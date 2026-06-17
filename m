@@ -1,288 +1,331 @@
-Return-Path: <linux-arm-msm+bounces-113657-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-113658-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id 0ZclFK65MmpQ4gUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-113657-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2026 17:13:50 +0200
+	id FMrnHYi6MmqR4gUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-113658-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2026 17:17:28 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id E80A169ADB6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2026 17:13:49 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id E4DF669AE1C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2026 17:17:27 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=redhat.com header.s=mimecast20190719 header.b="hMEqEB/u";
-	dkim=pass header.d=redhat.com header.s=google header.b=ZHizLDJ7;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113657-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.232.135.74 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113657-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=quarantine) header.from=redhat.com;
+	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b="mJhgK/u+";
+	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=kf1stwMX;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113658-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c09:e001:a7::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113658-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=reject) header.from=qualcomm.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 330E63115B56
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2026 15:07:11 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 37F963132072
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2026 15:10:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C8BF1345757;
-	Wed, 17 Jun 2026 15:02:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CB79849550A;
+	Wed, 17 Jun 2026 15:04:35 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F3B54779BB
-	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2026 15:02:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 620E0481223
+	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2026 15:04:34 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781708550; cv=none; b=s1j4G/WC2KwduQ3f6FAL/i/4rMCR/yrgeFksuCmXs474XaHMHboJqn7pPLHNJ+hbdCmMFe8XDv7Gc06KhSc2s2NMxyPjjKFHlWdEf9+/x3K3fpegXJ9bpd4sz6oGQ4VifsIylnmB5LP8sekGPiy5ZrNd57NgyNSgJ/9M8kOK5KM=
+	t=1781708675; cv=none; b=HRQbDHug7R/OI91wsbAD5glQzCxqOL31lmtnfMp3xl9Qi6mmmLMlq+Byu08qkR1voBOGB/WvHWIfNIRW6r21TafK2loIANkE2RwWa2GtYp4XSxEvo/S6JMIp8DjnPfMuBH1BRwPHOa9kUGS7BGynVi439z3VAjkcwL7f5OWzgBI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781708550; c=relaxed/simple;
-	bh=8uF65UMAky/mRqezH5Mq9Osuw3mDn+nryfOv7IcT948=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GEHq2qDu1E5+jimlwmB7fvYdKhCVjaLSnQ0gQL1r0xdGMmsmietJk7dZ9KVDWtcVPTTFbkUCiwA1zPPYQe4a2pu7lID1Fdn6cRF+gEA5FPhNP6uzlTjfCDUt0hUQPqKsmtBXtmXPW4Gmin6HR7hvFySmvezugKnZjzOYDk1aQ54=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=hMEqEB/u; dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.b=ZHizLDJ7; arc=none smtp.client-ip=170.10.133.124
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1781708547;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=3L0tfIfv3PgCCoHaDg/lriUnjs9nlO3WVhTB3T6ZruU=;
-	b=hMEqEB/ugmy18NDuHyzGGq71tw/ggNoE5FoGUz60R8Ymwb/i2qd7WHGtxxWz1trx7Qr1mg
-	b4X4FgLl1Ev7/xgQWTi2NybgPQ+VeeXoOo2q9jjQVaMS2jPYkcZnNEXE/esSx02W5otw8n
-	PtA9LNKXQrQXXM53uXUCEPUPv5eqQXA=
-Received: from mail-oo1-f71.google.com (mail-oo1-f71.google.com
- [209.85.161.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-692-hu9XUAduPdyZCqyiWXUgxw-1; Wed, 17 Jun 2026 11:02:26 -0400
-X-MC-Unique: hu9XUAduPdyZCqyiWXUgxw-1
-X-Mimecast-MFC-AGG-ID: hu9XUAduPdyZCqyiWXUgxw_1781708545
-Received: by mail-oo1-f71.google.com with SMTP id 006d021491bc7-69d9f54ab77so4877257eaf.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2026 08:02:26 -0700 (PDT)
+	s=arc-20240116; t=1781708675; c=relaxed/simple;
+	bh=pASOjP3S0Uv4ugchenDmCNPGNwsOsomDAh19FFHphRw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=K2vGmPfFUeG1QQ11Hmg7wcu+u1AMMNXLWiBfDL716E5+n4CO/9Ti03GQTvIrX+DqSRZNJAfkj0HecGAww4gaAVQ8Nc19Km/2WZaXqwwf3E2VIiZIWPGmXuf0UklRHj6ntr8d1YS4g0q3TxX5obLRG5Jh4BZRlwuQA6SaQxgVdOs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=mJhgK/u+; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=kf1stwMX; arc=none smtp.client-ip=205.220.168.131
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65HEEU9n2379646
+	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2026 15:04:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	0hkYA6Lo4Jj5Kkyg3hZREkEP+CcxyQv2PQdWFdmvQa4=; b=mJhgK/u+arZhAPSb
+	SxGBdHGKi1dTlJgk1piDUIAqxa3hCE9Bn1y0SJ49ZZTmrCg4elma6qqZR+Ekwsxl
+	XazN0HE/pjwhSlx9TPsQOJORHxKBvwRGYd9Axvp+34oxP7MfPK3mo2kTYiErtnqh
+	vy7MK8/YJ7n5if1APCJtRwnJ9ED3/dOiqwQbkgY7QJbxivClo5B54KVDPogYxld7
+	HsBHWk7ZVH+l91wGBLpnN7TOVTXIOvpbNG43dzJn143rN/w4G0lDhPqvqSn2oJzW
+	FUXI1zSHSUcaRmdcjQmzhZGl4GgI9UVx/su7/w5cqSoYFXn136C3QJ5xpbxDiRJf
+	Z9ZSzg==
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4euef23rm7-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2026 15:04:33 +0000 (GMT)
+Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-2c69f08f527so17505685ad.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2026 08:04:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=redhat.com; s=google; t=1781708545; x=1782313345; darn=vger.kernel.org;
-        h=user-agent:in-reply-to:content-transfer-encoding
-         :content-disposition:mime-version:references:message-id:subject:cc
-         :to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=3L0tfIfv3PgCCoHaDg/lriUnjs9nlO3WVhTB3T6ZruU=;
-        b=ZHizLDJ70d3TNcXjlcoqTp9gzvyZ/k+yWjY8ROo2OCyB0Y9Oa5UCHQ94dST8+QY2ib
-         EMQHE2KgpKXH13+xKKxW6pfxPkRcgK8sc033l8f4e5Tv3lMpKagbhgY4gJ5y4DAvLpKV
-         QoGmpc39HsnlJuXfynXz1AIGz6v393njtXbOd2ycVw+9FHnBjUghRb184pKhSNlrCYOP
-         TDvL4Ki+1KWe1EFK2AZGgAQpjTqqH2HqhOI9rLt5qQ1zQRND1A7IpdkfD67QnOtxKXUw
-         M8ntnp5ryUOGYW7CqAqowmvimtsiJF8Dc6ZRcFOfEKn3mm1A38IMhCc33BIdbvCp4x88
-         a+Yw==
+        d=oss.qualcomm.com; s=google; t=1781708673; x=1782313473; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=0hkYA6Lo4Jj5Kkyg3hZREkEP+CcxyQv2PQdWFdmvQa4=;
+        b=kf1stwMXHEKFQEcXKOoTv0lSVaA8ma4D17gVkIZ+cXeXy98HjLfRIblwIzPa6o1zmQ
+         JG3tMpMfY2bfo3LMKoc3gg99yW62aI0CfKjqeY9/T3K+MORFpahBHcAkoi9FM/1H3IZ7
+         U+BF3Sgu98InGZBUOP/UweYvDzKFqDnPS5zSMVrdYwOypkLu/9OCqwd6/7PCSdoE/qP8
+         aInpxAk+NWryjXpxvDh9WaB6TU81J7qr4oZXj+cl18m8BLuNz1ywkYaaKiSnpMIlyCwD
+         9tO1OTG0jIel/KRkOJRpKPUeyEf61U0e1UaqkuvwjFRl9nZuXaBr0p2IbeaTn9rVv63+
+         sPSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781708545; x=1782313345;
-        h=user-agent:in-reply-to:content-transfer-encoding
-         :content-disposition:mime-version:references:message-id:subject:cc
-         :to:from:date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3L0tfIfv3PgCCoHaDg/lriUnjs9nlO3WVhTB3T6ZruU=;
-        b=cx9WV+RdW3pnf0xTGWLBeunhRM4sGw8NAQfPBv2ZpZHJ5/1tb3MIbI/xzzQnJ2O+kZ
-         7692aC/eNzSJCPASn5hNbmTCtl1ul/8JGtJ4ga/vKAo4qQPXyfATxE/MqYBaeid1qKXI
-         vDY1CYM1UjF0l7n6mTMidejalK0s8iBttNv3hwXIg6uNMLcdYCsScG+vcgvLLcxlzC4Y
-         DUIZxMQkk5iOUD2iw4ZObaYpTfT0sEIeDeRgZQXr3XMrtHdHYUSNZ1MO4ElTB5Tsav1B
-         rM7gEd5oHVIZb2IKtFKvwUizJJXKXyRqvUo6KSwaZGohB0wnllJVwA/VTfaDWEmlvEJc
-         kJZQ==
-X-Forwarded-Encrypted: i=1; AFNElJ949A7aTPnizl3JKGBAP3X7rykqz93aQBjbh8zBdE+irBJ+RXaakKB01SVdEnQgoi/No1xpKYc7uzJEpfQl@vger.kernel.org
-X-Gm-Message-State: AOJu0YwZqPAbNM7qRArMr96MGxlKP/i7s22zXQeDjjGfsmq1yoeSFhAl
-	dpmTR5+n6l643glVg8Y+nyNr8DAM0jZ9K44PDofpHxTHpFXstALFEkyQr19J9S2e1eIffVP3ICK
-	/JmOkxwRtuTIIHsJF8ISibz3pwfu2EFiaJNM9/zIqB2WAleRaXKQlsKx14TtaxxisJ98=
-X-Gm-Gg: Acq92OHj8JFOpRIEKM5pxVqm2YBYlNtUQvdnb5ioTsJPTzkvQttlxqO6D+VQ/n6wW0r
-	SJNCygmZOYFxXqtrN6GgcydIOzo1tjFW0OufhXyp1vj/RhEybjiKHwagdZ5JEqjW7ozQeMOar+l
-	a5VNis3X7XCgCiEzZP6cVz+JtC5Zo5Gm/Lf2iUFiu7I8zbwSfi/mG+d+W6S6q1Rk4rULiByhi3i
-	a0Zv592hKA3vDJbvOkzAbNd0KVjH/pbHGkBakjRxicoKwHPtr5qJhyFFc+AyewijSxQtyK3CbP9
-	voksyvTCGo2GawPv+8KMjZp/eOZIbJENJtB0jOLMyLRqwZnnRl5lkUzaXm34zfRhf3NUacVVuMv
-	zq9SK1VTX
-X-Received: by 2002:a05:6820:2d08:b0:69e:3741:541b with SMTP id 006d021491bc7-6a0b63c3630mr2547630eaf.51.1781708545167;
-        Wed, 17 Jun 2026 08:02:25 -0700 (PDT)
-X-Received: by 2002:a05:6820:2d08:b0:69e:3741:541b with SMTP id 006d021491bc7-6a0b63c3630mr2547492eaf.51.1781708544318;
-        Wed, 17 Jun 2026 08:02:24 -0700 (PDT)
-Received: from redhat.com ([2600:382:770d:a626:c01:aa81:bd3c:9c5d])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8d9f132183bsm69910286d6.5.2026.06.17.08.02.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Jun 2026 08:02:17 -0700 (PDT)
-Date: Wed, 17 Jun 2026 11:02:13 -0400
-From: Brian Masney <bmasney@redhat.com>
-To: Ulf Hansson <ulf.hansson@oss.qualcomm.com>
-Cc: Saravana Kannan <saravanak@kernel.org>, Abel Vesa <abelvesa@kernel.org>,
-	Maxime Ripard <mripard@kernel.org>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Russell King <linux@armlinux.org.uk>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Hans de Goede <johannes.goede@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-Subject: Re: [PATCH v2 5/5] clk: implement sync_state support
-Message-ID: <ajK29WcueJ1wLCLQ@redhat.com>
-References: <20260616-clk-sync-state-v2-0-15f82c64d95c@redhat.com>
- <20260616-clk-sync-state-v2-5-15f82c64d95c@redhat.com>
- <CAPx+jO9JiV16ePLk59hTQzEMnA96Va6Ns4jqJbwyZ6oTT0AjXA@mail.gmail.com>
+        d=1e100.net; s=20251104; t=1781708673; x=1782313473;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=0hkYA6Lo4Jj5Kkyg3hZREkEP+CcxyQv2PQdWFdmvQa4=;
+        b=OTxcTKezqiaJZsoJj6QgRthxqrkWlj8Q19iKxqaALt4sRntX51bWRhThy98nMjBn8v
+         KF7jmoFhAkKY0nf+4FZFZEioDeH/yHRYQHvMinZ8EPm4zc/4Ez138w3MvNL4zPJez5AZ
+         gS8D9XdISWFklS9OUdwwZbUUzH6bFc8Znj8joaiQOiOUOkvNiUbUWUwOFymD3+9zCHls
+         80kD4Ip+hmfa0ECSGd/evVofqKgaRciU/Qhxt5p9jeU2yaR21FjUCZ1nCDcf18YTzyOz
+         emKYXHngCK/Zd74ABSfqZmR3fyZjuZco/1DIR9US25/cWTJ97xmLVvSYs6HeI8aVIjxC
+         rnlw==
+X-Forwarded-Encrypted: i=1; AFNElJ/w+vWnbe06XhZHDj05drORMAfbZpWodmU3wJau7zwBVCJmOCRDkhtPwK7MWBiKHjiRbkNG3bR2ugRr5pOZ@vger.kernel.org
+X-Gm-Message-State: AOJu0YzoABYdMRnh83WVZqojkQTVjIUQsVVe0wXhM9yr3xE58lWmyOPI
+	SGqoKOLO6PKf7j5XoGZ+gpbHrQYSosOTY9c3mYSeRCToWoVR2q7dhgCMo7gEzBNu+eq7M1SP5TR
+	Flx6G5kfLweqCdaeZBd7NPpyRel+e+7key1tvwow+/KySRW6z3kfgQ5asUp7q2JypOeC2
+X-Gm-Gg: AfdE7ck+/U9ld6BPVWm2PTzu6Xe1wD8oSlYV/Z0bHEA6NWwdohOBOUj0fb0Uy7SLjPa
+	E2gVqVnkGsteTiJoLd3Mkv/epiJFjGjth7Gv1xkMTZLtMBMfktgw5Rylj0us8OpdD6Obe9Ikxy6
+	0/85F8LUaPHQhUTu73buoz0gfFxbapQcgS6LnHK36WsQ9L81A6ZfPUpVKOcMZiTC6pMpSFHzAv0
+	r4P+G4uxdus/OOEQk/nUsyrE/HFqcVGr3O8TupZ5UgJVs7CBQ9jWB521rtGfGEFPlvYVJKgAbQ8
+	9Lx6BNQE1bmec4ro6o5XdpDbelhRxvvX5RryEfjTKhYslxfc705EQ7S7t8XBMPHYxjBp+uyg4ZC
+	ReXIZ9lHjzKyTylLS8lo9bCGOJLDs1LyiVveObNGQyW+g
+X-Received: by 2002:a17:903:950:b0:2bf:23ad:8595 with SMTP id d9443c01a7336-2c6bbf58b5emr43304845ad.4.1781708672771;
+        Wed, 17 Jun 2026 08:04:32 -0700 (PDT)
+X-Received: by 2002:a17:903:950:b0:2bf:23ad:8595 with SMTP id d9443c01a7336-2c6bbf58b5emr43304025ad.4.1781708672073;
+        Wed, 17 Jun 2026 08:04:32 -0700 (PDT)
+Received: from [192.168.29.100] ([49.43.194.141])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2c42f7c70easm227261845ad.25.2026.06.17.08.04.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 17 Jun 2026 08:04:31 -0700 (PDT)
+Message-ID: <023152ae-5a98-e19c-7803-0dbca7814ddd@oss.qualcomm.com>
+Date: Wed, 17 Jun 2026 20:34:25 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAPx+jO9JiV16ePLk59hTQzEMnA96Va6Ns4jqJbwyZ6oTT0AjXA@mail.gmail.com>
-User-Agent: Mutt/2.3.2 (2026-04-26)
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH v5 10/16] media: iris: add minimal GET_PROPERTY
+ implementation
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Bryan O'Donoghue <bod@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
+References: <20260616-iris-ar50lt-v5-0-583b42770b6a@oss.qualcomm.com>
+ <20260616-iris-ar50lt-v5-10-583b42770b6a@oss.qualcomm.com>
+Content-Language: en-US
+From: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
+In-Reply-To: <20260616-iris-ar50lt-v5-10-583b42770b6a@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE3MDE0NCBTYWx0ZWRfX9zDhC7aUuzSU
+ 853Q5xT+2XffYYxOwePIQSEjrq0FvPVQb1ml9WW3qlrJ23XcfxX9uwENdqSk5AJLYkHL/73FFHb
+ 2p6UO6kaHkXhQ+e0RUDSksMVBouEKEE=
+X-Proofpoint-ORIG-GUID: Emelf81Bx-3VkQQBgTJFo3rBOcY12SnK
+X-Proofpoint-GUID: Emelf81Bx-3VkQQBgTJFo3rBOcY12SnK
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE3MDE0NCBTYWx0ZWRfXxOE5NQ2tAIKe
+ NYHZsvIZ2CdsKg+idZYAEgAfMY8jTd7f5FQCrE1oHg2fcpmci0AQYQnnJJH7LyrR5RPBqs9GGwp
+ 6ieJNI+3rt/9G/tFBLU+F5Z/N7ptAfEY/5bvZ+lWbwhb7u89j8ANMrduhTq13IOba/6nZKk2x2k
+ WqUa+41Hs73r0Uupnjo9L+xqA8Z+9zs35oi+4hdkQ1kcNg0Hr2k5ulCPPgDVucWCXycgvUUoCx9
+ /T4LiwL2YMS03EWhZY11mVhgkE6oAaUnoEy+6MHJZmV9csWZJ2EuqNTFifEf7fAysI7jpJNNQTF
+ /6de/lE/atYwpgdiau28DbxoTsYZYDxwf586rCOmAPzsRqh0LD+LpJBTITDV5Y5pZhZdocSKcnb
+ JOBg/sXOTbf6wjILupu1udmxFodXts3kiGAbI/GOb+U8P5Q+7BOqAUIkDadlFNnXq4yJpZKK0nN
+ L9yrs+7pxD3oDYM9opw==
+X-Authority-Analysis: v=2.4 cv=acpRWxot c=1 sm=1 tr=0 ts=6a32b781 cx=c_pps
+ a=cmESyDAEBpBGqyK7t0alAg==:117 a=LrD0L7TPytbPiIQqxktYyw==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
+ a=EUspDBNiAAAA:8 a=FHMilMr0S3awb_RgwQsA:9 a=QEXdDO2ut3YA:10
+ a=1OuFwYUASf3TG4hYMiVC:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-17_02,2026-06-16_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 spamscore=0 suspectscore=0 lowpriorityscore=0 adultscore=0
+ clxscore=1015 bulkscore=0 malwarescore=0 priorityscore=1501 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606170144
 X-Rspamd-Action: no action
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[redhat.com,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
-	R_DKIM_ALLOW(-0.20)[redhat.com:s=mimecast20190719,redhat.com:s=google];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-113657-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-113658-lists,linux-arm-msm=lfdr.de];
 	RCPT_COUNT_TWELVE(0.00)[15];
 	MIME_TRACE(0.00)[0:+];
 	RCVD_TLS_LAST(0.00)[];
 	FORWARDED(0.00)[lists@lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:ulf.hansson@oss.qualcomm.com,m:saravanak@kernel.org,m:abelvesa@kernel.org,m:mripard@kernel.org,m:mturquette@baylibre.com,m:sboyd@kernel.org,m:linux@armlinux.org.uk,m:andersson@kernel.org,m:johannes.goede@oss.qualcomm.com,m:konrad.dybcio@oss.qualcomm.com,m:dmitry.baryshkov@oss.qualcomm.com,m:linux-clk@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:jens.glathe@oldschoolsolutions.biz,s:lists@lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:dmitry.baryshkov@oss.qualcomm.com,m:vikash.garodia@oss.qualcomm.com,m:abhinav.kumar@linux.dev,m:bod@kernel.org,m:mchehab@kernel.org,m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linux-media@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:devicetree@vger.kernel.org,m:dikshita.agarwal@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_SENDER(0.00)[bmasney@redhat.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[redhat.com:+];
+	FORGED_SENDER(0.00)[busanna.reddy@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FROM_HAS_DN(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:from_mime,vger.kernel.org:from_smtp,qualcomm.com:dkim,qualcomm.com:email,pkt.data:url];
 	TO_DN_SOME(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[6];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[bmasney@redhat.com,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[busanna.reddy@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
 	ALIAS_RESOLVED(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,oldschoolsolutions.biz:email]
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: E80A169ADB6
+X-Rspamd-Queue-Id: E4DF669AE1C
 
-Hi Ulf,
 
-On Wed, Jun 17, 2026 at 04:24:05PM +0200, Ulf Hansson wrote:
-> On Tue, Jun 16, 2026 at 11:09 PM Brian Masney <bmasney@redhat.com> wrote:
-> >
-> > The existing support for disabling unused clks runs in the late initcall
-> > stage, and it has been known for a long time that this is broken since
-> > it runs too early in the boot up process. It doesn't work for kernel
-> > modules, and it also doesn't work if all of the consumers haven't fully
-> > probed yet. Folks have long recommended to boot certain platforms with
-> > clk_ignore_unused to work around issues with disabling unused clks.
-> >
-> > Let's go ahead and add a framework-level sync_state callback for the clk
-> > subsystem. If a driver doesn't have a sync_state callback configured,
-> > which is the 99+% use case today, then let's set it up to use the
-> > clk_sync_state() introduced in this commit so that no driver changes
-> > are needed.
-> >
-> > At the time of this writing, there are currently only 7 clk drivers that
-> > implement sync_state, and all are Qualcomm SoCs where they interact with
-> > the interconnect framework via icc_sync_state(). A shared helper has
-> > been created for this platform that calls clk_sync_state(). It is
-> > expected that any new clk drivers that want to implement their own
-> > sync_state will also need to call clk_sync_state() at the end of their
-> > custom sync_state callback.
-> >
-> > There will be several stages of disabling unused clks:
-> >
-> > - The first phase will be executed at late_initcall and it will only
-> >   disable unused clks that do not have a struct dev.
-> > - The sync_state callback will be invoked for each clk driver once all
-> >   consumers have probed.
-> >
-> > This is based on previous attempts by Saravana Kannan and Abel Vesa
-> > that are linked below.
-> >
-> > This change was tested on a Thinkpad x13s laptop.
-> >
-> >     [    0.308051] clk: Disabling unused clocks not associated with a device
-> >     [    6.541069] qcom_aoss_qmp c300000.power-management: clk: Disabling unused clocks
-> >     [    6.843310] qcom-qmp-pcie-phy 1c24000.phy: clk: Disabling unused clocks
-> >     [    7.604556] qcom-qmp-pcie-phy 1c14000.phy: clk: Disabling unused clocks
-> >     [    8.446161] qcom-qmp-usb-phy 88f1000.phy: clk: Disabling unused clocks
-> >     [    8.446293] qcom-qmp-usb-phy 88ef000.phy: clk: Disabling unused clocks
-> >     [    8.546067] qcom-qmp-combo-phy 88eb000.phy: clk: Disabling unused clocks
-> >     [    8.546203] qcom-qmp-combo-phy 8903000.phy: clk: Disabling unused clocks
-> >     [    8.546254] qcom-edp-phy aec5a00.phy: clk: Disabling unused clocks
-> >     [   15.436834] qcom-cpufreq-hw 18591000.cpufreq: clk: Disabling unused clocks
-> >     [   15.436953] clk-rpmh 18200000.rsc:clock-controller: clk: Disabling unused clocks
-> >     [   15.723348] qcom-qmp-pcie-phy 1c06000.phy: clk: Disabling unused clocks
-> >     [   21.063241] q6prm-lpass-clock 3000000.remoteproc:glink-edge:gpr:service@2:clock-controller: clk: Disabling unused clocks
-> >     [   21.081996] va_macro 3370000.codec: clk: Disabling unused clocks
-> >     [   21.092740] rx_macro 3200000.rxmacro: clk: Disabling unused clocks
-> >     [   21.118261] wsa_macro 3240000.codec: clk: Disabling unused clocks
-> >     [   21.128758] tx_macro 3220000.txmacro: clk: Disabling unused clocks
-> >
-> > Tested-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-> > Signed-off-by: Brian Masney <bmasney@redhat.com>
-> > Link: https://www.youtube.com/watch?v=tXYzM8yLIQA
-> > Link: https://lore.kernel.org/all/20210407034456.516204-1-saravanak@google.com/
-> > Link: https://lore.kernel.org/all/20221227204528.1899863-1-abel.vesa@linaro.org/
-> 
-> For future revisions, please add ulfh@kernel.org on to/cc.
-> 
-> > ---
-> >  drivers/clk/clk.c | 72 +++++++++++++++++++++++++++++++++++++++++++++----------
-> >  1 file changed, 59 insertions(+), 13 deletions(-)
-> >
-> > diff --git a/drivers/clk/clk.c b/drivers/clk/clk.c
-> > index 9cb2b42d1be4..7a15cceec620 100644
-> > --- a/drivers/clk/clk.c
-> > +++ b/drivers/clk/clk.c
-> 
-> [...]
-> 
-> >  void clk_sync_state(struct device *dev)
-> >  {
-> > -       /* Will fill in */
-> > +       __clk_disable_unused(dev);
-> >  }
-> >  EXPORT_SYMBOL_GPL(clk_sync_state);
-> >
-> > @@ -4345,8 +4382,17 @@ __clk_register(struct device *dev, struct device_node *np, struct clk_hw *hw)
-> >         core->dev = dev;
-> >         clk_pm_runtime_init(core);
-> >         core->of_node = np;
-> > -       if (dev && dev->driver)
-> > +       if (dev && dev->driver) {
-> >                 core->owner = dev->driver->owner;
-> > +
-> > +               /*
-> > +                * If a clk provider sets their own sync_state, then it needs to
-> > +                * also call clk_sync_state(). dev_set_drv_sync_state() won't
-> > +                * overwrite the sync_state callback, and this call will fail
-> > +                * with -EBUSY.
-> > +                */
-> > +               dev_set_drv_sync_state(dev, clk_sync_state);
-> 
-> We have cases where a device node represents a provider for multiple
-> types of resources, like clocks, power-domains (genpds), resets, etc,
-> as in the qcom case, for example.
-> 
-> For power-domain provider drivers (genpd) we also try to assign the
-> ->sync_state() callback, see of_genpd_add_provider_simple() and
-> of_genpd_add_provider_simple(). This means the above doesn't play well
-> with how genpd behaves, so we need to figure out a way to manage these
-> cases.
-> 
-> In this regard, we also have of_genpd_sync_state(), which allows a
-> genpd provider driver to explicitly call genpd's sync state function,
-> if/when needed.
-> 
-> Unfortunately I am not able to suggest a detailed solution for how to
-> move this forward at this point, as it requires some more thinking and
-> I am heading for some vacation very soon.
+On 6/16/2026 5:34 AM, Dmitry Baryshkov wrote:
+> AR50Lt with the Gen1 firmware requires host to read
+> HFI_PROPERTY_CONFIG_BUFFER_REQUIREMENTS property, otherwise it doesn't
+> update internal data and fails the HFI_CMD_SESSION_LOAD_RESOURCES
+> command. Implement minimal support for querying the properties from the
+> firmware.
+>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> ---
+>  drivers/media/platform/qcom/iris/iris_hfi_common.h  |  1 +
+>  .../platform/qcom/iris/iris_hfi_gen1_command.c      | 21 +++++++++++++++++++++
+>  .../platform/qcom/iris/iris_hfi_gen1_defines.h      | 15 +++++++++++++++
+>  .../platform/qcom/iris/iris_hfi_gen1_response.c     |  6 ++++++
+>  4 files changed, 43 insertions(+)
+>
+> diff --git a/drivers/media/platform/qcom/iris/iris_hfi_common.h b/drivers/media/platform/qcom/iris/iris_hfi_common.h
+> index a27447eb2519..16099f9a25b6 100644
+> --- a/drivers/media/platform/qcom/iris/iris_hfi_common.h
+> +++ b/drivers/media/platform/qcom/iris/iris_hfi_common.h
+> @@ -121,6 +121,7 @@ struct iris_hfi_session_ops {
+>  	int (*session_set_property)(struct iris_inst *inst,
+>  				    u32 packet_type, u32 flag, u32 plane, u32 payload_type,
+>  				    void *payload, u32 payload_size);
+> +	int (*session_get_property)(struct iris_inst *inst, u32 packet_type);
+>  	int (*session_open)(struct iris_inst *inst);
+>  	int (*session_start)(struct iris_inst *inst, u32 plane);
+>  	int (*session_queue_buf)(struct iris_inst *inst, struct iris_buffer *buffer);
+> diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c b/drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c
+> index 7674b47ad6c4..99e82e5510ab 100644
+> --- a/drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c
+> +++ b/drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c
+> @@ -1117,10 +1117,31 @@ static int iris_hfi_gen1_session_set_config_params(struct iris_inst *inst, u32 p
+>  	return 0;
+>  }
+>  
+> +static int iris_hfi_gen1_session_get_property(struct iris_inst *inst, u32 packet_type)
+> +{
+> +	struct hfi_session_get_property_pkt pkt;
+> +	int ret;
+> +
+> +	pkt.shdr.hdr.size = sizeof(pkt);
+> +	pkt.shdr.hdr.pkt_type = HFI_CMD_SESSION_GET_PROPERTY;
+> +	pkt.shdr.session_id = inst->session_id;
+> +	pkt.num_properties = 1;
+> +	pkt.data = packet_type;
+> +
+> +	reinit_completion(&inst->completion);
+> +
+> +	ret = iris_hfi_queue_cmd_write(inst->core, &pkt, pkt.shdr.hdr.size);
+> +	if (ret)
+> +		return ret;
+> +
+> +	return iris_wait_for_session_response(inst, false);
+> +}
+> +
+>  static const struct iris_hfi_session_ops iris_hfi_gen1_session_ops = {
+>  	.session_open = iris_hfi_gen1_session_open,
+>  	.session_set_config_params = iris_hfi_gen1_session_set_config_params,
+>  	.session_set_property = iris_hfi_gen1_session_set_property,
+> +	.session_get_property = iris_hfi_gen1_session_get_property,
+>  	.session_start = iris_hfi_gen1_session_start,
+>  	.session_queue_buf = iris_hfi_gen1_session_queue_buffer,
+>  	.session_release_buf = iris_hfi_gen1_session_unset_buffers,
+> diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen1_defines.h b/drivers/media/platform/qcom/iris/iris_hfi_gen1_defines.h
+> index 0e4dee192384..bb495a1d2623 100644
+> --- a/drivers/media/platform/qcom/iris/iris_hfi_gen1_defines.h
+> +++ b/drivers/media/platform/qcom/iris/iris_hfi_gen1_defines.h
+> @@ -35,6 +35,7 @@
+>  #define HFI_CMD_SESSION_EMPTY_BUFFER			0x211004
+>  #define HFI_CMD_SESSION_FILL_BUFFER			0x211005
+>  #define HFI_CMD_SESSION_FLUSH				0x211008
+> +#define HFI_CMD_SESSION_GET_PROPERTY			0x211009
+>  #define HFI_CMD_SESSION_RELEASE_BUFFERS			0x21100b
+>  #define HFI_CMD_SESSION_RELEASE_RESOURCES		0x21100c
+>  #define HFI_CMD_SESSION_CONTINUE			0x21100d
+> @@ -113,6 +114,7 @@
+>  #define HFI_MSG_SESSION_FLUSH				0x221006
+>  #define HFI_MSG_SESSION_EMPTY_BUFFER			0x221007
+>  #define HFI_MSG_SESSION_FILL_BUFFER			0x221008
+> +#define HFI_MSG_SESSION_PROPERTY_INFO			0x221009
+>  #define HFI_MSG_SESSION_RELEASE_RESOURCES		0x22100a
+>  #define HFI_MSG_SESSION_RELEASE_BUFFERS			0x22100c
+>  
+> @@ -205,6 +207,12 @@ struct hfi_session_set_property_pkt {
+>  	u32 data[];
+>  };
+>  
+> +struct hfi_session_get_property_pkt {
+> +	struct hfi_session_hdr_pkt shdr;
+> +	u32 num_properties;
+> +	u32 data;
+> +};
+> +
+>  struct hfi_sys_pc_prep_pkt {
+>  	struct hfi_pkt_hdr hdr;
+>  };
+> @@ -574,6 +582,13 @@ struct hfi_msg_session_fbd_uncompressed_plane0_pkt {
+>  	u32 data[];
+>  };
+>  
+> +struct hfi_msg_session_property_info_pkt {
+> +	struct hfi_session_hdr_pkt shdr;
+> +	u32 num_properties;
+> +	u32 property;
+> +	u8 data[];
+> +};
+> +
+>  struct hfi_msg_session_release_buffers_done_pkt {
+>  	struct hfi_msg_session_hdr_pkt shdr;
+>  	u32 num_buffers;
+> diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen1_response.c b/drivers/media/platform/qcom/iris/iris_hfi_gen1_response.c
+> index bfd7495bf44f..23fc7194b1e3 100644
+> --- a/drivers/media/platform/qcom/iris/iris_hfi_gen1_response.c
+> +++ b/drivers/media/platform/qcom/iris/iris_hfi_gen1_response.c
+> @@ -591,6 +591,10 @@ static const struct iris_hfi_gen1_response_pkt_info pkt_infos[] = {
+>  	 .pkt = HFI_MSG_SESSION_RELEASE_BUFFERS,
+>  	 .pkt_sz = sizeof(struct hfi_msg_session_release_buffers_done_pkt),
+>  	},
+> +	{
+> +	 .pkt = HFI_MSG_SESSION_PROPERTY_INFO,
+> +	 .pkt_sz = sizeof(struct hfi_msg_session_property_info_pkt),
+> +	},
+>  };
+>  
+>  static void iris_hfi_gen1_handle_response(struct iris_core *core, void *response)
+> @@ -652,6 +656,8 @@ static void iris_hfi_gen1_handle_response(struct iris_core *core, void *response
+>  			iris_hfi_gen1_session_etb_done(inst, hdr);
+>  		} else if (hdr->pkt_type == HFI_MSG_SESSION_FILL_BUFFER) {
+>  			iris_hfi_gen1_session_ftb_done(inst, hdr);
+> +		} else if (hdr->pkt_type == HFI_MSG_SESSION_PROPERTY_INFO) {
+> +			complete(&inst->completion);
+>  		} else {
+>  			struct hfi_msg_session_hdr_pkt *shdr;
+>  
 
-One approach I initially considered was to make it so that we can have a
-list of sync_state callbacks that can be added to. I already did some
-work on this, but I didn't think it was worth it for just the QC clk
-drivers in isolation, but it would address the concern here.
-
-Brian
+Reviewed-by: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
 
 
