@@ -1,359 +1,243 @@
-Return-Path: <linux-arm-msm+bounces-113523-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-113524-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id OvLDNmtoMmo3zgUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-113523-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2026 11:27:07 +0200
+	id MpaHA3BqMmq1zgUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-113524-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2026 11:35:44 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 51B5F697E53
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2026 11:27:07 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5AF99697FB2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2026 11:35:43 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=none;
-	dmarc=none;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113523-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113523-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b="ftQQj5X/";
+	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=iAF7d7VP;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113524-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113524-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=reject) header.from=qualcomm.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 5F320300B84B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2026 09:27:05 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 4694A305046A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2026 09:30:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DD56439FCBF;
-	Wed, 17 Jun 2026 09:27:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DAC613C8713;
+	Wed, 17 Jun 2026 09:30:46 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from zg8tmtyylji0my4xnjeumjiw.icoremail.net (zg8tmtyylji0my4xnjeumjiw.icoremail.net [162.243.161.220])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B86513947AE;
-	Wed, 17 Jun 2026 09:26:59 +0000 (UTC)
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 605EB3CB8EF
+	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2026 09:30:45 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781688423; cv=none; b=mnYcgEqzAHwu2+sT6vUWHE954kpDIK+kVBP872qN0e2KzDCy6zxU5V7Vx3Fz82taaswr+dWr6Km4DnOGLhVrRUsclCotj+kjEa/dz712DlHz0djPVHDD0+H50P7A8H7PqEf9R6BXAtBLssFJcnSC8/PNgV8wwg4vjp4zivUywlA=
+	t=1781688646; cv=none; b=BXj3xiOlq088TdAzEpWMq47FbaQEs55v1fI10k13dHHAQ/8UCcagKaltbJZXCB1zAc7foRc17SwwWvdW5UKxxSI3QM2+7983+TaTiyqQp6b75L7L7vCOx9VmCQM0CJzqDroZoJxoJ2RYdYl7/bOkK78AqtWu9U6v7XUp4RInip0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781688423; c=relaxed/simple;
-	bh=4uspS+qzJUfvhm23h7VIAm7QzP8k+ERJkxgTiRQpW+Q=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lX5KmL1J0wxpRhCbkit6IGEg92gExdpMKuxMOyUTegiqVRLamNxD+59q4JuQZRf5NSN9nOLzf69qLE3xYAoyghkTcCEex9ANBPmZSZf2vrWu9zFphf3NR4g9N9prsvAGKO9QOYBGWtt1o1lMfbs5aff90gs7NyzHF9CPCt85SLo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=eswincomputing.com; spf=pass smtp.mailfrom=eswincomputing.com; arc=none smtp.client-ip=162.243.161.220
-Received: from E0005152DT.eswin.cn (unknown [10.12.96.41])
-	by app2 (Coremail) with SMTP id TQJkCgDn+55JaDJqaDIqAA--.45314S2;
-	Wed, 17 Jun 2026 17:26:34 +0800 (CST)
-From: dongxuyang@eswincomputing.com
-To: Brian Masney <bmasney@redhat.com>,
-	Saravana Kannan <saravanak@kernel.org>,
-	Abel Vesa <abelvesa@kernel.org>,
-	Maxime Ripard <mripard@kernel.org>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Russell King <linux@armlinux.org.uk>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Hans de Goede <johannes.goede@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: linux-clk@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	Jens Glathe <jens.glathe@oldschoolsolutions.biz>,
-	Xuyang Dong <dongxuyang@eswincomputing.com>,
-	Min Lin <linmin@eswincomputing.com>
-Subject: Re: [PATCH 5/5] clk: implement sync_state support
-Date: Wed, 17 Jun 2026 17:25:38 +0800
-Message-Id: <20260617092538.1098-1-dongxuyang@eswincomputing.com>
-X-Mailer: git-send-email 2.31.1.windows.1
-In-Reply-To: <20260616-clk-sync-state-v2-5-15f82c64d95c@redhat.com>
-References: <20260616-clk-sync-state-v2-5-15f82c64d95c@redhat.com>
+	s=arc-20240116; t=1781688646; c=relaxed/simple;
+	bh=h7NqFiL/vZAhxbDLER2nG3vWh/Se87PBLNeoY6zZN2M=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=g9Ue3/Br0GRttD8JSEeplq5NCwSJEPGJxEY3RWacDE0oqCAC+dPdQeDfJLuiajmyWp0WFvJfkllgIGn5SvKYR4lzJJgyUbrCYtitIH5/FzMloerlgu5hV97iKQOVx9fV5KwQcro1rGjG3YotQk30tKv7Zl2DFrlKQkO2H/EbOws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ftQQj5X/; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=iAF7d7VP; arc=none smtp.client-ip=205.220.168.131
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65H8UfN31654405
+	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2026 09:30:45 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	mbELSQCe+eLHzp84jgggoNFJ8/wasOftbLaK7oSIbpM=; b=ftQQj5X/9G9fSF45
+	Yq/2s+3OHwxxSyMTC1LXYst8SBO7fq8lJdpwgdpVGK2MXeaJTahnMhHQpZwmO6nT
+	qTC/RYWUxSFUiyCUgMLgaR9V1j11SZLi240Q9+bq765ifD1rCkPHh6Rp4Pbh0+hv
+	4/E6Sw1OEG9zdsNs5rdZWy+NZG3Q3BrB1Q4XoWVlRCz7BvivY12XYVL6q+m0zHOl
+	0VD4Inru3NRMX6h+8l3pUaWIuXWp1sUYZmT3lq5F8CMZwSgXW3THbB50DVP2tYK8
+	xKDTdjYNSPvVTuYZWxDGcK/L3KuWx4n/lXK/dPSm/CzFZlKNJWL8/gGtIhtSAXSq
+	vCti5Q==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eueer2cmq-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2026 09:30:44 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-915ccc2d4d2so118256085a.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2026 02:30:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1781688644; x=1782293444; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=mbELSQCe+eLHzp84jgggoNFJ8/wasOftbLaK7oSIbpM=;
+        b=iAF7d7VPmvhjK0d6a1CbsFO73FkUp4x4UyCWcn79vfr3iihwS2V+yIGbK1mQkB+Kd8
+         ONDEqXbnB3jfAFLA072PhQ4PDUoeFq+4NMaGsPbZx93tdJxgQmk8WM0epdv/Dsc6TotJ
+         OCCQamtPIPXufCg+ur9CXqfLBTIxCBW4SvbZnSCrDaOEOR/iK1aFQNbOSGOCYJavD38Q
+         dA4fcy2RVKG8FKqio0AgwYT8xKFA1ZiN5CV/G5S9w0qlcmD8IYpADKqVdB0lwGqZXQFd
+         vMD8COzRBFUUsebms4OwXr0d1G9um+gXwYzxbhnehl+MsUKqLyBUSfLaA9E243P0Nis5
+         Lumg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781688644; x=1782293444;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=mbELSQCe+eLHzp84jgggoNFJ8/wasOftbLaK7oSIbpM=;
+        b=jLAmQQcxkH+stzGhSPp+r8DFXIbVWLovZF+fKJRPjSlwc1bo6eWSclx5lkliMloBf3
+         U4kFke2s9teHNdh2B6LOg2yi/wBzCClPp3WXxHaIfxWzo/5Roe+gwswmBiUEoGYyEbK/
+         m3cJoPjzTFiutfdrAI7Z+pz1+qcY3Yv2eRFU/zuBdxheZdncZZ2nTilA8VuKl8PvKMXQ
+         HX3gaUGsQoVdGiI04shNk5toyF87Kxb00KgTx8U9nLU5hqo2i0lJ8TOz5Mu9P/Mew+Xr
+         nhJg1w5udwO2eCwgoV20CFcDjPDo/s6ntSBA5eE/XSy7d999GHzw+FH8hL+CQZDlj1lz
+         +Wcw==
+X-Forwarded-Encrypted: i=1; AFNElJ96hCqMOWmDskJr5Yu/DpdFUFcW9HfF1jt8cOwRBSp9l6KaMezhoUQOMjkhe+WP3MEKDkj3CeT6ZWVwMWN6@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywb7XiQxpYwp6YLLCVHRo+icyChn22WYikTrZm4tA7ELTZicAam
+	YXGER+noaPvfH9iVWoYxPO68wND/+Tb5Ma8ZefU3ZUUBNm6zrr7Tf8mfxU/vyKUOooRORoi95ya
+	Ch4EVs+rp5sIG8kLOWmRRCc/aOZMqcFfh4DdxpWI63+Nkhs7FsJjPITYF/DHYXbdf/gcO
+X-Gm-Gg: Acq92OGQ+SH/PWlCJW2YJhg9Uy4YcD2FVoMuCgGu16Dxd19rLUZXqVeWhM1mKiD9C+q
+	7qUOoYI1ITDwtMG28tjkOCnTelyubVfAK3l51xP7XkWuTAVO9/8VhMe9AJd0hBepjvc2Sny2n3P
+	yhuW/0vdetVYgQF5wO+YL1fjtuFYTJ14CssDp5Pf9yaMZjxZ8zDJclmnjekMYm9MOoAbrBG2ijU
+	d8bBkOdCcUVn1NkuBTyJcRHuZTbv/AlQnKKQ1OUMMmeDcyZQADfKbi1+CddiPutot6x1LQQ6H5S
+	dmybupNoK/ec2nuhxfsAGwjiBox8nDecUZev7F2TXneVc/LZRZKjiwJCUALvmfU7vpjPRxIfWEq
+	8fmloKivZE/Js7megDDUuBAP6FXX2cH1ANFU=
+X-Received: by 2002:a05:620a:438b:b0:8f1:9e59:2208 with SMTP id af79cd13be357-91d8acdc8f3mr299014785a.4.1781688643509;
+        Wed, 17 Jun 2026 02:30:43 -0700 (PDT)
+X-Received: by 2002:a05:620a:438b:b0:8f1:9e59:2208 with SMTP id af79cd13be357-91d8acdc8f3mr299012085a.4.1781688643022;
+        Wed, 17 Jun 2026 02:30:43 -0700 (PDT)
+Received: from [192.168.120.170] ([178.235.128.140])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-bfdb4b22136sm788125566b.15.2026.06.17.02.30.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 17 Jun 2026 02:30:42 -0700 (PDT)
+Message-ID: <29806448-0588-4590-8540-a689ccf1e7b0@oss.qualcomm.com>
+Date: Wed, 17 Jun 2026 11:30:39 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/4] input: misc: Add Qualcomm SPMI PMIC haptics driver
+To: Fenglin Wu <fenglin.wu@oss.qualcomm.com>, linux-arm-msm@vger.kernel.org,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>, Lee Jones <lee@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+Cc: David Collins <david.collins@oss.qualcomm.com>,
+        Subbaraman Narayanamurthy <subbaraman.narayanamurthy@oss.qualcomm.com>,
+        Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>, kernel@oss.qualcomm.com,
+        linux-input@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20260616-qcom-spmi-haptics-v1-0-d24e422de6b4@oss.qualcomm.com>
+ <20260616-qcom-spmi-haptics-v1-3-d24e422de6b4@oss.qualcomm.com>
+ <eb693705-c0c3-427b-a924-5aa907fd65bb@oss.qualcomm.com>
+ <1bcf00ae-2558-4c3a-970d-aee1da0c06f9@oss.qualcomm.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <1bcf00ae-2558-4c3a-970d-aee1da0c06f9@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:TQJkCgDn+55JaDJqaDIqAA--.45314S2
-X-Coremail-Antispam: 1UD129KBjvJXoW3WFWxKryfXw17Jw18tF1rXrb_yoWfXryrpr
-	WxAFy5Cr48XFWxWFnxXr1vyFnavw18KFyfWF15C3s7JFnxJrnakF4xC34UXF1DJrykC3y3
-	ArWjyrn8uw4xtrJanT9S1TB71UUUUUJqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUPa14x267AKxVW5JVWrJwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
-	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
-	1l84ACjcxK6xIIjxv20xvE14v26F1j6w1UM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4U
-	JVWxJr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_Gc
-	CE3s1ln4kS14v26r1Y6r17M2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE
-	6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72
-	CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7
-	M4IIrI8v6xkF7I0E8cxan2IY04v7M4kE6xkIj40Ew7xC0wCY1x0262kKe7AKxVW8ZVWrXw
-	CY02Avz4vE-syl42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAq
-	x4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r4a6r
-	W5MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF
-	7I0E14v26r4j6F4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxV
-	WUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIevJa73UjIFyTuYvjTR
-	CeHqDUUUU
-X-CM-SenderInfo: pgrqw5xx1d0w46hv4xpqfrz1xxwl0woofrz/
+X-Proofpoint-ORIG-GUID: ggHGXX_jQNAMjTk7tHaYU2satubKvx9r
+X-Authority-Analysis: v=2.4 cv=Mr1iLWae c=1 sm=1 tr=0 ts=6a326944 cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=PRfkaYvzSr8QmIIGAkY2Sg==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=IsPFB7xf8fGKp3IZfZcA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=IoWCM6iH3mJn3m4BftBB:22
+X-Proofpoint-GUID: ggHGXX_jQNAMjTk7tHaYU2satubKvx9r
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE3MDA4OSBTYWx0ZWRfX3mKqnyohR3Nm
+ Xh2bjyguATFw91bu93BXgxIa+rtHkXOjUVRn42sAJXOeV13M6vEWi3ovzqFZygqzqneg78zsrdC
+ nk2jzvX+RXBWT/PD5vJcpcE1D4k3MZU=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE3MDA4OSBTYWx0ZWRfX1SFwgIDiofvl
+ 2Pa2pa27i3FodaohhZTwpR7h8pnZK0LbxC6zZqBaMxyda/fwFMrdcSALgB/VsSjxwiiJJX5jloJ
+ ltyptPx3pDQEnWlAW2Vu7DNj5O/IHxvNqPcCEjhHWZhGW5WQHtqGEr3IEfH0SkOE+3Z+E+cE6wP
+ QNClCvTDp6K9V6lCNf4XfxELZ9VAulLrix7S4xjGLig9PuEPqXMBL3HzgAgnM74FMM0LUoI513c
+ m3Ymp2TKlf5DI1Py+AUGIxQVYayu/7TdWKBKNJjFX8Bc5a8fvk7mcrm05iC/PaZscxX3XWfpN54
+ nrj8yFXSRzWqoj1KsxCwUjmeKZHpAXiaFG/466vX9xP8PnUInS8AEETc/3q/tKHW8SXhJDVok2a
+ Zc/zUchlLkLL5Czw5mtfus8K0g7luqs0NOTGeNFcBNrGvAHkE1UhyE9bah9sCPZbBtvO28ibuIb
+ RbLGHj/XXkIEbU++HHw==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-17_01,2026-06-16_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 spamscore=0 phishscore=0 bulkscore=0 priorityscore=1501
+ malwarescore=0 lowpriorityscore=0 adultscore=0 suspectscore=0 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606170089
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-0.46 / 15.00];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_CONTAINS_FROM(1.00)[];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_RECIPIENTS(0.00)[m:bmasney@redhat.com,m:saravanak@kernel.org,m:abelvesa@kernel.org,m:mripard@kernel.org,m:mturquette@baylibre.com,m:sboyd@kernel.org,m:linux@armlinux.org.uk,m:andersson@kernel.org,m:johannes.goede@oss.qualcomm.com,m:konrad.dybcio@oss.qualcomm.com,m:dmitry.baryshkov@oss.qualcomm.com,m:linux-clk@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:jens.glathe@oldschoolsolutions.biz,m:dongxuyang@eswincomputing.com,m:linmin@eswincomputing.com,s:lists@lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	DMARC_NA(0.00)[eswincomputing.com];
-	FROM_NEQ_ENVFROM(0.00)[dongxuyang@eswincomputing.com,linux-arm-msm@vger.kernel.org];
-	FORGED_SENDER(0.00)[dongxuyang@eswincomputing.com,linux-arm-msm@vger.kernel.org];
-	FORWARDED(0.00)[lists@lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-113524-lists,linux-arm-msm=lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:fenglin.wu@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:dmitry.torokhov@gmail.com,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:lee@kernel.org,m:sboyd@kernel.org,m:andersson@kernel.org,m:konradybcio@kernel.org,m:david.collins@oss.qualcomm.com,m:subbaraman.narayanamurthy@oss.qualcomm.com,m:kamal.wadhwa@oss.qualcomm.com,m:kernel@oss.qualcomm.com,m:linux-input@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:dmitrytorokhov@gmail.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,qualcomm.com:dkim,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:from_mime];
+	FORGED_SENDER(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	RCPT_COUNT_TWELVE(0.00)[17];
+	FREEMAIL_TO(0.00)[oss.qualcomm.com,vger.kernel.org,gmail.com,kernel.org];
 	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-113523-lists,linux-arm-msm=lfdr.de];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FORWARDED(0.00)[lists@lfdr.de];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	TO_DN_SOME(0.00)[];
-	ALIAS_RESOLVED(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	R_DKIM_NA(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	FROM_NO_DN(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,vger.kernel.org:from_smtp,oldschoolsolutions.biz:email,eswincomputing.com:email,eswincomputing.com:mid,eswincomputing.com:from_mime]
+	ALIAS_RESOLVED(0.00)[];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 51B5F697E53
+X-Rspamd-Queue-Id: 5AF99697FB2
+
+On 6/17/26 4:31 AM, Fenglin Wu wrote:
+>>> +        ret = ptn_bulk_write(h, HAP_PTN_FIFO_DIN_0_REG, &data[i], 4);
+>>> +        if (ret)
+>>> +            return ret;
+>>> +    }
+>>> +
+>>> +    for (; i < len; i++) {
+>>> +        ret = ptn_write(h, HAP_PTN_FIFO_DIN_1B_REG, (u8)data[i]);
+>>> +        if (ret)
+>>> +            return ret;
+>>> +    }
+>> So if i'm reading this right, the first loop will always write
+>> 4*(len//4) bytes and the second one will be entered at most once,
+>> to write len rem 4 bytes.. should this be an if instead?
+> 
+> I should put a comment for clarification. Here’s some background: FIFO data writing supports both 4-byte bulk writes using registers [HAP_PTN_FIFO_DIN_0_REG ... HAP_PTN_FIFO_DIN_3_REG], and 1-byte writes using the HAP_PTN_FIFO_DIN_1B_REG register. The 4-byte bulk write is more efficient, especially for waveform which has several Kb data, and it helps to reduce software latency when loading effects and reduce the delay in triggering vibration. It also helps prevent the FIFO from running dry during data refill in FIFO-empty interrupts. Typically, we use 4-byte writes for the initial 4-byte aligned data, and 1-byte writes for any trailing remainder.
+> 
+> So it still needs a 'for' loop here since the remainder could be more than 1 byte.
+
+Right, I mentioned len rem 4 but failed to notice it's a
+single-byte write.. anyway, a comment here would be good
 
 > 
-> The existing support for disabling unused clks runs in the late initcall
-> stage, and it has been known for a long time that this is broken since
-> it runs too early in the boot up process. It doesn't work for kernel
-> modules, and it also doesn't work if all of the consumers haven't fully
-> probed yet. Folks have long recommended to boot certain platforms with
-> clk_ignore_unused to work around issues with disabling unused clks.
+>>> +
+>>> +    return 0;
+>>> +}
+>>> +
+>>> +/*
+>>> + * Configure the hardware FIFO memory boundary.
+>>> + * FIFO occupies addresses [0, fifo_len).
+>>> + */
+>>> +static int haptics_configure_fifo_mmap(struct qcom_haptics *h)
+>>> +{
+>>> +    u32 fifo_len, fifo_units;
+>>> +
+>>> +    /* Config all memory space for FIFO usage for now */
+>> What's the not-"for now" endgame for this?
 > 
-> 
-> Let's go ahead and add a framework-level sync_state callback for the clk
-> subsystem. If a driver doesn't have a sync_state callback configured,
-> which is the 99+% use case today, then let's set it up to use the
-> clk_sync_state() introduced in this commit so that no driver changes
-> are needed.
-> 
-> 
-> At the time of this writing, there are currently only 7 clk drivers that
-> implement sync_state, and all are Qualcomm SoCs where they interact with
-> the interconnect framework via icc_sync_state(). A shared helper has
-> been created for this platform that calls clk_sync_state(). It is
-> expected that any new clk drivers that want to implement their own
-> sync_state will also need to call clk_sync_state() at the end of their
-> custom sync_state callback.
-> 
-> 
-> There will be several stages of disabling unused clks:
-> 
-> 
-> - The first phase will be executed at late_initcall and it will only
->   disable unused clks that do not have a struct dev.
-> - The sync_state callback will be invoked for each clk driver once all
->   consumers have probed.
-> 
-> 
-> This is based on previous attempts by Saravana Kannan and Abel Vesa
-> that are linked below.
-> 
-> 
-> This change was tested on a Thinkpad x13s laptop.
-> 
-> 
->     [    0.308051] clk: Disabling unused clocks not associated with a device
->     [    6.541069] qcom_aoss_qmp c300000.power-management: clk: Disabling unused clocks
->     [    6.843310] qcom-qmp-pcie-phy 1c24000.phy: clk: Disabling unused clocks
->     [    7.604556] qcom-qmp-pcie-phy 1c14000.phy: clk: Disabling unused clocks
->     [    8.446161] qcom-qmp-usb-phy 88f1000.phy: clk: Disabling unused clocks
->     [    8.446293] qcom-qmp-usb-phy 88ef000.phy: clk: Disabling unused clocks
->     [    8.546067] qcom-qmp-combo-phy 88eb000.phy: clk: Disabling unused clocks
->     [    8.546203] qcom-qmp-combo-phy 8903000.phy: clk: Disabling unused clocks
->     [    8.546254] qcom-edp-phy aec5a00.phy: clk: Disabling unused clocks
->     [   15.436834] qcom-cpufreq-hw 18591000.cpufreq: clk: Disabling unused clocks
->     [   15.436953] clk-rpmh 18200000.rsc:clock-controller: clk: Disabling unused clocks
->     [   15.723348] qcom-qmp-pcie-phy 1c06000.phy: clk: Disabling unused clocks
->     [   21.063241] q6prm-lpass-clock 3000000.remoteproc:glink-edge:gpr:service@2:clock-controller: clk: Disabling unused clocks
->     [   21.081996] va_macro 3370000.codec: clk: Disabling unused clocks
->     [   21.092740] rx_macro 3200000.rxmacro: clk: Disabling unused clocks
->     [   21.118261] wsa_macro 3240000.codec: clk: Disabling unused clocks
->     [   21.128758] tx_macro 3220000.txmacro: clk: Disabling unused clocks
-> 
-> 
-> Tested-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-> Signed-off-by: Brian Masney <bmasney@redhat.com>
-> Link: https://www.youtube.com/watch?v=tXYzM8yLIQA
-> Link: https://lore.kernel.org/all/20210407034456.516204-1-saravanak@google.com/
-> Link: https://lore.kernel.org/all/20221227204528.1899863-1-abel.vesa@linaro.org/
-> ---
->  drivers/clk/clk.c | 72 ++++++++++++++++++++++++++++++++++++++---------
->  1 file changed, 59 insertions(+), 13 deletions(-)
-> 
-> 
-> diff --git a/drivers/clk/clk.c b/drivers/clk/clk.c
-> index 9cb2b42d1be4..7a15cceec620 100644
-> --- a/drivers/clk/clk.c
-> +++ b/drivers/clk/clk.c
-> @@ -1442,14 +1442,39 @@ static void clk_core_disable_unprepare(struct clk_core *core)
->  	clk_core_unprepare_lock(core);
->  }
->  
-> -static void __init clk_unprepare_unused_subtree(struct clk_core *core)
-> +/*
-> + * Returns true if @core should be skipped during an unused-clock sweep for
-> + * @dev.  When @dev is NULL the sweep is the global late_initcall pass; when
-> + * @dev is non-NULL the sweep is a per-device sync_state pass.
-> + */
-> +static bool clk_core_skip_unused(struct clk_core *core, struct device *dev)
-> +{
-> +	/*
-> +	 * At late_initcall, skip clocks that belong to a device — they will be
-> +	 * handled at sync_state time.
-> +	 */
-> +	if (!dev && core->dev)
-> +		return true;
-> +
-> +	/* When called from sync_state, only process clocks for this device. */
-> +	if (dev && core->dev != dev)
-> +		return true;
-> +
-> +	return false;
-> +}
-> +
-> +static void clk_unprepare_unused_subtree(struct clk_core *core,
-> +					 struct device *dev)
->  {
->  	struct clk_core *child;
->  
->  	lockdep_assert_held(&prepare_lock);
->  
->  	hlist_for_each_entry(child, &core->children, child_node)
-> -		clk_unprepare_unused_subtree(child);
-> +		clk_unprepare_unused_subtree(child, dev);
-> +
-> +	if (clk_core_skip_unused(core, dev))
-> +		return;
->  
->  	if (core->prepare_count)
->  		return;
-> @@ -1467,7 +1492,8 @@ static void __init clk_unprepare_unused_subtree(struct clk_core *core)
->  	}
->  }
->  
-> -static void __init clk_disable_unused_subtree(struct clk_core *core)
-> +static void clk_disable_unused_subtree(struct clk_core *core,
-> +				       struct device *dev)
->  {
->  	struct clk_core *child;
->  	unsigned long flags;
-> @@ -1475,7 +1501,10 @@ static void __init clk_disable_unused_subtree(struct clk_core *core)
->  	lockdep_assert_held(&prepare_lock);
->  
->  	hlist_for_each_entry(child, &core->children, child_node)
-> -		clk_disable_unused_subtree(child);
-> +		clk_disable_unused_subtree(child, dev);
-> +
-> +	if (clk_core_skip_unused(core, dev))
-> +		return;
->  
->  	if (core->flags & CLK_OPS_PARENT_ENABLE)
->  		clk_core_prepare_enable(core->parent);
-> @@ -1508,7 +1537,7 @@ static void __init clk_disable_unused_subtree(struct clk_core *core)
->  		clk_core_disable_unprepare(core->parent);
->  }
->  
-> -static bool clk_ignore_unused __initdata;
-> +static bool clk_ignore_unused;
->  static int __init clk_ignore_unused_setup(char *__unused)
->  {
->  	clk_ignore_unused = true;
-> @@ -1516,7 +1545,7 @@ static int __init clk_ignore_unused_setup(char *__unused)
->  }
->  __setup("clk_ignore_unused", clk_ignore_unused_setup);
->  
-> -static int __init clk_disable_unused(void)
-> +static int __clk_disable_unused(struct device *dev)
->  {
->  	struct clk_core *core;
->  	int ret;
-> @@ -1526,7 +1555,10 @@ static int __init clk_disable_unused(void)
->  		return 0;
->  	}
->  
-> -	pr_info("clk: Disabling unused clocks\n");
-> +	if (dev)
-> +		dev_info(dev, "clk: Disabling unused clocks\n");
-> +	else
-> +		pr_info("clk: Disabling unused clocks not associated with a device\n");
->  
->  	ret = clk_pm_runtime_get_all();
->  	if (ret)
-> @@ -1538,16 +1570,16 @@ static int __init clk_disable_unused(void)
->  	clk_prepare_lock();
->  
->  	hlist_for_each_entry(core, &clk_root_list, child_node)
-> -		clk_disable_unused_subtree(core);
-> +		clk_disable_unused_subtree(core, dev);
->  
->  	hlist_for_each_entry(core, &clk_orphan_list, child_node)
-> -		clk_disable_unused_subtree(core);
-> +		clk_disable_unused_subtree(core, dev);
->  
->  	hlist_for_each_entry(core, &clk_root_list, child_node)
-> -		clk_unprepare_unused_subtree(core);
-> +		clk_unprepare_unused_subtree(core, dev);
->  
->  	hlist_for_each_entry(core, &clk_orphan_list, child_node)
-> -		clk_unprepare_unused_subtree(core);
-> +		clk_unprepare_unused_subtree(core, dev);
->  
->  	clk_prepare_unlock();
->  
-> @@ -1555,11 +1587,16 @@ static int __init clk_disable_unused(void)
->  
->  	return 0;
->  }
-> +
-> +static int __init clk_disable_unused(void)
-> +{
-> +	return __clk_disable_unused(NULL);
-> +}
->  late_initcall_sync(clk_disable_unused);
->  
->  void clk_sync_state(struct device *dev)
->  {
-> -	/* Will fill in */
-> +	__clk_disable_unused(dev);
->  }
->  EXPORT_SYMBOL_GPL(clk_sync_state);
->  
-> @@ -4345,8 +4382,17 @@ __clk_register(struct device *dev, struct device_node *np, struct clk_hw *hw)
->  	core->dev = dev;
->  	clk_pm_runtime_init(core);
->  	core->of_node = np;
-> -	if (dev && dev->driver)
-> +	if (dev && dev->driver) {
->  		core->owner = dev->driver->owner;
-> +
-> +		/*
-> +		 * If a clk provider sets their own sync_state, then it needs to
-> +		 * also call clk_sync_state(). dev_set_drv_sync_state() won't
-> +		 * overwrite the sync_state callback, and this call will fail
-> +		 * with -EBUSY.
-> +		 */
-> +		dev_set_drv_sync_state(dev, clk_sync_state);
-> +	}
->  	core->hw = hw;
->  	core->flags = init->flags;
->  	core->num_parents = init->num_parents;
+> The hardware supports more modes than the two currently supported in the driver. One of these, called 'PAT_MEM' mode, also shares memory space with FIFO mode. However, 'PAT_MEM' requires memory to be pre-reserved and waveform data to be pre-loaded. The entire 8K bytes of memory can be divided into partitions, and it is configurable, with FIFO mode always using the first partition [0, fifo_len], where 'fifo_len' is set via the 'MMAP_FIFO_REG' register. 'PAT_MEM' mode plays waveform using data preloaded in a memory bank defined by the registers 'PATX_MEM_START_ADDR_REG' and 'PATTERN_SPMI_PATX_LEN_REG' (they are not defined in the driver). Since PAT_MEM is mainly intended for hardware-triggered vibrations, such as a signal from a dedicated GPIO triggering a short vibration with a preloaded waveform, and although it also supports software triggers, I haven't found a suitable way to support it well into the driver under input FF framework yet. So, I am currently allocating the
+> entire 8K FIFO memory for FIFO mode only. We can adjust this later if we find a better way to incorporate 'PAT_MEM' mode into the driver.
 
-Hi Brian,
+Sounds like a plan.
 
-Thank you for the patch set. I tested this in my tree on Sifive HiFive 
-Premier P550, and it behaved correctly.
+For the other mode, would that GPIO trigger need any OS intervention?
+Could you speak a bit more about how that works?
 
-Tested-by: Xuyang Dong <dongxuyang@eswincomputing.com> # hfp550
-
-Best regards,
-Xuyang Dong
-
+Konrad
 
