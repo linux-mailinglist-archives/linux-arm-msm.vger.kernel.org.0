@@ -1,104 +1,103 @@
-Return-Path: <linux-arm-msm+bounces-113648-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-113649-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id cP6oN4SgMmrP2wUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-113648-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2026 15:26:28 +0200
+	id hYdyFbygMmra2wUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-113649-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2026 15:27:24 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5402969A152
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2026 15:26:28 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id E5BBD69A17E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2026 15:27:23 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=leVczVH5;
-	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=PNeB5ZvV;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113648-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113648-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=NEXglQqI;
+	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=OWFAxz49;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113649-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c09:e001:a7::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113649-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=reject) header.from=qualcomm.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id AE1EB3028C5F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2026 13:24:25 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 64E2F303EE17
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2026 13:26:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C12C23A382B;
-	Wed, 17 Jun 2026 13:24:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 57E4B40B6F9;
+	Wed, 17 Jun 2026 13:26:25 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 287683F1AC1
-	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2026 13:24:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C6653955FF
+	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2026 13:26:23 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781702663; cv=none; b=T9YOM0Qypzk7v4+uOc+eSUtNI1fj9bqL/y1DeESWENTX5CSnbypRP+Imvd4KUgT+ptyIQgUsLmFUX6OkTF/j0ssbZxcW/wWLjwU0+TeK4MXEtslc5Iuywml3z0JUB0Amv0PzGlAFqgnubI5kVzReztmpXplwHFAa238cyMz0uxE=
+	t=1781702785; cv=none; b=Ei8ddA8rK2uGjcV1FQPMd6VxB9tzTFwAdiJsNWUv0cqwDivyTGkuFXX0VNbsM7/eMcPB2ocF1lZVRTbvVD8qUXnv9SyqkoCrYOzB5xdZU+63mF+wMD5SG+X+MkVUkIOuWq74Ayu8v3gJtUQ9csAtbTzjbgDW2j+ZXUKLE12wApU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781702663; c=relaxed/simple;
-	bh=4Tn2ySMFZIIRwdvHiA0vnWyqQiCS21SDTZkkqZvC6AQ=;
+	s=arc-20240116; t=1781702785; c=relaxed/simple;
+	bh=inIcFos/x0jKX2o4+YkzqWsmsZsjP37LAPvUVyviBhY=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=gA/BRHAi66LYzX2q8ndvGxDT+BizQAznqm2lTtVsLnWJonZIkwjP8Y9tYpuRjEQPYjHVNxa4mXhanKpmkRrwiEmnvIDPIWmSHyNU3tDlJ7KrIfOdQ5iBtawipD8jOVD/DP02/BoB9NMQRUu8bSwtEs+u6woxLlj0BdvBQqVKQdE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=leVczVH5; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=PNeB5ZvV; arc=none smtp.client-ip=205.220.180.131
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65HDHuKs2919597
-	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2026 13:24:21 GMT
+	 In-Reply-To:Content-Type; b=jYv27IcJ+VUcxqgaPNudaXSDstc8y76d8mEHcOggJkCInjqNu4rqY+aGZHOgrDGot/rTQKpKoQHkWp3fJqe2AKAfOFDLIxiFtd0e8GM6pLj4v+RPSkvr2cb97fvdQbzmbFnivvpnGWWaTjIr2XQeUHHb1nGIlr3fi9Z1XrhnDMc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=NEXglQqI; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=OWFAxz49; arc=none smtp.client-ip=205.220.168.131
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65H8Un7s1608102
+	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2026 13:26:23 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	EMBSdbpwBipKU1ms94J9YAyj0MUqDXodwBtSD+c987E=; b=leVczVH5TG07KI/2
-	0Vgh9NulvK2LxqW/NP/GjvlduaZN1kqK7Q6X9JXKtHU2GUuVAnpCyULEL71vjSfs
-	pgGRwxBXuzgXhiMmCK7qXOsoy1wGs1Z/r9hWpA6MWRq2IfQYRsNmHB+c2NIFv5/D
-	2tEaggBcTSqMgueOCY4dXmgbvX2TaZWw5ar+EaUF6T5zFMzh4xFSuDpAvv5vcemf
-	36VhT5Qvhmic4LmUW+JZbr8ODHJy0t6a8/08c1YaxD2TK0pOsaAc/fA77p4Cet5n
-	ymnVujbnhBzwBiIzGiy87i1nD2BVDHYumphzXbLp5Td8M1/6yyzVPuMTcJ6ugTYg
-	skZMEg==
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com [209.85.216.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4euef2bcef-1
+	d9L8d92QIfTFBohwf+5AnyF8y9DpzmN6NgGQoafr83o=; b=NEXglQqIlMtqgrma
+	PHQUKfyUIotdvE8l3OThso2pEag+QOXl1vPMOkYhE+1+q6EJlOP7Zw/LeHo9+6cN
+	CdPkgLfjmpKYpW3BgXx/c55Xa+qv5gRrY1ozJfILgs9XisOenPf2WWvBMqcwPuyg
+	4PYPUeVkE3ej8fSwEPXrQ7MuUnnOPO2y0yTqiX5gfSh1hdSsLGDkQyhn4IqPfv7S
+	M1s/nBUfY9CwCCZJxwwbDUnyEn9MMRbU/laP8+QVWTL911PQyKKBtVkXDrCPjFSV
+	UC6NanZGe0D78dRVvIuRjCTDdI/7yBCZjwbC/WxDX11FrmfH6tiTfyR33fZwoxee
+	RqLnnA==
+Received: from mail-ua1-f71.google.com (mail-ua1-f71.google.com [209.85.222.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4euef239ce-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2026 13:24:20 +0000 (GMT)
-Received: by mail-pj1-f72.google.com with SMTP id 98e67ed59e1d1-37c5dfb67b7so1998847a91.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2026 06:24:20 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2026 13:26:22 +0000 (GMT)
+Received: by mail-ua1-f71.google.com with SMTP id a1e0cc1a2514c-966d2895042so97924241.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2026 06:26:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1781702660; x=1782307460; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1781702782; x=1782307582; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=EMBSdbpwBipKU1ms94J9YAyj0MUqDXodwBtSD+c987E=;
-        b=PNeB5ZvVe2o7ZYT/3AUVNdMtHeWMXQZnxfj93Ir8GTIIDDRmDTfAmd4lJ1StrrI9lK
-         SWYjH2HiwvHDb7zfm+lQmGQWfAgB2VAUEwpD7bKwK6p0vA8BfjRFInHqvP1XX1SIDlww
-         164vJJMoVC9RSRHcueayZkjlHRgxOy9m9nCTTnl3a6HAI1EeEq77PeEzThhZyalJfxZJ
-         q2Tdz4/yZ5opYNFBHVrIjRZqsIVvnjLweA9gEWwscl6TEzK18ZM2U2CUN19JI6jnZZRe
-         V+mc7fesPF5IvaqqHlAP6o9u6tiNaank19pPKoQz9ch7Hz+7o9ZLpTggJiFloq1uHa9W
-         +AWw==
+        bh=d9L8d92QIfTFBohwf+5AnyF8y9DpzmN6NgGQoafr83o=;
+        b=OWFAxz49qZMMi+904yowz1cbhbf2d/Mw5N3cDN383lvDqgGDMB5rvjRgKuo1NuC6bs
+         BkbucN00F7mh7Z4c8p0g7uWS6CZFzYhesbFDghnLM14FmsXgIgFI8mRccLAXVLhYfg8n
+         qRd5/qTeHJbSMjb0e1cONSe5jdBJjGlqZAkxRNU9SQ5lkmHec+g6JyvH5BhzVM1w9zFN
+         Jc2a4UTPvXaYWaffH84I1kwOV7CzTeUc/EaM20uSdQBSWiZzsPfrCtHvMn4rCs8+s0a5
+         Xlx//Et8G/w58CMfaFI6KxngpSgbE+nSdlARoo6d6XXuRIX0GUYBk2quOsAoIhljHvhn
+         rZ2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781702660; x=1782307460;
+        d=1e100.net; s=20251104; t=1781702782; x=1782307582;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=EMBSdbpwBipKU1ms94J9YAyj0MUqDXodwBtSD+c987E=;
-        b=UbmFCScM7GS9jMfR4h9crwlHbVRto4H/Xalux9FvyGmvMOTGLrt+MkoEwJpj9x66Do
-         2g6FbgZ3e68ZbB8WrkfLXSm31rxdBEZKT94jo3fPJ+VNJyydKLtTrbYwCvqmom8n1gJ8
-         4vw2P0g91Z4RGJmp+yIuz4WbYGYEH4uH44cxH/j04YflCBjpZks1BCffSrkBdSFoG7Bx
-         AhOmPExA3IjTXWiNy8hCB4UvLKidR3mNxp+3BtnaSVl+DUdqvwWCxJqiFZAogyZi7gV9
-         z5h+0nZKDJ4ftiR746HD8q9I22ELSkHQ/Kx9soqHFpZBVghyOSFVhM9cj1bxqqmJBRi+
-         8XeQ==
-X-Gm-Message-State: AOJu0Yz3erS4LrII1ilDJPKdGUvCXHxwF+uPC2dxUuelZuLEyZG5z5h4
-	8XgOCos1aWOpcfZtlb4tVljitboRy8fiu6Rv/i2WyYr2R0Oc8J7sNjV++cgUU9xOQy69+tybf6P
-	E6JVD27eSi1uJP6BITT8jEpdRZSUBNtLQ8VIPHAAtEfKky7Y05jWhRY9SFvdD/XLmSPF5
-X-Gm-Gg: AfdE7ckFhDzueN7sWj4yXtaq1Gke/tXO3H5kkRMPE8pYUrqqj3+KhjHyDCxHeqv8QIX
-	2TWo7sH5lj1nLaxxuWOwPoCB8Jqvbbp3NL4SLwz0KSk46oFqDUogn/oGKVqsjDQFGIoBqe5Grvi
-	ctG1Gku6iOuo6yfCiHgNI4YpNyG8fAG+ZIhNmFioKiTkckUiXzXXqj8kqSnWY1wPCjRXigvIAbU
-	pg51I5Z8zlI4vK0A9ZEz93KV4uXqjc/+Pqt2/X2UNn3Al0w9ASnlDLpNz5MhTzGzOlxXXh2xsBN
-	HA+Qtk2XMs5ylRLBEDYXPm2reU+Bq5y9DwfhIoTJoJ7f/2qSs6LlW2a5cQPkUL/i1mEt1QVDG6y
-	r+bf2pEVwBtvPrL17aC9HKiEe76sg3wVMGYgr9cSdPRx+O6P9jMPS6mUkikzE5jCI08T78i9ep7
-	5XUEI=
-X-Received: by 2002:a17:90b:2e0b:b0:368:b724:6d53 with SMTP id 98e67ed59e1d1-37c9330947cmr3899158a91.4.1781702659898;
-        Wed, 17 Jun 2026 06:24:19 -0700 (PDT)
-X-Received: by 2002:a17:90b:2e0b:b0:368:b724:6d53 with SMTP id 98e67ed59e1d1-37c9330947cmr3899131a91.4.1781702659329;
-        Wed, 17 Jun 2026 06:24:19 -0700 (PDT)
-Received: from [192.168.1.112] (ptr-48-167.coastalbroadband.in. [163.223.48.167])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-37c930d7f81sm3459961a91.6.2026.06.17.06.24.14
+        bh=d9L8d92QIfTFBohwf+5AnyF8y9DpzmN6NgGQoafr83o=;
+        b=bNSBYow26ElKWl+E0nMDSlwqfHDiNSeHE1w+K55eZc7LeUwoMo62D0/IVAjTC2pmM7
+         2OZtJGVFHhEzajT2g28dCKORGhoYed8xsOa3pUoTbwGVszCXjobTrJiLLH+nmoa7CZma
+         uREkOUbZ14/EZSDFNtDIxYQs0RpxTOR2UMIEW1GsTbFVNZbr3ZSdJlk2vW2MYqanmz35
+         RXHw17uxRIaVEgYoG5ONaztS62rXmIYndYzZj+nuHdmaqm/hJ986qY58VBX4xVQvwDsd
+         2pttVjgpn0P+K7A8CrYUTmbeqgQKBCrx6uZFSiLz/v4MXx/u09IJiNZsdcd6yJbhjKZv
+         fqyw==
+X-Gm-Message-State: AOJu0YwSnRuTm+/euczaU/tX8nq1hrGPTszPxZNaY4DGw1+/xlqoXZHs
+	kJjUztXY7zJtRIE1ORoYNM7G8Nh5e5BJAHqR5PyOudP4skqNvOMrl+iFabDFOMIzrf20SWmUmGo
+	F+aSxVqvv8uJA+5/jGlpqMZikkNw6uaU3nYARKoeVXI1CESTzDMlV38ZYfBK9ss/zQ304
+X-Gm-Gg: AfdE7cmDbchGXYDc71dE8ngoHeiKg3NofkXmROFpip91l7Y1r0LdvacUO8aMIiH83vI
+	mmLx3n1/ow1Dn2VBjImOUFKHd/fwLYDYALz9PA+9U2LUY7iP1Y7y1o+f5+XvTCvUSxMjvJ1TPcT
+	rR3Eeg86US1h5ffwNUZjSZqh2xY8elwKlPeXVLj2uZ0hJR+dLdMpAOtWG/49+y8tBhdpBMFbU+E
+	39qXUBlPqAipZ/3yjWFdD1d0wPTCJUWH+i2KAOQ2bNEhbnPBaxrE8GV/OE1+Q1NGGvh5CWC9PyB
+	ijb0+PQcJR5BuO0UR0z38mwOOlAQIQNWsIk7iq3RB/vIhNrFyscWmVcj+rVM0GrDDxOX/3cKkwe
+	9to1CZ+pqocn8Mf3CanX3I5IgVqRlvKcC6gQ=
+X-Received: by 2002:a05:6102:3f0c:b0:6d1:8f7:18a5 with SMTP id ada2fe7eead31-7245d1f4fa6mr841365137.1.1781702781720;
+        Wed, 17 Jun 2026 06:26:21 -0700 (PDT)
+X-Received: by 2002:a05:6102:3f0c:b0:6d1:8f7:18a5 with SMTP id ada2fe7eead31-7245d1f4fa6mr841342137.1.1781702781292;
+        Wed, 17 Jun 2026 06:26:21 -0700 (PDT)
+Received: from [192.168.120.170] ([178.235.128.140])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-bfdb7b6d934sm799439166b.40.2026.06.17.06.26.18
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 17 Jun 2026 06:24:18 -0700 (PDT)
-Message-ID: <c9687d6e-652f-4d82-aea8-c156a8b613eb@oss.qualcomm.com>
-Date: Wed, 17 Jun 2026 18:54:11 +0530
+        Wed, 17 Jun 2026 06:26:20 -0700 (PDT)
+Message-ID: <8754de51-bfbe-42f2-84bf-36cc000afa3f@oss.qualcomm.com>
+Date: Wed, 17 Jun 2026 15:26:18 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -106,448 +105,108 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/6] ASoC: qcom: qdsp6: add topology-driven Audio IF
- support
-To: Srinivas Kandagatla <srini@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
-        Rob Herring <robh@kernel.org>,
+Subject: Re: [PATCH v3 2/8] irqchip/qcom-pdc: Move all statics to struct
+ pdc_desc
+To: Maulik Shah <maulik.shah@oss.qualcomm.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
         Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
-        Takashi Iwai <tiwai@suse.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20260610154517.134570-1-prasad.kumpatla@oss.qualcomm.com>
- <20260610154517.134570-2-prasad.kumpatla@oss.qualcomm.com>
- <90202cfd-19ad-4ae9-9f0d-cde014d8a663@kernel.org>
+        Conor Dooley
+ <conor+dt@kernel.org>, Thomas Gleixner <tglx@kernel.org>,
+        Linus Walleij <linusw@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-gpio@vger.kernel.org,
+        Sneh Mankad <sneh.mankad@oss.qualcomm.com>
+References: <20260616-hamoa_pdc_v3-v3-0-4d8e1504ea75@oss.qualcomm.com>
+ <20260616-hamoa_pdc_v3-v3-2-4d8e1504ea75@oss.qualcomm.com>
 Content-Language: en-US
-From: Prasad Kumpatla <prasad.kumpatla@oss.qualcomm.com>
-In-Reply-To: <90202cfd-19ad-4ae9-9f0d-cde014d8a663@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20260616-hamoa_pdc_v3-v3-2-4d8e1504ea75@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=F8hnsKhN c=1 sm=1 tr=0 ts=6a32a004 cx=c_pps
- a=RP+M6JBNLl+fLTcSJhASfg==:117 a=D3hM7nRbATf/MWm6WF+yZA==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE3MDEyOCBTYWx0ZWRfXzjmqjwbtPGDp
+ Xbqc1mNg1Z+j7Z/qF17rVFxnc9naNxhqZQSWxTEKvleql8YGZkIm1AJg0b85G2+G8H02kB/vMy5
+ Bgg1/kyheXhYAw5Jca/6J2qgznmh7dI=
+X-Proofpoint-ORIG-GUID: LEMcFVSIp_L0jS6-6JfO639qb_5-er4f
+X-Proofpoint-GUID: LEMcFVSIp_L0jS6-6JfO639qb_5-er4f
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE3MDEyOCBTYWx0ZWRfXxsOSPRI3AUgm
+ Qdu3CXfUoB2Wy7+Qes6ACckoI8xmgpgN8a2vMX8AEkjxXQ33w6ubSESjW1FFsacfXd+uJlqIxSO
+ W+I1KMYsYG9itDqyuAsajHhJpnrRmz11slE+5F6pyELHo5lSDFi07ppOuCV45g0CEIWGJicjnbn
+ KpKhjn/LwXXLfYAN1dbxTZU63uUybEK/rKadcs8hRZWsqFogB87H5wSGBpUAA5qr/sk3QfPP6Ad
+ CevThJe0iPz/Wq7jBPCXgmwxKRwNd6vuRDGTXjNtT1DhoVk+TqYw9zamVA+5xaVLB9F2Rag1C05
+ Grr1BrWQliiK6pEivdZoI12i2XkvkYO85UORpGlCeWdRzpEl2G2Uh5mZq/EtCVg/ZkP0YoYUQVP
+ Zo6H48PgCo+yrC3hYNvE/jkiqGgPU6uyN7gtdvtLOS9v0kTXDSEc8tHXekH6zMdAKorC9iD3KJu
+ QUFOefW3J8Kdx4z5cYA==
+X-Authority-Analysis: v=2.4 cv=acpRWxot c=1 sm=1 tr=0 ts=6a32a07e cx=c_pps
+ a=KB4UBwrhAZV1kjiGHFQexw==:117 a=PRfkaYvzSr8QmIIGAkY2Sg==:17
  a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=NEAV23lmAAAA:8 a=EUspDBNiAAAA:8 a=aOzt0AmiSN3BHcephwwA:9 a=QEXdDO2ut3YA:10
- a=iS9zxrgQBfv6-_F4QbHw:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE3MDEyOCBTYWx0ZWRfX6Ht7a0qaGSdN
- 8M8V03XBTHJ88H5IAj3pQc28rNjmLFEr6MHzffQ4/wPOoXCwLFxGMH+++oLogQ7MQuIhztDQ6Oa
- cFSXuI/vEQ3/ypFZe/ZfSs3PuKsLRvk=
-X-Proofpoint-GUID: 16Stnay6Z60fDRP3JoSjEITmw2BHOdGZ
-X-Proofpoint-ORIG-GUID: 16Stnay6Z60fDRP3JoSjEITmw2BHOdGZ
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE3MDEyOCBTYWx0ZWRfX4QCQ5nACo+Tm
- pTRk+pcpBiz1u3XIg6hcTQfqdfZw+4jtSWqFZA8hPiJqljuL/v3U49W1WmkyHeNcaUU7dmDiJR9
- W+w7zeugmFspjpRzEGuQui4p2dVWdqBWvHEBoXXlnOWtKwB7WvVZ5rsCQtenY4PT3Y8nrPd5rZu
- FTXxc8OX/FuJXoA1JUuMQeFcsJPXQw+pFjlmnNC1zBd0m1mDrp1nwCyREr4OTTvbgwK14bpZziH
- V0xlCyw2a3kHGWrCnlpg1CsBpMNSemQ09+8pKkII1ZyNOF4hp+1D20C9huNZWgjLFaMNzUDuzCL
- 1068LM+rkK+zqy7cH63q6eXgXQ8mlk5FzMWcOXXO3i271FAKVESOWu37JRZWq6ltZsS30qs+xl7
- t61PCQdEvPgyU+qbFp5t8PpjKs0lLE2Ef4N/+PGa/8EaNgzHjhUpx1d6xx1T948mq3Y4/Iqul4E
- YQ8rajluZb0E4RHJGXA==
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
+ a=EUspDBNiAAAA:8 a=YnNygKpUfyAIgCZGubgA:9 a=QEXdDO2ut3YA:10
+ a=o1xkdb1NAhiiM49bd1HK:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-17_01,2026-06-16_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 bulkscore=0 malwarescore=0 priorityscore=1501 suspectscore=0
- lowpriorityscore=0 phishscore=0 adultscore=0 clxscore=1015 spamscore=0
+ phishscore=0 spamscore=0 suspectscore=0 lowpriorityscore=0 adultscore=0
+ clxscore=1015 bulkscore=0 malwarescore=0 priorityscore=1501 impostorscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606170128
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-113649-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[13];
 	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-113648-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[12];
 	FORWARDED(0.00)[lists@lfdr.de];
-	FREEMAIL_TO(0.00)[kernel.org,gmail.com,perex.cz,suse.com];
-	FORGED_RECIPIENTS(0.00)[m:srini@kernel.org,m:lgirdwood@gmail.com,m:broonie@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:perex@perex.cz,m:tiwai@suse.com,m:linux-arm-msm@vger.kernel.org,m:linux-sound@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
-	FORGED_SENDER(0.00)[prasad.kumpatla@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS(0.00)[m:maulik.shah@oss.qualcomm.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:tglx@kernel.org,m:linusw@kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-gpio@vger.kernel.org,m:sneh.mankad@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:from_mime];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	FORGED_SENDER(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:from_mime,sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,vger.kernel.org:from_smtp,qualcomm.com:dkim,qualcomm.com:email];
+	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[prasad.kumpatla@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
 	ALIAS_RESOLVED(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	TO_DN_SOME(0.00)[];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 5402969A152
+X-Rspamd-Queue-Id: E5BBD69A17E
 
+On 6/16/26 11:25 AM, Maulik Shah wrote:
+> There are multiple statics used. Move all to struct pdc_desc to better
+> align with versioning support. Document them.
+> 
+> No functional impact.
+> 
+> Signed-off-by: Maulik Shah <maulik.shah@oss.qualcomm.com>
+> ---
 
-On 6/15/2026 2:58 PM, Srinivas Kandagatla wrote:
->
-> On 6/10/26 4:45 PM, Prasad Kumpatla wrote:
->> Add topology parsing and media-format programming for Audio IF
->> source and sink modules.
->>
->> Add the Audio IF module IDs, the required topology tokens, and a
->> dedicated topology loader that stores the parsed interface
->> configuration in the AudioReach module state. Also add the Audio IF
->> media-format path that sends the interface configuration, hardware
->> endpoint media format, and frame-duration parameters for Audio IF
->> modules.
->>
->> This keeps the serial-interface configuration topology-driven while
->> still allowing the machine driver to provide runtime slot and media
->> format settings. The same Audio IF path can then be reused for TDM,
->> PCM, and I2S style backends.
->>
->> The new UAPI tokens (AR_TKN_U32_MODULE_SYNC_SRC=262 through
->> AR_TKN_U32_MODULE_INV_EXT_BIT_CLK=276) are added.
->>
->> MODULE_ID_AUDIO_IF_SINK (0x0700117C) and MODULE_ID_AUDIO_IF_SOURCE
->> (0x0700117D) are introduced in this patch.
->>
-> Which platform is this tested on, also please send a PR to
-> github.com/linux-msm/audioreach-topology to add thse new tokens.
+[...]
 
-Hi Srini,
+>  static void pdc_enable_intr(struct irq_data *d, bool on)
+>  {
+> -	unsigned long flags;
+> +	guard(raw_spinlock)(&pdc->lock);
 
-Thanks for reviewing and comments.
+tglx suggested to use guard(irq) around "the other callsite"..
+which I'm not sure where it'd be - maybe around __pdc_enable_intr()
+in pdc_setup_pin_mapping()?
 
-this module is validated on Hawi and Shikra. Sure will raise the PR with 
-these tokens usage.
+Otherwise this patch looks good to me
 
->
->> Signed-off-by: Prasad Kumpatla <prasad.kumpatla@oss.qualcomm.com>
->> ---
->>   include/uapi/sound/snd_ar_tokens.h |  58 ++++++++++++++++
->>   sound/soc/qcom/qdsp6/audioreach.c  |  97 ++++++++++++++++++++++++++
->>   sound/soc/qcom/qdsp6/audioreach.h  |  62 +++++++++++++++++
->>   sound/soc/qcom/qdsp6/topology.c    | 108 +++++++++++++++++++++++++++++
->>   4 files changed, 325 insertions(+)
->>
->> diff --git a/include/uapi/sound/snd_ar_tokens.h b/include/uapi/sound/snd_ar_tokens.h
->> index 6b8102eaa..355a1e629 100644
->> --- a/include/uapi/sound/snd_ar_tokens.h
->> +++ b/include/uapi/sound/snd_ar_tokens.h
->> @@ -168,6 +168,48 @@ enum ar_event_types {
->>    *						LOG_WAIT = 0,
->>    *						LOG_IMMEDIATELY = 1
->>    *
->> + * %AR_TKN_U32_MODULE_SYNC_SRC:			Frame sync source
->> + *						0 = external, 1 = internal
->> + *
->> + * %AR_TKN_U32_MODULE_CTRL_DATA_OUT_ENABLE:	Enable data-out tri-state control
->> + *						0 = disable, 1 = enable
->> + *
->> + * %AR_TKN_U32_MODULE_SLOT_MASK:			Active TDM slot bitmask
->> + *
->> + * %AR_TKN_U32_MODULE_NSLOTS_PER_FRAME:		Number of slots per TDM frame
->> + *
->> + * %AR_TKN_U32_MODULE_SLOT_WIDTH:			Slot width in bits (16 or 32)
->> + *
->> + * %AR_TKN_U32_MODULE_SYNC_MODE:			Frame sync mode
->> + *						0 = short pulse, 1 = long pulse
-> We have 3 possible values, please correct this, also you could add
-> defines for these values.
-Ack, will update
->> + *
->> + * %AR_TKN_U32_MODULE_CTRL_INVERT_SYNC_PULSE:	Invert frame sync pulse polarity
->> + *						0 = normal, 1 = inverted
->> + *
->> + * %AR_TKN_U32_MODULE_CTRL_SYNC_DATA_DELAY:	Data delay relative to frame sync
->> + *						0 = no delay, 1 = one cycle delay
-> Exactly same here, we have 2 cyle delay too.
-Ack, will update
->> + *
->> + * %AR_TKN_U32_MODULE_INTF_MODE:			Audio IF interface mode
->> + *						AUDIO_IF_INTF_MODE_TDM = 0,
->> + *						AUDIO_IF_INTF_MODE_PCM = 1,
->> + *						AUDIO_IF_INTF_MODE_I2S = 2
-> Same here, defines for these.
-Ack, will update
->
->> + *
->> + * %AR_TKN_U32_MODULE_QAIF_TYPE:			QAIF hardware port type index
->> + *
->> + * %AR_TKN_U32_MODULE_ACTIVE_LANE_MASK:		Active lane bitmask for multi-lane
->> + *
->> + * %AR_TKN_U32_MODULE_FRAME_SYNC_RATE:		Frame sync rate in Hz
->> + *
->> + * %AR_TKN_U32_MODULE_BIT_CLK_TYPE:			Bit clock type
->> + *						0 = internal, 1 = external,
->> + *						2 = skip (bypass bit clock enable)
->> + *
->> + * %AR_TKN_U32_MODULE_INV_INT_BIT_CLK:		Invert internal bit clock
->> + *						0 = normal, 1 = inverted
->> + *
->> + * %AR_TKN_U32_MODULE_INV_EXT_BIT_CLK:		Invert external bit clock
->> + *						0 = normal, 1 = inverted
->> + *
->>    * %AR_TKN_DAI_INDEX:				dai index
->>    *
->>    */
->> @@ -240,6 +282,22 @@ enum ar_event_types {
->>   #define AR_TKN_U32_MODULE_LOG_TAP_POINT_ID	260
->>   #define AR_TKN_U32_MODULE_LOG_MODE		261
->>   
->> +#define AR_TKN_U32_MODULE_SYNC_SRC		262
->> +#define AR_TKN_U32_MODULE_CTRL_DATA_OUT_ENABLE	263
->> +#define AR_TKN_U32_MODULE_SLOT_MASK		264
->> +#define AR_TKN_U32_MODULE_NSLOTS_PER_FRAME	265
->> +#define AR_TKN_U32_MODULE_SLOT_WIDTH		266
->> +#define AR_TKN_U32_MODULE_SYNC_MODE		267
->> +#define AR_TKN_U32_MODULE_CTRL_INVERT_SYNC_PULSE	268
->> +#define AR_TKN_U32_MODULE_CTRL_SYNC_DATA_DELAY	269
->> +#define AR_TKN_U32_MODULE_INTF_MODE		270
->> +#define AR_TKN_U32_MODULE_QAIF_TYPE		271
->> +#define AR_TKN_U32_MODULE_ACTIVE_LANE_MASK	272
->> +#define AR_TKN_U32_MODULE_FRAME_SYNC_RATE	273
->> +#define AR_TKN_U32_MODULE_BIT_CLK_TYPE		274
->> +#define AR_TKN_U32_MODULE_INV_INT_BIT_CLK	275
->> +#define AR_TKN_U32_MODULE_INV_EXT_BIT_CLK	276
->> +
-> Here you prefix the tokens with U32, however in dirver this values are
-> validated against U8 and U16, So please fix the prefixes to reflect the
-> range.
->
->
-> ...
-Yes that's correct, will update them properly.
->
->>   
->>   	default:
->>   		rc = 0;
->> diff --git a/sound/soc/qcom/qdsp6/audioreach.h b/sound/soc/qcom/qdsp6/audioreach.h
->> index 62a2fd79b..1dc29ddfd 100644
->> --- a/sound/soc/qcom/qdsp6/audioreach.h
->> +++ b/sound/soc/qcom/qdsp6/audioreach.h
->> @@ -22,6 +22,8 @@ struct q6apm_graph;
->>   #define MODULE_ID_PLACEHOLDER_DECODER	0x07001009
->>   #define MODULE_ID_I2S_SINK		0x0700100A
->>   #define MODULE_ID_I2S_SOURCE		0x0700100B
->> +#define MODULE_ID_AUDIO_IF_SINK		0x0700117C
->> +#define MODULE_ID_AUDIO_IF_SOURCE	0x0700117D
-> Please place it in the assending order.
-Ack, will update.
->
->>   #define MODULE_ID_SAL			0x07001010
->>   #define MODULE_ID_MFC			0x07001015
->>   #define MODULE_ID_DATA_LOGGING		0x0700101A
->> @@ -544,6 +546,41 @@ struct param_id_i2s_intf_cfg {
->>   #define PORT_ID_I2S_OUPUT		1
->>   #define I2S_STACK_SIZE			2048
->>   
->> +#define PARAM_ID_AUDIO_IF_INTF_CFG	0x08001B11
->> +
->> +#define AUDIO_IF_INTF_MODE_TDM		0x0
->> +#define AUDIO_IF_INTF_MODE_PCM		0x1
->> +#define AUDIO_IF_INTF_MODE_I2S		0x2
->> +
->> +struct param_id_audio_if_intf_cfg {
-> I know that we have not added documentation for all the structures, but
-> Am in process of adding them. Can you add kernel doc to these structs.
-Ack, will update
->> +	uint16_t qaif_type;
->> +	uint16_t intf_idx;
->> +	uint16_t intf_mode;
->> +	uint16_t ctrl_data_out_enable;
->> +	uint32_t active_slot_mask;
->> +	uint16_t nslots_per_frame;
->> +	uint16_t slot_width;
->> +	uint32_t active_lane_mask;
->> +	uint32_t frame_sync_rate;
->> +	uint16_t frame_sync_src;
->> +	uint16_t frame_sync_mode;
->> +	uint16_t invert_frame_sync_pulse;
->> +	uint16_t frame_sync_data_delay;
->> +	uint16_t bit_clk_type;
->> +	uint8_t inv_int_bit_clk;
->> +	uint8_t inv_ext_bit_clk;
->> +} __packed;
->> +
->> +#define PARAM_ID_HW_EP_FRAME_DURATION		0x08001B2F
->> +#define AUDIO_IF_FRAME_DURATION_US		1000
-> Why is this hardcoded?
-
-As this module End point operate with a 1 ms processing interval.
-
->> +
->> +struct param_id_hw_ep_frame_duration {
->> +	uint32_t frame_duration_in_us;
->> +	uint32_t allow_frame_duration_normalization;
->> +	uint32_t min_normalized_frame_dur_us;
->> +	uint32_t max_normalized_frame_dur_us;
->> +} __packed;
->> +
->>   #define PARAM_ID_DISPLAY_PORT_INTF_CFG		0x08001154
->>   
->>   struct param_id_display_port_intf_cfg {
->> @@ -877,6 +914,28 @@ struct audioreach_module {
->>   	uint32_t data_format;
->>   	uint32_t hw_interface_type;
->>   
->> +	/* Audio IF module (TDM/PCM/I2S) */
->> +	/*
->> +	 * uint32_t fields first to minimise intra-block padding;
-> Why do we need this comments does not add a real value here?
-No much, will remove them.
->> +	 * 2 bytes of trailing padding remain after inv_ext_bit_clk
->> +	 * before the next uint32_t field (interleave_type).
->> +	 */
->> +	uint32_t slot_mask;
->> +	uint32_t active_lane_mask;
->> +	uint32_t frame_sync_rate;
->> +	uint16_t qaif_type;
->> +	uint16_t sync_src;
->> +	uint16_t ctrl_data_out_enable;
->> +	uint16_t nslots_per_frame;
->> +	uint16_t slot_width;
->> +	uint16_t intf_mode;
->> +	uint16_t sync_mode;
->> +	uint16_t ctrl_invert_sync_pulse;
->> +	uint16_t ctrl_sync_data_delay;
->> +	uint16_t bit_clk_type;
->> +	uint8_t inv_int_bit_clk;
->> +	uint8_t inv_ext_bit_clk;
->> +
->>   	/* PCM module specific */
->>   	uint32_t interleave_type;
->>   
->> @@ -907,6 +966,9 @@ struct audioreach_module_config {
->>   	u32	channel_allocation;
->>   	u32	sd_line_mask;
->>   	int	fmt;
->> +	u32	slot_mask;
->> +	u16	nslots_per_frame;
->> +	u16	slot_width;
->>   	struct snd_codec codec;
->>   	u8 channel_map[AR_PCM_MAX_NUM_CHANNEL];
->>   };
->> diff --git a/sound/soc/qcom/qdsp6/topology.c b/sound/soc/qcom/qdsp6/topology.c
->> index 1f69fba6d..2ae7ac3d2 100644
->> --- a/sound/soc/qcom/qdsp6/topology.c
->> +++ b/sound/soc/qcom/qdsp6/topology.c
->> @@ -753,6 +753,108 @@ static int audioreach_widget_i2s_module_load(struct audioreach_module *mod,
->>   	return 0;
->>   }
->>   
->> +static int audioreach_widget_audio_if_module_load(struct audioreach_module *mod,
->> +						  const struct snd_soc_tplg_vendor_array *mod_array)
->> +{
->> +	const struct snd_soc_tplg_vendor_value_elem *mod_elem;
->> +	int tkn_count = 0;
->> +	u32 val;
->> +
->> +	mod_elem = mod_array->value;
->> +
->> +	while (tkn_count < le32_to_cpu(mod_array->num_elems)) {
->> +		val = le32_to_cpu(mod_elem->value);
->> +		switch (le32_to_cpu(mod_elem->token)) {
->> +		case AR_TKN_U32_MODULE_HW_IF_IDX:
->> +			if (val > U16_MAX)
->> +				return -EINVAL;
-> Plese fix such instances as suggested at the top.
-Ack, will update
->
->> +			mod->hw_interface_idx = val;
->> +			break;
->> +		case AR_TKN_U32_MODULE_FMT_DATA:
->> +			mod->data_format = val;
->> +			break;
->> +		case AR_TKN_U32_MODULE_HW_IF_TYPE:
->> +			mod->hw_interface_type = val;
-> where are we using this?
-
-Its not being used any where, i will remove this.
-
-Thanks,
-Prasad
-
->
->> +			break;
->> +		case AR_TKN_U32_MODULE_SYNC_SRC:
->> +			if (val > U16_MAX)
->> +				return -EINVAL;
->> +			mod->sync_src = (u16)val;
->> +			break;
->> +		case AR_TKN_U32_MODULE_CTRL_DATA_OUT_ENABLE:
->> +			if (val > U16_MAX)
->> +				return -EINVAL;
->> +			mod->ctrl_data_out_enable = (u16)val;
->> +			break;
->> +		case AR_TKN_U32_MODULE_SLOT_MASK:
->> +			mod->slot_mask = val;
->> +			break;
->> +		case AR_TKN_U32_MODULE_NSLOTS_PER_FRAME:
->> +			if (val > U16_MAX)
->> +				return -EINVAL;
->> +			mod->nslots_per_frame = (u16)val;
->> +			break;
->> +		case AR_TKN_U32_MODULE_SLOT_WIDTH:
->> +			if (val > U16_MAX)
->> +				return -EINVAL;
->> +			mod->slot_width = (u16)val;
->> +			break;
->> +		case AR_TKN_U32_MODULE_INTF_MODE:
->> +			if (val > U16_MAX)
->> +				return -EINVAL;
->> +			mod->intf_mode = (u16)val;
->> +			break;
->> +		case AR_TKN_U32_MODULE_SYNC_MODE:
->> +			if (val > U16_MAX)
->> +				return -EINVAL;
->> +			mod->sync_mode = (u16)val;
->> +			break;
->> +		case AR_TKN_U32_MODULE_CTRL_INVERT_SYNC_PULSE:
->> +			if (val > U16_MAX)
->> +				return -EINVAL;
->> +			mod->ctrl_invert_sync_pulse = (u16)val;
->> +			break;
->> +		case AR_TKN_U32_MODULE_CTRL_SYNC_DATA_DELAY:
->> +			if (val > U16_MAX)
->> +				return -EINVAL;
->> +			mod->ctrl_sync_data_delay = (u16)val;
->> +			break;
->> +		case AR_TKN_U32_MODULE_QAIF_TYPE:
->> +			if (val > U16_MAX)
->> +				return -EINVAL;
->> +			mod->qaif_type = (u16)val;
->> +			break;
->> +		case AR_TKN_U32_MODULE_ACTIVE_LANE_MASK:
->> +			mod->active_lane_mask = val;
->> +			break;
->> +		case AR_TKN_U32_MODULE_FRAME_SYNC_RATE:
->> +			mod->frame_sync_rate = val;
->> +			break;
->> +		case AR_TKN_U32_MODULE_BIT_CLK_TYPE:
->> +			if (val > U16_MAX)
->> +				return -EINVAL;
->> +			mod->bit_clk_type = (u16)val;
->> +			break;
->> +		case AR_TKN_U32_MODULE_INV_INT_BIT_CLK:
->> +			if (val > U8_MAX)
->> +				return -EINVAL;
->> +			mod->inv_int_bit_clk = (u8)val;
->> +			break;
->> +		case AR_TKN_U32_MODULE_INV_EXT_BIT_CLK:
->> +			if (val > U8_MAX)
->> +				return -EINVAL;
->> +			mod->inv_ext_bit_clk = (u8)val;
->> +			break;
->> +		default:
->> +			break;
->> +		}
->> +		tkn_count++;
->> +		mod_elem++;
->> +	}
->> +
->> +	return 0;
->> +}
+Konrad
 
