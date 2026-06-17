@@ -1,81 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-113577-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-113578-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id 6IlEEeN6Mmpc0gUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-113577-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2026 12:45:55 +0200
+	id pIsCFBJ/Mmp80wUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-113578-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2026 13:03:46 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0385C698A0F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2026 12:45:55 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id BAD8A698C68
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2026 13:03:45 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=gmail.com header.s=20251104 header.b=QKEDzbK2;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113577-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c09:e001:a7::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113577-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=gmail.com header.s=20251104 header.b="Jh/l4rwq";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113578-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113578-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=none) header.from=gmail.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 3DE2B3065C38
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2026 10:42:21 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 52A8A32770EA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2026 10:42:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0C7FA48166E;
-	Wed, 17 Jun 2026 10:38:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 17782481239;
+	Wed, 17 Jun 2026 10:38:31 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-dy1-f181.google.com (mail-dy1-f181.google.com [74.125.82.181])
+Received: from mail-dy1-f180.google.com (mail-dy1-f180.google.com [74.125.82.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A584348BD24
-	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2026 10:38:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 252013F39DD
+	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2026 10:38:26 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781692699; cv=none; b=e3rcbPixp4Y97Ovqf/qWpnxxarU4sQlKmRusyH1MJwQM+ZCBwPna+FFsE5KlZlo3Od0mfR08LBJcxblkM7BLmI7djzaLY9v6Z2xoiMtnOE0BlrVn4JakCHg7Q5CzEd1vHAzQgsAagfl2edzq+L/6X6gMWrqKWxiqJ/aAmk3dm94=
+	t=1781692710; cv=none; b=K08gV8if/xGupcJwSMqEubWihHwSbRiwYoddmLsM1OUBjJ+PCwNWFbRQQcC++sSWJBJmVx513uRgsP0OHRgn6FYjwwPW7rLOioJu7LRTCTaBWNUYjiuFnw0FZa1a+nL/eL/y1BkgK/RIDMM8CVkjfn2RC4vikZ36ZsTTdkw8z98=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781692699; c=relaxed/simple;
-	bh=nSAn+IvomI3poT2XfEpySfMVhSrZidmFTXRdJVEBP6c=;
+	s=arc-20240116; t=1781692710; c=relaxed/simple;
+	bh=0JhvFKNYeb49RLF6bYiTwSAs/DtlSFc2jfqE8DFfeig=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k+gD0IasiIAwgKeNPUFr0zFrtu8UC+00blZBgP736wAjKdbuTul5sr2ZJYhxwVowAYU6I/tVLVoYWykPEnAdpbqfiCmnOlS0FmAWYl4pbP+EVJ/NUlia/o0lzmsQwFfK0XmN0H4im8cNyXID9//WneAfXShfkSxRXOqNPqbJbco=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QKEDzbK2; arc=none smtp.client-ip=74.125.82.181
-Received: by mail-dy1-f181.google.com with SMTP id 5a478bee46e88-30b6dad2382so6294420eec.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2026 03:38:13 -0700 (PDT)
+	 MIME-Version; b=olNg2woOLelT0GUgKwB+lYGvO78LS9e0to/GImt8bEfXegmQgZU9iWrfcy1III9tkUbYJ9HeobJrx9Gu/1Vxa4e4VicdDKqGlhQxoYa4ssmMjZI1fdVIrYbzeLTnHCseKknIT+H+v/pQ3fPQliarCal3oaRETO82+1rOjAbGODo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Jh/l4rwq; arc=none smtp.client-ip=74.125.82.180
+Received: by mail-dy1-f180.google.com with SMTP id 5a478bee46e88-30bc806fcf8so1068969eec.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2026 03:38:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781692693; x=1782297493; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1781692705; x=1782297505; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=wbx3ojyGvZm0HFvzH2fDjGYEhzXxcDovZmyIxDXeLB0=;
-        b=QKEDzbK2m+qSnduJiuc4OO9wPTT3iXovThu7YhE2r7T5ohKbNF5Mt1hiimi2K+9CW4
-         bGd8mxyi24dAnFKfxAd4JhTRfpmCgSBcLZ6eTWXg6SgNwSCv75CPTgxiJTzaAxjbr9+Z
-         4efORgIZX27YgaIJb43MEJ6o5sN1rjI5yzpokryH+PZEv6QVYTUiYRaHfHJ1bgKhvg7E
-         8Z1MRnySkexgps6XLJOZQPXVH4qVeP/NKwND7bqn0fwiICyOKlB8XLwJW2iVFYQ0C6qk
-         NvYEf2MezRaZsT5TnXTrK/9QiJqnRC7rhCSsKKy6ePvswy6AqP9C8nvc4QCmiEJxwFXP
-         Lnlw==
+        bh=MkZBCMurUYtbXlyM1bHHJ4jat4Djw6dn8DDEDOcRodM=;
+        b=Jh/l4rwqMEXSULgwXJcwlJs2AxjTyjKt1ulZvQGn7b9v7gOgV7KW7YF/bjaQmXDEiS
+         DpgD7d87o1vr7xnbNxtCnRSVyePFP7ffIkZ7eSB0Xa1jGBAEcNsjAOdhBrP7XrdGDZ/J
+         EtzDGC2HDK/zYMFFr8pkxRa9tmFi7kL5Z+rQ/TE6wW8bPkaSHKBcRS6AyZEUT36VpZ3L
+         sshcVuHBGDOseiMiraOnpGKk+IREL5CbtdtU5dt4+oGC1FI9Hdxu+TD7W5xNy7I9+qCc
+         4c88zcmNveXBuek/I6Eb2RpyU3m2UD5UvNUfwULMf/1W9pz49iQryYIxImehASGj8wqG
+         JGWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781692693; x=1782297493;
+        d=1e100.net; s=20251104; t=1781692705; x=1782297505;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=wbx3ojyGvZm0HFvzH2fDjGYEhzXxcDovZmyIxDXeLB0=;
-        b=UGmJmpf4RZ4VmPhsE2XPdN8Rg7+VZQ116n0uHSAAPc4yU4r57tb1K1hn3FCnUGNP4W
-         S2vOxm85hZ1r1KEK0z2V8BqJdwrpxE3Sh4kyZbufqbgU3Q0RnlibTBTFPtmKYln3um4J
-         z7buwUu2rKi/IAIjn4/aRMLIez43zFpZs8aDUwmZAhqAJzLujcA6hmYT/wYrSUHDVQc6
-         GVvzn2FGPu1B2Mu30iEjBLC7A7oK4w+FDeNmmZGmKrF9kNX0kedgL3POpL41csHTLemD
-         AvBNQKioaKPs0av3aPiMphP5Fj9ob2u7T+6j/cJDg0Sr6sSWVvhIIMcj0czv8xgrK3Y5
-         drBg==
-X-Forwarded-Encrypted: i=1; AFNElJ+CUNSTQu7KY4vsP13wsfE0ia6rQ1bBW6EJGVL1wI1gcN3q9kCelifq6VFAbDwgruZ75clRLxhjrmRbVNAC@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxpolep/Pl3lvh8Ki2MncIINTS6Rk3I4e6W1hYY6nmRNT/fH7hD
-	djLUcaouyLYsNf7iVHD98wsewyfU2qnLZRfwwC/k48q6JZ2Nre+YbhyW
-X-Gm-Gg: AfdE7ckOT77odXYYCw7IemBd8y191+bVBJojMKjwn/ioEM7UIPif8UTFVW6jwmBh7M2
-	nyRSlL8lyaip+TsDAeUmlinmxdUo3+w0AjOSRzE5w6QmEBU46+a+Hpga9Iq9/QZrpV8tiUtH4to
-	rY33hlyj3bV4cCSp/W00OC3a6KWMQruFhK4eOQIbUMBp80X1knED0JufN4tI/W4ptBC3uPmwKQR
-	Qodqpp6rXDMh/iVvrwaYxt+nSl0hxTqSYml552u+rZbQzgNrEBeLuFCmFSBS3GdxBrneWMcE4C1
-	Ximll5+K6j6UostpqF0BcN+lJtedH6o5DH26z1xhL9dqHzFwGwaCIbXm83dyGuVbmGP8GenXof+
-	PrqZV/SpRsr51B+02LcopkwCP71YCB4QFsectyQof00rdSbHXBau/kimjiS3EolKm4/BI9KrlJo
-	ZZNPS2Mrv6L5GgyckL8OcsOkifF4kF0B1hLdPxynFz0j1vT3Q=
-X-Received: by 2002:a05:7301:38a4:b0:304:e7c9:b528 with SMTP id 5a478bee46e88-30bcae4246bmr1408050eec.30.1781692692655;
-        Wed, 17 Jun 2026 03:38:12 -0700 (PDT)
+        bh=MkZBCMurUYtbXlyM1bHHJ4jat4Djw6dn8DDEDOcRodM=;
+        b=kBS/W6Taq3i6t5nENcj+bIexiwokjaO79ELTSJfTAD0Unfw/4uWDaVoaJ+yfwghEt0
+         fM0+9/vYXgvCZpfyyhytmz8NJUX2ycgbkhcu42hR7JZhdyXIX9CbIWEsPzt9fqL7bdb5
+         X2+XjOpKJgZorxTEtPdagpLWWO+HW985H7QyW6OWExWV2Ymnk8nmzowuQ8vnoWC+u5Ob
+         /6dx1D7ryqUYvEJQE4jtDdDBf5vDnmNRyalrzTQ/SkGaHXBb4bsqS8ViVUOcdEGPu2kv
+         J2eio0MjaT2UhLrCFf6zknI2J+5ziZiSYpVXb1ZE7wRrHcrmFIIGOAgvkGEmmaJSqJ5Z
+         tcmA==
+X-Forwarded-Encrypted: i=1; AFNElJ/HNZ9MxzW6HDnvW2CqwQZ7ffdVKy580NU5aqZ7YxpkKaY8jPGzS1JRwoNwjaFYPG4Xb08eQP5A25r6fb2i@vger.kernel.org
+X-Gm-Message-State: AOJu0YwVYeOHeQaOxC9L1U3Y0u9BOZ5+buYf1wOAeG9A1IGM7KEW/vCM
+	YI2Xi21gGzfoxeMu2jbQn8I7Jpf4PKBucm3xocYNoa2XR6YaDX2HWQ4V
+X-Gm-Gg: AfdE7cnFKcvdfzhYph1Omg4SXhq4gryAJ79zHFPswJ5+I9XoTzYWHi/k8d5XaMhiZlR
+	+QC3VsnaX+8Pzg6+u7GMxnmYFR82f0JDVXkBM4IN4ahODeJ2uyuZ6ixGp7gkPfFVYCzT26gGUb3
+	2xiM8FrndfIDXvvjXpsJFbKRzdQwCxGdsqtOTnKwP52vk/a34nmaF4qf1JZ5wRZQPJbmDNl+veC
+	TMLJDUv9xXUjgHfs/1U0+9yAm+LsnHKhG47l+3tSiPZ7EcKXXvlCSOAtNUDOqhQyuTMYS0ZgKu0
+	PDGlL76dlrUhuEKxQiCHoVbarkYW4zGXViNUcv/XqwvuR3V9dzXoxe+cZyMGewj/iqTqqt6EyH8
+	9CG0d6XBr1FoKPqFHwhWLas0AU8O45l0E3D6wIZGzvad/IeyE9PF1Bbc1ENGC3du0lU/TWOW93T
+	smEBKoVjuEBY7aAc8TAJv1AK/zN0DYCd7G5EjxMcaAXLNzYFQ=
+X-Received: by 2002:a05:7300:2153:b0:30b:8860:94c1 with SMTP id 5a478bee46e88-30bcae21d20mr1491165eec.23.1781692705015;
+        Wed, 17 Jun 2026 03:38:25 -0700 (PDT)
 Received: from phuc-desktop.. ([183.91.15.56])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3081e5d0828sm24616275eec.10.2026.06.17.03.38.04
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3081e5d0828sm24616275eec.10.2026.06.17.03.38.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Jun 2026 03:38:12 -0700 (PDT)
+        Wed, 17 Jun 2026 03:38:24 -0700 (PDT)
 From: phucduc.bui@gmail.com
 To: Mark Brown <broonie@kernel.org>
 Cc: Liam Girdwood <lgirdwood@gmail.com>,
@@ -112,9 +112,9 @@ Cc: Liam Girdwood <lgirdwood@gmail.com>,
 	linux-arm-kernel@lists.infradead.org,
 	linux-mediatek@lists.infradead.org,
 	bui duc phuc <phucduc.bui@gmail.com>
-Subject: [PATCH 34/78] ASoC: codecs: lpass-macro: Use guard() for mutex locks
-Date: Wed, 17 Jun 2026 17:31:51 +0700
-Message-ID: <20260617103235.449609-35-phucduc.bui@gmail.com>
+Subject: [PATCH 35/78] ASoC: codecs: madera: Use guard() for mutex locks
+Date: Wed, 17 Jun 2026 17:31:52 +0700
+Message-ID: <20260617103235.449609-36-phucduc.bui@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260617103235.449609-1-phucduc.bui@gmail.com>
 References: <20260617103235.449609-1-phucduc.bui@gmail.com>
@@ -132,14 +132,14 @@ X-Spamd-Result: default: False [-0.16 / 15.00];
 	R_MISSING_CHARSET(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
 	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
 	FREEMAIL_FROM(0.00)[gmail.com];
-	RCPT_COUNT_TWELVE(0.00)[35];
-	TAGGED_FROM(0.00)[bounces-113577-lists,linux-arm-msm=lfdr.de];
+	TO_DN_SOME(0.00)[];
+	TAGGED_FROM(0.00)[bounces-113578-lists,linux-arm-msm=lfdr.de];
 	FORWARDED(0.00)[lists@lfdr.de];
 	FORGED_RECIPIENTS(0.00)[m:broonie@kernel.org,m:lgirdwood@gmail.com,m:perex@perex.cz,m:tiwai@suse.com,m:cychiang@chromium.org,m:tzungbi@kernel.org,m:groeck@chromium.org,m:bleung@chromium.org,m:david.rhodes@cirrus.com,m:rf@opensource.cirrus.com,m:povik+lin@cutebit.org,m:ckeepax@opensource.cirrus.com,m:support.opensource@diasemi.com,m:nick.li@foursemi.com,m:herve.codina@bootlin.com,m:srini@kernel.org,m:matthias.bgg@gmail.com,m:angelogioacchino.delregno@collabora.com,m:shenghao-ding@ti.com,m:kevin-lu@ti.com,m:baojun.xu@ti.com,m:sen@ti.com,m:oder_chiou@realtek.com,m:lars@metafoo.de,m:nuno.sa@analog.com,m:steven.eckhoff.opensource@gmail.com,m:patches@opensource.cirrus.com,m:chrome-platform@lists.linux.dev,m:asahi@lists.linux.dev,m:linux-arm-msm@vger.kernel.org,m:linux-sound@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-arm-kernel@lists.infradead.org,m:linux-mediatek@lists.infradead.org,m:phucduc.bui@gmail.com,m:povik@cutebit.org,m:matthiasbgg@gmail.com,m:steveneckhoffopensource@g
  mail.com,m:phucducbui@gmail.com,s:lists@lfdr.de];
@@ -157,13 +157,13 @@ X-Spamd-Result: default: False [-0.16 / 15.00];
 	DKIM_TRACE(0.00)[gmail.com:+];
 	MID_RHS_MATCH_FROM(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,lin];
-	TO_DN_SOME(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[35];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,vger.kernel.org:from_smtp]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 0385C698A0F
+X-Rspamd-Queue-Id: BAD8A698C68
 
 From: bui duc phuc <phucduc.bui@gmail.com>
 
@@ -172,37 +172,113 @@ Merely code refactoring, and no behavior change.
 
 Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
 ---
- sound/soc/codecs/lpass-macro-common.c | 11 +++--------
- 1 file changed, 3 insertions(+), 8 deletions(-)
+ sound/soc/codecs/madera.c | 31 +++++++++----------------------
+ 1 file changed, 9 insertions(+), 22 deletions(-)
 
-diff --git a/sound/soc/codecs/lpass-macro-common.c b/sound/soc/codecs/lpass-macro-common.c
-index 6e3b8d0897dd..c8c4a98fd765 100644
---- a/sound/soc/codecs/lpass-macro-common.c
-+++ b/sound/soc/codecs/lpass-macro-common.c
-@@ -71,21 +71,16 @@ EXPORT_SYMBOL_GPL(lpass_macro_pds_exit);
+diff --git a/sound/soc/codecs/madera.c b/sound/soc/codecs/madera.c
+index 98d72db599d8..03bb1ed70b29 100644
+--- a/sound/soc/codecs/madera.c
++++ b/sound/soc/codecs/madera.c
+@@ -513,7 +513,7 @@ int madera_domain_clk_ev(struct snd_soc_dapm_widget *w,
+ 	 * We can't rely on the DAPM mutex for locking because we need a lock
+ 	 * that can safely be called in hw_params
+ 	 */
+-	mutex_lock(&priv->rate_lock);
++	guard(mutex)(&priv->rate_lock);
  
- void lpass_macro_set_codec_version(enum lpass_codec_version version)
- {
--	mutex_lock(&lpass_codec_mutex);
-+	guard(mutex)(&lpass_codec_mutex);
- 	lpass_codec_version = version;
--	mutex_unlock(&lpass_codec_mutex);
- }
- EXPORT_SYMBOL_GPL(lpass_macro_set_codec_version);
+ 	switch (event) {
+ 	case SND_SOC_DAPM_PRE_PMU:
+@@ -532,8 +532,6 @@ int madera_domain_clk_ev(struct snd_soc_dapm_widget *w,
  
- enum lpass_codec_version lpass_macro_get_codec_version(void)
- {
--	enum lpass_codec_version ver;
-+	guard(mutex)(&lpass_codec_mutex);
+ 	madera_debug_dump_domain_groups(priv);
  
--	mutex_lock(&lpass_codec_mutex);
--	ver = lpass_codec_version;
--	mutex_unlock(&lpass_codec_mutex);
+-	mutex_unlock(&priv->rate_lock);
 -
--	return ver;
-+	return lpass_codec_version;
+ 	return 0;
  }
- EXPORT_SYMBOL_GPL(lpass_macro_get_codec_version);
+ EXPORT_SYMBOL_GPL(madera_domain_clk_ev);
+@@ -875,9 +873,8 @@ static int madera_adsp_rate_get(struct snd_kcontrol *kcontrol,
+ 	const int adsp_num = e->shift_l;
+ 	int item;
+ 
+-	mutex_lock(&priv->rate_lock);
+-	cached_rate = priv->adsp_rate_cache[adsp_num];
+-	mutex_unlock(&priv->rate_lock);
++	scoped_guard(mutex, &priv->rate_lock)
++		cached_rate = priv->adsp_rate_cache[adsp_num];
+ 
+ 	item = snd_soc_enum_val_to_item(e, cached_rate);
+ 	ucontrol->value.enumerated.item[0] = item;
+@@ -903,7 +900,7 @@ static int madera_adsp_rate_put(struct snd_kcontrol *kcontrol,
+ 	 * maintain consistent behaviour that rate domains cannot be changed
+ 	 * while in use since this is a hardware requirement
+ 	 */
+-	mutex_lock(&priv->rate_lock);
++	guard(mutex)(&priv->rate_lock);
+ 
+ 	if (!madera_can_change_grp_rate(priv, priv->adsp[adsp_num].cs_dsp.base)) {
+ 		dev_warn(priv->madera->dev,
+@@ -916,8 +913,6 @@ static int madera_adsp_rate_put(struct snd_kcontrol *kcontrol,
+ 		ret = 1;
+ 	}
+ 
+-	mutex_unlock(&priv->rate_lock);
+-
+ 	return ret;
+ }
+ 
+@@ -1061,15 +1056,13 @@ int madera_rate_put(struct snd_kcontrol *kcontrol,
+ 	 * Prevent the domain powering up while we're checking whether it's
+ 	 * safe to change rate domain
+ 	 */
+-	mutex_lock(&priv->rate_lock);
++	guard(mutex)(&priv->rate_lock);
+ 
+ 	val = snd_soc_component_read(component, e->reg);
+ 	val >>= e->shift_l;
+ 	val &= e->mask;
+-	if (snd_soc_enum_item_to_val(e, item) == val) {
+-		ret = 0;
+-		goto out;
+-	}
++	if (snd_soc_enum_item_to_val(e, item) == val)
++		return 0;
+ 
+ 	if (!madera_can_change_grp_rate(priv, e->reg)) {
+ 		dev_warn(priv->madera->dev,
+@@ -1082,8 +1075,6 @@ int madera_rate_put(struct snd_kcontrol *kcontrol,
+ 		ret = snd_soc_put_enum_double(kcontrol, ucontrol);
+ 		madera_spin_sysclk(priv);
+ 	}
+-out:
+-	mutex_unlock(&priv->rate_lock);
+ 
+ 	return ret;
+ }
+@@ -3041,12 +3032,11 @@ static int madera_hw_params_rate(struct snd_pcm_substream *substream,
+ 	if ((cur & MADERA_AIF1_RATE_MASK) == (tar & MADERA_AIF1_RATE_MASK))
+ 		return 0;
+ 
+-	mutex_lock(&priv->rate_lock);
++	guard(mutex)(&priv->rate_lock);
+ 
+ 	if (!madera_can_change_grp_rate(priv, base + MADERA_AIF_RATE_CTRL)) {
+ 		madera_aif_warn(dai, "Cannot change rate while active\n");
+-		ret = -EBUSY;
+-		goto out;
++		return -EBUSY;
+ 	}
+ 
+ 	/* Guard the rate change with SYSCLK cycles */
+@@ -3055,9 +3045,6 @@ static int madera_hw_params_rate(struct snd_pcm_substream *substream,
+ 				      MADERA_AIF1_RATE_MASK, tar);
+ 	madera_spin_sysclk(priv);
+ 
+-out:
+-	mutex_unlock(&priv->rate_lock);
+-
+ 	return ret;
+ }
  
 -- 
 2.43.0
