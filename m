@@ -1,206 +1,181 @@
-Return-Path: <linux-arm-msm+bounces-113641-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-113642-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id Dd+2BmOdMmpR2wUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-113641-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2026 15:13:07 +0200
+	id Bn1EE+ydMmpg2wUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-113642-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2026 15:15:24 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 68FCF699FF1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2026 15:13:06 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4B52C69A023
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2026 15:15:23 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=PQq5qqaW;
-	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=cgj30RjP;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113641-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113641-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=reject) header.from=qualcomm.com;
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=jRLSFxXc;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113642-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 104.64.211.4 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113642-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 735303082C38
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2026 13:12:52 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 764D1300139E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2026 13:15:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 775A5400DE2;
-	Wed, 17 Jun 2026 13:12:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3CC903EC2E3;
+	Wed, 17 Jun 2026 13:15:19 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1C491DF254
-	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2026 13:12:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30567EEA8;
+	Wed, 17 Jun 2026 13:15:17 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781701970; cv=none; b=Q0wqDpxk/GMdQBsw0JqZK9UYHInbxlp72CiJUdqXrKdBjKtpV7gN5o1JX9z2ZbCQ3PmgCJRXpWjlPpQVoS3h9Js0EsSfvdOYR2FazOKtBGnxq6ymjJRMPEB64bj7mWS5JH/HXdw7lI83JsGaf/u3pnVisS7KOTo4TyoZABic9gU=
+	t=1781702119; cv=none; b=HhxH6iH0s0vCQw9oc/AxvBgHAwXc1Ao6W1fs4rQhwki8VfHoXLbB+PpCXrCG5a1DQA+YE39zBuiV+iNCm4wWuyaz/4kYJIQx4nRThyJ2HjFOdghYeEjmOmTn8RTY8ib/Ur3CheW2aBOCuA+phTMumaktwWuyHEf9456+NZ4L5K4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781701970; c=relaxed/simple;
-	bh=/xYSuDuApVlDwRl5mUUmCd+M8zOhVp0QHXRqk2UrHUM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=d5XlcnoCeR1V1+9OCNua3YW4pYFebkzEPOBXxhKUzZJMCRWqO7CSgGW7Sr7DBXqXwuFuY/vTVRcgiOOG77KCDvhXgMvLBLpo85sJnzJy2oBbNRsEMO/euUz6ju5WXJrT3Kwk1+WXYC1er14qPJCzLof5+a0sMzcwC7DYPOQub9M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=PQq5qqaW; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=cgj30RjP; arc=none smtp.client-ip=205.220.168.131
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65H8Ulks1607945
-	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2026 13:12:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Bl7Cu9/Rb8h2gN+c/vf6cviy2rxKrYizQzQi6ZcXv4Y=; b=PQq5qqaWT6gifv18
-	migQ05k3hZ43x0ykGskbXeD80/VilkA8dDLPyv7Spo4U44PVGXoQXbs2/B8CWvn/
-	5q+0ncb/PcTNGRgXLJKUlH1FngDJpQlabMIVrJKHcALj5nrn/WYb+fpabdhA31SX
-	j8LV2vjWmNqIruTpxh6Ctub98JgA5xuS9KlJ1i5ml2s7x1aqL9ovpLFjVC2tXDWs
-	QMAhXnrrWmraODZqRggj7XBJN1sEwlbg10USIKoJoIE92sU4azyJYByLVs8n/6pV
-	f/fVmDLQp408A77TLMKIjSHbFQOrOr/xi72sSwWPf+AY+u2epAy1aAda7/GGHznk
-	h86uAw==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4euef237nt-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2026 13:12:47 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-915976b2dffso47279985a.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2026 06:12:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1781701966; x=1782306766; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Bl7Cu9/Rb8h2gN+c/vf6cviy2rxKrYizQzQi6ZcXv4Y=;
-        b=cgj30RjPRCAYvKX192WDMTBbfd//Q3CGNMucT+zntmwUZwWESNd1j0FX64mfMwDqcx
-         OImQwX8Ct8yk40kIRpHgUzF7bZQrBb4XwFEyUdwo49qX7fl5nBbBO9KNwSQ+icqWabra
-         ottE11lK9/wqRnqarq/T37K8TL7SdoJH60V0YFA8tNTu9W6L4oeDo+2C7mlkpMIV4TcO
-         jhT1Dgm3btJ20yULtqdvMQ5UGQCFK44XHtYISX6ns1wyi3q+UQy1Qqr7qNg20ah2t3Q0
-         /Y72DBkmYA+FhgzbAoNDfiWHwIiBMLcHgCYGexwxtt2Tgchf9jYa4dx8IQt++N1YsLhN
-         Au4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781701966; x=1782306766;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Bl7Cu9/Rb8h2gN+c/vf6cviy2rxKrYizQzQi6ZcXv4Y=;
-        b=AovwSJDUdAAQ/JQe3585QsV8mwgj3LLpcwJL7rVR6qHjRpR3PzYExeWJgK/F+xTWSK
-         GDB1bfVV30Xge2ktstGyhtyxJDlbBb1QWVaiCOjbWEZJxW6PG+nkYpupnqNQGbTNkPBh
-         OeCExOvjtnG6CRGiKGerGJ6SdIR1+oPE2ln6BccofsFaN1e9PfEJhF4Db7If5f99slTJ
-         hFeYyebfcWn63uEMTQ0l3aMZh14yCSG9EU4fPXC7vBAtcoJIcjkNDqpCrwpE+SefJxz8
-         sDw1FOsClF1hEOdBLcfuY2xXWEysHE2SE05eLbhdOE5cLxUcZMQq9UR22MjrLXC6q+tk
-         toMA==
-X-Gm-Message-State: AOJu0YzzTza/j1RsAg6P1ClotSp+QZOYgZb31nqNLHz6kdPkvKrxafYH
-	N0DrNanGdAk/4+pibX7VDvRbzbOTKE3ozAGI3+XrPN39Y7OLr6UFE1QHTsj2iF4CSI3CW7/T7iE
-	9zqR3FmiQSKr3dp33KWZecPlpCodW0QsKDzXWxm+g+sslsAXfI7+VVedt3V+3Gydq7UPB2gwNz3
-	e6
-X-Gm-Gg: Acq92OF6wI+ZwrOB32U0YwF0A55ClpD2Kfhkw6MT/ly0E2ycAu/ZrB10Up4mBfgYXrL
-	hSZwPlzuHKO8DCUiHb7FjctpQZ1G6UZvAavnZ8pzqypVEty/szNuM5po3+PSACzTNLVo7XWXBwE
-	gDYWbVLlFo3CEj/KYeLIpJok12Yu3L5aDLS87ayQkhn3XKSnkXOI3n7ly3VvjmDJBJjaThcXPFf
-	EgD9vgN1i2TL3a2GXrhY8zOph3Kjho25yobOmHT7Tz/bmEmw4Ut9bnYxo5hmuh/vFhy6Y0BDinM
-	oxVVEbon9WXaM9aWiQeqEL8wIVHI9IpoiIg/Ynuse7HJ4Jp5PckwPsJBxQxtbP6bWsrOIFSZIld
-	86kKLE54QN0mxUDMSeziLNMC4nxjAghONPn0=
-X-Received: by 2002:a05:620a:4081:b0:913:b4b9:5ec8 with SMTP id af79cd13be357-91d8d5b2aacmr404161785a.6.1781701966265;
-        Wed, 17 Jun 2026 06:12:46 -0700 (PDT)
-X-Received: by 2002:a05:620a:4081:b0:913:b4b9:5ec8 with SMTP id af79cd13be357-91d8d5b2aacmr404157785a.6.1781701965809;
-        Wed, 17 Jun 2026 06:12:45 -0700 (PDT)
-Received: from [192.168.120.170] ([178.235.128.140])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6937948fc99sm6573561a12.23.2026.06.17.06.12.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 17 Jun 2026 06:12:45 -0700 (PDT)
-Message-ID: <0fcfe7c3-ff54-4a72-9529-8f55d77814ef@oss.qualcomm.com>
-Date: Wed, 17 Jun 2026 15:12:42 +0200
+	s=arc-20240116; t=1781702119; c=relaxed/simple;
+	bh=aIlDLMkkNHtsDElYOHx+iCX+qfTNktD94VrGYo6P2ds=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=JWpyvT9ic5fjxSBoQkDf4V8fXgrngSFMpHPMrChIOQBqDAii0bkiZkOLFKzoAD0KYOYjoEGQJkYoayD2lViTc/aGOfMElYEwOJ+cgA1TN167if/KawwNiyrrHE6v9J1PBpYQ7wdZlrS9px2GIDHk+3NdjfqV4ORvMYMnWDIh5AE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jRLSFxXc; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B6901F000E9;
+	Wed, 17 Jun 2026 13:15:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1781702117;
+	bh=RecN5ZtDRcqCxYcd/2RjkSxa7a1qN8tkR8fOcVntLnw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date;
+	b=jRLSFxXcuguZjn8k9T/6YsLlp/PLbF+S//JuN8QuD5ZsNDQ1qAo9EvcABxcZgjxdM
+	 yOVi1Jmtquis6KE2gafyzTflGkN8B1qrZnfGgYCFyPV59sc+tPNx47TsJmVNDOFc5E
+	 uRFaoMJtSpf/ExA3v4QoD2/jcz70Rhb55v3XgHg/kYlTV7IJPrhwy1UqIvLS4aCi2R
+	 G9v4SQKLQSB48wNn2cyw03ceQ9xy/vVu/joOZ9X2DHtTes4g+5JfpG+EgwMRDyJMaT
+	 L0x9QSEqQ2W2tc3KmTN0zfIWd5h5yNqBGjyxkVMCU0n/8vTDEXzUHN9upwVpkMdkBv
+	 /3QSKWsqk3M+w==
+From: Mattijs Korpershoek <mkorpershoek@kernel.org>
+To: Praveen Talari <praveen.talari@oss.qualcomm.com>, Andi Shyti
+ <andi.shyti@kernel.org>, Rob Herring <robh@kernel.org>, Krzysztof
+ Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Konrad
+ Dybcio <konradybcio@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>, Viken Dadhaniya
+ <viken.dadhaniya@oss.qualcomm.com>
+Cc: Mattijs Korpershoek <mkorpershoek@kernel.org>, Praveen Talari
+ <praveen.talari@oss.qualcomm.com>, linux-arm-msm@vger.kernel.org,
+ linux-i2c@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, bjorn.andersson@oss.qualcomm.com,
+ konrad.dybcio@oss.qualcomm.com, aniket.randive@oss.qualcomm.com,
+ chandana.chiluveru@oss.qualcomm.com, prasad.sodagudi@oss.qualcomm.com,
+ Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>, Nikunj Kela
+ <quic_nkela@quicinc.com>
+Subject: Re: [PATCH v7 0/6] Enable I2C on SA8255p Qualcomm platforms
+In-Reply-To: <20260617-enable-i2c-on-sa8255p-v7-0-ad736dbeab57@oss.qualcomm.com>
+References: <20260617-enable-i2c-on-sa8255p-v7-0-ad736dbeab57@oss.qualcomm.com>
+Date: Wed, 17 Jun 2026 15:15:15 +0200
+Message-ID: <874ij1gvfg.fsf@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/8] irqchip/qcom-pdc: restructure version support
-To: Maulik Shah <maulik.shah@oss.qualcomm.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>, Thomas Gleixner <tglx@kernel.org>,
-        Linus Walleij <linusw@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-gpio@vger.kernel.org,
-        Sneh Mankad <sneh.mankad@oss.qualcomm.com>
-References: <20260616-hamoa_pdc_v3-v3-0-4d8e1504ea75@oss.qualcomm.com>
- <20260616-hamoa_pdc_v3-v3-1-4d8e1504ea75@oss.qualcomm.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20260616-hamoa_pdc_v3-v3-1-4d8e1504ea75@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE3MDEyNSBTYWx0ZWRfX5AwmiP3tEvIO
- tGlLlYjoAhecMziKlqNzmt0PlZzz+UbGP+VMGVUtZC1JwY1e+8BKJTWl9dBXc5nl7OHtiDpMO09
- a8p2tttZvA0/7OvOSCkqm7dnkWDseUc=
-X-Proofpoint-ORIG-GUID: ooAWnVbAqZUGjjuAzCfpHTPvkqwqxf23
-X-Proofpoint-GUID: ooAWnVbAqZUGjjuAzCfpHTPvkqwqxf23
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE3MDEyNSBTYWx0ZWRfX8dZjLut+tniJ
- fM6YkiXPBLlmogrSxU2v2OTNSnC+3rqlDU/JYYn4n6DjjovIAm971LUF70iwNRjS5UaVRF3c2NT
- AY8tfqaNIoTgCFIZW7nXed1l1BM9+yT+AQvRxSRWEjLuSRFs2u3XXVV8QgpBu2+QROblz2pmvhY
- JfmZ8CYvCbSAiPAwW1Kx6vD4aYcrO4x6CCEAGRktqqn3Q4l3pMRSqEL8ZVmKmP+SQDDgwdggGGl
- OphEDU3qhIR+9vh10+BvwF6jvdshkSmY+4TDauhQm2S2Fw44PhI2Kv8wpwlhT/MYMYQ+Yj1I9oK
- 9/meLsTXU1zqBp6yV5+45ZDvJ5f0yiqTBMa6mVZsdbLnz959hfFnxFSx0E+tV52X5HLYzVIuXwc
- pJeBhjHRaW54ORlP7wJOIAXIvzSAT9BKs069MQ2OCm/KUo6u5CQre4ZKsNHcxMVmgfpfCCmh11Q
- 0VF63H2Xk9wc9HF2sWg==
-X-Authority-Analysis: v=2.4 cv=acpRWxot c=1 sm=1 tr=0 ts=6a329d4f cx=c_pps
- a=50t2pK5VMbmlHzFWWp8p/g==:117 a=PRfkaYvzSr8QmIIGAkY2Sg==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
- a=EUspDBNiAAAA:8 a=y--pFEGKUWMBhsBSRrIA:9 a=QEXdDO2ut3YA:10
- a=IoWCM6iH3mJn3m4BftBB:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-17_01,2026-06-16_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 spamscore=0 suspectscore=0 lowpriorityscore=0 adultscore=0
- clxscore=1015 bulkscore=0 malwarescore=0 priorityscore=1501 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606170125
+Content-Type: text/plain
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-4.66 / 15.00];
+	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_MISSING_CHARSET(0.50)[];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-113641-lists,linux-arm-msm=lfdr.de];
-	RCPT_COUNT_TWELVE(0.00)[13];
-	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-113642-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[22];
 	RCVD_TLS_LAST(0.00)[];
-	FORWARDED(0.00)[lists@lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:maulik.shah@oss.qualcomm.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:tglx@kernel.org,m:linusw@kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-gpio@vger.kernel.org,m:sneh.mankad@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_SENDER(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:from_mime,qualcomm.com:dkim,qualcomm.com:email,vger.kernel.org:from_smtp];
+	RCVD_COUNT_THREE(0.00)[4];
+	FORGED_RECIPIENTS(0.00)[m:praveen.talari@oss.qualcomm.com,m:andi.shyti@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:konradybcio@kernel.org,m:andersson@kernel.org,m:mukesh.savaliya@oss.qualcomm.com,m:viken.dadhaniya@oss.qualcomm.com,m:mkorpershoek@kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-i2c@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:bjorn.andersson@oss.qualcomm.com,m:konrad.dybcio@oss.qualcomm.com,m:aniket.randive@oss.qualcomm.com,m:chandana.chiluveru@oss.qualcomm.com,m:prasad.sodagudi@oss.qualcomm.com,m:krzysztof.kozlowski@oss.qualcomm.com,m:quic_nkela@quicinc.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	FORWARDED(0.00)[lists@lfdr.de];
+	FORGED_SENDER(0.00)[mkorpershoek@kernel.org,linux-arm-msm@vger.kernel.org];
+	MIME_TRACE(0.00)[0:+];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	MISSING_XM_UA(0.00)[];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[mkorpershoek@kernel.org,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCVD_COUNT_SEVEN(0.00)[7]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo,vger.kernel.org:from_smtp]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 68FCF699FF1
+X-Rspamd-Queue-Id: 4B52C69A023
 
-On 6/16/26 11:25 AM, Maulik Shah wrote:
-> PDC irqchip updates IRQ_ENABLE and IRQ_CFG and for three different
-> versions v2.7, v3.0 and v3.2. These registers are organized in H/W
-> as below on various SoCs.
+On Wed, Jun 17, 2026 at 10:20, Praveen Talari <praveen.talari@oss.qualcomm.com> wrote:
 
-[...]
+> The Qualcomm automotive SA8255p SoC relies on firmware to configure
+> platform resources, including clocks, interconnects and TLMM.
+> The driver requests resources operations over SCMI using power
+> and performance protocols.
+>
+> The SCMI power protocol enables or disables resources like clocks,
+> interconnect paths, and TLMM (GPIOs) using runtime PM framework APIs,
+> such as resume/suspend, to control power states(on/off).
+>
+> The SCMI performance protocol manages I2C frequency, with each
+> frequency rate represented by a performance level. The driver uses
+> geni_se_set_perf_opp() API to request the desired frequency rate..
+>
+> As part of geni_se_set_perf_opp(), the OPP for the requested frequency
+> is obtained using dev_pm_opp_find_freq_floor() and the performance
+> level is set using dev_pm_opp_set_opp().
+>
+> Tested-by: Mattijs Korpershoek <mkorpershoek@kernel.org>
+> Signed-off-by: Praveen Talari <praveen.talari@oss.qualcomm.com>
 
-> -	ret = pdc_setup_pin_mapping(node);
-> +	ret = pdc_setup_pin_mapping(dev, node);
+I've retested this on top of linux-next-20260616 and it still works fine
+for me on the Ride SX (SA8775P) board:
 
-dev is enough, we can get the np in that function from dev->of_node
+/ # uname  -a
+Linux (none) 7.1.0-next-20260616+ #2 SMP PREEMPT_RT Wed Jun 17 14:58:42 CEST 2026 aarch64 aarch64 aarch64 GNU/Linux
+/ # i2cdetect -l
+i2c-11  i2c             Geni-I2C                                I2C adapter
+i2c-18  i2c             Geni-I2C                                I2C adapter
+/ # i2cdetect -F 11
+Functionalities implemented by bus #11
+I2C                              yes
+SMBus quick command              no
+SMBus send byte                  yes
+SMBus receive byte               yes
+SMBus write byte                 yes
+SMBus read byte                  yes
+SMBus write word                 yes
+SMBus read word                  yes
+SMBus process call               yes
+SMBus block write                yes
+SMBus block read                 no
+SMBus block process call         no
+SMBus PEC                        yes
+I2C block write                  yes
+I2C block read                   yes
+/ # i2cdetect -F 18
+Functionalities implemented by bus #18
+I2C                              yes
+SMBus quick command              no
+SMBus send byte                  yes
+SMBus receive byte               yes
+SMBus write byte                 yes
+SMBus read byte                  yes
+SMBus write word                 yes
+SMBus read word                  yes
+SMBus process call               yes
+SMBus block write                yes
+SMBus block read                 no
+SMBus block process call         no
+SMBus PEC                        yes
+I2C block write                  yes
+I2C block read                   yes
 
-otherwise:
-
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-
-Konrad
+Regards,
+Mattijs
 
