@@ -1,327 +1,238 @@
-Return-Path: <linux-arm-msm+bounces-113694-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-113695-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id bl5xKaGSM2ofDgYAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-113694-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jun 2026 08:39:29 +0200
+	id PK3LLGCbM2qpEAYAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-113695-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jun 2026 09:16:48 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id A147869DE10
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jun 2026 08:39:28 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4C38B69E054
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jun 2026 09:16:48 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=OOfMd87j;
-	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=A8MLK3CZ;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113694-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 104.64.211.4 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113694-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=lgfYkfVT;
+	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=YdnNpzEf;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113695-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.232.135.74 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113695-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=reject) header.from=qualcomm.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id ADBEF30151EB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jun 2026 06:39:25 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 8AF643005982
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jun 2026 07:16:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1FD90330678;
-	Thu, 18 Jun 2026 06:39:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A6C4730DD30;
+	Thu, 18 Jun 2026 07:16:45 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 918542EA481
-	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jun 2026 06:39:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C44D3655F5
+	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jun 2026 07:16:44 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781764762; cv=none; b=Qe3ivECz4QUdqrWX6O6M2IEGb/zWyNnW65NgK28J0KDH/hl6CWooVox/9hsWndwPWP8eyzNsi7Ru6tl8MtpW7lfKAOxXVCLIwUmdaU6ev2adLGXFUOENzQUypc8ogQHyr9xNTgSNiD/4zpDjCcU+hHMvKOdq9gysZ7TUCz6Kwc0=
+	t=1781767005; cv=none; b=cD/hECbcQqASQFy1wPqEI+GH9YGfPyvv6wvrY2zdcqRIJ148T04gcGIx2d1/CgOij+maaak2SaGaYA3ti1VVqfzRwDyEgueuVuIZhGP4fuuUHgMCvtVXBczToJG9dcLvtTKSvAtBvH2cF/VL3KzKOTVqx4Zd9jmKYV5w5FpRkUU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781764762; c=relaxed/simple;
-	bh=CitbZsiqyq66RRkeKiRbQVLiOa6DYPRfkQxVYj9mvKw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=M7pcxlSA+RXcfWnzMqLzG/lHExzrDoBXvXI/yhoQeUe9TY5/ayNeeuBkUlRKWUn8MBhJ5m/ewZbouy+gUztfsErnnO+TnNazvJHkfB9ckqRCKgABJoCf9tXgTBFBXHgXXf1MZ6gxHFj6lRXYcM63wf+KMsARqsAmqYEP5joX4P0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=OOfMd87j; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=A8MLK3CZ; arc=none smtp.client-ip=205.220.180.131
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65I4UAeK3588851
-	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jun 2026 06:39:19 GMT
+	s=arc-20240116; t=1781767005; c=relaxed/simple;
+	bh=hvOh8cEClaiB2vFMktW+2r7QZW93RLGLCpI2YW05JOI=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=uwB36w6Rmj9CoWTq2CXKU+3fkoclyfxPHE1VJS2Z3spwf8/mXnc8KesZATJJk+Fb0EaenGdJrKacxEvfiQ7ALXOr15Xi2TxmtkMoeBlRlVbJgSc7oas/qdImncVGHtgfaWBBlG8isAgIcKIlPTyua05aOhZvBfYjRFnBdTIlrVA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=lgfYkfVT; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=YdnNpzEf; arc=none smtp.client-ip=205.220.180.131
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65I5rNqR3525647
+	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jun 2026 07:16:43 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	g/stOCxZ+zAQ9WeYQSMa5ASQyIxGcj+rnwFXY6EZ0JA=; b=OOfMd87jECFH+brW
-	tG3LXYftDFyR2s3hcbI8BOfWWKpn0MdvKmRL7PgcUCWzdAil/gBev40fi58N91N/
-	pzAPmLaMrmup2nP+jJJyQR+S1LDmiH+KpdXa7me20BANJOvoTOJjiZMKoLnW0xC7
-	Vtpfbl9veYHK2+MTowgA8VPUI9VfGk5ICUKhHe6Z80VvH8kjZOQD/NW54PTIDA4W
-	4m6Lm7uGlkT7oaM1wnUkAVpX6c9eOD18sZ12V+v5wIg8Wve6fqo/KxFgsXIz6698
-	NstepS4HXxVJQ9EMcfsnePPop5CI+KKD4sp7t5eJ8yy/AWrG48Dq99DjYLyDqaXI
-	lea2pA==
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ev12kj63j-1
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=ShDllGPAIl7Vq+gPkwo0Da
+	oUO1L9IDh4ObT/0q4ua4w=; b=lgfYkfVTR0heTr2aKIWDoJLQHU6psB53OEBhMI
+	pp/ByugsWlDHzv+AcvVqflykj8FFqTFBraf37zyeoA/3XkkFmJxtCy49uSdWSlyX
+	JCeesSWARtvQdyQkHynsd3aDvFYnyoGkjXVi5Q+VkCNIc/RxGKd6Izf5+oLHyrk0
+	bceKS5FeBtSj6KfXld45T7yzm8Fitx9nZVX4/TWEz77I9YoQ0zsh/iIMYkHnzCAD
+	J9F+WiOj7tgXOCpyMk6xgdFCE5PDgSHwAcE+TCJLifUusvf5pn8TjlIXCxOfK6lR
+	agensCWxIZ2/cr606cy6ONTXZshqm8G9HjpJSagk9JEzM7FQ==
+Received: from mail-dy1-f199.google.com (mail-dy1-f199.google.com [74.125.82.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ev1rtt3qq-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jun 2026 06:39:19 +0000 (GMT)
-Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-2bf11699875so8322685ad.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2026 23:39:19 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jun 2026 07:16:43 +0000 (GMT)
+Received: by mail-dy1-f199.google.com with SMTP id 5a478bee46e88-30bef75a41eso2864419eec.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jun 2026 00:16:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1781764758; x=1782369558; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=g/stOCxZ+zAQ9WeYQSMa5ASQyIxGcj+rnwFXY6EZ0JA=;
-        b=A8MLK3CZsSO22ZvvmwNv/Y81hnBox7l9gI/ZqdzCOPPygbahtrcpC+Fw3WEZXJMPw6
-         6ltNs+3XqX9j+NChGWskrDzm64gadayMVgughpMnXZMpBG/tuWkzYbxQs46XQ6wLGsew
-         CMcEqPM3/MY4ErMFvjLLl7wLzvqjKYHBBPDP5JWoyQGJbqmNhAtZ2TGP/6pCq2RkeSUO
-         237IaPNTXPRsqec+GrLLzANaX/e+YBMg/GycaGK1Z94ya5ErZMnMs2N2GlF3W9A1mCtj
-         SbnLBKeToWLHVk+bsSFVQ22meyWBNGQHgOXiWwU+JRP9gfMPdMbAgukAEPMP0PoecgCj
-         3hFg==
+        d=oss.qualcomm.com; s=google; t=1781767002; x=1782371802; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ShDllGPAIl7Vq+gPkwo0DaoUO1L9IDh4ObT/0q4ua4w=;
+        b=YdnNpzEfGHkooTz3bC94odi4E7aAhLooZW/YM4G1dc1CwKNcBu+PhU+OgnHqv13AbJ
+         XzAr3PjoDEDwWWWXGhXp+xJYwrNW+2mOE7HRjw+iNGw0hpa7CHpeHP9uPM134sM/fg2E
+         G45Ea+v/RurSitYPQ//jzO00YLsDQ6PhGz30iKFahhmkE8rLnAIQW8JvrzzOW+bktZt/
+         pX6GB021aBMnqIYDESmTco+Zc3duStMdGMp73qF7ucmtxrTQLzNX1SWNpTYTRlrdCGDQ
+         nM3wfqV3T0zygNM76Ii38Mck/hPRu6u69c1IeKevyGxpkd9cdhDZfaR6dcueMxrsgVyZ
+         Q1dQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781764758; x=1782369558;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=g/stOCxZ+zAQ9WeYQSMa5ASQyIxGcj+rnwFXY6EZ0JA=;
-        b=FFU+OFsZTrS+EqB7MR5zIzIBZza2fbdybw9liCWOMYHw6PMY0c/R1Qaq5eVepoMO35
-         45AsgFZ9J1aB6qD0wn6M3TSGf5eaA37qulV71nggI0xZFspEEn8VpMl1Xs5z0dVcLcvg
-         Sx65b3M/exzYWljufADYhQKqcsnqc3IIyqcDm7tRDWNZwXiSb78UngcZ2tYWEDDbMiV1
-         bfkKNsPNhmpVAXs9ZW/ll0lWnXSU9P9Yc5Wkl7Zr1xapIJ7z/sxm7iiFBHzS0qwVHhRG
-         oZZXVXP2IWWkBU9mCHRiFqs2N865suSTJWUAJfn5AkgefWPCS2kd44mtPSsqI2tGhj67
-         K3bg==
-X-Gm-Message-State: AOJu0YwCrNa+rN3klFvj6RCPOx5f/fQ1a+Rzx2eHLkV2OGF4ny59n8P4
-	4sFW9Br1u4WBKKU2sgCPVkIwjuK+rADjghK9wbF4blrK5R1UdApErdFhD29z3/wu1tvnGA1DtWA
-	FDZB53lXMH4UMVKLJd9f62BWZjtt6Ob33vloJMrg3mNPKGbsXV0rc+QofOC64g53+9Cyz
-X-Gm-Gg: AfdE7cnq5kYR3iVzuNmdNSjNr5Jb9Agq3SJWI1Jj5g779/3tOHPzOUfMXS4885+2YRh
-	o2lMgUhnuBT0B5meeoYrGkFJXHQgs1wiTBv99954XsIqYHcAAQ3l/5Yo0SSEKn5nYXaDnwoTo2I
-	GbxNvvfl3AaKQXW3YemduTxZX3qJ5bS1KBoHxsx+jPeHwH9UB0RLf9xW7hFnUj5v5LT5ZMc9bK6
-	hvv9Wk6PGBE5u7UOhspXVac0dUBsQmj/+DZts3k18Nyl2st6y0jiPUYPOZRTGouDkPQoiVGUtiF
-	j378Druzb6wgZ4XT2x2k7KsFQk9XM6Ohqp/+6c5faMrj7Pqo3u7ugoDZW54jtqGKuu7ln7GtNa0
-	E6mg4B/XyxFno3OYj3bUTojvM/7HfHNHmRuMDjtAmwziyxDBlfaAf3U7iRXT0DeKh85AsgHcj5S
-	jzelPX
-X-Received: by 2002:a17:903:1b43:b0:2c0:b31b:b19 with SMTP id d9443c01a7336-2c6de79ed27mr21996755ad.21.1781764758109;
-        Wed, 17 Jun 2026 23:39:18 -0700 (PDT)
-X-Received: by 2002:a17:903:1b43:b0:2c0:b31b:b19 with SMTP id d9443c01a7336-2c6de79ed27mr21996345ad.21.1781764757497;
-        Wed, 17 Jun 2026 23:39:17 -0700 (PDT)
-Received: from [10.133.33.101] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2c6a1878426sm68884315ad.64.2026.06.17.23.39.13
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 17 Jun 2026 23:39:17 -0700 (PDT)
-Message-ID: <c0478a3b-dcc0-44e0-abfd-2c86f24db733@oss.qualcomm.com>
-Date: Thu, 18 Jun 2026 14:39:12 +0800
+        d=1e100.net; s=20251104; t=1781767002; x=1782371802;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ShDllGPAIl7Vq+gPkwo0DaoUO1L9IDh4ObT/0q4ua4w=;
+        b=f3hnfaUZiMKwMpK3vmub23PFg4IC227ePU92Vnhm6s1vcueUup3qWAm18fxncj9f7C
+         P7KmU55LvGop9YtEdm7CQ8PuwRx8Y2ejsD+psFpLASZ56TSiJu6wlDQ6jq2tqNMtEj7M
+         sd0K4jg2HZpztONp8qJvtdV06MlID5RRkIzFi3+BDLSARDgFRbATu7BtEPD8T/NlULyk
+         pTJXgLi7eGSntsFZ2QI4u3WhiRyofXzdG5jM1/Jsck/hEppXd+B9XQaBMsgvj5u6j7yK
+         ySCFDKsvfFtfAxX6t2WOKLsPwB4/hjaWiSk4I2Cxj2SRH3Z9gmLiCcb+1iM+fuAdUghR
+         pDaA==
+X-Gm-Message-State: AOJu0YwWELJgRsFN6c7Vbs39MFF7UoKkn3xo0En7ZzyzWzHOZIUF9Kv1
+	uHZ4HQDcu3KcJyGhmuG6CH6JAmnX48+hkGwtyc9EfHlN822PTIVn3aFLzuewwFslkewAHMmFjwI
+	vv4xQ88gmhbdxpdULC1v863bKPCfggYkZobcI3MdGAVu1y6dK6eQVgw69QYuGGrrDC2qM
+X-Gm-Gg: AfdE7cnE5vMxZzwheqLuQZe0C/UO0ljfwvwwJwt0EC8pqMOevh1AKHV+eVW/qaAqGtm
+	ZvLS+eACP0a3MyjWk8CdVf9j81e6iMv7WQZFXgxRDGwzxEaKxq16cL1izIXjylyO58jxZf87tcv
+	9k5KxOrgV+JN3OtgVQ9ImZOndcXloDEDSrQf77WKrSfrI/6jLiKFO1tDKGNZOnI6lmnr90iQa2w
+	/XtPClrS37/8hsW21x0xvPgpXc1ingUaYO7hmsBoFap0an73dDoQQvzGKUid4GeOVgkuH6O0RJV
+	AJJwtG+nGtmadtnaas8qZhhbrupOSD+D/qzg0m4dhTbjzvvZnaFxqCVdYA/pqJl2Vgw/EpdDici
+	CkjYGwqqYqsYdIKWloQEWCveo9WluqvL2umsD5WP0YP5TPL0E0fIlwGAXKHwCJ5z4/g==
+X-Received: by 2002:a05:7300:2302:b0:30b:c502:23df with SMTP id 5a478bee46e88-30bf7175348mr885305eec.13.1781767002306;
+        Thu, 18 Jun 2026 00:16:42 -0700 (PDT)
+X-Received: by 2002:a05:7300:2302:b0:30b:c502:23df with SMTP id 5a478bee46e88-30bf7175348mr885280eec.13.1781767001800;
+        Thu, 18 Jun 2026 00:16:41 -0700 (PDT)
+Received: from hu-chunkaid-lv.qualcomm.com (Global_NAT1.qualcomm.com. [129.46.96.20])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-30bd677ff31sm4089851eec.16.2026.06.18.00.16.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 18 Jun 2026 00:16:41 -0700 (PDT)
+From: Chunkai Deng <chunkai.deng@oss.qualcomm.com>
+Date: Thu, 18 Jun 2026 00:16:39 -0700
+Subject: [PATCH] rpmsg: glink: smem: order FIFO read after availability
+ check
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/4] soc: qcom: rpmh: Allow non-child devices to issue
- write commands
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Linus Walleij <linusw@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bartosz Golaszewski <brgl@kernel.org>,
-        David Collins <david.collins@oss.qualcomm.com>,
-        Subbaraman Narayanamurthy <subbaraman.narayanamurthy@oss.qualcomm.com>,
-        Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>,
-        Maulik Shah <maulik.shah@oss.qualcomm.com>, kernel@oss.qualcomm.com,
-        linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20260528-pinctrl-level-shifter-v2-0-3a6a025392bf@oss.qualcomm.com>
- <20260528-pinctrl-level-shifter-v2-1-3a6a025392bf@oss.qualcomm.com>
- <4ac5hjmr6divqs4myhcw5sveuboj265sw2jwslbivrfwh5e7ce@6d7ajvgikkgt>
- <18235340-cd42-4d88-bfdb-19aecdd63d68@oss.qualcomm.com>
- <9927f5d7-1eca-4936-b38c-678e76ac11cb@oss.qualcomm.com>
- <vmk6b6cd4jolhisfphgai35eznr5d5uwrhx2qktdwd2qayxwm5@fb2js7bw4dca>
- <837dc7e2-4db8-4a7d-a19f-e53ddbcc9cf6@oss.qualcomm.com>
- <4edaf745-d24f-4ce0-9605-e3971f067b68@oss.qualcomm.com>
- <ao2bl4vzgb3mvqnk2kgvgqnifujbvy6oyzuj4rnvjrv6teyrel@56txzbrtwm64>
-Content-Language: en-US
-From: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
-In-Reply-To: <ao2bl4vzgb3mvqnk2kgvgqnifujbvy6oyzuj4rnvjrv6teyrel@56txzbrtwm64>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE4MDA1OSBTYWx0ZWRfX2x1ILDnwwdb6
- JCku4M8PihI1ZKYYiZcCtnCv1USV2Vm0puumnv+QljN51lejBvwHsJUoGFoJnFNvPAhI1DVdhwT
- uMe7WsNOu+QAukQDhGVcRBevmLfHxENQsbje5+VX26tPRSAmPXTvFzWdQg5jp7nCQILEYRYPXH/
- NaSqP5Ai1UdrubTrR0NxB1VY/bfMDV5svTe8WlNOcva40CN+oBJmJqp2sjq8dqnr/jIFhuQqjHR
- nIUuvFtz6ZyZ4lWFurfK1VJk8XrHThkHJlX6hTSGGBu1QEh5wrwODlKO5EjmyLHu4lhkK0CPx43
- a8BisjOkW0P1F7DkiMvDUn8+2Vo/7JG5WZr9Z6cqAFBm4ofS69D+32kPVK++VXd1RjtbipNQP2l
- GdDgfLKn9QhZa1F6wUZXBHtqDo9OZkd4m2lwkaNXyn7flvDkY4TSjJ1OzIQfLQ2R9rJlHb7k73s
- QMAYyP1k+H7OU3f9f/w==
-X-Proofpoint-GUID: 5u4MTUuoiXMzNVdL8rwtySAbXEvlotgZ
-X-Authority-Analysis: v=2.4 cv=HpVG3UTS c=1 sm=1 tr=0 ts=6a339297 cx=c_pps
- a=JL+w9abYAAE89/QcEU+0QA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260618-rpmsg-glink-smem-mb-v1-1-68a026453a69@oss.qualcomm.com>
+X-B4-Tracking: v=1; b=H4sIAFabM2oC/32NzQqDMBCEX0X23BVj8Iee+h7Fg8aNpjXGZlVax
+ HdvtPdeBj6YmW8DJm+I4Rpt4Gk1bNwYQFwiUH09doSmDQxpkuZJLhL0k+UOu8GMT2RLFm2Dssl
+ lq9KilFkJYTl50uZ9vt6rH/PSPEjNx9XR6A3Pzn9O7SqO3n/DKlBgrQulMy0ySXRzzPFrqQflr
+ I1DQLXv+xcvMPNuzwAAAA==
+X-Change-ID: 20260610-rpmsg-glink-smem-mb-3b63dc278358
+To: Bjorn Andersson <andersson@kernel.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Sricharan Ramabadhran <quic_srichara@quicinc.com>,
+        Arun Kumar Neelakantam <quic_aneela@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, konrad.dybcio@oss.qualcomm.com,
+        tony.truong@oss.qualcomm.com, chris.lew@oss.qualcomm.com,
+        stable@vger.kernel.org, Chunkai Deng <chunkai.deng@oss.qualcomm.com>
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1781767001; l=1751;
+ i=chunkai.deng@oss.qualcomm.com; s=20260604; h=from:subject:message-id;
+ bh=hvOh8cEClaiB2vFMktW+2r7QZW93RLGLCpI2YW05JOI=;
+ b=CyC1+P4gLTNiG0GCQOxfrjRtgg6Ue4lxkOwxEGVYWbQRpaeYKJeG0NZaWGjaFEp05XZKrfcTw
+ 0rL0I8FJEITCUulKK2OTq8Ts6a7ADjaL3m7LvZpJ59vuXNmKKYfr8Rz
+X-Developer-Key: i=chunkai.deng@oss.qualcomm.com; a=ed25519;
+ pk=wWxCpsJRKQeVRzpZ8GLRnUX6ozLMowqE3hiz/j+j9O8=
+X-Authority-Analysis: v=2.4 cv=MNpQXsZl c=1 sm=1 tr=0 ts=6a339b5b cx=c_pps
+ a=cFYjgdjTJScbgFmBucgdfQ==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
  a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=l5iDvloktsjau2Z1kDIA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=324X-CrmTo6CU4MGRt3R:22
-X-Proofpoint-ORIG-GUID: 5u4MTUuoiXMzNVdL8rwtySAbXEvlotgZ
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE4MDA1OSBTYWx0ZWRfX8hNdC1MnKS/R
- 9IPuSIVdtbgr0+Y0XBTpBUwXqLF4o9b6IDGYpims6S6D13Nso933LgBZgpzvvx7+xwElW3CLIsf
- XcFurDyueYe5zY0iK5yYl+/3u7q12eI=
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=cA7Ack57fQK9oI2lPcoA:9 a=QEXdDO2ut3YA:10
+ a=scEy_gLbYbu1JhEsrz4S:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE4MDA2NSBTYWx0ZWRfX6TG1vAln86iw
+ DRLHtmVSt0WXBqdOTjPMBGS96dXz6cU6XWSLS1BrJ2gx0Yi53kQyEXdiA0M46z3+ZaEjkZegoxU
+ dGVTPv00/ba+Ov1r7VC6nrq59vEqpAUB1E0fvpQCXqrXwzsn1KheJTalWi1aFiZCfz7y0XEvZud
+ PX6EdA9ktQiG6U/BjJduLh2yBKHCuglS6C938gQV4CFGOK/YVDHOI6Jnv2lkQRGD5L2RGfmHKed
+ VutnFreM/2BcefbM/mJf4LmBhT0qskfQ3TzQKVX9sxfFoqBdcPgeVFkMm3kZkIPJYe0+3oL0g42
+ ZeC7t21nVXEr9J+Lr3zJMbJ7YRHrflrXCIAcWBsivapttHbOiO6z0zKmND1ShoaftnHXwsXxRGN
+ Vi6MRj5Elk/BIRicaN9V6EeZ50kmfpWiGRbmS4i+xp5cRQeHFRFbuXA7Q/a/dtOFbVjwA9AiTxy
+ V99V7D+33j38cOKvDVA==
+X-Proofpoint-ORIG-GUID: HZwitxB0UvqANre8IeJvhCjS6BvHR9o_
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE4MDA2NSBTYWx0ZWRfXxmmPolfaEcz6
+ y6LTtxb6JK+xXb9alOLcy7X7ZwSmSpDmMMAQiyJ6fa6icqZysKlxLsP69YGsEA96dpWVnDOe8LG
+ S4ShGyLcYTIZq8SYF+PMoKhWFF0bwz0=
+X-Proofpoint-GUID: HZwitxB0UvqANre8IeJvhCjS6BvHR9o_
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-17_02,2026-06-17_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 suspectscore=0 priorityscore=1501 malwarescore=0
- clxscore=1015 adultscore=0 phishscore=0 bulkscore=0 spamscore=0
- impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ bulkscore=0 phishscore=0 spamscore=0 impostorscore=0 clxscore=1015
+ malwarescore=0 suspectscore=0 lowpriorityscore=0 priorityscore=1501
+ adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2606180059
+ definitions=main-2606180065
 X-Rspamd-Action: no action
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-113694-lists,linux-arm-msm=lfdr.de];
-	RCPT_COUNT_TWELVE(0.00)[18];
+	TAGGED_FROM(0.00)[bounces-113695-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[12];
 	MIME_TRACE(0.00)[0:+];
 	RCVD_TLS_LAST(0.00)[];
 	FORWARDED(0.00)[lists@lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:dmitry.baryshkov@oss.qualcomm.com,m:konrad.dybcio@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:andersson@kernel.org,m:konradybcio@kernel.org,m:linusw@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:brgl@kernel.org,m:david.collins@oss.qualcomm.com,m:subbaraman.narayanamurthy@oss.qualcomm.com,m:kamal.wadhwa@oss.qualcomm.com,m:maulik.shah@oss.qualcomm.com,m:kernel@oss.qualcomm.com,m:linux-kernel@vger.kernel.org,m:linux-gpio@vger.kernel.org,m:devicetree@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:andersson@kernel.org,m:mathieu.poirier@linaro.org,m:quic_srichara@quicinc.com,m:quic_aneela@quicinc.com,m:linux-arm-msm@vger.kernel.org,m:linux-remoteproc@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:konrad.dybcio@oss.qualcomm.com,m:tony.truong@oss.qualcomm.com,m:chris.lew@oss.qualcomm.com,m:stable@vger.kernel.org,m:chunkai.deng@oss.qualcomm.com,s:lists@lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_SENDER(0.00)[fenglin.wu@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FORGED_SENDER(0.00)[chunkai.deng@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:from_mime,sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,qualcomm.com:dkim,qualcomm.com:email];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[fenglin.wu@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[chunkai.deng@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
 	ALIAS_RESOLVED(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
 	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: A147869DE10
+X-Rspamd-Queue-Id: 4C38B69E054
 
+glink_smem_rx_peek() reads the RX FIFO payload after the caller has
+determined data is available via glink_smem_rx_avail(), which reads the
+remote-updated head index. A control dependency between the head read
+and the subsequent payload read does not order the two loads, so the
+CPU may speculatively read the FIFO before observing the head update
+and consume stale data the remote has not yet published.
 
-On 6/12/2026 8:27 AM, Dmitry Baryshkov wrote:
-> On Thu, Jun 11, 2026 at 12:36:43PM +0200, Konrad Dybcio wrote:
->> On 6/9/26 3:28 AM, Fenglin Wu wrote:
->>> On 6/8/2026 5:21 AM, Dmitry Baryshkov wrote:
->>>> On Thu, Jun 04, 2026 at 10:02:43AM +0800, Fenglin Wu wrote:
->>>>> On 6/2/2026 3:29 PM, Fenglin Wu wrote:
->>>>>> On 6/1/2026 9:37 PM, Dmitry Baryshkov wrote:
->>>>>>> On Thu, May 28, 2026 at 06:05:35PM -0700, Fenglin Wu wrote:
->>>>>>>> Currently, the RPMH driver only allows child devices of the RPMH
->>>>>>>> controller to issue commands, as it assumes dev->parent points to the
->>>>>>>> RSC device.
->>>>>>>>
->>>>>>>> There is a possibility that certain devices which are not children of
->>>>>>>> the RPMH controller want to send commands for special control at the
->>>>>>>> RPMH side. For example, in PMH0101 PMICs, there are bidirectional
->>>>>>>> level shifter (LS) peripherals, and each LS works with a pair of PMIC
->>>>>>>> GPIOs. The control of the LS, which is combined with the GPIO
->>>>>>>> configuration, is handled by RPMH firmware for sharing the resource
->>>>>>>> between different subsystems. From a hardware point of view, the LS
->>>>>>>> functionality is tied to a pair of PMIC GPIOs, so its control is more
->>>>>>>> suitable to be added in the pinctrl-spmi-gpio driver by adding the
->>>>>>>> level-shifter function. However, the pinctrl-spmi-gpio device is a
->>>>>>>> child device of the SPMI controller, not the RPMH controller.
->>>>>>> This replicates the story of the PMIC regulators. There are two drivers,
->>>>>>> one SPMI and one RPMh. Why don't we add a separate, RPMh-based GPIO
->>>>>>> driver targeting only those paired GPIOs (and we don't even need to
->>>>>>> represent them as a pair, it might be just one pin).
->>>>>> Thanks for the suggestion.
->>>>>>
->>>>>> I agree that adding a separate, RPMh-based GPIO driver would be more
->>>>>> straightforward from RPMh control perspective. It makes the new device
->>>>>> as a child of the RSC device then it can naturally use the APIs for RPMh
->>>>>> commands. The main challenge here is, we need to make the level-shifter
->>>>>> mutually exclusive with other GPIO functions when the GPIO pairs are
->>>>>> used in level-shifter function, which means we need to write SPMI
->>>>>> commands to disable the associated GPIO modules. I am not sure if AOP
->>>>>> already handles this; as far as I know, AOP only manages the
->>>>>> BIDIR_LVL_SHIFTER module registers. Let me double check on this
->>>>>> internally, if the GPIO modules could be controlled along
->>>>>> with BIDIR_LVL_SHIFTER module registers at AOP side, and get back.
->>>>>>
->>>>> I checked on this internally, AOP only handles BIDIR_LVL_SHIFTER module
->>>>> registers, it doesn't disable the associated GPIO modules. Also, I still
->>>>> have no idea how could we make the "level-shifter" function to be mutually
->>>>> exclusive with other GPIO functions after moved it into a separate driver.
->>>>> Do you have further suggestions?
->>>> So, for my understanding, we still need to write SPMI registers to
->>>> configure the pins and only then AOP can handle the level shifter?
->>>>
->>>> I was thinking of using gpio-reserved-ranges to prevent those GPIOs from
->>>> being used by the normal SPMI driver.
->>> More background: "level-shifter" module is actually an independent hardware which is not part of the GPIO module. However, they are sharing the physical pins. Which means, from PMIC chip perspective, these pins can be configured to either a GPIO function or the "level-shifter" function. So in PMIC base dtsi file, for example, pmh0101.dtsi, these pins should not be restricted in the GPIO nodes in "gpio-reserved-ranges".
->>>
->>> Also, we need to make the GPIO modules are disabled when the "level-shifter" is enabled, to ensure that the "level-shifter" circuitry is not impacted by the GPIO modules internal circuitry. So it is supposed to write GPIO EN_CTL register (offset 0x46) to 0 through SPMI bus when the "level-shifter" is enabled.
->>>
->>> That's why we have the requirement to access both RPMh and SPMI bus in the same driver.
->> I was thinking about other ways to solve it.. maybe someting like:
->>
->> &pmh0101_gpios {
->> 	pmh0101_ls_pins1_2: foo-bar {
->> 		pins = "gpio1", "gpio2";
->> 		// appropriate pinctrl config
->> 	};
->> };
->>
->> &rpmh_rsc {
->> 	// should this be a gpio controller? a mux provider?
->> 	// is there another class that would better suit this?
->> 	rpmh_level_shifter: rpmh-foo-bar {
->> 		pinctrl-0 = <&>;
->> 		pinctrl-names = "default";
->> 	};
->> };
->>
->> // but where would it make sense to describe?
->> // fixed-regulator or something akin to that?
->> &some_consumer {
->> 	someclass = <&rpmh_level_shifter 1>;
->> };
->>
->> i.e. the "rpmh level shifter" driver would consume a reference to the
->> pins, configure them as necessary (just like any other pinctrl consumer)
->> upon request
-> SGTM.
-Thanks for the suggestion, Konrad and Dmitry!
-Using the pinctrl state in the new driver to disable GPIO pairs is a 
-good idea. I’ve been considering which class would best support the PMIC 
-level-shifter, especially since we’re moving it to a new driver and it’s 
-no longer restricted by the pinctrl framework. Functionally, the driver 
-should provide following capabilities:
-1. Enable and disable the level-shifter at runtime. Consumers, likely 
-I2C client devices, will enable it when active and disable it when not, 
-mainly to save power.
-2. Allow sharing the level-shifter between multiple consumers, even 
-across different subsystems (currently managed by AOP).
+Add rmb() in glink_smem_rx_peek() before the memcpy_fromio() so the
+availability (head) read is ordered ahead of the FIFO payload read,
+matching the consumer pattern in
+Documentation/core-api/circular-buffers.rst.
 
-I see flaws in each of the following approaches and haven’t decided 
-which to use:
-A. Using the mux subsystem: The level-shifter acts as a switch, so it 
-fits the mux subsystem physically. It can be enabled/disabled via 
-‘mux_control_select()’ and ‘mux_control_deselect()’. However, with 
-multiple consumers, a second call to ‘mux_control_select()’ is blocked 
-until ‘mux_control_deselect()’ is called, so votes from multiple 
-consumers are not allowed and can’t be aggregated.
-B. Using the GPIO/pinctrl subsystem: After moving to a new driver, the 
-level-shifter doesn’t fit the GPIO controller or pinctrl device concept. 
-It has only one pinmux, and each level-shifter works with two pins. 
-Also, both GPIO and pinctrl frameworks require exclusive control, and 
-couldn't shared between consumers.
-C. Using the regulator framework: The level-shifter is controlled via 
-the RPMh XOB resource at the AOP side, which was adopted from the idea 
-of power rails sharing between subsystems. The regulator framework’s 
-APIs and reference counting fit the requirements for sharing between 
-multiple consumers. The problem is, the level-shifter isn’t a power rail 
-so it is conceptually not a regulator.
+Fixes: caf989c350e8 ("rpmsg: glink: Introduce glink smem based transport")
+Cc: stable@vger.kernel.org
+Signed-off-by: Chunkai Deng <chunkai.deng@oss.qualcomm.com>
+---
+ drivers/rpmsg/qcom_glink_smem.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-Please let me know your thoughts. If there isn’t a suitable approach for 
-supporting the PMIC level-shifter right now, I’ll stop chasing on this 
-until there is a better idea.
+diff --git a/drivers/rpmsg/qcom_glink_smem.c b/drivers/rpmsg/qcom_glink_smem.c
+index 62adc4db2317..35bb03e67ae8 100644
+--- a/drivers/rpmsg/qcom_glink_smem.c
++++ b/drivers/rpmsg/qcom_glink_smem.c
+@@ -103,6 +103,13 @@ static void glink_smem_rx_peek(struct qcom_glink_pipe *np,
+ 	if (tail >= pipe->native.length)
+ 		tail -= pipe->native.length;
+ 
++	/*
++	 * Order the availability (head) read in glink_smem_rx_avail()
++	 * against the FIFO payload read below, so APPS never consumes
++	 * stale data the remote has not yet published.
++	 */
++	rmb();
++
+ 	len = min_t(size_t, count, pipe->native.length - tail);
+ 	if (len)
+ 		memcpy_fromio(data, pipe->fifo + tail, len);
 
-Thanks
+---
+base-commit: a225caacc36546a09586e3ece36c0313146e7da9
+change-id: 20260610-rpmsg-glink-smem-mb-3b63dc278358
 
+Best regards,
+--  
+Chunkai Deng <chunkai.deng@oss.qualcomm.com>
 
->> Konrad
 
