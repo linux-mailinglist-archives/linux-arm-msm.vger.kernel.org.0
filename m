@@ -1,300 +1,310 @@
-Return-Path: <linux-arm-msm+bounces-113829-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-113830-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id aNK1A5McNWqjnAYAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-113829-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jun 2026 12:40:19 +0200
+	id WZVqE/MfNWo+nQYAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-113830-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jun 2026 12:54:43 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 987546A5447
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jun 2026 12:40:18 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9DC1A6A551D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jun 2026 12:54:42 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=cirrus.com header.s=PODMain02222019 header.b=qO5ATb2Y;
-	dkim=pass header.d=cirrus4.onmicrosoft.com header.s=selector2-cirrus4-onmicrosoft-com header.b=rZPBQawq;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113829-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.232.135.74 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113829-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=reject) header.from=cirrus.com;
-	arc=reject ("cv is fail on i=2")
+	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=OhNHN0bi;
+	dkim=pass header.d=oss.qualcomm.com header.s=google header.b="csg/tHiX";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113830-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113830-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=reject) header.from=qualcomm.com;
+	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 12F21300B9FA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jun 2026 10:40:18 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 70638300B61A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jun 2026 10:54:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 25F0E3749E3;
-	Fri, 19 Jun 2026 10:40:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 244D737419B;
+	Fri, 19 Jun 2026 10:54:41 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-001ae601.pphosted.com (mx0a-001ae601.pphosted.com [67.231.149.25])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E40AF3624A5;
-	Fri, 19 Jun 2026 10:40:13 +0000 (UTC)
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781865615; cv=fail; b=priK3l7jc39rlm6LRZabbDVtzQnyku9FtQZ8CLKWFKA5iXVtoFg/1Twvs+1y8IFW0mP2/HagsdCkR/0LDZZCo8rsewDJTRodoFCJmvqMFuGkpZ92crMdaLufgtjN3F7UhSj8hbctKuZOzF64CpF/s7RtYdFtezMJp21Vw2bk8Zw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781865615; c=relaxed/simple;
-	bh=55NxGL9npcHS6HlJwGZvkIFWT/0zqIDehAEYIzoMPOE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bHOhKZ45RQNbo4qb8tVXRk+hvsHZfHW2UIY2ZkwS/MlA1Eh4mAmcHl/JdxYpbUX9zNfRplQNkQ2T0Mvf0IUXQE4Q55D3GtWfdDuN2/H+LGpmSlQrZ9NV5FIRFT+5hF9O1K5dDOJmwC7igAwelj6+r5eDmLGoPyJTGGtP3vNr4dE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=opensource.cirrus.com; spf=pass smtp.mailfrom=opensource.cirrus.com; dkim=pass (2048-bit key) header.d=cirrus.com header.i=@cirrus.com header.b=qO5ATb2Y; dkim=pass (1024-bit key) header.d=cirrus4.onmicrosoft.com header.i=@cirrus4.onmicrosoft.com header.b=rZPBQawq; arc=fail smtp.client-ip=67.231.149.25
-Received: from pps.filterd (m0077473.ppops.net [127.0.0.1])
-	by mx0a-001ae601.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65J7c9222848864;
-	Fri, 19 Jun 2026 05:39:17 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cirrus.com; h=cc
-	:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=PODMain02222019; bh=eqCrcOKyOn8XAyC+h2
-	Or/oWbNlkET9lDTBjL/V4AWE4=; b=qO5ATb2Yb2Lw6e7TUg2n4qMsDzd5iBiUeb
-	WX55I9z8K2ZZ9TK01yH6rmCEk3QH5n8Vmj0feR7lzRm8+OjA2Mmv/ygR1+DuMzkB
-	cQH+0R0Fqgy4ANoWNw+s9Q5glSeBmaVbe1Isu2qfPZR3zNTOhdgh921PvFgygneX
-	ohLTqWlcmqftKbKz9icS3wVkHB7iGT6VX3QoWNO9Cq4yZ74ARM+YLZE6EKneNgLc
-	j8YaWpvE79NeTj8iNgwY7jWV6T1lZGv1YOETRcO1mrlkJkGBKKhqLKSMIUV7R+EL
-	+y/5b5irszy4bPsxLJ6IIByKS8Yczw18Q+FdhoYGkKBWRzc0n9Qg==
-Received: from ph7pr06cu001.outbound.protection.outlook.com (mail-westus3azon11020093.outbound.protection.outlook.com [52.101.201.93])
-	by mx0a-001ae601.pphosted.com (PPS) with ESMTPS id 4eueefva0q-1
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-	Fri, 19 Jun 2026 05:39:17 -0500 (CDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=cWJR3abiyMEg2YykeS3/vc6WKP/yRiaswp03UxOA6yKFQ/NXdSb0cSFJxP8OsmqfcdTKp/oc8MiQot1Ul3CqJVg+jZ2SRKoeV7XNW1LDSyC8kkFUfucr2IyIwCatywkO1jqD0bD4F/PdXF3C8qqm7Znj5fpfVQAZEpybE7yLCoeMQAn6dBZcQWrLJhWn97L5pwhDkQib7EtWdtktS1Le3YUiiLPouwYfY0IUQaSnlW531ZB5pKc7pG6/M2ma7N0guxeGm9SHdlM9wIQISJRKgtOhFaapBNOmic5dbASR3AXVlD8f59OMvO+i1rhcJDaio6cpINlWJjmtJXHAa0/hfQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=eqCrcOKyOn8XAyC+h2Or/oWbNlkET9lDTBjL/V4AWE4=;
- b=I9vL6estGN7WLqiLJGsXn3Fca0/H8BhnShC9VBn6W5rOCjl2WlEVAZ5OIobNsfiLXLirsfxubF/D0jIsQJG2vRH0nzMFQrrdhCk542UazPjNXjGDh+HRbXI2a65EOadN5AINbiaPaZ9ZaZujh3Jomf/IpSiynCbIslyWO05vKiVmtoi/GYAHWRt8Uyb6Rp+6ZdixXKAf2LoU4lokS2ZXsHNMJNehOMa4KrYZl5OVLcV6UeHcwC/KUcKAc/rYMmUVyfPB/Y64vdkRwZ6gEUdh+gZfRk2M9RD2JTzCav7qCIOB3x6s+fCBQfVA4yvHetAkVSuyMy6gF/klL/DIkj1s/A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=softfail (sender ip
- is 84.19.233.75) smtp.rcpttodomain=analog.com
- smtp.mailfrom=opensource.cirrus.com; dmarc=fail (p=reject sp=reject pct=100)
- action=oreject header.from=opensource.cirrus.com; dkim=none (message not
- signed); arc=none (0)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0B9A367B81
+	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Jun 2026 10:54:39 +0000 (UTC)
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781866481; cv=none; b=lVnLs84XpRvFBHNnXZ2XbrI6eKMLE80EGmcpWAGAvzBRZRnDxB37AlJv+p5mDUvEQ55eV6EC2h3GErz2E1zBCy11i7w/8qdtHVvvHRyUhU5/MVBpfFGi0LnuXBVAjE/6H07iT86bR0ldq/JSA48rBPIFYTgzSEfOUsjxv3cwFa0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781866481; c=relaxed/simple;
+	bh=cijrwQ9O5Wsy7Ns7ARoiPJFl63dkmQm9dPwVhuUPxvE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=c4yo1w7EeS2KK34+cl6bwVriiD4bg27zsRXt+Op5o+xu83Ml2wjQF1SYwQ8MJUw8WlXHBd8ofU/K9+cqmYN7sVV80gRopHp+08lQSkvw5fhwxX+BW9Ftt1/ZpcpyYVPWmNSBO6rHTrxCwvxBsr4mTHgWU88ObEYNk7a9jyRudLQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=OhNHN0bi; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=csg/tHiX; arc=none smtp.client-ip=205.220.180.131
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65J7Q41u4033718
+	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Jun 2026 10:54:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	uJASCICmhbYbPbzCDWKXXIRnLLMfhiemH7GJWmQ/H1Q=; b=OhNHN0biDYyFQwgk
+	nXOC7uj4+hu8ejH3kmNt1s+lrUg4ZL23JpqdrV/OMVC+JLAuBLfE+xPm8V78s9iQ
+	IF1mOiz1CV6CNDvSWeOueLa/qfC3FSSmq3Sk5+jbseiurHfL7elTbL+aX8zcQja/
+	rDCmev4XPuahHfjOj/pDvSk4eXqC9a4WyYRwiD0MBk1RRNXmUXy5eWUudBDff8vp
+	IaBJVLBpM2FBEPicbmK6K9qtCNsOlaQRO/HBzQ4qcICcRHme43QtTpf2XhAIqjaO
+	FUCW16qOUCJnr4sifm6l+WTi8bbLHcVZil3qZQUudtHxiiVFW4A0sVMWm60wTmuW
+	P9ZVgA==
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4evp6sax3w-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Jun 2026 10:54:38 +0000 (GMT)
+Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-2c0d0516ad7so20207855ad.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Jun 2026 03:54:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=cirrus4.onmicrosoft.com; s=selector2-cirrus4-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=eqCrcOKyOn8XAyC+h2Or/oWbNlkET9lDTBjL/V4AWE4=;
- b=rZPBQawq13dFq70+SBjocqAsWCaorH/Ej4p7KCyyzc54B0po4SGWXzxNJ0Y852WsayRmcDXSHcuEZzTIzxWLIjHvQUY4Zvy6Z478bOJGVZruX9IAzmfNYRKb2F62Cl2eHDazkPgbrIs+hC2r61nmXam00bcwK6oNjYqTqEgc8zI=
-Received: from DS1P221CA0021.NAMP221.PROD.OUTLOOK.COM (2603:10b6:8:242::12) by
- LV0PR19MB9543.namprd19.prod.outlook.com (2603:10b6:408:326::16) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.139.11; Fri, 19 Jun
- 2026 10:39:13 +0000
-Received: from DS1PEPF0001709A.namprd05.prod.outlook.com
- (2603:10b6:8:242:cafe::1) by DS1P221CA0021.outlook.office365.com
- (2603:10b6:8:242::12) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.139.16 via Frontend Transport; Fri,
- 19 Jun 2026 10:39:12 +0000
-X-MS-Exchange-Authentication-Results: spf=softfail (sender IP is 84.19.233.75)
- smtp.mailfrom=opensource.cirrus.com; dkim=none (message not signed)
- header.d=none;dmarc=fail action=oreject header.from=opensource.cirrus.com;
-Received-SPF: SoftFail (protection.outlook.com: domain of transitioning
- opensource.cirrus.com discourages use of 84.19.233.75 as permitted sender)
-Received: from edirelay1.ad.cirrus.com (84.19.233.75) by
- DS1PEPF0001709A.mail.protection.outlook.com (10.167.18.104) with Microsoft
- SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.21.139.8
- via Frontend Transport; Fri, 19 Jun 2026 10:39:12 +0000
-Received: from ediswmail9.ad.cirrus.com (ediswmail9.ad.cirrus.com [198.61.86.93])
-	by edirelay1.ad.cirrus.com (Postfix) with ESMTPS id 3AA2E406544;
-	Fri, 19 Jun 2026 10:39:11 +0000 (UTC)
-Received: from opensource.cirrus.com (ediswmail9.ad.cirrus.com [198.61.86.93])
-	by ediswmail9.ad.cirrus.com (Postfix) with ESMTPSA id 1EDDE82025A;
-	Fri, 19 Jun 2026 10:39:11 +0000 (UTC)
-Date: Fri, 19 Jun 2026 11:39:09 +0100
-From: Charles Keepax <ckeepax@opensource.cirrus.com>
-To: David Laight <david.laight.linux@gmail.com>
-Cc: Bui Duc Phuc <phucduc.bui@gmail.com>, Mark Brown <broonie@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>, Jaroslav Kysela <perex@perex.cz>,
-        Takashi Iwai <tiwai@suse.com>, Cheng-Yi Chiang <cychiang@chromium.org>,
-        Tzung-Bi Shih <tzungbi@kernel.org>,
-        Guenter Roeck <groeck@chromium.org>,
-        Benson Leung <bleung@chromium.org>,
-        David Rhodes <david.rhodes@cirrus.com>,
-        Richard Fitzgerald <rf@opensource.cirrus.com>, povik+lin@cutebit.org,
-        Support Opensource <support.opensource@diasemi.com>,
-        Nick Li <nick.li@foursemi.com>,
-        Herve Codina <herve.codina@bootlin.com>,
-        Srinivas Kandagatla <srini@kernel.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-        Shenghao Ding <shenghao-ding@ti.com>, Kevin Lu <kevin-lu@ti.com>,
-        Baojun Xu <baojun.xu@ti.com>, Sen Wang <sen@ti.com>,
-        Oder Chiou <oder_chiou@realtek.com>,
-        Lars-Peter Clausen <lars@metafoo.de>, nuno.sa@analog.com,
-        Steven Eckhoff <steven.eckhoff.opensource@gmail.com>,
-        patches@opensource.cirrus.com, chrome-platform@lists.linux.dev,
-        asahi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        linux-sound@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org
-Subject: Re: [PATCH 15/78] ASoC: codecs: cs42l43: Use guard() for mutex locks
-Message-ID: <ajUcTfG3vSGz3n3d@opensource.cirrus.com>
-References: <20260617103235.449609-1-phucduc.bui@gmail.com>
- <20260617103235.449609-16-phucduc.bui@gmail.com>
- <ajJ9rbHTspXHo6Ou@opensource.cirrus.com>
- <20260617140209.3f89706c@pumpkin>
- <CAABR9nG+6gOj4KnWmTyykgGN93xy6jKQh+-_f8Xxn=Jkv28vBA@mail.gmail.com>
- <20260619101346.2ec49087@pumpkin>
+        d=oss.qualcomm.com; s=google; t=1781866478; x=1782471278; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=uJASCICmhbYbPbzCDWKXXIRnLLMfhiemH7GJWmQ/H1Q=;
+        b=csg/tHiX3AVJ7SSgoBZvTOAR/GPkbHBvyEvSH2AD8w/4vJg44/U3ppzch1umV5J3At
+         pYkOTQEb534TgSPqcANlf3+cX0hRIk1Xw7dosF05yP+kZKa5fHYglQydxHJAcH2TPPAT
+         o6aVq1iWd5861mpqJub0HJ5Q51kMK3vyJiAedJYxJBn8Y221qHKWI29V1YAkEd7zPC9J
+         vcgGCYEv+QCwalHoqFmQUZWtn7PPLp6JLP2Ek9gJUFT1fKC4ajvlWtrv7hkyOzNJ9590
+         2Zh1TLVrJcqm8BH5wUU4tStDoSkdTSr6UXBIuPcz5dz8yWudk9fHBcy6DgUuQwkvZbRx
+         xaGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781866478; x=1782471278;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=uJASCICmhbYbPbzCDWKXXIRnLLMfhiemH7GJWmQ/H1Q=;
+        b=FMFcX0pnZAk2LergY7BmgfN3X9ysuGceA0vUAK4/bCxWoP6jQarUjJHReF8uTHy6Px
+         8Nd3NvRp1p6rSCFJHA9MPQRd+GWR8hN5Fq32ziouhepg54FFY+OGFyBJjpQ8GflwI3pV
+         GfcoZLSDd1bD4ntHUPGAwXBEDyPUyTrzDMglPeewhQ5QWBXPKGhbTS/Wv1ClgBsOycuc
+         LrEBSr63s+U6uIjMTIva8PMNfnAfYByYqc1Cu7/+ENItN9GrRqwbqeGnx7EWAQTJeZ/V
+         yrxP6UY/5KyFSy/ZUoGHDwtDnHiffuRbCm1ScY/aDXo+h1W0UNWlFiLpvOQ0Cd4nHOGq
+         oTGA==
+X-Forwarded-Encrypted: i=1; AFNElJ/l7mI8RQn+9LA+fFwsOvlV8311qP/EyWM/ZBbe8x8uvMmb5O+6OUhC0E3K+xTJb1M3PBMCEq3u39QYlu3y@vger.kernel.org
+X-Gm-Message-State: AOJu0YygkfeK5d0s801GmQMmdHt8AL7JgoOL0IUHjlez8EOui38O70+3
+	COhmSkWRnrH6/5+EcbT2FkGl3zkFXbuEEgp05jDxJfgMxM5lRsUVObL+aOYiPFI5i84xOL5n37b
+	+rwqQXKCFxx/WKKtovSoczDxSChT0md1NhIqGqpskfxacnHVuspA2F8ysjze6pFzPI+ts
+X-Gm-Gg: AfdE7clOE0EOituxjH8wW/lRV5WzfhNoCnmS9fk3GOEsdq6nbKT3GsXzhKR35GIcVVe
+	Md840ymhwIhOFiXlXL33gnh7DbrVhX8HDwxP1TZmXCoWcj7shjAiaGGuWD0Yj/MjeCT7DksFAi3
+	xAGmew2G5clQuzUOEw1TjMJNaCHjJUtuPu4kLM2IjhofrdYpf+ba+5V9QavbQj5PU9oUiMY/MzB
+	Gs7F5je3H1UPSeXI6WvoC49eZ7OtDyEsOojEAeFJkW5z9UZ4R2siwFuJRhAR4dZ0DbnO3PsI4BF
+	ZHMIi3pBfKm/obUfI/yhLq4D7/60Xyqj1yyyC3LRtQx7ijcEGiYlaY2qTr1AtIrAZih9nDsYTeC
+	MdTGBEVVK7q1dETMXQaWvrbZsrH1GJXyUv22ArQ==
+X-Received: by 2002:a17:903:32c7:b0:2c0:bcb3:86f with SMTP id d9443c01a7336-2c718f1f000mr33930735ad.6.1781866477622;
+        Fri, 19 Jun 2026 03:54:37 -0700 (PDT)
+X-Received: by 2002:a17:903:32c7:b0:2c0:bcb3:86f with SMTP id d9443c01a7336-2c718f1f000mr33930485ad.6.1781866477173;
+        Fri, 19 Jun 2026 03:54:37 -0700 (PDT)
+Received: from [10.219.56.41] ([202.46.23.19])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2c73663cc3bsm4044435ad.76.2026.06.19.03.54.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 19 Jun 2026 03:54:36 -0700 (PDT)
+Message-ID: <aaf4daee-4886-4214-a761-80545d2565ee@oss.qualcomm.com>
+Date: Fri, 19 Jun 2026 16:24:31 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260619101346.2ec49087@pumpkin>
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS1PEPF0001709A:EE_|LV0PR19MB9543:EE_
-X-MS-Office365-Filtering-Correlation-Id: 23131880-1b44-4383-602b-08decdef00b3
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|7416014|376014|30052699003|36860700016|23010399003|61400799027|82310400026|16102099003|18002099003|22082099003|4143699003|5023799004|56012099006|11063799006|6133799003;
-X-Microsoft-Antispam-Message-Info:
-	cMmjtLtI3FcFerFobXhR5FNHvDGJdhWrPbbtakaUumA0QwU8qQ/fjxqmBRZn1wNtLr/pNbUo4vYzTnYDnZwWkWje2KLi0IYXYjgpID9y+0sQD15CCifgTsqKKu2GPzXEEJwPSwClU68PdZq0lPoPoqMxcoZbsINnyniBIFWB1Cfmv0e/zfY5JRtyMNC34rESvcRK4B7yqkXoDVOmueMJMoPYqJ290ucbC8164ZqeQskqhYTocMcbQ/2AGzg76UkNgBZ63S8e4OFlZ8Vd/8kt+/+EN0xXjrL7H6uti5lMCCLBkBvGe56Z2ZrQoW5pPhEIHTfSjl0pJfsRdzum6nCOs73JDYYvyDfHOVAl5WaQza7msdrFuyBpUQQ7GvY17mJ3NgtelW0qn/z1a/fwATo/fPSNcm36UxowP/INbcitJaEjHlkwKQXX+4wP2JW+UHEBQ/JCfutHm9lAVOuSg9PelDE+I6PjXKqtxUSgpKE/6Qy2F/a90ZsQqbzhw7BDboxMUfjd0Q6h0u4XLcyApv69zqxoD760C9U8HeffCHdmLv7uy/s09UQC0grj0wO6mmd5NM/jnDTND6DZaH0tKMgx43gbsHOo+R3Oy6TLRXH4qtUQ9i98RvSTdN72ZXwGqhFm+fy2Ze5rweqWHz9T+ZrLtbla9qIIDBcwN+8ljLWszLJ8uZvsCq5Vzh4/gG7PqgUO+aWYWxqd82mBNBnQuffuxA==
-X-Forefront-Antispam-Report:
-	CIP:84.19.233.75;CTRY:GB;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:edirelay1.ad.cirrus.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(7416014)(376014)(30052699003)(36860700016)(23010399003)(61400799027)(82310400026)(16102099003)(18002099003)(22082099003)(4143699003)(5023799004)(56012099006)(11063799006)(6133799003);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	wSxmKo5nUeic5dduWSuouRqTebHlhpOqVNuORVkjhqUeYccjn4bWBuZt+oavcZLIsyUU7XLxbCLb66cQZ7zQ4z46kr3JPZxCdcV1SwMA6bqoWjrURlIs+yO8DlWn17+ZI2HPSCkJYiO0fIKBbAwZrXva9inEsmlG+nL8sPMbtwOQiH7V+hquRmkPOdJvi8ppNRzq/IKmzEZIbyFrOUyM5T6TX7Fjzt7pMsIgsDI45grWSx0+dUUBmxW8EoS6TluX/D3teSGHU/3PiRr3as1Q7KcTay2YHm8qi2NI7zZbxWP5ely+1T2VyX7jOP95AuhlAn3qe3VZ84V0ayATPG2ngRwsqcAN9ztRCq1gjjZP8FpCFhohVT+/lDM7Ap4BeZtsaFG47qLChXQNBcP9eF1BI+LQGZ1hR9l6RcRYQTjX4lZ2b0MPmPxX1ThhiioifAwJ
-X-Exchange-RoutingPolicyChecked:
-	c2tK64T7g1SQnVoooYChftxJMvUxSp9TQ9hovbQh+ulCCyRq9OUl7xWXkCP2NzFl/KLP6dBsRpmZab3MlbQL87thPUnNHy8ftGJChxRDilNDMOpPgL/7N9npDgWVWHmYQz81ZfO6iSbvYxJtrIiDV2XrKUR66Rg3x3BHBRGLRjiAEzBZ9YngWk1qcLTrYwisHFf+ooL1TVZcr/wp5u4RKWyYkh2Xxlo+wEB5M3mTXV4riK7frdJ/xWg2QF+T/VahT/0P92MTsLFFwPs2K4/cEw+TVe+suoOUeg4RxEBM9FLu34Lk107YOMxtrU00OPLStrw4L4JbFUsN+s0f2DOV4Q==
-X-OriginatorOrg: opensource.cirrus.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Jun 2026 10:39:12.3315
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 23131880-1b44-4383-602b-08decdef00b3
-X-MS-Exchange-CrossTenant-Id: bec09025-e5bc-40d1-a355-8e955c307de8
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=bec09025-e5bc-40d1-a355-8e955c307de8;Ip=[84.19.233.75];Helo=[edirelay1.ad.cirrus.com]
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: TreatMessagesAsInternal-DS1PEPF0001709A.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV0PR19MB9543
-X-Proofpoint-GUID: fY95iPaaVKiVsEex4aTZwoiIFk5z0WD7
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE5MDA5OSBTYWx0ZWRfX0Lby/p6xWiXW
- N46rwI1mjCOQA8vl2slgQn9G9utU/d5sHclbSzGqSa3neBCsDSunEK5m+82rAbVHyvndRqtGoKB
- gpJrUqMQfmg1gthLk58Qs+ZtkwNaQWmKuMC1D5xvsjoCmxDj14AP2gV0baSMzsrLXHnBzYM+fzl
- XZhLDONoTQQ6isQ+eenrIlhiK3qnT5FDGTOCoNWbvUHybGzl0GBIYJTipwzQ4ZbkAlYM8GJSoD7
- RCfog5WbzZQAkBDAFyfzFVBW3qqN6OLyt6/eTX3EhCuTZfPvwPiu1EVt3AA4bpzw8XZdmoSdRIp
- Gtdd1ztICLzcjwV++u/VYJwxNb42tSFLFR7v5XnYg3+/zrLxK+ltEQ9CzgKo0IuKWEorD4UCk1e
- y/fuI7aSemWk7pim+FUJojF5nYEAHWREOjap+i6iAyYLV3QTke7TtKhk5Sfrm0H2RRkcA3d2lkO
- bESZVSZzX4DIdXX4oZA==
-X-Proofpoint-ORIG-GUID: fY95iPaaVKiVsEex4aTZwoiIFk5z0WD7
-X-Authority-Analysis: v=2.4 cv=Wukb99fv c=1 sm=1 tr=0 ts=6a351c55 cx=c_pps
- a=bYRzraljH1LAKK9Y2O2T7Q==:117 a=h1hSm8JtM9GN1ddwPAif2w==:17
- a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
- a=kj9zAlcOel0A:10 a=FelO9ux0wxsA:10 a=s63m1ICgrNkA:10 a=RWc_ulEos4gA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=iX4cTi3TZMoOKdANLEfx:22 a=Dj2-6B8FqX4mGL0U3gbX:22
- a=pGLkceISAAAA:8 a=e8pHenwNzZXRAC_djyEA:9 a=CjuIK1q_8ugA:10 a=O8hF6Hzn-FEA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE5MDA5OSBTYWx0ZWRfX1WgC6qFuPfBK
- imufkA/VSNPLuAkrJXYaT48f5sbRM2BWqmFzEOsWOLn5/ejnWNJT68RMj/u0Tm+2f+9+BAR9O43
- gZ1luTYPD3B5VDDyoY77ACJ57ut8yN0=
-X-Proofpoint-Spam-Reason: safe
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/6] iommu/arm-smmu: Add interconnect bandwidth voting
+ support
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+References: <20260526-smmu_interconnect_addition-v2-0-2a6d8ca30d63@oss.qualcomm.com>
+ <20260526-smmu_interconnect_addition-v2-2-2a6d8ca30d63@oss.qualcomm.com>
+ <7xfxlxfqjcqdzl6gckaoyy2ioefglc7bgi66yv5khrbl6fi2zc@ivtiukdaj4jv>
+ <d25f24ca-5bb3-4276-ac8f-8340e8fb4ce8@oss.qualcomm.com>
+ <sdm7sqiokmsgczeat2mxch42ois5rwabav6c5fm7abct2xoepf@j3kraqrjvpoc>
+ <ea345832-711d-4e32-af0f-bc74d8646aef@oss.qualcomm.com>
+ <299d54c5-fb93-47ee-9495-fbf48a3204fd@oss.qualcomm.com>
+Content-Language: en-US
+From: Bibek Kumar Patro <bibek.patro@oss.qualcomm.com>
+In-Reply-To: <299d54c5-fb93-47ee-9495-fbf48a3204fd@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: tkqgg8kLAN4IkYk-hMPwY5k_hDbp3szN
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE5MDEwMSBTYWx0ZWRfX94sJ/TcOSbBQ
+ /5MJUlHhoh3bE2mBqkRdtK4kvEXnNjtsX5uamd427g6dFkNUfBoz5IQnVHc8IwFzUWgWyG3Z+TX
+ RrRu2YteO8Z+Kh9Wv3yl3wxVvNGomtvz0dC2wOO8aySVJgp1CF/BEg7wzl2p6QXXB9StIy8+pP2
+ PR7nMXxnYw54hab+KTVxir+sv24Is8UgBpO3jADOEnQcz/F8S+QBF9IQhnmAmZQgTXIKwosYL9n
+ sDi+Ftex66eEDhe+cC3g0tE3IquWv9xO9TwZrZzH9tPrao//qKhIP1rQdKqJLD8+2nJRfhw4Gxv
+ 8p03SIZqjN+PK92NiT0ZwceTQ78RfG1XJNK15xKnQl7YGKNLrIQyOo3syOFwAZf5WG4DKt0uvsQ
+ qXQdN6ZDPFMX71RZEvkpe3zkxPW5zcrTK0zo8ia7GoAIQILhFtezdHlZOltVITZZXQOscds56hB
+ mjU0sgB7FJsiFUEbLag==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE5MDEwMSBTYWx0ZWRfXwxxDAZ/G8D8I
+ mdPjtce9a/kUTWxvs876nk94XK0jdZdsWQeyuKi8wLAarDEMOLf2AsmkdjcEVxafBBGU+W8rLUc
+ CI0woHaEHd7KcvSVbEmwMH4bUOTPazE=
+X-Proofpoint-ORIG-GUID: tkqgg8kLAN4IkYk-hMPwY5k_hDbp3szN
+X-Authority-Analysis: v=2.4 cv=KbzidwYD c=1 sm=1 tr=0 ts=6a351fee cx=c_pps
+ a=JL+w9abYAAE89/QcEU+0QA==:117 a=j4ogTh8yFefVWWEFDRgCtg==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=5sB-xfgw_plGXbDTPmIA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=324X-CrmTo6CU4MGRt3R:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-19_02,2026-06-18_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 suspectscore=0 priorityscore=1501 lowpriorityscore=0
+ bulkscore=0 spamscore=0 impostorscore=0 adultscore=0 phishscore=0
+ clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2606190101
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [1.34 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
-	ARC_REJECT(1.00)[cv is fail on i=2];
-	DMARC_POLICY_ALLOW(-0.50)[cirrus.com,reject];
-	R_DKIM_ALLOW(-0.20)[cirrus.com:s=PODMain02222019,cirrus4.onmicrosoft.com:s=selector2-cirrus4-onmicrosoft-com];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-113830-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-113829-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	FREEMAIL_TO(0.00)[gmail.com];
-	FORGED_SENDER(0.00)[ckeepax@opensource.cirrus.com,linux-arm-msm@vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[35];
-	FORGED_RECIPIENTS(0.00)[m:david.laight.linux@gmail.com,m:phucduc.bui@gmail.com,m:broonie@kernel.org,m:lgirdwood@gmail.com,m:perex@perex.cz,m:tiwai@suse.com,m:cychiang@chromium.org,m:tzungbi@kernel.org,m:groeck@chromium.org,m:bleung@chromium.org,m:david.rhodes@cirrus.com,m:rf@opensource.cirrus.com,m:povik+lin@cutebit.org,m:support.opensource@diasemi.com,m:nick.li@foursemi.com,m:herve.codina@bootlin.com,m:srini@kernel.org,m:matthias.bgg@gmail.com,m:angelogioacchino.delregno@collabora.com,m:shenghao-ding@ti.com,m:kevin-lu@ti.com,m:baojun.xu@ti.com,m:sen@ti.com,m:oder_chiou@realtek.com,m:lars@metafoo.de,m:nuno.sa@analog.com,m:steven.eckhoff.opensource@gmail.com,m:patches@opensource.cirrus.com,m:chrome-platform@lists.linux.dev,m:asahi@lists.linux.dev,m:linux-arm-msm@vger.kernel.org,m:linux-sound@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-arm-kernel@lists.infradead.org,m:linux-mediatek@lists.infradead.org,m:davidlaightlinux@gmail.com,m:phucducbui@gmail.com,m:povik@cutebit.org,
- m:matthiasbgg@gmail.com,m:steveneckhoffopensource@gmail.com,s:lists@lfdr.de];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,qualcomm.com:dkim,qualcomm.com:email,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:from_mime];
+	FORGED_SENDER(0.00)[bibek.patro@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[15];
+	FORGED_RECIPIENTS(0.00)[m:konrad.dybcio@oss.qualcomm.com,m:dmitry.baryshkov@oss.qualcomm.com,m:will@kernel.org,m:robin.murphy@arm.com,m:joro@8bytes.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:andersson@kernel.org,m:konradybcio@kernel.org,m:linux-arm-kernel@lists.infradead.org,m:iommu@lists.linux.dev,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	FORWARDED(0.00)[lists@lfdr.de];
-	FREEMAIL_CC(0.00)[gmail.com,kernel.org,perex.cz,suse.com,chromium.org,cirrus.com,opensource.cirrus.com,cutebit.org,diasemi.com,foursemi.com,bootlin.com,collabora.com,ti.com,realtek.com,metafoo.de,analog.com,lists.linux.dev,vger.kernel.org,lists.infradead.org];
-	DKIM_TRACE(0.00)[cirrus.com:+,cirrus4.onmicrosoft.com:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	ALIAS_RESOLVED(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[ckeepax@opensource.cirrus.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	TO_DN_SOME(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,lin];
-	MISSING_XM_UA(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[bibek.patro@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	ALIAS_RESOLVED(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[10]
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 987546A5447
+X-Rspamd-Queue-Id: 9DC1A6A551D
 
-On Fri, Jun 19, 2026 at 10:13:46AM +0100, David Laight wrote:
-> On Fri, 19 Jun 2026 15:20:37 +0700
-> Bui Duc Phuc <phucduc.bui@gmail.com> wrote:
-> > > > I believe you have to use scoped_guard here, as there is a return
-> > > > from the function above, if memory serves it attempts to release
-> > > > the mutex on that path despite it being above the guard.  
-> > >
-> > > Indeed.
-> > > I believe clang will complain.
-> > > That makes these mechanical conversions of existing code dangerous churn.
-> > >
-> > > While using guard() (etc) can make it easier to ensure the lock is released
-> > > when functions have multiple error exits, I'm not convinced it makes the
-> > > code any easier to read (other people may disagree).
-> > 
-> > I built the code with both GCC and Clang and didn't see any warnings.
-> > 
-> > My understanding was that the early return exits the function before
-> > the guard is instantiated, so it should not affect the guard's cleanup
-> > handling.
+
+
+On 6/18/2026 2:58 PM, Konrad Dybcio wrote:
+> On 6/17/26 4:26 PM, Bibek Kumar Patro wrote:
+>>
+>>
+>> On 6/16/2026 5:51 AM, Dmitry Baryshkov wrote:
+>>> On Mon, Jun 15, 2026 at 06:36:51PM +0530, Bibek Kumar Patro wrote:
+>>>>
+>>>>
+>>>> On 6/8/2026 7:25 PM, Dmitry Baryshkov wrote:
+>>>>> On Tue, May 26, 2026 at 08:12:03PM +0530, Bibek Kumar Patro wrote:
+>>>>>> On some SoCs the SMMU registers require an active interconnect
+>>>>>> bandwidth vote to be accessible. While other clients typically
+>>>>>> satisfy this requirement implicitly, certain corner cases (e.g.
+>>>>>> during sleep/wakeup transitions) can leave the SMMU without a
+>>>>>> vote, causing intermittent register access failures.
+>>>>>>
+>>>>>> Add support for an optional interconnect path to the arm-smmu
+>>>>>> driver and vote for bandwidth while the SMMU is active. The path
+>>>>>> is acquired from DT if present and ignored otherwise.
+>>>>>>
+>>>>>> The bandwidth vote is enabled before accessing SMMU registers
+>>>>>> during probe and runtime resume, and released during runtime
+>>>>>> suspend and on error paths.
+>>>>>>
+>>>>>> Generally, from an architectural perspective, GEM_NOC and DDR are
+>>>>>> expected to have an active vote whenever the adreno_smmu block is
+>>>>>> powered on. In most common use cases, this requirement is implicitly
+>>>>>> satisfied because other GPU-related clients (for example, the GMU
+>>>>>> device) already hold a GEM_NOC vote when adreno_smmu is enabled.
+>>>>>>
+>>>>>> However, there are certain corner cases, such as during sleep/wakeup
+>>>>>> transitions, where the GEM_NOC vote can be removed before adreno_smmu
+>>>>>> is powered down. If adreno_smmu is then accessed while the interconnect
+>>>>>> vote is missing, it can lead to the observed failures. Because of the
+>>>>>> precise ordering involved, this scenario is difficult to reproduce
+>>>>>> consistently.
+>>>>>> (also GDSC is involved in adreno usecases can have an independent vote)
+>>>>>>
+>>>>>> Signed-off-by: Bibek Kumar Patro <bibek.patro@oss.qualcomm.com>
+>>>>>> ---
+>>>>>>     drivers/iommu/arm/arm-smmu/arm-smmu.c | 57 +++++++++++++++++++++++++++++++++--
+>>>>>>     drivers/iommu/arm/arm-smmu/arm-smmu.h |  2 ++
+>>>>>>     2 files changed, 57 insertions(+), 2 deletions(-)
+>>>>>>
+>>>>>> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+>>>>>> index 0bd21d206eb3e75c3b9fb1364cdc92e82c5aa499..07c7e44ec6a5bd1488f00f87d859a20495e46601 100644
+>>>>>> --- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
+>>>>>> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+>>>>>> @@ -53,6 +53,11 @@
+>>>>>>     #define MSI_IOVA_BASE            0x8000000
+>>>>>>     #define MSI_IOVA_LENGTH            0x100000
+>>>>>> +/* Interconnect bandwidth vote values for the SMMU register access path */
+>>>>>> +#define ARM_SMMU_ICC_AVG_BW        0
+>>>>>> +#define ARM_SMMU_ICC_PEAK_BW_HIGH    1000
+>>>>>
+>>>>> totally random numbers, which might be different for non-Qualcomm platform.
+>>>>>
+>>>>
+>>>> Ideally, any non-zero value would be enough to keep the path active.
+>>>
+>>> This is true for Qualcomm devices. However, you are adding this to a
+>>> generic code.
+>>>
+>>>> Here 1 Would be enough to keep the path active, but might be too small to
+>>>> reliably keep the bus active.
+>>>> Other is UINT_MAX, which will reliably keep the bus active but might cause a
+>>>> power penalty.
+>>>>
+>>>> #define ARM_SMMU_ICC_PEAK_BW_HIGH    UINT_MAX
+>>>>
+>>>> seems to be suitable here to reliably keep the bus active by BCM
+>>>> for both Qualcomm and non-Qualcomm platforms (with some power penalty).
+>>>>
+>>>> LMK, if you feel otherwise.
+>>>
+>>> Shift it to the qcom instance or provide platform-specific values? (My
+>>> preference would be towards the first solution).
+>>>
+>>
+>>
+>> To support platform-specific values, we may need to introduce a LUT-based approach in the driver. (Bandwidth voting values cannot be placed in device-tree property IIRC ?)
+>>
+>> Currently, all Qualcomm platforms use 0x1000 for SMMU ICC voting. I
 > 
-> When a variable is defined (and initialised) part way down a block the
-> compiler moves the definition to the top of the block but doesn't initialise
-> it at all, the first assignment happens where the code contains the
-> definition.
+> (you used decimal 1000)
 > 
-> However the destructor is always called at the end of the block.
-> So if you return from a function before the definition the destructor
-> is called with an uninitialised argument.
 
-My understanding was exactly as your David, but it seems that isn't
-the whole story and indeed I had to fix a bug in our SDCA code
-that hit this.  However testing this out, results in some things I
-find very hard to explain.
+It's my bad, i meant 1000 only
+(I'll check on the icc_bw calculation to get clarity on the values)
 
-It seems as far as I have managed to test, the code below works
-fine as Phuc suggests. It does not appear to run the mutex_unlock
-on the error path.
+>> can evaluate if this could be moved to a Qualcomm-specific
+>> implementation.
+> 
+> Add a vendor hook to arm_smmu_runtime_suspend/resume and handle it within
+> the QC driver
+> 
 
-int function()
-{
-	if (error)
-		return;
+Just curious, wouldn't this apply for all the arm-smmu users in addition 
+to Qualcomm devices as i mentioned here [1].
+Vendor hook would make it Qualcomm specific.
 
-	guard(mutex)(&mutex);
+[1]: 
+https://lore.kernel.org/all/984ff9c7-3eef-463c-a330-bf7acd063667@oss.qualcomm.com/
 
-	stuff();
+Thanks & regards,
+Bibek
 
-	return;
-}
+> Konrad
 
-The situation I hit this in before that doesn't work was actually
-this:
-
-int function()
-{
-	if (error)
-		goto error_label;
-
-	guard(mutex)(&mutex);
-
-	stuff();
-
-error_label;
-	return;
-}
-
-Which in this case it does run the mutex_unlock and NULL pointer.
-Will try to find sometime to look at the generated assembly, but
-this basically totally blows my mind. Very unclear as to if this
-is supposed to work this way or just does by pure luck.
-
-Thanks,
-Charles
 
