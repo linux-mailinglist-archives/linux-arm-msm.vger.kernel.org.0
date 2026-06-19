@@ -1,286 +1,322 @@
-Return-Path: <linux-arm-msm+bounces-113839-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-113840-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id /x1iDRI7NWqdpQYAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-113839-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jun 2026 14:50:26 +0200
+	id LhVRBr89NWrzpgYAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-113840-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jun 2026 15:01:51 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 24B806A5D94
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jun 2026 14:50:25 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0C9E36A5E9A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jun 2026 15:01:46 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=none;
-	dmarc=none;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113839-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c15:e001:75::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113839-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
+	dkim=none ("invalid DKIM record") header.d=siliconsignals.io header.s=selector1 header.b=jyNDKFSO;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113840-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113840-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=fail reason="SPF not aligned (relaxed)" header.from=siliconsignals.io (policy=quarantine);
+	arc=reject ("cv is fail on i=2")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 2CBDE3000B97
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jun 2026 12:50:22 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id AB2BA302A6FA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jun 2026 12:55:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A46DF388386;
-	Fri, 19 Jun 2026 12:50:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4D7BC389106;
+	Fri, 19 Jun 2026 12:55:11 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from cstnet.cn (smtp81.cstnet.cn [159.226.251.81])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+Received: from MA0PR01CU012.outbound.protection.outlook.com (mail-southindiaazon11021078.outbound.protection.outlook.com [40.107.57.78])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1055284693;
-	Fri, 19 Jun 2026 12:50:14 +0000 (UTC)
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781873418; cv=none; b=cm/aLX1+wZWLRKRykT52btnfAI8YNnaCrvvkSPPbGeib8xFyOwRK9iVnUWXEcAR2vJ/p/muG7ih7VdmkBuydVEdZQBmWrMb+WJKl3NwhlvbEfR2jcrWJEBFTzn2EwNwMqbOV4H5ufhh6Vkw6HxoyJtt/iblAoAfEBJnZUgx9Sjg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781873418; c=relaxed/simple;
-	bh=J5MR+WnYkHVcwJnzQxjUM0jmQz85ma0D/zw6/BXcNlo=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=s8FMJZ+TAzhHdnWsV/RVKGUbFA+4jPP3LAmGaiGE409Muq5UQ438cAFdIdNxUWk7ukw+YeE4Pe6669oW5QBc1mv0SMWt3MAvdwIfUy02VCzKpIHuYQ31hwXjFxizR0B0TulXrmeuZwVpZn71E0YgjCqRU8MmMbG7NUY/dsLzgWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.81
-Received: from edelgard.fodlan.icenowy.me (unknown [112.94.100.206])
-	by APP-03 (Coremail) with SMTP id rQCowAC3l579OjVq31s9FQ--.9922S2;
-	Fri, 19 Jun 2026 20:50:06 +0800 (CST)
-Message-ID: <9434068bd7e69c92fed5382bff2479d4fc0e4bf4.camel@iscas.ac.cn>
-Subject: Re: [PATCH 0/6] arm64: dts: qcom: sc8280xp: set GPI DMA channels
- according to DSDT
-From: Icenowy Zheng <zhengxingda@iscas.ac.cn>
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, Pengyu Luo
-	 <mitltlatltl@gmail.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio	
- <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, Krzysztof
- Kozlowski	 <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Date: Fri, 19 Jun 2026 20:50:05 +0800
-In-Reply-To: <5621f70b-984e-4a65-add8-a9bf42e6c0c2@oss.qualcomm.com>
-References: <20260602081451.3808833-1-zhengxingda@iscas.ac.cn>
-	 <178040480680.1778078.1165164069560552075.b4-review@b4>
-	 <bc4644a6c1e30a99f1ed5d967c64ba7f5da77fbc.camel@iscas.ac.cn>
-	 <178073773007.397244.9871455646149843167.b4-reply@b4>
-	 <7ecda3d0f91b0d96bcec44ddf485ed5146788220.camel@iscas.ac.cn>
-	 <178073918523.417326.15121723011916371966.b4-reply@b4>
-	 <1c33b1dd7d187b17b21b17339a4f1990e59d2f77.camel@iscas.ac.cn>
-	 <CAH2e8h7y9PivdMh-h78VSqMf8i2vSR2fvVaO0P1eYBT8qgEdUA@mail.gmail.com>
-	 <bd5ad1b53eb009377d0ee492b0e007e45d36f6a1.camel@iscas.ac.cn>
-	 <12a8cc4f-3c45-471b-8a0c-f7473cefa190@oss.qualcomm.com>
-	 <926a0fe9224d73e0f5e3f58f3769c6247b1cabd4.camel@iscas.ac.cn>
-	 <7ac67f89-c6b4-4e0c-8eec-1e5c757777ce@oss.qualcomm.com>
-	 <ab5c5f53-4119-4bbe-88ac-e2933bf6f8d8@oss.qualcomm.com>
-	 <cd1910faf5b7b20d9154798b05449fe30cb1cba1.camel@iscas.ac.cn>
-	 <5621f70b-984e-4a65-add8-a9bf42e6c0c2@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.58.3 
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E58137B019;
+	Fri, 19 Jun 2026 12:55:07 +0000 (UTC)
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781873711; cv=fail; b=mFL16WHToEB6otzDHNUNTgUcTJjBQkQY1GN/Bhu1XoQk50OyUPS+FILJtclIhkyFBGflm4U+j8VDSlpg125OeeEYWWNPMpnpnF1q6Vxw8knNgBAvMDr+NXDDGJQMrAbAXE8OtWuSpQwTmzff5f3Hw8QbSlM2ohS/Qe83uKpdMrw=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781873711; c=relaxed/simple;
+	bh=RKordJRZcp7+sTmAjENJkIiqsMXokX61zOCkPQqzNhI=;
+	h=From:To:Cc:Subject:Date:Message-Id:Content-Type:MIME-Version; b=JjaKzh4xhBmgCLENwf4S60W2gAXP+WrP0p1bUPxSRE1ox3ZbpqkR8Tn/Krsks7JoZDkrq21MBHyP0hCKN7tQkUbjF0cN8F6lIq1C6S/2tsDQiqDuoMZEhsIketRcD5ywgqhTAb5eCbRnmeabfjYK0fz5nic7a9kUzNUV/K8UOkE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=siliconsignals.io; spf=pass smtp.mailfrom=siliconsignals.io; dkim=fail (0-bit key) header.d=siliconsignals.io header.i=@siliconsignals.io header.b=jyNDKFSO reason="key not found in DNS"; arc=fail smtp.client-ip=40.107.57.78
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=fLtStjcNNbfPafJM5LH6zxgX5E7213Sf+AsUuWVJOp+xb1xz2xIhlJtMkwVlPvh5q8saX6D3vBX/aqmH4l2rnITGKuhVciHNYZ0X7yP/c4nyyLVowPW+rFGeHCkRSs6NjopSlTYbTIbafQ+QtDOa5lL2j7a2xhc8K8/vj9aogqXmBYRR4d7+l+FqvgBNEX/JZ4D1LhyMaA357I1IiDV87wsRPKy0KgNfKBeosTsB1ur8BH4tZqzRyeOJpSEqUFWbkNaaE1Yw+QWUxWhpvLk0ah+gicXTvn84jnhaMqGAaIu6qF6DCGREK76sqovieI2zgCq7beqRh9Dyq4jzjitSWg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=a+4ISgmfhhRfLkLYfymzp+AWI1TaVnBTkl9wzy2obk4=;
+ b=a/SgxPC8Vyxpe6XfTU9CVJbS5TfF+knAT0zAiW7ccbDxpnlD9C3MxGaBTHXho5/TjhXIIO4b7nMii0El4PyGp7jZP0+f54ifVBQ+lB2cJ1S4xAQOYQCTj7L7jWFvUJ+AvYPR4MUo/5ycMXb2ohbk+D/lcQxMvHMyl56A/YMGO2xOmnRt4IBEo7tZiSV9avMjPChdxE2Tch/yp+hQhOwlP/k/P6BsT+E+U6rY8eanhd5f+Xw2baP9oxq4AuYV04IrxzuvJzE7xT2nZ3CAbJiwoZ9kNiopPjCdfJF8fz2lD/kwNWguRi3Qk8tY8IOz21g3HxRWVmg3bE5dR3Fm1bduWA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=siliconsignals.io; dmarc=pass action=none
+ header.from=siliconsignals.io; dkim=pass header.d=siliconsignals.io; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=siliconsignals.io;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=a+4ISgmfhhRfLkLYfymzp+AWI1TaVnBTkl9wzy2obk4=;
+ b=jyNDKFSOVWFh3KVFO6JIc9fR8PgG4fEoxOBOqlK+doI/RkReAxFJ0r1eP6GqWdZ5matIVKH83tA8cQMQXHQ4Bvlm11FTMNGI1OyK3Pl26uYcIL93BcW5O/xfXIMvDc6YGPApaniv+fWhAbPl2zMa/P9cuM821V/QhZAn0IS1xk6vVOClB3AVi5v5ZUvxKVNL09nIUhOHRequYSjOjWXEtJvWIpPTBzRdIu0YR7HOsiXUKqCTjMuh0H3yarSImTn8cogbGZra82EcjUGLsKLHXRwlalPOunYe/eMk1EKcuZcfOpMuHA2Ns/ij6i8g07oI2HDQgwEflRr3bsTVriYV8g==
+Received: from PN0P287MB2019.INDP287.PROD.OUTLOOK.COM (2603:1096:c01:1b8::9)
+ by PN3P287MB1847.INDP287.PROD.OUTLOOK.COM (2603:1096:c01:19d::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.139.13; Fri, 19 Jun
+ 2026 12:55:03 +0000
+Received: from PN0P287MB2019.INDP287.PROD.OUTLOOK.COM
+ ([fe80::ebd8:538d:c705:8432]) by PN0P287MB2019.INDP287.PROD.OUTLOOK.COM
+ ([fe80::ebd8:538d:c705:8432%6]) with mapi id 15.21.0139.011; Fri, 19 Jun 2026
+ 12:55:03 +0000
+From: Himanshu Bhavani <himanshu.bhavani@siliconsignals.io>
+To: sakari.ailus@linux.intel.com,
+	luca.weiss@fairphone.com
+Cc: Himanshu Bhavani <himanshu.bhavani@siliconsignals.io>,
+	Hardevsinh Palaniya <hardevsinh.palaniya@siliconsignals.io>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Hans de Goede <johannes.goede@oss.qualcomm.com>,
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+	Elgin Perumbilly <elgin.perumbilly@siliconsignals.io>,
+	Xiaolei Wang <xiaolei.wang@windriver.com>,
+	Walter Werner Schneider <contact@schnwalter.eu>,
+	Kate Hsuan <hpa@redhat.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Svyatoslav Ryhel <clamor95@gmail.com>,
+	linux-media@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org
+Subject: [PATCH v2 0/3] media: i2c: Add imx576 camera sensor driver
+Date: Fri, 19 Jun 2026 18:24:30 +0530
+Message-Id: <20260619125439.55311-1-himanshu.bhavani@siliconsignals.io>
+X-Mailer: git-send-email 2.34.1
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: PN4PR01CA0063.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:c01:26c::9) To PN0P287MB2019.INDP287.PROD.OUTLOOK.COM
+ (2603:1096:c01:1b8::9)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-CM-TRANSID:rQCowAC3l579OjVq31s9FQ--.9922S2
-X-Coremail-Antispam: 1UD129KBjvJXoWxJF4DKFWrZr1DXw1kZryxZrb_yoWrKrW3pF
-	yUJFWUKF4UJr15Jr18tr1UXr1Utr17Jr1UXr1UGr18Jw1qvr1UJr4UJr15uFyDXr18Jw4U
-	Jr45Jry7Xr1UAw7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUvSb7Iv0xC_Kw4lb4IE77IF4wAFF20E14v26r4j6ryUM7CY07I2
-	0VC2zVCF04k26cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rw
-	A2F7IY1VAKz4vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xII
-	jxv20xvEc7CjxVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4
-	A2jsIEc7CjxVAFwI0_GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IE
-	w4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r1j6r4UMc
-	vjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwACI402YVCY1x02628vn2kIc2xKxwCY
-	1x0262kKe7AKxVWUtVW8ZwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8Jw
-	C20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAF
-	wI0_Jw0_GFylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjx
-	v20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2
-	jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43
-	ZEXa7IU56yI5UUUUU==
-X-CM-SenderInfo: x2kh0wp0lqwv3d6l2u1dvotugofq/
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PN0P287MB2019:EE_|PN3P287MB1847:EE_
+X-MS-Office365-Filtering-Correlation-Id: 3a647a76-89e5-4deb-e271-08dece01faf4
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|23010399003|1800799024|376014|7416014|52116014|366016|56012099006|6133799003|5023799004|18002099003|3023799007|38350700014;
+X-Microsoft-Antispam-Message-Info:
+	h2qI5izYHb0DljLkpD1H1Yjvkp+Hy9qHUV4hkg0yBNczOgX7bNV8gfws+OtSnXS8Z5cnohhp4jDe3ot8+1DizRXLnjbks/UX1KtRm1CIrkW7txfQD1qs4FwbP2d9Dlc/9EqWmz5yYU743Usw7Zdr8lzG9R70hq3pmDX4EjxRQ0wjZIf/ie1f9KLZCdB2pQah7Oyxt/8jciQEiTk23U0/VmKXAd6fpu2qwVd2TSy2onYjalJ14gymjfel7AZlsrg+cNoOXIUCqWO54x9d4T9oz/O0qbtPMFA3d+8JSy5Gum2Pe5ilHdXW8cp9JAAuopmyEYReZDAY9coZNxVrqMoH60lr4cAGtZHC/2JLOeqC3duOZnza9z91PcS+6D8CltEhYdwMzBtJCTVL9dql5YbI9ENYuVyOAzhzodr/QZkuiuDSy+FLjNA9nKaG6LmyZp2RthF+Ilo6cTzyYecI9Hlhn1M7jmYmCQK0wyUhjlZGu3DqhvPX28AMAdox3uYQ7FmHkELUZdnxgRSN+6t6Qx1zfIea5R6+XFX6CovYeckXl7CdP8wMrEGFqRNcXje3gN+bE8GLJTLv0XXxur9ZPjRNRRKlIfb/4PxPFV5ytCt/i8eb4TL8Wjj/xr5L/4G6wzuYSbDhD4yQKEfNVK4kHvHEsCxMOpBK/H2+iua04CZ2gBf9rvIHVdAmOmAWGt+LsSnY5AJV3AnK19Vqe326GiuBcSSbqZbRBcATOADRpBHx/O8=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PN0P287MB2019.INDP287.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(1800799024)(376014)(7416014)(52116014)(366016)(56012099006)(6133799003)(5023799004)(18002099003)(3023799007)(38350700014);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?tP5MBgjh+u8BmPi/SwSPBCXPyLd8Qy7+suc7zyI+mb44E73WrqGQu/I1BQ1G?=
+ =?us-ascii?Q?NAC3+V82630T5Qa/D+rNX65uSnw+XR51aLZ+5lDLg/KpsLkzZCp4umBRS5vA?=
+ =?us-ascii?Q?0bJHiAmFBMtvWqbB/LNTSeIDHix1Cnz7N7bT7qW5hb4CqJnvNyafipX7gXOf?=
+ =?us-ascii?Q?uqW0msgrmbbvks+KfD5j9h/KIPU+TEEQc7cV2gkHMsZqVWoEyqq4gwTcgcWI?=
+ =?us-ascii?Q?95+13ua3ttok3yOsDBsu8jNsqhJsgLQjCSuPtuq3/drKqL+77oQDB+hbl9qs?=
+ =?us-ascii?Q?MLx1VFw/GsAqcgyoHmkZZZcbkOh9Gr1oRMyncjazoj+YcAmj6GMUTxXLVKrl?=
+ =?us-ascii?Q?9FNxPVSyaABVBLJA7tlR4xS3TtaIntMSsJ78WlOlZnDxhYQGfqKctqiNJG/D?=
+ =?us-ascii?Q?9cKql93++olrpKsiiT5CZY2T01msGoT4rFe1GqJW24HI8qkXs/VCoqjKl2rH?=
+ =?us-ascii?Q?4pPflO7RcLSYpz6ahxnWUTDrkQ0EUCq0ITXiHc5BGPpkRE7yvSHskqZVFqSM?=
+ =?us-ascii?Q?lQFJmHGK2gZRinMtNjx8GY520LrVMdDt6ovxOEOrRrzWM4ECxsXogekXJtMI?=
+ =?us-ascii?Q?e89gglHWFlAa86IZU5lSicaGbUeqN0up/b5KyKFGeEXao2axzBMdTihn8llF?=
+ =?us-ascii?Q?TM4VLteBatvULmqzmAT4ouW8FXcyS05HAdPGG5GrvucCtlMvwQ9/L6SY1uUA?=
+ =?us-ascii?Q?R3bG+75SA+0DpniSrCO/X4+fKZp7VLHmtfN5OLQwh0nJgx9fbKSbv3zP0rhQ?=
+ =?us-ascii?Q?HR+YVpHZDeTbbUwNKYt4gLFKxVxUlAU8RWGVBZDU3apdVlwotkN6X9jdfVda?=
+ =?us-ascii?Q?hruWx7TtPZnrhMbKtYuUYVQFCjw2k32BOwqFilK248xKpWTtU0u3trTg9gmA?=
+ =?us-ascii?Q?wjhGLvpmAy13ReS+PH+8e3snm3hIVZIyl5R1wx4x3lXx+evH/pITXXN/ahVG?=
+ =?us-ascii?Q?GsLuLAajWfwL7SZwWeQlOYRy97Gu5LlRmh9DnxaAm7pBGCQ3Ondpmm+SARJC?=
+ =?us-ascii?Q?1MSctY7+f8OKSkhhbySisTYOHO/sqlQLVVFumyHBvPrOuRlaHrbNJp9Dxxly?=
+ =?us-ascii?Q?pODB4U/PxXU5Zn5UpbNzuUfZRr7uoRKl8sIue8COsL+z3V3GtYcGydz7w3vD?=
+ =?us-ascii?Q?dvuLZ9sskM/T/TdybzBwtrBZgK/0+OIQycCLZK9jcWbjKE8FbBEZXnTktNAs?=
+ =?us-ascii?Q?dvslUy+c5skIp4tVPjvIZonVwE005ctbwICdgSCztjbFFm3JhZmdY3iG13Po?=
+ =?us-ascii?Q?lRMvL0JflvW58wzgZ+NUs399p3r51zRsVWcS7YhJSY5sS3JCZ3n8s/pCRiAS?=
+ =?us-ascii?Q?clyGG9MCpuI1utdARLI2wu9pkL/BczQVBi4eiSJlbUYtdx1TR9pQ7uAF88dI?=
+ =?us-ascii?Q?O1t5DRg8FhslEYDRc/kuxl8/a/KyCwTP2kVTmoC6yxbcZpsl1XD6IS9JVlMj?=
+ =?us-ascii?Q?vfsj29NkqJQIuQ6VQqcHsCmKIizpJWy2uuQ56nb2g3haH5/UIRIJMzX66MBw?=
+ =?us-ascii?Q?gDeeclAgGWP74eNNxckfkkbTOgDbs7GXz569Djxv6DpfSV0iO+xevvRqgbV4?=
+ =?us-ascii?Q?Gw+5wVLdVyqnPLLTaSD0RZ5seyHKTz6ZMhIbHDIPC+b03QRtELEDDqkKK85r?=
+ =?us-ascii?Q?8ZMqQtdN/sijRbCDRQrfB+hOGR+vEj/YiBoYpGy+JABROqIoQXG3zPeY0gW+?=
+ =?us-ascii?Q?nDTruNvixLbYJhf7B8DoIDLM6YoGzmUa6a7vCVPvzm0ucyRWHQI9zAs3gg+8?=
+ =?us-ascii?Q?uCTQat6NDiMb2k0g83v6UbhOwwMIz6j+9gTGyM7PHE0XxImisuPS?=
+X-OriginatorOrg: siliconsignals.io
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3a647a76-89e5-4deb-e271-08dece01faf4
+X-MS-Exchange-CrossTenant-AuthSource: PN0P287MB2019.INDP287.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Jun 2026 12:55:03.5057
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 7ec5089e-a433-4bd1-a638-82ee62e21d37
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 74DF83QJvCrM+fLt4uLY+bYiOa7avvpOIrnDa5Shxxlh8bYpExRiI+Bd9hlPktC2PABzk26HeJpmA+0l09ThqknRkM4FLsPHBwrBkSC7gT/SvZJTxyRP2lW0BMOusD05
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PN3P287MB1847
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [0.04 / 15.00];
+X-Spamd-Result: default: False [5.04 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	DMARC_POLICY_QUARANTINE(1.50)[siliconsignals.io : SPF not aligned (relaxed),quarantine];
+	MID_CONTAINS_FROM(1.00)[];
+	ARC_REJECT(1.00)[cv is fail on i=2];
+	R_MISSING_CHARSET(0.50)[];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	DMARC_NA(0.00)[iscas.ac.cn];
-	FORGED_RECIPIENTS(0.00)[m:konrad.dybcio@oss.qualcomm.com,m:mitltlatltl@gmail.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
-	RCVD_COUNT_THREE(0.00)[4];
-	FREEMAIL_TO(0.00)[oss.qualcomm.com,gmail.com];
-	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-113839-lists,linux-arm-msm=lfdr.de];
 	FORWARDED(0.00)[lists@lfdr.de];
-	FORGED_SENDER(0.00)[zhengxingda@iscas.ac.cn,linux-arm-msm@vger.kernel.org];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	ALIAS_RESOLVED(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[zhengxingda@iscas.ac.cn,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[23];
+	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-113840-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
+	FORGED_RECIPIENTS(0.00)[m:sakari.ailus@linux.intel.com,m:luca.weiss@fairphone.com,m:himanshu.bhavani@siliconsignals.io,m:hardevsinh.palaniya@siliconsignals.io,m:mchehab@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:andersson@kernel.org,m:konradybcio@kernel.org,m:hverkuil+cisco@kernel.org,m:johannes.goede@oss.qualcomm.com,m:vladimir.zapolskiy@linaro.org,m:elgin.perumbilly@siliconsignals.io,m:xiaolei.wang@windriver.com,m:contact@schnwalter.eu,m:hpa@redhat.com,m:laurent.pinchart@ideasonboard.com,m:clamor95@gmail.com,m:linux-media@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,m:hverkuil@kernel.org,s:lists@lfdr.de];
+	FORGED_SENDER(0.00)[himanshu.bhavani@siliconsignals.io,linux-arm-msm@vger.kernel.org];
+	GREYLIST(0.00)[pass,body];
+	FREEMAIL_CC(0.00)[siliconsignals.io,kernel.org,oss.qualcomm.com,linaro.org,windriver.com,schnwalter.eu,redhat.com,ideasonboard.com,gmail.com,vger.kernel.org];
+	R_DKIM_PERMFAIL(0.00)[siliconsignals.io:s=selector1];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	R_DKIM_NA(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCPT_COUNT_SEVEN(0.00)[10];
 	TO_DN_SOME(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[iscas.ac.cn:email,iscas.ac.cn:mid,iscas.ac.cn:from_mime,vger.kernel.org:from_smtp,sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo]
+	PRECEDENCE_BULK(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[himanshu.bhavani@siliconsignals.io,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[siliconsignals.io:~];
+	RCVD_COUNT_FIVE(0.00)[5];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	ALIAS_RESOLVED(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt,cisco];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[siliconsignals.io:mid,siliconsignals.io:from_mime,vger.kernel.org:from_smtp,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 24B806A5D94
+X-Rspamd-Queue-Id: 0C9E36A5E9A
 
-=E5=9C=A8 2026-06-19=E4=BA=94=E7=9A=84 14:27 +0200=EF=BC=8CKonrad Dybcio=E5=
-=86=99=E9=81=93=EF=BC=9A
-> On 6/18/26 12:34 PM, Icenowy Zheng wrote:
-> > =E5=9C=A8 2026-06-18=E5=9B=9B=E7=9A=84 11:05 +0200=EF=BC=8CKonrad Dybci=
-o=E5=86=99=E9=81=93=EF=BC=9A
-> > > On 6/18/26 11:04 AM, Konrad Dybcio wrote:
-> > > > On 6/9/26 5:54 PM, Icenowy Zheng wrote:
-> > > > > =E5=9C=A8 2026-06-09=E4=BA=8C=E7=9A=84 14:23 +0200=EF=BC=8CKonrad=
- Dybcio=E5=86=99=E9=81=93=EF=BC=9A
-> > > > > > On 6/7/26 10:49 AM, Icenowy Zheng wrote:
-> > > > > > > =E5=9C=A8 2026-06-06=E5=85=AD=E7=9A=84 21:51 +0800=EF=BC=8CPe=
-ngyu Luo=E5=86=99=E9=81=93=EF=BC=9A
-> > > > > > > > On Sat, Jun 6, 2026 at 9:21=E2=80=AFPM Icenowy Zheng
-> > > > > > > > <zhengxingda@iscas.ac.cn> wrote:
-> > > > > > > > >=20
-> > > > > > > > > =E5=9C=A8 2026-06-06=E5=85=AD=E7=9A=84 17:46 +0800=EF=BC=
-=8CPengyu Luo=E5=86=99=E9=81=93=EF=BC=9A
-> > > > > > > > > > On 2026-06-06 17:28:35+08:00, Icenowy Zheng wrote:
-> > > > > > > > > > > =E5=9C=A8 2026-06-06=E5=85=AD=E7=9A=84 17:22 +0800=EF=
-=BC=8CPengyu Luo=E5=86=99=E9=81=93=EF=BC=9A
-> > > > > > > > > > >=20
-> > > > > > > > > > > > On 2026-06-02 21:21:27+08:00, Icenowy Zheng
-> > > > > > > > > > > > wrote:
-> > > > > > > > > > > >=20
-> > > > > > > > > > > > The magnetic keyboard (USB HID) can't be
-> > > > > > > > > > > > connected
-> > > > > > > > > > > > somehow,
-> > > > > > > > > > > > others
-> > > > > > > > > > > > are
-> > > > > > > > > > > > fine, such as the spi touchscreen (not upstream
-> > > > > > > > > > > > yet),
-> > > > > > > > > > > > which
-> > > > > > > > > > > > utilizes
-> > > > > > > > > > > > DMA definitely. My config is here
-> > > > > > > > > > > > https://pastebin.com/SdjuyJYk
-> > > > > > > > > > >=20
-> > > > > > > > > > > Is this a defconfig?
-> > > > > > > > > > >=20
-> > > > > > > > > >=20
-> > > > > > > > > > Yes.
-> > > > > > > > > >=20
-> > > > > > > > > > > BTW it seems that CONFIG_ASYNC_TX_DMA needs to be
-> > > > > > > > > > > selected
-> > > > > > > > > > > too
-> > > > > > > > > > > for
-> > > > > > > > > > > exhibiting the problem (because there should be
-> > > > > > > > > > > "public"
-> > > > > > > > > > > GPI
-> > > > > > > > > > > DMA
-> > > > > > > > > > > consumers to trigger the stuck/reset).
-> > > > > > > > > > >=20
-> > > > > > > > > >=20
-> > > > > > > > > > Is this still necessary? I checked the fedora
-> > > > > > > > > > discussion and
-> > > > > > > > > > your
-> > > > > > > > > > GPI
-> > > > > > > > > > DMA fix. And GPI DMA is only for the QUP-supported
-> > > > > > > > > > peripherals as
-> > > > > > > > > > the
-> > > > > > > > > > binding mentioned,
-> > > > > > > > > > devicetree/bindings/dma/qcom,gpi.yaml
-> > > > > > > > >=20
-> > > > > > > > > The devicetree without this fix seems to be still
-> > > > > > > > > incorrect,
-> > > > > > > > > because
-> > > > > > > > > with the device tree fix even if the GPI DMA driver
-> > > > > > > > > misbehaves
-> > > > > > > > > the
-> > > > > > > > > system won't be stuck (although it will iterate all
-> > > > > > > > > GPI
-> > > > > > > > > channels
-> > > > > > > > > and
-> > > > > > > > > then fail to function at all).
-> > > > > > > > >=20
-> > > > > > > >=20
-> > > > > > > > Back to the start. You said some GPI interfaces aren't
-> > > > > > > > available
-> > > > > > > > to
-> > > > > > > > HLOS, your mask is 0xb(0b1011), so I use 0x4(0b100) did
-> > > > > > > > a
-> > > > > > > > quick
-> > > > > > > > test,
-> > > > > > > > and spi6 consumed it, no stuck or reset. Could you give
-> > > > > > > > me
-> > > > > > > > a
-> > > > > > > > unavailable channel?
-> > > > > > >=20
-> > > > > > > I think channel 0b10000 of gpi_dma2 could be an example?
-> > > > > > >=20
-> > > > > > > It seems that 4 channels are tried on gpi_dma2 before
-> > > > > > > hang on
-> > > > > > > my
-> > > > > > > gaokun3, but as gaokun3 has no known serial access, it's
-> > > > > > > possible
-> > > > > > > that
-> > > > > > > 0b100000 or 0b1000 is problematic.
-> > > > > > >=20
-> > > > > > > (The reason gpi_dma2 is checked first is because it's the
-> > > > > > > GPI
-> > > > > > > DMA
-> > > > > > > controller with the smallest address)
-> > > > > > >=20
-> > > > > > > BTW I just took the values from Windows DSDT, which is
-> > > > > > > quite
-> > > > > > > conservative.
-> > > > > >=20
-> > > > > > So, with DMA_PRIVATE set, is this series made redundant?
-> > > > >=20
-> > > > > I assume technically the trustzone is still protecting some
-> > > > > channels,
-> > > > > although the system stuck issue is fixed.
-> > > > >=20
-> > > > > This series should still be relevant, although not so
-> > > > > emergent.
-> > > >=20
-> > > > So now we're down to the case of the TZ reserving some of the
-> > > > GPI
-> > > > channels (presumably for locked down/TZ-driven QUPs) crashing
-> > > > the
-> > > > device on access, is that right?
-> > >=20
-> > > i.e. now, is requesting these channels through (wrongfully)
-> > > enabling
-> > > the devices in DT the only remaining concern?
-> >=20
-> > Yes, I think so; although I think few devices will use GPI on these
-> > devices (usually only one or two SPI controllers according to the
-> > DSDTs).
->=20
-> IIRC there's a configuration table that lets OEMs decide which ones
-> should fall under the secure umbrella (although most never seem to
-> change the defaults).
+The following features are supported:
+- Manual exposure an gain control support.
+- vblank/hblank control support.
+- Supported resolution: 2880 x 2156 30fps (SRGGB10)
 
-Ah then what's the default value?
+This series depends on the SM6350 CAMSS support series
+https://lore.kernel.org/linux-arm-msm/20260216-sm6350-camss-v4-0-b9df35f87edb@fairphone.com/
 
-Radxa Dragon Q8B seems to have GPII0-5 enabled for all GPI controllers
-[1].
+The driver has been tested on the mainline v7.0-rc6 kernel on the Fairphone 4 running postmarketOS.
 
-Thanks,
-Icenowy
+fairphone-fp4:~$ v4l2-compliance -d /dev/v4l-subdev21
+v4l2-compliance 1.32.0, 64 bits, 64-bit time_t
 
-[1]
-https://github.com/strongtz/linux-radxa-qcom/commit/99878a41264ef4f2a777836=
-76de36a80de7103ba
+Compliance test for device /dev/v4l-subdev21:
 
->=20
-> I don't think we need to care too much about the mask being ultra-
-> correct,
-> since as we've established only QUPs are "valid" consumers and we're
-> not
-> going to enable them globally by default, since there are conflicting
-> pin
-> assignments (i.e. there are many more QUPs than allocated GPIOs)
->=20
-> Konrad
+Driver Info:
+        Driver version   : 7.0.0
+        Capabilities     : 0x00000000
+        Client Capabilities: 0x0000000000000002
+interval-uses-which
+Required ioctls:
+        test VIDIOC_SUDBEV_QUERYCAP: OK
+        test invalid ioctls: OK
 
+Allow for multiple opens:
+        test second /dev/v4l-subdev21 open: OK
+        test VIDIOC_SUBDEV_QUERYCAP: OK
+        test for unlimited opens: OK
+
+Debug ioctls:
+        test VIDIOC_LOG_STATUS: OK (Not Supported)
+
+Input ioctls:
+        test VIDIOC_G/S_TUNER/ENUM_FREQ_BANDS: OK (Not Supported)
+        test VIDIOC_G/S_FREQUENCY: OK (Not Supported)
+        test VIDIOC_S_HW_FREQ_SEEK: OK (Not Supported)
+        test VIDIOC_ENUMAUDIO: OK (Not Supported)
+        test VIDIOC_G/S/ENUMINPUT: OK (Not Supported)
+        test VIDIOC_G/S_AUDIO: OK (Not Supported)
+        Inputs: 0 Audio Inputs: 0 Tuners: 0
+
+Output ioctls:
+        test VIDIOC_G/S_MODULATOR: OK (Not Supported)
+        test VIDIOC_G/S_FREQUENCY: OK (Not Supported)
+        test VIDIOC_ENUMAUDOUT: OK (Not Supported)
+        test VIDIOC_G/S/ENUMOUTPUT: OK (Not Supported)
+        test VIDIOC_G/S_AUDOUT: OK (Not Supported)
+        Outputs: 0 Audio Outputs: 0 Modulators: 0
+
+Input/Output configuration ioctls:
+        test VIDIOC_ENUM/G/S/QUERY_STD: OK (Not Supported)
+        test VIDIOC_ENUM/G/S/QUERY_DV_TIMINGS: OK (Not Supported)
+        test VIDIOC_DV_TIMINGS_CAP: OK (Not Supported)
+        test VIDIOC_G/S_EDID: OK (Not Supported)
+
+Control ioctls:
+        test VIDIOC_QUERY_EXT_CTRL/QUERYMENU: OK
+        test VIDIOC_QUERYCTRL: OK
+        test VIDIOC_G/S_CTRL: OK
+        test VIDIOC_G/S/TRY_EXT_CTRLS: OK
+        test VIDIOC_(UN)SUBSCRIBE_EVENT/DQEVENT: OK
+        test VIDIOC_G/S_JPEGCOMP: OK (Not Supported)
+        Standard Controls: 12 Private Controls: 0
+
+Format ioctls:
+        test VIDIOC_ENUM_FMT/FRAMESIZES/FRAMEINTERVALS: OK (Not Supported)
+        test VIDIOC_G/S_PARM: OK (Not Supported)
+        test VIDIOC_G_FBUF: OK (Not Supported)
+        test VIDIOC_G_FMT: OK (Not Supported)
+        test VIDIOC_TRY_FMT: OK (Not Supported)
+        test VIDIOC_S_FMT: OK (Not Supported)
+        test VIDIOC_G_SLICED_VBI_CAP: OK (Not Supported)
+        test Cropping: OK (Not Supported)
+        test Composing: OK (Not Supported)
+        test Scaling: OK (Not Supported)
+
+Codec ioctls:
+        test VIDIOC_(TRY_)ENCODER_CMD: OK (Not Supported)
+        test VIDIOC_G_ENC_INDEX: OK (Not Supported)
+        test VIDIOC_(TRY_)DECODER_CMD: OK (Not Supported)
+
+Buffer ioctls:
+        test VIDIOC_REQBUFS/CREATE_BUFS/QUERYBUF: OK (Not Supported)
+        test CREATE_BUFS maximum buffers: OK
+        test VIDIOC_REMOVE_BUFS: OK
+        test VIDIOC_EXPBUF: OK (Not Supported)
+        test Requests: OK (Not Supported)
+        test blocking wait: OK (Not Supported)
+
+Total for device /dev/v4l-subdev21: 46, Succeeded: 46, Failed: 0, Warnings: 0
+
+V1 -> V2
+
+In Patch 1/3
+- Rename regulator supplies to (vana, vdig, vif).
+
+In Patch 2/3
+- Rename link_freq array to avoid confusion with the link_freq control.
+- Use IMX576_EXPOSURE_STEP in exposure control range update.
+- Make cci_write() error handling consistent.
+- Return imx576_set_pad_format() result instead of return 0.
+- Initialize link_freq_index before creating the link frequency control.
+- Replace dev_err() with dev_err_probe().
+- Remove redundant comment.
+
+In Patch 3/3
+- Added the remaining supplies CSIPHYs (0-3).
+- Add comment for camera orientation property.
+- Move cam_mclk1_default{..} pinctrl definition to SoC SM6350 dtsi.
+
+Hardevsinh Palaniya (2):
+  dt-bindings: media: i2c: Add imx576 sensor
+  arm64: dts: qcom: sm7225-fairphone-fp4: Add Sony IMX576 front camera
+    support
+
+Himanshu Bhavani (1):
+  media: i2c: add imx576 image sensor driver
+
+ .../bindings/media/i2c/sony,imx576.yaml       |  111 ++
+ MAINTAINERS                                   |    8 +
+ arch/arm64/boot/dts/qcom/sm6350.dtsi          |    7 +
+ .../boot/dts/qcom/sm7225-fairphone-fp4.dts    |   53 +-
+ drivers/media/i2c/Kconfig                     |   10 +
+ drivers/media/i2c/Makefile                    |    1 +
+ drivers/media/i2c/imx576.c                    | 1034 +++++++++++++++++
+ 7 files changed, 1223 insertions(+), 1 deletion(-)
+ create mode 100644 Documentation/devicetree/bindings/media/i2c/sony,imx576.yaml
+ create mode 100644 drivers/media/i2c/imx576.c
+
+--
+2.34.1
 
