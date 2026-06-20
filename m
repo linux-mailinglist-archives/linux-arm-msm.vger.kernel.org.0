@@ -1,84 +1,90 @@
-Return-Path: <linux-arm-msm+bounces-113881-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-113882-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id iayUBW1JNmqh9AYAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-113881-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Jun 2026 10:03:57 +0200
+	id jkzYNuNJNmqy9AYAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-113882-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Jun 2026 10:05:55 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id EDD256A8887
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Jun 2026 10:03:55 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3EAD36A88B2
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Jun 2026 10:05:55 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=fr8KcA6v;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113881-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c15:e001:75::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113881-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=reject) header.from=qualcomm.com;
+	dkim=pass header.d=gmail.com header.s=20251104 header.b=EVPgLndi;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113882-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113882-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=none) header.from=gmail.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id BC0C23008D1F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Jun 2026 08:03:52 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 55B9A305117C
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Jun 2026 08:04:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0E9D922579E;
-	Sat, 20 Jun 2026 08:03:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D65853438B5;
+	Sat, 20 Jun 2026 08:04:13 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 964A41A3166;
-	Sat, 20 Jun 2026 08:03:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CB9AE573
+	for <linux-arm-msm@vger.kernel.org>; Sat, 20 Jun 2026 08:04:12 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781942631; cv=none; b=hujs/Hlnie+VY8PahGGqe8XqR604C2LdOku4UvoSK/8O/TGBwwAETcZ4l9gIPWS+pxJHvjQImoabtuuECDJVVl7hM2PbUKQBWs+dtuTWS89KrSg2Ko//NQLMENeojeCXUDJmo3jFCQBxVC0iz++DlgChuh24n0g/Cll4ArC9370=
+	t=1781942653; cv=none; b=BNVSG2zQCWdpB/fJbmLXK2oW3XNuv+YHIYEOyTFgdXmw8hKVuwnSI5TswUaP56kOfJjEliEA2SV8mWAzXD1ze5mV6tvTNOWzSSxMequmbnrje2A4Rl9suabcXPrPzuYonc8B8kHJfNI+itPhJNMHznxTf1/l/0hYq+/424TBDuM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781942631; c=relaxed/simple;
-	bh=V2EXxXoDMG5deaJlqQb1USo0Et0IF2rWIjZfGUxuMM0=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=uJZ6vAuZU5854goPE6jRXFA4N2p79oit2wAICzRoDM4NspU9GwzwS64BLtW9WspU0WQmxL8O/tYxxkpoQ1qX7qtsS7K7TDIA5hwF6LvTBMtpXotlJ5JtQC/HyuwK7IfxuwZel6WZtPTVElcWOLtnD8rKq8DCFlqxpIvUbxLMdfE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=fr8KcA6v; arc=none smtp.client-ip=205.220.180.131
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65K3L3eC2618784;
-	Sat, 20 Jun 2026 08:03:30 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=uQ+HE2A31kE
-	yF82FwAhJXLBEykdUxlLdjJ8+6OcyraU=; b=fr8KcA6v198wZFiHwYgEfvCS3Ns
-	lb2JrarWCi/iq235k4QbmDxjOWNDYgwPMxgy1UnBRuR9rLfuTsEDG3eviFgGKvze
-	0P/8/YxYGjMGXj5WM6ENx5ta597By7xlgX2WH7/4pHmQLZ9syzpDOPD2r17YhlUb
-	dTTf6lRzTqFhlyZbOqlauR84YIcc1m9lfrrXOkG7HqNvdzynF/v15NVnPIruLobP
-	KlM4xl9MjGaNmE8tBsLcF0176IYpe8oP6q/dnQwv5LmagBu44ZrQ/2j4Gb6t9Sa0
-	i4IfHUApQDqmAzXPmc5N800Q11z9WqDzQtxwPu/Xhgz1SuNRWPyNkqXADbg==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ewhv5gkrw-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sat, 20 Jun 2026 08:03:30 +0000 (GMT)
-Received: from pps.filterd (NALASPPMTA01.qualcomm.com [127.0.0.1])
-	by NALASPPMTA01.qualcomm.com (8.18.1.7/8.18.1.7) with ESMTP id 65K83TgG012531;
-	Sat, 20 Jun 2026 08:03:29 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by NALASPPMTA01.qualcomm.com (PPS) with ESMTPS id 4ewkxh95x2-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sat, 20 Jun 2026 08:03:29 +0000 (GMT)
-Received: from NALASPPMTA01.qualcomm.com (NALASPPMTA01.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.18.1.12/8.18.1.12) with ESMTP id 65K83Seu012525;
-	Sat, 20 Jun 2026 08:03:28 GMT
-Received: from hu-devc-lv-u22-c.qualcomm.com (hu-cang-lv.qualcomm.com [10.81.25.255])
-	by NALASPPMTA01.qualcomm.com (PPS) with ESMTPS id 65K83SlA012524
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sat, 20 Jun 2026 08:03:28 +0000 (GMT)
-Received: by hu-devc-lv-u22-c.qualcomm.com (Postfix, from userid 359480)
-	id 9F9CD64C; Sat, 20 Jun 2026 01:03:28 -0700 (PDT)
-From: Can Guo <can.guo@oss.qualcomm.com>
-To: bvanassche@acm.org, beanhuo@micron.com, peter.wang@mediatek.com,
-        martin.petersen@oracle.com, mani@kernel.org
-Cc: linux-scsi@vger.kernel.org, Can Guo <can.guo@oss.qualcomm.com>,
-        "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
-        linux-arm-msm@vger.kernel.org (open list:UNIVERSAL FLASH STORAGE HOST CONTROLLER DRIVER...),
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH 1/3] scsi: ufs: ufs-qcom: Restore TX Equalization settings on FOM failure
-Date: Sat, 20 Jun 2026 01:03:20 -0700
-Message-Id: <20260620080322.3765210-2-can.guo@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260620080322.3765210-1-can.guo@oss.qualcomm.com>
-References: <20260620080322.3765210-1-can.guo@oss.qualcomm.com>
+	s=arc-20240116; t=1781942653; c=relaxed/simple;
+	bh=vr+D48qZUZL4HK65fAvy4xudrWZiPByTLHbOTHkKFlE=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=XlAmpQJpD5XzmV2vAzNgYcroLxS2Bb49QzDwuAo8uJbVj8OQNykXCmoGScfFQ9N16GMSpU2WRQBYfS6zZMI+Au6i7GG7smaBtbatjevsTTSFYc5zLUx47qgGkXFd5v/RIa9N5cnRMEXiMCxemcRY3Tddkw3aBYMXBur/NToVVpY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EVPgLndi; arc=none smtp.client-ip=209.85.214.172
+Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-2c6bb8a5980so19536185ad.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 20 Jun 2026 01:04:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1781942652; x=1782547452; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=heXg3yOXzX2LQOc/U/NrXde9JiDhaHN9Xy0IhhHBxTg=;
+        b=EVPgLnditsnW4q/xYTK1+I1Il8n6UvMfeqX1Bd5IyjVRTsgn9sISketdOPw3ZbYCaa
+         TGAZMP48YDw2BzW87+rbAH11DfPy6XQ6biBqNkBwqJg36SKkRJUIIrgvYPt1i0Gyyyzc
+         zvG4wpv/GOjwBHk+XufenOiLWEiCX4LMd0chvPsPwtEmRD0BYaSGeLP2st6lJw3belCi
+         5+l1/EfvCKVzxmJFOIiBpATdU8+3BjHOMP66+ocjp0rjFnnX26LZ4qkyzZuN/r4t5xMW
+         Pt3h5jKiprZMxeaLtGbgL4Jvhy1THug1GKziCdf+qVqiVfZV49tXywT2xTyF2WBlO/Hr
+         +XVQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781942652; x=1782547452;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=heXg3yOXzX2LQOc/U/NrXde9JiDhaHN9Xy0IhhHBxTg=;
+        b=QDWaBmk5xn/FQWWv+UQeo76CzQuROD5zN2lUUBm/3V9WZqLjDGio/WTOjQOrBr/C9i
+         58ElSFvMrMhIlAfOQ6ITutgN5/mKSmnWUjHU8FYwaSfbP3GIfVIhkC+1xNJHjj+8vZHY
+         W+lXGMKYdrFvC6cUNn9c5JIDsB0yDyIHs6NEiP8JeGGTUMxj3DlZl4sTIWhfP8rtSciS
+         iTAJZpdtG7mdJwYLWtcmshpdbAr40ejCH6ZXQtqdyV9q5IBD17eRlY3b69w7RfGhQ52l
+         GjaleJLqwuK4NsnZDwYmisJo+VWiga1r+HMX1arDlBtnm0G4KwmL329+vZLA4ebzl+RE
+         eg8A==
+X-Forwarded-Encrypted: i=1; AFNElJ/nf2AL6hh0eUk5faJjA+4O7K78ka/fRj+a7+FoMFR+13FuCXYaTi+Bm3IAxwzhhdwwy+2mIjsPP5YwFJBr@vger.kernel.org
+X-Gm-Message-State: AOJu0YyJbZhd2ONIlIiOGMdJ628rcsUAAW3AskkMF5pQFvvLCwfHF1WB
+	dDlmxNa7Z+IYZZ2fR7KU88qbBwQaqnPdyCqiOYjqazburJQW+CogTXfz
+X-Gm-Gg: AfdE7cnTFsqCETPrDV7eIfgE3RLiv5u7FwoukwzErbAMh9EkMEB/aT5TX4/aEu3sjQy
+	iyEik+/hmSFFH4Z+RdEkUtJVnzP3mc9ILn72h312jlCbZZzsTTQ9ScRh2IbjdHEiaMO+8QV4X6X
+	wdXkVVGTFj9UodPT6PnspSv3pTckzKro5D+Eue1StLMf47XNOIGg24PkHJoJ/p//igPXXBIVhQg
+	PmygAI+H35GEzQoQ0rM/LgP81oE59jxc4V4wBQZM1+sSnNfDY2Gnea+THiQ1MI2gX5biPLkHM8e
+	XeydlFkzVV7KKZ5jHyKvtZTZMRllPsaljx6fuL9KJCt0qK0vhpRB6h0kCcto42tYhlKD+13qggd
+	z44X+uhH6xBlAzHeJlvGlpXNz7T48RuoB1/ExEII5gXxoW7bDWO2WQ7n8cNGr1CWFwbq57IYM6z
+	BPz6WXzm0xoPtiMyhchRrpSIYBSRP2YkCI
+X-Received: by 2002:a17:902:d54a:b0:2b2:5515:661c with SMTP id d9443c01a7336-2c7190179a3mr76441265ad.31.1781942651724;
+        Sat, 20 Jun 2026 01:04:11 -0700 (PDT)
+Received: from haichao.tail057a43.ts.net ([2001:da8:e000:1206:8e0e:956e:b09c:23cd])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2c7436d5057sm15676735ad.21.2026.06.20.01.04.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 20 Jun 2026 01:04:11 -0700 (PDT)
+From: Ruoyu Wang <ruoyuw560@gmail.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>
+Cc: Linus Walleij <linus.walleij@linaro.org>,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Ruoyu Wang <ruoyuw560@gmail.com>
+Subject: [PATCH] bus: qcom-ebi2: Fix clock leak on probe failure
+Date: Sat, 20 Jun 2026 16:04:06 +0800
+Message-ID: <20260620080406.1970447-1-ruoyuw560@gmail.com>
+X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -86,120 +92,92 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIwMDA3NyBTYWx0ZWRfX5PXHeolm2A/I
- DhD1WnZeAbpNZwHft2bZK0JPOuh9LN/9KtI4FZGXj9YQ89jg9vcJxO6sIObC+vowqqGDg4TbyLN
- Z5meBz2cdFpiKWnVGiyucRDKAGK4FclCJSx6eVnyxBzscQQxirmc4tI/ki7+EUKAYxjuz5gjJIk
- Fc5NmCX4vboijiuporOIhJObZO0Qx8MFfivhMPBMLuJ3h+MevuLIrvoxef819q5JY1qWrM3PtFU
- inTBDa4Coj3JPXpRUignEI/yBw570KKfHrqvo0V6a4yco0HenVclULTKH8Ja1F23r0BOTJauHe0
- vkEk5/9mospDXeSuwNjm5V9X5n/B84fxAev3dIzvP0F999zvartxIkFSqjIRbKUUrPcCY2GkKa0
- l62JAcRvOoFLt08Q0l4p4HaC+hSlYzXynFzgzB+bgWlcBnSif0PqtrL4Bhj8Yupa8ZALOHrVObs
- kb3OzqZjPSlidFBvxbQ==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIwMDA3NyBTYWx0ZWRfX/QzfdxwUELCy
- QcTSJLkb8+UkO1fXa8ZK2iqnTtG6kxDxbZY0bELQt30qF3j2sDYxVYWnBOGrSsK42RGtbN4U+U4
- 1FcioEzPHnvRvCyd+o8W9Zvox03uOjs=
-X-Proofpoint-ORIG-GUID: C5FKg2mC_3BzZtv-EAcjRXaQmJHTYBxE
-X-Proofpoint-GUID: C5FKg2mC_3BzZtv-EAcjRXaQmJHTYBxE
-X-Authority-Analysis: v=2.4 cv=UrZT8ewB c=1 sm=1 tr=0 ts=6a364952 cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
- a=_glEPmIy2e8OvE2BGh3C:22 a=EUspDBNiAAAA:8 a=eGa5Le0WxWYHDMwdXPYA:9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-20_01,2026-06-18_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 phishscore=0 impostorscore=0 clxscore=1015 malwarescore=0
- bulkscore=0 suspectscore=0 priorityscore=1501 lowpriorityscore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606200077
 X-Rspamd-Action: no action
 X-Spamd-Result: default: False [-0.66 / 15.00];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MID_CONTAINS_FROM(1.00)[];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	R_MISSING_CHARSET(0.50)[];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-113881-lists,linux-arm-msm=lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:bvanassche@acm.org,m:beanhuo@micron.com,m:peter.wang@mediatek.com,m:martin.petersen@oracle.com,m:mani@kernel.org,m:linux-scsi@vger.kernel.org,m:can.guo@oss.qualcomm.com,m:James.Bottomley@HansenPartnership.com,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,s:lists@lfdr.de];
-	FORGED_SENDER(0.00)[can.guo@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_CC(0.00)[linaro.org,vger.kernel.org,gmail.com];
+	FREEMAIL_FROM(0.00)[gmail.com];
+	TAGGED_FROM(0.00)[bounces-113882-lists,linux-arm-msm=lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS(0.00)[m:andersson@kernel.org,m:konradybcio@kernel.org,m:linus.walleij@linaro.org,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:ruoyuw560@gmail.com,s:lists@lfdr.de];
 	MIME_TRACE(0.00)[0:+];
-	FORWARDED(0.00)[lists@lfdr.de];
-	FROM_NEQ_ENVFROM(0.00)[can.guo@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[10];
-	ALIAS_RESOLVED(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,qualcomm.com:email,vger.kernel.org:from_smtp,oss.qualcomm.com:mid,oss.qualcomm.com:from_mime,sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo];
-	DKIM_TRACE(0.00)[qualcomm.com:+];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	FORGED_SENDER(0.00)[ruoyuw560@gmail.com,linux-arm-msm@vger.kernel.org];
 	TO_DN_SOME(0.00)[];
+	FORWARDED(0.00)[lists@lfdr.de];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCPT_COUNT_FIVE(0.00)[6];
+	PRECEDENCE_BULK(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[ruoyuw560@gmail.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[gmail.com:+];
+	RCVD_COUNT_FIVE(0.00)[5];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	ALIAS_RESOLVED(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
-	RCVD_COUNT_SEVEN(0.00)[10]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[iu.edu:url,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,vger.kernel.org:from_smtp]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: EDD256A8887
+X-Rspamd-Queue-Id: 3EAD36A88B2
 
-ufs_qcom_get_rx_fom() applies temporary device TX Equalization values
-before forcing HS mode and running the EOM-based SW FOM scan.
+qcom_ebi2_probe() enables the EBI2X and EBI2 clocks before it walks
+child nodes and populates child devices. If reading a child node's reg
+property fails, or if of_platform_default_populate() fails, probe returns
+without disabling either clock.
 
-When one of these steps fails, the function can bypass the shared
-cleanup path and leave temporary TX Equalization settings programmed.
+Route those failure paths through the existing clock cleanup labels so a
+failed probe does not leave the clocks prepared and enabled.
 
-Route those failures through the cleanup label so the original TX EQ
-settings are restored and link recovery runs before exit.
-
-This path also reuses ret for cleanup, so it may overwrite the original
-error. Keep that on purpose: if cleanup succeeds, the caller can proceed
-with the FOM result for the current iteration.
-
-Signed-off-by: Can Guo <can.guo@oss.qualcomm.com>
+Fixes: 335a12754808 ("bus: qcom: add EBI2 driver")
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
 ---
- drivers/ufs/host/ufs-qcom.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+This is a minimal error-path fix for a previously reported leak. A broader
+devm_clk_get_enabled() conversion was posted in 2023 and reviewed, and a
+similar cleanup was posted in 2024, but neither appears in current upstream:
+https://lkml.iu.edu/hypermail/linux/kernel/2305.1/00605.html
+https://lkml.iu.edu/2408.2/09536.html
 
-diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-index c084ccc72523..7d7c001435bf 100644
---- a/drivers/ufs/host/ufs-qcom.c
-+++ b/drivers/ufs/host/ufs-qcom.c
-@@ -2791,7 +2791,7 @@ static int ufs_qcom_get_rx_fom(struct ufs_hba *hba,
- 	if (ret) {
- 		dev_err(hba->dev, "%s: Failed to apply TX EQ settings for HS-G%u: %d\n",
- 			__func__, gear, ret);
--		return ret;
-+		goto link_recover_and_restore;
+ drivers/bus/qcom-ebi2.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/bus/qcom-ebi2.c b/drivers/bus/qcom-ebi2.c
+index be8166565e7c..ab00c75b9e95 100644
+--- a/drivers/bus/qcom-ebi2.c
++++ b/drivers/bus/qcom-ebi2.c
+@@ -353,7 +353,7 @@ static int qcom_ebi2_probe(struct platform_device *pdev)
+ 		/* Figure out the chipselect */
+ 		ret = of_property_read_u32(child, "reg", &csindex);
+ 		if (ret)
+-			return ret;
++			goto err_disable_clk;
+ 
+ 		if (csindex > 5) {
+ 			dev_err(dev,
+@@ -372,8 +372,12 @@ static int qcom_ebi2_probe(struct platform_device *pdev)
+ 		have_children = true;
  	}
  
- 	/* Force PMC to target HS Gear to use new TX Equalization settings. */
-@@ -2799,16 +2799,15 @@ static int ufs_qcom_get_rx_fom(struct ufs_hba *hba,
- 	if (ret) {
- 		dev_err(hba->dev, "%s: Failed to change power mode to HS-G%u, Rate-%s: %d\n",
- 			__func__, gear, ufs_hs_rate_to_str(rate), ret);
--		return ret;
-+		goto link_recover_and_restore;
- 	}
+-	if (have_children)
+-		return of_platform_default_populate(np, NULL, dev);
++	if (have_children) {
++		ret = of_platform_default_populate(np, NULL, dev);
++		if (ret)
++			goto err_disable_clk;
++	}
++
+ 	return 0;
  
- 	ret = ufs_qcom_host_sw_rx_fom(hba, pwr_mode->lane_rx, fom);
--	if (ret) {
-+	if (ret)
- 		dev_err(hba->dev, "Failed to get SW FOM of TX (PreShoot: %u, DeEmphasis: %u): %d\n",
- 			d_iter->preshoot, d_iter->deemphasis, ret);
--		return ret;
--	}
- 
-+link_recover_and_restore:
- 	/* Restore Device's TX Equalization settings. */
- 	ret = ufshcd_apply_tx_eq_settings(hba, &hba->tx_eq_params[gear - 1], gear);
- 	if (ret) {
+ err_disable_clk:
 -- 
-2.34.1
-
+git 2.51.0
 
