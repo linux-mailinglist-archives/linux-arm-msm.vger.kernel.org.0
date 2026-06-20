@@ -1,183 +1,146 @@
-Return-Path: <linux-arm-msm+bounces-113882-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-113883-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id jkzYNuNJNmqy9AYAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-113882-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Jun 2026 10:05:55 +0200
+	id npojLmeVNmrjBQcAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-113883-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Jun 2026 15:28:07 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3EAD36A88B2
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Jun 2026 10:05:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 039366A8F0B
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Jun 2026 15:28:07 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=gmail.com header.s=20251104 header.b=EVPgLndi;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113882-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113882-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=none) header.from=gmail.com;
+	dkim=pass header.d=ideasonboard.com header.s=mail header.b=JPePHGKB;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113883-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113883-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=none) header.from=ideasonboard.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 55B9A305117C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Jun 2026 08:04:14 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id EC15E3019BA7
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Jun 2026 13:28:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D65853438B5;
-	Sat, 20 Jun 2026 08:04:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8796A391E6D;
+	Sat, 20 Jun 2026 13:28:02 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CB9AE573
-	for <linux-arm-msm@vger.kernel.org>; Sat, 20 Jun 2026 08:04:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 817E127874F;
+	Sat, 20 Jun 2026 13:27:59 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781942653; cv=none; b=BNVSG2zQCWdpB/fJbmLXK2oW3XNuv+YHIYEOyTFgdXmw8hKVuwnSI5TswUaP56kOfJjEliEA2SV8mWAzXD1ze5mV6tvTNOWzSSxMequmbnrje2A4Rl9suabcXPrPzuYonc8B8kHJfNI+itPhJNMHznxTf1/l/0hYq+/424TBDuM=
+	t=1781962082; cv=none; b=Xtgnqe9pDouWiE3ataceNC18Hw8HrYlX4pYwjYR/xsCM1AuQzjVPPXYESXA9gI57uU7XP5eoNrfszVr/6ZcrJppsc3t+xIQstJ1mRFeK+opa0YPcb6+NlNuqJ0b1ZOn+JdZHJ6DEHCKs5SzvyMqXj2BFhWloF/bbXeAa3w9u8yg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781942653; c=relaxed/simple;
-	bh=vr+D48qZUZL4HK65fAvy4xudrWZiPByTLHbOTHkKFlE=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=XlAmpQJpD5XzmV2vAzNgYcroLxS2Bb49QzDwuAo8uJbVj8OQNykXCmoGScfFQ9N16GMSpU2WRQBYfS6zZMI+Au6i7GG7smaBtbatjevsTTSFYc5zLUx47qgGkXFd5v/RIa9N5cnRMEXiMCxemcRY3Tddkw3aBYMXBur/NToVVpY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EVPgLndi; arc=none smtp.client-ip=209.85.214.172
-Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-2c6bb8a5980so19536185ad.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 20 Jun 2026 01:04:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781942652; x=1782547452; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=heXg3yOXzX2LQOc/U/NrXde9JiDhaHN9Xy0IhhHBxTg=;
-        b=EVPgLnditsnW4q/xYTK1+I1Il8n6UvMfeqX1Bd5IyjVRTsgn9sISketdOPw3ZbYCaa
-         TGAZMP48YDw2BzW87+rbAH11DfPy6XQ6biBqNkBwqJg36SKkRJUIIrgvYPt1i0Gyyyzc
-         zvG4wpv/GOjwBHk+XufenOiLWEiCX4LMd0chvPsPwtEmRD0BYaSGeLP2st6lJw3belCi
-         5+l1/EfvCKVzxmJFOIiBpATdU8+3BjHOMP66+ocjp0rjFnnX26LZ4qkyzZuN/r4t5xMW
-         Pt3h5jKiprZMxeaLtGbgL4Jvhy1THug1GKziCdf+qVqiVfZV49tXywT2xTyF2WBlO/Hr
-         +XVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781942652; x=1782547452;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=heXg3yOXzX2LQOc/U/NrXde9JiDhaHN9Xy0IhhHBxTg=;
-        b=QDWaBmk5xn/FQWWv+UQeo76CzQuROD5zN2lUUBm/3V9WZqLjDGio/WTOjQOrBr/C9i
-         58ElSFvMrMhIlAfOQ6ITutgN5/mKSmnWUjHU8FYwaSfbP3GIfVIhkC+1xNJHjj+8vZHY
-         W+lXGMKYdrFvC6cUNn9c5JIDsB0yDyIHs6NEiP8JeGGTUMxj3DlZl4sTIWhfP8rtSciS
-         iTAJZpdtG7mdJwYLWtcmshpdbAr40ejCH6ZXQtqdyV9q5IBD17eRlY3b69w7RfGhQ52l
-         GjaleJLqwuK4NsnZDwYmisJo+VWiga1r+HMX1arDlBtnm0G4KwmL329+vZLA4ebzl+RE
-         eg8A==
-X-Forwarded-Encrypted: i=1; AFNElJ/nf2AL6hh0eUk5faJjA+4O7K78ka/fRj+a7+FoMFR+13FuCXYaTi+Bm3IAxwzhhdwwy+2mIjsPP5YwFJBr@vger.kernel.org
-X-Gm-Message-State: AOJu0YyJbZhd2ONIlIiOGMdJ628rcsUAAW3AskkMF5pQFvvLCwfHF1WB
-	dDlmxNa7Z+IYZZ2fR7KU88qbBwQaqnPdyCqiOYjqazburJQW+CogTXfz
-X-Gm-Gg: AfdE7cnTFsqCETPrDV7eIfgE3RLiv5u7FwoukwzErbAMh9EkMEB/aT5TX4/aEu3sjQy
-	iyEik+/hmSFFH4Z+RdEkUtJVnzP3mc9ILn72h312jlCbZZzsTTQ9ScRh2IbjdHEiaMO+8QV4X6X
-	wdXkVVGTFj9UodPT6PnspSv3pTckzKro5D+Eue1StLMf47XNOIGg24PkHJoJ/p//igPXXBIVhQg
-	PmygAI+H35GEzQoQ0rM/LgP81oE59jxc4V4wBQZM1+sSnNfDY2Gnea+THiQ1MI2gX5biPLkHM8e
-	XeydlFkzVV7KKZ5jHyKvtZTZMRllPsaljx6fuL9KJCt0qK0vhpRB6h0kCcto42tYhlKD+13qggd
-	z44X+uhH6xBlAzHeJlvGlpXNz7T48RuoB1/ExEII5gXxoW7bDWO2WQ7n8cNGr1CWFwbq57IYM6z
-	BPz6WXzm0xoPtiMyhchRrpSIYBSRP2YkCI
-X-Received: by 2002:a17:902:d54a:b0:2b2:5515:661c with SMTP id d9443c01a7336-2c7190179a3mr76441265ad.31.1781942651724;
-        Sat, 20 Jun 2026 01:04:11 -0700 (PDT)
-Received: from haichao.tail057a43.ts.net ([2001:da8:e000:1206:8e0e:956e:b09c:23cd])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2c7436d5057sm15676735ad.21.2026.06.20.01.04.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 20 Jun 2026 01:04:11 -0700 (PDT)
-From: Ruoyu Wang <ruoyuw560@gmail.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>
-Cc: Linus Walleij <linus.walleij@linaro.org>,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Ruoyu Wang <ruoyuw560@gmail.com>
-Subject: [PATCH] bus: qcom-ebi2: Fix clock leak on probe failure
-Date: Sat, 20 Jun 2026 16:04:06 +0800
-Message-ID: <20260620080406.1970447-1-ruoyuw560@gmail.com>
-X-Mailer: git-send-email 2.51.0
+	s=arc-20240116; t=1781962082; c=relaxed/simple;
+	bh=//RtIbbbO+6Y9IggxZGdSw3W2JDAG48tPtlced6Ieys=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ps7UM0/FxG/iBfSbj1GSgk8LG8mREzobUYtYof6Zu4PJ4pRLMpql2q+a03tMZ1sYgCSt6iQxny5qma1MHW8FPJNb6RP+Yyhd/0a7Wes71QQtPf2+4vgp1o6UnVG08MVHRQW/dWUQtRgRUez+LvSDW9+q369JSSQ0wWoF5jUbFNM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com; spf=pass smtp.mailfrom=ideasonboard.com; dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b=JPePHGKB; arc=none smtp.client-ip=213.167.242.64
+Received: from killaraus.ideasonboard.com (2001-14ba-70f3-e800--a06.rev.dnainternet.fi [IPv6:2001:14ba:70f3:e800::a06])
+	by perceval.ideasonboard.com (Postfix) with ESMTPSA id 56F9A56D;
+	Sat, 20 Jun 2026 15:27:14 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
+	s=mail; t=1781962034;
+	bh=//RtIbbbO+6Y9IggxZGdSw3W2JDAG48tPtlced6Ieys=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=JPePHGKBsdJ/lIIINcK6809JnDeJ7nB6JKHdYt0BQK9HNgWiqmu99TF49vtudqT2/
+	 3jT9AgIHt+2dxYqCA0pk5yV+KlPFElWGV0EjiH/iduccWqJjOwwGpjTIXd/sPN5yeo
+	 2QvTvpYctAzvXVLMQNwTpf/3K61GvrJMmaSyZZQE=
+Date: Sat, 20 Jun 2026 16:27:49 +0300
+From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+To: Himanshu Bhavani <himanshu.bhavani@siliconsignals.io>
+Cc: sakari.ailus@linux.intel.com, luca.weiss@fairphone.com,
+	Hardevsinh Palaniya <hardevsinh.palaniya@siliconsignals.io>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Hans de Goede <johannes.goede@oss.qualcomm.com>,
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+	Elgin Perumbilly <elgin.perumbilly@siliconsignals.io>,
+	Walter Werner Schneider <contact@schnwalter.eu>,
+	Kate Hsuan <hpa@redhat.com>, Svyatoslav Ryhel <clamor95@gmail.com>,
+	linux-media@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2 2/3] media: i2c: add imx576 image sensor driver
+Message-ID: <20260620132749.GE3552167@killaraus.ideasonboard.com>
+References: <20260619125439.55311-1-himanshu.bhavani@siliconsignals.io>
+ <20260619125439.55311-3-himanshu.bhavani@siliconsignals.io>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260619125439.55311-3-himanshu.bhavani@siliconsignals.io>
 X-Rspamd-Action: no action
 X-Spamd-Result: default: False [-0.66 / 15.00];
-	MID_CONTAINS_FROM(1.00)[];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_MISSING_CHARSET(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
+	DMARC_POLICY_ALLOW(-0.50)[ideasonboard.com,none];
+	R_DKIM_ALLOW(-0.20)[ideasonboard.com:s=mail];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_CC(0.00)[linaro.org,vger.kernel.org,gmail.com];
-	FREEMAIL_FROM(0.00)[gmail.com];
-	TAGGED_FROM(0.00)[bounces-113882-lists,linux-arm-msm=lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:andersson@kernel.org,m:konradybcio@kernel.org,m:linus.walleij@linaro.org,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:ruoyuw560@gmail.com,s:lists@lfdr.de];
+	TAGGED_FROM(0.00)[bounces-113883-lists,linux-arm-msm=lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:himanshu.bhavani@siliconsignals.io,m:sakari.ailus@linux.intel.com,m:luca.weiss@fairphone.com,m:hardevsinh.palaniya@siliconsignals.io,m:mchehab@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:andersson@kernel.org,m:konradybcio@kernel.org,m:hverkuil+cisco@kernel.org,m:johannes.goede@oss.qualcomm.com,m:vladimir.zapolskiy@linaro.org,m:elgin.perumbilly@siliconsignals.io,m:contact@schnwalter.eu,m:hpa@redhat.com,m:clamor95@gmail.com,m:linux-media@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,m:hverkuil@kernel.org,s:lists@lfdr.de];
+	RCVD_COUNT_THREE(0.00)[4];
+	FORGED_SENDER(0.00)[laurent.pinchart@ideasonboard.com,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[21];
+	FREEMAIL_CC(0.00)[linux.intel.com,fairphone.com,siliconsignals.io,kernel.org,oss.qualcomm.com,linaro.org,schnwalter.eu,redhat.com,gmail.com,vger.kernel.org];
 	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER(0.00)[ruoyuw560@gmail.com,linux-arm-msm@vger.kernel.org];
-	TO_DN_SOME(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	FORWARDED(0.00)[lists@lfdr.de];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_FIVE(0.00)[6];
-	PRECEDENCE_BULK(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[ruoyuw560@gmail.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	RCVD_COUNT_FIVE(0.00)[5];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[laurent.pinchart@ideasonboard.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[ideasonboard.com:+];
+	MID_RHS_MATCH_FROMTLD(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[iu.edu:url,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,vger.kernel.org:from_smtp]
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt,cisco];
+	MISSING_XM_UA(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 3EAD36A88B2
+X-Rspamd-Queue-Id: 039366A8F0B
 
-qcom_ebi2_probe() enables the EBI2X and EBI2 clocks before it walks
-child nodes and populates child devices. If reading a child node's reg
-property fails, or if of_platform_default_populate() fails, probe returns
-without disabling either clock.
+On Fri, Jun 19, 2026 at 06:24:32PM +0530, Himanshu Bhavani wrote:
+> Add a v4l2 subdevice driver for the Sony imx576 sensor.
+> 
+> The Sony IMX576 image sensor with an active
+> array size of 5760 x 4312
+> 
+> The following features are supported:
+> - Manual exposure an gain control support
+> - vblank/hblank control support
+> - Supported resolution: 2880 x 2156 30fps (SRGGB10)
 
-Route those failure paths through the existing clock cleanup labels so a
-failed probe does not leave the clocks prepared and enabled.
+You've been asked in v1 to make this driver dynamically compute
+registers instead of hardcoding modes. Please do so in v3. Nack on v2.
 
-Fixes: 335a12754808 ("bus: qcom: add EBI2 driver")
-Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
----
-This is a minimal error-path fix for a previously reported leak. A broader
-devm_clk_get_enabled() conversion was posted in 2023 and reviewed, and a
-similar cleanup was posted in 2024, but neither appears in current upstream:
-https://lkml.iu.edu/hypermail/linux/kernel/2305.1/00605.html
-https://lkml.iu.edu/2408.2/09536.html
+> Signed-off-by: Himanshu Bhavani <himanshu.bhavani@siliconsignals.io>
+> ---
+>  MAINTAINERS                |    1 +
+>  drivers/media/i2c/Kconfig  |   10 +
+>  drivers/media/i2c/Makefile |    1 +
+>  drivers/media/i2c/imx576.c | 1034 ++++++++++++++++++++++++++++++++++++
+>  4 files changed, 1046 insertions(+)
+>  create mode 100644 drivers/media/i2c/imx576.c
 
- drivers/bus/qcom-ebi2.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+[snip]
 
-diff --git a/drivers/bus/qcom-ebi2.c b/drivers/bus/qcom-ebi2.c
-index be8166565e7c..ab00c75b9e95 100644
---- a/drivers/bus/qcom-ebi2.c
-+++ b/drivers/bus/qcom-ebi2.c
-@@ -353,7 +353,7 @@ static int qcom_ebi2_probe(struct platform_device *pdev)
- 		/* Figure out the chipselect */
- 		ret = of_property_read_u32(child, "reg", &csindex);
- 		if (ret)
--			return ret;
-+			goto err_disable_clk;
- 
- 		if (csindex > 5) {
- 			dev_err(dev,
-@@ -372,8 +372,12 @@ static int qcom_ebi2_probe(struct platform_device *pdev)
- 		have_children = true;
- 	}
- 
--	if (have_children)
--		return of_platform_default_populate(np, NULL, dev);
-+	if (have_children) {
-+		ret = of_platform_default_populate(np, NULL, dev);
-+		if (ret)
-+			goto err_disable_clk;
-+	}
-+
- 	return 0;
- 
- err_disable_clk:
 -- 
-git 2.51.0
+Regards,
+
+Laurent Pinchart
 
