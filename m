@@ -1,170 +1,200 @@
-Return-Path: <linux-arm-msm+bounces-113910-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-113911-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id r47VAaAtOGr4ZAcAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-113910-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Jun 2026 20:29:52 +0200
+	id K1TNG8VhOGoJbwcAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-113911-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2026 00:12:21 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6B1FB6AB6C7
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Jun 2026 20:29:51 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id C95E26ABB74
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2026 00:12:20 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=OUKqj8nH;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113910-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113910-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=quarantine) header.from=kernel.org;
+	dkim=pass header.d=chromium.org header.s=google header.b=dEmhp7Im;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113911-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113911-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=none) header.from=chromium.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 31652300903B
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Jun 2026 18:29:50 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 8E2E3302453B
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Jun 2026 22:12:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1DD00284690;
-	Sun, 21 Jun 2026 18:29:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 99B3337475E;
+	Sun, 21 Jun 2026 22:12:15 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f46.google.com (mail-vs1-f46.google.com [209.85.217.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 136621A0712;
-	Sun, 21 Jun 2026 18:29:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45298372046
+	for <linux-arm-msm@vger.kernel.org>; Sun, 21 Jun 2026 22:12:14 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782066587; cv=none; b=pUqYJJ3TmOiuw2tgOZA7cYPgABJ5DF1+X48ji54+JbkWNTs46wdz2VUdI67y+qZi8FCSSf3YLuatemcpc5UYEWZKyWyrknoMXWUAeYh13ht6mJjZnghNkT8lEnYTJuI+Wdyb4rZCHLdRLJtsqfq0ICJ+p2n9h7+d42Cwrtc27a8=
+	t=1782079935; cv=none; b=EoyFFEPP1ywUTOCAZI37UIryhw0ih7Fvlq43yuaHqj/c0zZci2QdkyThewtsYBxDcTUXs9cqYILy7ceOL3cxBLFgeeLGsoM+SsNqgk+bGfJ4qOYD5hMKa/QS/tHsYUrTU2IzT9cOS2ysfzJJBooJdxuBtxn1gyAr10IJAHgtsIk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782066587; c=relaxed/simple;
-	bh=XshDS5LX06Nigp+AQeMTSp3fbLh3OqQj7mbH7MeBp3k=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=s6mSTkG+Xo10qTtEuRw9N1XxmbIgz5iGnAC0KrXFv8TkfanEBb2hrG/kb37y2Dz/C1x65rtilVoigyRrUv6O+VozZX9sqDQFNsxt6ajbseGOcanFiOyHHY3DslCkU5E3VmA/vFSDCmYR6HsACqFOy2FynYIwkEGU/UXw1eletYM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OUKqj8nH; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 777781F000E9;
-	Sun, 21 Jun 2026 18:29:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782066585;
-	bh=zZkxbo2hUXhh2IgEZJgHgKhNdIsAZMVIniWu+cUUowo=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=OUKqj8nHbpREpW2ermYoBq3cLSIUep14onFAlR/sQYRjnbibYuC+8PDpcV2AGigBE
-	 UKgyNPaxpk2C524qg3K5Nu/JUqc4Mpga7HZ8kE36h33wm9xA/uBuXzZOiUXgl4G/SJ
-	 LLoeSMXpOrmjU1AoQz79OlC1cz3/Ii+urU5c+3x7D0NBn3qcifcEEFxakyWmSRHjNL
-	 kdBO/FccC/x5TIeGljz3y0GTirxuIA8Y+A7PBgwBpjqAWXLN7IWdrw+mD8BF/PT2En
-	 JRfDjcN07N/xLD/MN82g089IRqqzGqb0cz/K0jcva7ZEfQY5zpeyADc/J/xCUtNvLK
-	 nNDqKJ+GKjZ1w==
-Message-ID: <a4252886-112c-4b04-9216-d945572119d1@kernel.org>
-Date: Sun, 21 Jun 2026 20:29:37 +0200
+	s=arc-20240116; t=1782079935; c=relaxed/simple;
+	bh=pRqEZo/jVAgqejstxN/UwBgCjSpApW9UxkJ0EoPl6Yw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=YKQICAhdFXEUJ9pt/i114w3F9HDN20W8xMk4hPQ4LCmx5Biss3N38cnHo5r3V9wyC6VLOIDpaJPguTjEOjSlWd43wAbhpWXOOPlxjmQI2xbMfwrjghqZrT1yZDN3AyUIn0JjigkUqbzZCT8jQgu2yaw6TSfjBx2MTZlpKEJqxaM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=dEmhp7Im; arc=none smtp.client-ip=209.85.217.46
+Received: by mail-vs1-f46.google.com with SMTP id ada2fe7eead31-72686746814so2193553137.3
+        for <linux-arm-msm@vger.kernel.org>; Sun, 21 Jun 2026 15:12:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1782079933; x=1782684733; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=pRqEZo/jVAgqejstxN/UwBgCjSpApW9UxkJ0EoPl6Yw=;
+        b=dEmhp7ImfilT45/1oXAZwYfSkTI+GaWxZALp7yyCWysiAyHHvmKglfHYHRAitexYDD
+         TshbhZ+V3IY36te28QSh//myB0lE3jZ7zaIfVj4816n5G7b2o4kRJqBCf/ZIVjp5BuUr
+         oY+rrNixeXeSzZUCLzvRXEKxET9LCkk/bW/f8=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782079933; x=1782684733;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=pRqEZo/jVAgqejstxN/UwBgCjSpApW9UxkJ0EoPl6Yw=;
+        b=Qt3EwULxiIlAqtr3yeUAh5REyDokwUlsXvYvbQ82QUTR6KxV3i3/2tdaijnr/0jta8
+         6hzPxkJkU3+PrB1qvIu/Vp7qDfDqpT5xpVqnmsEBTTa/jNMtgpLTbXAIRGxGGfO0M4qI
+         wSmy27FOMAiGSDkPlUxP+z75n2l9JcdFZqIz7h+rs1Jl1W4meiPYaTp8dYnVNM/dpqlG
+         hEF7Lk4tKk7uQTnjFw1ZrzcfaUzVSqr796CuInOeKyU/+pXoxLhlyZQGvDcXzCtIiUC3
+         QZ9JTgYxHJ0r7Qw4B7O4qtlIveft8RB/MW2gpdlRRBhm0FkCks0qFqyqvwNiGJL3ewTO
+         +Yeg==
+X-Forwarded-Encrypted: i=1; AFNElJ9q2gukzGdzHCC4/i1t+DAA38kYB/hC++WdFXySVGC80wZo/OW0OGVAsqa8k3W2N/NTAeTVQBEptKCwXfFY@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywvg7eLtkDJrFyebyoUEXWilBj4W14uG0Jq+80IfFveKdnJJ5MY
+	sdWx/VZZX2ZsZQsLmpPJ/B3hatfmMjx8zgL0TEvpiOztpOAQRzt0VaRaovXQWvREl0CBf4Nhgr9
+	JOPk=
+X-Gm-Gg: AfdE7ckp5VuCmlouH1BinJVYAG6t6yQXYED6CClbB9aIQ6UwotOfCCUz3S6nnhEUAYK
+	8l5xKCWXRRbGdafXhOrdBGVZxn/u6BReoAmsgzZJA0ZGJB/DyBrM0xZyYOwwuVuNe9mBPi28JI5
+	2PC9WUd77oFNiDOrLW3GIY5LnAz8hUSZhqDY653AXvzNlmnJgxahxv6RKRFEtUpPRJl13zpgvJs
+	7Y5YPPaeCDdsQ6ocXYoNpXsB1FHjciSMoDokhF5N+sWEm/sGCR9DPvlb5LTwjlKxQdb7lOJz8RN
+	x0UmmEon37jVR+YkrG/ZNigP5JpzmbXARnAIdjgWOTR0pOSlXPD1rW0e/wAF5mZ5gYIxjdJxLy1
+	XEVubrOYzYo8AyKQXfwT6WbnncHMLWOiV2wTEvNnbBAakx3njCwCKCMZnrc+B6mvdOeVrlatZah
+	bb/s/M5qAGA+9nje3UTXk2STxMPR3ym0cV2Mspo9YpeycS9OcMs9xnbxdnRRwlKA==
+X-Received: by 2002:a05:6102:b14:b0:6d8:f538:f01e with SMTP id ada2fe7eead31-72a1fbf95f2mr6751446137.24.1782079933237;
+        Sun, 21 Jun 2026 15:12:13 -0700 (PDT)
+Received: from mail-vs1-f48.google.com (mail-vs1-f48.google.com. [209.85.217.48])
+        by smtp.gmail.com with ESMTPSA id ada2fe7eead31-72ba543e440sm4751049137.10.2026.06.21.15.12.10
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 21 Jun 2026 15:12:11 -0700 (PDT)
+Received: by mail-vs1-f48.google.com with SMTP id ada2fe7eead31-6c3154fa47fso3178619137.2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 21 Jun 2026 15:12:10 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AFNElJ9LhfdDu+z2Swikz4VG0+PVJ5X/m20WdPIDp4HlxttxIb+8pszDakc2Nk+eAmnieMow0WIlDxvF/vUwEWP1@vger.kernel.org
+X-Received: by 2002:a05:6102:3710:b0:6f0:3999:b378 with SMTP id
+ ada2fe7eead31-72a1f0bbe0fmr6441389137.13.1782079929560; Sun, 21 Jun 2026
+ 15:12:09 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] dt-bindings: arm: qcom: Add HP EliteBook X G2q 14 AI
-To: Jason Pettit <jason.pettit@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, Akhil P Oommen <akhilpo@oss.qualcomm.com>,
- Mahadevan P <mahadevan.p@oss.qualcomm.com>,
- Sibi Sankar <sibi.sankar@oss.qualcomm.com>,
- Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
- Ananthu C V <ananthu.cv@oss.qualcomm.com>
-References: <20260620-glymur-send-v1-0-fc4a2cfd107c@oss.qualcomm.com>
- <20260620-glymur-send-v1-1-fc4a2cfd107c@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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
-In-Reply-To: <20260620-glymur-send-v1-1-fc4a2cfd107c@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20260429-kodiak_v2-v2-0-c3a703cc30eb@oss.qualcomm.com>
+ <ag_QL5DIo7MxsdYU@baldur> <84ed2c32-16d0-4c29-a06a-9242eeb8e86e@oss.qualcomm.com>
+In-Reply-To: <84ed2c32-16d0-4c29-a06a-9242eeb8e86e@oss.qualcomm.com>
+From: Doug Anderson <dianders@chromium.org>
+Date: Sun, 21 Jun 2026 15:11:58 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=XQH3kng7MV=Jr=HmZQc4TEUCq+V3TsLNChr5vUHUtXAg@mail.gmail.com>
+X-Gm-Features: AVVi8CdsJ9dr4hnltaNTYTTF0jzeSz-qJJrPJ-GY5G_cdzHr7Jfp7FT56KvCLXo
+Message-ID: <CAD=FV=XQH3kng7MV=Jr=HmZQc4TEUCq+V3TsLNChr5vUHUtXAg@mail.gmail.com>
+Subject: Re: [PATCH v2 0/3] arm64: dts: qcom: kodiak: Enable 4-lane DP via QMP
+ Combo PHY
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, Mahadevan P <mahadevan.p@oss.qualcomm.com>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Mahadevan P <mahap@qti.qualcomm.com>, Stephen Boyd <sboyd@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-5.16 / 15.00];
-	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	DMARC_POLICY_ALLOW(-0.50)[chromium.org,none];
+	R_DKIM_ALLOW(-0.20)[chromium.org:s=google];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-113911-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	FORWARDED(0.00)[lists@lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:jason.pettit@oss.qualcomm.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:akhilpo@oss.qualcomm.com,m:mahadevan.p@oss.qualcomm.com,m:sibi.sankar@oss.qualcomm.com,m:jingyi.wang@oss.qualcomm.com,m:ananthu.cv@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
-	FORGED_SENDER(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	TAGGED_FROM(0.00)[bounces-113910-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FORGED_SENDER(0.00)[dianders@chromium.org,linux-arm-msm@vger.kernel.org];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_RECIPIENTS(0.00)[m:konrad.dybcio@oss.qualcomm.com,m:andersson@kernel.org,m:mahadevan.p@oss.qualcomm.com,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:cros-qcom-dts-watchers@chromium.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:mahap@qti.qualcomm.com,m:sboyd@kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	FORWARDED(0.00)[lists@lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[chromium.org:+];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	MISSING_XM_UA(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	ALIAS_RESOLVED(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[6];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	MID_RHS_MATCH_FROM(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[dianders@chromium.org,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	ALIAS_RESOLVED(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[14];
+	RCPT_COUNT_TWELVE(0.00)[13];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TO_DN_SOME(0.00)[]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 6B1FB6AB6C7
+X-Rspamd-Queue-Id: C95E26ABB74
 
-On 21/06/2026 06:50, Jason Pettit wrote:
-> The HP EliteBook X G2q 14 AI is a Snapdragon X2 Elite (Glymur) laptop.
-> Document its top-level "hp,elitebook-x-g2q" compatible, falling back to
-> the existing "qcom,glymur" SoC compatible.
+Hi,
 
-Drop last sentence. It's pointless to explain what the diff is doing.
+On Fri, Jun 19, 2026 at 8:34=E2=80=AFAM Konrad Dybcio
+<konrad.dybcio@oss.qualcomm.com> wrote:
+>
+> On 5/22/26 5:41 AM, Bjorn Andersson wrote:
+> > On Wed, Apr 29, 2026 at 12:10:39PM +0530, Mahadevan P wrote:
+> >> This series enables full 4-lane DisplayPort operation on SC7280/kodiak
+> >> platforms by wiring up the QMP Combo PHY correctly and consolidating
+> >> the DP endpoint configuration in the SoC dtsi.
+> >>
+> >> Patch 1 adds mode-switch to the QMP Combo PHY node in kodiak.dtsi,
+> >> which is required for the PHY to respond to USB-C Alternate Mode
+> >> negotiation and switch into 4-lane DP configuration.
+> >>
+> >> Patch 2 moves the data-lanes property from individual board files into
+> >> kodiak.dtsi since the PHY-to-controller wiring is fixed in silicon.
+> >> It also removes redundant remote-endpoint and orientation-switch
+> >> overrides from qcs6490-rb3gen2 and qcs6490-thundercomm-rubikpi3 that
+> >> are already covered by the SoC dtsi.
+> >>
+> >> Patch 3 updates data-lanes from <0 1> to <0 1 2 3> in kodiak.dtsi now
+> >> that mode-switch is in place, enabling the full 4-lane DP link.
+> >
+> > Are you sure that herobrine has 4 lanes routed on the PCB?
+>
+> +Doug any chance you still have schematics for that old boy?
+>
+> Bjorn, perhaps we could switch to a model where we define the max
+> capabilities (i.e. 4-lane 8.1 GHz link) in the SoC DTs and only limit
+> them as necessary? Not meeting these is borderline a board defect anyway
 
-> 
-> Signed-off-by: Jason Pettit <jason.pettit@oss.qualcomm.com>
-> Assisted-by: Claude:claude-opus-4-8
+Bleh, I'd forgotten what a pain it was to look at herobrine schematics
+with the whole qcard "abstraction".
 
-Your tag is supposed to be the last one. And really, making such commit
-with Claude feels odd. This is a single one liner.
+My memory and a quick glance at schematics makes me say that herobrine
+only has 2 lanes of DP. The problem is that this SoC really wasn't
+designed with a laptop in mind. I seem to remember there only being
+one USB 3 port and it is muxed with two of the DP lanes (since the SoC
+is designed to drive a single Type-C port). In order to support all of
+the ports that a laptop should have, you pretty much need to feed that
+one USB 3 port into a USB hub and hardcode the DP to always use two
+lanes.
 
-Best regards,
-Krzysztof
+The two DP lanes then go to a mux where they can be routed either
+towards the left Type C port or the right Type C port.
+
+In terms of whether we can support the 8.1 GHz link speed, I remember
+much debate during the project, but I don't recall all the details. I
+think the discussion was that we were supposed to support the higher
+speeds, but we had to disable them because they weren't working. From
+my fuzzy memory, it was unclear whether the problem was known to be
+hardware or software related. I can try to dig deeper if it's
+relevant.
+
+-Doug
 
