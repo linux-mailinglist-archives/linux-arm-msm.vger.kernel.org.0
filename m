@@ -1,104 +1,104 @@
-Return-Path: <linux-arm-msm+bounces-113973-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-113974-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id 8j52NB0WOWptmgcAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-113973-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2026 13:01:49 +0200
+	id NuLSEWEWOWp5mgcAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-113974-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2026 13:02:57 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 676196AEEB9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2026 13:01:49 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6FB826AEEDC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2026 13:02:56 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=a7wLSAlG;
-	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=B1YoumdV;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113973-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c09:e001:a7::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113973-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=JNgRdcHs;
+	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=KEIpNHgB;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113974-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113974-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=reject) header.from=qualcomm.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id AF5DB3009166
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2026 11:01:48 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id CCDC6303181A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2026 11:02:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5723519CCFA;
-	Mon, 22 Jun 2026 11:01:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 558903793B3;
+	Mon, 22 Jun 2026 11:02:44 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBC4C379EC1
-	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jun 2026 11:01:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 011462BD587
+	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jun 2026 11:02:42 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782126108; cv=none; b=b+bugmDY4ytUgFb2H5vi3kCgSmGpFcl/Q55p4OYYNSHK/VWIU8bjlWwRoY0MU72i5riHbEj2l0Zu1UWYNfXNpPBVVcpzHvw1uoFCLMH05dCRqz7Pgi4gosD8ZC7wYV7L1CkS041LlR/kaKQA5VxYITx1Hi5acwSwIfZi9UOGtw0=
+	t=1782126164; cv=none; b=Gv66CAS/gVJywdILOXK7YphxVeap3Ri8mLO3/gR4/bmPNGkD2gvvUJufFBqF0hTl24NzljcbIKvv0cg6rOVNsuwdsUQB57zSjq5uHH205GgFMQdeAo4BqyVs0UaRrb4HVVGVZrqFS5VQ7g9CKev6yIIGc8428t48WE4iWhbFpls=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782126108; c=relaxed/simple;
-	bh=NDQUSnItSW38oUJTEm8zZeXFfK/1bxhGeF1F7VfHarA=;
+	s=arc-20240116; t=1782126164; c=relaxed/simple;
+	bh=BizhfnJCvc1hwpxr4UCjPSeJMxdZf0AOEqU+ZpUG4cA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=eLGtTOrjs4i1VUNsXQ7WiKT4tJ0uRLLP/SLj7GFCXg02SljqkLgl9ya7kNlqCGF2Q6QTZfHfLMAwQKOYcEf88KBvhDxZ+JNKEFYSXctxS1kZO7HAaB1mzKzHSK+lfvYA1L/Zrt5IAoDJEh3iUcG1bAndZm33vLloFNKXVP1hHYU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=a7wLSAlG; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=B1YoumdV; arc=none smtp.client-ip=205.220.168.131
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65MAnGI7380997
-	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jun 2026 11:01:46 GMT
+	 In-Reply-To:Content-Type; b=Bncqy9tJ+Ro8sXxTidvCJAs8A5KpKKDsAsD+J6w6NlhO8Ka6sfP01SaBLBBNzfDdcoL+qXwkTzFOM3KZ8LDHE7MRIXWpW/tixOkq6vimVE63+/dEWvffoM5UMLnLN5iwM5xMjux99baISigVNiYkhMTqXbqAgqGRT/Qu/92hbpw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=JNgRdcHs; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=KEIpNHgB; arc=none smtp.client-ip=205.220.180.131
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65MAo2gB1016667
+	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jun 2026 11:02:42 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	AARN7G4QPvec8eqob/vF17xv4KWR384m4AJdD/OA+fM=; b=a7wLSAlGJ4kyyYYH
-	cemNmeOIbU3IZNPy1FyLqpUR/mNR1hviUFtMuS1oDxwFA4Tkvj+e6JnDWI9oEkOq
-	hSmX2LhrBQciyatQSJAHGUSI/QqStP716PSzPGFw8Q5DMbVxDxzgJ60OUb9PeuJc
-	9/VYn2F2RNHYkZ4OHHqodJNqkjul8/WtRfV0n7Vbcefv9aYXtFWQYFufhmwtH9+K
-	/jkUgEzTxIIgMl2OIsmwJwDo+hF75LyAJ2YIugFVpPp4J+xLA+7WRXlc93r+EwgJ
-	h9+rW4wwRkJ/TQxjeFT1IGgMSzjU7w/OuB79rPt8+GQVCtX/JdsBmcRDZB2Srwu4
-	SSWufQ==
-Received: from mail-oi1-f200.google.com (mail-oi1-f200.google.com [209.85.167.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ey3a0r3s9-1
+	RrqKexHGAJvP/Ujx2c0/m11d5lUKuqak4XFL47jwQd0=; b=JNgRdcHsurmzSiOt
+	+k4FFN7bxFE8uWCGka3H2jlC2t72I8jq88IzeUVIDE6yXLAjE4d6ql5KNzo7rcT1
+	x4Ihms4PMctnBTKxGlSF0wWAE90/uVbww9ZFw96YLMGEK+M7mnWOeWUr6d62tf8J
+	b3FQhrSuBjcFZvFCiA6/fuggKXJcORIDtLe79LsYn2mc6UyzntzLMkQeaE6oBSaU
+	dZJiV+WOoUTYIsc4bikDnFVDn2pQqrHL4fjpoZQ2LlnLoUwgYZEZaKs8ClxcnpvG
+	aKpbOPG9XwUB1lwDuOpdxQum+z7pVzRktmrvWspBb3g+Iz2pZSX/HmmZClByDBVk
+	VKOkbg==
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com [209.85.219.69])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ey37h8486-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jun 2026 11:01:45 +0000 (GMT)
-Received: by mail-oi1-f200.google.com with SMTP id 5614622812f47-4853fc7bd03so983237b6e.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jun 2026 04:01:45 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jun 2026 11:02:41 +0000 (GMT)
+Received: by mail-qv1-f69.google.com with SMTP id 6a1803df08f44-8ddecbc403eso9137276d6.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jun 2026 04:02:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1782126105; x=1782730905; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1782126161; x=1782730961; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=AARN7G4QPvec8eqob/vF17xv4KWR384m4AJdD/OA+fM=;
-        b=B1YoumdVub4AcrLoUxDEI34HFXk4wzH+9nPZS31cYnPJRlWGMkrJXM8y1JcihNpEyk
-         gf0nruY/CSKlbZJqjmMjbXqOSLMRtK84dpR7oQeg7A1IpSNa434Qf9VMNBUX8g5yz6ge
-         /jai60aOLAibIGUNiG0PAWQBYNR7I/O5ZkdrvGCEQLEMRQVUoUtX9WrXbuh4CCBFlqCH
-         ypLubWT/nk9jJ0AboUABjkPPAv8venDy6qAzMs7SeMJ03B5ZEefBZ+etAHDmUU5frwdg
-         CsxVEAUrG0Ysl/eJ//Ad5bNrJIEL2huI2Ipns7U2JI6FAagU9bXiJvon++aN+Kl8QJtf
-         2poQ==
+        bh=RrqKexHGAJvP/Ujx2c0/m11d5lUKuqak4XFL47jwQd0=;
+        b=KEIpNHgB1Q4vm09MxCvgynj3M52DMFEEsv5pfGrrDnigqi93UwA/7oqr16DRL6UmZB
+         /3mGz5DeMJnYoMjn5T0cY90r2fF9Pj5/yfIL3yg7LOMKXngIb3J8jA94T9BpSljNEWXU
+         1bshWHSEgYmctqGv6GEgS5+fO5ZGBkxqbpR7G1sFDA9YhwTmWrpgIOEJVqHvgbsXAuB9
+         5oh34RQAyMSMPTC3rxT4EdlFLIXJW2iqzv5lzY67cQ25LgAaKTDmWIFj6X1eMKbd9qGa
+         tFfPl7SVLFjroqaECpFU3uL9b6sWQEW4Opsv7vofFqMnnRG7b+5gd2qBKzGkGB7ksbwg
+         xrVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782126105; x=1782730905;
+        d=1e100.net; s=20251104; t=1782126161; x=1782730961;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=AARN7G4QPvec8eqob/vF17xv4KWR384m4AJdD/OA+fM=;
-        b=P0IML6fLoCBbtevzoy5mi8OGRx4DM25ILgS9RM3J5dISiMGtbapRhG5JNQEirDYbyx
-         0Wg/GSlY5kq9gnVqjMjIqjp+bYU60RUDfaHjNHDz3aYpcbl25djj8yShQgaeh5/ERlDr
-         xgwnn1A+YK2fXBQbepHsHra3LmzGWUQlvwxa6eqK6nrm6yK/uIDg0UQgjsaaEylvCGLw
-         r6X5eCuSNMu6kt9gAq8tzluO+L20NI7C1F1qId988fI4XMWM1Wat7TZT2T411z6pjLyp
-         D5RxWgycZ+vEh8o+JdzJvpTTgiiesRBLGxQozg4j/jtp6Ex5GP9AGB7PLN2kdlQMHAiD
-         2spw==
-X-Forwarded-Encrypted: i=1; AFNElJ8dyLJZ8IU6DJOrE9ZEdnurY/M7sHQUsRqLXAlOhXoSOu0HfWJ1BUn1u4XLDM87HcrXqYi6Bc4+/cxmS6Dv@vger.kernel.org
-X-Gm-Message-State: AOJu0YyxXe90TNLD02zgMXI1D4MaXhn+S8UUIlKk2XzK7p1aNJV650Iq
-	Uy0ldkVpvIn6f49TImc76/JV/wu31bQJSwcMTJ1PEl35MYCIu2lJUq0f4zLkRCUUzb2kvVDM340
-	mTGZDSdTUElN9Zt+Ceu8knaihNgDlKkb8PDuV/WuK4Ht76qw+YLdGksSU07b8Dw9hhCFE
-X-Gm-Gg: AfdE7cni1qx+RnRoBAl8YgxOAfNAQwL8oOzUUatLPfV8S7WL7IltruLPexb/I4ncS9x
-	ad+CYezwZ511pVHFGce7X9b9TDAPiG3P/BgQfQEj74LqAQ+BzdMolDHdJhCoJHf7Vv2baqMMbCt
-	Z+PL4fTb3ILRwLlOlNOfZeSfdVFw3p2+6RzwNcWOD3dUj//PUz+wkldlkFrZ+ObRhwgfxGBGhhl
-	0hFuq9gzgbjDOet20FeyUp+o/Suds+um+8uob3J1nVEc673i38Vs8nKdZeqCENdciQ7dJUQ/OJk
-	K4mrG4Nxo6ofPetdk0m7peNVRFW92tzZWf8l7JK6jQZjlqsx8upQQf5r0etl+vAya75Ve0k5rAX
-	Bosw+XhT6AMfbjy3+P/zAyj14Gn14OnbG5oI=
-X-Received: by 2002:a05:6808:4f22:b0:48b:f341:1148 with SMTP id 5614622812f47-48bf34123afmr3761847b6e.3.1782126105055;
-        Mon, 22 Jun 2026 04:01:45 -0700 (PDT)
-X-Received: by 2002:a05:6808:4f22:b0:48b:f341:1148 with SMTP id 5614622812f47-48bf34123afmr3761687b6e.3.1782126101919;
-        Mon, 22 Jun 2026 04:01:41 -0700 (PDT)
+        bh=RrqKexHGAJvP/Ujx2c0/m11d5lUKuqak4XFL47jwQd0=;
+        b=NOagOJ7tHCu5bc1/RFqjbitYGRF2n8TiaYdSjhVH8evJpKD48hd7BlzayqU0o0nKiT
+         gyTl7OJn1Z8nToIzF3Ohx+jqUe3SRa25T077GrVjMzklipIxNEkhxSqavb3HgzxwduO6
+         Ne7bQMkIXXwZ2PzuWyFO4ZICzyBPeLGzZtO1omH5EmCG/gE5KPmLIMH/4eXD1qEPVElr
+         1+YyBbRPO/g1Jxa05Pq28Bxn92zM9s17/R1+UN4gjV/wiIqURkarcZOHw/yJdI9kJk0C
+         MHxt6llXZwLgBCqlsJEUBPYpw97YQMdxz69RXB6fINXe97mXZZlGGUb0g4gyBvG/zeox
+         Rd6Q==
+X-Forwarded-Encrypted: i=1; AFNElJ+r/wjQH6CvFoEWPSYXZwTqjLusd5/FCinxApetaMr2SgpT2ET6Sn8yBlhX/FpV1ZLQkPxSr7aD+aQUS/pY@vger.kernel.org
+X-Gm-Message-State: AOJu0YzigMk13iHfWbOnihFES+l1Vx42i5TAHRhHaIkAsvKgY4b0PVgN
+	MOgOEZXsLnKMzPRfgrvbLgY3Eh58JVnqWwhSvOk9kpvm3whZ9nBSNEdgDG1oSiww+O+bTWsXGIt
+	gRevqI6jYSfWqONNgfldHlb94oQp5OCep+mSxW6NG8I1o2P7VYoiWMFX5zIhnu0b8hlLX
+X-Gm-Gg: AfdE7cnT3/0OGpJ64TR19JvjBzTGCH3HPHtuFHEKIJOA/0BjraARk+zSv92mDOEakZJ
+	pbxAY2/0FQ3GZVfsrCI8ODePHjMFdvgk4flOSMHGBsg0q21ff0GEJHxeQo90cvmeBsxhO9knl6B
+	L2UYm0WBVuWXmOASowoqTM2Qf+77Pq9ji3eb/3Hw41I9IBMTZXK/BAFhzvdi14OQT2G3D72UYlP
+	3ILzxDC/TZPQlwRazyCNhuZtzAtFYjqNLpnkjKRI9RTY3BWL/1/wDqtXabD+h0ueBzLhY1QRa0r
+	WIJEWTP0MY8NzMc1z5/JruOLsemHZFtlZ43Qg4BcUxjC8qRmHJJWI9nwXDoaqxploktdO37C/bD
+	T4IqaMK4UHX76mhWKCfRbpqfKunyO1Bbs7mY=
+X-Received: by 2002:a05:620a:8087:b0:915:769d:56e with SMTP id af79cd13be357-9208a8c06bdmr1415066685a.1.1782126161106;
+        Mon, 22 Jun 2026 04:02:41 -0700 (PDT)
+X-Received: by 2002:a05:620a:8087:b0:915:769d:56e with SMTP id af79cd13be357-9208a8c06bdmr1415064085a.1.1782126160580;
+        Mon, 22 Jun 2026 04:02:40 -0700 (PDT)
 Received: from [192.168.120.170] ([178.235.128.140])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c0c60ac98c9sm336066766b.29.2026.06.22.04.01.39
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c0c5ef8eb38sm335761766b.28.2026.06.22.04.02.38
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 22 Jun 2026 04:01:41 -0700 (PDT)
-Message-ID: <e203221b-5de5-4cc3-b65a-a3545986a954@oss.qualcomm.com>
-Date: Mon, 22 Jun 2026 13:01:39 +0200
+        Mon, 22 Jun 2026 04:02:39 -0700 (PDT)
+Message-ID: <50d92653-b403-402d-af82-a037114c3aab@oss.qualcomm.com>
+Date: Mon, 22 Jun 2026 13:02:37 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -106,7 +106,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/3] powercap: qcom: Add SPEL powercap driver
+Subject: Re: [PATCH v2 1/3] dt-bindings: power: limits: Describe Qualcomm SPEL
+ hardware
 To: Manaf Meethalavalappu Pallikunhi <manaf.pallikunhi@oss.qualcomm.com>,
         Rob Herring <robh@kernel.org>,
         Krzysztof Kozlowski <krzk+dt@kernel.org>,
@@ -119,50 +120,49 @@ Cc: Gaurav Kohli <gaurav.kohli@oss.qualcomm.com>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org
 References: <20260620-qcom_spel_driver_upstream-v2-0-a3ee6837c18f@oss.qualcomm.com>
- <20260620-qcom_spel_driver_upstream-v2-2-a3ee6837c18f@oss.qualcomm.com>
+ <20260620-qcom_spel_driver_upstream-v2-1-a3ee6837c18f@oss.qualcomm.com>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20260620-qcom_spel_driver_upstream-v2-2-a3ee6837c18f@oss.qualcomm.com>
+In-Reply-To: <20260620-qcom_spel_driver_upstream-v2-1-a3ee6837c18f@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIyMDEwOCBTYWx0ZWRfX8Aqah+0CuMfS
- ZYtQ8wdYmCl2geQZ9SasoKqB935gA2f7t9Bxtw7DSsQsva+mbBoHOAL09PXzJeNDQxqrlpFtPit
- q6g3KCWCfFtWyXxjdaVb9eRsVb7N4Kc=
-X-Proofpoint-GUID: DjzqHyJtH6ict3AYwvZOooslZhjNsBGm
-X-Authority-Analysis: v=2.4 cv=UJ7t2ify c=1 sm=1 tr=0 ts=6a391619 cx=c_pps
- a=AKZTfHrQPB8q3CcvmcIuDA==:117 a=PRfkaYvzSr8QmIIGAkY2Sg==:17
+X-Proofpoint-ORIG-GUID: 5X-CX4dF3fDWF4VicNZpXiVkMmo9nC3Z
+X-Authority-Analysis: v=2.4 cv=ecANubEH c=1 sm=1 tr=0 ts=6a391651 cx=c_pps
+ a=wEM5vcRIz55oU/E2lInRtA==:117 a=PRfkaYvzSr8QmIIGAkY2Sg==:17
  a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
- a=EUspDBNiAAAA:8 a=02jEIrHkWd2Y-gyNavAA:9 a=QEXdDO2ut3YA:10
- a=pF_qn-MSjDawc0seGVz6:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIyMDEwOCBTYWx0ZWRfX1R6l2N7i0SDD
- /QyTg3X6KDEsFX5pvCkv7oCYnpbcupsWLQdls1EupSn5k7MjI6sWn7TpnIG9an/octTv0b2HfcX
- lNihVUYZShneWLYpRzgMAqWgQgiSuwLuX0Cxw1qQejk8s5HpIwOnuByNq7HVEoDf3slW6Odvp/k
- ncl2pfkjOx59JlU7SDJDQwUjZ4e3VKxJjwx7r/sOxC2Z4kVFwBVb/WGrbhQE3aqo6PG3EqywntG
- 13UiXedge3CnvHvbpmKQaUqnRnpA1Kkl+t3XoD67o9yEVCARDbqtHpctQcniSPOBDtly7yCld8V
- thxdDVzRQP9KWOI3ZK48N9LcgHPPb3+t7+m3Hdpj7ZBDHaW0yD4ieDCEj40PxycfLecsMgeflEj
- oA7U3iGR4ACHJewMHus1JOmFucvnQOH4Vk7GejFSW1hgLJ2A2P1YcfAOnxVrh33EIiN3us31BjJ
- XwIPSOvs3kYSZkycikQ==
-X-Proofpoint-ORIG-GUID: DjzqHyJtH6ict3AYwvZOooslZhjNsBGm
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=gEfo2CItAAAA:8 a=EUspDBNiAAAA:8 a=_263P9KSp_576IJaSfIA:9 a=QEXdDO2ut3YA:10
+ a=OIgjcC2v60KrkQgK7BGD:22 a=sptkURWiP4Gy88Gu7hUp:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIyMDEwOCBTYWx0ZWRfX9c2EV8P35gYI
+ 9o8nCBC0S7R0fw6o8BPGxPYP3hoR5uYvaBuzLbpUFBcP6T0vr3RC6xM+L/hScsdNJZAihtKtWW9
+ gSY7ytbMq0KaSFurANLX08Q4ep6qEpc=
+X-Proofpoint-GUID: 5X-CX4dF3fDWF4VicNZpXiVkMmo9nC3Z
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIyMDEwOCBTYWx0ZWRfXw0AwPegQT1QN
+ pzLuFgE+vd6+Lqyf5I4m+mggcCDezYguDh2j/5NunTRoY4ST1RzpcIdQXyHpxYenwoeeoFeO8F6
+ W4oz/C8rEDTEEj45Pvpzj7QRvdKMruj0tlSq550wTsiXsyNT40gZ87RCUL4vnkJcoWfOl2LEvl1
+ OCOkCX3Tr1vHkLYgKM/fti/F7lBtuAyJRGSjXe5mwK2/aZw1U03nvlPgho/DOets1DjHI1O0M7r
+ eIQUiaUfGxscsrUIDk6AOeM7t4FGqpYa23CYFinZiuM8r42wJkdQqEUOCIX0pgAsP2jWaRxIKXA
+ fJ4apQuHpjLUxsGO/xzVpd4iUS54EQnIQCVtl+WZOTMCNe1WYnNsRjF0JbzwNQONWjl3KTe3s2g
+ uyxcF5WEfq2ba7jh4QsfZVJkeDJ8KNSAvGK9MLEmCEey27kiae60ydi4B/4xlWtVDBSc+AWsipf
+ mS9R4KWjhEtQ6kMQPWA==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-22_02,2026-06-18_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 suspectscore=0 clxscore=1015 bulkscore=0
- lowpriorityscore=0 adultscore=0 spamscore=0 malwarescore=0 phishscore=0
- impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2606220108
+ phishscore=0 lowpriorityscore=0 priorityscore=1501 clxscore=1015 spamscore=0
+ suspectscore=0 impostorscore=0 adultscore=0 malwarescore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606220108
 X-Rspamd-Action: no action
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-113973-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-113974-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
@@ -172,7 +172,7 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	MIME_TRACE(0.00)[0:+];
 	FORWARDED(0.00)[lists@lfdr.de];
 	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	TO_DN_SOME(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
@@ -185,177 +185,70 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 676196AEEB9
+X-Rspamd-Queue-Id: 6FB826AEEDC
 
 On 6/19/26 10:39 PM, Manaf Meethalavalappu Pallikunhi wrote:
 > The Qualcomm SoC Power and Electrical Limits (SPEL) provides hardware
-> based power monitoring and limiting capabilities for various power
-> domains including System, SoC, CPU clusters, GPU, and various other
-> subsystems.
+> based power monitoring and limiting capabilities for various domains.
 > 
-> The driver integrates with the Linux powercap framework, exposing SPEL
-> capabilities through powercap sysfs interfaces.
+> Add a DeviceTree binding to describe the SPEL block on Qualcomm's SoC.
 > 
 > Signed-off-by: Manaf Meethalavalappu Pallikunhi <manaf.pallikunhi@oss.qualcomm.com>
 > ---
-
-[...]
-
-> +#include <linux/bitfield.h>
-> +#include <linux/device.h>
-> +#include <linux/io.h>
-> +#include <linux/kernel.h>
-> +#include <linux/module.h>
-> +#include <linux/mod_devicetable.h>
-> +#include <linux/mutex.h>
-> +#include <linux/platform_device.h>
-> +#include <linux/powercap.h>
-> +#include <linux/slab.h>
-> +#include <linux/types.h>
-
-Please ensure all the includes are necessary
-
+>  .../bindings/power/limits/qcom,spel.yaml           | 47 ++++++++++++++++++++++
+>  MAINTAINERS                                        |  6 +++
+>  2 files changed, 53 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/power/limits/qcom,spel.yaml b/Documentation/devicetree/bindings/power/limits/qcom,spel.yaml
+> new file mode 100644
+> index 000000000000..4c6e6cbfbfe4
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/power/limits/qcom,spel.yaml
+> @@ -0,0 +1,47 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/power/limits/qcom,spel.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
 > +
-> +/* SPEL register bitmasks */
-> +#define ENERGY_STATUS_MASK		GENMASK(31, 0)
+> +title: Qualcomm SoC Power and Electrical Limits (SPEL)
 > +
-> +#define POWER_LIMIT_MASK		GENMASK(14, 0)
-> +#define POWER_LIMIT_ENABLE		BIT(31)
+> +maintainers:
+> +  - Manaf Meethalavalappu Pallikunhi <manaf.pallikunhi@oss.qualcomm.com>
 > +
-> +#define TIME_WINDOW_MASK_L		GENMASK(14, 0)
-> +#define TIME_WINDOW_MASK_H		GENMASK(22, 16)
-
-Is BIT(15) not part of this?
-
-[...]
-
-> +/* Domain configuration */
-> +static const struct spel_domain_info domain_info[SPEL_DOMAIN_MAX] = {
-> +	[SPEL_DOMAIN_SYS]	= { "sys", 0x40 },
-> +	[SPEL_DOMAIN_SOC]	= { "soc", 0x00 },
-> +	[SPEL_DOMAIN_CL0]	= { "cl0", 0x5c },
-> +	[SPEL_DOMAIN_CL1]	= { "cl1", 0x60 },
-> +	[SPEL_DOMAIN_CL2]	= { "cl2", 0x64 },
-> +	[SPEL_DOMAIN_IGPU]	= { "igpu", 0x08 },
-> +	[SPEL_DOMAIN_DGPU]	= { "dgpu", 0x44 },
-> +	[SPEL_DOMAIN_NSP]	= { "nsp", 0x0c },
-> +	[SPEL_DOMAIN_MMCX]	= { "mmcx", 0x10 },
-> +	[SPEL_DOMAIN_INFRA]	= { "infra", 0x18 },
-> +	[SPEL_DOMAIN_DRAM]	= { "dram", 0x1c },
-> +	[SPEL_DOMAIN_MDM]	= { "mdm", 0x48 },
-> +	[SPEL_DOMAIN_WLAN]	= { "wlan", 0x4c },
-> +	[SPEL_DOMAIN_USB1]	= { "usb1", 0x50 },
-> +	[SPEL_DOMAIN_USB2]	= { "usb2", 0x54 },
-> +	[SPEL_DOMAIN_USB3]	= { "usb3", 0x58 },
-> +};
-
-I would expect that the names are going to stay common, but the offsets
-will be different. This array should probably be called
-glymur_domain_info[]. We may have another LUT just for names of indices
-(i.e. [SPEL_DOMAIN_xxx] = "xxx")
-
+> +description:
+> +  The Qualcomm SPEL (SoC Power and Electrical Limits) provides hardware-based
+> +  power monitoring and limiting capabilities for various power domains in
+> +  Qualcomm SoCs.
 > +
-> +/**
-> + * struct spel_constraint_info - Power limit constraint information
-> + * @limit_offset:	Register offset for power limit value
-> + * @time_window_offset:	Register offset for time window
-> + * @supported_mask:	Bit mask in capability register
-> + * @domain_id:		Domain this constraint applies to
-> + * @pl_id:		Power limit ID (PL1, PL2, etc.)
-> + */
-> +struct spel_constraint_info {
-> +	u32 limit_offset;
-> +	u32 time_window_offset;
-> +	u32 supported_mask;
-> +	enum spel_domain_type domain_id;
-> +	int pl_id;
-> +};
+> +properties:
+> +  compatible:
+> +    const: qcom,glymur-spel
 > +
-> +/* Constraint configuration */
-> +static const struct spel_constraint_info constraints[] = {
-> +	/* SYS domain constraints */
-> +	{ 0x10, 0x70, BIT(0), SPEL_DOMAIN_SYS, POWER_LIMIT1 },
-> +	{ 0x14, 0x74, BIT(1), SPEL_DOMAIN_SYS, POWER_LIMIT2 },
-> +	{ 0x18, 0x78, BIT(2), SPEL_DOMAIN_SYS, POWER_LIMIT3 },
-> +	{ 0x1c, 0x7c, BIT(3), SPEL_DOMAIN_SYS, POWER_LIMIT4 },
-> +	/* SoC domain constraints */
-> +	{ 0x00, 0x60, BIT(4), SPEL_DOMAIN_SOC, POWER_LIMIT1 },
-> +	{ 0x04, 0x64, BIT(5), SPEL_DOMAIN_SOC, POWER_LIMIT2 },
-> +	{ 0x08, 0x68, BIT(6), SPEL_DOMAIN_SOC, POWER_LIMIT3 },
-> +	{ 0x0c, 0x6c, BIT(7), SPEL_DOMAIN_SOC, POWER_LIMIT4 },
-> +};
-
-Is this specific to Glymur, or SPEL-wide?
-
-[...]
-
-> +/**
-> + * struct spel_system -	SPEL system
-
-odd tab after '-'
-
-[...]
-
-> +	case PL_LIMIT:
-> +		new_val = spel_unit_xlate(sd, POWER_UNIT, value, 1);
-> +		if (new_val > FIELD_MAX(POWER_LIMIT_MASK))
-> +			return -EINVAL;
-> +		reg_val = (reg_val & ~POWER_LIMIT_MASK) | FIELD_PREP(POWER_LIMIT_MASK, new_val);
-
-FIELD_MODIFY()
-
+> +  reg:
+> +    maxItems: 3
 > +
-> +		/*
-> +		 * Enable/Disable PL based on the value:
-> +		 * - If value is 0, disable the PL (clear enable bit)
-> +		 * - If value is non-zero, enable the PL (set enable bit)
-> +		 */
-> +		if (new_val == 0)
-> +			reg_val &= ~POWER_LIMIT_ENABLE;
-> +		else
-> +			reg_val |= POWER_LIMIT_ENABLE;
-
-Likewise
-
-
+> +  reg-names:
+> +    items:
+> +      - const: config
+> +      - const: constraints
+> +      - const: nodes
 > +
-> +		writel(reg_val, reg_addr);
-> +		return 0;
+> +required:
+> +  - compatible
+> +  - reg
+> +  - reg-names
 > +
-> +	case PL_TIME_WINDOW:
-> +		/*
-> +		 * Encode time window: upper 7 bits to [22:16], lower 15 bits to [14:0]
-> +		 */
-> +		new_val = spel_unit_xlate(sd, TIME_UNIT, value, 1);
-> +		if (new_val > TIME_WINDOW_MAX)
-> +			return -EINVAL;
-> +		/* Read-modify-write to preserve other bits */
-> +		reg_val = (reg_val & ~(TIME_WINDOW_MASK_H | TIME_WINDOW_MASK_L)) |
-> +			  FIELD_PREP(TIME_WINDOW_MASK_H, new_val >> 15) |
-> +			  FIELD_PREP(TIME_WINDOW_MASK_L, new_val);
-
-Also here
-
-[...]
-
-> +static void spel_detect_powerlimit(struct spel_domain *sd)
-> +{
-> +	struct spel_system *sp = sd->sp;
-> +	u32 capabilities;
-> +	int i, j;
+> +additionalProperties: false
 > +
-> +	capabilities = readl(sp->config_base + LIMITS_CAPABILITY_OFFSET);
-> +
-> +	/*
-> +	 * Detect power limits from hardware capabilities.
-> +	 * Start from index 1 (POWER_LIMIT2) since PL1 is always enabled in spel_init_domains().
-> +	 */
-> +	for (i = 1; i < ARRAY_SIZE(pl_names); i++) {
+> +examples:
+> +  - |
+> +    power-limits@ef3b000 {
+> +        compatible = "qcom,glymur-spel";
+> +        reg = <0x0ef3b000 0x1000>,
+> +              <0x0ef3d000 0x1000>,
 
-int i = POWER_LIMIT2
+Don't we need the range inbetween these two (base=0xef3c000)?
 
-(yeah, nowadays you can finally declare the iterator inside the loop
-in the kernel)
-
-Konrad
+Konrad 
 
