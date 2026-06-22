@@ -1,299 +1,218 @@
-Return-Path: <linux-arm-msm+bounces-113927-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-113928-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id 5KNFD7DNOGphiQcAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-113927-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2026 07:52:48 +0200
+	id MEPxDBTQOGrqiQcAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-113928-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2026 08:03:00 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2B5576ACD81
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2026 07:52:47 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 81AE26ACDD6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2026 08:02:59 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=ZXEuMsn2;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113927-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 104.64.211.4 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113927-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=reject) header.from=qualcomm.com;
-	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
+	dkim=none ("invalid DKIM record") header.d=siliconsignals.io header.s=selector1 header.b=WO0zPd9f;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113928-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113928-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=fail reason="SPF not aligned (relaxed)" header.from=siliconsignals.io (policy=quarantine);
+	arc=reject ("cv is fail on i=2")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 2DAEE30011B8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2026 05:52:44 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 2C9E8301AF7A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2026 06:02:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8017F355F5C;
-	Mon, 22 Jun 2026 05:52:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC9AD35B650;
+	Mon, 22 Jun 2026 06:02:30 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from MA0PR01CU012.outbound.protection.outlook.com (mail-southindiaazon11021087.outbound.protection.outlook.com [40.107.57.87])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D53D13126D6;
-	Mon, 22 Jun 2026 05:52:40 +0000 (UTC)
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782107562; cv=none; b=CA0kRerit8ZIkvcjrN0AOuk4lBqtWtq6mmujjzCY1Q1eAD1BjAgF7BWDPpP8j9nQFoqEpY12VLImfnajNuLcMuWT5vnX6eUg/hvU3Wrzb2QSwF8siHW5DKa5I4QYe/UQPXr4dmZ6FOgc6Fe4NQvq+cpATvH+Iylc8ve+7RSos+I=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782107562; c=relaxed/simple;
-	bh=UswUcCBuz6YkMAzX++Z5RK+C4hIKcHXCIeaToEoY4UU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ha62CjOk15MOl2L3ajdOvSrb44iGUOq1EAgRrY5oUOL5zdE9Bxm5d4vuZJ6WMsj8nTeI9zlfpCozTSmRTmP+7cRZJseXwd2TnVBbpE3I0x+7atgTzz09/ZlcK24DvuNY7SEFeWxF2TuSINffy8jTh+2HcBuXimNVR0Nq+Exf8H0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ZXEuMsn2; arc=none smtp.client-ip=205.220.180.131
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65M5BeQi4183639;
-	Mon, 22 Jun 2026 05:52:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=CVRc+Y0rwza
-	6gSkxu04Fw7lTdNuCh4IdLTzrJCQVPtk=; b=ZXEuMsn27ssFHTG6fmr0TgDK7Xv
-	QLbAmTekZVPt+WHUGtjPpPv2jwnfGfLxzxIAg5XAsmTcPcwOeeA8N4e6wy6I7Hzs
-	EBbx7FSLPeggJqqJYhvdNHRvPbQoav0C/FJAeEXEl1069JQrxw4Kl7KIAO34QKvF
-	OTb4bbzOv2Y//Fdm/ozTGCu4+jmnxLHPh/tekF1ereDo6FLEKv9iA5VUfOQ3wzYw
-	KYw0KcNkVDXFnqj/JL8QEzNSI0ngKoPc/XOJHBoasc+mEifOCZl3hSr10NZ+K8pv
-	EY3bLyJfJm535N2TFPlZEL+DVFRrpp0VuP/R/QQl7zk5uN3SuH5O45Vj2xQ==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ewj6h5111-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 22 Jun 2026 05:52:37 +0000 (GMT)
-Received: from pps.filterd (NALASPPMTA03.qualcomm.com [127.0.0.1])
-	by NALASPPMTA03.qualcomm.com (8.18.1.7/8.18.1.7) with ESMTP id 65M5qa28031963;
-	Mon, 22 Jun 2026 05:52:36 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by NALASPPMTA03.qualcomm.com (PPS) with ESMTPS id 4exx92rhku-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 22 Jun 2026 05:52:36 +0000 (GMT)
-Received: from NALASPPMTA03.qualcomm.com (NALASPPMTA03.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.18.1.12/8.18.1.12) with ESMTP id 65M5qa4W031952;
-	Mon, 22 Jun 2026 05:52:36 GMT
-Received: from las-colo41-d19-19.qualcomm.com (las-colo41-d19-19.qualcomm.com [10.37.19.116])
-	by NALASPPMTA03.qualcomm.com (PPS) with ESMTPS id 65M5qaC2031936
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 22 Jun 2026 05:52:36 +0000 (GMT)
-Received: by las-colo41-d19-19.qualcomm.com (Postfix, from userid 3978420)
-	id 3286F5EA; Sun, 21 Jun 2026 22:52:36 -0700 (PDT)
-From: Vishwas Udupa <vishwas.udupa@oss.qualcomm.com>
-To: andersson@kernel.org
-Cc: vudupa@qti.qualcomm.com, conor+dt@kernel.org, devicetree@vger.kernel.org,
-        kbajaj@qti.qualcomm.com, konradybcio@kernel.org, krzk+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, robh@kernel.org, snb@qti.qualcomm.com,
-        lminier@qti.qualcomm.com,
-        Vishwas Udupa <vishwas.udupa@oss.qualcomm.com>
-Subject: [PATCH v3] arm64: dts: qcom: install DT overlays via dtbs_install
-Date: Sun, 21 Jun 2026 22:52:26 -0700
-Message-ID: <20260622055226.4085891-1-vishwas.udupa@oss.qualcomm.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260428123725.3457865-1-vudupa@qti.qualcomm.com>
-References: <20260428123725.3457865-1-vudupa@qti.qualcomm.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EC6C3126D6;
+	Mon, 22 Jun 2026 06:02:29 +0000 (UTC)
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782108150; cv=fail; b=AH/i/QA4xgW6BC9txxZBnc6aTFo2+vEsZl5YOagHiJWxLOJMaB/S3tzJZ82QElotM146NTUc5+i8WdrOPUnNbFmcDrb2glUOZN5piysNXAw2LW9bmlC228Asf25UB13HeCAX+9BmtVqaUUjQZjzyYXiEOMK9+usKCsJn+8F2pxM=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782108150; c=relaxed/simple;
+	bh=keE7w7l1vdUww8qkUrzfBMl3nXhLhE/c0CeoB+pHXgc=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=iFfV5zc7vBf9YUjnxSB8Ksqi53tMobK9zM9EngOI25IRvtHyWA7Yk21mEny8MhHK4uYyPOYM/gfrN/I+xNum1tCch6hRmIkVmWanS37+/nAUxk78p9bI/amlcYjAAzpR+c/DRt+8yLGMrHf75y93kLo6Aa3w4RHYrnJa5dMRgAI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=siliconsignals.io; spf=pass smtp.mailfrom=siliconsignals.io; dkim=fail (0-bit key) header.d=siliconsignals.io header.i=@siliconsignals.io header.b=WO0zPd9f reason="key not found in DNS"; arc=fail smtp.client-ip=40.107.57.87
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=bBinR4vI+2PcwEP1KwSxXEEvbIIPqFJ6EFZtLQOTBkFkyH9lWfGDDK37eHKl1jPL280MawGzYClU+Y08RIOKXln+0gAK8+BjS4n3dsmybYF3fihBkEWFsAjjLnVu60oJP5BhHADlC4DPrsICD41o7dit+7P1Fg5rXM4A6/g1xbZ6nWY/PQ9lb8eUkqrdk2FOpb69OjSGzBivbNl+2m7fkL6u8wklp00Txxe/vCTfsCNCGD/13NLwVJpr6W1hmPr+wv+5gDZ+9sgR3BtUeNcC10J6Kh2TBGrSz2aEhEJEPFiMWJgFNeLns4nhbStPM+7BPmbIqe97IlEPif/jWxaA/g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=keE7w7l1vdUww8qkUrzfBMl3nXhLhE/c0CeoB+pHXgc=;
+ b=vM7x3VF+VatzinEOBmCqhZ/V1WhTp4Cb0e9CBgAuuN+HSDyPEeZ0b5pMOyKFz/1iKjFHll3sLpMl4ncekElfaPE6fMQXwlG8oKU/ISMYQjiEVnj1QOr7Aaj7OPmSCol80EADrOkXCw2ZVOrqqw7GFqgLkOJX1g+ecAv/tbfHtcaNIcvhQnLcpEVVtrJ8cfOcDuDChraslFsJv1XHUSrdrSd4dt682sbdMt+elDh/dJAa5XTsqokgiECcbi2Ay9F9ILzx/0HmHyalZrbmf8yf+jiElUUDtBiwkFalUYivWVs7+ASWghLEcgm7nZGScxIOgp/OuGCXVGyMZ4jdgc3Rvg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=siliconsignals.io; dmarc=pass action=none
+ header.from=siliconsignals.io; dkim=pass header.d=siliconsignals.io; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=siliconsignals.io;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=keE7w7l1vdUww8qkUrzfBMl3nXhLhE/c0CeoB+pHXgc=;
+ b=WO0zPd9fVmKewUgC60I2bKyJ8hoAjplRzyocf8CSlBisVQK4mYcMauXfiDryjVOk+A7bz/WNmQ2TIbpNnxKqt4GV09wtx6G8SVE+u40PYxtVxseXfv9jAYLMzpnJY6hXYRR3hYGm/C3I5FiNMARhnVj4yNF0X1n9hQMx/lHectGNon9bD2vcBhGOQah1DHa0eq5oXJBJXB9jkE+CLlj8K1sNK5zga5QBAfcAskkU/+SAdaC2YtsyFTW2ukYFgRjM7HMsV2o/P8Abn79Ahe13njUpbPICdCznZudbNhJG+O/fAYQG7TFr3euhXdZ8/RwZI2F03Ab+4GDEutojI9SU6g==
+Received: from PN0P287MB2019.INDP287.PROD.OUTLOOK.COM (2603:1096:c01:1b8::9)
+ by MAYP287MB3568.INDP287.PROD.OUTLOOK.COM (2603:1096:a01:151::6) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.113.20; Mon, 22 Jun
+ 2026 06:02:24 +0000
+Received: from PN0P287MB2019.INDP287.PROD.OUTLOOK.COM
+ ([fe80::ebd8:538d:c705:8432]) by PN0P287MB2019.INDP287.PROD.OUTLOOK.COM
+ ([fe80::ebd8:538d:c705:8432%6]) with mapi id 15.21.0139.018; Mon, 22 Jun 2026
+ 06:02:24 +0000
+From: Himanshu Bhavani <himanshu.bhavani@siliconsignals.io>
+To: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+CC: "sakari.ailus@linux.intel.com" <sakari.ailus@linux.intel.com>,
+	"luca.weiss@fairphone.com" <luca.weiss@fairphone.com>, Hardevsinh Palaniya
+	<hardevsinh.palaniya@siliconsignals.io>, Mauro Carvalho Chehab
+	<mchehab@kernel.org>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski
+	<krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson
+	<andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, Hans Verkuil
+	<hverkuil+cisco@kernel.org>, Hans de Goede <johannes.goede@oss.qualcomm.com>,
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, Elgin Perumbilly
+	<elgin.perumbilly@siliconsignals.io>, Walter Werner Schneider
+	<contact@schnwalter.eu>, Kate Hsuan <hpa@redhat.com>, Svyatoslav Ryhel
+	<clamor95@gmail.com>, "linux-media@vger.kernel.org"
+	<linux-media@vger.kernel.org>, "devicetree@vger.kernel.org"
+	<devicetree@vger.kernel.org>, "linux-kernel@vger.kernel.org"
+	<linux-kernel@vger.kernel.org>, "linux-arm-msm@vger.kernel.org"
+	<linux-arm-msm@vger.kernel.org>
+Subject: Re: [PATCH v2 2/3] media: i2c: add imx576 image sensor driver
+Thread-Topic: [PATCH v2 2/3] media: i2c: add imx576 image sensor driver
+Thread-Index: AQHc/+rjlKGWpG0n2UqPle5J3Ir6S7ZHcVeAgAKoCP0=
+Date: Mon, 22 Jun 2026 06:02:24 +0000
+Message-ID:
+ <PN0P287MB20199A3EF8F3183176AC1E559AEF2@PN0P287MB2019.INDP287.PROD.OUTLOOK.COM>
+References: <20260619125439.55311-1-himanshu.bhavani@siliconsignals.io>
+ <20260619125439.55311-3-himanshu.bhavani@siliconsignals.io>
+ <20260620132749.GE3552167@killaraus.ideasonboard.com>
+In-Reply-To: <20260620132749.GE3552167@killaraus.ideasonboard.com>
+Accept-Language: en-GB, en-US
+Content-Language: en-GB
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+msip_labels:
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: PN0P287MB2019:EE_|MAYP287MB3568:EE_
+x-ms-office365-filtering-correlation-id: 7ea4c027-4f25-48d2-45fa-08ded023d4f5
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|1800799024|366016|376014|7416014|23010399003|38070700021|18002099003|22082099003|56012099006|4143699003;
+x-microsoft-antispam-message-info:
+ /NCAyhld2tXcmfGXelpUa/Xli1KyqDd8DQ3x4BPCT6gwax+uYVgbMp8M0kGee7gLcYiQetnkqAER4mw/7P0pTKxvXmNduSVEVP3Vdteg03srvxHlvEyU7gWyKTIYwgB+vTj+yl1SG5gvCQt0T3j6tZmA9lndohbOR9fxE+rNw2fCMo13izQgNz8d4BOPPcJJcDqpazpv8WXE+wSzNgrcPdaQNJM5y17M/p/N+/0wlWvx8nByCXHd7sxcKSg1lVCN3emKlCX3w8ehHMhXB0sOXBNlQcHZvSnPMUJD4oddvoZQM2sbezr5fmwBeqNtKo3VnowXmeEdoh5UqTIdOLBazR+swNWlFueFImxpPKwnZuKgBCHCZd2WghopSUEkh27sWCZirbjkf/whKJ5FGD+aDQni0FM3rQ6dDgi/lokE7r0+Jor0/HaB+QMq+/QnlW22Ht5k9uGgZIm88hiJgp/PR0hjyiJkNnvSLEzbAbvP3zqy9oACP5Jy5PvJzNKaIvtobQEiJndjj2POEYnyYtBHM6REZUcIahKrP6oq+mS/3x7Lh+1UueYQxMycpcP9R+K84UbOtIBKFVFNBnUTNlA4IRjUUu+e1b84jhfISY6bGyZlO/kaUezvS9vqBNdayy8QMCo//i+zsNBnrnJ4H2z0PUC7YR/htDbp0rYas+1CQC7KDRVRo0tOa7/zQFqizfUUfFC2HUfSU2DC4pg5oov4tOTmHOrLi/d0dyTuZJUuxf8=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PN0P287MB2019.INDP287.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014)(7416014)(23010399003)(38070700021)(18002099003)(22082099003)(56012099006)(4143699003);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?iso-8859-1?Q?f9Q3d6fbu8bI/FKiu4nfbl81REcfdI+t8cg/pD82SCOMHfthkASIPynLHV?=
+ =?iso-8859-1?Q?jCYGkn1q1vvYFFBk1ptNfTcB5dvY72YWKbDSCxmbcD6akcVfnYTf2RwUi4?=
+ =?iso-8859-1?Q?C82d3D6jpQ83S4eCAKVvt1ydbTgZrKXBWg98k0b2QgRntmYw3tujOXgOC5?=
+ =?iso-8859-1?Q?/tXL7zbD3nlGVJUfy4Kvm9/gNr2WU1yGe/0k92rfUiRrKVwjacAFhvExFV?=
+ =?iso-8859-1?Q?wXWoCAWqLt2IGthhZNB2CR2J084t8UFSQ5wR/sYzo/c1oc3d3x101BHd29?=
+ =?iso-8859-1?Q?9plZezfR1pOs1QDDnxwc76OvO/CO7FY7DBjregd5DQWROhWujZQMtPRXVu?=
+ =?iso-8859-1?Q?L2L4jDR8c6PAkmgKfAWpE5bYzReeu+CVXcyHXbbJIeyuZB4KplDF418Ihi?=
+ =?iso-8859-1?Q?gbRpRZcl6FDGjbzeooNjaUtiD4c8wAF+FJtLVXm4AlUx7j0XzHT8F+gohY?=
+ =?iso-8859-1?Q?iQFaQU5bQPrOkDndlmLnTbhcgz7/PunAmGaI/IX7I4x3njWbWa2y4522GU?=
+ =?iso-8859-1?Q?YTE7bog/B1o84N5x/LIF9/03cP0G9znDVE3xt2KT8aSBVuR4R3hODXtuOh?=
+ =?iso-8859-1?Q?VCvMPsE+dkFU5UwNDp8sWsRLMDntwkxjiI8mC6MwpLoQ1W70oTLF0epeVr?=
+ =?iso-8859-1?Q?q3zSlICMqE/22899djKtlu3/Qt72xxm1rZBvOAvpKCNamCPwo1BuHipdwJ?=
+ =?iso-8859-1?Q?WpOTHKQf5DZ+ueUeoOYIgJS4ztNCbuDr/1RyXXB5KKygA0S9KuC+Do+L4y?=
+ =?iso-8859-1?Q?rz47x0MMjsIQY0a7FvE0jVti7PQsUfPJsuZhm+Sefv6NzPHtzaG5yGtF1x?=
+ =?iso-8859-1?Q?dHGiL1LVdSUTjSK+a6SjfFBUNKuBG1qrXApPjzzG3gbnilBkxWbl6Parqq?=
+ =?iso-8859-1?Q?2PtHKYh2M8pdwIlnRA0EdG8si7xk7sJUTNncWLwSyWGpInyTDt9JHWBlpO?=
+ =?iso-8859-1?Q?lKR72lJ24EyPWGDpGMy3Yee1qcGfPu0ysV1K/7L7A+5xjquwLzGk+9SPEh?=
+ =?iso-8859-1?Q?/us7+eYVQOFU+h4Yhy0zuwdB/E6g75ysKkmQ7/ohRRi7vQ9hKIMEsPkN7n?=
+ =?iso-8859-1?Q?S8Yseor5yi+ZwYK4n3KIpF/4H6vQOxNfwfdQqCd1AfKuQqLHxu0Kdb+qah?=
+ =?iso-8859-1?Q?Y0fxE5TQKnelDEA/xVJ6GJzJwJvPWs6vr6JHRnaElAR0QFeMznCJAx+m7J?=
+ =?iso-8859-1?Q?VBIm0uCN/MSqxpm4dhYCLCDJmg/r97LSqZiUXzQWwXIH5tWqBdEupK6u9y?=
+ =?iso-8859-1?Q?pp2ukYNcCwLPzZ8zNl8Olk7p89VXYOC05yhzetjewIUBL9YcMTmNJ7aPl8?=
+ =?iso-8859-1?Q?XldfKfWIuVtMg/RQR6wEPZyp69i1Bf3icRWs9MfBXEFWJBMakork7K3cxl?=
+ =?iso-8859-1?Q?jtzlG0QDrTWOeE0erQnQyTm9Q6pqdk9ThrVo+fCP2Ee7WBJ8afbSI4ZhHE?=
+ =?iso-8859-1?Q?mawMTVzTRR78pn0RfVQ8hWSq6QsZiUcuuyNyQuwl1IkbPpm67Xr7VYBqi3?=
+ =?iso-8859-1?Q?q3eY/lJ8BKJewIebBiQLMR7z3AXJjGt92CN7xuoq/7F7Rr0wu9Ivs6OSdd?=
+ =?iso-8859-1?Q?Km8kbewYBQz0bdvdSaVRkoWCeLr9W8eQAUrwTaAc6rMbJT1FN5f3CwK4ql?=
+ =?iso-8859-1?Q?qJoXpyps/nuOfQW5RrgS+GvgB+vxrsYs8WQxcHQ/1PJcUZA8SbLyEf1hYs?=
+ =?iso-8859-1?Q?IuvjU7QhvtnOb/Zf7G6MHrac/M0x8v0QvqfpJiWf5/1Cty7gPMml9yvdip?=
+ =?iso-8859-1?Q?dsnjHgMaHFn86Gf6BO2MixSmE4dLfkPLgDGtw9o7HO6nU5mu8K35yrQ1BS?=
+ =?iso-8859-1?Q?wdu3NhltK9YwVKtaFUxr5kRP9lrs2H8=3D?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIyMDA1NSBTYWx0ZWRfX8E50z1WIdE6Y
- 0CIk//1HxJabmKe73pk7LHaHCysY21su+brpfa0u3CNRDskct0kLt1nQnrvzdLJO9T7nz9l1fPk
- 8bySfWl2mq8a6P+fq0A3H/N3lyMuYBmbhgjWpzaFt9g2oHblRluR2qxD+VvukuJovrafTW/En+Z
- h7BBQ+3wUHVlOvZYu2nddEeOpLHy3ZH+OJvKqB1M8He3UP+faVBHOzkLGn5nYdtsBrdA0rQTguc
- kjGQ57T/gKQ21G0rfT6hnvkBdIpXwGT+uZw5i3isQc3WTLFTucPp/B3IHpyQcBodF8njfcH2SZf
- tkFKGIkamRyl802mGsVfSSPT/7im6+zQCf5nRTvoXcS0oNmUswTa1n2ghFLvyeaFGvQdG4rVLvS
- +S3+42JXs6uIwNL+tbN1KsBEN4t+e+ujV7/Fhg9vm2GMXGQPFVYr96NoXPqPBOmNujYxPA/R2XN
- zMrGzRX43yjK/lEBXFA==
-X-Proofpoint-ORIG-GUID: 1nNc9zSh2ExbKmIr95hOgfOsT3e7jLaK
-X-Authority-Analysis: v=2.4 cv=E7P9Y6dl c=1 sm=1 tr=0 ts=6a38cda5 cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
- a=ZpdpYltYx_vBUK5n70dp:22 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
- a=8fCnAp95bUwIBqsXEYIA:9
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIyMDA1NSBTYWx0ZWRfX3v85muh3GGlJ
- CpSYSGXR62E9M8swhdVzNrBmr91+wCECxx0P9q8dNJan+3Tk2yarXU/V9ddPGCkY/4mJ7omhjdT
- O+6+hoh8Tyx7E/tdYJsLFjnIQvyrGV8=
-X-Proofpoint-GUID: 1nNc9zSh2ExbKmIr95hOgfOsT3e7jLaK
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-22_01,2026-06-18_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 clxscore=1015 suspectscore=0 priorityscore=1501
- impostorscore=0 spamscore=0 phishscore=0 bulkscore=0 adultscore=0
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2606220055
+X-OriginatorOrg: siliconsignals.io
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: PN0P287MB2019.INDP287.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7ea4c027-4f25-48d2-45fa-08ded023d4f5
+X-MS-Exchange-CrossTenant-originalarrivaltime: 22 Jun 2026 06:02:24.7686
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 7ec5089e-a433-4bd1-a638-82ee62e21d37
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: cVHx8cU/g/LQzaIbunhuF/KSrGverEFNc0rgDz//bHuSNnSTNhlm5VgG3v5sRNYh3XQSV6CglGQp8Uk0V9ZuxAuqljc1XM/4Mhas0IeyCmqqw/3AlgaJ9aH0O8wiDhba
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MAYP287MB3568
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	MID_CONTAINS_FROM(1.00)[];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_MISSING_CHARSET(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
+X-Spamd-Result: default: False [3.54 / 15.00];
+	DMARC_POLICY_QUARANTINE(1.50)[siliconsignals.io : SPF not aligned (relaxed),quarantine];
+	SUSPICIOUS_RECIPS(1.50)[];
+	ARC_REJECT(1.00)[cv is fail on i=2];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCPT_COUNT_TWELVE(0.00)[12];
-	TAGGED_FROM(0.00)[bounces-113927-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-113928-lists,linux-arm-msm=lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:laurent.pinchart@ideasonboard.com,m:sakari.ailus@linux.intel.com,m:luca.weiss@fairphone.com,m:hardevsinh.palaniya@siliconsignals.io,m:mchehab@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:andersson@kernel.org,m:konradybcio@kernel.org,m:hverkuil+cisco@kernel.org,m:johannes.goede@oss.qualcomm.com,m:vladimir.zapolskiy@linaro.org,m:elgin.perumbilly@siliconsignals.io,m:contact@schnwalter.eu,m:hpa@redhat.com,m:clamor95@gmail.com,m:linux-media@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,m:hverkuil@kernel.org,s:lists@lfdr.de];
+	FORGED_SENDER(0.00)[himanshu.bhavani@siliconsignals.io,linux-arm-msm@vger.kernel.org];
+	R_DKIM_PERMFAIL(0.00)[siliconsignals.io:s=selector1];
+	RCPT_COUNT_TWELVE(0.00)[21];
+	FREEMAIL_CC(0.00)[linux.intel.com,fairphone.com,siliconsignals.io,kernel.org,oss.qualcomm.com,linaro.org,schnwalter.eu,redhat.com,gmail.com,vger.kernel.org];
 	MIME_TRACE(0.00)[0:+];
 	FORWARDED(0.00)[lists@lfdr.de];
-	FORGED_SENDER(0.00)[vishwas.udupa@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS(0.00)[m:andersson@kernel.org,m:vudupa@qti.qualcomm.com,m:conor+dt@kernel.org,m:devicetree@vger.kernel.org,m:kbajaj@qti.qualcomm.com,m:konradybcio@kernel.org,m:krzk+dt@kernel.org,m:linux-arm-msm@vger.kernel.org,m:robh@kernel.org,m:snb@qti.qualcomm.com,m:lminier@qti.qualcomm.com,m:vishwas.udupa@oss.qualcomm.com,m:conor@kernel.org,m:krzk@kernel.org,s:lists@lfdr.de];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TO_DN_EQ_ADDR_SOME(0.00)[];
+	DKIM_TRACE(0.00)[siliconsignals.io:~];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[vishwas.udupa@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[himanshu.bhavani@siliconsignals.io,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,oss.qualcomm.com:mid,oss.qualcomm.com:from_mime];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	MISSING_XM_UA(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
-	TO_DN_SOME(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCVD_COUNT_SEVEN(0.00)[10]
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt,cisco];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[PN0P287MB2019.INDP287.PROD.OUTLOOK.COM:mid,vger.kernel.org:from_smtp,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,siliconsignals.io:from_mime]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 2B5576ACD81
+X-Rspamd-Queue-Id: 81AE26ACDD6
 
-Overlay binaries (.dtbo) are currently only built implicitly as
-dependencies of composite firmware images and are therefore absent from the
-kernel install output.
-
-Even when final DTBs are produced at build time, some distributions rely on
-standalone DTBOs for runtime selection and application by bootloaders or
-firmware. Without explicit install targets, DTBOs are not picked up by the
-standard dtbs_install flow and therefore cannot be packaged alongside DTBs.
-
-Add explicit dtb-$(CONFIG_ARCH_QCOM) entries for DT overlays defined in
-this Makefile so they are installed via dtbs_install, matching existing DTB
-install behaviour, while excluding EL2 DTBOs as they are not intended for
-independent use and are only meaningful in conjunction with their base DTBs.
-
-Signed-off-by: Vishwas Udupa <vishwas.udupa@oss.qualcomm.com>
----
-Changes in v3:
-- Address review feedback from sashiko on commit message
-- Link to v2: https://lore.kernel.org/all/20260619180951.325272-1-vishwas.udupa@oss.qualcomm.com/
- 
-Changes in v2:
-- Address review feedback from Krzysztof Kozlowski
-- Drop inclusion of EL2 DTBOs
-- Link to v1: https://lore.kernel.org/all/20260428123725.3457865-1-vudupa@qti.qualcomm.com/
-
- arch/arm64/boot/dts/qcom/Makefile | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 4ba8e7306419..44ed2b591363 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -7,7 +7,9 @@ apq8016-sbc-usb-host-dtbs		:= apq8016-sbc.dtb apq8016-sbc-usb-host.dtbo
- dtb-$(CONFIG_ARCH_QCOM) += sar2130p-qar2130p.dtb
- 
- dtb-$(CONFIG_ARCH_QCOM)	+= apq8016-sbc-d3-camera-mezzanine.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= apq8016-sbc-d3-camera-mezzanine.dtbo
- dtb-$(CONFIG_ARCH_QCOM)	+= apq8016-sbc-usb-host.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= apq8016-sbc-usb-host.dtbo
- dtb-$(CONFIG_ARCH_QCOM)	+= apq8016-schneider-hmibsc.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= apq8039-t2.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= apq8094-sony-xperia-kitakami-karin_windy.dtb
-@@ -47,13 +49,16 @@ lemans-evk-camera-csi1-imx577-dtbs	:= lemans-evk.dtb lemans-evk-camera-csi1-imx5
- lemans-evk-camera-dtbs	:= lemans-evk.dtb lemans-evk-camera.dtbo
- 
- dtb-$(CONFIG_ARCH_QCOM)	+= lemans-evk-camera-csi1-imx577.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= lemans-evk-camera-csi1-imx577.dtbo
- dtb-$(CONFIG_ARCH_QCOM)	+= lemans-evk-camera.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= lemans-evk-camera.dtbo
- 
- lemans-evk-el2-dtbs := lemans-evk.dtb lemans-el2.dtbo
- 
- dtb-$(CONFIG_ARCH_QCOM)	+= lemans-evk-el2.dtb
- lemans-evk-ifp-mezzanine-dtbs	:= lemans-evk.dtb lemans-evk-ifp-mezzanine.dtbo
- dtb-$(CONFIG_ARCH_QCOM)	+= lemans-evk-ifp-mezzanine.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= lemans-evk-ifp-mezzanine.dtbo
- dtb-$(CONFIG_ARCH_QCOM)	+= mahua-crd.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= milos-fairphone-fp6.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= monaco-arduino-monza.dtb
-@@ -61,12 +66,14 @@ dtb-$(CONFIG_ARCH_QCOM)	+= monaco-evk.dtb
- 
- monaco-evk-camera-imx577-dtbs	:= monaco-evk.dtb monaco-evk-camera-imx577.dtbo
- dtb-$(CONFIG_ARCH_QCOM)	+= monaco-evk-camera-imx577.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= monaco-evk-camera-imx577.dtbo
- 
- monaco-evk-el2-dtbs := monaco-evk.dtb monaco-el2.dtbo
- 
- dtb-$(CONFIG_ARCH_QCOM)	+= monaco-evk-el2.dtb
- monaco-evk-ifp-mezzanine-dtbs	:= monaco-evk.dtb monaco-evk-ifp-mezzanine.dtbo
- dtb-$(CONFIG_ARCH_QCOM)	+= monaco-evk-ifp-mezzanine.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= monaco-evk-ifp-mezzanine.dtbo
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8216-samsung-fortuna3g.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-acer-a1-724.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-alcatel-idol347.dtb
-@@ -175,7 +182,9 @@ qcs6490-rb3gen2-vision-mezzanine-dtbs := qcs6490-rb3gen2.dtb qcs6490-rb3gen2-vis
- qcs6490-rb3gen2-industrial-mezzanine-dtbs := qcs6490-rb3gen2.dtb qcs6490-rb3gen2-industrial-mezzanine.dtbo
- 
- dtb-$(CONFIG_ARCH_QCOM)	+= qcs6490-rb3gen2-industrial-mezzanine.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= qcs6490-rb3gen2-industrial-mezzanine.dtbo
- dtb-$(CONFIG_ARCH_QCOM)	+= qcs6490-rb3gen2-vision-mezzanine.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= qcs6490-rb3gen2-vision-mezzanine.dtbo
- dtb-$(CONFIG_ARCH_QCOM)	+= qcs6490-thundercomm-minipc-g1iot.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= qcs6490-thundercomm-rubikpi3.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= qcs8300-ride.dtb
-@@ -199,6 +208,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= qrb2210-rb1.dtb
- qrb2210-rb1-vision-mezzanine-dtbs	:= qrb2210-rb1.dtb qrb2210-rb1-vision-mezzanine.dtbo
- 
- dtb-$(CONFIG_ARCH_QCOM)	+= qrb2210-rb1-vision-mezzanine.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= qrb2210-rb1-vision-mezzanine.dtbo
- 
- dtb-$(CONFIG_ARCH_QCOM)	+= qrb4210-rb2.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= qrb5165-rb5.dtb
-@@ -206,6 +216,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= qrb5165-rb5.dtb
- qrb5165-rb5-vision-mezzanine-dtbs	:= qrb5165-rb5.dtb qrb5165-rb5-vision-mezzanine.dtbo
- 
- dtb-$(CONFIG_ARCH_QCOM)	+= qrb5165-rb5-vision-mezzanine.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= qrb5165-rb5-vision-mezzanine.dtbo
- dtb-$(CONFIG_ARCH_QCOM)	+= qru1000-idp.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sa8155p-adp.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sa8295p-adp.dtb
-@@ -308,6 +319,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-db845c.dtb
- sdm845-db845c-navigation-mezzanine-dtbs	:= sdm845-db845c.dtb sdm845-db845c-navigation-mezzanine.dtbo
- 
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-db845c-navigation-mezzanine.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-db845c-navigation-mezzanine.dtbo
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-google-crosshatch.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-google-blueline.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-lg-judyln.dtb
-@@ -372,7 +384,9 @@ sm8550-hdk-rear-camera-card-dtbs	:= sm8550-hdk.dtb sm8550-hdk-rear-camera-card.d
- 
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8550-hdk-display-card-rear-camera-card.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8550-hdk-display-card.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sm8550-hdk-display-card.dtbo
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8550-hdk-rear-camera-card.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sm8550-hdk-rear-camera-card.dtbo
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8550-hdk.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8550-mtp.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8550-qrd.dtb
-@@ -386,7 +400,9 @@ sm8650-hdk-rear-camera-card-dtbs	:= sm8650-hdk.dtb sm8650-hdk-rear-camera-card.d
- 
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8650-hdk-display-card-rear-camera-card.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8650-hdk-display-card.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sm8650-hdk-display-card.dtbo
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8650-hdk-rear-camera-card.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sm8650-hdk-rear-camera-card.dtbo
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8650-hdk.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8650-mtp.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8650-qrd.dtb
-@@ -395,12 +411,14 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sm8750-qrd.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= talos-evk.dtb
- talos-evk-usb1-peripheral-dtbs := talos-evk.dtb talos-evk-usb1-peripheral.dtbo
- dtb-$(CONFIG_ARCH_QCOM) += talos-evk-usb1-peripheral.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= talos-evk-usb1-peripheral.dtbo
- dtb-$(CONFIG_ARCH_QCOM)	+= talos-evk-camera-imx577.dtbo
- talos-evk-camera-imx577-dtbs	:= talos-evk.dtb talos-evk-camera-imx577.dtbo
- dtb-$(CONFIG_ARCH_QCOM)	+= talos-evk-camera-imx577.dtb
- talos-evk-lvds-auo,g133han01-dtbs	:= \
- 	talos-evk.dtb talos-evk-lvds-auo,g133han01.dtbo
- dtb-$(CONFIG_ARCH_QCOM)	+= talos-evk-lvds-auo,g133han01.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= talos-evk-lvds-auo,g133han01.dtbo
- x1e001de-devkit-el2-dtbs	:= x1e001de-devkit.dtb x1-el2.dtbo
- dtb-$(CONFIG_ARCH_QCOM)	+= x1e001de-devkit.dtb x1e001de-devkit-el2.dtb
- x1e78100-lenovo-thinkpad-t14s-el2-dtbs	:= x1e78100-lenovo-thinkpad-t14s.dtb x1-el2.dtbo
--- 
-2.43.0
-
+Hi Laurent,=0A=
+=0A=
+>On Fri, Jun 19, 2026 at 06:24:32PM +0530, Himanshu Bhavani wrote:=0A=
+>> Add a v4l2 subdevice driver for the Sony imx576 sensor.=0A=
+>>=0A=
+>> The Sony IMX576 image sensor with an active=0A=
+>> array size of 5760 x 4312=0A=
+>>=0A=
+>> The following features are supported:=0A=
+>> - Manual exposure an gain control support=0A=
+>> - vblank/hblank control support=0A=
+>> - Supported resolution: 2880 x 2156 30fps (SRGGB10)=0A=
+>=0A=
+>You've been asked in v1 to make this driver dynamically compute=0A=
+>registers instead of hardcoding modes. Please do so in v3. Nack on v2.=0A=
+=0A=
+As I mentioned earlier, I don't have the full datasheet yet, so I can't imp=
+lement this now.=0A=
+=0A=
+Link to discussion:=0A=
+https://lore.kernel.org/linux-media/PN0P287MB2019AFCBDF0E24BFEF8E0E399A0F2@=
+PN0P287MB2019.INDP287.PROD.OUTLOOK.COM/=0A=
+=0A=
+Best regards,=0A=
+Himanshu=
 
