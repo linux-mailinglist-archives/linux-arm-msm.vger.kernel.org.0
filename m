@@ -1,180 +1,166 @@
-Return-Path: <linux-arm-msm+bounces-113947-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-113948-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id c2amAWLyOGrCkQcAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-113947-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2026 10:29:22 +0200
+	id q1F4L7XyOGrLkQcAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-113948-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2026 10:30:45 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5CB6E6ADB63
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2026 10:29:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3236D6ADB84
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2026 10:30:45 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=fairphone.com header.s=fair header.b=tJlpr39N;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113947-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113947-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=quarantine) header.from=fairphone.com;
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=QSC4F7Fj;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113948-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113948-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id F2923305E1B2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2026 08:23:49 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 555B4303982C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2026 08:25:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0E43B390222;
-	Mon, 22 Jun 2026 08:23:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F24AB390998;
+	Mon, 22 Jun 2026 08:25:18 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4066438F93B
-	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jun 2026 08:23:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DC813905EB
+	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jun 2026 08:25:15 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782116628; cv=none; b=Oe3AyAB4VddYXc6gNOZn4yEoqN2IZzhcRZHLi1IGyI7TlK/fkehg3e5LOya1+cA3OEzmZ4H/rjtTiCX28oqcZU9ey68/qyPUiCtGu/imZaJ/5Y5F5JnCThJIZ5OGojFkpf65xM47FNJIm3m5ZUszInVA/x3MrnamwQe0ix8Td6M=
+	t=1782116718; cv=none; b=ZQz4caiBF06btNs+X/dzG77SXU7i5vOwWFy1/S0tThSvuBCIQKTIRHN3tq9EcChs31d+PKbVcUPnl9N4bWsz0HJF+YKE5GlLJKpiUjfOv//MJfvPTunpb5oD7AtID+b1HbXmBCM0+9J2rzbA/wTNNsLVtG3ZXG5hp9ezC2kQCdQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782116628; c=relaxed/simple;
-	bh=QayaNVYMdk0y95PRvg6tdQ2LISbdzw2ou3QRiLXOzkc=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=ndSZarN13RFpFFoSUc4kd9tCqH/o3w5fyS5rKuW77GyuHmWG+xSTsuM9fUkg2m5rR5TmN1dlOnyZYcks3A1fuwbqug7iJk1Mz0FS8hQKa60U5HV9B60FmVRqGNFbAkHeWf7vbDToTvd5QgUURDl0m0TUDDJv9E+xXvhlyGqGguM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=tJlpr39N; arc=none smtp.client-ip=209.85.218.41
-Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-c0c41ff84a6so257616166b.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jun 2026 01:23:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1782116626; x=1782721426; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=QayaNVYMdk0y95PRvg6tdQ2LISbdzw2ou3QRiLXOzkc=;
-        b=tJlpr39NE7yGwJMaIA+4fM/aUP1Hj/FhwSsW4fmioS66ZE3OOwUcuWDkxxKVorhLis
-         ZMgOkPIMXJQe+NTG5ZYUFKC1TkiBSBqKtGC7VCVYnihn2NP+AObCyhcwr0k99YRahxiN
-         Ut8EEBIEMisEfVkXJO51acgdZVEq5FvPCJIR11zF6xQfdRy6LBjqUIw6qH2RoIglLiIF
-         FqgRTlmv6E9iS5OQu8dskQDGJ+6Gp4luIohKuR30FITZCi48YwX3TgPH/IQ2nMW2uXcJ
-         1DfMYK0YHbESilAQa+voh/KPbAutCuxeBgfUBsg9UNj/I5+5DrwJvBlGwqm7pL/rbVom
-         oesA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782116626; x=1782721426;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=QayaNVYMdk0y95PRvg6tdQ2LISbdzw2ou3QRiLXOzkc=;
-        b=MxftwUbd0nsJzOgMO6B1yAttryHc5EW2Eb2mp8+63JjxJvu8Ip+Agp9ZBsEzIF6MEg
-         T443sb+PNfitnkHmDa+rRFsucaGrZVMrBPXF0KMb44VyNFZx45hLr8R3I/0fcJ3w5lCR
-         Uvlxwe2LMHS3TbHPXgpAwkhWr+zJlzLdcQ2tX3TaOV40bHT5eCfukD+qvwRruVgTmGdB
-         9wuXNohDC1iJhCplqV4sWqeRHJl2hBzLvk0FXdjKZd6p1DWt5YZfTm+Yt/49wiMCVA17
-         AGGq3kkjxGNTur5y9Ckbsr3BzBPoQq/Cx/HHzu1ZN1ka5arRSOu5llEhp2otvO+qlqIR
-         lbwQ==
-X-Forwarded-Encrypted: i=1; AFNElJ9PgdvdADUcXX8PHIPFvtyuD77h2JG4vRo8VyroCnu2IDLwlDS2qjJiPvfZSQRRg+meRpi1/LQLU3kYPvT1@vger.kernel.org
-X-Gm-Message-State: AOJu0YxleRuzuleDelu6YvSeZOd9eExWP3f7tFgVO27SgndXrAoRd3ct
-	R4u0rNdrpEpWia8olPH2vmtm/JwpZNOEVzkIb9EKy5ZGseUtxmbTwphbXPXm8ZlVOKU=
-X-Gm-Gg: AfdE7cnPd8fSul8TOquZdSMStNzIE/btkvEelPA29cDB8AvUNYfQzF8Nxa8nwzyZBlT
-	chX2GDJeSox2kqCXLOOmb+tqpGf8yCQpVrn3DYQMKC/oK0n6iTMs9GbYNQv+J1MhMsvc6W1NtBJ
-	XBLnJwkulGD4pG1XTswg7jbMdd1tYSkxaWd745pMXRPaQHVVk7xGof0EACI4oWTTpmKY1ESNxDj
-	+ZVWDhx29EecA7e5tswZCQH8LDH40GVG+yj6yPWeT44NeHMXgmZFkl5aA8MxtQJdt8eDzzs8wBY
-	gSXo/bwGtpsTpBpjftfwZzfkZn8GnTqqZehcFJ2HT2mf0v2Kc2TGYYV8MHTj2xHBMwxiKAKH2Lt
-	qUowaiVj/1nst9ldu33NF7X6sKt5/MQX0M3M5dvsC7FjNAoKRjJp2y9AlaGMw4NFYB2PZO0PygL
-	PkrDdwJXxi8mRzcsMPQhRuSL4Mrae4ZdKjunQ2aZCEjMfgKn4mGHXWEQQcmHKax64UqQoxSdaEf
-	GL0q6/NDjBOst2PTCcy/wmfJcM=
-X-Received: by 2002:a17:907:3e9a:b0:bfe:ed74:524 with SMTP id a640c23a62f3a-c098f33a0f1mr679421766b.51.1782116625717;
-        Mon, 22 Jun 2026 01:23:45 -0700 (PDT)
-Received: from localhost (2001-1c00-3b89-c600-b4d0-bc9f-f60e-913a.cable.dynamic.v6.ziggo.nl. [2001:1c00:3b89:c600:b4d0:bc9f:f60e:913a])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c0c60ac97aesm310087666b.30.2026.06.22.01.23.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 22 Jun 2026 01:23:45 -0700 (PDT)
+	s=arc-20240116; t=1782116718; c=relaxed/simple;
+	bh=X/OpTbuthlVusCSOnihn3WAb4xYSqe+YlVeJG6hFE4A=;
+	h=From:In-Reply-To:MIME-Version:References:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=lgRZH5yyoK3vNdN4qJU4DdVrpaSwH0pckRDY6tnHhYyDYPp+YxcbZuc1ggvj8IqO2OwsDqDipkQX4uZ95Df1p/Qix1vVcEj7kRz79iWpVTeMz/O3pYoax6ElNkzZ7caCxp9r3f1d70hxJT7ETpdhn1QY2adxz1CaUf6tWdiVQas=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QSC4F7Fj; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A84141F00A3D
+	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jun 2026 08:25:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1782116715;
+	bh=dGzB8a7uRXU43VC5H/RJSltTtPvZBBro4QCVA4GdtP4=;
+	h=From:In-Reply-To:References:Date:Subject:To:Cc;
+	b=QSC4F7Fjsb6UDa4UQFHkpPf01msyxFA6Bx6zSIx11l5u2hRCTnsJJsqnnKWwfS90U
+	 Gvc8JsZemI27tAmK7IUkxys4/vM7INW1OqlmD73hg6M5RtME5mNP6BMdr3O0h9QprD
+	 m2M3gqpc8fhwYahDbMuqFarZ3/sqhfHTlE0cp5r4S45q1yeMB4yn28bLomdxxzDF/Y
+	 /W66RlS48R912piU1q4bGvht4vyavZU5QNwTBcoeiX0Kctwkcwhboe5OJks6p/cglw
+	 eRhLs4bf03IZAZlREfqTjXhEl73c6B9+3rtyYPvSBz5wICmFKHlGa6wJMbzMAegEBj
+	 sdlEn6pZhMJrA==
+Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-39983214844so35818521fa.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jun 2026 01:25:15 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AFNElJ8lvQT+8ThL0gpN0FOt3PXvP0f4pT3PQ1LfNK2u/1EAZ/KBwEKGcWnlMu+mM4Gp8b8NRcB5+bTEApEpHuwq@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz8PrxCaF/8szXgFUrmjrgLEGmRrb/7Ajqcbqqq3ZW9PEnEC2z4
+	up+u22iOgMKs5tvvfak1XwfpyEzX27tTYaro0g5pHLweyGKlYjjgdconqQPVP4D3uC5Y1a+8Mq4
+	ynKQKjc6XiStDPLdSa26GEaAMIOMAiDYgaNwoTyq8Xg==
+X-Received: by 2002:a2e:a815:0:b0:393:b365:6e24 with SMTP id
+ 38308e7fff4ca-3998bc52fb3mr30333831fa.4.1782116714327; Mon, 22 Jun 2026
+ 01:25:14 -0700 (PDT)
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 22 Jun 2026 04:25:12 -0400
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 22 Jun 2026 04:25:12 -0400
+From: Bartosz Golaszewski <brgl@kernel.org>
+In-Reply-To: <20260619164506.GA3223@sol>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Mon, 22 Jun 2026 10:23:44 +0200
-Message-Id: <DJFFMB9BO7GF.3CIRW26SHUSD@fairphone.com>
-Cc: <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>,
- <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] arm64: dts: qcom: kodiak: Elite-ify LPASS macros
-From: "Luca Weiss" <luca.weiss@fairphone.com>
-To: "Konrad Dybcio" <konrad.dybcio@oss.qualcomm.com>, "Luca Weiss"
- <luca.weiss@fairphone.com>, "Bjorn Andersson" <andersson@kernel.org>,
- "Konrad Dybcio" <konradybcio@kernel.org>, "Rob Herring" <robh@kernel.org>,
- "Krzysztof Kozlowski" <krzk+dt@kernel.org>, "Conor Dooley"
- <conor+dt@kernel.org>, <cros-qcom-dts-watchers@chromium.org>
-X-Mailer: aerc 0.21.0-0-g5549850facc2
-References: <20260522-kodiak-elite-macros-v1-1-487661ac1270@fairphone.com>
- <b39e4b4f-c166-48e1-901c-51694cf8172b@oss.qualcomm.com>
-In-Reply-To: <b39e4b4f-c166-48e1-901c-51694cf8172b@oss.qualcomm.com>
+MIME-Version: 1.0
+References: <20260521-shikra_crypto_changse-v1-0-0154cc9cc0de@oss.qualcomm.com>
+ <53b1fa61-9692-42fd-a295-98bbeacbcd9a@oss.qualcomm.com> <20260619164506.GA3223@sol>
+Date: Mon, 22 Jun 2026 04:25:12 -0400
+X-Gmail-Original-Message-ID: <CAMRc=MdJJRPBeNtAUr82b4zv7vLjrRQ76Q3bJHQYEigaE2Hqog@mail.gmail.com>
+X-Gm-Features: AVVi8CeAxt9KMOL095y2v4UTrPSzivkzFWS7f7st5RqKHpq1WC_YJZWgEPbn2QE
+Message-ID: <CAMRc=MdJJRPBeNtAUr82b4zv7vLjrRQ76Q3bJHQYEigaE2Hqog@mail.gmail.com>
+Subject: Re: [PATCH 0/5] Shikra: Add DT support for ice, rng and qce
+To: Eric Biggers <ebiggers@kernel.org>
+Cc: Herbert Xu <herbert@gondor.apana.org.au>, "David S. Miller" <davem@davemloft.net>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Vinod Koul <vkoul@kernel.org>, 
+	Thara Gopinath <thara.gopinath@gmail.com>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Frank Li <Frank.Li@kernel.org>, Andy Gross <agross@kernel.org>, 
+	Harshal Dev <harshal.dev@oss.qualcomm.com>, linux-arm-msm@vger.kernel.org, 
+	linux-crypto@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org, 
+	Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-0.16 / 15.00];
+X-Spamd-Result: default: False [-3.66 / 15.00];
+	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[fairphone.com,quarantine];
-	MV_CASE(0.50)[];
-	R_DKIM_ALLOW(-0.20)[fairphone.com:s=fair];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	FORGED_SENDER(0.00)[luca.weiss@fairphone.com,linux-arm-msm@vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[13];
-	TAGGED_FROM(0.00)[bounces-113947-lists,linux-arm-msm=lfdr.de];
 	MIME_TRACE(0.00)[0:+];
-	FORWARDED(0.00)[lists@lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:~postmarketos/upstreaming@lists.sr.ht,m:phone-devel@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:konrad.dybcio@oss.qualcomm.com,m:luca.weiss@fairphone.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:cros-qcom-dts-watchers@chromium.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
-	RECEIVED_HELO_LOCALHOST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[19];
+	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-113948-lists,linux-arm-msm=lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	FORGED_RECIPIENTS(0.00)[m:ebiggers@kernel.org,m:herbert@gondor.apana.org.au,m:davem@davemloft.net,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:andersson@kernel.org,m:vkoul@kernel.org,m:thara.gopinath@gmail.com,m:konradybcio@kernel.org,m:Frank.Li@kernel.org,m:agross@kernel.org,m:harshal.dev@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:linux-crypto@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:dmaengine@vger.kernel.org,m:kuldeep.singh@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,m:tharagopinath@gmail.com,s:lists@lfdr.de];
+	FORWARDED(0.00)[lists@lfdr.de];
+	FORGED_SENDER(0.00)[brgl@kernel.org,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_CC(0.00)[gondor.apana.org.au,davemloft.net,kernel.org,gmail.com,oss.qualcomm.com,vger.kernel.org];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,mail.gmail.com:mid];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[luca.weiss@fairphone.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[fairphone.com:+];
-	ALIAS_RESOLVED(0.00)[];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	TO_DN_SOME(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[brgl@kernel.org,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	ALIAS_RESOLVED(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,vger.kernel.org:from_smtp,fairphone.com:dkim,fairphone.com:mid,fairphone.com:from_mime]
+	MISSING_XM_UA(0.00)[];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 5CB6E6ADB63
+X-Rspamd-Queue-Id: 3236D6ADB84
 
-On Wed Jun 17, 2026 at 12:05 PM CEST, Konrad Dybcio wrote:
-> On 5/22/26 4:46 PM, Luca Weiss wrote:
->> Due to initial kodiak/sc7280 bringup being done for Chrome platforms,
->> some Chrome-specific bits still remain in kodiak.dtsi, like the clocks
->> and power-domains for the LPASS RX/TX/WSA/VA macros.
->>=20
->> Move them to sc7280-chrome-common.dtsi and put Elite (q6afecc)
->> equivalents in its place. The qcs6490-audioreach.dtsi file can also drop
->> deletion of power-domains properties then.
->>=20
->> This follows previous commits moving Chrome-specific configuration to
->> the correct file, leaving kodiak.dtsi for Elite and
->> qcs6490-audioreach.dtsi for AudioReach.
->>=20
->> No functional change intended. The clock-output-names property will now
->> exist for both Chrome and AudioReach devices but this shouldn't have any
->> relevant effect. And WSA macro clocks weren't added to Chrome because I
->> don't believe this would've ever worked given it already referenced
->> q6afecc and the nodes were originally added during AudioReach bringup.
+On Fri, 19 Jun 2026 18:45:06 +0200, Eric Biggers <ebiggers@kernel.org> said:
+> On Fri, Jun 19, 2026 at 02:13:28PM +0530, Kuldeep Singh wrote:
+>> On 21-05-2026 18:47, Kuldeep Singh wrote:
+>> > This patchseries attempt to enable sdhc-ice, rng and qce on shikra
+>> > platform similar to other platforms.
+>> >
+>> > Previously, the 3 dt-bindigs/DT changes were sent as individual series
+>> > and with feedback received, clubbed them together as all belong to same
+>> > crypto subsystem.
+>> >
+>> > Here's link to old patchsets.
+>> > QCE: https://lore.kernel.org/lkml/20260515-shikra_qcrypto-v1-0-80f07b345c29@oss.qualcomm.com/
+>>
+>> Hi Eric,
+>>
+>> As selftests issues for QCE are now fixed[1], so shikra series should be
+>> good to proceed? as your concerns[2] are now addressed.
+>> I am waiting for merge window to end and will send next rev post that.
+>>
+>> [1]
+>> https://lore.kernel.org/linux-arm-msm/20260617-qce-fix-self-tests-v3-0-ecc2b4dedcfd@oss.qualcomm.com/
+>> [2] https://lore.kernel.org/lkml/20260522024912.GC5937@quark/
 >
-> I think it's better to keep them, if only to make sure that the result
-> of dtx_diff isn't outside the expectation of a commit that claims to
-> only reshuffle data for these platforms
-
-I documented this in the commit message for this purpose.
-
-But I'd argue not putting (likely incorrect) wsa_macro overrides there
-is the better thing to do. Probably somebody should've taken care of the
-Chrome platforms when adding the wsa nodes in the first place.
-
+> If you think that then it sounds like you need to read what I actually
+> said.  The fixes are appreciated but don't change the big picture.
 >
-> It looks OK as-is for Elite and Audioreach platforms (for the record, I
-> checked rb3gen2 and FP5)
+> - Eric
+>
 
-Thanks!
+Eric,
 
-Regards
-Luca
+I mentioned it in another thread[1]. This series is not adding any new features
+to the QCE driver, it describes the hardware. The SoC *does have* this IP and
+no matter the state of the support in the kernel, there's nothing wrong in
+extending the existing bindings and adding new dts nodes.
+
+Thanks,
+Bartosz
+
+[1] https://lore.kernel.org/all/CAMRc=MfY-tmMCdw9FVBgfkX-FvB5Nx2X06S023GhASenSCQSNA@mail.gmail.com/
 
