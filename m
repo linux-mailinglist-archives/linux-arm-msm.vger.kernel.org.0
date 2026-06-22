@@ -1,222 +1,140 @@
-Return-Path: <linux-arm-msm+bounces-113954-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-113955-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id sKCeHZQAOWrylAcAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-113954-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2026 11:29:56 +0200
+	id v8MtOKACOWqHlQcAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-113955-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2026 11:38:40 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 098506AE38E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2026 11:29:56 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 60F776AE4FF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2026 11:38:40 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=none ("invalid DKIM record") header.d=siliconsignals.io header.s=selector1 header.b=RoLguuZN;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113954-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113954-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=fail reason="SPF not aligned (relaxed)" header.from=siliconsignals.io (policy=quarantine);
-	arc=reject ("cv is fail on i=2")
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=oQu3Jp12;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113955-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113955-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=quarantine) header.from=kernel.org;
+	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 10439302731A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2026 09:18:51 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 3FFD33166147
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2026 09:22:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C672236B07E;
-	Mon, 22 Jun 2026 09:18:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6A239399890;
+	Mon, 22 Jun 2026 09:21:57 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from PNZPR01CU001.outbound.protection.outlook.com (mail-centralindiaazon11021091.outbound.protection.outlook.com [40.107.51.91])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82D65397E64;
-	Mon, 22 Jun 2026 09:18:44 +0000 (UTC)
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782119928; cv=fail; b=DA8flDFvr9jyepxcGtg5iuKNa7izkDheVbJCQhhYM4FGo2QXHwKCSK3Wuu7bAKjQTzc47d05uPwZHkdb+xVM28oTeOKabErVNmWr9RUDkuU5v+iaEF967RQJDvgaJLrhaAW/ljLETGsLTDymI0IPmouuLgLnqOrjwVZ2Clg0PJw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782119928; c=relaxed/simple;
-	bh=PcpYa72zbk0lPqvQQbkX45BJxkyDzYgp2vxzqHRgZnI=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=UR1E4WeHfOYvNlrOtDzfs5a/EHfZ23HzTf753ElTw0jUwDx46SjGPWiJjDfxGxwpwSp/DxpP9Al5ylsa2az/AAmNCZHuF5wDrfEeJH3hRvIC/69VhFa0bfHP7J4QxIrZoagKq6jBDVJmahWlpGMYCLRCCBZcbj7OsH/FNzwkMdk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=siliconsignals.io; spf=pass smtp.mailfrom=siliconsignals.io; dkim=fail (0-bit key) header.d=siliconsignals.io header.i=@siliconsignals.io header.b=RoLguuZN reason="key not found in DNS"; arc=fail smtp.client-ip=40.107.51.91
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=TALZLl90pBvinlxwQ7cTr3K+ePX2fR00ftaUQQStemtTjlwB1zOd7rtKoCKB/2XhjxPJaZ7BCkG2L46KBIVZawHHHt2fRixGVkKm5Ncy54tqlB4IObUQbfG15o7u6hzVqbr6BS2IysEFRhQwGYOOdMA2ib8v97dLj9qN+gUE2niGS8lWiPABN654u+gdmdJJmZMrTt+YHHIbGFcigqFEr4VHFJvWxwbtRn0rMrqO96ht2QeyuNK8r5W+sR7fjodAnoqPZA8C0uBxbJcTUUQVyhQ8egwPUQP4+DNOmqubk6bZZbyo2zhnQ92i1M/+EuDjtV1c2a9IJ056bqqA+0l6Ig==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=PcpYa72zbk0lPqvQQbkX45BJxkyDzYgp2vxzqHRgZnI=;
- b=VoiKgtI4WfU+f9Gj3iY6OvORs7IAsE8CqEi+U9F16rmNc2YvMC0AgXXzw5desmDLbPRUsY5FgSI2Odi21SnXwVKu/uuHBf3X9aSR0lsWNxA3OJ3HrBoj5PUX7e8xfQ6eK1u/AGtr+D3js8B0pEjKAr9nci+g9G4FkdUKfeUpssLquBMB8P1i3kGIURPQmZsuWGXm+y4kaLWQPuknW1ajacaTCy5b3sii6wWZQZ+iBiS7oQXgax28NtbL74ictzMvMwZPmeZL2uosk2ZGt4dzwbmHDf5B4N8ZPn0iFtxVigLbb5hgqRGslkYC1+sDprF5z+Z0MjNiqHH37iMlotE7tQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=siliconsignals.io; dmarc=pass action=none
- header.from=siliconsignals.io; dkim=pass header.d=siliconsignals.io; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=siliconsignals.io;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=PcpYa72zbk0lPqvQQbkX45BJxkyDzYgp2vxzqHRgZnI=;
- b=RoLguuZNqTNn+riAbr8yOMv2YBHArRNgTlN5zGKKZY+BQE921vW5ny+z38sm99Z0Ukaq4qZ5fdS1chxca/KB7eKA6GdTds+Tuo8DCKkq+owHjKXMuMjx9JFfvTSBpicmr8X8VHxC3FnCPTxWvnMNweHvgpn2LnUgWb9ia8LfVzdQEeowlxzTeI2ydQ0rESqpW/v1qMezr+E6IjqLPM6r/abPxXrKFSdBHxdT2uzVpZi5vGqRIx9GH+1YExpX+DhUcbmQ/BeO/MyzW6dcI881Y/eFNsizEWfyBLNZ/4HE6GOkp7FHQKs0swxWVOILoIVQtN+LN8V6LZyFSqQeGZS1cg==
-Received: from PN0P287MB2019.INDP287.PROD.OUTLOOK.COM (2603:1096:c01:1b8::9)
- by PN3P287MB1108.INDP287.PROD.OUTLOOK.COM (2603:1096:c01:173::6) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.139.14; Mon, 22 Jun
- 2026 09:18:40 +0000
-Received: from PN0P287MB2019.INDP287.PROD.OUTLOOK.COM
- ([fe80::ebd8:538d:c705:8432]) by PN0P287MB2019.INDP287.PROD.OUTLOOK.COM
- ([fe80::ebd8:538d:c705:8432%6]) with mapi id 15.21.0139.018; Mon, 22 Jun 2026
- 09:18:40 +0000
-From: Himanshu Bhavani <himanshu.bhavani@siliconsignals.io>
-To: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-CC: "sakari.ailus@linux.intel.com" <sakari.ailus@linux.intel.com>,
-	"luca.weiss@fairphone.com" <luca.weiss@fairphone.com>, Hardevsinh Palaniya
-	<hardevsinh.palaniya@siliconsignals.io>, Mauro Carvalho Chehab
-	<mchehab@kernel.org>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski
-	<krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson
-	<andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, Hans Verkuil
-	<hverkuil+cisco@kernel.org>, Hans de Goede <johannes.goede@oss.qualcomm.com>,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, Elgin Perumbilly
-	<elgin.perumbilly@siliconsignals.io>, Walter Werner Schneider
-	<contact@schnwalter.eu>, Kate Hsuan <hpa@redhat.com>, Svyatoslav Ryhel
-	<clamor95@gmail.com>, "linux-media@vger.kernel.org"
-	<linux-media@vger.kernel.org>, "devicetree@vger.kernel.org"
-	<devicetree@vger.kernel.org>, "linux-kernel@vger.kernel.org"
-	<linux-kernel@vger.kernel.org>, "linux-arm-msm@vger.kernel.org"
-	<linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH v2 2/3] media: i2c: add imx576 image sensor driver
-Thread-Topic: [PATCH v2 2/3] media: i2c: add imx576 image sensor driver
-Thread-Index: AQHc/+rjlKGWpG0n2UqPle5J3Ir6S7ZHcVeAgAKoCP2AADMSAIAAAwww
-Date: Mon, 22 Jun 2026 09:18:40 +0000
-Message-ID:
- <PN0P287MB201958C9169499B93C50ABC49AEF2@PN0P287MB2019.INDP287.PROD.OUTLOOK.COM>
-References: <20260619125439.55311-1-himanshu.bhavani@siliconsignals.io>
- <20260619125439.55311-3-himanshu.bhavani@siliconsignals.io>
- <20260620132749.GE3552167@killaraus.ideasonboard.com>
- <PN0P287MB20199A3EF8F3183176AC1E559AEF2@PN0P287MB2019.INDP287.PROD.OUTLOOK.COM>
- <20260622090432.GL3552167@killaraus.ideasonboard.com>
-In-Reply-To: <20260622090432.GL3552167@killaraus.ideasonboard.com>
-Accept-Language: en-GB, en-US
-Content-Language: en-GB
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-msip_labels:
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: PN0P287MB2019:EE_|PN3P287MB1108:EE_
-x-ms-office365-filtering-correlation-id: 5788b443-d5ec-46f3-1f27-08ded03f3f97
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:
- BCL:0;ARA:13230040|366016|1800799024|23010399003|7416014|376014|38070700021|22082099003|18002099003|56012099006|4143699003;
-x-microsoft-antispam-message-info:
- M3fCbT3DADFU10BDrNTlEKF62r1QYA93FU7JSgdR1G2pSZXQRugldpVCPTc4ekQw+Bghne3S48m8xHDELvQWoEULW/EFDwd2X0PEENT0vNQryY8qb6PZoGtnCrV9cA8jqT6OyeVve+ypmkQydJwIPjwXaVBfMAHpWptSxNb+wCnFlg5mMhsRpc2OSnHf7NxFB0sIrpEJchxO5kpy9lQF7NZY9gLaRYvDXqgFBCX3VSAVMQiLj/0SsQdO9cQJwfRLqifx3NYbfmzDfS+lExlF5agPNI0fnovAGuWTr99Rcc7qAzlBd5Or1SHO5pTrKA4u9TGnNI09c7HXp718MnmFAvFZNjuTb+15+0+vzapaN3qYxsTm8+g5djcKYEPzLBk/Tv2KMrv9GZoLQVmrT8nddzUikwAIyJzgeuP3d5DZfCpGV9pVFDJJP+ToW1H1FDxS3FJ1XqN0GUwiIa/y9QCvn8T7x++YXUqmkXq32O30G1AErsLg5sF+43nRIeutNI8MZDFCJbtsUaGlAsywh9Gx0Jb8h5HqykKpebBfSxBOppl+17snEHTdGaamlvUjy9PxC7/ZQ1hOZQGGeF2bRuOgXQxlg9ekGoGcQ36UnqUM4yHO56rUzLx/QuUcfDSpt2VdF2DLCPDyznkh6LA88q96cHl4UO9FWXDoCSIZEuG7R5fsfXksBGwSWMKYR1UvqleWlTW6zBW/+zcSFGKBqDfupoPq8LFPKmTyoiyQBdDi2gQ=
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PN0P287MB2019.INDP287.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(23010399003)(7416014)(376014)(38070700021)(22082099003)(18002099003)(56012099006)(4143699003);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?iso-8859-1?Q?jM6pNN4UE3kjV/UUfWN5RjFQZSIun5sOHRSboZaznInIA4N2bXYX0SwOcp?=
- =?iso-8859-1?Q?GX0A+5xqdbrdkSsKY+KXi3CqKeuO7fQU0ZTBlQ4QIaCNa5y+7hEcL4XgGv?=
- =?iso-8859-1?Q?Y+U45BSmDX5fUR7Xya3Bl9QBQqBmQKNGasOnMzS56P4FuJpyxipfGEtzKg?=
- =?iso-8859-1?Q?HV+SJpxuxiFDu/wjI1BYM1PGNDUvucLRWZlCpHz3aYudmyOeeAPU8we0L3?=
- =?iso-8859-1?Q?BH5RQreskDGdTEVrl3MH9F79sQYQwsXJXdOEUOtB4yYaJHyu2MMjfMunc7?=
- =?iso-8859-1?Q?qpoqon7kJbXEr5qcVm8b1l3crACqKUUA7Up8II9DQ8b+fVcicXxN+3shXb?=
- =?iso-8859-1?Q?nuPfwZhBz5xy5OF0NysbacJjISYxE4uKcnokzP65bF33y+K2GU9IgKi4yY?=
- =?iso-8859-1?Q?gkM1XK6UdIdvETCBf4M0IcCabtxQDxc+mbzWsSgT0IsyIXGZri9t4oDs7B?=
- =?iso-8859-1?Q?zJYoyBEZjq0lcpC9KKhJXxXEGi+V7rB+2NZ9koB9On89QM00QubQVP2RBd?=
- =?iso-8859-1?Q?8/haPXr56inrr0xJi/8pMn46cFOEK52Wm/3U5Wqu8VqIXzbb2//JHBSU1l?=
- =?iso-8859-1?Q?NJoPZZVCnrWLxgJWDrIFIpgifjH64t6fCbAO1eoIq+eEWi6sX0zqrumzgu?=
- =?iso-8859-1?Q?3LJj4D+OwrjymJcNeqR6Oc7DdcCpXh170B8LaxbErwCcIBmSPWByhP3PTg?=
- =?iso-8859-1?Q?CQTCZXfOwHmxuGrd4B72ilGbalg4B/fN9UHu0ZHN3GXu6xnVqKooCaF9TW?=
- =?iso-8859-1?Q?KPFcvatNCLmIqPL78uwUjEKvzqThFWClivF1nN0w3ApuaeQzaP95YOVEEP?=
- =?iso-8859-1?Q?ot9xsnU0XYqmrqjBHQW323Z4vaii+m2zBYi0WSlvZgreX7EjdF08LMDPCF?=
- =?iso-8859-1?Q?44cb08QBsTuGJGUGqeZg1izUaL4+35tO7xG34HC2cft7olP5N0eh1AOGld?=
- =?iso-8859-1?Q?rpCZa5USpkjRYor/U/DoHbVKVlCL1eE1lNbbiSAdvxC+5vOGG7DJgc112M?=
- =?iso-8859-1?Q?y0iXao3opmcnB0kpI526URldA6ARo5Uj/k+WKCSmuN3vaLi8gbVCacZ7CM?=
- =?iso-8859-1?Q?zOSj49Je4ZTvhTANgjbNx+mdMj+/sLdfWVxoiwhD62GdG5DSQ8PabbUQZF?=
- =?iso-8859-1?Q?wjwzympnZasfPelFliYnXC9dOZddUPLo/b+sAwP0uWY25FzN9UdtwQarxe?=
- =?iso-8859-1?Q?n0fzmAkFMNMMCe6+RYEyFLheLJkenqFeKJL1l/+bE3r2wkf8JJ4Rf7YMZJ?=
- =?iso-8859-1?Q?OvqrKwXbYCBUoubXIjNZr0lfz/pySu54/dysXZFgCFHpbQRf12C68TUYW/?=
- =?iso-8859-1?Q?zDF7ywNIAypASamacsTkcxZ8bVgyx64HmT9PZ+/orhb9GE81I8k0LcZKUL?=
- =?iso-8859-1?Q?OSF5mWx0+HWm2E/OIO2Dp2lnPrMpTOPzT3IfWW/ogQfvC0+memOvMa51Md?=
- =?iso-8859-1?Q?7/RELYHk+4g6XXJ0TJ6tFgXnDYLmMK9OoUTzg4zyZCmGx9/ShS1JHvn8O0?=
- =?iso-8859-1?Q?IYOxIua1o6ycgLDZwuO3qdNavnqOkeIIT9qtZPeFCyhYfZS8ISIVRru//w?=
- =?iso-8859-1?Q?susR2RAMdrSEYpyVosJVXlpxmgPyJg0RF8NNs5KWkiO+iMT12WMIEDcALE?=
- =?iso-8859-1?Q?dh2QRceMZyz+KjF5axJtB1DyJl9EppmzLpveEb8jd61QXwFDStInQnhEZf?=
- =?iso-8859-1?Q?ilVPAlOBIr1gUm4t4xuTYwAZ5ZMLpj+KrjJdU+336VPo0Mg5eLT/kemv/3?=
- =?iso-8859-1?Q?DmpKRnP4vBNmD4j/Z8IJfUVAFdfX7mUuGWn1stE95EksQv6dPhgTADI27Q?=
- =?iso-8859-1?Q?Gd/UOWYQXDq7HrGxTVwH+DZIB5HDMiw=3D?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51090364049;
+	Mon, 22 Jun 2026 09:21:53 +0000 (UTC)
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782120116; cv=none; b=YDa7S58lQIqcuqI2X0QtnBA4oJM7ujUehI1cjwKpz9devoizutfYwROg8tkMdZg6+QPqmV1ctpIvz3QgLLxMcBt+ziyyo7prDYecrgjSQxraTmm4nscrCspTWxhVkJbQr4+1SQA2KyDO4917y3Bm05iIexoKxUvCtUtMpMQyU24=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782120116; c=relaxed/simple;
+	bh=uHVf0Jy6vUIHuqEDqyAkWupfMY5pJ7s8MtJ34TcNuuU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=pN4g+OT2enOL8eGZnGtNNjRGkl4v8N+gDhHPsMB6KbcUaJ8KbwOPwuq4hhSng4lSEHP99s1FsNCMRY3vsaNYpdq8ZrJuFeFfl2iVNgBficwILsTtKjjBhH8gJHKerB+V6Ejv8lJdSjgjA0dGSJC6s54J1Qqym8KW85ZzgYx0AzU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oQu3Jp12; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 976721F000E9;
+	Mon, 22 Jun 2026 09:21:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1782120113;
+	bh=77wIqgo4jFeWA0NXSl8ibtCsUhwVKZwgljHlmjkSEoU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=oQu3Jp12M+W3sDDSDWTuMxQM8AiP6aGolGm18QnoHyGoKNq6o2sFA4yzKsJyPpBuK
+	 vBqQP8kZjsflOBIZZuF5vlOnYQ9JpZbgvder+l0ESgiEukgdBCimwROWLOAmI9lgcw
+	 94SYsR3d72svwtCy5vMjijm0SaOm/rRO5mxqIpbsB69N4a+6c6Aiuu3YBHu4VeKndY
+	 gF3YJ0hsexLVOKVgzINnZHm7Tq7VTvSrf8Ur7E1tSmZpNoiKIl8w+KvkPrd634vAW/
+	 GFfJBCLrvWjVC+L1yhpVzEJTj1LI1OB8QzK5EUS7eR+V0kv71YnNMApnw4hrmy4qBn
+	 JQlXP+pP8f39A==
+Date: Mon, 22 Jun 2026 11:21:49 +0200
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Herman van Hazendonk <github.com@herrie.org>
+Cc: Vinod Koul <vkoul@kernel.org>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>, 
+	Nathan Chancellor <nathan@kernel.org>, Nick Desaulniers <nick.desaulniers+lkml@gmail.com>, 
+	Bill Wendling <morbo@google.com>, Justin Stitt <justinstitt@google.com>, 
+	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, llvm@lists.linux.dev, konrad.dybcio@oss.qualcomm.com, 
+	dmitry.baryshkov@oss.qualcomm.com
+Subject: Re: [PATCH v3 1/2] dt-bindings: phy: qcom,usb-hs-phy: add
+ qcom,hs-drv-slope
+Message-ID: <20260622-thankful-vehement-bittern-0edc8d@quoll>
+References: <20260616-submit-phy-usb-hs-vendor-init-seq-v3-0-7d21fb1d1484@herrie.org>
+ <20260616-submit-phy-usb-hs-vendor-init-seq-v3-1-7d21fb1d1484@herrie.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-OriginatorOrg: siliconsignals.io
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: PN0P287MB2019.INDP287.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5788b443-d5ec-46f3-1f27-08ded03f3f97
-X-MS-Exchange-CrossTenant-originalarrivaltime: 22 Jun 2026 09:18:40.1481
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 7ec5089e-a433-4bd1-a638-82ee62e21d37
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: OO3NPDT/pp5pywgfUBC3WX22ykz+wwQhH4EctJmuBOUPFd7g5fK/Ry6iLpuzQ4qUM/flIdBGfDF20gxcRMYVXACnOpFoM6z/ZOfTwtBaOoyi3E+dqs2+8VcfqyZrqF/d
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PN3P287MB1108
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260616-submit-phy-usb-hs-vendor-init-seq-v3-1-7d21fb1d1484@herrie.org>
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [3.54 / 15.00];
-	DMARC_POLICY_QUARANTINE(1.50)[siliconsignals.io : SPF not aligned (relaxed),quarantine];
+X-Spamd-Result: default: False [-3.16 / 15.00];
+	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
 	SUSPICIOUS_RECIPS(1.50)[];
-	ARC_REJECT(1.00)[cv is fail on i=2];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-113954-lists,linux-arm-msm=lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:laurent.pinchart@ideasonboard.com,m:sakari.ailus@linux.intel.com,m:luca.weiss@fairphone.com,m:hardevsinh.palaniya@siliconsignals.io,m:mchehab@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:andersson@kernel.org,m:konradybcio@kernel.org,m:hverkuil+cisco@kernel.org,m:johannes.goede@oss.qualcomm.com,m:vladimir.zapolskiy@linaro.org,m:elgin.perumbilly@siliconsignals.io,m:contact@schnwalter.eu,m:hpa@redhat.com,m:clamor95@gmail.com,m:linux-media@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,m:hverkuil@kernel.org,s:lists@lfdr.de];
-	FORGED_SENDER(0.00)[himanshu.bhavani@siliconsignals.io,linux-arm-msm@vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-113955-lists,linux-arm-msm=lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:github.com@herrie.org,m:vkoul@kernel.org,m:neil.armstrong@linaro.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:andersson@kernel.org,m:p.zabel@pengutronix.de,m:nathan@kernel.org,m:nick.desaulniers+lkml@gmail.com,m:morbo@google.com,m:justinstitt@google.com,m:linux-arm-msm@vger.kernel.org,m:linux-phy@lists.infradead.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:llvm@lists.linux.dev,m:konrad.dybcio@oss.qualcomm.com,m:dmitry.baryshkov@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,m:nickdesaulniers@gmail.com,s:lists@lfdr.de];
+	FORGED_SENDER(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
 	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_CC(0.00)[linux.intel.com,fairphone.com,siliconsignals.io,kernel.org,oss.qualcomm.com,linaro.org,schnwalter.eu,redhat.com,gmail.com,vger.kernel.org];
-	TO_DN_EQ_ADDR_SOME(0.00)[];
-	R_DKIM_PERMFAIL(0.00)[siliconsignals.io:s=selector1];
+	RCVD_COUNT_THREE(0.00)[4];
 	FORWARDED(0.00)[lists@lfdr.de];
-	DKIM_TRACE(0.00)[siliconsignals.io:~];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[21];
-	PRECEDENCE_BULK(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[himanshu.bhavani@siliconsignals.io,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	MISSING_XM_UA(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	RCPT_COUNT_TWELVE(0.00)[19];
+	FORGED_SENDER_FORWARDING(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt,cisco];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_CC(0.00)[kernel.org,linaro.org,pengutronix.de,gmail.com,google.com,vger.kernel.org,lists.infradead.org,lists.linux.dev,oss.qualcomm.com];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt,lkml];
+	MISSING_XM_UA(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	TO_DN_SOME(0.00)[]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 098506AE38E
+X-Rspamd-Queue-Id: 60F776AE4FF
 
->On Mon, Jun 22, 2026 at 06:02:24AM +0000, Himanshu Bhavani wrote:=0A=
->> > On Fri, Jun 19, 2026 at 06:24:32PM +0530, Himanshu Bhavani wrote:=0A=
->> >> Add a v4l2 subdevice driver for the Sony imx576 sensor.=0A=
->> >>=0A=
->> >> The Sony IMX576 image sensor with an active=0A=
->> >> array size of 5760 x 4312=0A=
->> >>=0A=
->> >> The following features are supported:=0A=
->> >> - Manual exposure an gain control support=0A=
->> >> - vblank/hblank control support=0A=
->> >> - Supported resolution: 2880 x 2156 30fps (SRGGB10)=0A=
->> >=0A=
->> >You've been asked in v1 to make this driver dynamically compute=0A=
->> >registers instead of hardcoding modes. Please do so in v3. Nack on v2.=
-=0A=
->>=0A=
->> As I mentioned earlier, I don't have the full datasheet yet, so I=0A=
->> can't implement this now.=0A=
->=0A=
->You have been given a link to the datasheet in a private reply.=0A=
-=0A=
-Sorry, I missed that e-mail, Just checked.=0A=
-=0A=
-However, the datasheet is the same that I have, but still I will check the =
-reference's as suggested by Dave.=0A=
-=0A=
-Thanks & BR,=0A=
-Himanshu Bhavani=0A=
+On Tue, Jun 16, 2026 at 03:26:53PM +0200, Herman van Hazendonk wrote:
+> The MSM8x60 / APQ8060 PHY needs three vendor ULPI register tweaks for
+> stable USB operation: pre-emphasis level, CDR auto-reset and SE1
+> gating in registers 0x32 and 0x36.  A survey of MSM8x60-class
+> downstream board files (Qualcomm SURF/FFA/Fluid/Dragon, Samsung
+> Galaxy S2 family, Sony Xperia, HTC and HP TouchPad) shows that those
+> three values are identical across every reference board and can be
+> hardcoded in the driver behind the existing
+> qcom,usb-hs-phy-msm8660 compatible.
+> 
+> The only board-specific value is the 4-bit HS driver slope in bits
+> [3:0] of register 0x32:
+> 
+>   HP TouchPad                                  5
+>   HTC MSM8660 ports                            1
+>   Qualcomm / Samsung / Sony reference boards   0 (silicon default)
+> 
+> Add a qcom,hs-drv-slope property carrying that 4-bit value, valid
+> only on the qcom,usb-hs-phy-msm8660 variant.  When the property is
+> absent the driver leaves the silicon default in place, matching the
+> behaviour of the Qualcomm reference platform.
+
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+
+Best regards,
+Krzysztof
+
 
