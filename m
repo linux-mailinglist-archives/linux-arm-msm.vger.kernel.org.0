@@ -1,52 +1,52 @@
-Return-Path: <linux-arm-msm+bounces-114014-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-114015-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id sCp6F/o9OWpypAcAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-114014-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2026 15:51:54 +0200
+	id G8KxLC4/OWrQpAcAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-114015-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2026 15:57:02 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id DD3EB6B0050
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2026 15:51:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 185396B00FE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2026 15:57:02 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=dfqnWB7i;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-114014-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-114014-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=b+LAmCWV;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-114015-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-114015-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id E127C300CCBB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2026 13:51:52 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id A0F9A3030751
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2026 13:56:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 029963B2FC6;
-	Mon, 22 Jun 2026 13:51:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 69A8E3B52E1;
+	Mon, 22 Jun 2026 13:56:11 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05980126C03;
-	Mon, 22 Jun 2026 13:51:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6001B3B47F3;
+	Mon, 22 Jun 2026 13:56:10 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782136309; cv=none; b=XBjVNFWnuZtpOqBrcSjJwJpkdlII+CyPEKyMVD/7P7ALQlrLuQ1CoIx+t8Tj8k3Xtyi9DakKBf6fC7UoGzhrbyBxPxdkvQgojUnlxSqVAzRh2wfMMZPEn29gWU/gEamA9EElN3GSNpbdANj5H7tKXID5Dsf9PcBKOJzDgLNrpQw=
+	t=1782136571; cv=none; b=NfwNr+AQb+XKHBAubLTkedNzf+hOtdFGCNfZy6DKmWlgRKW5eiZYjzSeWASxtwbHMmcrWc+uRgv0zWM2AE3krNYfTuWKo6+KfaYlMoywR+u+W00Wf99Ejy5T91WcK/TMu3wOkyEX73a8gT+H5dOF67F1YmI7r6exNNreCY0ecg4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782136309; c=relaxed/simple;
-	bh=YY6kKelcExsXNVqog5yJ1MBQ4xJvusPeJALhnCg7WZE=;
+	s=arc-20240116; t=1782136571; c=relaxed/simple;
+	bh=iikRMKXAlVaPR/0pHuWi9d4G9BZaBSLWWvNs5OXMjGs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tXNkRqvJQMbbhqCw9JQ5TCQHwTcd7ToOJ0VIIdW6zT3ZD1i7VbKlrzbVGJ2WVrgPY0TQKJNQo3c1U4YlGrLGLEPEbvOoZVS35I4akgdU0pEvEN5ZhV2eIydoVBeH3qiHArrkSWjkqyfQ9x4U1UuJAsrstZsYmEZldgQbC3n0soQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dfqnWB7i; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFC3D1F000E9;
-	Mon, 22 Jun 2026 13:51:47 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=Vvb8n6RVaBfV2uis+GwTkHS5leySx3zoaugGRLOPKQe2kXlOPcFrUJDkOJr6oHUhl15zlDcHfmb9+JO/tJxN+tp5+hK7r517r9Fm1EVQbbX7y2NESl7LxljIXivbR5a2TrHTFWOBlFY4CmCHmQ5SaUSBl/Dmf0D0sEmQEOE3J9I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=b+LAmCWV; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F7381F000E9;
+	Mon, 22 Jun 2026 13:56:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782136308;
-	bh=3OR1YeiV2WovN1USTywrDWul8x9HKiw6jnEgq6vBn98=;
+	s=k20260515; t=1782136570;
+	bh=oKPEl/5kCiDiYCUDWLMa1pIvO9b3D4oGCZaPnidyXKo=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=dfqnWB7immgiTA3nlaUkhlWzmBk8quMioKc3S/241ufdkyT8PgXi6wYwiOE3cfyes
-	 QJcSMR8vkVNZjAtt2lH9ImKdw1+fv7yRI7NKWcsLWzq/ZF8YDs2DLO8DH1hXfSH+R4
-	 jL773V23PpwgvG4hLfAMxx+gxrjh7ZTHY3he43h5Ci8DJTMPvS/F1Nq5Wr+GXLw0lg
-	 FCk1ClAs6uus4WBAB5oEgptqiuR3zf1Ii9FlXIb6y1pRns5U+Ew9CxqdmyIYJ/teoc
-	 PuhhrTt9Y2y9GmKwJRjS/q/yOXFqN+ociRLMnIqzkI0DTLBG4dDpikVACbGy6y5EfL
-	 1o8gRU2+hlAlg==
-Date: Mon, 22 Jun 2026 15:51:44 +0200
+	b=b+LAmCWV+592EqfUvI8S3kLUHg9HmzY/5nd38PSLPZy68lVpYn8Tqa9rSkF5PJIa7
+	 iMdB+TwdQz6WCFyqrdQ1cFku2w4StL7iLRrwGi2uJr8QyH4txZcQGt4v9bLHk4X+dO
+	 PypWxzSgKgCCmZS+lfIRaDRAU5vreboCRuHaH0wOZ9U6GAmxJsJXFE/SWx3x6ya8oI
+	 qIcaAbEBreWWhJMwHyr4GTGA2/c0FtKgHP+4mkgGlCznEx8V4n6iHjCzC88HkUfxnh
+	 YaKHziOspNCFoAsvLjOP32vkj5E79qRuKUBAs4QUpR0EOAhd412QNTTKAkxu3M5km7
+	 ilEnkym8mdbRw==
+Date: Mon, 22 Jun 2026 15:56:06 +0200
 From: Krzysztof Kozlowski <krzk@kernel.org>
 To: Taniya Das <taniya.das@oss.qualcomm.com>
 Cc: Bjorn Andersson <andersson@kernel.org>, 
@@ -57,11 +57,11 @@ Cc: Bjorn Andersson <andersson@kernel.org>,
 	Imran Shaik <imran.shaik@oss.qualcomm.com>, Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>, 
 	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, devicetree@vger.kernel.org, 
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/5] dt-bindings: clock: qcom-rpmhcc: Add RPMH clock
- controller for Maili
-Message-ID: <20260622-charming-aromatic-potoo-c4b9ea@quoll>
+Subject: Re: [PATCH 2/5] dt-bindings: clock: qcom: Add Maili TCSR clock
+ controller
+Message-ID: <20260622-vivacious-camouflaged-loon-ed6fd2@quoll>
 References: <20260618-maili_initial_clock-v1-0-d6ede0352113@oss.qualcomm.com>
- <20260618-maili_initial_clock-v1-1-d6ede0352113@oss.qualcomm.com>
+ <20260618-maili_initial_clock-v1-2-d6ede0352113@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -70,7 +70,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260618-maili_initial_clock-v1-1-d6ede0352113@oss.qualcomm.com>
+In-Reply-To: <20260618-maili_initial_clock-v1-2-d6ede0352113@oss.qualcomm.com>
 X-Rspamd-Action: no action
 X-Spamd-Result: default: False [-3.16 / 15.00];
 	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
@@ -92,7 +92,7 @@ X-Spamd-Result: default: False [-3.16 / 15.00];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	FORWARDED(0.00)[lists@lfdr.de];
-	TAGGED_FROM(0.00)[bounces-114014-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-114015-lists,linux-arm-msm=lfdr.de];
 	DKIM_TRACE(0.00)[kernel.org:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
@@ -105,21 +105,22 @@ X-Spamd-Result: default: False [-3.16 / 15.00];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MISSING_XM_UA(0.00)[];
 	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[quoll:mid,qualcomm.com:email,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,vger.kernel.org:from_smtp]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,qualcomm.com:email,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,quoll:mid]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: DD3EB6B0050
+X-Rspamd-Queue-Id: 185396B00FE
 
-On Thu, Jun 18, 2026 at 10:51:16PM +0530, Taniya Das wrote:
-> Document the RPMH clock controller for the Qualcomm Maili SoC.
+On Thu, Jun 18, 2026 at 10:51:17PM +0530, Taniya Das wrote:
+> Add bindings documentation for TCSR clock controller on the
+> Qualcomm Maili SoC.
 > 
-> Maili SoC is a derivative of the Hawi SoC and the rpmh clock controller
+> Maili is a derivative of the Hawi SoC and the tcsr clock controller
 > is identical to that of Hawi. Therefore Maili uses the fallback
-> compatible to reuse the Hawi rpmhcc driver.
+> compatible to reuse the Hawi tcsrcc driver.
 > 
 > Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
 > ---
->  .../devicetree/bindings/clock/qcom,rpmhcc.yaml     | 65 ++++++++++++----------
->  1 file changed, 35 insertions(+), 30 deletions(-)
+>  .../bindings/clock/qcom,sm8550-tcsr.yaml           | 34 +++++++++++++---------
+>  1 file changed, 20 insertions(+), 14 deletions(-)
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
