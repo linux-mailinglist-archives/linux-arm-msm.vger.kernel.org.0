@@ -1,227 +1,171 @@
-Return-Path: <linux-arm-msm+bounces-114081-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-113982-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id 9AnxBs/5OWp4zgcAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-114081-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jun 2026 05:13:19 +0200
+	id NZy1KE0iOWpQnQcAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-113982-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2026 13:53:49 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5F9A36B3BED
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jun 2026 05:13:18 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id C49236AF3A5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2026 13:53:47 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=samsung.com header.s=mail20170921 header.b=dNfxF4M3;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-114081-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-114081-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=none) header.from=samsung.com;
+	dkim=pass header.d=linux.dev header.s=key1 header.b=kChLxFBp;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113982-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c15:e001:75::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113982-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=none) header.from=linux.dev;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 173A5300C027
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jun 2026 03:13:17 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id C8BB53009822
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2026 11:53:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A00FE38D3F3;
-	Tue, 23 Jun 2026 03:13:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 17E322DB7BE;
+	Mon, 22 Jun 2026 11:53:43 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mailout4.samsung.com (mailout4.samsung.com [203.254.224.34])
+Received: from out-170.mta0.migadu.com (out-170.mta0.migadu.com [91.218.175.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBD6938D3E6;
-	Tue, 23 Jun 2026 03:13:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40ACC215075;
+	Mon, 22 Jun 2026 11:53:41 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782184395; cv=none; b=ppPjLOsdfmP+Vk8us8Ganw6O0FuP1awjXyoMFfCwul+HGdcLFqHZAI7dQLCG3yTmMGA8dOLnNOOiHbGN4QRT8lq2OD9mBqLRSjhXQ4O5mZ8+ApuhjiC/h15eLG9mWa6BfFCubIpc2lzXnTpMJCae8Qk+HO6lGdEFR/M0OzBwXuQ=
+	t=1782129223; cv=none; b=g/s8bysawT33dKHd29IJkHsGg8q8tLLpCmBf4F8D8R6fXX3apL9R9UPzn4aJnS0FM9PQTNoKO+UHIljSBeSppOvNRVn793aSm0zKtWECKSiwS9Zr0wGUXHmhDz7kYO/UUbjksQhHm+7w/H5bei+BCDArOG17Umewwc7t3kqbFC8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782184395; c=relaxed/simple;
-	bh=tatdd/Q7QE0upqPJVjWgLFwHUzQQq+izQdPrwXLkDtk=;
-	h=From:To:In-Reply-To:Subject:Date:Message-ID:MIME-Version:
-	 Content-Type:References; b=Z9oS3eMmT4mzR5aLybFEz4wVeD2LPT9udgVHrMxRAp1o0WywAZezKeIe44q45ucCrX8Ta3KZpUTKpcM02trQmcTCKdhEeKdqYEdEZK84gvaIP6xD8CKl494dUQmTaMpREfnXgPF1oodc+IT7In9YbohfvNrwz+evUEe6Mu0/sUY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=dNfxF4M3; arc=none smtp.client-ip=203.254.224.34
-Received: from epcas5p2.samsung.com (unknown [182.195.41.40])
-	by mailout4.samsung.com (KnoxPortal) with ESMTP id 20260623031304epoutp04b58205b658a8fc7f7458a882a18eaba2~7l0FFYfm41880418804epoutp04a;
-	Tue, 23 Jun 2026 03:13:04 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com 20260623031304epoutp04b58205b658a8fc7f7458a882a18eaba2~7l0FFYfm41880418804epoutp04a
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-	s=mail20170921; t=1782184384;
-	bh=tatdd/Q7QE0upqPJVjWgLFwHUzQQq+izQdPrwXLkDtk=;
-	h=From:To:In-Reply-To:Subject:Date:References:From;
-	b=dNfxF4M3fyZDfW3CRh3lyZWqMNYsOP4XtAdUT1p5ZJqUeSRRx63y6bFC8gBFnYGJ/
-	 2PA9S3WitCXE5BiEd84kDRmhjRFpItBmgmC2TWVubBHDJLlGmnyl63bz1zTjkIX2Mn
-	 UkknWAWYwpil1XaCsoKvzcmVN65+WOpAu9nWyWc0=
-Received: from epsnrtp02.localdomain (unknown [182.195.42.154]) by
-	epcas5p3.samsung.com (KnoxPortal) with ESMTPS id
-	20260623031303epcas5p378f6b175e3e88956e96fb88e6537bcf9~7l0EthhRN0685906859epcas5p39;
-	Tue, 23 Jun 2026 03:13:03 +0000 (GMT)
-Received: from epcpadp2new (unknown [182.195.40.142]) by
-	epsnrtp02.localdomain (Postfix) with ESMTP id 4gkqrb4vT0z2SSKX; Tue, 23 Jun
-	2026 03:13:03 +0000 (GMT)
-Received: from epsmtip2.samsung.com (unknown [182.195.34.31]) by
-	epcas5p2.samsung.com (KnoxPortal) with ESMTPA id
-	20260622114525epcas5p2654a56b123110dea3b2fb97739d9a92b~7ZKI1GCT00255802558epcas5p2L;
-	Mon, 22 Jun 2026 11:45:25 +0000 (GMT)
-Received: from INBRO002756 (unknown [107.122.3.168]) by epsmtip2.samsung.com
-	(KnoxPortal) with ESMTPA id
-	20260622114503epsmtip205edc6f0281b21bca275e7401267a8a1~7ZJ05N0KR2405124051epsmtip2Y;
-	Mon, 22 Jun 2026 11:45:03 +0000 (GMT)
-From: "Alim Akhtar" <alim.akhtar@samsung.com>
-To: "'Krzysztof Kozlowski'" <krzysztof.kozlowski@oss.qualcomm.com>, "'Bjorn
- Andersson'" <andersson@kernel.org>, "'Konrad Dybcio'"
-	<konradybcio@kernel.org>, "'Rob Herring'" <robh@kernel.org>, "'Krzysztof
- Kozlowski'" <krzk+dt@kernel.org>, "'Conor Dooley'" <conor+dt@kernel.org>,
-	"'Peter Griffin'" <peter.griffin@linaro.org>, "'Michael	Turquette'"
-	<mturquette@baylibre.com>, "'Stephen Boyd'" <sboyd@kernel.org>, "'Brian
- Masney'" <bmasney@redhat.com>, "'Sylwester Nawrocki'"
-	<s.nawrocki@samsung.com>, "'Chanwoo Choi'" <cw00.choi@samsung.com>, "'Sam
- Protsenko'" <semen.protsenko@linaro.org>, "'Rob Clark'"
-	<robin.clark@oss.qualcomm.com>, "'Dmitry Baryshkov'" <lumag@kernel.org>,
-	"'Abhinav Kumar'" <abhinav.kumar@linux.dev>, "'Jessica Zhang'"
-	<jesszhan0024@gmail.com>, "'Sean Paul'" <sean@poorly.run>, "'Marijn
-	Suijten'" <marijn.suijten@somainline.org>, "'David	Airlie'"
- <airlied@gmail.com>, "'Simona Vetter'" <simona@ffwll.ch>, "'Maarten
-	Lankhorst'" <maarten.lankhorst@linux.intel.com>, "'Maxime Ripard'"
- <mripard@kernel.org>, "'Thomas Zimmermann'" <tzimmermann@suse.de>, "'Inki
-	Dae'" <inki.dae@samsung.com>, "'Seung-Woo Kim'" <sw0312.kim@samsung.com>,
-	"'Kyungmin	Park'" <kyungmin.park@samsung.com>, "'Andi Shyti'"
-	<andi.shyti@kernel.org>, "'Georgi	Djakov'" <djakov@kernel.org>, "'Lee
-	Jones'" <lee@kernel.org>, "'Pavel Machek'" <pavel@kernel.org>, "'Hans
-	Verkuil'" <hverkuil@kernel.org>, "'Mauro Carvalho	Chehab'"
- <mchehab@kernel.org>, "'Ulf Hansson'" <ulfh@kernel.org>, "'Peter Rosin'"
- <peda@lysator.liu.se>, "'Vinod Koul'" <vkoul@kernel.org>, "'Neil Armstrong'"
- <neil.armstrong@linaro.org>, "'Linus Walleij'" <linusw@kernel.org>, "'Geert
-	Uytterhoeven'" <geert+renesas@glider.be>, "'Magnus Damm'"
- <magnus.damm@gmail.com>, "'Sebastian Reichel'" <sre@kernel.org>, "'Javier
-	Martinez Canillas'" <javier@dowhile0.org>, "'Liam Girdwood'"
- <lgirdwood@gmail.com>, "'Mark Brown'" <broonie@kernel.org>, "'Greg
-	Kroah-Hartman'" <gregkh@linuxfoundation.org>, "'Jiri	Slaby'"
- <jirislaby@kernel.org>, "'Srinivas Kandagatla'" <srini@kernel.org>,
-	"'Bartlomiej Zolnierkiewicz'" <bzolnier@gmail.com>, "'Rafael J. Wysocki'"
-	<rafael@kernel.org>, "'Daniel Lezcano'" <daniel.lezcano@kernel.org>, "'Zhang
- Rui'" <rui.zhang@intel.com>, "'Lukasz Luba'" <lukasz.luba@arm.com>,
-	"'Jonathan Marek'" <jonathan@marek.ca>, "'Taniya Das'"
-	<quic_tdas@quicinc.com>, "'Robert Marko'" <robimarko@gmail.com>, "'Christian
- Marangi'" <ansuelsmth@gmail.com>, "'Stephan	Gerhold'" <stephan@gerhold.net>,
-	"'Adam Skladowski'" <a_skl39@protonmail.com>, "'Sireesh Kodali'"
-	<sireeshkodali@protonmail.com>, "'Barnabas Czeman'"
-	<barnabas.czeman@mainlining.org>, "'Imran Shaik'"
-	<quic_imrashai@quicinc.com>, "'Sricharan Ramabadhran'"
-	<quic_srichara@quicinc.com>, "'Anusha Rao'" <quic_anusha@quicinc.com>, "'Luo
- Jie'" <quic_luoj@quicinc.com>, "'Tomasz Figa'" <tomasz.figa@gmail.com>,
-	"'Chanho Park'" <chanho61.park@samsung.com>, "'Sunyeal	Hong'"
-	<sunyeal.hong@samsung.com>, "'Shin Son'" <shin.son@samsung.com>, "'Krishna
- Manikandan'" <quic_mkrishn@quicinc.com>, "'Jacek Anaszewski'"
-	<jacek.anaszewski@gmail.com>, "'Jaehoon Chung'" <jh80.chung@samsung.com>,
-	"'Marek	Szyprowski'" <m.szyprowski@samsung.com>, "'Alina Yu'"
-	<alina_yu@richtek.com>, "'Andy	Gross'" <agross@kernel.org>,
-	=?UTF-8?Q?'Niklas_S=C3=B6derlund'?= <niklas.soderlund@ragnatech.se>,
-	"'Wesley Cheng'" <quic_wcheng@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-	<devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-	<linux-arm-kernel@lists.infradead.org>, <linux-samsung-soc@vger.kernel.org>,
-	<linux-clk@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-	<freedreno@lists.freedesktop.org>, <linux-i2c@vger.kernel.org>,
-	<linux-pm@vger.kernel.org>, <linux-leds@vger.kernel.org>,
-	<linux-media@vger.kernel.org>, <linux-mmc@vger.kernel.org>,
-	<linux-phy@lists.infradead.org>, <linux-gpio@vger.kernel.org>,
-	<linux-renesas-soc@vger.kernel.org>, <linux-serial@vger.kernel.org>,
-	<linux-sound@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-	<cpgs@samsung.com>
-In-Reply-To: <20260622101606.485961-4-krzysztof.kozlowski@oss.qualcomm.com>
-Subject: RE: [PATCH 2/2] dt-bindings: Drop incorrect usage of double '::'
-Date: Mon, 22 Jun 2026 17:15:00 +0530
-Message-ID: <373928166.21782184383679.JavaMail.epsvc@epcpadp2new>
+	s=arc-20240116; t=1782129223; c=relaxed/simple;
+	bh=ZlY7LiDJbqgSVT9Nf/t6ZTWQFSkggeXli1VFF7vseCU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=hFbeXM9+8j1uazT5p53rvuiI95BYSxLtwrxzCmpaoQu8F44Wcvg4laFkyjYckLJ7EE7x47RByRzaC1IzuZmK6mysTWB3gvOcIbOMq81WCNbKPkdyEQGyxUBHm68Au/gV/xQijneyMi53iZigZt10LQroUg++6vPM7E8D8GrBhGU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=kChLxFBp; arc=none smtp.client-ip=91.218.175.170
+Message-ID: <40ee213b-7aff-4bae-a779-8bbc8a12c307@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1782129209;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=j16DQTDl5D56r3ONIjaiPaCsohlbcGnNLgUHsyy9OfM=;
+	b=kChLxFBpZ/aXxvpKphfhZDi87fbZPV/mv6O7M9La61jklHQxG4sewcYOs6lcj73z/37KJD
+	n34hVcnKDn7TBQxiR9ThC1vkekQ0piE2rhHc+G5bfKWPJG817Dv8fvxgKYa+iZE/5VUgNM
+	SmiEyhpCd39pALAMq10RfpQdVs1fSX0=
+Date: Mon, 22 Jun 2026 13:53:03 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQI6ZcaYiR7zkv7wowZwd71jplyCqgLGmQzlAevIaT+1ahn2EA==
-Content-Language: en-us
-X-CMS-MailID: 20260622114525epcas5p2654a56b123110dea3b2fb97739d9a92b
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-CMS-TYPE: 105P
-X-CPGSPASS: Y
-X-Hop-Count: 3
-X-CMS-RootMailID: 20260622101634epcas5p1137f33cd1e53341e3d7600eb105cd859
-References: <20260622101606.485961-3-krzysztof.kozlowski@oss.qualcomm.com>
-	<CGME20260622101634epcas5p1137f33cd1e53341e3d7600eb105cd859@epcas5p1.samsung.com>
-	<20260622101606.485961-4-krzysztof.kozlowski@oss.qualcomm.com>
+Subject: Re: [PATCH v3 00/10] Expand SoundWire enumeration helper coverage
+To: Charles Keepax <ckeepax@opensource.cirrus.com>
+Cc: broonie@kernel.org, vkoul@kernel.org, lee@kernel.org,
+ lgirdwood@gmail.com, yung-chuan.liao@linux.intel.com,
+ peter.ujfalusi@linux.intel.com, oder_chiou@realtek.com, jack.yu@realtek.com,
+ shumingf@realtek.com, srini@kernel.org, linux-sound@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ patches@opensource.cirrus.com
+References: <20260608102714.2503120-1-ckeepax@opensource.cirrus.com>
+ <7466d545-85e0-4dab-aa3d-79c8e3a9cbda@linux.dev>
+ <ajVpMYzqnSc0x/YB@opensource.cirrus.com>
+ <d4c4ffb9-8ea6-4fb2-bcfe-1e2265c262fa@linux.dev>
+ <ajkLfSeJDAG53/ZM@opensource.cirrus.com>
+Content-Language: en-US
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>
+In-Reply-To: <ajkLfSeJDAG53/ZM@opensource.cirrus.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Migadu-Flow: FLOW_OUT
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-3.16 / 15.00];
-	WHITELIST_SPF_DKIM(-3.00)[samsung.com:d:+,kernel.org:s:+];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[samsung.com,none];
-	MID_RHS_NOT_FQDN(0.50)[];
-	R_DKIM_ALLOW(-0.20)[samsung.com:s=mail20170921];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	DMARC_POLICY_ALLOW(-0.50)[linux.dev,none];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	R_DKIM_ALLOW(-0.20)[linux.dev:s=key1];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-113982-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-114081-lists,linux-arm-msm=lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:ckeepax@opensource.cirrus.com,m:broonie@kernel.org,m:vkoul@kernel.org,m:lee@kernel.org,m:lgirdwood@gmail.com,m:yung-chuan.liao@linux.intel.com,m:peter.ujfalusi@linux.intel.com,m:oder_chiou@realtek.com,m:jack.yu@realtek.com,m:shumingf@realtek.com,m:srini@kernel.org,m:linux-sound@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:patches@opensource.cirrus.com,s:lists@lfdr.de];
+	FORGED_SENDER(0.00)[pierre-louis.bossart@linux.dev,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_CC(0.00)[kernel.org,gmail.com,linux.intel.com,realtek.com,vger.kernel.org,opensource.cirrus.com];
+	RCPT_COUNT_TWELVE(0.00)[15];
+	RCVD_COUNT_THREE(0.00)[3];
 	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_TO(0.00)[oss.qualcomm.com,kernel.org,linaro.org,baylibre.com,redhat.com,samsung.com,linux.dev,gmail.com,poorly.run,somainline.org,ffwll.ch,linux.intel.com,suse.de,lysator.liu.se,glider.be,dowhile0.org,linuxfoundation.org,intel.com,arm.com,marek.ca,quicinc.com,gerhold.net,protonmail.com,mainlining.org,richtek.com,ragnatech.se,vger.kernel.org,lists.infradead.org,lists.freedesktop.org];
-	FORWARDED(0.00)[lists@lfdr.de];
-	FORGED_SENDER(0.00)[alim.akhtar@samsung.com,linux-arm-msm@vger.kernel.org];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:krzysztof.kozlowski@oss.qualcomm.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:peter.griffin@linaro.org,m:mturquette@baylibre.com,m:sboyd@kernel.org,m:bmasney@redhat.com,m:s.nawrocki@samsung.com,m:cw00.choi@samsung.com,m:semen.protsenko@linaro.org,m:robin.clark@oss.qualcomm.com,m:lumag@kernel.org,m:abhinav.kumar@linux.dev,m:jesszhan0024@gmail.com,m:sean@poorly.run,m:marijn.suijten@somainline.org,m:airlied@gmail.com,m:simona@ffwll.ch,m:maarten.lankhorst@linux.intel.com,m:mripard@kernel.org,m:tzimmermann@suse.de,m:inki.dae@samsung.com,m:sw0312.kim@samsung.com,m:kyungmin.park@samsung.com,m:andi.shyti@kernel.org,m:djakov@kernel.org,m:lee@kernel.org,m:pavel@kernel.org,m:hverkuil@kernel.org,m:mchehab@kernel.org,m:ulfh@kernel.org,m:peda@lysator.liu.se,m:vkoul@kernel.org,m:neil.armstrong@linaro.org,m:linusw@kernel.org,m:geert+renesas@glider.be,m:magnus.damm@gmail.com,m:sre@kernel.org,m:javier@dowh
- ile0.org,m:lgirdwood@gmail.com,m:broonie@kernel.org,m:gregkh@linuxfoundation.org,m:jirislaby@kernel.org,m:srini@kernel.org,m:bzolnier@gmail.com,m:rafael@kernel.org,m:daniel.lezcano@kernel.org,m:rui.zhang@intel.com,m:lukasz.luba@arm.com,m:jonathan@marek.ca,m:quic_tdas@quicinc.com,m:robimarko@gmail.com,m:ansuelsmth@gmail.com,m:stephan@gerhold.net,m:a_skl39@protonmail.com,m:sireeshkodali@protonmail.com,m:barnabas.czeman@mainlining.org,m:quic_imrashai@quicinc.com,m:quic_srichara@quicinc.com,m:quic_anusha@quicinc.com,m:quic_luoj@quicinc.com,m:tomasz.figa@gmail.com,m:chanho61.park@samsung.com,m:sunyeal.hong@samsung.com,m:shin.son@samsung.com,m:quic_mkrishn@quicinc.com,m:jacek.anaszewski@gmail.com,m:jh80.chung@samsung.com,m:m.szyprowski@samsung.com,m:alina_yu@richtek.com,m:agross@kernel.org,m:niklas.soderlund@ragnatech.se,m:quic_wcheng@quicinc.com,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-arm-kernel@lists.infradead.org,m:linux-samsu
- ng-soc@vger.kernel.org,m:linux-clk@vger.kernel.org,m:dri-devel@lists.freedesktop.org,m:freedreno@lists.freedesktop.org,m:linux-i2c@vger.kernel.org,m:linux-pm@vger.kernel.org,m:linux-leds@vger.kernel.org,m:linux-media@vger.kernel.org,m:linux-mmc@vger.kernel.org,m:linux-phy@lists.infradead.org,m:linux-gpio@vger.kernel.org,m:linux-renesas-soc@vger.kernel.org,m:linux-serial@vger.kernel.org,m:linux-sound@vger.kernel.org,m:linux-usb@vger.kernel.org,m:cpgs@samsung.com,s:lists@lfdr.de];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo];
+	FORWARDED(0.00)[lists@lfdr.de];
+	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[alim.akhtar@samsung.com,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[samsung.com:+];
-	RCPT_COUNT_GT_50(0.00)[96];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	ALIAS_RESOLVED(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt,renesas];
-	RCVD_COUNT_SEVEN(0.00)[8]
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[pierre-louis.bossart@linux.dev,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[linux.dev:+];
+	MID_RHS_MATCH_FROM(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[linux.dev:dkim,linux.dev:mid,linux.dev:from_mime,sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo,vger.kernel.org:from_smtp]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 5F9A36B3BED
+X-Rspamd-Queue-Id: C49236AF3A5
 
+On 6/22/26 12:16, Charles Keepax wrote:
+> On Mon, Jun 22, 2026 at 11:44:01AM +0200, Pierre-Louis Bossart wrote:
+>> On 6/19/26 18:07, Charles Keepax wrote:
+>>> On Fri, Jun 19, 2026 at 03:41:44PM +0200, Pierre-Louis Bossart wrote:
+>>> The problem is mostly from the device side. This usually comes up
+>>> from a device reset. So the driver does a reset, device drops off
+>>> the bus, the device driver doesn't want to carry on until it
+>>> knows the device is back on the bus. So naively one calls
+>>> sdw_slave_wait_for_init() but there is nothing the ensures the
+>>> core saw the bus disconnection before that call so it might
+>>> immediately succeed, causing the driver to attempt to access a
+>>> missing device.
+>>>
+>>> Yeah the fall of the bus is fast but so are processors, you need
+>>> to actually ensure you can't shortcut the wait. Although typing
+>>> this it occurs to me it probably doesn't have to be a wait one
+>>> can probably just manually reinit the initalization_complete
+>>> completion. But hopefully I will get this series ready soon and
+>>> we can discuss on there.
+>>
+>> Don't we already have the interface to detect a device was UNATTACHED?
+>> In theory the core will invoke the update_status() callback on
+>> every status change. Each driver would use the information to
+>> know when the UNATTACHED happened and likewise when the device
+>> is enumerated/initialized again. So far most drivers just return
+>> and do nothing when an UNATTACHED status is reported.
+> 
+> Yeah so update_status() is the normal mechanism for a driver to
+> know if it becomes unattached AFAIK. Indeed what this is working
+> up to is removing the code in cs42l43 that uses that to track if
+> the device is attached. Although also now you can also use the
+> intialization_complete completion for this purpose too, since it
+> was moved to complete_all().
+> 
+>> The only thing we can't control at the moment is that when
+>> a device reports as device0, the core will enumerate it and
+>> attempt to initialize it. If additional time is needed prior
+>> to the enumeration, we don't have the hooks for it - that would
+>> not be quite standard behavior anyways.
+> 
+> Its not really about additional time, there is always time,
+> events in the real world are not instant.
+> 
+> Thread 1 (driver)                 Thread 2 (core)
+> -----------------                 ---------------
+> Reset device
+> call wait_for_init()
+>                                   reinit_completion()
+> 
+> You need something to ensure that wait_for_init() doesn't skip
+> the completion before the core calls reinit_completion(). Or are
+> you saying there is already a mechanism that prevents this that I
+> am missing?
 
+Ah ok I see what you are trying to do.
+I am afraid we don't have a mechanism to do what your Thread1 describes, but you could alternatively have a less sequential mechanism where you only do the reset, and then the rest of the initialization is done in the update_status() callback. Your Thread1 would be implemented in two disjoint parts with no need for waiting.
 
-> -----Original Message-----
-> From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-> Sent: Monday, June 22, 2026 3:46 PM
-> To: Bjorn Andersson <andersson@kernel.org>; Konrad Dybcio
-> <konradybcio@kernel.org>; Rob Herring <robh@kernel.org>; Krzysztof
-> Kozlowski <krzk+dt@kernel.org>; Conor Dooley <conor+dt@kernel.org>;
-> Peter Griffin <peter.griffin@linaro.org>; Alim Akhtar
-> <alim.akhtar@samsung.com>; Michael Turquette
-> <mturquette@baylibre.com>; Stephen Boyd <sboyd@kernel.org>; Brian
-> Masney <bmasney@redhat.com>; Sylwester Nawrocki
-[Snip]
-> soc@vger.kernel.org; linux-serial@vger.kernel.org; linux-
-> sound@vger.kernel.org; linux-usb@vger.kernel.org
-> Cc: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-> Subject: [PATCH 2/2] dt-bindings: Drop incorrect usage of double '::'
->=20
-> There is no use of double colon '::' in YAML. OTOH, the literal style blo=
-ck, e.g.
-> using '|' treats all characters as content [1] therefore single use of ':=
-' in
-> descriptions is perfectly fine, whenever '|' is used.
->=20
-> Cleanup existing code, so the confusing style won't be re-used in new
-> contributions.
->=20
-> Link: https://protect2.fireeye.com/v1/url?k=3D20b000b4-490b6806-20b18bfb-
-> 905a08a8515a-b42887ea7482314e&q=3D1&e=3D9fffcc8f-6266-432d-a638-
-> 208efe86c9d7&u=3Dhttps%3A%2F%2Fyaml.org%2Fspec%2F1.2.2%2F%23literal-
-> style [1]
-> Signed-off-by: Krzysztof Kozlowski
-> <krzysztof.kozlowski@oss.qualcomm.com>
->=20
-For Samsung IPs related
-Reviewed-by: Alim Akhtar <alim.akhtar@samsung.com>
+The completions were meant for the suspend/resume cases mostly. I am not sure we want to use completion or any other synchronization between core and peripheral driver, it'd be introducing even more races.
 
-
-
+Anyways, best to follow-up with next series, my comments are speculative and probably somewhat off-track..
 
