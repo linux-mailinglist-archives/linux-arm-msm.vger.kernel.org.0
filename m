@@ -1,163 +1,248 @@
-Return-Path: <linux-arm-msm+bounces-114054-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-114055-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id dYYVA6Z8OWrCuQcAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-114054-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2026 20:19:18 +0200
+	id qSzQL1KDOWp8ugcAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-114055-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2026 20:47:46 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6A92F6B1C2A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2026 20:19:17 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 44E5B6B1D82
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2026 20:47:46 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b="W/QrQ8Gs";
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-114054-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-114054-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=quarantine) header.from=kernel.org;
+	dkim=pass header.d=qq.com header.s=s201512 header.b=cOtdib3R;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-114055-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-114055-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=quarantine) header.from=qq.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 57C40301588B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2026 18:19:16 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 367A8302E312
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jun 2026 18:47:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6BF25344023;
-	Mon, 22 Jun 2026 18:19:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D428133F58B;
+	Mon, 22 Jun 2026 18:47:03 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from out162-62-57-210.mail.qq.com (out162-62-57-210.mail.qq.com [162.62.57.210])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66C3933EAF9;
-	Mon, 22 Jun 2026 18:19:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D836D33F584;
+	Mon, 22 Jun 2026 18:46:59 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782152353; cv=none; b=EQXkeN3onOy9/fldx1D6yD7Ghq8bMXuvPyvBJcrw6EfweuyqhQte+iwb9hcqWkLn/h5/dcclFRX0DKDEjgNnajtr0k0kvOqhy7ogJ8YQCbKw5tiboy1Y3ZF9M7YkM9u72nqGH03KAqXt7tRSEjUcCgGk1Ri1yJQZnd4a6cCC3+E=
+	t=1782154023; cv=none; b=U5s+f26zwmfUwvKZnLXtEXgNYnRMN5w3rIJO0EARqBI7WFP8JSPRkctjwLbzftaffpKvrbxdjjaMLRvgXkzZaIcpNNWhUMCHQgV+BNc6+IE/IH50PsYeDitwhP/QrTOT7zyin9OgKi1e/gxBiUf2J8HuQzZXQ3EWN94wEwMGJno=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782152353; c=relaxed/simple;
-	bh=aKPfzKSh4kE5bd0323tvQMZuR4CGMJhZvfCO//1dm0k=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=oomhXPD5hBMTzyl6BYtrupE0mXfzVTz7jorrTJnhhYJ0fc+UlebG1Ec6B2AaajwTbVsh9btEFeiYXhzd3z07b6ZtvQ5WiMDgbuHW7r3WXESrbL19WMgVUO8d3M7+ioDlMmQ6vggFPVZdhkMjeDmm05mRU40467JOVf6j74UQ8vM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=W/QrQ8Gs; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D82D1F000E9;
-	Mon, 22 Jun 2026 18:19:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782152351;
-	bh=XKlqJDn41xHqxzBssntuIwLv2qXiV/8MEgFKl/31tuA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=W/QrQ8GsogW7QyIXylJn27vxjfhXkXzLQahuKRQQthlkDvW6mIkGRGFoQ3mHpnOnl
-	 8pFOXS8rAz6Jrdna6Qq63quSFnPeujpT2upF4iIggQQzxNQI+4WstblsTliuE06/qc
-	 JX1JWmRjRYM04WCNoQ6KG1nkuD8+1QNZVKGWaugrzWjklmz1z22Je/LyjALcT4QCUr
-	 Pz9PlT7YLynMWhP56ut9YH2jYvUTpBknBf38PhpAQ79ppC8mHtlUERsmrGQO0b+cYD
-	 MavyY5UKyd3nqs0WZMYVxHixpTJhwL19J36iDFNmuT27gjIU6lyx9iWpEer3nu6+21
-	 iZqorFo426LSg==
-Date: Mon, 22 Jun 2026 18:19:09 +0000
-From: Eric Biggers <ebiggers@kernel.org>
-To: Bartosz Golaszewski <brgl@kernel.org>
-Cc: Herbert Xu <herbert@gondor.apana.org.au>,
-	"David S. Miller" <davem@davemloft.net>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Vinod Koul <vkoul@kernel.org>,
-	Thara Gopinath <thara.gopinath@gmail.com>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Frank Li <Frank.Li@kernel.org>, Andy Gross <agross@kernel.org>,
-	Harshal Dev <harshal.dev@oss.qualcomm.com>,
-	linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	dmaengine@vger.kernel.org,
-	Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>
-Subject: Re: [PATCH 0/5] Shikra: Add DT support for ice, rng and qce
-Message-ID: <20260622181909.GA1250822@google.com>
-References: <20260521-shikra_crypto_changse-v1-0-0154cc9cc0de@oss.qualcomm.com>
- <53b1fa61-9692-42fd-a295-98bbeacbcd9a@oss.qualcomm.com>
- <20260619164506.GA3223@sol>
- <CAMRc=MdJJRPBeNtAUr82b4zv7vLjrRQ76Q3bJHQYEigaE2Hqog@mail.gmail.com>
+	s=arc-20240116; t=1782154023; c=relaxed/simple;
+	bh=An2+BAMtub3yMjQnm4NJSwdIwiSUv2D3Ph7Ew8GgDaQ=;
+	h=Message-ID:From:To:Cc:Subject:Date:MIME-Version; b=m+3z7t5AcbD/ffSJU9l9gfdezAyoCCj0+uc+L7oGTkmP9M2U4RBIHogyFAg52Y4IKCjXj+Haw/Owfla2GDMWS3mt85ZUccI9bJh+RKYqrYJFgXGUO6Msyl3zEgBJ7I0jJ0GP3Xy2jGLtTwyDA9dXbQoklcj7XIWl479c2nxO1Dg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com; spf=pass smtp.mailfrom=qq.com; dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b=cOtdib3R; arc=none smtp.client-ip=162.62.57.210
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
+	t=1782154015; bh=nEPSXfB+JjBafbHMX3olBM+i4VDB+I2MaZhDTL+Ymt0=;
+	h=From:To:Cc:Subject:Date;
+	b=cOtdib3RJ9rk6AS/PJZqMjsIle+wB+9l7UkxKtck/VL+BaIkFEU8n0aaXppW7njNS
+	 d9o9tg0o5CSQxoBMRqo5FU4kw8eUNs+enEN1jT0cIEYhaXhOnEVFF6pTx/PMpD4a7K
+	 k19WHWrmmXpWMzEa/TjALqa8q7IzbUfMqNk2icrQ=
+Received: from 8qyomHQF3vPjMe ([163.125.200.111])
+	by newxmesmtplogicsvrsza73-0.qq.com (NewEsmtp) with SMTP
+	id BB2AEC35; Tue, 23 Jun 2026 02:46:50 +0800
+X-QQ-mid: xmsmtpt1782154010tap0won9v
+Message-ID: <tencent_A65CB41DCB0CA96634CF8883E1CF89059706@qq.com>
+X-QQ-XMAILINFO: OVNf2QX+HnES52RG68ns1XlfODRgrGD8GbMIjma7t1drujjFdnYCI7mYYMfYfg
+	 NCwMG0NJ7M2vxMapQ4dB9KcVhw6TDAdUz44TpdCFpJ8hMJNOT4pXvsi5RUmH+19wO1xzgCrDMzZp
+	 SYBamZ/HAhkWz75HJz1OGPWHLtlWngsoTkDDGO+A58xH9z77MstoTbGw9rOGGX085YWF2fFLSja6
+	 BfqxF7euf/aXvZ+dl03LzWIMj5WnaSJrJZ9smt/umSVabowGGUlglyNV66o/ZWeOahDv4OM+Ry0E
+	 wokHtHU1LFBMJ1GKjHWSiN/8KhB9eg3NYv+L9w9J8mlbRY3QiR6UDaOE6BfOh1cMTcSdcKZKmdNq
+	 qOEI4y8Txdz6Yh2tauuyroD+aSFj28gai6+fVbd5ZNd9cpkqQBaGb7/0YbRNte6jgH/KUOe7Kk0f
+	 vwp3/ecK2h2KyGI9Lsu57BT5nvG3J5lnAYn2o9Sl881PDlwOHfYqI0g8e3o3xijH7s8vbRRUDXUR
+	 9SVPvtaoi4v0GkSBavoGVw82b/GMrwAzpt6LHBW6dzgh24eo4GxdQWAuJ0dwAFBIrJ3P6bx/jMwd
+	 UvhxrvOyw5J2SCP+NMsnIJWBdviMPKke2nzstA7TsOxa72kVmLosnG8Hr60SEIA4AROkQe1JHnoL
+	 0MOAcvl/j9XA9Vm3q0ZRbA9OIBDRzd6y23DIs/5mQCDbN+cYM+61CKWycC/Gm5a1e5oB+YRhaisP
+	 jZ2mMf6TD4hbSvdxIK11Kkjwm2qtcVXkwWsdrm/hA0Ju5aJT3Y5FjjcMvJU5HVPCygx9scTgo7KH
+	 FfoGXTjfDnVjSMgfQFKhL9gvJsu/h8KoiLq78neyjn7RMMHROikYukCgtG+nWJqxTyuryzyAJQk1
+	 2nHNVtXv5GL9LDx4hrHxxMv0MUzxgKWZIDR5qJJGtkgsje8DYrXxFF1A99TW7lcp6+iY537twcdu
+	 ZmoEDCjCNvpZ3sjaAgE3vme84d609mmj79FfNhTen376mMQaM3aT8z/t7q0xP/AG9MAAKCsiVjQK
+	 PPbi6APWWaCKgL38wlziJjpfjJBB5bYiVBnR/co+a9Yzu22IKBglZZT0q74ase0Nm60Ld0dlVsOC
+	 B9rbCN6OX3+UFPZf6lUDZPAJDMHpb41tbvYkoEP45N2wj4wpNGaNkkD7FrOX3Hy4LuuxCMTfVL53
+	 k8YxY=
+X-QQ-XMRINFO: MSVp+SPm3vtSI1QTLgDHQqIV1w2oNKDqfg==
+From: Xin Xu <xxsemail@qq.com>
+To: konrad.dybcio@oss.qualcomm.com,
+	andersson@kernel.org,
+	konradybcio@kernel.org
+Cc: linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Xin Xu <xxsemail@qq.com>
+Subject: [PATCH v2 1/2] arm64: dts: qcom: sm8250-xiaomi-elish: Add pm8008 PMIC
+Date: Tue, 23 Jun 2026 02:46:25 +0800
+X-OQ-MSGID: <20260622184625.41560-1-xxsemail@qq.com>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAMRc=MdJJRPBeNtAUr82b4zv7vLjrRQ76Q3bJHQYEigaE2Hqog@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-3.66 / 15.00];
-	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	R_MISSING_CHARSET(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[qq.com,quarantine];
+	R_DKIM_ALLOW(-0.20)[qq.com:s=s201512];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TO_DN_SOME(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-114054-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:brgl@kernel.org,m:herbert@gondor.apana.org.au,m:davem@davemloft.net,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:andersson@kernel.org,m:vkoul@kernel.org,m:thara.gopinath@gmail.com,m:konradybcio@kernel.org,m:Frank.Li@kernel.org,m:agross@kernel.org,m:harshal.dev@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:linux-crypto@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:dmaengine@vger.kernel.org,m:kuldeep.singh@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,m:tharagopinath@gmail.com,s:lists@lfdr.de];
-	FORGED_SENDER(0.00)[ebiggers@kernel.org,linux-arm-msm@vger.kernel.org];
-	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-114055-lists,linux-arm-msm=lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:konrad.dybcio@oss.qualcomm.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:xxsemail@qq.com,s:lists@lfdr.de];
 	RCVD_COUNT_THREE(0.00)[4];
-	FORWARDED(0.00)[lists@lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_CC(0.00)[gondor.apana.org.au,davemloft.net,kernel.org,gmail.com,oss.qualcomm.com,vger.kernel.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[19];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	ALIAS_RESOLVED(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[ebiggers@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER(0.00)[xxsemail@qq.com,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_CC(0.00)[vger.kernel.org,qq.com];
+	FORWARDED(0.00)[lists@lfdr.de];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MISSING_XM_UA(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	TO_DN_SOME(0.00)[]
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[xxsemail@qq.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[qq.com:+];
+	ALIAS_RESOLVED(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
+	FREEMAIL_FROM(0.00)[qq.com];
+	RCPT_COUNT_SEVEN(0.00)[7];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,qq.com:dkim,qq.com:email,qq.com:mid,qq.com:from_mime]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 6A92F6B1C2A
+X-Rspamd-Queue-Id: 44E5B6B1D82
 
-On Mon, Jun 22, 2026 at 04:25:12AM -0400, Bartosz Golaszewski wrote:
-> On Fri, 19 Jun 2026 18:45:06 +0200, Eric Biggers <ebiggers@kernel.org> said:
-> > On Fri, Jun 19, 2026 at 02:13:28PM +0530, Kuldeep Singh wrote:
-> >> On 21-05-2026 18:47, Kuldeep Singh wrote:
-> >> > This patchseries attempt to enable sdhc-ice, rng and qce on shikra
-> >> > platform similar to other platforms.
-> >> >
-> >> > Previously, the 3 dt-bindigs/DT changes were sent as individual series
-> >> > and with feedback received, clubbed them together as all belong to same
-> >> > crypto subsystem.
-> >> >
-> >> > Here's link to old patchsets.
-> >> > QCE: https://lore.kernel.org/lkml/20260515-shikra_qcrypto-v1-0-80f07b345c29@oss.qualcomm.com/
-> >>
-> >> Hi Eric,
-> >>
-> >> As selftests issues for QCE are now fixed[1], so shikra series should be
-> >> good to proceed? as your concerns[2] are now addressed.
-> >> I am waiting for merge window to end and will send next rev post that.
-> >>
-> >> [1]
-> >> https://lore.kernel.org/linux-arm-msm/20260617-qce-fix-self-tests-v3-0-ecc2b4dedcfd@oss.qualcomm.com/
-> >> [2] https://lore.kernel.org/lkml/20260522024912.GC5937@quark/
-> >
-> > If you think that then it sounds like you need to read what I actually
-> > said.  The fixes are appreciated but don't change the big picture.
-> >
-> > - Eric
-> >
-> 
-> Eric,
-> 
-> I mentioned it in another thread[1]. This series is not adding any new features
-> to the QCE driver, it describes the hardware. The SoC *does have* this IP and
-> no matter the state of the support in the kernel, there's nothing wrong in
-> extending the existing bindings and adding new dts nodes.
-> 
-> Thanks,
-> Bartosz
+Add the pm8008 PMIC node on i2c15 with seven LDOs,
+using GPIO84 as interrupt and GPIO76 as reset.
 
-It enables the driver on a new platform.  So it very much has a real
-effect.  It's not just adding a hardware description without a user.
+Signed-off-by: Xin Xu <xxsemail@qq.com>
+---
+Changes in v2:
+  - Fix coding style (blank line, interrupts-extended, property order,
+    drop output-high)
+  - Correct voltage constraints for ldo1 and ldo2
 
-- Eric
+ .../dts/qcom/sm8250-xiaomi-elish-common.dtsi  | 93 +++++++++++++++++++
+ 1 file changed, 93 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi b/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi
+index 51b57c697a75..c514478cba4f 100644
+--- a/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi
+@@ -571,6 +571,82 @@ fuel-gauge@55 {
+ 	};
+ };
+ 
++&i2c15 {
++	clock-frequency = <400000>;
++
++	status = "okay";
++
++	pm8008: pmic@8 {
++		compatible = "qcom,pm8008";
++		reg = <0x8>;
++
++		interrupts-extended = <&tlmm 84 IRQ_TYPE_EDGE_RISING>;
++		reset-gpios = <&tlmm 76 GPIO_ACTIVE_LOW>;
++
++		vdd-l1-l2-supply = <&vreg_s8c_1p35>;
++		vdd-l3-l4-supply = <&vreg_bob>;
++		vdd-l5-supply = <&vreg_bob>;
++		vdd-l6-supply = <&vreg_bob>;
++		vdd-l7-supply = <&vreg_bob>;
++
++		pinctrl-0 = <&pm8008_default>;
++		pinctrl-names = "default";
++
++		gpio-controller;
++		#gpio-cells = <2>;
++		gpio-ranges = <&pm8008 0 0 2>;
++
++		interrupt-controller;
++		#interrupt-cells = <2>;
++
++		#thermal-sensor-cells = <0>;
++
++		regulators {
++			vreg_l1p: ldo1 {
++				regulator-name = "vreg_l1p";
++				regulator-min-microvolt = <1200000>;
++				regulator-max-microvolt = <1200000>;
++			};
++
++			vreg_l2p: ldo2 {
++				regulator-name = "vreg_l2p";
++				regulator-min-microvolt = <1200000>;
++				regulator-max-microvolt = <1200000>;
++			};
++
++			vreg_l3p: ldo3 {
++				regulator-name = "vreg_l3p";
++				regulator-min-microvolt = <2800000>;
++				regulator-max-microvolt = <2800000>;
++			};
++
++			vreg_l4p: ldo4 {
++				regulator-name = "vreg_l4p";
++				regulator-min-microvolt = <2800000>;
++				regulator-max-microvolt = <2800000>;
++			};
++
++			vreg_l5p: ldo5 {
++				regulator-name = "vreg_l5p";
++				regulator-min-microvolt = <2800000>;
++				regulator-max-microvolt = <2800000>;
++			};
++
++			vreg_l6p: ldo6 {
++				regulator-name = "vreg_l6p";
++				regulator-min-microvolt = <1800000>;
++				regulator-max-microvolt = <1800000>;
++			};
++
++			vreg_l7p: ldo7 {
++				regulator-name = "vreg_l7p";
++				regulator-min-microvolt = <2800000>;
++				regulator-max-microvolt = <2900000>;
++			};
++		};
++	};
++};
++
+ &i2c11 {
+ 	clock-frequency = <400000>;
+ 	status = "okay";
+@@ -801,6 +877,23 @@ bt_en_state: bt-default-state {
+ 		bias-pull-up;
+ 	};
+ 
++	pm8008_default: pm8008-default-state {
++		int-pins {
++			pins = "gpio84";
++			function = "gpio";
++			bias-disable;
++			drive-strength = <2>;
++			input-enable;
++		};
++
++		reset-pins {
++			pins = "gpio76";
++			function = "gpio";
++			bias-pull-up;
++			drive-strength = <2>;
++		};
++	};
++
+ 	wlan_en_state: wlan-default-state {
+ 		pins = "gpio20";
+ 		function = "gpio";
+-- 
+2.53.0
+
 
