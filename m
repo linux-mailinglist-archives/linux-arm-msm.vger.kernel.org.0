@@ -1,57 +1,57 @@
-Return-Path: <linux-arm-msm+bounces-114075-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-114077-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id B+ltJOvlOWpRywcAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-114075-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jun 2026 03:48:27 +0200
+	id 4RDWFPvkOWoSywcAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-114077-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jun 2026 03:44:27 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2E5A26B3603
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jun 2026 03:48:27 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2BAC26B353A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jun 2026 03:44:27 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20201202 header.b=kT79ttHi;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-114075-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-114075-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=kernel.org header.s=k20201202 header.b=m1cYcdqU;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-114077-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c09:e001:a7::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-114077-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 181063031AC0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jun 2026 01:44:23 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 447C2300E164
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jun 2026 01:44:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7BD873859EB;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AE9DC385D82;
 	Tue, 23 Jun 2026 01:44:21 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54761378D82;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79B343859E3;
 	Tue, 23 Jun 2026 01:44:21 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782179061; cv=none; b=JA3qs1ADDVkRb+Yp4dnba2UBfvNUrArmKv+265cv/5JCXZtWgsgwZBJd2WTj/2sde5StHxhv9X/67jMjUjNjUTTjqr6iisLhgWlTGpTyUP9QkyksjlL5xbTP4Kpqjp69cca3sr7UAzQiliDZkiarETXhKPnjZuu7pseQuwSb2YY=
+	t=1782179061; cv=none; b=PVbezSbG8vXIsCFHr4AujcVBUbDCKfS6JnY433iJw8I8T3GYEzURSWzAA67O3CQnYjDLdED3ZJbdeXEU423KU0qnrUvJhrfD4hkh+tx2hgbd/Wqa8YG+MyjYgJtl4M9RtSY+VuSt5xUMjr57oigTlGdHMa5sX3GtoBnyHUXKTP4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1782179061; c=relaxed/simple;
-	bh=WqY7LEhsoR33ic8KDIs1qJmmlmw/mQOzPyENBlR+Sc4=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=o/zHB2Nd8PqourVxQe7R+gPy1Ii2PF1stk0LurGL3lj6uyaxYy9MusXWO8hAPpXJCS7smZjI0uPX7EKRPrwRzIkqLSqBBkyA7c1G1N9TynHeV6Ufs+ENEc83YdpgtXe+a1IRKxzOTuCc/yFsNFa45aBCXmLAUH0WQfQFjcuX4IY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kT79ttHi; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 04C65C2BCC6;
+	bh=xAp94depaq4Dj1p9lGi8JJCadhv1Kb/sm6H74JDc88Y=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=OcuU2BrYYqkiKHzuQBj94DhaJlebVhAFgTngSjTSI2aUr1zwWic2RAdserXS3SzwzejS0nHQI3BSHJJxSflCloG0Iw3rA6rfUMWIermrlmYlU+j0HfbfdzQjMZIKobK1pmS+NLC6JX7/aA40a0glJJtOtpfXZNf7Dz6bOD8Sz1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=m1cYcdqU; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 10EACC2BCB4;
 	Tue, 23 Jun 2026 01:44:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1782179061;
-	bh=WqY7LEhsoR33ic8KDIs1qJmmlmw/mQOzPyENBlR+Sc4=;
-	h=From:Subject:Date:To:Cc:Reply-To:From;
-	b=kT79ttHiwYztemidPvBGK7d1LoR5bdGPlcQjt8gvS4Hr9Qdy0On4RdYnDYjP96oyS
-	 4Be0RLmVwemij1j/tRLzdPXakWqvqy+XKeqdqKniYqpbv5oOQLTuH8Wydsto7egN1q
-	 c9k6J2t2B3or1i2V2NTBARCy3AR6x8+y8QI32z7nZnHm+/GO9wN+ME+j2G8lj83G1N
-	 oCqAjeq+FyKwExnWsMUoLD8QiPHm0r3sXRSCqPR+fgJEYwMRV17LZo+GjGq0xay1gq
-	 k4b+TjALBiM2wceNfYvs+4XIbJpzGzvgEiVHiVIeWFxloFAVkmEURU5RSCMDE3hS8Y
-	 EYGDPZN5O2z6w==
+	bh=xAp94depaq4Dj1p9lGi8JJCadhv1Kb/sm6H74JDc88Y=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
+	b=m1cYcdqUysBqwaK3urwKf5yCvIljJkrZSNaTJSLEoB+53MFYKMO1rdBnt69aArGoH
+	 KHQ8EJEZWaEeAXF56Nv3j10Vhu+1DhfqdDTUCHNlUgnB9vaSVn859qWAQTmPsYODVa
+	 PNRJMXAklBwf7U/6YJnIA2Skjkn0rZrOJs0jnoXT4g0G4mhU/It7IHptOUOWJUp117
+	 fiYVMhqmF3wmPKrT6IwdOe5EMxJuEXmxbpS9mrgvWqp6tbsv/9jvOlNcoqm7i3mBY1
+	 ltIQ/qdN65CX7w6JHpEFzzCpI4aV686XGLhRduG1d8i1+4EzZRzRay41562F74Bx2j
+	 Sc8NebDcMRdNg==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DCF09CDB46B;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F12FECDB466;
 	Tue, 23 Jun 2026 01:44:20 +0000 (UTC)
 From: Esteban Urrutia via B4 Relay <devnull+esteuwu.proton.me@kernel.org>
-Subject: [PATCH 0/3] SM8450 IPA support
-Date: Mon, 22 Jun 2026 21:44:16 -0400
-Message-Id: <20260622-sm8450-ipa-v1-0-532f0299f96e@proton.me>
+Date: Mon, 22 Jun 2026 21:44:17 -0400
+Subject: [PATCH 1/3] arm64: dts: qcom: sm8450: Add IPA support
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -60,10 +60,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXMTQ5AMBBA4avIrDWpRktcRSyKKSPxkw4ikd5ds
- fwW793A6AkZquQGjycxrUtElibQjXYZUFAfDUoqI41Sgucy11LQZoXubZk5U2BrNMRg8+jo+mZ
- 185uPdsJufw8QwgNmge/VbgAAAA==
-X-Change-ID: 20260622-sm8450-ipa-5da81f67eb65
+Message-Id: <20260622-sm8450-ipa-v1-1-532f0299f96e@proton.me>
+References: <20260622-sm8450-ipa-v1-0-532f0299f96e@proton.me>
+In-Reply-To: <20260622-sm8450-ipa-v1-0-532f0299f96e@proton.me>
 To: Bjorn Andersson <andersson@kernel.org>, 
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
  Krzysztof Kozlowski <krzk+dt@kernel.org>, 
@@ -75,11 +74,11 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, netdev@vger.kernel.org, 
  Esteban Urrutia <esteuwu@proton.me>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1782179059; l=1359;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1782179059; l=2576;
  i=esteuwu@proton.me; s=20260622; h=from:subject:message-id;
- bh=WqY7LEhsoR33ic8KDIs1qJmmlmw/mQOzPyENBlR+Sc4=;
- b=eLqzm+hzX0hr4/X3p2jgMNy1H3N9C/SRQMjI+Qr9zldSQarf9TCUBMJcw/XQD6XdDHHv/vSUp
- s+RNH1ZyqCfBWCFWxZ1CMISh+u5unjDwZTrzddJ5GLOGDw9E64csddt
+ bh=REPoX2GD1ofl2IYq/QGL3Tdyi2FLXycfusk5NUq3JGA=;
+ b=QoxedY3RmE6Ji5eZvOO4tDSdZlVmZEjjpbnrD0VwbIKAeDooafDiOUzrCg+47OP1nv71YOg6y
+ +IktDTKMBbSCEsWTcPMjIXPKhN5U8MV8oGgdCHb1O13JsFKZ/97TEmV
 X-Developer-Key: i=esteuwu@proton.me; a=ed25519;
  pk=wToFt4mOAWkzbqb15Ye1hrhevI13vK9BcMUFiQ/me1M=
 X-Endpoint-Received: by B4 Relay for esteuwu@proton.me/20260622 with
@@ -92,12 +91,12 @@ X-Spamd-Result: default: False [-3.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-114075-lists,linux-arm-msm=lfdr.de,esteuwu.proton.me];
+	TAGGED_FROM(0.00)[bounces-114077-lists,linux-arm-msm=lfdr.de,esteuwu.proton.me];
 	FORGED_RECIPIENTS(0.00)[m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:andrew+netdev@lunn.ch,m:davem@davemloft.net,m:edumazet@google.com,m:kuba@kernel.org,m:pabeni@redhat.com,m:elder@kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:netdev@vger.kernel.org,m:esteuwu@proton.me,m:krzk@kernel.org,m:conor@kernel.org,m:andrew@lunn.ch,s:lists@lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	FORGED_SENDER(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
@@ -119,44 +118,104 @@ X-Spamd-Result: default: False [-3.66 / 15.00];
 	REPLYTO_DOM_NEQ_TO_DOM(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,vger.kernel.org:from_smtp,proton.me:replyto,proton.me:email,proton.me:mid]
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,vger.kernel.org:from_smtp]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 2E5A26B3603
+X-Rspamd-Queue-Id: 2BAC26B353A
 
-This series adds support for the IPA subsystem found in the SM8450 SoC.
-While IPA v5.0 is very similar to IPA v5.1 (heck, it even managed to
-properly get the modem up and running), it wasn't perfect, since the
-modem would sometimes hang when rebooting or powering the AP off.
-After a thorough investigation, I managed to create the proper data file
-required for IPA v5.1.
+From: Esteban Urrutia <esteuwu@proton.me>
 
-Regards,
-Esteban
+Add support for IPA in DT while expanding the IMEM region just enough to
+accommodate the modem tables used by IPA.
+As reference, SM8450 uses IPA v5.1.
 
 Signed-off-by: Esteban Urrutia <esteuwu@proton.me>
 ---
-Esteban Urrutia (3):
-      arm64: dts: qcom: sm8450: Add IPA support
-      dt-bindings: net: qcom,ipa: Add SM8450 compatible string
-      net: ipa: Add IPA v5.1 data
+ arch/arm64/boot/dts/qcom/sm8450.dtsi | 55 ++++++++++++++++++++++++++++++++----
+ 1 file changed, 50 insertions(+), 5 deletions(-)
 
- .../devicetree/bindings/net/qcom,ipa.yaml          |   1 +
- arch/arm64/boot/dts/qcom/sm8450.dtsi               |  55 ++-
- drivers/net/ipa/Makefile                           |   2 +-
- drivers/net/ipa/data/ipa_data-v5.1.c               | 477 +++++++++++++++++++++
- drivers/net/ipa/gsi_reg.c                          |   1 +
- drivers/net/ipa/ipa_data.h                         |   1 +
- drivers/net/ipa/ipa_main.c                         |   4 +
- drivers/net/ipa/ipa_reg.c                          |   1 +
- 8 files changed, 536 insertions(+), 6 deletions(-)
----
-base-commit: 948efecf22e49aa4bf55bb73ec79a0ddcfd38571
-change-id: 20260622-sm8450-ipa-5da81f67eb65
+diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+index 56cb6e959e4e..c904720008fa 100644
+--- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+@@ -2639,6 +2639,47 @@ adreno_smmu: iommu@3da0000 {
+ 			dma-coherent;
+ 		};
+ 
++		ipa: ipa@3f40000 {
++			compatible = "qcom,sm8450-ipa";
++
++			iommus = <&apps_smmu 0x5c0 0x0>,
++				 <&apps_smmu 0x5c2 0x0>;
++			reg = <0 0x3f40000 0 0x10000>,
++			      <0 0x3f50000 0 0x5000>,
++			      <0 0x3e04000 0 0xfc000>;
++			reg-names = "ipa-reg",
++				    "ipa-shared",
++				    "gsi";
++
++			interrupts-extended = <&intc GIC_SPI 654 IRQ_TYPE_EDGE_RISING>,
++					      <&intc GIC_SPI 432 IRQ_TYPE_LEVEL_HIGH>,
++					      <&ipa_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
++					      <&ipa_smp2p_in 1 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "ipa",
++					  "gsi",
++					  "ipa-clock-query",
++					  "ipa-setup-ready";
++
++			clocks = <&rpmhcc RPMH_IPA_CLK>;
++			clock-names = "core";
++
++			interconnects = <&aggre2_noc MASTER_IPA 0 &mc_virt SLAVE_EBI1 0>,
++					<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_IPA_CFG 0>;
++			interconnect-names = "memory",
++					     "config";
++
++			qcom,qmp = <&aoss_qmp>;
++
++			qcom,smem-states = <&ipa_smp2p_out 0>,
++					   <&ipa_smp2p_out 1>;
++			qcom,smem-state-names = "ipa-clock-enabled-valid",
++						"ipa-clock-enabled";
++
++			sram = <&ipa_modem_tables>;
++
++			status = "disabled";
++		};
++
+ 		usb_1_hsphy: phy@88e3000 {
+ 			compatible = "qcom,sm8450-usb-hs-phy",
+ 				     "qcom,usb-snps-hs-7nm-phy";
+@@ -4970,17 +5011,21 @@ cti@13900000 {
+ 			clock-names = "apb_pclk";
+ 		};
+ 
+-		sram@146aa000 {
++		sram@146a8000 {
+ 			compatible = "qcom,sm8450-imem", "syscon", "simple-mfd";
+-			reg = <0 0x146aa000 0 0x1000>;
+-			ranges = <0 0 0x146aa000 0x1000>;
++			reg = <0 0x146a8000 0 0x3000>;
++			ranges = <0 0 0x146a8000 0x3000>;
+ 
+ 			#address-cells = <1>;
+ 			#size-cells = <1>;
+ 
+-			pil-reloc@94c {
++			ipa_modem_tables: modem-tables@0 {
++				reg = <0 0x2000>;
++			};
++
++			pil-reloc@294c {
+ 				compatible = "qcom,pil-reloc-info";
+-				reg = <0x94c 0xc8>;
++				reg = <0x294c 0xc8>;
+ 			};
+ 		};
+ 
 
-Best regards,
---  
-Esteban Urrutia <esteuwu@proton.me>
+-- 
+2.54.0
 
 
 
