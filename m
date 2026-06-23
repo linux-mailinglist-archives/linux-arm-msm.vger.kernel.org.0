@@ -1,145 +1,180 @@
-Return-Path: <linux-arm-msm+bounces-114098-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-114099-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id 14trNzMyOmpA3wcAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-114098-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jun 2026 09:13:55 +0200
+	id Jp1uLY0yOmpn3wcAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-114099-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jun 2026 09:15:25 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id CD2BD6B4BDD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jun 2026 09:13:54 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2E2D86B4C17
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jun 2026 09:15:25 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=163.com header.s=s110527 header.b="c6tNc/HP";
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-114098-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-114098-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=none) header.from=163.com;
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=YULqLzxC;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-114099-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-114099-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 9913A3008D1A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jun 2026 07:13:53 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 346E03013734
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jun 2026 07:15:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 03C213BD224;
-	Tue, 23 Jun 2026 07:13:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E8D373C5837;
+	Tue, 23 Jun 2026 07:15:21 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.5])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59846340286;
-	Tue, 23 Jun 2026 07:13:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2D14345752
+	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jun 2026 07:15:20 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782198832; cv=none; b=DgTJtY2LASxlJAorSCJpS90GLwBmiaY3ZQF7339bbLbtZeu9DNFlU0hGnsbcqJZrXtqfELxEKzJTO7mkRga0VHa0qx3zxv9k/KnmOL8gpKPqrnGBQCe5USwbyv7mvejfDAp3QDjzeNKvkqU73fpH8juB2WhA7uYqNUoC9Py9dAo=
+	t=1782198921; cv=none; b=N8oiOoesLtQrDrSd5spx/dDGpwVKEzmFB50e0xkfWBahNlFJkVs5Y8eZ9VCydgATMTFfdy/i3EebEb20UcAflct+aAhPFJchSr+IhE4SojefK+dYwZeDDB9Yxr8muam5ZreN4KT5pX2rSOzStHQYc/VoUbQg+nJFi0fYrA81Li4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782198832; c=relaxed/simple;
-	bh=ll7sCeJdqnrLF1rrQ4sCH3LbuRxCyheWaYccMsi4nxM=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=E88CVFV6TkCZfLXQ1VMhgp7PdNVzVtPB7cs4PrDYK+HXk4LQpPNtwJLpNC+nVoigwQicOgk/GA3XGuOTibYqMXcp5EZg9FOIWq0QjTUG7OGF1e34IVKJY2flKoaBw2zHwPLHWbA/mFDzN9NoAQSjvxKCXhSKaQw0v1wsNuEKzOg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=c6tNc/HP; arc=none smtp.client-ip=220.197.31.5
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=From:To:Subject:Date:Message-Id:MIME-Version; bh=T5
-	duRQLCA/bGKWwNVui3NRidvUDd3JmBN2G/gYGjz9A=; b=c6tNc/HPuqMUhEDXmf
-	/VVWy7uRnqL2jjFAecWpsx6ALh02YXw6LIFvf8lp7aTWUbjmsAvXbVN+1tyRIOxn
-	5lQqIPn8ZGa78IKop3ao8gw6Hm9p8gpgsc6SRhS5nZBsD8iGpZiimJNAz+zW6Nmh
-	202+BVorehsvURByiLx3NEorE=
-Received: from localhost.localdomain (unknown [])
-	by gzga-smtp-mtada-g1-4 (Coremail) with SMTP id _____wCn5MjwMTpqH6DKFQ--.10651S2;
-	Tue, 23 Jun 2026 15:12:50 +0800 (CST)
-From: Haoxiang Li <haoxiang_li2024@163.com>
-To: robin.clark@oss.qualcomm.com,
-	will@kernel.org,
-	robin.murphy@arm.com,
-	joro@8bytes.org,
-	jroedel@suse.de
-Cc: iommu@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	Haoxiang Li <haoxiang_li2024@163.com>
-Subject: [PATCH] iommu/qcom: Remove sysfs device on probe failure path
-Date: Tue, 23 Jun 2026 15:12:45 +0800
-Message-Id: <20260623071245.1985938-1-haoxiang_li2024@163.com>
-X-Mailer: git-send-email 2.25.1
+	s=arc-20240116; t=1782198921; c=relaxed/simple;
+	bh=BkIrv3PeQJrIrIyJpIE7lPE0AkoiwGoLxnXFFNdR3Go=;
+	h=From:In-Reply-To:MIME-Version:References:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=EiNjygliURWNumZnxwptkOnRSpOdIXp8YvaXWXxsNqV09XIl48Ni8y3/q7qGnBJ3FyEm6MWSY8y2wcljkQ7bOfmt8P8RP5rIfZsZMgUFqzp1jb1Aku61NSMkXeqJses0YR8a/vqdHkmL75MSaU4Q6/lHi9sZLe29OCiWNqrZpO0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YULqLzxC; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BAC51F00A3F
+	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jun 2026 07:15:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1782198920;
+	bh=6+U07TSbyfoGNdA2P/aBkTcdGl+S1M9ab9Yxk/ZPUzI=;
+	h=From:In-Reply-To:References:Date:Subject:To:Cc;
+	b=YULqLzxCrdobVNjKQ2ZqvgsdWJB2h6JQAKhLZG6XiWzS3P9MEboRU7kwYwPoF5FsG
+	 tYNvitt9UZhkKMCCn3S9ufSpfjpiNUR6TXdHmzFgCZOFap5rTZsbPOdAcOLlFB+M38
+	 w7/VXBDd9MzHVWvYKaWvHUOSkD47fVrhG4jlDLlObKZYsGcwrY7GIokDfLcfCH7zRI
+	 WEOR9LN5limT2Y0AXUFyScAkkQvSSH8mRmEQXCCXc4pxYlUnmH+Ki0hquGHSHUJbNw
+	 fyNrGMn3aYnkddaaFMUs2R1UUmggx66UyS6WhN2Ei0me22gAoqRTL1QPsUaW3sXz3Q
+	 MriVxbN2dp4zQ==
+Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-5aa61e3d3f3so5262681e87.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jun 2026 00:15:20 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AFNElJ8j8aerTZttVWQ1b9lFr+e9d4dVB8oDXYVE7bvh0eDBqurrT9KbRuwf6wX5d24SuBtDU0p5xBIVFQrWSQ6N@vger.kernel.org
+X-Gm-Message-State: AOJu0YzMXQK+exNe8kmITGuDYfcScZT+xJmPwPkviGZHSumQ/RRyjjj0
+	CAXNL1J6/k+YGGcaPHwwlnH3QM3SOoXFiSuUnMrODfb5N6dAAygehh39WHbiDEukGSXydnnFkF2
+	+/dUBT6G5rwK5C/u/xt7hXS76GKyjUoNkGr6intdheQ==
+X-Received: by 2002:a05:6512:238c:b0:5ad:2a73:8a0a with SMTP id
+ 2adb3069b0e04-5addc486646mr466863e87.20.1782198919228; Tue, 23 Jun 2026
+ 00:15:19 -0700 (PDT)
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 23 Jun 2026 03:15:17 -0400
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 23 Jun 2026 03:15:17 -0400
+From: Bartosz Golaszewski <brgl@kernel.org>
+In-Reply-To: <20260622181909.GA1250822@google.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:_____wCn5MjwMTpqH6DKFQ--.10651S2
-X-Coremail-Antispam: 1Uf129KBjvJXoWruF45AryDZFWrAr1kAr4xZwb_yoW8Jr45pa
-	yUGFZIgrWUWF1rtFyUJ3Z7ZFy8KwsFva4S9r4fG3yYgw1UAryUKFyxtFySgr1rJFWDG3W3
-	A3s3XryqvF15G3DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0pimhF7UUUUU=
-X-CM-SenderInfo: xkdr5xpdqjszblsqjki6rwjhhfrp/xtbCxRKxIGo6MfL+YQAA3K
+References: <20260521-shikra_crypto_changse-v1-0-0154cc9cc0de@oss.qualcomm.com>
+ <53b1fa61-9692-42fd-a295-98bbeacbcd9a@oss.qualcomm.com> <20260619164506.GA3223@sol>
+ <CAMRc=MdJJRPBeNtAUr82b4zv7vLjrRQ76Q3bJHQYEigaE2Hqog@mail.gmail.com> <20260622181909.GA1250822@google.com>
+Date: Tue, 23 Jun 2026 03:15:17 -0400
+X-Gmail-Original-Message-ID: <CAMRc=McxsU8h7ZFFRX+MsrufeWZaXzQv_QZpF3zZWTvOQr6A+A@mail.gmail.com>
+X-Gm-Features: AVVi8Cdztrg_PDv4XwvulJ3y8k7gxEzu4r1Z1W6KytPslNOCvABFoRyn5h6EeHI
+Message-ID: <CAMRc=McxsU8h7ZFFRX+MsrufeWZaXzQv_QZpF3zZWTvOQr6A+A@mail.gmail.com>
+Subject: Re: [PATCH 0/5] Shikra: Add DT support for ice, rng and qce
+To: Eric Biggers <ebiggers@kernel.org>
+Cc: Herbert Xu <herbert@gondor.apana.org.au>, "David S. Miller" <davem@davemloft.net>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Vinod Koul <vkoul@kernel.org>, 
+	Thara Gopinath <thara.gopinath@gmail.com>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Frank Li <Frank.Li@kernel.org>, Andy Gross <agross@kernel.org>, 
+	Harshal Dev <harshal.dev@oss.qualcomm.com>, linux-arm-msm@vger.kernel.org, 
+	linux-crypto@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org, 
+	Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>, Bartosz Golaszewski <brgl@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	MID_CONTAINS_FROM(1.00)[];
+X-Spamd-Result: default: False [-3.66 / 15.00];
+	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[163.com,none];
-	R_MISSING_CHARSET(0.50)[];
-	R_DKIM_ALLOW(-0.20)[163.com:s=s110527];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TO_DN_SOME(0.00)[];
-	FREEMAIL_CC(0.00)[lists.linux.dev,vger.kernel.org,lists.infradead.org,163.com];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-114098-lists,linux-arm-msm=lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:robin.clark@oss.qualcomm.com,m:will@kernel.org,m:robin.murphy@arm.com,m:joro@8bytes.org,m:jroedel@suse.de,m:iommu@lists.linux.dev,m:linux-arm-msm@vger.kernel.org,m:linux-arm-kernel@lists.infradead.org,m:linux-kernel@vger.kernel.org,m:haoxiang_li2024@163.com,s:lists@lfdr.de];
-	FORWARDED(0.00)[lists@lfdr.de];
-	FORGED_SENDER(0.00)[haoxiang_li2024@163.com,linux-arm-msm@vger.kernel.org];
 	MIME_TRACE(0.00)[0:+];
-	RCVD_COUNT_THREE(0.00)[4];
+	RCPT_COUNT_TWELVE(0.00)[20];
+	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-114099-lists,linux-arm-msm=lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FORGED_RECIPIENTS(0.00)[m:ebiggers@kernel.org,m:herbert@gondor.apana.org.au,m:davem@davemloft.net,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:andersson@kernel.org,m:vkoul@kernel.org,m:thara.gopinath@gmail.com,m:konradybcio@kernel.org,m:Frank.Li@kernel.org,m:agross@kernel.org,m:harshal.dev@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:linux-crypto@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:dmaengine@vger.kernel.org,m:kuldeep.singh@oss.qualcomm.com,m:brgl@kernel.org,m:krzk@kernel.org,m:conor@kernel.org,m:tharagopinath@gmail.com,s:lists@lfdr.de];
+	FORWARDED(0.00)[lists@lfdr.de];
+	FORGED_SENDER(0.00)[brgl@kernel.org,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_CC(0.00)[gondor.apana.org.au,davemloft.net,kernel.org,gmail.com,oss.qualcomm.com,vger.kernel.org];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,mail.gmail.com:mid,vger.kernel.org:from_smtp];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FREEMAIL_FROM(0.00)[163.com];
+	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[haoxiang_li2024@163.com,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[brgl@kernel.org,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[163.com:+];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	ALIAS_RESOLVED(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MISSING_XM_UA(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[10];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,vger.kernel.org:from_smtp]
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: CD2BD6B4BDD
+X-Rspamd-Queue-Id: 2E2D86B4C17
 
-In qcom_iommu_device_probe(), if iommu_device_register()
-fails, the sysfs device created by iommu_device_sysfs_add()
-is not released. Add a goto label to do the cleanup.
+On Mon, 22 Jun 2026 20:19:09 +0200, Eric Biggers <ebiggers@kernel.org> said:
+> On Mon, Jun 22, 2026 at 04:25:12AM -0400, Bartosz Golaszewski wrote:
+>> On Fri, 19 Jun 2026 18:45:06 +0200, Eric Biggers <ebiggers@kernel.org> said:
+>> > On Fri, Jun 19, 2026 at 02:13:28PM +0530, Kuldeep Singh wrote:
+>> >> On 21-05-2026 18:47, Kuldeep Singh wrote:
+>> >> > This patchseries attempt to enable sdhc-ice, rng and qce on shikra
+>> >> > platform similar to other platforms.
+>> >> >
+>> >> > Previously, the 3 dt-bindigs/DT changes were sent as individual series
+>> >> > and with feedback received, clubbed them together as all belong to same
+>> >> > crypto subsystem.
+>> >> >
+>> >> > Here's link to old patchsets.
+>> >> > QCE: https://lore.kernel.org/lkml/20260515-shikra_qcrypto-v1-0-80f07b345c29@oss.qualcomm.com/
+>> >>
+>> >> Hi Eric,
+>> >>
+>> >> As selftests issues for QCE are now fixed[1], so shikra series should be
+>> >> good to proceed? as your concerns[2] are now addressed.
+>> >> I am waiting for merge window to end and will send next rev post that.
+>> >>
+>> >> [1]
+>> >> https://lore.kernel.org/linux-arm-msm/20260617-qce-fix-self-tests-v3-0-ecc2b4dedcfd@oss.qualcomm.com/
+>> >> [2] https://lore.kernel.org/lkml/20260522024912.GC5937@quark/
+>> >
+>> > If you think that then it sounds like you need to read what I actually
+>> > said.  The fixes are appreciated but don't change the big picture.
+>> >
+>> > - Eric
+>> >
+>>
+>> Eric,
+>>
+>> I mentioned it in another thread[1]. This series is not adding any new features
+>> to the QCE driver, it describes the hardware. The SoC *does have* this IP and
+>> no matter the state of the support in the kernel, there's nothing wrong in
+>> extending the existing bindings and adding new dts nodes.
+>>
+>> Thanks,
+>> Bartosz
+>
+> It enables the driver on a new platform.  So it very much has a real
+> effect.  It's not just adding a hardware description without a user.
+>
 
-Fixes: 0ae349a0f33f ("iommu/qcom: Add qcom_iommu")
-Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
----
- drivers/iommu/arm/arm-smmu/qcom_iommu.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+The driver can be disabled by not building it. The hardware description in dts
+must reflect the reality. This is what dt-bindings and devicetree sources do:
+they *describe* the hardware. It's up to the systems integrator to build the
+relevant driver or not.
 
-diff --git a/drivers/iommu/arm/arm-smmu/qcom_iommu.c b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-index a1e8cf29f594..32efef69e72d 100644
---- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-+++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-@@ -855,7 +855,7 @@ static int qcom_iommu_device_probe(struct platform_device *pdev)
- 	ret = iommu_device_register(&qcom_iommu->iommu, &qcom_iommu_ops, dev);
- 	if (ret) {
- 		dev_err(dev, "Failed to register iommu\n");
--		goto err_pm_disable;
-+		goto err_sysfs_remove;
- 	}
- 
- 	if (qcom_iommu->local_base) {
-@@ -866,6 +866,8 @@ static int qcom_iommu_device_probe(struct platform_device *pdev)
- 
- 	return 0;
- 
-+err_sysfs_remove:
-+	iommu_device_sysfs_remove(&qcom_iommu->iommu);
- err_pm_disable:
- 	pm_runtime_disable(dev);
- 	return ret;
--- 
-2.25.1
+Let's wait for DT maintainers to respond to v2 once it's out.
 
+Bartosz
 
