@@ -1,79 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-114415-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-114416-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id 2K9CIDUvPGpZlAgAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-114415-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jun 2026 21:25:41 +0200
+	id N8DeKmIvPGpelAgAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-114416-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jun 2026 21:26:26 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1EB6F6C1049
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jun 2026 21:25:41 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id A551F6C1063
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jun 2026 21:26:25 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=gmail.com header.s=20251104 header.b=TYIkTz4m;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-114415-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-114415-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=gmail.com header.s=20251104 header.b="Bx8/zMZL";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-114416-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c15:e001:75::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-114416-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=none) header.from=gmail.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 963E3303799F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jun 2026 19:25:08 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id D8487301277A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jun 2026 19:26:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 525011F03DE;
-	Wed, 24 Jun 2026 19:25:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5EF4834A78E;
+	Wed, 24 Jun 2026 19:26:09 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0150632570D
-	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jun 2026 19:25:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7A8932E696
+	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jun 2026 19:26:07 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782329108; cv=none; b=iCbPlz2Ixoh5Lc94b0SIeTCi6cZ5unD3y2tBkm9DxwIeyw2LzcalhfTkH8s/q1vbkPthMWE307PE6Q25LMgnHNiCH4Y54KZJ1HSiHvQ0hhfMPXZp64mFiUzNHU9h7ArBTHC348iTvlNtSTp4HeEVzBbMEqt1In8kL5EvjhNQXyw=
+	t=1782329169; cv=none; b=AgPU1xzopWXGft39XejB9/2kZhzDkFNG3SX6iawQBrRwxdaRvrjrviun+PJm0BJXBfdm2gpAsbNaIyE2XnpdIuv1tLBO8ziGnHmz/+Pebxcpvh151NrkdEEPp25WVL/BVBir/cXrG6Zn9a28Rr5A/2qaOspxfwGzimCnHHwcJm4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782329108; c=relaxed/simple;
-	bh=tDEIZvfq3ccwECO7/FTIJpXPU9L95A/b27CVeP2Gyxg=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=NbNC4GsN/ZMzhjoMobWCcSu8ZHhpRNdduiY7xsfTVUkF+2U8S7LCu0dpBKTwheQAPbUHl4+K35CtZzXv83o6aJ+jkFI1vN/W1PPxnmtDops7IbhgGI1nSlcMKK7PRuDSp39chzTscgA6Pqf2jtBWZj0dEeN/QYHuUZtaMG9Q+x0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TYIkTz4m; arc=none smtp.client-ip=209.85.128.53
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-490b4a8e28bso11041225e9.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jun 2026 12:25:05 -0700 (PDT)
+	s=arc-20240116; t=1782329169; c=relaxed/simple;
+	bh=uFdweM4aJouxeUV836HB26SAS4KqpF523nYMZBE0ESA=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=V4sAwkRUCai3zMlmZhcloSim5v1gRFmrsBSdf8HMSZjMUQjkG3xZG+oNo2q/RnI3MkYHTcRq/qqc9FVOCAlGvyPYdL1b5E6CVenT6VbxJwHc12vazXJJ2d3XlGYO+iLiGv3joM+XzB8Xa6Qs7Rvg7wTh61BvPVf91UeNW+039dU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Bx8/zMZL; arc=none smtp.client-ip=209.85.128.52
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-4924944fe6bso9650905e9.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jun 2026 12:26:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782329104; x=1782933904; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1782329166; x=1782933966; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=eTNgkQdTW5rge9w2rIY/43V8cY+8H+JG9cF1K9K10rg=;
-        b=TYIkTz4mk5ook8KrJvjQIek3cPhssXpVLp6ezKCcuZKf6lxdK63hx9nPvrQQwtXHBz
-         jmV9CLQlZOmj9OCMeWNYolYRk+HGKNrPmoLc5znlaXARnQut08IyhTV2ur6HxHiY2Inm
-         tOCgBkGFKAtmVGsvAMqibWwaoBdTFxUU9Gpn1QZENTjCE5EJG1f2ru5PGtl08UjSJVBa
-         4S6XApJv4zzLKAbAAdLgUsclZyS45y1eeNIx340P0lHp6EcdN6kmKEnl7NMpiYEeGNxp
-         Hyv4ZdT1X8ZdFYMqkc00Do3diEpuC/ZXA8aMIKq/+HRIrhmnoC1Xq/mdI5/EsQyPdo+a
-         y1Lw==
+        bh=BvV+Q7TxmkZErxEzBPmGA9pyzogQykAvWuzenzPuaG4=;
+        b=Bx8/zMZLUravhztk8ETE8ytKwBAHynUBhw27OJh46mAM0TTKLOoqgiAtduavpMJeEQ
+         BOCWxKmO1vOZNU56NEz7JCZ3qDXTDD6LGpKWHwzloM3qO69iUWFam5xZqRO6vYuQIVpr
+         TqPg59gTalZqS7lPjQ++YKEC0oZa9fZb9huZCgjGjtwXIfXtHHwiCeJvDHArN4ipNifb
+         C/BKcQRMb3PrI7G93Dk0WStfkl6PGm1CVcubLY0U4PnEcoMW/9Et2TQDzgiVvY4RBldV
+         IKAw3AZOqXo0FRVNhC/rBukUm/IGRDJL8emtlAf8YdRrqsSpp8a1q8Qn2UP3hcH66aM9
+         y+wQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782329104; x=1782933904;
+        d=1e100.net; s=20251104; t=1782329166; x=1782933966;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=eTNgkQdTW5rge9w2rIY/43V8cY+8H+JG9cF1K9K10rg=;
-        b=OASy+3m+/JLSxvReyPOZQyyNJ5V4x2KFvpirT2dSNyUppNLKxqJqZHJ+oCEUNo1AxP
-         k4XNuD8WyClVFvqCqOWKUN6VZzlmEtqAdLILYFcRkMhU1hQvpjWQd+5ZIiMYFh5ahYlN
-         W79vkKmpIveg+rHUgp6KPlItLoLuU/VOGEaAzNVvVtaKqDvNoPCgHVWS5VD2Zsjgjj9w
-         fyta/FDDo1FagkYcnXqZS8HMNt85yWFd49UinIOkYO2t8aCuzdtnh7RKU5PdjR8fIPdu
-         KqM4HiaY7GiSlmBb33pE4NPjiVjHjV1oqccIY6kTRBZzfCENf3gotytDBzlRhwb9qrPq
-         RuyA==
-X-Forwarded-Encrypted: i=1; AFNElJ99w2Mjn8/To6tSF0IVjCXBN74TqApBB2Tq51jKILuBWGiikihSI3bdc6Obj5bQzV5Gb2V1XAEmzmSUKITi@vger.kernel.org
-X-Gm-Message-State: AOJu0YyvcsOnwfnhxHXu5dU6IGQTWfoBPK9mpSYx/4hp60ISxuVfIPER
-	GYu6kCfi5vSZMJm/K+R+yv2wM+jeOM7sFyL/fUXAatVjPp6cfnysnqrxJQEyokkNTRFIYw==
-X-Gm-Gg: AfdE7clvo2mss3WWpwFrNALsKgksUuZI2zq/LhzMoXHH9gyJAxElEAhhe9U4hmMA1hs
-	orQL3TQbz3wJgoACpitC8AYaSIU66HSVVCK7Jr73L6GfJQF9kqZ3iFjPHnZE8I5D4ntuSohI0IR
-	TQjUofMra4cxZe6ILLiv0xD8ZPj+Exw5XutWnmCuSrdY0d0K05z6Cs0giijlJ76H+17pqT8hrYW
-	S30pkd3BvUkKnxTZJcE22pLOCUOektEWtb7GRtp89kqP5OpwjJv8aWK3EF9g7z0Ev3iDx0F4ONE
-	fcl6aA1kZvavMo2Bc/Dxh9wmNP7Ael9DTmPJUBy1nLCTc86ZqpQ5T367vm4qcqdBtsvm9fWPaR3
-	oD/ATs/99VGFoebhX6rIJmZ2HlhZ/uNxE3oawUc4QGZeCiGVAkrX0ivd2UT+x5zmUuKG6jD7+rI
-	8Ew5aa1BPn48hmx66r+Nk5lSmMVA==
-X-Received: by 2002:a05:600c:4443:b0:491:8043:5c4a with SMTP id 5b1f17b1804b1-49260879105mr68640375e9.31.1782329104364;
-        Wed, 24 Jun 2026 12:25:04 -0700 (PDT)
+        bh=BvV+Q7TxmkZErxEzBPmGA9pyzogQykAvWuzenzPuaG4=;
+        b=nC+Iut5fORjEEg7LxllZ2TyAgj0kbi9QtylT0KQCXnoL3VjtIka+Fwu80z8a/VCjNU
+         2Iil1/8V8hjY34Ao6dEVxgaX/Uirahc7MgmynnjzPQvBLas4NivevMng4mmtUocrFteE
+         9vBOqpUA2vGjsJZXmNXB54m4z8MzGxtYPTqh6919THriLrYFBSbqS+h3FxhsTjvLkSZ4
+         xVl40aBUa4HzQbihePtn7C4LDOyPts1qyANi800USDCASIveH1uFdSyvCFry7sZ2rykq
+         UQnvdkKAWSjf6/+ex2bJk0K2OIzd4iQdsEWJntqKdtsgtrD1DPPxXVJCg5Ek3J+PjtLI
+         q/Iw==
+X-Forwarded-Encrypted: i=1; AFNElJ/Jwk9JcIChQ41MQBgwZ4gkQX9dx8JfNFvlE8ezpZWuLxCJNTa4NQzkhHF+HeR2cvvTALjwEFCKTOcfR4Ii@vger.kernel.org
+X-Gm-Message-State: AOJu0YzXKIe/ZqSQjV2TpZaq5ruiS3uDd7LwBKP94BNltO5ClNtPOZCB
+	lwBzf+y1TRmKXjESZB4dnvIR4LAr5BylRTOn911JxH1f0x13hYGGfQTn
+X-Gm-Gg: AfdE7cmti8H+JWMIPoXqFKKH3VS+7Z9L3uWwK+WIpsFA49Tt8RjpU0MCKSQ1PAA3hFS
+	oXrmO/4bub460gq4KQNdvhr0SyX/rtkeLcjpvSYkDCdKiFBUCoIp7/ke0X58cSL5VSrypASFtE3
+	GYlQCxNsUJ88uNv8BvFQNH3GdLoSz0xVv5kVui6msdJfi5K44xUL0qn+Ut+dtPdRY8uDbEyaqPk
+	w/5Q/ALXeG7qxC1Rx4xe9Cjm5H/vMV+5lAIxJHuW1aMjb48pt+kDbRzXfqnLU7B25PqRaYUZyGm
+	hDZGJ+yrwmpX6nglrvpwHWN7yvc8jJTEzNa/ycdy7CG/EBaWjsZhx4bHCdhgx4ChaYNyRFNkrB4
+	TDRd+v6uOVgLZjg0c+BZd/5CCsH/TGAlb2/4MGJvVu5ldOzpthMdK6CJdCQPttdSvTGHXffiG2S
+	qIf9cLShv/U1JkDA8ujNLe4l/fEL3jIkJPOD67
+X-Received: by 2002:a05:600c:3489:b0:492:5068:61fc with SMTP id 5b1f17b1804b1-4926086c3fbmr73867905e9.19.1782329166203;
+        Wed, 24 Jun 2026 12:26:06 -0700 (PDT)
 Received: from Dev-Null-MSI ([2a0d:3344:52ac:a808:98a4:4381:be45:536f])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-46c9787dddbsm6955406f8f.3.2026.06.24.12.25.03
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4926417f0c7sm11379775e9.14.2026.06.24.12.26.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Jun 2026 12:25:03 -0700 (PDT)
+        Wed, 24 Jun 2026 12:26:05 -0700 (PDT)
 From: Yousef Alhouseen <alhouseenyousef@gmail.com>
 To: Srinivas Kandagatla <srini@kernel.org>,
 	Amol Maheshwari <amahesh@qti.qualcomm.com>
@@ -83,9 +83,9 @@ Cc: Arnd Bergmann <arnd@arndb.de>,
 	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org,
 	Yousef Alhouseen <alhouseenyousef@gmail.com>
-Subject: [PATCH] misc: fastrpc: hold rpmsg device while using endpoint
-Date: Wed, 24 Jun 2026 21:24:52 +0200
-Message-ID: <20260624192452.4949-1-alhouseenyousef@gmail.com>
+Subject: [PATCH] misc: fastrpc: drop invoke context on interrupted waits
+Date: Wed, 24 Jun 2026 21:25:54 +0200
+Message-ID: <20260624192554.5172-1-alhouseenyousef@gmail.com>
 X-Mailer: git-send-email 2.54.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -101,7 +101,7 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	R_MISSING_CHARSET(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
 	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
@@ -109,13 +109,13 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	TO_DN_SOME(0.00)[];
 	FREEMAIL_CC(0.00)[arndb.de,linuxfoundation.org,vger.kernel.org,lists.freedesktop.org,gmail.com];
 	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-114415-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-114416-lists,linux-arm-msm=lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
 	FORGED_RECIPIENTS(0.00)[m:srini@kernel.org,m:amahesh@qti.qualcomm.com,m:arnd@arndb.de,m:gregkh@linuxfoundation.org,m:linux-arm-msm@vger.kernel.org,m:dri-devel@lists.freedesktop.org,m:linux-kernel@vger.kernel.org,m:alhouseenyousef@gmail.com,s:lists@lfdr.de];
 	FORGED_SENDER(0.00)[alhouseenyousef@gmail.com,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[gmail.com:+];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
 	FREEMAIL_FROM(0.00)[gmail.com];
 	PRECEDENCE_BULK(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
@@ -128,92 +128,58 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	ALIAS_RESOLVED(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,vger.kernel.org:from_smtp]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 1EB6F6C1049
+X-Rspamd-Queue-Id: A551F6C1063
 
-Invoke and remote heap setup paths dereference cctx->rpdev after only a
-lockless NULL check. fastrpc_rpmsg_remove() can clear that pointer while
-an ioctl is preparing an invoke, leaving the send path to dereference a
-NULL or stale rpmsg device pointer.
+fastrpc_internal_invoke() skips removing and dropping the invoke context
+when userspace wait is interrupted or a kernel invoke times out. The
+context remains on the user's pending list even after a later DSP reply
+consumes the send reference.
 
-Take a device reference while holding the channel lock before using the
-rpmsg device. Return -EPIPE if the rpmsg endpoint has already gone away.
+Remove the context from the pending list and drop the caller reference for
+all exits. A late DSP reply still holds the send reference until the
+callback releases it, but interrupted callers no longer pin completed
+contexts for the lifetime of the file.
 
 Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
 ---
- drivers/misc/fastrpc.c | 33 +++++++++++++++++++++++++++------
- 1 file changed, 27 insertions(+), 6 deletions(-)
+ drivers/misc/fastrpc.c | 15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
 diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-index 1b70acc10..4b258dbcd 100644
+index 4b258dbcd..90281859a 100644
 --- a/drivers/misc/fastrpc.c
 +++ b/drivers/misc/fastrpc.c
-@@ -486,9 +486,24 @@ static int fastrpc_buf_alloc(struct fastrpc_user *fl, struct device *dev,
- static int fastrpc_remote_heap_alloc(struct fastrpc_user *fl, struct device *dev,
- 				     u64 size, struct fastrpc_buf **obuf)
- {
--	struct device *rdev = &fl->cctx->rpdev->dev;
-+	struct fastrpc_channel_ctx *cctx = fl->cctx;
-+	struct rpmsg_device *rpdev;
-+	unsigned long flags;
-+	int ret;
-+
-+	spin_lock_irqsave(&cctx->lock, flags);
-+	rpdev = cctx->rpdev;
-+	if (rpdev)
-+		get_device(&rpdev->dev);
-+	spin_unlock_irqrestore(&cctx->lock, flags);
-+
-+	if (!rpdev)
-+		return -EPIPE;
+@@ -1379,14 +1379,6 @@ static int fastrpc_internal_invoke(struct fastrpc_user *fl,  u32 kernel,
+ 		goto bail;
  
--	return  __fastrpc_buf_alloc(fl, rdev, size, obuf);
-+	ret = __fastrpc_buf_alloc(fl, &rpdev->dev, size, obuf);
-+	put_device(&rpdev->dev);
-+
-+	return ret;
- }
- 
- static void fastrpc_channel_ctx_free(struct kref *ref)
-@@ -1260,6 +1275,7 @@ static int fastrpc_invoke_send(struct fastrpc_session_ctx *sctx,
- 	struct fastrpc_channel_ctx *cctx;
- 	struct fastrpc_user *fl = ctx->fl;
- 	struct fastrpc_msg *msg = &ctx->msg;
-+	struct rpmsg_device *rpdev;
- 	unsigned long flags;
- 	bool put_ref = true;
- 	int ret;
-@@ -1279,10 +1295,18 @@ static int fastrpc_invoke_send(struct fastrpc_session_ctx *sctx,
- 	fastrpc_context_get(ctx);
- 
- 	spin_lock_irqsave(&cctx->lock, flags);
-+	rpdev = cctx->rpdev;
-+	if (!rpdev) {
-+		spin_unlock_irqrestore(&cctx->lock, flags);
-+		fastrpc_context_put(ctx);
-+		return -EPIPE;
-+	}
-+	get_device(&rpdev->dev);
- 	ctx->sent = true;
- 	spin_unlock_irqrestore(&cctx->lock, flags);
- 
--	ret = rpmsg_send(cctx->rpdev->ept, (void *)msg, sizeof(*msg));
-+	ret = rpmsg_send(rpdev->ept, (void *)msg, sizeof(*msg));
-+	put_device(&rpdev->dev);
- 
- 	if (ret) {
- 		spin_lock_irqsave(&cctx->lock, flags);
-@@ -1312,9 +1336,6 @@ static int fastrpc_internal_invoke(struct fastrpc_user *fl,  u32 kernel,
- 	if (!fl->sctx)
- 		return -EINVAL;
- 
--	if (!fl->cctx->rpdev)
--		return -EPIPE;
+ bail:
+-	if (err != -ERESTARTSYS && err != -ETIMEDOUT) {
+-		/* We are done with this compute context */
+-		spin_lock(&fl->lock);
+-		list_del(&ctx->node);
+-		spin_unlock(&fl->lock);
+-		fastrpc_context_put(ctx);
+-	}
 -
- 	if (handle == FASTRPC_INIT_HANDLE && !kernel) {
- 		dev_warn_ratelimited(fl->sctx->dev, "user app trying to send a kernel RPC message (%d)\n",  handle);
- 		return -EPERM;
+ 	if (err == -ERESTARTSYS) {
+ 		list_for_each_entry_safe(buf, b, &fl->mmaps, node) {
+ 			list_del(&buf->node);
+@@ -1394,6 +1386,13 @@ static int fastrpc_internal_invoke(struct fastrpc_user *fl,  u32 kernel,
+ 		}
+ 	}
+ 
++	/* We are done with this compute context */
++	spin_lock(&fl->lock);
++	if (!list_empty(&ctx->node))
++		list_del_init(&ctx->node);
++	spin_unlock(&fl->lock);
++	fastrpc_context_put(ctx);
++
+ 	if (err)
+ 		dev_dbg(fl->sctx->dev, "Error: Invoke Failed %d\n", err);
+ 
 -- 
 2.54.0
 
