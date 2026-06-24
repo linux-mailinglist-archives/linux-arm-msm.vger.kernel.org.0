@@ -1,323 +1,263 @@
-Return-Path: <linux-arm-msm+bounces-114268-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-114269-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id SUNBNNY+O2pnUQgAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-114268-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jun 2026 04:20:06 +0200
+	id 1L/+BkFEO2qjVAgAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-114269-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jun 2026 04:43:13 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 749516BAE6C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jun 2026 04:20:06 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6463D6BAF5D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jun 2026 04:43:12 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=samsung.com header.s=mail20170921 header.b=pW7LR+mE;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-114268-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-114268-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=none) header.from=samsung.com;
+	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b="J+/vqGOc";
+	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=dfx00ODy;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-114269-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-114269-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=reject) header.from=qualcomm.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id DD890302D516
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jun 2026 02:20:02 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 1DAFC3057619
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jun 2026 02:43:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AAA822F25F3;
-	Wed, 24 Jun 2026 02:20:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C03B1245019;
+	Wed, 24 Jun 2026 02:43:09 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mailout1.samsung.com (mailout1.samsung.com [203.254.224.24])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31303275B03
-	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jun 2026 02:19:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83B712F8EAF
+	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jun 2026 02:43:07 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782267602; cv=none; b=Kmd1evlCAKwqhSBvz3L0gZoxxv83Iu+Ks1DCMetqvpstxJsITN4YCACBoKWNg9f6ZYJlI0qIcB2EeiEwRT2NSMchb9Os8hX0s5znU/L+Q2pnT+VdZvrqSiDUeIqOwbWBhJjb2Iwv1WGP+rQ1/XvxF3wnrysGz0P/UOcVmX2T7u8=
+	t=1782268989; cv=none; b=Ad63tRgd1VLDHtNl08IQaBpYJFCQoPflelGgAJuIe/z5N16LkWjDV/VU6erbwdLpx9pkHnLfzGrwkEjoN0JRWk1gU1sqBwn/MruTewGWzI5kw/U6Sz4iasbsAI9upv7myOwJVcyqxRw27hpqy3xRCqCYzPafHWxJkqprhVDlHK8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782267602; c=relaxed/simple;
-	bh=DGJVCnFbCJgisJ9N6u0idYTaKLaz0dHWWhJ9ygzwkQ8=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type:
-	 References; b=b0jvWPtoB87SjKR8NRk6kX/kvm0io5dS64CzyXY/MNkACGthJqPV56flzK2/gGXpEzZuDt+ieRZYl5Ux92gLRnlM75T9mVGA4tu7DyvDXOawpAc9GyuXpFlEB2JDZnbN4WZTv57qp2qpYcZylyAadC+sEFFSRuBUGxCNf14f270=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=pW7LR+mE; arc=none smtp.client-ip=203.254.224.24
-Received: from epcas1p1.samsung.com (unknown [182.195.41.45])
-	by mailout1.samsung.com (KnoxPortal) with ESMTP id 20260624021957epoutp012d4dbe09054d2a6857647106ed67b084~74u-RLHuj1621116211epoutp01F
-	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jun 2026 02:19:57 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com 20260624021957epoutp012d4dbe09054d2a6857647106ed67b084~74u-RLHuj1621116211epoutp01F
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-	s=mail20170921; t=1782267597;
-	bh=JqPyZ0aaQVBBC6joV6zD0RbPShi6Y/+SNaCXbd0DQHo=;
-	h=From:To:Cc:Subject:Date:References:From;
-	b=pW7LR+mEt9uxjtqQhQhCIqCiZDGMgDljh09xK735xGJ/r1/ipAoOYmCgYIWVOO7ar
-	 PEVRtYbCmokc7nncENNeUZSrUDcvSo2+V/8AvTdFO3LHZuOrLjiVWc2xA33Oco9/zS
-	 /YfL32lVoqXy1DtESSA5ll54PFja2PrDKhGrK+mY=
-Received: from epsnrtp04.localdomain (unknown [182.195.42.156]) by
-	epcas1p1.samsung.com (KnoxPortal) with ESMTPS id
-	20260624021956epcas1p1620b680e9321a3aba8069cada28ee742~74u_kGyTe1547115471epcas1p1J;
-	Wed, 24 Jun 2026 02:19:56 +0000 (GMT)
-Received: from epcas1p3.samsung.com (unknown [182.195.38.118]) by
-	epsnrtp04.localdomain (Postfix) with ESMTP id 4glQcr1Sxvz6B9mB; Wed, 24 Jun
-	2026 02:19:56 +0000 (GMT)
-Received: from epsmtip1.samsung.com (unknown [182.195.34.30]) by
-	epcas1p2.samsung.com (KnoxPortal) with ESMTPA id
-	20260624021955epcas1p2ba2fa4eb8bd0aafaf7b46bde2cf524be~74u9oMuYh0842908429epcas1p2p;
-	Wed, 24 Jun 2026 02:19:55 +0000 (GMT)
-Received: from cw9316lee.. (unknown [10.253.101.98]) by epsmtip1.samsung.com
-	(KnoxPortal) with ESMTPA id
-	20260624021955epsmtip1ed35129491f5eb1c90636349381c9e79~74u9g6r832095320953epsmtip12;
-	Wed, 24 Jun 2026 02:19:55 +0000 (GMT)
-From: Chanwoo Lee <cw9316.lee@samsung.com>
-To: Adrian Hunter <adrian.hunter@intel.com>, Asutosh Das
-	<quic_asutoshd@quicinc.com>, Ritesh Harjani <ritesh.list@gmail.com>, Ulf
-	Hansson <ulfh@kernel.org>, Chaotian Jing <chaotian.jing@mediatek.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>, AngeloGioacchino Del Regno
-	<angelogioacchino.delregno@collabora.com>, Kamal Dasu
-	<kamal.dasu@broadcom.com>, Al Cooper <alcooperx@gmail.com>, Broadcom
-	internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, Florian
-	Fainelli <florian.fainelli@broadcom.com>, Haibo Chen <haibo.chen@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>, Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>, Fabio Estevam
-	<festevam@gmail.com>, Michal Simek <michal.simek@amd.com>, Thierry Reding
-	<thierry.reding@kernel.org>, Jonathan Hunter <jonathanh@nvidia.com>,
-	linux-mmc@vger.kernel.org (open list:EMMC CMDQ HOST CONTROLLER INTERFACE
-	(CQHCI) DRIVER), linux-kernel@vger.kernel.org (open list),
-	linux-arm-kernel@lists.infradead.org (moderated list:ARM/Mediatek SoC
-	support), linux-mediatek@lists.infradead.org (moderated list:ARM/Mediatek
-	SoC support), linux-arm-msm@vger.kernel.org (open list:ARM/QUALCOMM MAILING
-	LIST), linux-tegra@vger.kernel.org (open list:TEGRA ARCHITECTURE SUPPORT)
-Cc: Chanwoo Lee <cw9316.lee@samsung.com>
-Subject: [PATCH] mmc: cqhci: Remove unused intmask parameter from
- cqhci_irq()
-Date: Wed, 24 Jun 2026 11:19:03 +0900
-Message-ID: <20260624021912.632627-1-cw9316.lee@samsung.com>
-X-Mailer: git-send-email 2.43.0
+	s=arc-20240116; t=1782268989; c=relaxed/simple;
+	bh=1BUkjsbXJai+1Y/OyCBHxg+SQuJVTVgUyXJfQqGUeXo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=CqC34tK/ywvG1YqauWzNVmnnzmPJNjImSAdD7mL6p7aBKjdVZQUNju2trmeq0g1j5y59dPZ69vjLWsO3kWw17Wrv1lOMjg/axhEs3SYNtyO/YawQRTID2H6FDFnqs3SOPr726SFANXyYYooWzEExaRAner08YIP9ArYaRCHHwMs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=J+/vqGOc; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=dfx00ODy; arc=none smtp.client-ip=205.220.168.131
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65O1U9nM1400625
+	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jun 2026 02:43:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=xBXRxomKqNN1kZzaPtiFIXNw
+	qHBxEiMa6YFVXqngpiM=; b=J+/vqGOcxPmiitqbT4ZQ6jhFDViAQ3zM665ZnVPU
+	tjYFGex99L5nwCL6K23JQv7dIf00H+7AN6cI8uKEQnpZKHwjzxqmR2ZL8F9rvWK3
+	U80WJBNLcwkBV2mQlmiOCwOh2+1S6M1I4JHAqEL2tqRoMAp+79IGx1OSQ9IsgvLO
+	2G/zS90V1jdKT+uEbN4yiuYN+9oPug2ECOSaXu5zSS3JoqmMgrzquWg2+7gtjMF8
+	EpVAZIJXufXhb4trVXXpA33ANnHohTAkkhup95A4ysXZC49754lUvxKzC5HhD/hD
+	wEgBAn6dXFKDayekajH2W7Ivnc6jBxLcRpnfOdMWC9he2Q==
+Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com [74.125.82.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f05aq86uw-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jun 2026 02:43:06 +0000 (GMT)
+Received: by mail-dy1-f200.google.com with SMTP id 5a478bee46e88-30c1f6c5559so603640eec.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jun 2026 19:43:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1782268986; x=1782873786; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=xBXRxomKqNN1kZzaPtiFIXNwqHBxEiMa6YFVXqngpiM=;
+        b=dfx00ODyUz2gb/xF50h2Ggs7tmxLvPdsAIF1vuj33UbBkpxS+g+xbnZ8RGM0eagfuc
+         z01Yb5/8uaBdLOSPjM9ME9l+bGl06cjfRdL1E3hrd7HVzedszdaq3RfK9cRfmmlI3D9m
+         5unyEPSsmMhUWTY2+flMZ1sMKeov8RE5S9Hwj7xkqMrGFSq8fK8WgqjmQsksFmFgM/Jh
+         fOfy8C/TmUL85NC5uvbQpOVnEeW3El47joQKawoEnUelQqBZ4rh1wjch1HkyV+rzL/N/
+         tNFbSJaVz7iWBuiWPkr2yKFqteclQki+nc4htXwSES6sjaaU308dU1ZRZNOLzNXZTtUk
+         eQeg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782268986; x=1782873786;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=xBXRxomKqNN1kZzaPtiFIXNwqHBxEiMa6YFVXqngpiM=;
+        b=qvvjtHJACtXUABbG4NEU21S1tbrbqNsBJoZOoyY6CqRA9DJDDP0WNOdCDf8ZNE1vbm
+         1m+XH6FdkmT+M7TuEyogavcqy6QWzzV6dkxXj13ZreiZL7V52L1YhJwpIUDdCLGRxRlc
+         mq9DD5+PG4ZBxoiTaPlnDUCPrYKHp/PHqPgUOgugSJDjKWG80reRHM3qywNROVcJNBNR
+         6GZMEoHdotVV5kIUadaXEFLzeT8XonXzFKiwz3hIjv1z1y1hX4PHCerXhOM/az/tpJ/Y
+         SqmpOFw5BnMj0f2v/CGUPltXPISzyMvGbANE++21/fhSNXzktqG0BFRH5rZfSdpBSC7h
+         f/GA==
+X-Forwarded-Encrypted: i=1; AHgh+RoHF5D7HKh/1wbthPRT5EyQ1zPXda2cOadvRmzmnocvbAWefF4DLf5LAPr7FqnYQWZWZ3G4Mtq2PvvFPojZ@vger.kernel.org
+X-Gm-Message-State: AOJu0YwWp9aaGeomJKkxgGUwRo14eBP45sndYfZwglMETRwjvH9icQJB
+	TzWtt64rSKW8HZgwDy7i0MF90y0VsSExsf/IqDB7ocmndySFVOXewI/lQw/ZNV/aAw9I/TratB3
+	ypUHxuGPImx0Cj2qALe4I9nPrlWhjHJ6uLC7/a1LsPqtzrIxmwz6XkQ4memMlgfUSi+R4
+X-Gm-Gg: AfdE7ckx614iKToTTl/+NIOS9xGEOINhqQBXHIp2OSKKu9Pik55kbrQLThvc6bZbDPm
+	PP6/QhyKqqbG75LSdVku/Q84bPmLK8ApFz0ow37NRDLAiNRrA5JCxPD1sS0N+3y3oqjQuF23BSw
+	IxJrS6LOztbIksstGe72efkbC+nDAfgfNxVG8PjKrGXB8JDVpzTJN8ajr1KE66Xl0kwyrgEYHLi
+	qtj+Hqv+Vk6uHqObyUNYThoTA+/KQEY6GC9pu+OxDDczD+rXrYJHDbgcBwcALwMmeAJzPelUUPX
+	cckA44pamQkudLKbKM+i3a16AXtCRfOB6AqZA3yrKTeyIaVzIRjBoJn4X/QGJIKQpClu02hbfwa
+	GNVDFfY/zxsGgZqo5Rf99hQCarP3NxaaZtCnm5nkBQ9xTSIlL+PG6Uw==
+X-Received: by 2002:a05:7300:550:b0:306:f474:738c with SMTP id 5a478bee46e88-30c68d1b308mr2036640eec.13.1782268986070;
+        Tue, 23 Jun 2026 19:43:06 -0700 (PDT)
+X-Received: by 2002:a05:7300:550:b0:306:f474:738c with SMTP id 5a478bee46e88-30c68d1b308mr2036590eec.13.1782268985518;
+        Tue, 23 Jun 2026 19:43:05 -0700 (PDT)
+Received: from QCOM-aGQu4IUr3Y (i-global052.qualcomm.com. [199.106.103.52])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-30c6eabb7a5sm363369eec.26.2026.06.23.19.43.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 23 Jun 2026 19:43:05 -0700 (PDT)
+Date: Wed, 24 Jun 2026 10:42:58 +0800
+From: Shawn Guo <shengchao.guo@oss.qualcomm.com>
+To: Taniya Das <taniya.das@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Brian Masney <bmasney@redhat.com>,
+        Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Ajit Pandey <ajit.pandey@oss.qualcomm.com>,
+        Imran Shaik <imran.shaik@oss.qualcomm.com>,
+        Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH 4/6] clk: qcom: Add Nord display clock controller support
+Message-ID: <ajtEMi-HQ3AAOTog@QCOM-aGQu4IUr3Y>
+References: <20260623-nords_mm_v1-v1-0-860c84539804@oss.qualcomm.com>
+ <20260623-nords_mm_v1-v1-4-860c84539804@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CMS-MailID: 20260624021955epcas1p2ba2fa4eb8bd0aafaf7b46bde2cf524be
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-CMS-TYPE: 101P
-cpgsPolicy: CPGSC10-711,Y
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20260624021955epcas1p2ba2fa4eb8bd0aafaf7b46bde2cf524be
-References: <CGME20260624021955epcas1p2ba2fa4eb8bd0aafaf7b46bde2cf524be@epcas1p2.samsung.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260623-nords_mm_v1-v1-4-860c84539804@oss.qualcomm.com>
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI0MDAyMSBTYWx0ZWRfXw9cu+cAX67Gw
+ 0mtLcTUKPI+xIxiMKdYrfNmFltVz6d2RZArq5eXfxe9yBJXeKyIqkzE2wxciWfRE0DX/dSOsdwS
+ FybEUdTQ/o4DLFfPFs6mneYrt1j3Ap4oCN7sp+BlimHKSOZyFYtgktWRvPlk3OfSG+RgRzOKmYk
+ n3TV3NMGeDlo7PZdLlP0ygZRYD0D6lYeZNISyiLidrtJ4Cqn5FZY8zuWxCnf/xFdA67KxLT0Fx3
+ eYB3p3/0FZkjOAtUUOsoNDvvRO2291jmSWjTIrjsgBf5DABcAT14+gT+IHM4H/yu75ZjQTpQbbj
+ 8bPI1l9NQXiZY1x6GvcNb88Rbu3PRH7Py3rsxFskerd5ZCH+r49nmTV7YkNEbNSkGmobgH6lxXU
+ hxLbmcdMHG6Esb25D+5syZDVI+OQvSJnLUHQjjIRNyyGrvqiW5zS6fPBjZTXK0xrJ0ckqOFMhfF
+ tXhYC8DVoD/ICJgnDnQ==
+X-Proofpoint-GUID: D27GkuhXomcoKZTpJQmqej40TYJqtGgc
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI0MDAyMSBTYWx0ZWRfX4kaSlrY1OqnW
+ p85SoD/ARel7R4PrQtdoj335i22epA0rtdQzPGHKr1NSuGQP+meBmvZoNTda1Ue5XnszQd5r8gm
+ Qhn83cmMv8cljGr7qdiyc7SYwgZR2PU=
+X-Proofpoint-ORIG-GUID: D27GkuhXomcoKZTpJQmqej40TYJqtGgc
+X-Authority-Analysis: v=2.4 cv=UphT8ewB c=1 sm=1 tr=0 ts=6a3b443a cx=c_pps
+ a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=b9+bayejhc3NMeqCNyeLQQ==:17
+ a=kj9zAlcOel0A:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=EUspDBNiAAAA:8 a=uRAUcPz_pJdlg0Cm8TEA:9 a=CjuIK1q_8ugA:10
+ a=6Ab_bkdmUrQuMsNx7PHu:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-24_01,2026-06-23_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 lowpriorityscore=0 clxscore=1015 adultscore=0
+ impostorscore=0 phishscore=0 spamscore=0 suspectscore=0 malwarescore=0
+ bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2606240021
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-2.66 / 15.00];
-	WHITELIST_SPF_DKIM(-3.00)[samsung.com:d:+,kernel.org:s:+];
+X-Spamd-Result: default: False [-0.16 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_CONTAINS_FROM(1.00)[];
-	DMARC_POLICY_ALLOW(-0.50)[samsung.com,none];
-	R_DKIM_ALLOW(-0.20)[samsung.com:s=mail20170921];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-114268-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-114269-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[18];
+	FORGED_SENDER(0.00)[shengchao.guo@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_TO(0.00)[intel.com,quicinc.com,gmail.com,kernel.org,mediatek.com,collabora.com,broadcom.com,nxp.com,pengutronix.de,amd.com,nvidia.com,vger.kernel.org,lists.infradead.org];
-	RCPT_COUNT_TWELVE(0.00)[26];
-	FORWARDED(0.00)[lists@lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:adrian.hunter@intel.com,m:quic_asutoshd@quicinc.com,m:ritesh.list@gmail.com,m:ulfh@kernel.org,m:chaotian.jing@mediatek.com,m:matthias.bgg@gmail.com,m:angelogioacchino.delregno@collabora.com,m:kamal.dasu@broadcom.com,m:alcooperx@gmail.com,m:bcm-kernel-feedback-list@broadcom.com,m:florian.fainelli@broadcom.com,m:haibo.chen@nxp.com,m:Frank.Li@nxp.com,m:s.hauer@pengutronix.de,m:kernel@pengutronix.de,m:festevam@gmail.com,m:michal.simek@amd.com,m:thierry.reding@kernel.org,m:jonathanh@nvidia.com,m:linux-mmc@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-arm-kernel@lists.infradead.org,m:linux-mediatek@lists.infradead.org,m:linux-arm-msm@vger.kernel.org,m:linux-tegra@vger.kernel.org,m:cw9316.lee@samsung.com,m:riteshlist@gmail.com,m:matthiasbgg@gmail.com,s:lists@lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_SENDER(0.00)[cw9316.lee@samsung.com,linux-arm-msm@vger.kernel.org];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,vger.kernel.org:from_smtp];
-	DKIM_TRACE(0.00)[samsung.com:+];
+	FORWARDED(0.00)[lists@lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:taniya.das@oss.qualcomm.com,m:andersson@kernel.org,m:mturquette@baylibre.com,m:sboyd@kernel.org,m:bmasney@redhat.com,m:bartosz.golaszewski@oss.qualcomm.com,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:neil.armstrong@linaro.org,m:konradybcio@kernel.org,m:ajit.pandey@oss.qualcomm.com,m:imran.shaik@oss.qualcomm.com,m:jagadeesh.kona@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:linux-clk@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:devicetree@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,qualcomm.com:dkim,qualcomm.com:email];
+	MISSING_XM_UA(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[cw9316.lee@samsung.com,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[shengchao.guo@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	ALIAS_RESOLVED(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	TO_DN_SOME(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[8]
+	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 749516BAE6C
+X-Rspamd-Queue-Id: 6463D6BAF5D
 
-The intmask parameter of cqhci_irq() is never used within the function
-body. The function reads the CQHCI interrupt status directly via
-cqhci_readl() and processes interrupts independently of the SDHCI
-intmask value passed by callers.
+On Tue, Jun 23, 2026 at 04:24:07PM +0530, Taniya Das wrote:
+> Add support for the display clock controllers (DISPCC) on the
+> Qualcomm Nord platform.
+> 
+> The platform includes two display clock controller instances,
+> display0 and display1. Register support for both controllers.
+> 
+> Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
+> ---
+>  drivers/clk/qcom/Kconfig        |   11 +
+>  drivers/clk/qcom/Makefile       |    1 +
+>  drivers/clk/qcom/dispcc0-nord.c | 2006 +++++++++++++++++++++++++++++++++++++++
+>  drivers/clk/qcom/dispcc1-nord.c | 2006 +++++++++++++++++++++++++++++++++++++++
+>  4 files changed, 4024 insertions(+)
+> 
+> diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
+> index 7d84c2f1d911a35430bba7670409f59972dcca0f..874136a2ad9aaa117df2c7ad5c8abc5280b76339 100644
+> --- a/drivers/clk/qcom/Kconfig
+> +++ b/drivers/clk/qcom/Kconfig
+> @@ -145,6 +145,17 @@ config CLK_KAANAPALI_VIDEOCC
+>  	  Say Y if you want to support video devices and functionality such as
+>  	  video encode/decode.
+>  
+> +config CLK_NORD_DISPCC
+> +	tristate "Nord Display Clock Controller"
+> +	depends on ARM64 || COMPILE_TEST
+> +	select CLK_NORD_GCC
+> +	default m if ARCH_QCOM
+> +	help
+> +	  Support for the display clock controllers on Qualcomm Technologies, Inc
+> +	  Nord devices. There are two display clock controllers on Nord SoC.
+> +	  Say Y if you want to support display devices and functionality such as
+> +	  splash screen.
+> +
+>  config CLK_NORD_GCC
+>  	tristate "Nord Global Clock Controller"
+>  	depends on ARM64 || COMPILE_TEST
+> diff --git a/drivers/clk/qcom/Makefile b/drivers/clk/qcom/Makefile
+> index 58f9a5eb6fd7fc457607a179d8bab5623fedf706..4282f43e7078f1fe0dde6f942040eb6bd122d7ce 100644
+> --- a/drivers/clk/qcom/Makefile
+> +++ b/drivers/clk/qcom/Makefile
+> @@ -37,6 +37,7 @@ obj-$(CONFIG_CLK_KAANAPALI_GCC) += gcc-kaanapali.o
+>  obj-$(CONFIG_CLK_KAANAPALI_GPUCC) += gpucc-kaanapali.o gxclkctl-kaanapali.o
+>  obj-$(CONFIG_CLK_KAANAPALI_TCSRCC) += tcsrcc-kaanapali.o
+>  obj-$(CONFIG_CLK_KAANAPALI_VIDEOCC) += videocc-kaanapali.o
+> +obj-$(CONFIG_CLK_NORD_DISPCC) += dispcc0-nord.o dispcc1-nord.o
+>  obj-$(CONFIG_CLK_NORD_GCC) += gcc-nord.o negcc-nord.o nwgcc-nord.o segcc-nord.o
+>  obj-$(CONFIG_CLK_NORD_TCSRCC) += tcsrcc-nord.o
+>  obj-$(CONFIG_CLK_X1E80100_CAMCC) += camcc-x1e80100.o
+> diff --git a/drivers/clk/qcom/dispcc0-nord.c b/drivers/clk/qcom/dispcc0-nord.c
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..c0097482a1a94a99a05767726b5a7405cf014fea
+> --- /dev/null
+> +++ b/drivers/clk/qcom/dispcc0-nord.c
+> @@ -0,0 +1,2006 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+> + */
+> +
+> +#include <linux/clk-provider.h>
+> +#include <linux/mod_devicetable.h>
+> +#include <linux/module.h>
+> +#include <linux/of.h>
 
-Signed-off-by: Chanwoo Lee <cw9316.lee@samsung.com>
----
- drivers/mmc/host/cqhci-core.c       | 3 +--
- drivers/mmc/host/cqhci.h            | 3 +--
- drivers/mmc/host/mtk-sd.c           | 2 +-
- drivers/mmc/host/sdhci-brcmstb.c    | 2 +-
- drivers/mmc/host/sdhci-esdhc-imx.c  | 2 +-
- drivers/mmc/host/sdhci-msm.c        | 2 +-
- drivers/mmc/host/sdhci-of-arasan.c  | 2 +-
- drivers/mmc/host/sdhci-of-dwcmshc.c | 2 +-
- drivers/mmc/host/sdhci-pci-core.c   | 2 +-
- drivers/mmc/host/sdhci-pci-gli.c    | 2 +-
- drivers/mmc/host/sdhci-tegra.c      | 2 +-
- drivers/mmc/host/sdhci_am654.c      | 2 +-
- 12 files changed, 12 insertions(+), 14 deletions(-)
+This include shouldn't be needed.
 
-diff --git a/drivers/mmc/host/cqhci-core.c b/drivers/mmc/host/cqhci-core.c
-index 178277d90c31..98ceb0b9a6d1 100644
---- a/drivers/mmc/host/cqhci-core.c
-+++ b/drivers/mmc/host/cqhci-core.c
-@@ -819,8 +819,7 @@ static void cqhci_finish_mrq(struct mmc_host *mmc, unsigned int tag)
- 	mmc_cqe_request_done(mmc, mrq);
- }
- 
--irqreturn_t cqhci_irq(struct mmc_host *mmc, u32 intmask, int cmd_error,
--		      int data_error)
-+irqreturn_t cqhci_irq(struct mmc_host *mmc, int cmd_error, int data_error)
- {
- 	u32 status;
- 	unsigned long tag = 0, comp_status;
-diff --git a/drivers/mmc/host/cqhci.h b/drivers/mmc/host/cqhci.h
-index 3668856531c1..8fbbc48c3f85 100644
---- a/drivers/mmc/host/cqhci.h
-+++ b/drivers/mmc/host/cqhci.h
-@@ -315,8 +315,7 @@ static inline u32 cqhci_readl(struct cqhci_host *host, int reg)
- 
- struct platform_device;
- 
--irqreturn_t cqhci_irq(struct mmc_host *mmc, u32 intmask, int cmd_error,
--		      int data_error);
-+irqreturn_t cqhci_irq(struct mmc_host *mmc, int cmd_error, int data_error);
- int cqhci_init(struct cqhci_host *cq_host, struct mmc_host *mmc, bool dma64);
- struct cqhci_host *cqhci_pltfm_init(struct platform_device *pdev);
- int cqhci_deactivate(struct mmc_host *mmc);
-diff --git a/drivers/mmc/host/mtk-sd.c b/drivers/mmc/host/mtk-sd.c
-index b2680cc054bd..01ea3adbdf3b 100644
---- a/drivers/mmc/host/mtk-sd.c
-+++ b/drivers/mmc/host/mtk-sd.c
-@@ -1805,7 +1805,7 @@ static irqreturn_t msdc_cmdq_irq(struct msdc_host *host, u32 intsts)
- 			cmd_err, dat_err, intsts);
- 	}
- 
--	return cqhci_irq(mmc, 0, cmd_err, dat_err);
-+	return cqhci_irq(mmc, cmd_err, dat_err);
- }
- 
- static irqreturn_t msdc_irq(int irq, void *dev_id)
-diff --git a/drivers/mmc/host/sdhci-brcmstb.c b/drivers/mmc/host/sdhci-brcmstb.c
-index 57e45951644e..1de2f05fd958 100644
---- a/drivers/mmc/host/sdhci-brcmstb.c
-+++ b/drivers/mmc/host/sdhci-brcmstb.c
-@@ -430,7 +430,7 @@ static u32 sdhci_brcmstb_cqhci_irq(struct sdhci_host *host, u32 intmask)
- 	if (!sdhci_cqe_irq(host, intmask, &cmd_error, &data_error))
- 		return intmask;
- 
--	cqhci_irq(host->mmc, intmask, cmd_error, data_error);
-+	cqhci_irq(host->mmc, cmd_error, data_error);
- 
- 	return 0;
- }
-diff --git a/drivers/mmc/host/sdhci-esdhc-imx.c b/drivers/mmc/host/sdhci-esdhc-imx.c
-index 18ecddd6df6f..d0fa83f67a80 100644
---- a/drivers/mmc/host/sdhci-esdhc-imx.c
-+++ b/drivers/mmc/host/sdhci-esdhc-imx.c
-@@ -1503,7 +1503,7 @@ static u32 esdhc_cqhci_irq(struct sdhci_host *host, u32 intmask)
- 	if (!sdhci_cqe_irq(host, intmask, &cmd_error, &data_error))
- 		return intmask;
- 
--	cqhci_irq(host->mmc, intmask, cmd_error, data_error);
-+	cqhci_irq(host->mmc, cmd_error, data_error);
- 
- 	return 0;
- }
-diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-index 0882ce74e0c9..ceed47ccfda8 100644
---- a/drivers/mmc/host/sdhci-msm.c
-+++ b/drivers/mmc/host/sdhci-msm.c
-@@ -2165,7 +2165,7 @@ static u32 sdhci_msm_cqe_irq(struct sdhci_host *host, u32 intmask)
- 	if (!sdhci_cqe_irq(host, intmask, &cmd_error, &data_error))
- 		return intmask;
- 
--	cqhci_irq(host->mmc, intmask, cmd_error, data_error);
-+	cqhci_irq(host->mmc, cmd_error, data_error);
- 	return 0;
- }
- 
-diff --git a/drivers/mmc/host/sdhci-of-arasan.c b/drivers/mmc/host/sdhci-of-arasan.c
-index 785d3acb18c5..4ca73e7d799e 100644
---- a/drivers/mmc/host/sdhci-of-arasan.c
-+++ b/drivers/mmc/host/sdhci-of-arasan.c
-@@ -555,7 +555,7 @@ static u32 sdhci_arasan_cqhci_irq(struct sdhci_host *host, u32 intmask)
- 	if (!sdhci_cqe_irq(host, intmask, &cmd_error, &data_error))
- 		return intmask;
- 
--	cqhci_irq(host->mmc, intmask, cmd_error, data_error);
-+	cqhci_irq(host->mmc, cmd_error, data_error);
- 
- 	return 0;
- }
-diff --git a/drivers/mmc/host/sdhci-of-dwcmshc.c b/drivers/mmc/host/sdhci-of-dwcmshc.c
-index eef53455b8ee..4c5fa6a6931d 100644
---- a/drivers/mmc/host/sdhci-of-dwcmshc.c
-+++ b/drivers/mmc/host/sdhci-of-dwcmshc.c
-@@ -624,7 +624,7 @@ static u32 dwcmshc_cqe_irq_handler(struct sdhci_host *host, u32 intmask)
- 	if (!sdhci_cqe_irq(host, intmask, &cmd_error, &data_error))
- 		return intmask;
- 
--	cqhci_irq(host->mmc, intmask, cmd_error, data_error);
-+	cqhci_irq(host->mmc, cmd_error, data_error);
- 
- 	return 0;
- }
-diff --git a/drivers/mmc/host/sdhci-pci-core.c b/drivers/mmc/host/sdhci-pci-core.c
-index c347fac24515..b121d896a804 100644
---- a/drivers/mmc/host/sdhci-pci-core.c
-+++ b/drivers/mmc/host/sdhci-pci-core.c
-@@ -215,7 +215,7 @@ static u32 sdhci_cqhci_irq(struct sdhci_host *host, u32 intmask)
- 	if (!sdhci_cqe_irq(host, intmask, &cmd_error, &data_error))
- 		return intmask;
- 
--	cqhci_irq(host->mmc, intmask, cmd_error, data_error);
-+	cqhci_irq(host->mmc, cmd_error, data_error);
- 
- 	return 0;
- }
-diff --git a/drivers/mmc/host/sdhci-pci-gli.c b/drivers/mmc/host/sdhci-pci-gli.c
-index 6e4084407662..b55618566d65 100644
---- a/drivers/mmc/host/sdhci-pci-gli.c
-+++ b/drivers/mmc/host/sdhci-pci-gli.c
-@@ -1760,7 +1760,7 @@ static u32 sdhci_gl9763e_cqhci_irq(struct sdhci_host *host, u32 intmask)
- 	if (!sdhci_cqe_irq(host, intmask, &cmd_error, &data_error))
- 		return intmask;
- 
--	cqhci_irq(host->mmc, intmask, cmd_error, data_error);
-+	cqhci_irq(host->mmc, cmd_error, data_error);
- 
- 	return 0;
- }
-diff --git a/drivers/mmc/host/sdhci-tegra.c b/drivers/mmc/host/sdhci-tegra.c
-index 820ce4dae58b..221e48b59f48 100644
---- a/drivers/mmc/host/sdhci-tegra.c
-+++ b/drivers/mmc/host/sdhci-tegra.c
-@@ -1280,7 +1280,7 @@ static u32 sdhci_tegra_cqhci_irq(struct sdhci_host *host, u32 intmask)
- 	if (!sdhci_cqe_irq(host, intmask, &cmd_error, &data_error))
- 		return intmask;
- 
--	cqhci_irq(host->mmc, intmask, cmd_error, data_error);
-+	cqhci_irq(host->mmc, cmd_error, data_error);
- 
- 	return 0;
- }
-diff --git a/drivers/mmc/host/sdhci_am654.c b/drivers/mmc/host/sdhci_am654.c
-index d235b0aecfdb..2a27db2f558b 100644
---- a/drivers/mmc/host/sdhci_am654.c
-+++ b/drivers/mmc/host/sdhci_am654.c
-@@ -462,7 +462,7 @@ static u32 sdhci_am654_cqhci_irq(struct sdhci_host *host, u32 intmask)
- 	if (!sdhci_cqe_irq(host, intmask, &cmd_error, &data_error))
- 		return intmask;
- 
--	cqhci_irq(host->mmc, intmask, cmd_error, data_error);
-+	cqhci_irq(host->mmc, cmd_error, data_error);
- 
- 	return 0;
- }
--- 
-2.43.0
+Shawn
 
+> +#include <linux/platform_device.h>
+> +#include <linux/regmap.h>
 
