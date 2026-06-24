@@ -1,92 +1,94 @@
-Return-Path: <linux-arm-msm+bounces-114380-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-114381-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id b/i2BNsYPGpHjwgAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-114380-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jun 2026 19:50:19 +0200
+	id qGZVGsYZPGpujwgAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-114381-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jun 2026 19:54:14 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 70C0E6C07CB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jun 2026 19:50:18 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id B43296C082B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jun 2026 19:54:13 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=gmail.com header.s=20251104 header.b=rdWs215Z;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-114380-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-114380-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=gmail.com header.s=20251104 header.b=Y2tyEOMX;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-114381-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c09:e001:a7::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-114381-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=none) header.from=gmail.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 76A1A301048B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jun 2026 17:50:17 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id DF4613022B64
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jun 2026 17:54:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C7213DD52C;
-	Wed, 24 Jun 2026 17:50:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F94B3DD84D;
+	Wed, 24 Jun 2026 17:54:09 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
+Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56D6C399CFD
-	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jun 2026 17:50:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9ABB3DD506
+	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jun 2026 17:54:07 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782323415; cv=none; b=KINMOOIBqAP7G2t4c98FtfLTg0763VRKL3sS7aMY53Zh4DPMCSAENjM/bdqGjwMEcmbNEBpr5TtyG+tf0TkOJPGs/HG/lQKL09iwDeNyddv8dEspT55k1nPUuY4USSf7uxxR4o3DxeeHbx6sP9BaTMEmX0+ou1vMpuFR3PoeisA=
+	t=1782323649; cv=none; b=Pr2b5+mX/C7Fxzaqr8nO2Y7qoEcgpQGswegok9aTh/YN80irWR4CwHMmwYtQ0Feh8wfSssV8ULI2/XKi5q/U0rat+puGBWJL/4S82HnCV0MFxOdE9kSX6Y57st1HsBgdQYq1xJHJ6oQde9X3ZQSMQQggUdRpVHDIIT2+W+CvAso=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782323415; c=relaxed/simple;
-	bh=eZTu51HHRJvIW/ZKGlQIrOMMhbkH7c8hYVY/WqqaGdE=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=F5FvHTrWBnqgtTjgnRhn+0SCXZ9B6Zsf6wbAdWn8MKFq90yrb9au8GG12mtuaxPynj6tgvMOJWiX+wSw+oRIhR0hU1+d7zUsnGuzWeNQsKmFRIXLx3N8H9rxphnOBprWCZHVZngs9Bk8DRsnbxNxixlof7ptsW4VUQiTUoJDq1w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=rdWs215Z; arc=none smtp.client-ip=209.85.128.182
-Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-804239c418bso18294407b3.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jun 2026 10:50:14 -0700 (PDT)
+	s=arc-20240116; t=1782323649; c=relaxed/simple;
+	bh=zS39eoSU0MQzmQzeMb7eknSjOrzat2yPax7g0/+bddU=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=JwyAmmfViXwaej3a1OfMAzGEazMY8eCoN+KQYSevtOYBuxwWRQvcl5N54uOA2RqOCyl7tE19N6j+OtLyXII7JIyLHTCFGBqe0ghon9pdpD0doxysQ4Bvzf4eqOJRcAwE/8l/4W+Sp13+mAonG+baTnOWSDBMw8vJTcZg25T6poE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Y2tyEOMX; arc=none smtp.client-ip=209.85.210.180
+Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-8454fccf3b1so285834b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jun 2026 10:54:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782323413; x=1782928213; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=j/uILbh1n2PkpNOCtS0svqEcnFHuP4Pdw3ur3cUKxxI=;
-        b=rdWs215Zj6EEWB+t/2h2CV8USLc9pfcMR9+T+SXmwAQsjSxrsxSOq+CxV4CLPfonld
-         CORxLts7Yam6MAUwxmWH24ROiYsOeCDprJhhrx0xUAcG9apgkbxvkF9/O212YqJO9UZJ
-         Ag1yxKHVglbjWi/ruXdyeoEJx6NO2MvSeR2I6BRT19xluHH/JGorE7JRP+0AAbchRhNz
-         UDDAJhtoDBkGPsBgrmtQBAhz7ptpUcqfbHVgmBXp96I/k07ADNk9UrZFtNoQNXRxMoIJ
-         SPuVsCaubSZc5aT7bZSOaDYEtE5oD1KNLUEsUOTFvc+mm8BzJRThDqwWeCAda5N/UsnG
-         4RDQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782323413; x=1782928213;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1782323647; x=1782928447; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=j/uILbh1n2PkpNOCtS0svqEcnFHuP4Pdw3ur3cUKxxI=;
-        b=MwVjHhFR5rV2BSdhMU+WqiRPKRHfkHClWCR/SJ/zDnHatNu4PBg0FJlGtjcCFEJ8sI
-         KfLcA1i5OKxC/kPSqIQoEEPaKFQ/DpWWx5u213WhAiqB2RoKSmvD+JC1ZJsb3V486J+v
-         FeuIJ6GfZX2iNgs8phZvQ9tm+id0GLS7ndFAtWds6hFEs8IlJHGbsGMLkAP/Yp5Vj/bt
-         FpyxmoEPahwtP5nGVICJ1M4hL+zwjvQwEqWXZl2rj7goVLvYR019OhiAhuo8BC5meTC/
-         thAlcFx1euHASzxwVir2GkZIBEWhvCHaxBDQqwQVfmgDeybehsmKXAev65UDA4ZKt+Wb
-         w+Ow==
-X-Forwarded-Encrypted: i=1; AHgh+Rr4e2eQPdugsOLy//TIxDrheaoP71nNFXZFJS1y0n77WD8BbxETgxxdriSkazgwewE1wgUaf/p1jWAPq+TZ@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxoqe1XS8jBH3BV/+cp3UYC94wLUlXosHK7CbhEljjpwTtFLEq+
-	EAICiPwLzNDZl9EM2qdl6xGJ5Qtj9gr/IUFLuFBfnNLu2njwDm3YLunk
-X-Gm-Gg: AfdE7cmSPGCHtiLoYE5uC8Vu5/DoU6vyvkYY20TbbVqvzVnaGF5plH/dmxb+mwqSzLh
-	B7puQWGrJg7OkZWoyy6FHs22q2a7k3x5/fRGdyjvQzMx1ND4X6D3MmN+QvCEtQ7ietO1+1NT/Xb
-	Wq4jvQFOrnZWF3TCBbN0oC4bp9ZMOs49NOneEFgKKGdglvhjQtqURIWGWKOTns6BNfg97Wnz93R
-	q8aBPu6gl/x7y8jtpL9wC+OTe0H/croyDm/mvVjG6pwE8/D8V2e6OrI9A7u5a/FgOtTjz4n9nhR
-	ruwkqfP8JNZwqRxJ1Q5CQWo77Kls5M5G2aRdZh9wTYa7pexPPPCqdgKAsc6XOMWmvCNCzH/9gTS
-	HkiLJXLEMD7GRRfKc2coPYleCjbxgqn3FHPE2TS7FZVDqfvJSL5mQMUF8lzlhm78LOkHg0Bz6i/
-	7g4r9WdJtPAa8QXs+7iOERtq8fL0ew8jkI2fhI
-X-Received: by 2002:a05:690c:6306:b0:7e1:e20c:1e3e with SMTP id 00721157ae682-807ef91a515mr44538487b3.28.1782323413407;
-        Wed, 24 Jun 2026 10:50:13 -0700 (PDT)
-Received: from Dev-Null-MSI ([2a0d:3344:52ac:a808:98a4:4381:be45:536f])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-80259d20d84sm61339237b3.0.2026.06.24.10.50.10
+        bh=anmA2l3MxALUQm7PPnRPt/zM8+X9tbioRc5oCtucAME=;
+        b=Y2tyEOMX7zJdGggLPN87Kvsj0sJrKinBXyB7Cvp8a6iGCU2szgUtgG9kV6+gD7AMYw
+         i7Pr2cIJ1P0wacjrsQtvS8lXz6MqRsiIRSCTr4t43S0TzfpoE4f+ocWqe9XJS8phCstW
+         6A8Ts7J5ciIhwCN0b8f1PfAZPh9Pfkg9xkj4cQxGK2NwO3b/OZNGWAPiSoaBbVNt+Z7H
+         I660wwhd4vlz93tOlqdIs4yWgugDPeRzaii4uEAWEmz5i9VH3cXrJE3BDpZMai+wDECW
+         39YQHKnJuU9mDRRTr/zBXvp/rWP0h0viv8NEvUA8z+FKWTJceEXPdyKFqIFcMOVB604/
+         iQ2g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782323647; x=1782928447;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=anmA2l3MxALUQm7PPnRPt/zM8+X9tbioRc5oCtucAME=;
+        b=ImfhU1zElxU4PZQCGFsorqzw3O09JDVtvbiqUF1W1Rr0Dpn1Q35an7AeOadiUhiNND
+         fLjedWZ5Jgh3HnqGydT1wBFm8kzPT/NiLQalxi0u5vjPXnG48aT9D0wJwPRONvyper8v
+         xWUUHYPt3TTkh9MalZ3wsd+F3n66vWv4eDDZoeazUubHX5p17MuncKgcvpY5vRE5AYaq
+         WCfJ1BTbENJ/EL3ecBfQq/MUB32lvFhKcXtBlDs/bINkXP+iLOuBd2yaxP+BGJtm+zmp
+         VNQ3Co7DI8vPg3ajku7XnTpe4Vc2JH295duiWZagRkDK3e0nsAnCFyiKZXrtfapQ3lng
+         mA+g==
+X-Forwarded-Encrypted: i=1; AHgh+RqcXvgeHj+q0GDRhq3iVR4s8VGfHKYNJhvdh73SsQezCS/A4oBC6h8RwFo5r/BVNob1n8pivo6s7Obco5ii@vger.kernel.org
+X-Gm-Message-State: AOJu0YwGXQ5JL1HTutnMdDelK+czharB79NZ3fmXHmoZcxPP3deQD0sE
+	LA29m5QDAVkKVNVanDxfpeZ4gcQQtKUhbmK/HNBgAedJ8Nm+1mfNu1kr
+X-Gm-Gg: AfdE7cnjePHAyJ/CVvMbdVvKhuaGqtdpeVeI6oY4py81WD2kK5pt1br1q2Zt0wweM3H
+	GUeP0i7vFuf237D/5MbCXjKzpMx2T6yE5VhQ/s3jHVd332HirPG70aVhmYagA6wHIi2bsxZkfhz
+	I2CG2VEP82JdhS/mrvoEKjKIU9vpYnuQoW02JoAi0tfvgyM/ar+wYPHeE4Ko2dfk8yRG3VEstzx
+	xFhpJ8EVCPYvlJHxzCoX8SU/hpcMlZG0AYjAIRpZaMHuQH1LP6fGEtYjL7A+IaHnhjwSvBdEv/o
+	o2c0Mz1wf4VMvoqvmeeurOSYGq8mO3DZXeBLvYy5LP6bFbfTY9PTZ49kjj+GhpKRJRfcjAFA1vh
+	PaRHbT61PcyCLxQG/sqqi91BMwY6kde35b+UHNGcdYikBgUup+nQdyT5OtkkCgXGjuwZbmS51Oo
+	a9LeCWJ/STCXDRog81AIL75kR+9uyl1t05zhKpcFk=
+X-Received: by 2002:a17:902:db0d:b0:2c7:f524:a8e with SMTP id d9443c01a7336-2c7f52411f8mr4584005ad.3.1782323647155;
+        Wed, 24 Jun 2026 10:54:07 -0700 (PDT)
+Received: from localhost.localdomain ([202.164.135.140])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2c7f5afb1e0sm3629865ad.29.2026.06.24.10.54.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Jun 2026 10:50:13 -0700 (PDT)
-From: Yousef Alhouseen <alhouseenyousef@gmail.com>
-To: Srinivas Kandagatla <srini@kernel.org>,
-	Amol Maheshwari <amahesh@qti.qualcomm.com>
-Cc: Arnd Bergmann <arnd@arndb.de>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Wed, 24 Jun 2026 10:54:06 -0700 (PDT)
+From: Sailesh Nandanavanam <saileshnandanavanam@gmail.com>
+To: andersson@kernel.org
+Cc: mathieu.poirier@linaro.org,
 	linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
+	linux-remoteproc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Yousef Alhouseen <alhouseenyousef@gmail.com>
-Subject: [PATCH] misc: fastrpc: remove map before remote unmap
-Date: Wed, 24 Jun 2026 19:49:32 +0200
-Message-ID: <20260624174932.7419-1-alhouseenyousef@gmail.com>
-X-Mailer: git-send-email 2.54.0
+	saileshnandanavanam@gmail.com
+Subject: [PATCH v2] remoteproc: qcom_q6v5_pas: Fix dtb firmware lifecycle and leak
+Date: Wed, 24 Jun 2026 23:23:35 +0530
+Message-Id: <20260624175335.22799-1-saileshnandanavanam@gmail.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260622064141.zfakbyenknx6vbm5@hu-mojha-hyd.qualcomm.com>
+References: <20260622064141.zfakbyenknx6vbm5@hu-mojha-hyd.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -100,88 +102,173 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	MID_CONTAINS_FROM(1.00)[];
 	R_MISSING_CHARSET(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORWARDED(0.00)[lists@lfdr.de];
-	TO_DN_SOME(0.00)[];
-	FREEMAIL_CC(0.00)[arndb.de,linuxfoundation.org,vger.kernel.org,lists.freedesktop.org,gmail.com];
 	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-114380-lists,linux-arm-msm=lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:srini@kernel.org,m:amahesh@qti.qualcomm.com,m:arnd@arndb.de,m:gregkh@linuxfoundation.org,m:linux-arm-msm@vger.kernel.org,m:dri-devel@lists.freedesktop.org,m:linux-kernel@vger.kernel.org,m:alhouseenyousef@gmail.com,s:lists@lfdr.de];
-	FORGED_SENDER(0.00)[alhouseenyousef@gmail.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	FORGED_RECIPIENTS(0.00)[m:andersson@kernel.org,m:mathieu.poirier@linaro.org,m:linux-arm-msm@vger.kernel.org,m:linux-remoteproc@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:saileshnandanavanam@gmail.com,s:lists@lfdr.de];
 	FREEMAIL_FROM(0.00)[gmail.com];
+	FREEMAIL_CC(0.00)[linaro.org,vger.kernel.org,gmail.com];
+	FORWARDED(0.00)[lists@lfdr.de];
+	TAGGED_FROM(0.00)[bounces-114381-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
+	FORGED_SENDER(0.00)[saileshnandanavanam@gmail.com,linux-arm-msm@vger.kernel.org];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[gmail.com:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	RCPT_COUNT_FIVE(0.00)[6];
 	PRECEDENCE_BULK(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[alhouseenyousef@gmail.com,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[saileshnandanavanam@gmail.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[5];
-	RCPT_COUNT_SEVEN(0.00)[8];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TO_DN_NONE(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,vger.kernel.org:from_smtp]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 70C0E6C07CB
+X-Rspamd-Queue-Id: B43296C082B
 
-FASTRPC_IOCTL_MEM_UNMAP found a map under fl->lock, then dropped the lock.
+DTB co-firmware was previously requested and loaded in
+qcom_pas_load(), but its lifetime did not match the actual
+start/stop lifecycle of the remoteproc. As a result, the firmware
+reference could be retained across restart cycles, leading to a
+leak for each successful boot.
 
-It used that map until the DSP completed the unmap.
+Additionally, if qcom_pas_start() failed after loading the DTB
+firmware, the remoteproc core would not invoke .stop(), leaving
+no opportunity to release the associated firmware reference.
 
-A second unmap can find the same map and race to fastrpc_map_put().
+Fix this by moving DTB firmware request and loading into
+qcom_pas_start(), so that its lifetime is strictly tied to the
+remoteproc start sequence.
 
-That can cause a use-after-free or double list deletion.
+Update qcom_pas_start() to ensure proper cleanup on all paths:
+- release PAS metadata on failure
+- release DTB firmware on both success and failure paths
+- unmap DTB carveout where applicable
 
-Remove the map from the lookup list before the remote unmap.
+Remove DTB firmware handling from qcom_pas_load(), as it does not
+match the correct ownership and lifecycle model.
 
-Reinsert it if the remote side reports an error.
+With this change, request_firmware() and release_firmware() are
+properly paired within the start path, avoiding leaks and ensuring
+consistent behavior across restart and failure scenarios.
 
-Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
+Fixes: 29814986b82e ("remoteproc: qcom_q6v5_pas: add support for dtb co-firmware loading")
+Signed-off-by: Sailesh Nandanavanam <saileshnandanavanam@gmail.com>
 ---
- drivers/misc/fastrpc.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+v2:
+- Move DTB firmware request/load from qcom_pas_load() to qcom_pas_start()
+- Fix firmware reference leak across restart cycles
+- Handle start() failure paths where .stop() is not invoked
+- Ensure firmware is released on all success and failure paths
+- Remove DTB handling from load() and drop release from stop()
+---
+ drivers/remoteproc/qcom_q6v5_pas.c | 54 ++++++++++++++++--------------
+ 1 file changed, 29 insertions(+), 25 deletions(-)
 
-diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-index 6a5239b1c..6ced210ca 100644
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -365,7 +365,8 @@ static void fastrpc_free_map(struct kref *ref)
+diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
+index da27d1d3c9da..090f1f09dba3 100644
+--- a/drivers/remoteproc/qcom_q6v5_pas.c
++++ b/drivers/remoteproc/qcom_q6v5_pas.c
+@@ -232,28 +232,7 @@ static int qcom_pas_load(struct rproc *rproc, const struct firmware *fw)
+ 	if (pas->lite_dtb_pas_id)
+ 		qcom_scm_pas_shutdown(pas->lite_dtb_pas_id);
  
- 	if (map->fl) {
- 		spin_lock(&map->fl->lock);
--		list_del(&map->node);
-+		if (!list_empty(&map->node))
-+			list_del_init(&map->node);
- 		spin_unlock(&map->fl->lock);
- 		map->fl = NULL;
- 	}
-@@ -2064,6 +2065,7 @@ static int fastrpc_req_mem_unmap_impl(struct fastrpc_user *fl, struct fastrpc_me
- 	list_for_each_entry_safe(iter, m, &fl->maps, node) {
- 		if ((req->fd < 0 || iter->fd == req->fd) && (iter->raddr == req->vaddr)) {
- 			map = iter;
-+			list_del_init(&map->node);
- 			break;
- 		}
- 	}
-@@ -2088,6 +2090,9 @@ static int fastrpc_req_mem_unmap_impl(struct fastrpc_user *fl, struct fastrpc_me
- 				      &args[0]);
- 	if (err) {
- 		dev_err(dev, "unmmap\tpt fd = %d, 0x%09llx error\n",  map->fd, map->raddr);
-+		spin_lock(&fl->lock);
-+		list_add_tail(&map->node, &fl->maps);
-+		spin_unlock(&fl->lock);
- 		return err;
- 	}
- 	fastrpc_map_put(map);
+-	if (pas->dtb_pas_id) {
+-		ret = request_firmware(&pas->dtb_firmware, pas->dtb_firmware_name, pas->dev);
+-		if (ret) {
+-			dev_err(pas->dev, "request_firmware failed for %s: %d\n",
+-				pas->dtb_firmware_name, ret);
+-			return ret;
+-		}
+-
+-		ret = qcom_mdt_pas_load(pas->dtb_pas_ctx, pas->dtb_firmware,
+-					pas->dtb_firmware_name, pas->dtb_mem_region,
+-					&pas->dtb_mem_reloc);
+-		if (ret)
+-			goto release_dtb_metadata;
+-	}
+-
+ 	return 0;
+-
+-release_dtb_metadata:
+-	qcom_scm_pas_metadata_release(pas->dtb_pas_ctx);
+-	release_firmware(pas->dtb_firmware);
+-
+-	return ret;
+ }
+ 
+ static void qcom_pas_unmap_carveout(struct rproc *rproc, phys_addr_t mem_phys, size_t size)
+@@ -277,9 +256,24 @@ static int qcom_pas_start(struct rproc *rproc)
+ 	struct qcom_pas *pas = rproc->priv;
+ 	int ret;
+ 
++	if (pas->dtb_pas_id) {
++		ret = request_firmware(&pas->dtb_firmware, pas->dtb_firmware_name, pas->dev);
++		if (ret) {
++			dev_err(pas->dev, "request_firmware failed for %s: %d\n",
++					pas->dtb_firmware_name, ret);
++			return ret;
++		}
++
++		ret = qcom_mdt_pas_load(pas->dtb_pas_ctx, pas->dtb_firmware,
++				pas->dtb_firmware_name, pas->dtb_mem_region,
++				&pas->dtb_mem_reloc);
++		if (ret)
++			goto release_dtb_metadata;
++	}
++
+ 	ret = qcom_q6v5_prepare(&pas->q6v5);
+ 	if (ret)
+-		return ret;
++		goto release_dtb_metadata;
+ 
+ 	ret = qcom_pas_pds_enable(pas, pas->proxy_pds, pas->proxy_pd_count);
+ 	if (ret < 0)
+@@ -350,15 +344,17 @@ static int qcom_pas_start(struct rproc *rproc)
+ 	/* firmware is used to pass reference from qcom_pas_start(), drop it now */
+ 	pas->firmware = NULL;
+ 
++	if (pas->dtb_firmware) {
++		release_firmware(pas->dtb_firmware);
++		pas->dtb_firmware = NULL;
++	}
++
+ 	return 0;
+ 
+ unmap_carveout:
+ 	qcom_pas_unmap_carveout(rproc, pas->mem_phys, pas->mem_size);
+ release_pas_metadata:
+ 	qcom_scm_pas_metadata_release(pas->pas_ctx);
+-	if (pas->dtb_pas_id)
+-		qcom_scm_pas_metadata_release(pas->dtb_pas_ctx);
+-
+ unmap_dtb_carveout:
+ 	if (pas->dtb_pas_id)
+ 		qcom_pas_unmap_carveout(rproc, pas->dtb_mem_phys, pas->dtb_mem_size);
+@@ -376,6 +372,14 @@ static int qcom_pas_start(struct rproc *rproc)
+ 	qcom_pas_pds_disable(pas, pas->proxy_pds, pas->proxy_pd_count);
+ disable_irqs:
+ 	qcom_q6v5_unprepare(&pas->q6v5);
++release_dtb_metadata:
++	if (pas->dtb_pas_id)
++		qcom_scm_pas_metadata_release(pas->dtb_pas_ctx);
++release_dtb_firmware:
++	if (pas->dtb_firmware) {
++		release_firmware(pas->dtb_firmware);
++		pas->dtb_firmware = NULL;
++	}
+ 
+ 	/* firmware is used to pass reference from qcom_pas_start(), drop it now */
+ 	pas->firmware = NULL;
 -- 
-2.54.0
+2.34.1
 
 
