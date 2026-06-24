@@ -1,173 +1,202 @@
-Return-Path: <linux-arm-msm+bounces-114412-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-114413-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id gBSxE9EtPGoolAgAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-114412-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jun 2026 21:19:45 +0200
+	id wvC8GIMuPGpDlAgAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-114413-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jun 2026 21:22:43 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id B80F76C0FD9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jun 2026 21:19:44 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id EB3686C1015
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jun 2026 21:22:42 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=ideasonboard.com header.s=mail header.b=R9iPS6IL;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-114412-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-114412-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=none) header.from=ideasonboard.com;
+	dkim=pass header.d=gmail.com header.s=20251104 header.b=BmXKpF0k;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-114413-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c09:e001:a7::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-114413-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=none) header.from=gmail.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 9DA40300D637
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jun 2026 19:19:43 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 3F05B300E149
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jun 2026 19:22:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 34DB93812DE;
-	Wed, 24 Jun 2026 19:19:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6563B32570D;
+	Wed, 24 Jun 2026 19:22:39 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E51BD380FEB;
-	Wed, 24 Jun 2026 19:19:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E58D226E71E
+	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jun 2026 19:22:37 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782328780; cv=none; b=nw5hA0hoOnjOf1WRQY0K97/VZP3UJahIx3ifDY/VnJJTyGDkowQFGguXF115INYDkDkk5/H4DWSXK2Z2vrBxw3xwuf9gWeBaYy3W90URA87Ng9Z/7Dt3JYyVJ7fRVoLn7Ipn7UOhKfMDUaN5Bc7rypmj8/3q/C/B6d8NVoOr1pM=
+	t=1782328959; cv=none; b=NMfcsANifU+ZtvRdMNZ3qY+UV16enf1qVvbX0AohJ+muuAuiClw6dWWsWa67B3Y2v6E7QI4/hogPaVe62cgbrwJv/ivpDc7TV4LvrLddXMFjtG8wvfTt7FD175la1XQ96n+iW66wLg24eX3gh/2iRTmxMVWQJoBu4jcf4O3fO4g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782328780; c=relaxed/simple;
-	bh=SygbhfMsHBXymcem7e6Zd0nKKWVHq2pp7wmjCrhnj44=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=E66B57+NYz90RdHwVImqWcr9bnXCLiJ1D+plc6kpJIH6bd2Hg1MLK6Y/emdS99JG12ZOnsl44+DuGuAZcS3GBNuTSxywPWKYcIu1iJEFul4QjWRE+GdHo61InifWW+dHEIrZiC3B2Ud+kAF2NHiIt3GJunKZAfrtZ9UxWDSRp5U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com; spf=pass smtp.mailfrom=ideasonboard.com; dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b=R9iPS6IL; arc=none smtp.client-ip=213.167.242.64
-Received: from killaraus.ideasonboard.com (2001-14ba-70f3-e800--a06.rev.dnainternet.fi [IPv6:2001:14ba:70f3:e800::a06])
-	by perceval.ideasonboard.com (Postfix) with ESMTPSA id 56D7E1049;
-	Wed, 24 Jun 2026 21:18:57 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-	s=mail; t=1782328737;
-	bh=SygbhfMsHBXymcem7e6Zd0nKKWVHq2pp7wmjCrhnj44=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=R9iPS6IL6p0/dDAwuFkL5icB0WAA7/VF1Z2f8Muhz3zenEk89jfcpVogCPF9xqqsm
-	 QPxnlkhw7Ug6s2tpdrYSAD+ZWecr8sCsX3hYxbY51skwWfYFAI00vNswoaiCKIZj+k
-	 0HxXfhmL6kVxPTzsYM4hCVIu8p8C42YQ/DqNXn+k=
-Date: Wed, 24 Jun 2026 22:19:35 +0300
-From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-To: Frank.Li@oss.nxp.com
-Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Daniel Scally <djrscally@gmail.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	s=arc-20240116; t=1782328959; c=relaxed/simple;
+	bh=mLcqDysyvTZZAFjeAJTToWbdlYFZOaevmyXnNRQx1I0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=H3uWCwFNEQGbSY17rR5aadSkp8+5e2RXuJ7gEsRbKnsu9nnb+eOv1NPLYZAWDcaobkzQi18FSmW+NXlQa/eGLnGrxeZXsuiyKaYHj87ylqYnHZAkXuYvn6+W57fv2DX8thhgjAjDK5lHTjQuVE2IB0uX9RDU2FMgIuDh/Igx4dI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BmXKpF0k; arc=none smtp.client-ip=209.85.128.47
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-49249707788so7512675e9.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jun 2026 12:22:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1782328956; x=1782933756; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=uaPww1pWXi5Q4D8htcYS+X1youQrkpsB4ZWwVylX53E=;
+        b=BmXKpF0kt1AH0mGK36M5OolSvXnVnG0SkSU9hTInu+6QuKGnjC7bw99fdD0opWubFE
+         8Vq9sO2SRSy5elWEoHk/MXQV3wzeHKG29TbsZ+HawqAuqt9dZQfFG4e/ako+FKoTuaCj
+         eVMA/lJGh/MKPeKP9AjoTZjIXHA1chCqVdZf+aj1Bt5IHO9ZY9bGz996AH9hVmMzETIq
+         5ylSZCJFcucmaRJ6qYHnQ6oAjSa8A5g18ZcXTNfB/MwhxJMd9Sw4r+bpsfj3Z933GJcq
+         Euk+FmqqDn5AMAwZDv+rWw8jzN1M9jcJuUsWzaB33rqRCsWUKU2N1Xyj4K3tVWOVwNLd
+         LFKQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782328956; x=1782933756;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=uaPww1pWXi5Q4D8htcYS+X1youQrkpsB4ZWwVylX53E=;
+        b=N0wlFzGSnWO2HBIcYbWMpe5K/sKbe4v83PcssDPXI1Faj7MFzPvovmdNetBoOvf58c
+         1w4VuMscVnu7FG42f7irE00alH2P9D+XSG52KfW2ojs0UdAw8mgk5vno7LF05Q8dvliJ
+         c0Q+J90WH7xbUmJeN18fS08aqjcjXHRmjMKYTNZsmklYBYjP+I2ID8EAF1o6rHhuqfbE
+         176E0OaurVdeXnSIT0NirN/Pz3QBaBHPMrfvFN2meywsw76SN3nJO5dgMq7gvL4oPqqv
+         6hexmT36h8MUbg2x81T0ZOP+hTvc0XKJacrexlV5j80TgImuqw5sqAi/AA8xzMH7RwQW
+         XFFQ==
+X-Forwarded-Encrypted: i=1; AFNElJ8SGr2tvp6GyCdxlqxpa9Y4FqfPOiVhQr2kcRpBVvKOmGmltcUVNyDGVLBvrW54J9UJhAIqXrSOH+qUc9HJ@vger.kernel.org
+X-Gm-Message-State: AOJu0YxlZrYiRNeimZnrmPfwaELGa6AdKTDBNiwLyizqNc+Yww2jvLVE
+	ba89vTrQnL43nugtyuQjdsS/YX+PQKn6o2TlxdiRgiw3Nmnu0QgqgWNK
+X-Gm-Gg: AfdE7cnZNmBUngNp8aPCgjKsr27c2gHRd++lcmOWnk4JtlAELzUbKOgfwgM/VmC1PPU
+	XK2v50g6u6AId+/NBseFoFmY+J+bzsBmjpm1uDNccc48B3T8yqjxkn8OxEREFt+bN72qr9R14p5
+	5Ken+SNxMiIJ+mkbROc2TDVLN2VVbr7oHYlv+8Do4qfPK7Py3jxPWKglclL52gL3lXuMZdVtIme
+	nvdIn1R7T9+A7OVs9KvZxJ86RMn92D1cFHgF2lykROAE713XLW+nnL7crhfQcQ/hmct6arvsYTx
+	PfArnLT0I+etbz8mYJWrUT8dz9JB+rHqdI7GrsnoRAlTPTdoKzNZUe06DHSyEtZYysl/hhfs7t0
+	QhAVOPqe+KH5FZbGvtIVUGs93Pi/FWsoCgpiNszp+nimHzpqxWEf/XUmjCuJvTF5mlEhMQe9WYr
+	VYXnZYC2lmw4nLv3rjFcsSDrNJbw==
+X-Received: by 2002:a05:600c:3f14:b0:490:b446:fb8 with SMTP id 5b1f17b1804b1-4924908ac6cmr296967175e9.11.1782328956186;
+        Wed, 24 Jun 2026 12:22:36 -0700 (PDT)
+Received: from Dev-Null-MSI ([2a0d:3344:52ac:a808:98a4:4381:be45:536f])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-46c221d93d8sm15740889f8f.23.2026.06.24.12.22.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 24 Jun 2026 12:22:35 -0700 (PDT)
+From: Yousef Alhouseen <alhouseenyousef@gmail.com>
+To: Srinivas Kandagatla <srini@kernel.org>,
+	Amol Maheshwari <amahesh@qti.qualcomm.com>
+Cc: Arnd Bergmann <arnd@arndb.de>,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Danilo Krummrich <dakr@kernel.org>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Dafna Hirschfeld <dafna@fastmail.com>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
-	driver-core@lists.linux.dev, linux-acpi@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
-	linux-rockchip@lists.infradead.org,
-	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-	imx@lists.linux.dev, Guoniu Zhou <guoniu.zhou@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>, Guoniu Zhou <guoniu.zhou@oss.nxp.com>
-Subject: Re: [PATCH v2 0/4] media: add and use
- fwnode_graph_for_each_endpoint_scoped()
-Message-ID: <20260624191935.GG851255@killaraus.ideasonboard.com>
-References: <20260624-fw_scoped-v2-0-0a8db472af4a@nxp.com>
+	linux-arm-msm@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	linux-kernel@vger.kernel.org,
+	Yousef Alhouseen <alhouseenyousef@gmail.com>
+Subject: [PATCH] misc: fastrpc: reject overflowing invoke payload sizes
+Date: Wed, 24 Jun 2026 21:22:25 +0200
+Message-ID: <20260624192225.4508-1-alhouseenyousef@gmail.com>
+X-Mailer: git-send-email 2.54.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260624-fw_scoped-v2-0-0a8db472af4a@nxp.com>
+Content-Transfer-Encoding: 8bit
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[ideasonboard.com,none];
-	R_DKIM_ALLOW(-0.20)[ideasonboard.com:s=mail];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	MID_CONTAINS_FROM(1.00)[];
+	R_MISSING_CHARSET(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-114412-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:Frank.Li@oss.nxp.com,m:andriy.shevchenko@linux.intel.com,m:djrscally@gmail.com,m:heikki.krogerus@linux.intel.com,m:sakari.ailus@linux.intel.com,m:gregkh@linuxfoundation.org,m:rafael@kernel.org,m:dakr@kernel.org,m:mchehab@kernel.org,m:dafna@fastmail.com,m:heiko@sntech.de,m:bryan.odonoghue@linaro.org,m:vladimir.zapolskiy@linaro.org,m:loic.poulain@oss.qualcomm.com,m:driver-core@lists.linux.dev,m:linux-acpi@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-media@vger.kernel.org,m:linux-rockchip@lists.infradead.org,m:linux-arm-kernel@lists.infradead.org,m:linux-arm-msm@vger.kernel.org,m:imx@lists.linux.dev,m:guoniu.zhou@nxp.com,m:Frank.Li@nxp.com,m:guoniu.zhou@oss.nxp.com,s:lists@lfdr.de];
-	FORGED_SENDER(0.00)[laurent.pinchart@ideasonboard.com,linux-arm-msm@vger.kernel.org];
-	FREEMAIL_CC(0.00)[linux.intel.com,gmail.com,linuxfoundation.org,kernel.org,fastmail.com,sntech.de,linaro.org,oss.qualcomm.com,lists.linux.dev,vger.kernel.org,lists.infradead.org,nxp.com,oss.nxp.com];
-	RCPT_COUNT_TWELVE(0.00)[25];
-	RCVD_COUNT_THREE(0.00)[4];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	FORWARDED(0.00)[lists@lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	ALIAS_RESOLVED(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[laurent.pinchart@ideasonboard.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[ideasonboard.com:+];
-	MID_RHS_MATCH_FROMTLD(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TO_DN_SOME(0.00)[];
+	FREEMAIL_CC(0.00)[arndb.de,linuxfoundation.org,vger.kernel.org,lists.freedesktop.org,gmail.com];
+	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-114413-lists,linux-arm-msm=lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	FORGED_RECIPIENTS(0.00)[m:srini@kernel.org,m:amahesh@qti.qualcomm.com,m:arnd@arndb.de,m:gregkh@linuxfoundation.org,m:linux-arm-msm@vger.kernel.org,m:dri-devel@lists.freedesktop.org,m:linux-kernel@vger.kernel.org,m:alhouseenyousef@gmail.com,s:lists@lfdr.de];
+	FORGED_SENDER(0.00)[alhouseenyousef@gmail.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[gmail.com:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	FREEMAIL_FROM(0.00)[gmail.com];
+	PRECEDENCE_BULK(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[alhouseenyousef@gmail.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	RCPT_COUNT_SEVEN(0.00)[8];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	ALIAS_RESOLVED(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	MISSING_XM_UA(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[nxp.com:email,msgid.link:url,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,killaraus.ideasonboard.com:mid,vger.kernel.org:from_smtp,ideasonboard.com:dkim,ideasonboard.com:from_mime]
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,vger.kernel.org:from_smtp]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: B80F76C0FD9
+X-Rspamd-Queue-Id: EB3686C1015
 
-Hi Frank,
+fastrpc_get_payload_size() accumulates the metadata and inline argument
+payload sizes before allocating the coherent invoke buffer. User-provided
+argument ranges can make this accumulator wrap, leaving a buffer smaller
+than the later serialization expects.
 
-On Wed, Jun 24, 2026 at 01:00:08PM -0400, Frank.Li@oss.nxp.com wrote:
-> Add new helper macro fwnode_graph_for_each_endpoint_scoped() and use it
-> simplify media code.
-> 
-> Typical example should qualcomm's driver (camss.c), the v4l2_mc.c and
-> rkisp1-dev.c only silience improvement.
-> 
-> Anyways, *_for_each_*_scoped() already use widely and make code clean.
-> 
-> Build test only.
-> 
-> Sakari Ailus:
-> 	when I try to improve the patch
-> "Add common helper library for 1-to-1 subdev registration", I found need
-> camss.c pattern, so I create this small improvement firstly.
+Return an error when the payload size arithmetic overflows or cannot be
+represented as an allocation size. This prevents an undersized DMA buffer
+from being used for invoke argument serialization.
 
-Those are nice cleanups, thank you.
+Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
+---
+ drivers/misc/fastrpc.c | 18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
 
-After applying this series, the only left users of the
-fwnode_graph_for_each_endpoint() macro are in drivers/base/property.c.
-They can all be trivially replaced with the scoped variant. Should we
-add a patch to use fwnode_graph_for_each_endpoint_scoped() everywhere,
-and drop fwnode_graph_for_each_endpoint() ?
-
-> Signed-off-by: Frank Li <Frank.Li@nxp.com>
-> ---
-> Changes in v2:
-> - colllect review by tags
-> - fix typo and indent.
-> - see each patch's change log.
-> - Link to v1: https://patch.msgid.link/20260622-fw_scoped-v1-0-a37d0aac0a68@nxp.com
-> 
-> ---
-> Frank Li (4):
->       device property: Introduce fwnode_graph_for_each_endpoint_scoped()
->       media: mc: use fwnode_graph_for_each_endpoint_scoped() to simpilfy code
->       media: rkisp1: use fwnode_graph_for_each_endpoint_scoped() to simplify code
->       media: qcom: camss: use fwnode_graph_for_each_endpoint_scoped() to simplify code
-> 
->  drivers/media/platform/qcom/camss/camss.c           | 17 +++++------------
->  drivers/media/platform/rockchip/rkisp1/rkisp1-dev.c |  4 +---
->  drivers/media/v4l2-core/v4l2-mc.c                   |  5 +----
->  include/linux/property.h                            |  5 +++++
->  4 files changed, 12 insertions(+), 19 deletions(-)
-> ---
-> base-commit: 3ce97bd3c4f18608335e709c24d6a40e7036cab8
-> change-id: 20260620-fw_scoped-5dab644510a1
-
+diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+index 4eaecee1b..ed0041076 100644
+--- a/drivers/misc/fastrpc.c
++++ b/drivers/misc/fastrpc.c
+@@ -997,7 +997,8 @@ static int fastrpc_get_meta_size(struct fastrpc_invoke_ctx *ctx)
+ 	return size;
+ }
+ 
+-static u64 fastrpc_get_payload_size(struct fastrpc_invoke_ctx *ctx, int metalen)
++static int fastrpc_get_payload_size(struct fastrpc_invoke_ctx *ctx, int metalen,
++				    u64 *out_size)
+ {
+ 	u64 size = 0;
+ 	int oix;
+@@ -1007,15 +1008,22 @@ static u64 fastrpc_get_payload_size(struct fastrpc_invoke_ctx *ctx, int metalen)
+ 		int i = ctx->olaps[oix].raix;
+ 
+ 		if (ctx->args[i].fd == 0 || ctx->args[i].fd == -1) {
++			u64 len = ctx->olaps[oix].mend -
++				  ctx->olaps[oix].mstart;
+ 
+ 			if (ctx->olaps[oix].offset == 0)
+ 				size = ALIGN(size, FASTRPC_ALIGN);
+ 
+-			size += (ctx->olaps[oix].mend - ctx->olaps[oix].mstart);
++			if (check_add_overflow(size, len, &size))
++				return -EOVERFLOW;
+ 		}
+ 	}
+ 
+-	return size;
++	if (size > SIZE_MAX)
++		return -EOVERFLOW;
++
++	*out_size = size;
++	return 0;
+ }
+ 
+ static int fastrpc_create_maps(struct fastrpc_invoke_ctx *ctx)
+@@ -1068,7 +1076,9 @@ static int fastrpc_get_args(u32 kernel, struct fastrpc_invoke_ctx *ctx)
+ 
+ 	inbufs = REMOTE_SCALARS_INBUFS(ctx->sc);
+ 	metalen = fastrpc_get_meta_size(ctx);
+-	pkt_size = fastrpc_get_payload_size(ctx, metalen);
++	err = fastrpc_get_payload_size(ctx, metalen, &pkt_size);
++	if (err)
++		return err;
+ 
+ 	err = fastrpc_create_maps(ctx);
+ 	if (err)
 -- 
-Regards,
+2.54.0
 
-Laurent Pinchart
 
