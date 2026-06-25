@@ -1,216 +1,259 @@
-Return-Path: <linux-arm-msm+bounces-114581-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-114582-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id JPOeFuGrPWrc5QgAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-114581-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jun 2026 00:29:53 +0200
+	id 58UXHg6sPWrg5QgAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-114582-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jun 2026 00:30:38 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id AA4AC6C8F99
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jun 2026 00:29:52 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id CD24B6C8FA4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jun 2026 00:30:37 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=GIQNh9vj;
-	dkim=pass header.d=oss.qualcomm.com header.s=google header.b="MwzO/EJs";
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-114581-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-114581-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=reject) header.from=qualcomm.com;
+	dkim=fail ("headers rsa verify failed") header.d=igalia.com header.s=20170329 header.b=JFG0xNPI;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-114582-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-114582-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=fail reason="SPF not aligned (relaxed)" header.from=igalia.com (policy=none);
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id C5C4630CA3D4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2026 22:28:03 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 752463044102
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2026 22:29:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 78DC4383318;
-	Thu, 25 Jun 2026 22:28:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C409D37CD37;
+	Thu, 25 Jun 2026 22:29:53 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from fanzine2.igalia.com (fanzine2.igalia.com [213.97.179.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6D193859C3
-	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jun 2026 22:27:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B58B3446CA
+	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jun 2026 22:29:49 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782426483; cv=none; b=uSQz7sPrt2UuXJ5vP35szLW9CzD+k35SFzB/kCd0d3lT3kgmFj+9ie3r5mf5e6U/trOJse/dzPQy7I8LufhcY103GLMoNA59aTWrreSpApczUDTFjzJFLbEALPCVwVKZGkWpBILyF62YFeSN9JK6POGKYbaHG/BTmADGZX5zEJw=
+	t=1782426593; cv=none; b=attlNIuuV8A2F+vvpV7+sgsUdZRbVSk3MNk5ZF84u9rn1FBKecQbjJFF9u4T4H/Zb041pA4Fbsf1ozHOTqsFd56MNjQ2H2spsQw1uF/aXUNeoMsLZU1rqYvW91mhpqDk0xaPqgeenb/OzxZKCXg4c3/ZP6+aOdPt7dumBjDl1XU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782426483; c=relaxed/simple;
-	bh=UJzeniTUGEpiHfu9ZR+orQWkw+fF+r5Mn+nUSwed31g=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=icFTbUItJeiOu7w3gCOCEZUeOzUxI/YstqUdrajZ7ZXlQEmCbMIRaxVbEMoSSj4Bi10VqNuNXSDxu8SR6yw8Y7oKtihmfjJkquoJZa1xqwd7Ojg7rV5YvSr1HXJ8Xw/NFYr7aMA94LpDKbENsintFMttym/bJ15uo6cC9waQKN4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=GIQNh9vj; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=MwzO/EJs; arc=none smtp.client-ip=205.220.168.131
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65PJkQax2809127
-	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jun 2026 22:27:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=CrqeyYgLg0O
-	yN3yne80Nf16IikyqcRRNAcpAakZrOf8=; b=GIQNh9vj7976s1PV4uK6sNl1Ymh
-	Irj/v3lo1FXnt0baIlR0HGIalpQURhWwD7ZF10IZfG4jm+Q2kmjUzcwmmbV682j9
-	wJ8V5S2skww2vmG4xrbktPSs7vhsAIQY8/+GliP5WAxKn5P/TRGbc803FgRjrsEu
-	mOWUrbBUymUL5pG99Ef6PNWv6cyJcmLrmBikJRkW8brsLO1u9W3j48iJAhe/9AeO
-	ngQwZ81/zcVbxPmMtYDjrVitEc4McFZ6Hu3NBJe/eQPQXwFqL+FlUi//jqNDckkj
-	bfrtXSlTC4vwTfXhZR2C5aIYElL7raKT2CBAmz2QnPRVtsauJi9aQsxMsww==
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f1asj8f2j-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jun 2026 22:27:57 +0000 (GMT)
-Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-2c80be91ea3so5138985ad.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jun 2026 15:27:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1782426477; x=1783031277; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=CrqeyYgLg0OyN3yne80Nf16IikyqcRRNAcpAakZrOf8=;
-        b=MwzO/EJsktPAX64ujRU/4vHPYOtnaw8tB3zsJYGrUh5MZCRDj/l81dSjTM1RkjaeSA
-         JIifSeXBaD4huurunFhr7EmZGkFhctkIrqFqppJyVZbgfnnrycijB4BbSB/ZRPq6DCv8
-         XQV/kP0wfWLMZ9RxiSyW3Av6SouWuoxlYJCDoM73x4NsDAgIb3ehNL5SE+iABNDrKELB
-         tz5CdN9voU6N3hTjBfjPk53nkHSaccDO2fb7H8Ebnx0EyL2xucepfbnrSsVrOLKH0QWo
-         FBli8GBt9w69iAacr6uZ2ta5KOPXYJUS8PSd6uWg5nnHZJBDBYBIgqwH8Hj+1HQMAOkQ
-         yS5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782426477; x=1783031277;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=CrqeyYgLg0OyN3yne80Nf16IikyqcRRNAcpAakZrOf8=;
-        b=GGfrATjj7QlJIM5ffLbQenePbnXEr6+/U6YmjcvoekFpVajQloXadm2vLNdz4LClSC
-         0hcFa8UDrQD+eO1TDtGjfOGtR68dE2O5JRQJBRYJvz41Ii8vVuu/ZiONnf12CdusJhiP
-         gwldKmmTCqVErCsvO/bX4po+dW/Nm7zkcmoKiuD8Wx7mUvBZ8Mo8M1S+Ysnd1vuBKVJl
-         CYTKPAUVlpRzYW4fmBJ/m+Zllqw1+M2UF0lL0pNDUY4wUBJtZKo0KBDbel+/TjpcpMbd
-         g/Sa3edD0JwZanHEp8ga2oG11J7UohQPddW68ewTDsI8QMAglYAaLKgoRh+Ti5VLKHxo
-         ulSA==
-X-Gm-Message-State: AOJu0YwWd/fW2qutij4T9z/WuqkGc50gtNH2dxBY/7vZcquGRd8oHEoS
-	QzDWq2zpKl5k9+K7PyYFU0uDVkd3c2Cf04N7fSLclGN3XCIeqNynUX+Std+xP/9+F5Qzf6cHYcX
-	v8QNQZP4A1u7efixRLUzvGquOAoTS71D7DL7hJe43/4TV5DcWjF6lsawKtwZS0LuhpKqA
-X-Gm-Gg: AfdE7cnQ9E8+eWMhtMxWUmnFDPFPRD/g5nbfV+yqob7GDxoO2QABG3pPtVs0FNOKgjJ
-	ve6lWnSBrUEGSrdHEHjz8sMJWiCfOq8ZzWJ5FFraH+GAKhCT9WQnNLDB+2aCY0ZnD3xi4Wqhify
-	k1/OhlvDsXb9hLVfLv5Wd56LoYgdquBq93q+1sxcKQJpcZhpfJ6vZvCmi1/DxfRzFhXOtXOBOkr
-	LtkfhwzQpN+LJRWAOG5OHqc2Wqv40mf+W4tODgULDK3kJLHa/4VNGO4fWf5oHj1cuLvzlIewpE3
-	zMB6LNDjQKwwf/P2JKxQHHutQpc2o56KO6+ycsZz7DVsXVhnOrBgS/iG/gCYkoSQuTqCYrn4fqe
-	KDiNJLDon4arq4j3G80ih5o0fQZOku+fB7tuajCMnLc8CVTp1Vc/g99q/eQ==
-X-Received: by 2002:a17:902:e78d:b0:2c6:90ec:f601 with SMTP id d9443c01a7336-2c7fc632a17mr47006445ad.8.1782426477256;
-        Thu, 25 Jun 2026 15:27:57 -0700 (PDT)
-X-Received: by 2002:a17:902:e78d:b0:2c6:90ec:f601 with SMTP id d9443c01a7336-2c7fc632a17mr47006145ad.8.1782426476790;
-        Thu, 25 Jun 2026 15:27:56 -0700 (PDT)
-Received: from localhost (c-73-37-105-206.hsd1.or.comcast.net. [73.37.105.206])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2c7f63b24a2sm28025595ad.50.2026.06.25.15.27.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Jun 2026 15:27:56 -0700 (PDT)
-From: Rob Clark <robin.clark@oss.qualcomm.com>
-To: dri-devel@lists.freedesktop.org
-Cc: linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        Rob Clark <robin.clark@oss.qualcomm.com>,
-        Sashiko <sashiko-bot@kernel.org>, Sean Paul <sean@poorly.run>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Akhil P Oommen <akhilpo@oss.qualcomm.com>,
-        Dmitry Baryshkov <lumag@kernel.org>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jesszhan0024@gmail.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v3 4/4] drm/msm: Fix per-process-pgtables check
-Date: Thu, 25 Jun 2026 15:27:43 -0700
-Message-ID: <20260625222744.22254-5-robin.clark@oss.qualcomm.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260625222744.22254-1-robin.clark@oss.qualcomm.com>
-References: <20260625222744.22254-1-robin.clark@oss.qualcomm.com>
+	s=arc-20240116; t=1782426593; c=relaxed/simple;
+	bh=JrtoFau50J/hNRwHrhwcVd90kO6UnrYASeuNapH7t2o=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Ejkq6DvpVzYVY8gsbXEND9yKdoG61eriNUuWbi2eaBxK5OOxsIrjY7GS/5wFqX1fmxY2CzOkXEFss1MobFBQDucVMfus3js5dAHKWsgKwjYqlxbmfHrsbuYK1xFF30VgC+NiYWzECktVZFP7aoJSXSy7l7M9ss119WAkid2inkU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=Igalia.com; spf=pass smtp.mailfrom=Igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=JFG0xNPI; arc=none smtp.client-ip=213.97.179.56
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
+	s=20170329; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=+xpz/3mR0vc8MZUDX2dWK/x9YYE2W9Z6zuZ1hivI4Fc=; b=JFG0xNPILkwiYY54VdZjej0/2a
+	1BMr8ZXZRKZm9affvQYSmBPwPFO8tXABfgq3zhwGCeQuwjQzrGq+T5hE2t2h98lQTZktpHkIstRJA
+	zDDb/2I5WmbLIBxP07TG1H4z+JLGVJftpQ/eCTTq1h7G9m3tVek3jgQfhCK6DnXZBgKrQAUL7nB2X
+	ML6Y3gGiUzto0asaKS04xyIWx6ayC+BUIBc9LvQmB3qLCMINJOitdiO4W9gHoM/qW9dD8OcXNyLp8
+	EgbiFbDVNGdVMZlPifMTeM6KyVm2u62mSxvqwIVHiW6yiL06YOSLUSMy5bqeieGuFmEkfXeuA3qew
+	PaE/YFUQ==;
+Received: from c-73-157-168-91.hsd1.or.comcast.net ([73.157.168.91] helo=[192.168.1.133])
+	by fanzine2.igalia.com with esmtpsa 
+	(Cipher TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_128_GCM:128) (Exim)
+	id 1wcsZ4-005FfL-9L; Fri, 26 Jun 2026 00:28:54 +0200
+Message-ID: <140cad50-d1fc-416e-ba84-453e1a2000c4@Igalia.com>
+Date: Thu, 25 Jun 2026 15:28:43 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=TO11jVla c=1 sm=1 tr=0 ts=6a3dab6d cx=c_pps
- a=IZJwPbhc+fLeJZngyXXI0A==:117 a=19Wyn7e3V/0aNffMjNCMQw==:17
- a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22 a=VwQbUJbxAAAA:8
- a=EUspDBNiAAAA:8 a=vtH2vi951kckHO5NeAIA:9 a=uG9DUKGECoFWVXl0Dc02:22
-X-Proofpoint-ORIG-GUID: a_FgmM-AC5QkEtSO3jNiwd2_KnbcgVAB
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI1MDE5MyBTYWx0ZWRfX98Jgsk8rm0kF
- T2La8Nq5thEgOXw255biEUhDa47kCLH5HBsRdtzyL1B2ZiL6a21Xs2q0yMqKnJbb7Nls7ZcKx7s
- Zcpb43B+i4k/kwZT2IYdyUEuYK+myjA=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI1MDE5MyBTYWx0ZWRfX0qxoz1GyXXXQ
- z9NyRwPMgX9djZeDR3g1JGD8ogaRr0lV1i1zIf5X3yMLIg93O3IsjHKmcEAKatqjadVD3N5hkq+
- ZicwtFWZlwtSoly39aM0hzwABGHDUFw5AEuyJOlxe7hOSIFK5QRHlSXMbQ/JPBicI+F7TnTE9xI
- aWD4anAH8/8PTkqqV2+Dvyxz6pVeBBwXdc737FRJ1yassKKqRY71cpvMDE4+35otYEg60SfefqO
- Vn8twkZsa0TiAECJ4Z+SQBzn2SmZZeiK7OXFzFem2IFkmKhJHoxPcV6SvM0cQIR6VW3XfsFk4Ts
- uLSi5vmeawY8KeajvtJvgN05Hj+pIWAMtnHPTusTDCNLh6qWSFJuavySKuvaJ0Dxpa2h7JhN40k
- PFdoR2HPB+RvY4g2lpv/LUEcyKv0opYls6bQ2QQO+QyEBeMz7s8Gt7Vb01YGNSGhuvCTyfwsKmc
- tqpA4zyN2bOjNOFlP/g==
-X-Proofpoint-GUID: a_FgmM-AC5QkEtSO3jNiwd2_KnbcgVAB
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-25_02,2026-06-24_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 adultscore=0 phishscore=0 priorityscore=1501 impostorscore=0
- bulkscore=0 clxscore=1015 spamscore=0 lowpriorityscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606250193
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/7] drm/atomic: only add states of active or transient
+ active colorops
+To: Melissa Wen <mwen@igalia.com>, airlied@gmail.com,
+ alexander.deucher@amd.com, alex.hung@amd.com, aurabindo.pillai@amd.com,
+ christian.koenig@amd.com, contact@emersion.fr, daniels@collabora.com,
+ harry.wentland@amd.com, maarten.lankhorst@linux.intel.com,
+ mripard@kernel.org, simona@ffwll.ch, siqueira@igalia.com,
+ sunpeng.li@amd.com, tzimmermann@suse.de
+Cc: Uma Shankar <uma.shankar@intel.com>,
+ Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>,
+ Xaver Hugl <xaver.hugl@kde.org>,
+ Pekka Paalanen <pekka.paalanen@collabora.com>,
+ Louis Chauvet <louis.chauvet@bootlin.com>,
+ Matthew Schwartz <matthew.schwartz@linux.dev>,
+ amd-gfx@lists.freedesktop.org, kernel-dev@igalia.com,
+ Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov
+ <lumag@kernel.org>, Sean Paul <sean@poorly.run>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+ intel-xe@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
+ dri-devel@lists.freedesktop.org
+References: <20260609121230.1358786-1-mwen@igalia.com>
+ <20260609121230.1358786-2-mwen@igalia.com>
+Content-Language: en-GB
+From: John Harrison <John.Harrison@Igalia.com>
+In-Reply-To: <20260609121230.1358786-2-mwen@igalia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	MID_CONTAINS_FROM(1.00)[];
+X-Spamd-Result: default: False [-0.36 / 15.00];
+	R_DKIM_REJECT(1.00)[igalia.com:s=20170329];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_MISSING_CHARSET(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
+	DMARC_POLICY_SOFTFAIL(0.10)[igalia.com : SPF not aligned (relaxed),none];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_CC(0.00)[vger.kernel.org,lists.freedesktop.org,oss.qualcomm.com,kernel.org,poorly.run,linux.dev,gmail.com,somainline.org,ffwll.ch];
-	RCPT_COUNT_TWELVE(0.00)[15];
-	TAGGED_FROM(0.00)[bounces-114581-lists,linux-arm-msm=lfdr.de];
-	FORGED_SENDER(0.00)[robin.clark@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	RECEIVED_HELO_LOCALHOST(0.00)[];
-	FORWARDED(0.00)[lists@lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:dri-devel@lists.freedesktop.org,m:linux-arm-msm@vger.kernel.org,m:freedreno@lists.freedesktop.org,m:robin.clark@oss.qualcomm.com,m:sashiko-bot@kernel.org,m:sean@poorly.run,m:konradybcio@kernel.org,m:akhilpo@oss.qualcomm.com,m:lumag@kernel.org,m:abhinav.kumar@linux.dev,m:jesszhan0024@gmail.com,m:marijn.suijten@somainline.org,m:airlied@gmail.com,m:simona@ffwll.ch,m:linux-kernel@vger.kernel.org,s:lists@lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:mwen@igalia.com,m:airlied@gmail.com,m:alexander.deucher@amd.com,m:alex.hung@amd.com,m:aurabindo.pillai@amd.com,m:christian.koenig@amd.com,m:contact@emersion.fr,m:daniels@collabora.com,m:harry.wentland@amd.com,m:maarten.lankhorst@linux.intel.com,m:mripard@kernel.org,m:simona@ffwll.ch,m:siqueira@igalia.com,m:sunpeng.li@amd.com,m:tzimmermann@suse.de,m:uma.shankar@intel.com,m:chaitanya.kumar.borah@intel.com,m:xaver.hugl@kde.org,m:pekka.paalanen@collabora.com,m:louis.chauvet@bootlin.com,m:matthew.schwartz@linux.dev,m:amd-gfx@lists.freedesktop.org,m:kernel-dev@igalia.com,m:robin.clark@oss.qualcomm.com,m:lumag@kernel.org,m:sean@poorly.run,m:marijn.suijten@somainline.org,m:linux-arm-msm@vger.kernel.org,m:freedreno@lists.freedesktop.org,m:intel-xe@lists.freedesktop.org,m:intel-gfx@lists.freedesktop.org,m:dri-devel@lists.freedesktop.org,s:lists@lfdr.de];
+	RCVD_COUNT_THREE(0.00)[4];
+	FORGED_SENDER(0.00)[John.Harrison@Igalia.com,linux-arm-msm@vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-114582-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[32];
+	FREEMAIL_TO(0.00)[igalia.com,gmail.com,amd.com,emersion.fr,collabora.com,linux.intel.com,kernel.org,ffwll.ch,suse.de];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
+	FORWARDED(0.00)[lists@lfdr.de];
+	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[robin.clark@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,vger.kernel.org:from_smtp,qualcomm.com:dkim,qualcomm.com:email,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:from_mime];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	ALIAS_RESOLVED(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[John.Harrison@Igalia.com,linux-arm-msm@vger.kernel.org];
+	PRECEDENCE_BULK(0.00)[];
+	DKIM_TRACE(0.00)[igalia.com:-];
+	MID_RHS_MATCH_FROM(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCVD_COUNT_SEVEN(0.00)[7]
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,vger.kernel.org:from_smtp]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: AA4AC6C8F99
+X-Rspamd-Queue-Id: CD24B6C8FA4
 
-ctx->vm should not be inialized yet (or if it has, an error is returned
-immediately following this check), so this isn't a valid way to check
-for per-process-pgtable support.
+On 6/9/26 13:51, Melissa Wen wrote:
+> Only consider affected colorop states those that are part of an active
+> color pipeline or a pipeline that is about to be activated or
+> deactivated in the same atomic commit, i.e., colorop is in the chain of
+> old/new plane color pipeline property. To cover color_pipeline
+> deactivation, remove the condition for plane_state->color_pipeline.
+>
+> Signed-off-by: Melissa Wen <mwen@igalia.com>
+> ---
+>
+> v2: define a macro to walk in the color pipeline (Alex H.)
+> ---
+>   drivers/gpu/drm/drm_atomic.c | 65 +++++++++++++++++++++++++++++++-----
+>   include/drm/drm_colorop.h    |  3 ++
+>   2 files changed, 59 insertions(+), 9 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/drm_atomic.c b/drivers/gpu/drm/drm_atomic.c
+> index 3af1b9cc9a06..464562861408 100644
+> --- a/drivers/gpu/drm/drm_atomic.c
+> +++ b/drivers/gpu/drm/drm_atomic.c
+> @@ -892,6 +892,57 @@ static int drm_atomic_plane_check(const struct drm_plane_state *old_plane_state,
+>   	return 0;
+>   }
+>   
+> +/*
+> + * This function walks old and new plane state color pipelines and adds all
+> + * colorops in use by @plane to the atomic configuration @state. This is useful
+> + * when an atomic commit needs to check all currently enabled or about to be
+> + * enabled colorop on @plane, e.g. when changing the mode. This also avoids
+> + * including colorop states that are not part of the atomic state.
+> + *
+> + * Returns:
+> + * 0 on success or can fail with -EDEADLK or -ENOMEM. When the error is EDEADLK
+> + * then the w/w mutex code has detected a deadlock and the entire atomic
+> + * sequence must be restarted. All other errors are fatal.
+> + */
+> +static int
+> +drm_atomic_add_pipeline_colorops(struct drm_atomic_commit *state,
+> +				 struct drm_plane *plane)
+> +{
+> +	struct drm_colorop *colorop;
+> +	struct drm_colorop_state *colorop_state;
+> +	struct drm_plane_state *new_plane_state, *old_plane_state;
+> +
+> +	new_plane_state = drm_atomic_get_new_plane_state(state, plane);
+> +	old_plane_state = drm_atomic_get_old_plane_state(state, plane);
+> +
+> +	if (WARN_ON(!new_plane_state || !old_plane_state))
+> +		return -EINVAL;
+> +
+> +	drm_dbg_atomic(plane->dev,
+> +		       "Adding old+new pipeline colorops for [PLANE:%d:%s]\n",
+> +		       plane->base.id, plane->name);
+> +
+> +	drm_for_each_colorop_in_pipeline(colorop,
+> +					 new_plane_state->color_pipeline) {
+> +		colorop_state = drm_atomic_get_colorop_state(state, colorop);
+> +		if (IS_ERR(colorop_state))
+> +			return PTR_ERR(colorop_state);
+> +	}
+> +
+> +	/* Same color pipeline as new; no point walking old. */
+> +	if (new_plane_state->color_pipeline == old_plane_state->color_pipeline)
+> +		return 0;
+> +
+> +	drm_for_each_colorop_in_pipeline(colorop,
+> +					 old_plane_state->color_pipeline) {
+> +		colorop_state = drm_atomic_get_colorop_state(state, colorop);
+> +		if (IS_ERR(colorop_state))
+> +			return PTR_ERR(colorop_state);
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+>   static void drm_atomic_colorop_print_state(struct drm_printer *p,
+>   					   const struct drm_colorop_state *state)
+>   {
+> @@ -1671,11 +1722,9 @@ drm_atomic_add_affected_planes(struct drm_atomic_commit *state,
+>   		if (IS_ERR(plane_state))
+>   			return PTR_ERR(plane_state);
+>   
+> -		if (plane_state->color_pipeline) {
+> -			ret = drm_atomic_add_affected_colorops(state, plane);
+> -			if (ret)
+> -				return ret;
+> -		}
+> +		ret = drm_atomic_add_pipeline_colorops(state, plane);
+> +		if (ret)
+> +			return ret;
+>   	}
+>   	return 0;
+>   }
+> @@ -1687,10 +1736,8 @@ EXPORT_SYMBOL(drm_atomic_add_affected_planes);
+>    * @plane: DRM plane
+>    *
+>    * This function walks the current configuration and adds all colorops
+> - * currently used by @plane to the atomic configuration @state. This is useful
+> - * when an atomic commit also needs to check all currently enabled colorop on
+> - * @plane, e.g. when changing the mode. It's also useful when re-enabling a plane
+> - * to avoid special code to force-enable all colorops.
+> + * currently used by @plane to the atomic configuration @state. It's useful
+> + * when re-enabling a plane to avoid special code to force-enable all colorops.
+>    *
+>    * Since acquiring a colorop state will always also acquire the w/w mutex of the
+>    * current plane for that colorop (if there is any) adding all the colorop states for
+Unfortunately, it is not clear from the context diff but this update is 
+for drm_atomic_add_affected_colorops(). That function is now only used 
+by drm_atomic_helper_duplicate_state(). So, potentially it could be move to
+drm_atomic_helper.c and made a static local helper. Alternatively, 
+should the _duplicate_state() function also be updated to only copy the 
+states of colorops in active pipelines as well? It already only does the 
+state add call if there is a pipeline, it just doesn't filter according 
+to the pipeline. Seems like it should? In which case, this blanket add 
+code can be removed entirely.
 
-Instead just check if create_private_vm() is supported.
+John.
 
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Fixes: feb8ef4636a4 ("drm/msm: Add opt-in for VM_BIND")
-Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
----
- drivers/gpu/drm/msm/adreno/adreno_gpu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-index c62c45bb0ddb..bff2a773c0d4 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-@@ -505,7 +505,7 @@ int adreno_set_param(struct msm_gpu *gpu, struct msm_context *ctx,
- 		return msm_context_set_sysprof(ctx, gpu, value);
- 	case MSM_PARAM_EN_VM_BIND:
- 		/* We can only support VM_BIND with per-process pgtables: */
--		if (ctx->vm == gpu->vm)
-+		if (!gpu->funcs->create_private_vm)
- 			return UERR(EINVAL, drm, "requires per-process pgtables");
- 
- 		/*
--- 
-2.54.0
+> diff --git a/include/drm/drm_colorop.h b/include/drm/drm_colorop.h
+> index b4b9e4f558ab..006278e21d49 100644
+> --- a/include/drm/drm_colorop.h
+> +++ b/include/drm/drm_colorop.h
+> @@ -459,6 +459,9 @@ static inline unsigned int drm_colorop_index(const struct drm_colorop *colorop)
+>   #define drm_for_each_colorop(colorop, dev) \
+>   	list_for_each_entry(colorop, &(dev)->mode_config.colorop_list, head)
+>   
+> +#define drm_for_each_colorop_in_pipeline(colorop, pipeline) \
+> +	for ((colorop) = (pipeline); (colorop); (colorop) = (colorop)->next)
+> +
+>   /**
+>    * drm_get_colorop_type_name - return a string for colorop type
+>    * @type: colorop type to compute name of
 
 
