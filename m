@@ -1,210 +1,318 @@
-Return-Path: <linux-arm-msm+bounces-114489-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-114490-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id 7bGGJxr2PGoxvAgAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-114489-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2026 11:34:18 +0200
+	id 1LRzJl33PGqGvAgAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-114490-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2026 11:39:41 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id C49AE6C444A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2026 11:34:17 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 088186C4517
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2026 11:39:41 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=linaro.org header.s=google header.b=Xz4c2sW8;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-114489-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-114489-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=none) header.from=linaro.org;
+	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=b4iMNgnu;
+	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=ULA+b25v;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-114490-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-114490-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=reject) header.from=qualcomm.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 3364E302FA2A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2026 09:34:03 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id ADADA30A3712
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2026 09:37:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A06B739184B;
-	Thu, 25 Jun 2026 09:33:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EBB763CCFD2;
+	Thu, 25 Jun 2026 09:36:55 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 427A22C1595
-	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jun 2026 09:33:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A035C1CAA78
+	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jun 2026 09:36:53 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782380036; cv=none; b=SnygPzB6xTt4qg4my0r5ZbH+FDq0fN5FIW0z1zOKYDkUKl6odzF8KhVsPlMgC9UlNOilpreMyRC2WkI3jFElb2LKDtQMRcbkAbO6arWihYqNhT56Lu5RVslCmr8z9CjodaZ2cJNUlnBagK7Kgu4A3nsV/1acYEftT7o5ZhHQ+0g=
+	t=1782380215; cv=none; b=RpiBrTiEdwdUK4GclK7DcEjhORpkYdW4S06bWx61TBNtv9SZQZ1E/wS1k1vWB+eCM3b1Cz0wrjB3m5y4dxE/SLB4cTrIvCP9APqxko8YxG9AqXN8IywFABsnnvw/TMX1Th3C6wQl029BsL7rFNNsjO48nUvbGHFsqgQ1qxeEPhM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782380036; c=relaxed/simple;
-	bh=f5/dVqkaXjhX6dtp61tSmUjJiQd2J/ejrflXA7Mzdjg=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=mrAPgT4faVNj479M7jDSxLK60cdFn+W3bJwfLbls1DgRIj4aR0IDok8XW+0T/L2/J30SLPIWgb7TAEQlc+K/fKGGZLhVuIa38oqY6o+7vhakv/CwsbuYYJ8qhsJFlD/opawvU8NFFruSI6phWmULmtwyXwp7ebAbvCo/sMLDs4I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Xz4c2sW8; arc=none smtp.client-ip=209.85.128.44
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-490b211ee6aso12909875e9.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jun 2026 02:33:55 -0700 (PDT)
+	s=arc-20240116; t=1782380215; c=relaxed/simple;
+	bh=GINfe0IEN+5RQC/mziNtNaqc6jNSmuKvAfDxICFx8a0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=o/kgwpnDfx3yUFvzDyB+4D1ROyQS74FTxm5obDE1JoAg/VvHzLfM1DY/pn6WQv4kxTR+kvDwEF1h/EJFA2GB+knXzCroQBj7kax0jdgAuTuwL41PfByCeqHlskMsEaA7ZqM6WM9ZfhlsoFmuS8EO6qb0OaCX3Ut0qj5F4dAl8rk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=b4iMNgnu; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=ULA+b25v; arc=none smtp.client-ip=205.220.168.131
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65P8p9nl1247056
+	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jun 2026 09:36:52 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=OYUac9gdHKQ0bXVem8jt8Fm2nxuYdEvOCye
+	Kfp1XuJY=; b=b4iMNgnuCeyqteyCfCxO4izVUiV3jiZBxcTm8xXfwjdqqANQQ9F
+	g0wReeTZC0lKfIYHMZZvt5Z0qXEu5ZevISxFqteaGus1acPDInf19vV8Zr5Fotyc
+	r6kPkA2EHnfy1wV7NJT7zKDDsn0LZdA6VvJMigwvf72CrSCz6d4Gx/AL7XJW0F5s
+	v7OvreKw9Rc4ex9fvnvJVg4J5+cNwqztjSBa1QDPy+o74oMDOlRNN2qIL787vXm1
+	nLq31CWQRd7lOSvx6V1mZpe5rXP2AN5ELlYamDOXCxMl5AyU7r0aHr0ms1MHRCMf
+	PVlgYxZACs8bK4s7EQluw+BnjxhE1PPSVdg==
+Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com [209.85.210.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f0ymv0ju6-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jun 2026 09:36:52 +0000 (GMT)
+Received: by mail-pf1-f199.google.com with SMTP id d2e1a72fcca58-8453a81b846so3026975b3a.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jun 2026 02:36:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1782380034; x=1782984834; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=oX956Ovy0cEzFC2KbieHkOQE6+VfzcgweLx9ANa2s88=;
-        b=Xz4c2sW8kwITg3xlOCpjPnI3onxL0t5GuEd7gsnMHmZJy9sumInNh4J/TWUxyRz0IH
-         SN/Yno/Yat1TIzevsthk/BXUMRnVEATYvR0PSQHxsoMSOG+wk485aNIgL8APv4ByYgpt
-         e5JkTBc0jVXvUem8HFDLzfwg9DXHyneY5twIX+KU6ZrZLc5SVckXEdQ+VghICXmGQECY
-         UvbecFCaB7Qn2MkwGDq8Ff6mED+H19bmHVpL8+Y0XU79gHHtqhx7Pgow7uRbgDZFhUih
-         mWtfWDh8vUvZB2TGhAc6jMJxZrJ5WNRNwtO7nONqKZTEFArsiz0igfazXN8AigEDC//b
-         623w==
+        d=oss.qualcomm.com; s=google; t=1782380212; x=1782985012; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=OYUac9gdHKQ0bXVem8jt8Fm2nxuYdEvOCyeKfp1XuJY=;
+        b=ULA+b25vddAQbIMqvZge0G7lQ65EdEx2j/DwDI7+UdEzhqZDHsmR7uP3Z6YhvGgl1L
+         AdilgOzlw3nJ7+l1f7flOfIkvnzX5KYXuZZpBzMhVIfti2d+RO0RHI8lzJ/VWk/1s8z9
+         k8ZpsSYwv1YtVzjPPN2F31uGPOrf1DD3ajCSThL/KN1SJYwNDjHUYLMbHC941BtN7mKn
+         JSISmtlLc873dN+a0rjaX4N2g+VKUJejQIZYYYml8jZNcFb4k1z17KAJA8zHJ44/BeLP
+         C0qWQdHI856ZozTs3t0QOhZ6yw7I3coUJS/97Kymd448umQfDHC9O79hcOT0SHYo7osX
+         IFgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782380034; x=1782984834;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=oX956Ovy0cEzFC2KbieHkOQE6+VfzcgweLx9ANa2s88=;
-        b=YlnbpwlUrRj2H4pccdfgM3PHHcfINl7yyjso8R6zKyNTFkEEq8gSAa+P6HbusQmQoN
-         R/PE3uh/c+wxxZunVuo7Jn5tZaLVd+i73lxZdBe5rVdHAoNloqynW+HicgtbfUShSUVp
-         14LOVR8DHCW5cGSukR669HuSqnJlG+gRgPgODOy/tvdu7c+BWpwlLgLoS+U2wL2qorBH
-         jN3tE+bENofUSV4A2k7Vw8gy6nN9/zHAzlP/YYaIwH1kTVTJBjQhtjJA/sn5xSE3k/zh
-         RT+EF6b7qEbIf1kDE8tXOFZnXifS+aG+cXKrD168HPbEc0Ruh4YaYGY1wvbEubbTamXo
-         Cbig==
-X-Gm-Message-State: AOJu0Yw0m66Ok0tv5reStejhIr2Bel7awCKG8JrYjXE3oeaPQoNLgLxz
-	EQJIC+yBZXJugEJtbhTGp+0OjnIINCZk9R/BthqwUCx5oS0vCO6eKHLF24PS91OsMQ8=
-X-Gm-Gg: AfdE7ckfMolz/974jxkp5qLFnLJePD8iYNW5A6qLiKBBx90n3iKHkfZ5xdveNV6BsKR
-	+dQ2J92TNifkME68oVkk7kSkcFbRE/kMo2cNMFPE5VeXHhreKb7EWQXZpJLXW/Lt7GZ4Pa8DJQF
-	oDhKdmoe7HZm8F8PVDo3pZ3CYO+pCfucKeAa9/tYD1ym0JBqJ4oFcCHNb15rYanf2lrGtC1SIm0
-	XEiStYdtx4GvNPIfS2bBfmdjDHakZmpcZFuUsca4RLvNcLzlaROEUyLmEJIXR7y+v8uUKEDlCHj
-	VrDxzUggwsdL0kmY3UdXCrNBJCNgh9GsVURvQSKtoJX+3SZd2kPcWzh5S+lh9Tp+8jw5ioy70C3
-	usysMh5ITBPynvSdh+w82bCKMr9gknyISAb6vXxi+v/yn1BmcnyBXs6Jzp6dPwxU+/oNfeXE+EU
-	UOsWTjFKHnl7Sz7uUf2GcQfjCY+yn7btmVW/Pg1zINatV9
-X-Received: by 2002:a05:600c:3b24:b0:492:3fcb:22fe with SMTP id 5b1f17b1804b1-492668551dbmr24085265e9.1.1782380033508;
-        Thu, 25 Jun 2026 02:33:53 -0700 (PDT)
-Received: from arrakeen.starnux.net ([2a01:e0a:106d:1080:8261:5fff:fe11:bdda])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-492660a32ddsm40154745e9.1.2026.06.25.02.33.52
+        d=1e100.net; s=20251104; t=1782380212; x=1782985012;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=OYUac9gdHKQ0bXVem8jt8Fm2nxuYdEvOCyeKfp1XuJY=;
+        b=ro9iC9+HF8AgAKySwy638zn1CrCDpUz8Lsg902opxQCWy/hiro9xzv2w9Y6RgsfryL
+         2NEb3OMySAAEx0AUqz22to9RfIr8euOYyFCTY0mq2cdunM6jboCLtFQDjz/2sLVgfZ5t
+         5IcWdeokF3qbN0tkDQdDUULjTvlXOjUR8hkk3TKXskTriIFpHmJKjsAsOdNYbdTQxJ6w
+         0/h6aHyQgnKkSlEB3Drdaf1fs3YKsREVs7TtQO/pLX/CWbt99ddHwQIW2CKQDjLphXy5
+         9pqCST/KC9K1LSuXQuWQroWNXGk7tSxYQ3sSiS7fWP+Ebi9bEhhZiIAHGIQglTMgPn/p
+         Eprw==
+X-Gm-Message-State: AOJu0YwOJ6hy7YgI/d5/mqpUOEAKXjqVxtlZVDdVc16LUIvFZ4E3K/h2
+	oRtDDueD3YeI6AtTHrZPMWAQKNCwXQTAFaj5xqoFiqZSlYm1WxEAR7te/zAWlo/Fgt3ARlePrLc
+	H6kBrQqdTuwMfqyemVfOxSRHwNxUUa9LN12yE04/MlFSwgQ+kINH9aeSQBehlaanAJPg5
+X-Gm-Gg: AfdE7clLxTG4OVvgt6oRC8ejob+KjhQ48YKlHmZFLLpSRX5MaUuNroWioSsw7RXa3dO
+	1ON+VAx4pP67mvs+JyLN3GNf4XNCOz3DthD/w1Zwurv/DlNEjPgtE5jiZKmoDIPQ+GSblXB2fut
+	1AmNuu3rn9c4ubNR9gCdgTZMXwHqIKTPKUhz3GY+YqZwA5QAdqN1KSmfkwuLe9B3noFYRyqiSwN
+	jIhouvQklRtK0ifgEDl1yWW4rl3FNNTEL40HS2/fF/f0HB9Y/vzi6PznaU6FG4nZ2p5tZtgTpEY
+	WdyC2jX9dlZTbF7YXjiJpqSWThDqzhyoW17KiAhxFdHUDXQ3lj14LWJWBfG+G6oU8MD8/F2gXbH
+	1k/jd8oPQP6Sdzk9g1WE+j6S9szsfu2VE3ZDmNQ==
+X-Received: by 2002:a05:6a00:21d1:b0:82f:5051:f024 with SMTP id d2e1a72fcca58-845b3ac85d9mr2397955b3a.27.1782380211916;
+        Thu, 25 Jun 2026 02:36:51 -0700 (PDT)
+X-Received: by 2002:a05:6a00:21d1:b0:82f:5051:f024 with SMTP id d2e1a72fcca58-845b3ac85d9mr2397885b3a.27.1782380211166;
+        Thu, 25 Jun 2026 02:36:51 -0700 (PDT)
+Received: from hu-mojha-hyd.qualcomm.com ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-845a4120e30sm4372635b3a.50.2026.06.25.02.36.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Jun 2026 02:33:53 -0700 (PDT)
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Date: Thu, 25 Jun 2026 11:33:49 +0200
-Subject: [PATCH v2 2/2] drm/panel: visionox-vtdr6130: switch to devm panel
- calls and drop remove
+        Thu, 25 Jun 2026 02:36:50 -0700 (PDT)
+From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Bartosz Golaszewski <brgl@kernel.org>,
+        Elliot Berman <quic_eberman@quicinc.com>,
+        Andrew Halaney <ahalaney@redhat.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+Subject: [PATCH] firmware: qcom: scm: Fix resource cleanup on probe failure
+Date: Thu, 25 Jun 2026 15:06:44 +0530
+Message-ID: <20260625093644.3918184-1-mukesh.ojha@oss.qualcomm.com>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260625-topic-sm8x50-vtdr6130-dsc-v2-2-cd375ef0e0ce@linaro.org>
-References: <20260625-topic-sm8x50-vtdr6130-dsc-v2-0-cd375ef0e0ce@linaro.org>
-In-Reply-To: <20260625-topic-sm8x50-vtdr6130-dsc-v2-0-cd375ef0e0ce@linaro.org>
-To: Jessica Zhang <jesszhan0024@gmail.com>, 
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>
-Cc: linux-arm-msm@vger.kernel.org, 
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
- Doug Anderson <dianders@chromium.org>, dri-devel@lists.freedesktop.org, 
- linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>
-X-Mailer: b4 0.15.1
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1783;
- i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=f5/dVqkaXjhX6dtp61tSmUjJiQd2J/ejrflXA7Mzdjg=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBqPPX+4aHjc5CmtFTizCjgBxTKEob1ERvbC85IMHIR
- Ho9pT1GJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCajz1/gAKCRB33NvayMhJ0WWIEA
- C2I/K4cJOYNlTJAoydIMSupmXrYbACAnfJSnPE+mAZTP6xwzzZjhEckIrF0Ng9aFo5Lz3S5ZXsRwYp
- wLunhJs/yDYOIgRtS3I6uTtNKMKb1X2DrQPOq8SwAUYXS5jNzfMV6Aukcxe714oOkXsWbHYM4Lh8tY
- Uv18is9Lnm2ycCicd47KMKwQZHlQ5UtkTJ3pyDBB4MIPJN0eBnQFyB3SdoAhGuQ7MDEpdH7tDkBVbP
- 5RXxU97wRI5kfH/BcWpS7BR/If+oNuD1+9wbz6Ge+SD94mJql+2y7rvE2m8+RoAkZne8HYVQ5lrZut
- dVq3Nefi0RACJMZ+7n2w94B1jn8lCNtGgmqW5TigUW9ovVv7wnwdzECAlUX4O9DKEpli+ggkCg3zJq
- sVw9/UEhn7B68y2G3o2N7VD3Q0o7DgJKnZ7SI+KeJ42RmXa4g8y5faMHZELEANBW+cmMMKIa82+HJH
- lbq8hrcM1UxrR9aIeAqJKxPj6zTMQ8mxuPRAK5+JK4kg7JGX2oZ0o3sOgpKxU4UObTxZh0odfJWdAk
- 0E+/OvG53z1NEGFwlCickOiZ4ocEm+tLidYw1HzLv8biBTzVY4JX6gKpXPWhgvi7m269hA6lB5M6l8
- 8es6hztZv92h0Vl8aXpaczH8UB/S/iQekCu7+tpkOMN60gx3EmneIUgjz6Ng==
-X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
- fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=DqBmPm/+ c=1 sm=1 tr=0 ts=6a3cf6b4 cx=c_pps
+ a=WW5sKcV1LcKqjgzy2JUPuA==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+ a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22 a=VwQbUJbxAAAA:8
+ a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=uihZu18H8m0TJQArKZ8A:9
+ a=OpyuDcXvxspvyRM73sMx:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI1MDA4MiBTYWx0ZWRfX2TDvERcSk4TJ
+ rEki1+UmGizJF7TUZ5JjSiKHpax6FNB4qbZ+82TIyGVQF6ues30VMHmUD5APtukXqDyQQXFp5If
+ 2dCqPdTqfmmQn8D9io56M816MuCuHzI=
+X-Proofpoint-ORIG-GUID: qfMiBBpXiX72Rz-QZ_iNLgILrB35AxHw
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI1MDA4MiBTYWx0ZWRfXz/79lR63oJT/
+ dkaNyQGhISw7LKbLQ5kqpX3efeW/Dzz4BzpMUh+LQPEMzi6bIj+xf4EWaxoKzx4rpEH0EWMoF4w
+ +gtr+idKwXSZzxh6hVKl/UCk+GR68w+g5oO5lUa9gNLyWplGwzDj/JQdepNV8dEmzBLFQ2cUWiU
+ cy2CAYy+L+Dk5Dhd6mAlP2jcboFp0vwXGqzY3l8+ohMXRdsA2kjcSvGmHcd8XVwkN+noLLrtCA8
+ jRJYtucUUHo15e8E2WEGqn7jI+MFO8dvbTdrHzmlvY42ObJqLz1ahOM8EfPIhPSqhzHQZ2Sje05
+ 5hQ6fS9AqRX8GDy6dc4aZsy5Pwt/IlMtmXL/eXb2+mEgNniHN+mcaIxTGu5O6J36CBo9TSFlHh/
+ ZM+PXvEyWPAjgfIllM6I7mUNMoq4bAObF03ZZ9pk8FaqRlfBmL/lfBQ1nbP6czMes4j2TRm6q3R
+ f+bq4ke3EcwHdP7Iohg==
+X-Proofpoint-GUID: qfMiBBpXiX72Rz-QZ_iNLgILrB35AxHw
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-25_01,2026-06-24_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 lowpriorityscore=0 priorityscore=1501 malwarescore=0
+ suspectscore=0 bulkscore=0 adultscore=0 spamscore=0 impostorscore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2606250082
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
-	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	MID_CONTAINS_FROM(1.00)[];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_MISSING_CHARSET(0.50)[];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-114489-lists,linux-arm-msm=lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:jesszhan0024@gmail.com,m:maarten.lankhorst@linux.intel.com,m:mripard@kernel.org,m:tzimmermann@suse.de,m:airlied@gmail.com,m:simona@ffwll.ch,m:linux-arm-msm@vger.kernel.org,m:dmitry.baryshkov@oss.qualcomm.com,m:dianders@chromium.org,m:dri-devel@lists.freedesktop.org,m:linux-kernel@vger.kernel.org,m:neil.armstrong@linaro.org,s:lists@lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER(0.00)[neil.armstrong@linaro.org,linux-arm-msm@vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[12];
-	FREEMAIL_TO(0.00)[gmail.com,linux.intel.com,kernel.org,suse.de,ffwll.ch];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FORWARDED(0.00)[lists@lfdr.de];
-	DKIM_TRACE(0.00)[linaro.org:+];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	TO_DN_SOME(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[neil.armstrong@linaro.org,linux-arm-msm@vger.kernel.org];
+	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-114490-lists,linux-arm-msm=lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:andersson@kernel.org,m:konradybcio@kernel.org,m:brgl@kernel.org,m:quic_eberman@quicinc.com,m:ahalaney@redhat.com,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:mukesh.ojha@oss.qualcomm.com,s:lists@lfdr.de];
+	FORGED_SENDER(0.00)[mukesh.ojha@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	FORWARDED(0.00)[lists@lfdr.de];
+	FROM_NEQ_ENVFROM(0.00)[mukesh.ojha@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[8];
 	ALIAS_RESOLVED(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,qualcomm.com:email,linaro.org:email,vger.kernel.org:from_smtp,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:from_mime,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,linaro.org:dkim,linaro.org:email,linaro.org:mid,linaro.org:from_mime,vger.kernel.org:from_smtp]
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	TO_DN_SOME(0.00)[];
+	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: C49AE6C444A
+X-Rspamd-Queue-Id: 088186C4517
 
-Switch to devm_drm_panel_add() and devm_mipi_dsi_attach() and drop
-the remove() callback.
+qcom_scm_probe() acquires two non-devres resources that are never
+released if probe fails or defers after them. of_reserved_mem_device_init()
+adds an entry to a global list with no devres counterpart, so a retry
+would add a duplicate entry and leak the original. qcom_tzmem_enable()
+sets a static qcom_tzmem_dev pointer and may set qcom_tzmem_using_shm_bridge;
+without cleanup a probe retry finds qcom_tzmem_dev already set and
+returns -EBUSY, permanently preventing the driver from probing.
 
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Introduce err_tzmem and err_rmem goto labels at the end of probe to
+call qcom_tzmem_disable() and of_reserved_mem_device_release() in the
+right order, route all subsequent error paths through them, and add
+qcom_tzmem_disable() to qcom_tzmem.c to clear the static state.
+
+Fixes: a33b2579c8d3 ("firmware: qcom: scm: add support for SHM bridge memory carveout")
+Fixes: 40289e35ca52 ("firmware: qcom: scm: enable the TZ mem allocator")
+Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
 ---
- drivers/gpu/drm/panel/panel-visionox-vtdr6130.c | 24 +++---------------------
- 1 file changed, 3 insertions(+), 21 deletions(-)
+This is reported on sasiko review as existing issue here
+ https://lore.kernel.org/all/20260624192213.C82691F000E9@smtp.kernel.org/
+and it can go independently.
 
-diff --git a/drivers/gpu/drm/panel/panel-visionox-vtdr6130.c b/drivers/gpu/drm/panel/panel-visionox-vtdr6130.c
-index 0cdcdbbc766d..6733e0e1d061 100644
---- a/drivers/gpu/drm/panel/panel-visionox-vtdr6130.c
-+++ b/drivers/gpu/drm/panel/panel-visionox-vtdr6130.c
-@@ -298,28 +298,11 @@ static int visionox_vtdr6130_probe(struct mipi_dsi_device *dsi)
- 		return dev_err_probe(dev, PTR_ERR(ctx->panel.backlight),
- 				     "Failed to create backlight\n");
+ drivers/firmware/qcom/qcom_scm.c   | 42 +++++++++++++++++++++---------
+ drivers/firmware/qcom/qcom_tzmem.c |  7 +++++
+ drivers/firmware/qcom/qcom_tzmem.h |  1 +
+ 3 files changed, 37 insertions(+), 13 deletions(-)
+
+diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
+index ba5cdeed8a04..cb3d776fa645 100644
+--- a/drivers/firmware/qcom/qcom_scm.c
++++ b/drivers/firmware/qcom/qcom_scm.c
+@@ -2883,9 +2883,11 @@ static int qcom_scm_probe(struct platform_device *pdev)
+ 				     "Failed to setup the reserved memory region for TZ mem\n");
  
--	drm_panel_add(&ctx->panel);
--
--	ret = mipi_dsi_attach(dsi);
--	if (ret < 0) {
--		dev_err(dev, "Failed to attach to DSI host: %d\n", ret);
--		drm_panel_remove(&ctx->panel);
-+	ret = devm_drm_panel_add(dev, &ctx->panel);
-+	if (ret)
- 		return ret;
--	}
--
--	return 0;
--}
--
--static void visionox_vtdr6130_remove(struct mipi_dsi_device *dsi)
--{
--	struct visionox_vtdr6130 *ctx = mipi_dsi_get_drvdata(dsi);
--	int ret;
--
--	ret = mipi_dsi_detach(dsi);
--	if (ret < 0)
--		dev_err(&dsi->dev, "Failed to detach from DSI host: %d\n", ret);
+ 	ret = qcom_tzmem_enable(scm->dev);
+-	if (ret)
+-		return dev_err_probe(scm->dev, ret,
+-				     "Failed to enable the TrustZone memory allocator\n");
++	if (ret) {
++		ret = dev_err_probe(scm->dev, ret,
++				    "Failed to enable the TrustZone memory allocator\n");
++		goto err_rmem;
++	}
  
--	drm_panel_remove(&ctx->panel);
-+	return devm_mipi_dsi_attach(dev, dsi);
+ 	memset(&pool_config, 0, sizeof(pool_config));
+ 	pool_config.initial_size = 0;
+@@ -2893,16 +2895,20 @@ static int qcom_scm_probe(struct platform_device *pdev)
+ 	pool_config.max_size = SZ_256K;
+ 
+ 	scm->mempool = devm_qcom_tzmem_pool_new(scm->dev, &pool_config);
+-	if (IS_ERR(scm->mempool))
+-		return dev_err_probe(scm->dev, PTR_ERR(scm->mempool),
+-				     "Failed to create the SCM memory pool\n");
++	if (IS_ERR(scm->mempool)) {
++		ret = dev_err_probe(scm->dev, PTR_ERR(scm->mempool),
++				    "Failed to create the SCM memory pool\n");
++		goto err_tzmem;
++	}
+ 
+ 	ret = qcom_scm_query_waitq_count(scm);
+ 	scm->wq_cnt = ret < 0 ? QCOM_SCM_DEFAULT_WAITQ_COUNT : ret;
+ 	scm->waitq_comps = devm_kcalloc(&pdev->dev, scm->wq_cnt, sizeof(*scm->waitq_comps),
+ 					GFP_KERNEL);
+-	if (!scm->waitq_comps)
+-		return -ENOMEM;
++	if (!scm->waitq_comps) {
++		ret = -ENOMEM;
++		goto err_tzmem;
++	}
+ 
+ 	for (i = 0; i < scm->wq_cnt; i++)
+ 		init_completion(&scm->waitq_comps[i]);
+@@ -2912,14 +2918,18 @@ static int qcom_scm_probe(struct platform_device *pdev)
+ 		irq = platform_get_irq_optional(pdev, 0);
+ 
+ 	if (irq < 0) {
+-		if (irq != -ENXIO)
+-			return irq;
++		if (irq != -ENXIO) {
++			ret = irq;
++			goto err_tzmem;
++		}
+ 	} else {
+ 		ret = devm_request_threaded_irq(scm->dev, irq, NULL, qcom_scm_irq_handler,
+ 						IRQF_ONESHOT, "qcom-scm", scm);
+-		if (ret < 0)
+-			return dev_err_probe(scm->dev, ret,
+-					     "Failed to request qcom-scm irq\n");
++		if (ret < 0) {
++			ret = dev_err_probe(scm->dev, ret,
++					    "Failed to request qcom-scm irq\n");
++			goto err_tzmem;
++		}
+ 	}
+ 
+ 	/*
+@@ -2966,6 +2976,12 @@ static int qcom_scm_probe(struct platform_device *pdev)
+ 	qcom_scm_gunyah_wdt_init(scm);
+ 
+ 	return 0;
++
++err_tzmem:
++	qcom_tzmem_disable(scm->dev);
++err_rmem:
++	of_reserved_mem_device_release(scm->dev);
++	return ret;
  }
  
- static const struct of_device_id visionox_vtdr6130_of_match[] = {
-@@ -330,7 +313,6 @@ MODULE_DEVICE_TABLE(of, visionox_vtdr6130_of_match);
+ static void qcom_scm_shutdown(struct platform_device *pdev)
+diff --git a/drivers/firmware/qcom/qcom_tzmem.c b/drivers/firmware/qcom/qcom_tzmem.c
+index 0635cbeacfc8..3f2b782f4a94 100644
+--- a/drivers/firmware/qcom/qcom_tzmem.c
++++ b/drivers/firmware/qcom/qcom_tzmem.c
+@@ -518,6 +518,13 @@ int qcom_tzmem_enable(struct device *dev)
+ }
+ EXPORT_SYMBOL_GPL(qcom_tzmem_enable);
  
- static struct mipi_dsi_driver visionox_vtdr6130_driver = {
- 	.probe = visionox_vtdr6130_probe,
--	.remove = visionox_vtdr6130_remove,
- 	.driver = {
- 		.name = "panel-visionox-vtdr6130",
- 		.of_match_table = visionox_vtdr6130_of_match,
-
++void qcom_tzmem_disable(struct device *dev)
++{
++	qcom_tzmem_using_shm_bridge = false;
++	qcom_tzmem_dev = NULL;
++}
++EXPORT_SYMBOL_GPL(qcom_tzmem_disable);
++
+ MODULE_DESCRIPTION("TrustZone memory allocator for Qualcomm firmware drivers");
+ MODULE_AUTHOR("Bartosz Golaszewski <bartosz.golaszewski@linaro.org>");
+ MODULE_LICENSE("GPL");
+diff --git a/drivers/firmware/qcom/qcom_tzmem.h b/drivers/firmware/qcom/qcom_tzmem.h
+index 8fa8a3eb940e..0b0f26d4e22e 100644
+--- a/drivers/firmware/qcom/qcom_tzmem.h
++++ b/drivers/firmware/qcom/qcom_tzmem.h
+@@ -9,5 +9,6 @@
+ struct device;
+ 
+ int qcom_tzmem_enable(struct device *dev);
++void qcom_tzmem_disable(struct device *dev);
+ 
+ #endif /* __QCOM_TZMEM_PRIV_H */
 -- 
-2.34.1
+2.53.0
 
 
