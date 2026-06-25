@@ -1,53 +1,53 @@
-Return-Path: <linux-arm-msm+bounces-114451-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-114452-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id yI9yCKPOPGo7sggAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-114451-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2026 08:45:55 +0200
+	id kv1cEkLPPGplsggAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-114452-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2026 08:48:34 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 74DDC6C31E1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2026 08:45:54 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 963846C320B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2026 08:48:33 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=JwfrH5gq;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-114451-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-114451-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=SBYJ5Y8E;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-114452-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-114452-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 59006303429C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2026 06:45:36 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 693263013D7E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2026 06:48:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D81EA3603DD;
-	Thu, 25 Jun 2026 06:45:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C0EE63C0A13;
+	Thu, 25 Jun 2026 06:48:31 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA1601D47AC;
-	Thu, 25 Jun 2026 06:45:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB398FC0A;
+	Thu, 25 Jun 2026 06:48:30 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782369934; cv=none; b=PyX5CRuF1eS4fyUUKDxPWCLYWouNtpgyjiE7pjICuHoNPMQgrSKZMiP6CqgaAN2EutELYgOzGuGAqi7U5jUbPEwzrZyHJuaFB7Evl6g7a5wxDkfL8Ew43c0Rf79w3TcBmvuGyR3fo7xIpTyzoL8JGKDz6CIrJ3jLOpdLdXiV+TQ=
+	t=1782370111; cv=none; b=eiPLx9x2AWWmEV7RjFb38mGpJYq9jrk8MhX3Xs2D/rs21/8PkA6PeyJDeXxo9VarOy6Q7O7K/j3FIYDhLzR9/Xk9zHw+HNs3y5oK2QBLvochUnf/1COwFAae+9d0aUxFX3U6NvIA8UNCiySNPmLhHvDvZ5He6zDUel6Ev6JtLGo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782369934; c=relaxed/simple;
-	bh=snIsV+oiJM5SRuuUTmH+tiXuzpTBAeTJFdysxj17Ayo=;
+	s=arc-20240116; t=1782370111; c=relaxed/simple;
+	bh=8DQz7R3erOp/QCVcYib3MjtHtl1bxMjtS0XRdLtIgtw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=swED7Nr6WZzEFFfxX4yjeVushy3ZHJa0GXn9T8bDiDisbHU4BE7eyZsVRTuew+E6kh0X0RVYBulq+tKpaClbvL94xPrC9cx8fIUPpYikK2iDKFtTDX7MTwWMH/Mjbol3AMDSPeWwBoxoH0pq9Q/vnIJ/Vg9zaJbjcMw7OOEFKbg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JwfrH5gq; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 099741F000E9;
-	Thu, 25 Jun 2026 06:45:28 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=PxVc6s5NDrdFvZoV3kUl1ETHHJEikjiwu2Y4cAKTsDu5yU/JFn5w6zzE6CxwXIkjZu4CqVwdN3cGGZoNT1C/OFuvmAdrBojH6AHqYw5HD4LmVIWnlYbVnWfaOOjbBgOSWALVxjgMQLDwV7iPfwP59KexddrJzLpjYlI6ooeFk0c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SBYJ5Y8E; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17AE51F000E9;
+	Thu, 25 Jun 2026 06:48:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782369933;
-	bh=7hh+1OvfrguuVwzjYZC+7ARU09ldTNZ015rKDMXv7Go=;
+	s=k20260515; t=1782370110;
+	bh=YvQ6zpgStizKAGerrynhopeRrODxM3h9VJ9feKkaqaE=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=JwfrH5gqA268KOcErl+Cx36F7AxWadPW/ZFWXeI0auk1tDNLQGcsqD5n298EktS07
-	 Lf55uNarrJogQfrNbi8CWv8zTIGAf4Ldvac61WVN7q2DGid51vEkaCnzC1YHWAqtIv
-	 XBSDs4voBTVKCJk4cNPMpkXuUoWN/WZCyAK2BznOUdGDTIXAALwS6oI7cttOa4rJ6V
-	 Uj9h20L3/0JfpwxJHnvINjE0QIyXvjAEWLzQcKYJCriIAgwmIntcaVBxAgV2R94mu0
-	 YLWdBvS90gXiqT7FAY12IHCsAkSc+abyZ5rr2J6PXfVZvnTTXyd5Nj5sh8/PZslkrp
-	 OUf8q1ZLvgwtg==
-Message-ID: <dc827dea-0ba6-46ad-9e15-ab789f2b481e@kernel.org>
-Date: Thu, 25 Jun 2026 08:45:26 +0200
+	b=SBYJ5Y8EAPrfK4sW8q5WVGXS15cfkuvEhTgoGWCe0Vf/rggHPdRQZFSQgaCX06F61
+	 1aiFIsprbfAfYl3EaS7wSnKsob4Ia6h50zvQpPDLQ4G7xjEE8nTev0DXnmqAwKinSi
+	 dymJQbTJvVlWOkfjjkdz9gCjAGTRIDV8r3Kzef6ZhIJBQHU1Xx0U6Vi23j8mZ/ih4s
+	 SO2Vt3eKQV3IIsJb5OMdYcElSMzmQgRAT+ayFNDshVGVAjAST3x+ePp8EhorHnjXvr
+	 nU0drxJmYp7SJ9YR6uNBM4xLREFmN+ou6h2x7tfXFiDcETUhTqw2JZxCcn1OS+pnlq
+	 970PLQxTjPRDg==
+Message-ID: <d9582027-8555-49e2-9a36-c3b952dc61d4@kernel.org>
+Date: Thu, 25 Jun 2026 08:48:20 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -55,23 +55,38 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/3] dt-bindings: power: limits: Describe Qualcomm SPEL
- hardware
+Subject: Re: [PATCH v3 1/8] dt-bindings: remoteproc: qcom,pas: add thermal
+ mitigation properties
 To: Daniel Lezcano <daniel.lezcano@oss.qualcomm.com>,
- Manaf Meethalavalappu Pallikunhi <manaf.pallikunhi@oss.qualcomm.com>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Gaurav Kohli <gaurav.kohli@oss.qualcomm.com>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-pm@vger.kernel.org
-References: <20260620-qcom_spel_driver_upstream-v2-0-a3ee6837c18f@oss.qualcomm.com>
- <20260620-qcom_spel_driver_upstream-v2-1-a3ee6837c18f@oss.qualcomm.com>
- <20260622-armored-witty-tarantula-84a28a@quoll>
- <db8f06fa-0dda-4a22-baaf-8a708d43e113@oss.qualcomm.com>
- <d0528339-8be9-4895-a054-625df96ca926@kernel.org>
- <63d42dd6-862f-4a9c-a950-5bc90ffab391@oss.qualcomm.com>
+ Gaurav Kohli <gaurav.kohli@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+ Mathieu Poirier <mathieu.poirier@linaro.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Amit Kucheria <amit.kucheria@oss.qualcomm.com>,
+ Manivannan Sadhasivam <mani@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Kees Cook <kees@kernel.org>,
+ "Gustavo A. R. Silva" <gustavoars@kernel.org>,
+ cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org,
+ linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+ linux-hardening@vger.kernel.org,
+ Manaf Meethalavalappu Pallikunhi <manaf.pallikunhi@oss.qualcomm.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+References: <20260609-qmi-tmd-v3-0-291a2ff4c634@oss.qualcomm.com>
+ <20260609-qmi-tmd-v3-1-291a2ff4c634@oss.qualcomm.com>
+ <20260610-ocelot-of-stimulating-excellence-bcb0fe@quoll>
+ <03d863ee-2caa-41f2-94b5-7332fc930b42@oss.qualcomm.com>
+ <d81bc78e-2c1d-45fd-90c9-f7ec462183a0@kernel.org>
+ <7f1e46fb-15e3-4638-9930-8abc1dd5a778@oss.qualcomm.com>
+ <fcf93e0f-a2f0-4070-86ec-8a34e9344b76@kernel.org>
+ <ec65893d-873a-4a62-b0e2-5008b2130545@oss.qualcomm.com>
+ <3cbcaf8c-357e-42d2-91c1-9d1a32c55ed0@oss.qualcomm.com>
+ <ae43a691-4879-4bfa-8c7c-1be16945480c@oss.qualcomm.com>
+ <9a31bb29-75d7-42fa-b8a8-4155cf85cadf@oss.qualcomm.com>
+ <c32e263c-ba4e-4899-a935-e129de0f1269@kernel.org>
+ <61765401-3397-497d-a0ca-e9bf9d76cc6a@oss.qualcomm.com>
+ <5b0f1f39-ddaa-4a2e-ab29-34aacc9ff672@kernel.org>
+ <ae0ec05e-607b-4022-a006-2eb1a283144d@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -117,30 +132,31 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  K9bCVaboTA2T77QYkRcRJYSsO1alGX0ome/hMLD1daXlkrNUp1HWa3K4iytLRXjCSIorWiGs
  n+q3krnpXu3TFkA8qtOFZMdnIiFuiq1yLT8hptsV5xh1TA2nsVvSYiaCr3q4s4BKjS/KrLDb
  qoxzw8ISjdUp4pA85vb6YLCmb39NgidD+7PmAr65lBNveIFynTgsja1rRQ4=
-In-Reply-To: <63d42dd6-862f-4a9c-a950-5bc90ffab391@oss.qualcomm.com>
+In-Reply-To: <ae0ec05e-607b-4022-a006-2eb1a283144d@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-5.16 / 15.00];
+X-Spamd-Result: default: False [-3.66 / 15.00];
 	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-114452-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_RECIPIENTS(0.00)[m:daniel.lezcano@oss.qualcomm.com,m:gaurav.kohli@oss.qualcomm.com,m:andersson@kernel.org,m:mathieu.poirier@linaro.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:amit.kucheria@oss.qualcomm.com,m:mani@kernel.org,m:konradybcio@kernel.org,m:kees@kernel.org,m:gustavoars@kernel.org,m:cros-qcom-dts-watchers@chromium.org,m:linux-arm-msm@vger.kernel.org,m:linux-remoteproc@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-pm@vger.kernel.org,m:linux-hardening@vger.kernel.org,m:manaf.pallikunhi@oss.qualcomm.com,m:dmitry.baryshkov@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	RCVD_COUNT_THREE(0.00)[4];
-	FORWARDED(0.00)[lists@lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:daniel.lezcano@oss.qualcomm.com,m:manaf.pallikunhi@oss.qualcomm.com,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:rafael@kernel.org,m:andersson@kernel.org,m:konradybcio@kernel.org,m:gaurav.kohli@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-pm@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	FORGED_SENDER(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	TAGGED_FROM(0.00)[bounces-114451-lists,linux-arm-msm=lfdr.de];
+	FORWARDED(0.00)[lists@lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[21];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
@@ -149,46 +165,70 @@ X-Spamd-Result: default: False [-5.16 / 15.00];
 	MID_RHS_MATCH_FROM(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[13];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TO_DN_SOME(0.00)[]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 74DDC6C31E1
+X-Rspamd-Queue-Id: 963846C320B
 
-On 24/06/2026 22:41, Daniel Lezcano wrote:
-> It allows power capping and read the average power consumption for a 
-> specific device (or/and an energy counter)
+On 24/06/2026 17:56, Daniel Lezcano wrote:
+> On 6/24/26 12:42, Krzysztof Kozlowski wrote:
 > 
-> Basically you can set a power constraint (power limit) to a device and 
-> this one won't consume more than that power (the power limitation 
-> strategy is managed under the hood by the firmware depending on the 
-> device - lower OPP, idle injection, modem weaker signal, etc ...).
+> [ ... ]
 > 
-> The RAPL or the SPEL have a hierarchical power limitation. For example:
-> 
->                                      SoC
->                                       |
->                            ------------------------
->                           |                        |
->                       Cluster0                 Cluster1
->                           |                        |
->                  -----------------        -----------------
->                 |     |     |     |      |     |     |     |
->               CPU0  CPU1  CPU2  CPU3   CPU4  CPU5  CPU6  CPU7
+>> Therefore I still do not see the need of tmd-names. You know the name of
+>> cooling device, because you have strict one-to-one mapping.
 > 
 > 
-> If you specify a power limit to 'SoC', then the power consumption of 
-> Cluster0 + Cluster1 <= SoC
+> There is one remote proc with one or multiple cooling devices attached.
 > 
-> If Cluster0 power consumption decreases, then Cluster1 is allowed to use 
-> more power until Cluster0 + Cluster1 <= SoC
+> We describe those in the remoteproc node with the tmd-names.
 > 
-> For me it sounds reasonable to put the device description under power/limits
+> Anyway, we should be able to list the tmd names in the driver itself if 
+> we ensure a consistency with the index by defining them in a shared 
+> header eg. include/dt-bindings/firmware/qcom,cdsp.h
+> 
+> #define HAMOA_TMD_CDSP_SW 0
+> #define HAMOA_TMD_CDSP_HW 1
+> #define HAMOA_TMD_CP0UV_RESTRICTION_COLD 2
+> 
+> In the driver:
+> 
+> struct tmd_name {
+> 	const char *name;
+> 	int id;
+> 	bool disabled;
+> };
+> 
+> static struct tmd_name tmd_names[] = {
+> 	{ .name = "cdsp_sw", HAMOA_TMD_CDSP_SW },
+> 	{ .name = "cdsp_hw", HAMOA_TMD_CDSP_HW, .disabled = true },
+> 	{ .name = "cpuv_restriction_cold", HAMOA_TMD_CP0UV_RESTRICTION_COLD, 
+> .disabled = true },
+> };
+> 
+> ...
+> 	for (int i = 0; i < ARRAY_SIZE(tmd_names); i++) {
+> 
+> 		if (tmd_names[i].disabled)
+> 			continue;
+> 		devm_cooling_of_device_register(rprocdev,
+> 			tmd_names[i].name, tmd_names[i].id, ...);
+> 	}
+> 
+> 
+> In the device tree:
+> 
+> 	cooling-maps = <&rproc HAMOA_TMD_CDSP_SW min max>;
+> 
+> I think that is somehow what Konrad and Dmitry were suggesting
+> 
+> Does it sound better ?
 
-
-Yes, can go there. Some pieces of above explanation could be captured in
-commit msg.
-
+Yes and I am surprised that it came now. So you had TMD index available
+thus the ID was defined. If device has unique and fixed ID, you should
+not have any more properties defining it, because that ID is enough. Any
+names could be only for users, e.g. label, but that is not the case here.
 
 Best regards,
 Krzysztof
