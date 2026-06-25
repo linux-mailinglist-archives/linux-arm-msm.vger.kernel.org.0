@@ -1,53 +1,53 @@
-Return-Path: <linux-arm-msm+bounces-114446-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-114447-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id wzVlCfnIPGpCsAgAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-114446-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2026 08:21:45 +0200
+	id 5oh1CoTJPGpwsAgAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-114447-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2026 08:24:04 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id B628E6C2FEF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2026 08:21:44 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id B164F6C3016
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2026 08:24:03 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=GLykoh8W;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-114446-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.232.135.74 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-114446-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=FypkqN5t;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-114447-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c09:e001:a7::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-114447-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 318F73011057
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2026 06:21:44 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 02959300D353
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2026 06:24:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 32C3C3BE650;
-	Thu, 25 Jun 2026 06:21:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 236463C063E;
+	Thu, 25 Jun 2026 06:24:00 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33718364028;
-	Thu, 25 Jun 2026 06:21:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2300D1C84DC;
+	Thu, 25 Jun 2026 06:23:58 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782368503; cv=none; b=jOu9qK4SzsttkKaOzldFnyANtsb6OeGM3f/wofUZ+y8vMCjh5VMhny8K/RnABtHYxhe9WpcvlgIhW6pZE64d3ZDq7Zl4iStpcjiIUdMZOHnILJVXYgov9qixdum697nOimG1UB6QIbT0DVO4A9WrMQezkj8v/Ielk9S+9x8banU=
+	t=1782368640; cv=none; b=lZGVlg2NCPp1WO6NwmcyFYKYKmFJql6vXEBVGiHxK4yXK5ViR/GrZAg44wkYfSrxRE6ChBwXekAdSD8UG8cs3sjcIbGhXnU67aDivrKXCLpzEyHw4qI2mi0FLeJ066n04w8HUguEhBKdkT4PNiE5jv7yE5Rb4YfTDJ4pQvIjKDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782368503; c=relaxed/simple;
-	bh=vPx6lCqmoiWxreycWp2rq/gREKvI9/QxpGD6u1lLsSw=;
+	s=arc-20240116; t=1782368640; c=relaxed/simple;
+	bh=+jQUAu2cNB8TctfriC4zkoUJ1yELZVfPO4hA1oqUJWs=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=I4c9HgzZU/coKAZ+5Knol9DOCRMb29pIhxZzbf2mAd8LPfh+/ff5ijgS8wWgveVHvSx3Nc9LeH7KtfMm+qxheY949JBJLZ4UwxVIJ6TScCCDWH2PhFv/Wr0qKoyQhlRxuzVDbnBfrj9Wg1mjFJyIKtvxft0HeY2z8jrEEg9nOuw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GLykoh8W; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63B0D1F000E9;
-	Thu, 25 Jun 2026 06:21:36 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=BrmskHmh5scnd1ZvDDuK4XHxoqPljDw55vQAlS2zmx5BBknqc+ZRA3FbGUbhMhkeSuYc3WbhqZ3piwgMRzWdvtG7hKIoVLLXF8IQzReUWMJLQeNULv2grr4ItrWl/VuiSLXZErGpIbEcXp5zrcJF50DBlCUvA4oU25fUp8sCMSc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FypkqN5t; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 677161F000E9;
+	Thu, 25 Jun 2026 06:23:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782368501;
-	bh=nkmkcb1pqmx0XdGKwQVNQsBLiiBpOI2qh/mDyWOEnjE=;
+	s=k20260515; t=1782368638;
+	bh=/I3N7mH9T+gMWfBpfAhhrUU1yb4W5vV6Udh9IzOWy5k=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=GLykoh8W4B0xQ7Ag2NUKFDg0Vu63cKH+K+Ra7mddPqi+aznXI5Eek5iqm+dWV2mW/
-	 dKbxL1elRbdTjYlYeNALOfkQfjkwKuEnAwgfEYB31SVZ7JxR5sgexZn5qwLH1EJ8Xw
-	 y87teKUYixlVGglwgWpvSyKj3b9NdLZ81JFPvf9D6xwfp1ZzZj73yVKFN3viIvd2D8
-	 yyBVQb7a9DasaH3YYlzzlUFQDvYbxDcVTqri/JltAKShAHG6WIMAKpAJ36DH+Vj8sf
-	 FS+YPRsAfoBoUEphuZpu342PxTHdEtnc/e9n9LzgwktBfUDwyRem1ZxcOl03967Co0
-	 TlSJ5/cyJYAJA==
-Message-ID: <1954394d-88dc-4b8b-be71-57b1429f893f@kernel.org>
-Date: Thu, 25 Jun 2026 08:21:34 +0200
+	b=FypkqN5ta1C5/7BbOgj0wwetzNEtM1pXPz/MrRLWzB5vUQBrUhAXSD/6yD2nFHtRK
+	 eYNxwYlDUQle1iY2MulOarZWt66S/8BVrtDmpvHqYJvfIWgkq2+tOhhAejfnlY6SvI
+	 rThFFtwm6sRLxEsBG4VLKCqPsR+4np1Cu+29Fe3+splc6qheVsFW5W17WmvUCAatFs
+	 MhpVsQfC53DIIeMu6cRXvS79+YKI1ZQWoWhJ3o/+UNZhSu0dIbadnZfFMZSTP0GdYI
+	 jAQTihUMMFSIqOBUhvBHb+lbPPAmE18aa6l594G/taorgSmlVfktLxZuIcp9AK9u7j
+	 F+rcMmkS61TOg==
+Message-ID: <5a5fc753-977a-4e21-984c-9b4a09d002b5@kernel.org>
+Date: Thu, 25 Jun 2026 08:23:49 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -55,8 +55,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/3] dt-bindings: mfd: qcom,spmi-pmic: Document haptics
- device
+Subject: Re: [PATCH v2 1/3] dt-bindings: input: Add Qualcomm SPMI PMIC haptics
 To: Fenglin Wu <fenglin.wu@oss.qualcomm.com>, linux-arm-msm@vger.kernel.org,
  Dmitry Torokhov <dmitry.torokhov@gmail.com>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
@@ -69,7 +68,7 @@ Cc: David Collins <david.collins@oss.qualcomm.com>,
  linux-input@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org
 References: <20260624-qcom-spmi-haptics-v2-0-b9118e60f3e3@oss.qualcomm.com>
- <20260624-qcom-spmi-haptics-v2-2-b9118e60f3e3@oss.qualcomm.com>
+ <20260624-qcom-spmi-haptics-v2-1-b9118e60f3e3@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -115,7 +114,7 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  K9bCVaboTA2T77QYkRcRJYSsO1alGX0ome/hMLD1daXlkrNUp1HWa3K4iytLRXjCSIorWiGs
  n+q3krnpXu3TFkA8qtOFZMdnIiFuiq1yLT8hptsV5xh1TA2nsVvSYiaCr3q4s4BKjS/KrLDb
  qoxzw8ISjdUp4pA85vb6YLCmb39NgidD+7PmAr65lBNveIFynTgsja1rRQ4=
-In-Reply-To: <20260624-qcom-spmi-haptics-v2-2-b9118e60f3e3@oss.qualcomm.com>
+In-Reply-To: <20260624-qcom-spmi-haptics-v2-1-b9118e60f3e3@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Rspamd-Action: no action
@@ -123,14 +122,14 @@ X-Spamd-Result: default: False [-5.16 / 15.00];
 	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_RECIPIENTS(0.00)[m:fenglin.wu@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:dmitry.torokhov@gmail.com,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:lee@kernel.org,m:sboyd@kernel.org,m:andersson@kernel.org,m:konradybcio@kernel.org,m:david.collins@oss.qualcomm.com,m:subbaraman.narayanamurthy@oss.qualcomm.com,m:kamal.wadhwa@oss.qualcomm.com,m:kernel@oss.qualcomm.com,m:linux-input@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:dmitrytorokhov@gmail.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	RCVD_COUNT_THREE(0.00)[4];
 	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
 	RCPT_COUNT_TWELVE(0.00)[17];
@@ -138,7 +137,7 @@ X-Spamd-Result: default: False [-5.16 / 15.00];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	FORWARDED(0.00)[lists@lfdr.de];
-	TAGGED_FROM(0.00)[bounces-114446-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-114447-lists,linux-arm-msm=lfdr.de];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
@@ -149,28 +148,25 @@ X-Spamd-Result: default: False [-5.16 / 15.00];
 	MID_RHS_MATCH_FROM(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,qualcomm.com:email]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,vger.kernel.org:from_smtp]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: B628E6C2FEF
+X-Rspamd-Queue-Id: B164F6C3016
 
 On 25/06/2026 04:00, Fenglin Wu wrote:
-> Some of the Qualcomm SPMI PMIC has haptics device in it, add it in the
-> device list.
+> Add binding document for the haptics module inside Qualcomm PMIC
+> PMIH0108.
 > 
+> Assisted-by: Claude:claude-4-6-sonnet
 > Signed-off-by: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
 > ---
->  Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml | 4 ++++
->  1 file changed, 4 insertions(+)
+>  .../bindings/input/qcom,spmi-haptics.yaml          | 132 +++++++++++++++++++++
+>  1 file changed, 132 insertions(+)
 
-Still nothing about merging issue/dependency I asked to explain. You did
-not solve it, you did not mention it how I asked. We speak about basics
-of Linux kernel development process. If you cannot get this, even after
-I directed you in v1, then you need to attend internal trainings or read
-internal docs (go/upstream) where this is explained.
 
-I drop the patches from DT Patchwork.
+You did not test this before sending, therefore this fits in to AI slop
+category. I do not accept AI slop to be sent to mailing list.
 
 Best regards,
 Krzysztof
