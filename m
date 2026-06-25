@@ -1,206 +1,855 @@
-Return-Path: <linux-arm-msm+bounces-114501-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-114502-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id VHeZCmUBPWq2vggAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-114501-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2026 12:22:29 +0200
+	id 5BloGbsDPWosvwgAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-114502-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2026 12:32:27 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 920AD6C49F4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2026 12:22:28 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5D08A6C4AD9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2026 12:32:26 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=j6+gUzc5;
-	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=WEAjm5QY;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-114501-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-114501-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=VfSTYFJ7;
+	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=Jw6+pIfa;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-114502-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 104.64.211.4 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-114502-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=reject) header.from=qualcomm.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id A3A2E3013869
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2026 10:22:27 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 7EBE03003BEC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2026 10:32:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2CA8C3D0907;
-	Thu, 25 Jun 2026 10:22:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CEAB23CF05D;
+	Thu, 25 Jun 2026 10:32:20 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B150B3D090B
-	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jun 2026 10:22:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20370373BE7
+	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jun 2026 10:32:19 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782382947; cv=none; b=n6YK/XB2sdxwZCzOdOHV8qLbXXH0hEgVep7wBlz26FDEKYtjiny5eBIiL5PikYItqErbBI5xiEmx51mflJK53PTsV1LVWALW0dwa/uPuqG1fthnKcC2vbettvVyD4WcQLf6vHVzXTdiEP8rSimm3YNdEg9Se6lP2zehZgz45+TI=
+	t=1782383540; cv=none; b=mZ9njFfPC++6Z9aOilsL+FEREcOgyKz9zHgaS0CZiZI2GNR3d503T4SU7jhUUSgCh3HRyazWYdD9buAY4RbI0JNCuSy38m5q1tByCBJkCTAEcL8oHMuP0YZIVuZebfxre3ZUQefQHtQ1butLqikWnUW1uWXL2ACh5YjFeMj2EIc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782382947; c=relaxed/simple;
-	bh=PUd3wa1z9wVw46F6JNtqqyfzu6JtX0osRRT07M2mB0g=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=YFYusKbQBCpnSc0woF/NZpBGMOO+/7xUxisNCIT2K09R4t7EKquH1zrKh+3RwllAw/OXFHwXGtitlXvEoP+jfzvu9aTgX7aOTxXTC90s6QfBdztBz8TLiQo85zX7+7mO2Ka7ZleXDVHteTryp4spKUx+XuqQ7mEQ63rl8+ZeCAc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=j6+gUzc5; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=WEAjm5QY; arc=none smtp.client-ip=205.220.168.131
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65P9jwPC1471239
-	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jun 2026 10:22:25 GMT
+	s=arc-20240116; t=1782383540; c=relaxed/simple;
+	bh=C2j8ymWNMP4cWbdNoG5bAn7jN+qA/hasUEd/DfyZ4uM=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=cYr+p6ZVBh/RtiZNTO74tDv3i2D9vQpZcOaDc0fQ+vpknlUV90i3T3+1t+0ADkMwForswe1eI00YYiKyM8OvtCeobHkb7ZCV2PYx+oDPHr1N2IauyqUiMWtNYx5XNz+CnYNOFe+s7dAKmJkD/Z4to1U3rUm4ZIScFMDmYOBMSIk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=VfSTYFJ7; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Jw6+pIfa; arc=none smtp.client-ip=205.220.180.131
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65P9k4et1755406
+	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jun 2026 10:32:18 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	QKsIEUrVK0G2nIoOCPG0vvWvJmYCsY+ovNi5/n5tMP8=; b=j6+gUzc5lXVSNUD0
-	kXlMVtHC3fQPq0lxjmNUrXWVdBZPIs0itBiyQKGlKjBDFlDUikU024C/H8o93ELN
-	VU6p4ZAA7/Jinjj0EizNoSl8bwVUz1gxSt5oQjruMXn3Du2/jHc5wyXnlwx2Cww6
-	rDmEvEygNI4jWAxY6ioh6CcVw/Ex3i31gHnixifCEwUfKvNQNF0eNBjztQMPpfpB
-	35MhHxYzxZNnqPCfGFt75MFA8uVPmblxQKRWONU1+ycunVZ0gdwPhMUPVLLlkGa2
-	eSSDN8RxAKTUI83o7awTdcnw7ihfjnlTfnN3mOli3d7UR6BlBwZ1gAPyAWGyAXKa
-	5D0Ohw==
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com [209.85.219.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f0nv7jv28-1
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=LSsvOSKf+JaBPPv2gz2jGn
+	0kx8lV0K+uiQpfF+s3krY=; b=VfSTYFJ7pC0uxUeuEmj1+Md6jz2QgE8AiuLdI4
+	CAJzcQt6SP5RTCqp+hL5u4rg3rUZgBThynR2Mnt7AwmC8yCwzbGm61/9fpSFa2Jl
+	60pyexo/SgcLWP5GVW9ZxTte1EW76y2WpYJZuP5pa6yTIbd2/3w0uGR18QrMflfl
+	pNRjOUl5wAeURlR2EcxEb6W3/2OoxT2nc7kpQ5J4lXCL1iiM1ij7OLt7re05orWQ
+	fgB4HcPkWiO+KOtJhAmaj2yXecmSawBwMWTJGR25+O5D+8kBYf8cxKREDjFfL9kW
+	OUqAEMNANaVmoNUchQNVt5PtQOrKaJZWdwbx7tE2QjHLH/rw==
+Received: from mail-dl1-f72.google.com (mail-dl1-f72.google.com [74.125.82.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f0w0q1cba-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jun 2026 10:22:24 +0000 (GMT)
-Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-8ddb0711609so9376126d6.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jun 2026 03:22:24 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jun 2026 10:32:17 +0000 (GMT)
+Received: by mail-dl1-f72.google.com with SMTP id a92af1059eb24-139b70ca7e5so3052621c88.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jun 2026 03:32:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1782382944; x=1782987744; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=QKsIEUrVK0G2nIoOCPG0vvWvJmYCsY+ovNi5/n5tMP8=;
-        b=WEAjm5QYwAz2E2R6nX7AE5zq3nTqdpBFbpmUX9jmjyBmRb3JLKNGQBmovyWxgBHbgv
-         RDmKcgITR91zQZPs+17TSF4G83SW4hEVPFXT9O531bOPx/pFWPFKDnusF56zrTlALLwi
-         rNNMjtFcTTTCSNrNZ/KbAC9/Vu34TYCOIDGki7RG2+58X8mdjpWUAThSgoFL7Si1svUG
-         upMt/0ujhMD5goO0F49nZ1FS7cJ/X4zhjVU7rEVc70Hvy25iZ/L2Mr4e1l4N7LhDEkSp
-         VqSwG4dPof3QumgDE0974luqjusnjme/aNG6bNFxiOEz4g2t1dwES6eV7iYHB9XlWYxY
-         TNVA==
+        d=oss.qualcomm.com; s=google; t=1782383537; x=1782988337; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=LSsvOSKf+JaBPPv2gz2jGn0kx8lV0K+uiQpfF+s3krY=;
+        b=Jw6+pIfarNbBQSgkCvFHEoTrvI4dqsS34Xme4kIjm122SK9uRJ3ZTGblnTukR+71eY
+         f2Tgm9eG2Ur2W8YQz6J+nCbWEPIJ8JaBCqJQnKJo2q8zykUq824c0d3gmPhutZAABXmS
+         pM9WyNYQwZQn2cspSzqs3QWFHHv8+i1mlmXhYsXz6xqYIwWe4Ucvpwqn9fXl/+ZwZRrl
+         7CNo41Nr7BbaJnLyO6LtYpdF63wKw6WJBTeHDCUm/G0NXgNIIDxLkuhBZi/ysavzasNz
+         4oO06CGEoHQaPUgZoM+3X1rD4aTGsgFeMSe7gwLSj27PvF6ThJ4Ev7jMwIxny9Qr6Qva
+         nyUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782382944; x=1782987744;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=QKsIEUrVK0G2nIoOCPG0vvWvJmYCsY+ovNi5/n5tMP8=;
-        b=UOX6yrbWV12f8rkkIqknpO0XTHAfZnkYhHBSIPcN3VoU8/fLtBh5lp9ZdY2Fmc0Bf/
-         65db+fiWrsoMasEQY5xGuawvJ7t7of5JgYv1pmm3mf66t12t8UFHRPGBmPgQ4Z9meMNJ
-         c+Siv+ITSsoTHDheKlbGtthhHK+N9z+n6zxegV4FZU4WSX6XRmFTWlF7EN8uFclCR+ip
-         eBpIi6SXyYKBhZh7GEZUvthMfxtDtv/jJpWkzffW7CGCiSelYfVsErwTbL82dhtrnywM
-         9TXJv3DBBMXhsxGf79sUmnH/iXtwO4Qni9IaxZkIajGbKI2LYpRkBcM8WSmAB9sxG8dJ
-         MGow==
-X-Forwarded-Encrypted: i=1; AFNElJ+iRueN2h7a2Fc9sLOiwoinfMJwyJzFfxjA5Q0yybxmtXiF/OdHu91/0/qXSq275Tsq2PNqRc6myP+C2S9f@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy1UDgI/N5M8aRb7E2ny/lnrWrpj2/8IfN/L2iXKtGGSUMl0p7S
-	Bxc8MwctSgQ5xh7a/8siKliKk3uvSQ9TKLz09kXA1wBtiQEw9RWKSLtNSJ7EA8Vy9qsstK++t2E
-	PlHH+AO/vSfTqjkXA9q7cLVwm40U3kP+EXzRjTWRaXJzaf0klP3yBKDrLBhDrRutCF6Jb
-X-Gm-Gg: AfdE7cme97EGkZw4iovwUxIJsUr1V5fxl9lHwFWa+20CJgd59tlfv7OEyjkoTMBsTOK
-	5ORQHWeWiNX9AF96JO9YbH73bm6bSD35twadLCr3neHpSsYGTPkXHVvT4gqeJc6Jqc0ATlSvODE
-	sskA59pw/aWChljXyU3xRzFuLE0mrPulM8mvy49R0gUwPMqr9oJHG8UXUuyUiy9sv5mvBUjOaSI
-	uq7YFUzdx8Vz0h8evig1tLpf2Olgcvieztq5cJ28e3LGc2D07rD3gRSwL4yMmMNv5cBRsniaU2O
-	QUl6V3X/rFyxZORty0HTrmFBx9eI6sEVzatAcexnugVeTrNluxVBB4oZy8Eib7uwewy6+xtiGRS
-	Wy0ub87dElWni0Wjnw395xy8+OvGgP5cycGg=
-X-Received: by 2002:ac8:5f83:0:b0:50d:a92e:fead with SMTP id d75a77b69052e-51a728014a8mr13182611cf.3.1782382944032;
-        Thu, 25 Jun 2026 03:22:24 -0700 (PDT)
-X-Received: by 2002:ac8:5f83:0:b0:50d:a92e:fead with SMTP id d75a77b69052e-51a728014a8mr13182371cf.3.1782382943539;
-        Thu, 25 Jun 2026 03:22:23 -0700 (PDT)
-Received: from [192.168.120.170] ([178.235.128.140])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c11fb8dc641sm152400166b.0.2026.06.25.03.22.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 25 Jun 2026 03:22:22 -0700 (PDT)
-Message-ID: <df35362a-aa97-4cea-a18f-2bb8b2a320d9@oss.qualcomm.com>
-Date: Thu, 25 Jun 2026 12:22:21 +0200
+        d=1e100.net; s=20251104; t=1782383537; x=1782988337;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=LSsvOSKf+JaBPPv2gz2jGn0kx8lV0K+uiQpfF+s3krY=;
+        b=eIg1R5buTn+2KeupQuxACL2xo4ViquhBRvj96NcQjaoKmeeCNQFRYb6F3AMhU1c5UV
+         /J+FH0ZICE7DdwC5eObdm5Fv2EOYi4Khdx2h9kblJPrlJ7JsMGBgh60DkB40nckE8Kro
+         Srz+mRKG2T9A0XMb35pVfXUASfPq+JRfdaF/8hYWMFNV1A3b3d8GGfuN5fhgrjrURJui
+         2t+yaaldZwJ6A3RVvV8Q7VDBPWKyzX198pt5161rvqHaxghO0WrYJSgM5p+VqclVkvwd
+         TqBvXCceL9wOYJNkPhKRDMeqBWcKHR8ip+LcjM+6X4TGMMPvT17L81+cQi69Ec6dz1Ar
+         z5GQ==
+X-Gm-Message-State: AOJu0Yz9SzaDUo86zLRVN63hF+Obc3FzonquZtBuDiH9AZLro2SV6WiM
+	DZDB5St+QJCaPNAj5iF7vwpTXicFyDTVUMtp1TiAwWZbHh7Ij9S4UNvxY123aayz/mfYmUnPr+p
+	UvRduVfs30lXzuB2jJEXimbMJEYtOGM0PoMt+hMJUSAD5s8DvB8pQr20/EIlncvHMlh05
+X-Gm-Gg: AfdE7cmAf80KXzk6IcPhJ71sOH6IYAYp1qDqgvhXlWUrLeSUf30D8h2KEPnriKYgGA0
+	sF9fDFerbdCHOjnRD1bAaDBBO3Ye7dMk0XjABT6MpErbO3XbPgo2+JXXdCWf3g1mTDBueuDCpQ+
+	uwdIPjwMniKbu28mRAzu1O/eT7OygNLVnVK4Wuj2JdAbtSRhes1WWDfHFhQ1ZFecO8/hErfrOiY
+	zKX/OXltdQR/YVrGZiVT29Io4MmnKbXrsnStTHJg6T59fJvlwTAigb5agpWh42vbljc7/8fMjVr
+	/3BuAEO0RmCh3nIYgtdp5fM34RwD0jwjcUAgB8nUH4F0DPhVVYxuJNyuRa5RoQD9PXwVFjjDSsT
+	ZBjF9NWn1/RdlL2qlco5q2kuvAWskbG2ftenrYP7sUFtmGHJ7GzDOcGdGxtBTyOs34wGv7AlXLn
+	mZCD+J8OvdFwizUXi39srTkllfchjo8uKqtiTJSAeD17jcnw==
+X-Received: by 2002:a05:7022:69e:b0:136:b67e:93e6 with SMTP id a92af1059eb24-139dbac9d7amr1897063c88.37.1782383536605;
+        Thu, 25 Jun 2026 03:32:16 -0700 (PDT)
+X-Received: by 2002:a05:7022:69e:b0:136:b67e:93e6 with SMTP id a92af1059eb24-139dbac9d7amr1897032c88.37.1782383535947;
+        Thu, 25 Jun 2026 03:32:15 -0700 (PDT)
+Received: from hu-kathirav-blr.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com. [103.229.18.19])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-139d8f55b04sm7282265c88.4.2026.06.25.03.32.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 25 Jun 2026 03:32:14 -0700 (PDT)
+From: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
+Date: Thu, 25 Jun 2026 16:02:02 +0530
+Subject: [PATCH] dt-bindings: arm: qcom: sort compatibles alphabetically by
+ base SoC
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] i2c: qcom-cci: drop custom suspend/resume and rely on
- runtime PM helpers
-To: Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>,
-        Loic Poulain <loic.poulain@oss.qualcomm.com>,
-        Robert Foss
- <rfoss@kernel.org>, Andi Shyti <andi.shyti@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>, Wolfram Sang <wsa@kernel.org>,
-        Todor Tomov <todor.too@gmail.com>, Vinod Koul <vkoul@kernel.org>
-Cc: linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, stable@vger.kernel.org
-References: <20260625-cci-v1-1-a100cda673ce@oss.qualcomm.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20260625-cci-v1-1-a100cda673ce@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI1MDA4OCBTYWx0ZWRfX/CtBun7X9FKs
- vLTllGnop/wREFHM4HqSitQR6N46bwdtEAl6Ik5ng9WoxE974FBHZt5wobkDgB10YtjAz5lF3gR
- nf/ywQBeTSsnQrsiEuO7Ydy1YOVQk+M=
-X-Authority-Analysis: v=2.4 cv=RJiD2Yi+ c=1 sm=1 tr=0 ts=6a3d0160 cx=c_pps
- a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=PRfkaYvzSr8QmIIGAkY2Sg==:17
+Message-Id: <20260625-reorg_qcom_binding-v1-1-f2c6501f7401@oss.qualcomm.com>
+X-B4-Tracking: v=1; b=H4sIAKEDPWoC/yXMQQqDMBBA0avIrBuIqYTQq4iIScY4QhM70SKId
+ ze2y7f4/4CMTJjhVR3A+KVMKRbUjwrcNMSAgnwxKKm01OopGBOH/uPSu7cUPcUgpG6M9Tgabw2
+ UcGEcaf9N2+7vvNkZ3Xqf4DwvwuE15XYAAAA=
+X-Change-ID: 20260623-reorg_qcom_binding-0648bdef8db8
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
+X-Mailer: b4 0.15.2
+X-Proofpoint-ORIG-GUID: xn1ACOYon2YwIRRNphWcTdO_D3SI1IB5
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI1MDA5MCBTYWx0ZWRfX49/9qQD26NbG
+ E6r61bSiPYf7ctDDXBpYXiFHCha4c3nephUGz///DMUPK25F36u8sYS3qq7lLx1AIF6YuwP3yeT
+ Zobfi7gnTdkO6QrHJsMS0ohOyl5xzBA=
+X-Proofpoint-GUID: xn1ACOYon2YwIRRNphWcTdO_D3SI1IB5
+X-Authority-Analysis: v=2.4 cv=R6Ez39RX c=1 sm=1 tr=0 ts=6a3d03b1 cx=c_pps
+ a=bS7HVuBVfinNPG3f6cIo3Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
  a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=9YL1cksPtRnqhRk4DJMA:9 a=QEXdDO2ut3YA:10
- a=ZXulRonScM0A:10 a=pJ04lnu7RYOZP9TFuWaZ:22
-X-Proofpoint-ORIG-GUID: S86b9LxNmdhBRdb-Uz6L-oLJkhoECnNd
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI1MDA4OCBTYWx0ZWRfXxQtlLfwZk2Ka
- 4UAcYiD58q7frsWHTM5LAwzqhT6FqSESCyugCxbHtda7DwT+GTmK3o9C822HmIBKRDFPJlf97H4
- oXfbtiCJdSJpx33qa3tyIPAyX2AePfVKHZ9xcxv+uA/r5Yy0s2SwIYRDvN+oMnxRwcGDqhNScqV
- GROiGyJNtI1NQDf4Aha6Vmez8G6plbrOxXhLJHJeyj2elY7cUkDiVCK/FsJaGXvHfZA4JWK7GfB
- ckS3eEcODBKqll6b1u54GCos+9uqZ181xrrk0eqt7H4wSc/urvA67rypbebzoc+360iHca8TK9d
- DN5Zsg5XBV3E2PlweiTrFEzJu34bnwQ0jegz/Xj8herACyIBuoE1jjqjVdtEBvXZLTx38cSlwAr
- BSGJxXdSRu533BIdGgMiTV9yIP/E6ZLwvloPPJJqkwRKS+9a4GaV2lpBvRYPjfHJWBQ6HVpBg66
- 4hRVnKEYJBf3HX9udsA==
-X-Proofpoint-GUID: S86b9LxNmdhBRdb-Uz6L-oLJkhoECnNd
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=EUspDBNiAAAA:8 a=iYw7bn2tY6KM8CvLDdUA:9 a=QEXdDO2ut3YA:10
+ a=vBUdepa8ALXHeOFLBtFW:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI1MDA5MCBTYWx0ZWRfXy7bTW5OKXHmz
+ 9tdmyhsFelyuAMC6oWvVv/qUBD+g+GJrArkwR3PoZXDFQj+EqDqm/xDE4IjoII4kFuGJlqPu0eu
+ plx1VMK19Rng5VFLa5kxKakuoXy5Xk1WoqVmtNxSNAnw/pjp4chBeEsroXAMajjb8xoLb3ZD1W5
+ LhAOTAT2Z8T+gRg0DCZj7EQv0ZqsF2QF/R91wSvVo5sdCpUbkC+ALzC+iUKbYOuZjU1uHm2+Qc7
+ pUFcgtIgetFm9XAz6zAlXsKnChkjjYcdm6RjOa6GlkB/9rlzMhCYh7DJ3T5fYBgDQzujYkQkAFb
+ 0ARbvcpRDYeSiOoXq2DJrOwNsLtiY2KNpHDJLaSjBWLzWQyCQQjhtEZ4klRwHCX38vffnfE5xsF
+ qGfzBYaFRrEbIVQl0j9kTlA8/8A52+OtwYHeY4aJfwf3IxBA/IX0M/g6qznfKDYUuSAgJU/FgY5
+ kqa0FYY6exEMY8RPn7A==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-25_01,2026-06-24_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 bulkscore=0 lowpriorityscore=0 priorityscore=1501 spamscore=0
- clxscore=1015 impostorscore=0 suspectscore=0 adultscore=0 malwarescore=0
+ phishscore=0 clxscore=1015 malwarescore=0 priorityscore=1501 adultscore=0
+ suspectscore=0 impostorscore=0 spamscore=0 lowpriorityscore=0 bulkscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606250088
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606250090
 X-Rspamd-Action: no action
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-114501-lists,linux-arm-msm=lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:wenmeng.liu@oss.qualcomm.com,m:loic.poulain@oss.qualcomm.com,m:rfoss@kernel.org,m:andi.shyti@kernel.org,m:andersson@kernel.org,m:wsa@kernel.org,m:todor.too@gmail.com,m:vkoul@kernel.org,m:linux-i2c@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:stable@vger.kernel.org,m:todortoo@gmail.com,s:lists@lfdr.de];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,qualcomm.com:dkim,qualcomm.com:email,vger.kernel.org:from_smtp,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:from_mime];
-	FORGED_SENDER(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[12];
-	FREEMAIL_TO(0.00)[oss.qualcomm.com,kernel.org,gmail.com];
 	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FORWARDED(0.00)[lists@lfdr.de];
 	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	FORWARDED(0.00)[lists@lfdr.de];
+	TAGGED_FROM(0.00)[bounces-114502-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FORGED_SENDER(0.00)[kathiravan.thirumoorthy@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS(0.00)[m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:konrad.dybcio@oss.qualcomm.com,m:kathiravan.thirumoorthy@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:from_mime,sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[kathiravan.thirumoorthy@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
 	ALIAS_RESOLVED(0.00)[];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	MID_RHS_MATCH_FROM(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[10];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 920AD6C49F4
+X-Rspamd-Queue-Id: 5D08A6C4AD9
 
-On 6/25/26 11:42 AM, Wenmeng Liu wrote:
-> cci_resume() unconditionally calls cci_resume_runtime() regardless of
-> the runtime PM state.
-> 
-> If the device is already runtime-suspended before system suspend,
-> the clock is re-enabled while runtime_status remains RPM_SUSPENDED.
-> As a result, pm_request_autosuspend() does not arm the timer,
-> leaving the clock permanently enabled.
-> 
-> Fixes: e517526195de ("i2c: Add Qualcomm CCI I2C driver")
-> Cc: stable@vger.kernel.org
-> Signed-off-by: Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>
-> ---
+The compatible entries in qcom.yaml were not in alphabetical order by
+their base SoC compatible string (the last const: qcom,* in each block),
+making the file harder to audit and maintain. Sort the entries for
+better maintenance.
 
+No functional change; reordering only.
+
+Assisted-by: Claude:claude-sonnet-4-6
+Suggested-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
+---
+ Documentation/devicetree/bindings/arm/qcom.yaml | 490 ++++++++++++------------
+ 1 file changed, 245 insertions(+), 245 deletions(-)
 
-Konrad
+diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+index 50cc18a6ec5e..dfbc82377fcf 100644
+--- a/Documentation/devicetree/bindings/arm/qcom.yaml
++++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+@@ -49,18 +49,31 @@ properties:
+               - qcom,apq8074-dragonboard
+           - const: qcom,apq8074
+ 
+-      - items:
+-          - enum:
+-              - qcom,apq8060-dragonboard
+-              - qcom,msm8660-surf
+-          - const: qcom,msm8660
+-
+       - items:
+           - enum:
+               - qcom,apq8084-mtp
+               - qcom,apq8084-sbc
+           - const: qcom,apq8084
+ 
++      - items:
++          - enum:
++              - sony,karin_windy
++          - const: qcom,apq8094
++
++      - items:
++          - enum:
++              - arrow,apq8096-db820c
++              - inforce,ifc6640
++          - const: qcom,apq8096-sbc
++          - const: qcom,apq8096
++
++      - items:
++          - const: arrow,apq8096sg-db820c
++          - const: arrow,apq8096-db820c
++          - const: qcom,apq8096-sbc
++          - const: qcom,apq8096sg
++          - const: qcom,apq8096
++
+       - items:
+           - enum:
+               - qcom,eliza-mtp
+@@ -73,102 +86,126 @@ properties:
+ 
+       - items:
+           - enum:
+-              - qcom,mahua-crd
+-          - const: qcom,mahua
++              - 8dev,jalapeno
++              - alfa-network,ap120c-ac
++          - const: qcom,ipq4018
+ 
+       - items:
+           - enum:
+-              - fairphone,fp6
+-              - nothing,asteroids
+-          - const: qcom,milos
++              - qcom,ipq4019-ap-dk01.1-c1
++              - qcom,ipq4019-ap-dk04.1-c3
++              - qcom,ipq4019-ap-dk07.1-c1
++              - qcom,ipq4019-ap-dk07.1-c2
++              - qcom,ipq4019-dk04.1-c1
++          - const: qcom,ipq4019
+ 
+       - items:
+           - enum:
+-              - microsoft,dempsey
+-              - microsoft,makepeace
+-              - microsoft,moneypenny
+-              - motorola,falcon
+-              - samsung,ms013g
+-              - samsung,s3ve3g
+-          - const: qcom,msm8226
++              - qcom,ipq5018-rdp432-c2
++              - tplink,archer-ax55-v1
++          - const: qcom,ipq5018
+ 
+       - items:
+           - enum:
+-              - htc,memul
+-              - microsoft,superman-lte
+-              - microsoft,tesla
+-              - motorola,peregrine
+-              - samsung,matisselte
+-          - const: qcom,msm8926
+-          - const: qcom,msm8226
++              - qcom,ipq5210-rdp504
++          - const: qcom,ipq5210
+ 
+       - items:
+           - enum:
+-              - wingtech,wt82918hd
+-          - const: qcom,msm8929
++              - qcom,ipq5332-ap-mi01.2
++              - qcom,ipq5332-ap-mi01.3
++              - qcom,ipq5332-ap-mi01.6
++              - qcom,ipq5332-ap-mi01.9
++          - const: qcom,ipq5332
+ 
+       - items:
+           - enum:
+-              - asus,z00t
+-              - huawei,kiwi
+-              - longcheer,l9100
+-              - samsung,a7
+-              - sony,kanuti-tulip
+-              - square,apq8039-t2
+-              - wingtech,wt82918
+-              - wingtech,wt82918hdhw39
+-          - const: qcom,msm8939
++              - qcom,ipq5424-rdp466
++          - const: qcom,ipq5424
+ 
+       - items:
+           - enum:
+-              - sony,kugo-row
+-              - sony,suzu-row
+-          - const: qcom,msm8956
++              - qcom,ipq6018-cp01
++              - qcom,ipq6018-cp01-c1
++          - const: qcom,ipq6018
+ 
+       - items:
+           - enum:
+-              - qcom,msm8960-cdp
+-              - samsung,expressatt
+-          - const: qcom,msm8960
++              - mikrotik,rb3011
++              - qcom,ipq8064-ap148
++          - const: qcom,ipq8064
+ 
+       - items:
+           - enum:
+-              - sony,huashan
+-          - const: qcom,msm8960t
+-          - const: qcom,msm8960
++              - qcom,ipq8074-hk01
++              - qcom,ipq8074-hk10-c1
++              - qcom,ipq8074-hk10-c2
++          - const: qcom,ipq8074
+ 
+       - items:
+           - enum:
+-              - lge,hammerhead
+-              - samsung,hlte
+-              - sony,xperia-amami
+-              - sony,xperia-honami
+-              - sony,xperia-togari
+-          - const: qcom,msm8974
++              - qcom,ipq9574-ap-al02-c2
++              - qcom,ipq9574-ap-al02-c2-emmc
++              - qcom,ipq9574-ap-al02-c6
++              - qcom,ipq9574-ap-al02-c7
++              - qcom,ipq9574-ap-al02-c7-emmc
++              - qcom,ipq9574-ap-al02-c8
++              - qcom,ipq9574-ap-al02-c9
++          - const: qcom,ipq9574
+ 
+       - items:
+           - enum:
+-              - fairphone,fp2
+-              - htc,m8
+-              - oneplus,bacon
+-              - samsung,klte
+-              - sony,xperia-aries
+-              - sony,xperia-castor
+-              - sony,xperia-leo
+-          - const: qcom,msm8974pro
+-          - const: qcom,msm8974
++              - qcom,ipq9650-rdp488
++          - const: qcom,ipq9650
+ 
+       - items:
+           - enum:
+-              - samsung,kltechn
+-          - const: samsung,klte
+-          - const: qcom,msm8974pro
+-          - const: qcom,msm8974
++              - qcom,kaanapali-mtp
++              - qcom,kaanapali-qrd
++          - const: qcom,kaanapali
+ 
+       - items:
+           - enum:
+-              - longcheer,l9360
+-          - const: qcom,msm8976
++              - qcom,mahua-crd
++          - const: qcom,mahua
++
++      - description: Sierra Wireless MangOH Green with WP8548 Module
++        items:
++          - const: swir,mangoh-green-wp8548
++          - const: swir,wp8548
++          - const: qcom,mdm9615
++
++      - items:
++          - enum:
++              - fairphone,fp6
++              - nothing,asteroids
++          - const: qcom,milos
++
++      - items:
++          - enum:
++              - microsoft,dempsey
++              - microsoft,makepeace
++              - microsoft,moneypenny
++              - motorola,falcon
++              - samsung,ms013g
++              - samsung,s3ve3g
++          - const: qcom,msm8226
++
++      - items:
++          - enum:
++              - htc,memul
++              - microsoft,superman-lte
++              - microsoft,tesla
++              - motorola,peregrine
++              - samsung,matisselte
++          - const: qcom,msm8926
++          - const: qcom,msm8226
++
++      - items:
++          - enum:
++              - qcom,apq8060-dragonboard
++              - qcom,msm8660-surf
++          - const: qcom,msm8660
+ 
+       - items:
+           - enum:
+@@ -217,11 +254,28 @@ properties:
+               - xiaomi,tiare
+           - const: qcom,msm8917
+ 
++      - items:
++          - enum:
++              - wingtech,wt82918hd
++          - const: qcom,msm8929
++
+       - items:
+           - enum:
+               - xiaomi,land
+           - const: qcom,msm8937
+ 
++      - items:
++          - enum:
++              - asus,z00t
++              - huawei,kiwi
++              - longcheer,l9100
++              - samsung,a7
++              - sony,kanuti-tulip
++              - square,apq8039-t2
++              - wingtech,wt82918
++              - wingtech,wt82918hdhw39
++          - const: qcom,msm8939
++
+       - items:
+           - enum:
+               - flipkart,rimob
+@@ -232,6 +286,57 @@ properties:
+               - xiaomi,vince
+           - const: qcom,msm8953
+ 
++      - items:
++          - enum:
++              - sony,kugo-row
++              - sony,suzu-row
++          - const: qcom,msm8956
++
++      - items:
++          - enum:
++              - qcom,msm8960-cdp
++              - samsung,expressatt
++          - const: qcom,msm8960
++
++      - items:
++          - enum:
++              - sony,huashan
++          - const: qcom,msm8960t
++          - const: qcom,msm8960
++
++      - items:
++          - enum:
++              - lge,hammerhead
++              - samsung,hlte
++              - sony,xperia-amami
++              - sony,xperia-honami
++              - sony,xperia-togari
++          - const: qcom,msm8974
++
++      - items:
++          - enum:
++              - fairphone,fp2
++              - htc,m8
++              - oneplus,bacon
++              - samsung,klte
++              - sony,xperia-aries
++              - sony,xperia-castor
++              - sony,xperia-leo
++          - const: qcom,msm8974pro
++          - const: qcom,msm8974
++
++      - items:
++          - enum:
++              - samsung,kltechn
++          - const: samsung,klte
++          - const: qcom,msm8974pro
++          - const: qcom,msm8974
++
++      - items:
++          - enum:
++              - longcheer,l9360
++          - const: qcom,msm8976
++
+       - items:
+           - enum:
+               - lg,bullhead
+@@ -240,11 +345,6 @@ properties:
+               - xiaomi,libra
+           - const: qcom,msm8992
+ 
+-      - items:
+-          - enum:
+-              - sony,karin_windy
+-          - const: qcom,apq8094
+-
+       - items:
+           - enum:
+               - huawei,angler
+@@ -256,20 +356,6 @@ properties:
+               - sony,suzuran-row
+           - const: qcom,msm8994
+ 
+-      - items:
+-          - enum:
+-              - arrow,apq8096-db820c
+-              - inforce,ifc6640
+-          - const: qcom,apq8096-sbc
+-          - const: qcom,apq8096
+-
+-      - items:
+-          - const: arrow,apq8096sg-db820c
+-          - const: arrow,apq8096-db820c
+-          - const: qcom,apq8096-sbc
+-          - const: qcom,apq8096sg
+-          - const: qcom,apq8096
+-
+       - items:
+           - enum:
+               - oneplus,oneplus3
+@@ -303,86 +389,6 @@ properties:
+               - xiaomi,sagit
+           - const: qcom,msm8998
+ 
+-      - items:
+-          - enum:
+-              - 8dev,jalapeno
+-              - alfa-network,ap120c-ac
+-          - const: qcom,ipq4018
+-
+-      - items:
+-          - enum:
+-              - qcom,ipq4019-ap-dk01.1-c1
+-              - qcom,ipq4019-ap-dk04.1-c3
+-              - qcom,ipq4019-ap-dk07.1-c1
+-              - qcom,ipq4019-ap-dk07.1-c2
+-              - qcom,ipq4019-dk04.1-c1
+-          - const: qcom,ipq4019
+-
+-      - items:
+-          - enum:
+-              - qcom,ipq5018-rdp432-c2
+-              - tplink,archer-ax55-v1
+-          - const: qcom,ipq5018
+-
+-      - items:
+-          - enum:
+-              - qcom,ipq5210-rdp504
+-          - const: qcom,ipq5210
+-
+-      - items:
+-          - enum:
+-              - qcom,ipq5332-ap-mi01.2
+-              - qcom,ipq5332-ap-mi01.3
+-              - qcom,ipq5332-ap-mi01.6
+-              - qcom,ipq5332-ap-mi01.9
+-          - const: qcom,ipq5332
+-
+-      - items:
+-          - enum:
+-              - qcom,ipq5424-rdp466
+-          - const: qcom,ipq5424
+-
+-      - items:
+-          - enum:
+-              - mikrotik,rb3011
+-              - qcom,ipq8064-ap148
+-          - const: qcom,ipq8064
+-
+-      - items:
+-          - enum:
+-              - qcom,ipq8074-hk01
+-              - qcom,ipq8074-hk10-c1
+-              - qcom,ipq8074-hk10-c2
+-          - const: qcom,ipq8074
+-
+-      - items:
+-          - enum:
+-              - qcom,ipq9574-ap-al02-c2
+-              - qcom,ipq9574-ap-al02-c2-emmc
+-              - qcom,ipq9574-ap-al02-c6
+-              - qcom,ipq9574-ap-al02-c7
+-              - qcom,ipq9574-ap-al02-c7-emmc
+-              - qcom,ipq9574-ap-al02-c8
+-              - qcom,ipq9574-ap-al02-c9
+-          - const: qcom,ipq9574
+-
+-      - items:
+-          - enum:
+-              - qcom,ipq9650-rdp488
+-          - const: qcom,ipq9650
+-
+-      - items:
+-          - enum:
+-              - qcom,kaanapali-mtp
+-              - qcom,kaanapali-qrd
+-          - const: qcom,kaanapali
+-
+-      - description: Sierra Wireless MangOH Green with WP8548 Module
+-        items:
+-          - const: swir,mangoh-green-wp8548
+-          - const: swir,wp8548
+-          - const: qcom,mdm9615
+-
+       - description: Qualcomm Technologies, Inc. Robotics RB1
+         items:
+           - enum:
+@@ -403,6 +409,20 @@ properties:
+               - thundercomm,rubikpi3
+           - const: qcom,qcm6490
+ 
++      - items:
++          - enum:
++              - qcom,qcs404-evb-1000
++              - qcom,qcs404-evb-4000
++          - const: qcom,qcs404-evb
++          - const: qcom,qcs404
++
++      - items:
++          - enum:
++              - arduino,monza
++              - qcom,monaco-evk
++              - qcom,qcs8300-ride
++          - const: qcom,qcs8300
++
+       - description: Qualcomm Technologies, Inc. Distributed Unit 1000 platform
+         items:
+           - enum:
+@@ -416,6 +436,31 @@ properties:
+               - qcom,qru1000-idp
+           - const: qcom,qru1000
+ 
++      - items:
++          - enum:
++              - qcom,sa8155p-adp
++          - const: qcom,sa8155p
++
++      - items:
++          - enum:
++              - qcom,sa8295p-adp
++              - qcom,sa8540p-ride
++          - const: qcom,sa8540p
++
++      - items:
++          - enum:
++              - qcom,sa8775p-ride
++              - qcom,sa8775p-ride-r3
++          - const: qcom,sa8775p
++
++      - items:
++          - enum:
++              - qcom,lemans-evk
++              - qcom,qcs9100-ride
++              - qcom,qcs9100-ride-r3
++          - const: qcom,qcs9100
++          - const: qcom,sa8775p
++
+       - description: Qualcomm AR2 Gen1 platform
+         items:
+           - enum:
+@@ -828,14 +873,6 @@ properties:
+           - const: google,zombie-sku514
+           - const: qcom,sc7280
+ 
+-      - description: Xiaomi Poco F1
+-        items:
+-          - enum:
+-              - xiaomi,beryllium-ebbg
+-              - xiaomi,beryllium-tianma
+-          - const: xiaomi,beryllium
+-          - const: qcom,sdm845
+-
+       - items:
+           - enum:
+               - lenovo,flex-5g
+@@ -853,6 +890,11 @@ properties:
+               - qcom,sc8280xp-qrd
+           - const: qcom,sc8280xp
+ 
++      - items:
++          - enum:
++              - inforce,ifc6560
++          - const: qcom,sda660
++
+       - items:
+           - enum:
+               - lenovo,tbx605f
+@@ -867,11 +909,6 @@ properties:
+               - sony,voyager-row
+           - const: qcom,sdm630
+ 
+-      - items:
+-          - enum:
+-              - inforce,ifc6560
+-          - const: qcom,sda660
+-
+       - items:
+           - enum:
+               - fairphone,fp3
+@@ -899,74 +936,13 @@ properties:
+           - const: google,bonito
+           - const: qcom,sdm670
+ 
+-      - items:
+-          - enum:
+-              - qcom,sdx55-mtp
+-              - qcom,sdx55-telit-fn980-tlb
+-              - qcom,sdx55-t55
+-          - const: qcom,sdx55
+-
+-      - items:
+-          - enum:
+-              - qcom,sdx65-mtp
+-          - const: qcom,sdx65
+-
+-      - items:
+-          - enum:
+-              - qcom,sdx75-idp
+-          - const: qcom,sdx75
+-
+-      - items:
+-          - enum:
+-              - qcom,ipq6018-cp01
+-              - qcom,ipq6018-cp01-c1
+-          - const: qcom,ipq6018
+-
+-      - items:
+-          - enum:
+-              - qcom,qcs404-evb-1000
+-              - qcom,qcs404-evb-4000
+-          - const: qcom,qcs404-evb
+-          - const: qcom,qcs404
+-
+-      - items:
+-          - enum:
+-              - arduino,monza
+-              - qcom,monaco-evk
+-              - qcom,qcs8300-ride
+-          - const: qcom,qcs8300
+-
+-      - items:
+-          - enum:
+-              - qcom,qcs615-ride
+-              - qcom,talos-evk
+-          - const: qcom,qcs615
+-          - const: qcom,sm6150
+-
+-      - items:
+-          - enum:
+-              - qcom,sa8155p-adp
+-          - const: qcom,sa8155p
+-
+-      - items:
+-          - enum:
+-              - qcom,sa8295p-adp
+-              - qcom,sa8540p-ride
+-          - const: qcom,sa8540p
+-
+-      - items:
+-          - enum:
+-              - qcom,sa8775p-ride
+-              - qcom,sa8775p-ride-r3
+-          - const: qcom,sa8775p
+-
+-      - items:
++      - description: Xiaomi Poco F1
++        items:
+           - enum:
+-              - qcom,lemans-evk
+-              - qcom,qcs9100-ride
+-              - qcom,qcs9100-ride-r3
+-          - const: qcom,qcs9100
+-          - const: qcom,sa8775p
++              - xiaomi,beryllium-ebbg
++              - xiaomi,beryllium-tianma
++          - const: xiaomi,beryllium
++          - const: qcom,sdm845
+ 
+       - items:
+           - enum:
+@@ -989,6 +965,23 @@ properties:
+               - xiaomi,polaris
+           - const: qcom,sdm845
+ 
++      - items:
++          - enum:
++              - qcom,sdx55-mtp
++              - qcom,sdx55-telit-fn980-tlb
++              - qcom,sdx55-t55
++          - const: qcom,sdx55
++
++      - items:
++          - enum:
++              - qcom,sdx65-mtp
++          - const: qcom,sdx65
++
++      - items:
++          - enum:
++              - qcom,sdx75-idp
++          - const: qcom,sdx75
++
+       - items:
+           - enum:
+               - oneplus,billie2
+@@ -1024,6 +1017,13 @@ properties:
+               - xiaomi,willow
+           - const: qcom,sm6125
+ 
++      - items:
++          - enum:
++              - qcom,qcs615-ride
++              - qcom,talos-evk
++          - const: qcom,qcs615
++          - const: qcom,sm6150
++
+       - items:
+           - enum:
+               - sony,pdx213
+
+---
+base-commit: 4e5dfb7c84012007c3c7061126491bbc92d71bf1
+change-id: 20260623-reorg_qcom_binding-0648bdef8db8
+
+Best regards,
+--  
+Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
+
 
