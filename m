@@ -1,173 +1,209 @@
-Return-Path: <linux-arm-msm+bounces-114447-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-114448-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id 5oh1CoTJPGpwsAgAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-114447-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2026 08:24:04 +0200
+	id Dx2MED7LPGrhsAgAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-114448-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2026 08:31:26 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id B164F6C3016
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2026 08:24:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id C8B126C3097
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2026 08:31:25 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=FypkqN5t;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-114447-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c09:e001:a7::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-114447-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=quarantine) header.from=kernel.org;
+	dkim=pass header.d=intel.com header.s=Intel header.b=jCBw0qeI;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-114448-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c09:e001:a7::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-114448-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=none) header.from=intel.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 02959300D353
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2026 06:24:03 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 477F43014260
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2026 06:31:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 236463C063E;
-	Thu, 25 Jun 2026 06:24:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 22DE931E84A;
+	Thu, 25 Jun 2026 06:31:23 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2300D1C84DC;
-	Thu, 25 Jun 2026 06:23:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5FCC2874E6;
+	Thu, 25 Jun 2026 06:31:21 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782368640; cv=none; b=lZGVlg2NCPp1WO6NwmcyFYKYKmFJql6vXEBVGiHxK4yXK5ViR/GrZAg44wkYfSrxRE6ChBwXekAdSD8UG8cs3sjcIbGhXnU67aDivrKXCLpzEyHw4qI2mi0FLeJ066n04w8HUguEhBKdkT4PNiE5jv7yE5Rb4YfTDJ4pQvIjKDw=
+	t=1782369083; cv=none; b=mnmskOjizAk3ficUSFmvXgVhfbO3huNXny3Y16q4QRLOVxprBM+QzRPKTqrnd7UClOvW7EDxv8KTq6XthGH8Z89Xj1PV8HEiIub1SCE+RBcRbUfy/vYewX7COKtWiiAt8I9qNY/75MVeDaj+tsgsDMfy3gngJjWayhkXogLfvAY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782368640; c=relaxed/simple;
-	bh=+jQUAu2cNB8TctfriC4zkoUJ1yELZVfPO4hA1oqUJWs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=BrmskHmh5scnd1ZvDDuK4XHxoqPljDw55vQAlS2zmx5BBknqc+ZRA3FbGUbhMhkeSuYc3WbhqZ3piwgMRzWdvtG7hKIoVLLXF8IQzReUWMJLQeNULv2grr4ItrWl/VuiSLXZErGpIbEcXp5zrcJF50DBlCUvA4oU25fUp8sCMSc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FypkqN5t; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 677161F000E9;
-	Thu, 25 Jun 2026 06:23:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782368638;
-	bh=/I3N7mH9T+gMWfBpfAhhrUU1yb4W5vV6Udh9IzOWy5k=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=FypkqN5ta1C5/7BbOgj0wwetzNEtM1pXPz/MrRLWzB5vUQBrUhAXSD/6yD2nFHtRK
-	 eYNxwYlDUQle1iY2MulOarZWt66S/8BVrtDmpvHqYJvfIWgkq2+tOhhAejfnlY6SvI
-	 rThFFtwm6sRLxEsBG4VLKCqPsR+4np1Cu+29Fe3+splc6qheVsFW5W17WmvUCAatFs
-	 MhpVsQfC53DIIeMu6cRXvS79+YKI1ZQWoWhJ3o/+UNZhSu0dIbadnZfFMZSTP0GdYI
-	 jAQTihUMMFSIqOBUhvBHb+lbPPAmE18aa6l594G/taorgSmlVfktLxZuIcp9AK9u7j
-	 F+rcMmkS61TOg==
-Message-ID: <5a5fc753-977a-4e21-984c-9b4a09d002b5@kernel.org>
-Date: Thu, 25 Jun 2026 08:23:49 +0200
+	s=arc-20240116; t=1782369083; c=relaxed/simple;
+	bh=fwGnL97xmgeZIlcEfXqmDIbjqKBgP8CglQlDHEXM+X8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=EW2C/O2KBlzxe48a0fFUgZSUU0dnoR7xCWVEIRa9NfdKLddsTquBXVca4QpWwbSCPeBSfZiIRqjHkBPEQqQ8Joe/VW48ewkbIQLgbFR+/ZNqmnjZuYA8V4sk5A1BEGn2W6/VIltNP1x28F4HnnEqliPbtkQPStkTwjO4xyrxVPE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=jCBw0qeI; arc=none smtp.client-ip=198.175.65.14
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1782369082; x=1813905082;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=fwGnL97xmgeZIlcEfXqmDIbjqKBgP8CglQlDHEXM+X8=;
+  b=jCBw0qeIx4c4gKAy0zAG5bICAQ+IxZvowUtKXtJuwQDT48D9zsiL4fPr
+   CDXBeueOyIJUTulDU70w1IYU5uYBNdzmVAYiv/H58ucNwLa/UZ1k1QlXY
+   ouBkY/yUmc58XMmfy6Fdpb9Q0949sJq7tudbVNpWk1T2xsUs+vmFZrETq
+   g+cXoeYnDV8r/7knwATN6gNasvieea5QR6omJKNoHpbaMO9E6rWqIDcyh
+   fQNvDQotgfMzq9uVUQn4NqwElfE5c5AaZg4V8vvGPq2sy2l045Ue4DXFi
+   a4uRKsmFTMdoHiIhMDNQQpypg8EU9VpFTEE2TTySEzh0w2f0+O+Iu3NLU
+   g==;
+X-CSE-ConnectionGUID: BSfNjMHVSjWriRn49YrGxQ==
+X-CSE-MsgGUID: hUGvNEDsRP+GxpX2UMfi6w==
+X-IronPort-AV: E=McAfee;i="6800,10657,11827"; a="87046024"
+X-IronPort-AV: E=Sophos;i="6.24,223,1774335600"; 
+   d="scan'208";a="87046024"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Jun 2026 23:31:21 -0700
+X-CSE-ConnectionGUID: slld4H3rR16nX4qt4wrK0A==
+X-CSE-MsgGUID: LScKLZpATE+psYxu0HB+Cg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.24,223,1774335600"; 
+   d="scan'208";a="252343530"
+Received: from rvuia-mobl.ger.corp.intel.com (HELO localhost) ([10.245.245.93])
+  by fmviesa004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Jun 2026 23:31:16 -0700
+Date: Thu, 25 Jun 2026 09:31:14 +0300
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: Frank Li <Frank.li@oss.nxp.com>
+Cc: Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Daniel Scally <djrscally@gmail.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Danilo Krummrich <dakr@kernel.org>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Dafna Hirschfeld <dafna@fastmail.com>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+	Loic Poulain <loic.poulain@oss.qualcomm.com>,
+	driver-core@lists.linux.dev, linux-acpi@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
+	linux-rockchip@lists.infradead.org,
+	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	imx@lists.linux.dev, Guoniu Zhou <guoniu.zhou@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>, Guoniu Zhou <guoniu.zhou@oss.nxp.com>
+Subject: Re: [PATCH v2 0/4] media: add and use
+ fwnode_graph_for_each_endpoint_scoped()
+Message-ID: <ajzLMiKrlXf2hFRd@ashevche-desk.local>
+References: <20260624-fw_scoped-v2-0-0a8db472af4a@nxp.com>
+ <20260624191935.GG851255@killaraus.ideasonboard.com>
+ <ajwxcn2LXS8InAjZ@SMW015318>
+ <20260624200237.GJ851255@killaraus.ideasonboard.com>
+ <ajxCOE3avXXLlrfT@SMW015318>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/3] dt-bindings: input: Add Qualcomm SPMI PMIC haptics
-To: Fenglin Wu <fenglin.wu@oss.qualcomm.com>, linux-arm-msm@vger.kernel.org,
- Dmitry Torokhov <dmitry.torokhov@gmail.com>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Lee Jones <lee@kernel.org>,
- Stephen Boyd <sboyd@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: David Collins <david.collins@oss.qualcomm.com>,
- Subbaraman Narayanamurthy <subbaraman.narayanamurthy@oss.qualcomm.com>,
- Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>, kernel@oss.qualcomm.com,
- linux-input@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20260624-qcom-spmi-haptics-v2-0-b9118e60f3e3@oss.qualcomm.com>
- <20260624-qcom-spmi-haptics-v2-1-b9118e60f3e3@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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
-In-Reply-To: <20260624-qcom-spmi-haptics-v2-1-b9118e60f3e3@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ajxCOE3avXXLlrfT@SMW015318>
+Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
+ krs, Bertel Jungin Aukio 5, 02600 Espoo
 X-Rspamd-Action: no action
 X-Spamd-Result: default: False [-5.16 / 15.00];
-	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
+	WHITELIST_SPF_DKIM(-3.00)[intel.com:d:+,kernel.org:s:+];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	DMARC_POLICY_ALLOW(-0.50)[intel.com,none];
+	R_DKIM_ALLOW(-0.20)[intel.com:s=Intel];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:fenglin.wu@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:dmitry.torokhov@gmail.com,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:lee@kernel.org,m:sboyd@kernel.org,m:andersson@kernel.org,m:konradybcio@kernel.org,m:david.collins@oss.qualcomm.com,m:subbaraman.narayanamurthy@oss.qualcomm.com,m:kamal.wadhwa@oss.qualcomm.com,m:kernel@oss.qualcomm.com,m:linux-input@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:dmitrytorokhov@gmail.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
-	RCVD_COUNT_THREE(0.00)[4];
-	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[17];
-	FREEMAIL_TO(0.00)[oss.qualcomm.com,vger.kernel.org,gmail.com,kernel.org];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-114448-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[25];
 	FORWARDED(0.00)[lists@lfdr.de];
-	TAGGED_FROM(0.00)[bounces-114447-lists,linux-arm-msm=lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:Frank.li@oss.nxp.com,m:laurent.pinchart@ideasonboard.com,m:djrscally@gmail.com,m:heikki.krogerus@linux.intel.com,m:sakari.ailus@linux.intel.com,m:gregkh@linuxfoundation.org,m:rafael@kernel.org,m:dakr@kernel.org,m:mchehab@kernel.org,m:dafna@fastmail.com,m:heiko@sntech.de,m:bryan.odonoghue@linaro.org,m:vladimir.zapolskiy@linaro.org,m:loic.poulain@oss.qualcomm.com,m:driver-core@lists.linux.dev,m:linux-acpi@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-media@vger.kernel.org,m:linux-rockchip@lists.infradead.org,m:linux-arm-kernel@lists.infradead.org,m:linux-arm-msm@vger.kernel.org,m:imx@lists.linux.dev,m:guoniu.zhou@nxp.com,m:Frank.Li@nxp.com,m:guoniu.zhou@oss.nxp.com,s:lists@lfdr.de];
+	FREEMAIL_CC(0.00)[ideasonboard.com,gmail.com,linux.intel.com,linuxfoundation.org,kernel.org,fastmail.com,sntech.de,linaro.org,oss.qualcomm.com,lists.linux.dev,vger.kernel.org,lists.infradead.org,nxp.com,oss.nxp.com];
+	MIME_TRACE(0.00)[0:+];
+	HAS_ORG_HEADER(0.00)[];
+	FORGED_SENDER(0.00)[andriy.shevchenko@linux.intel.com,linux-arm-msm@vger.kernel.org];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	MISSING_XM_UA(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	ALIAS_RESOLVED(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[andriy.shevchenko@linux.intel.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[intel.com:+];
+	RCVD_COUNT_FIVE(0.00)[5];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	TO_DN_SOME(0.00)[];
+	ALIAS_RESOLVED(0.00)[];
 	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,vger.kernel.org:from_smtp]
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[ashevche-desk.local:mid,intel.com:dkim,linux.intel.com:from_mime,vger.kernel.org:from_smtp,sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,nxp.com:email]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: B164F6C3016
+X-Rspamd-Queue-Id: C8B126C3097
 
-On 25/06/2026 04:00, Fenglin Wu wrote:
-> Add binding document for the haptics module inside Qualcomm PMIC
-> PMIH0108.
+On Wed, Jun 24, 2026 at 03:46:48PM -0500, Frank Li wrote:
+> On Wed, Jun 24, 2026 at 11:02:37PM +0300, Laurent Pinchart wrote:
+> > On Wed, Jun 24, 2026 at 02:35:14PM -0500, Frank Li wrote:
+> > > On Wed, Jun 24, 2026 at 10:19:35PM +0300, Laurent Pinchart wrote:
+> > > > On Wed, Jun 24, 2026 at 01:00:08PM -0400, Frank.Li@oss.nxp.com wrote:
+> > > > > Add new helper macro fwnode_graph_for_each_endpoint_scoped() and use it
+> > > > > simplify media code.
+> > > > >
+> > > > > Typical example should qualcomm's driver (camss.c), the v4l2_mc.c and
+> > > > > rkisp1-dev.c only silience improvement.
+> > > > >
+> > > > > Anyways, *_for_each_*_scoped() already use widely and make code clean.
+> > > > >
+> > > > > Build test only.
+> > > > >
+> > > > > Sakari Ailus:
+> > > > > 	when I try to improve the patch
+> > > > > "Add common helper library for 1-to-1 subdev registration", I found need
+> > > > > camss.c pattern, so I create this small improvement firstly.
+> > > >
+> > > > Those are nice cleanups, thank you.
+> > > >
+> > > > After applying this series, the only left users of the
+> > > > fwnode_graph_for_each_endpoint() macro are in drivers/base/property.c.
+> > >
+> > > I already checked previously, two place use it.
+> > >
+> > > fwnode_graph_get_endpoint_count(), it will go though all endpoints, last
+> > > ep is NULL, which totally equial to scoped() version.
+> > >
+> > > another one fwnode_graph_get_endpoint_by_id(), which return ep, expect
+> > > caller to call put().
+> > >
+> > > if use scoped() version, need use no_free_ptr() at return, which make think
+> > > a little bit complex.
+> >
+> > It would introduce a tiny bit of extra complexity there, but the
+> > advantage (in my opinion) is that we'll be able to remove the less safe
+> > fwnode_graph_for_each_endpoint() macro.
+> >
+> > Now one may argue that the risk of
+> > fwnode_graph_for_each_endpoint_scoped() is returning the iterator
+> > without using no_free_ptr(). I wonder if that would be easier to catch
+> > in static analysis tools than the current pattern that leaks a reference
+> > when exiting the loop early.
 > 
-> Assisted-by: Claude:claude-4-6-sonnet
-> Signed-off-by: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
-> ---
->  .../bindings/input/qcom,spmi-haptics.yaml          | 132 +++++++++++++++++++++
->  1 file changed, 132 insertions(+)
+> It's not big deal, if everyone prefer drop fwnode_graph_for_each_endpoint(),
+> I can do it.
+
+I slightly tend to the safest option (see below), but as a compromise I can
+suggest to inline the fwnode_graph_for_each_endpoint() into that single user
+that doesn't need a put. However, this may uglify the code and rise a question
+of the consistency. So, consider that suggestion with grain of salt and apply
+only if we have wider agreement with it.
+
+> > > It'd better leave these as it.
+
+TL;DR:
+This is the safest option, of course. And as mentioned above I slightly
+prefer this way. Another argument is that in some cases we might want to
+have it in the future and since we have an existing user, let it live.
+
+-- 
+With Best Regards,
+Andy Shevchenko
 
 
-You did not test this before sending, therefore this fits in to AI slop
-category. I do not accept AI slop to be sent to mailing list.
-
-Best regards,
-Krzysztof
 
