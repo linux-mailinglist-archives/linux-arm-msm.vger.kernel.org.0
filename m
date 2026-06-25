@@ -1,79 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-114474-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-114475-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id h6MEKpjtPGojuggAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-114474-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2026 10:58:00 +0200
+	id 0zPGA67tPGoouggAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-114475-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2026 10:58:22 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1A5E16C4035
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2026 10:58:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5B4066C403B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2026 10:58:21 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=gmail.com header.s=20251104 header.b="nyBJrK/P";
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-114474-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-114474-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=gmail.com header.s=20251104 header.b=ZZf0L1Zx;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-114475-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-114475-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=none) header.from=gmail.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id CB82C304C97B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2026 08:57:25 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 97028305A5D6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2026 08:57:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5D0F338888C;
-	Thu, 25 Jun 2026 08:57:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 76E57326927;
+	Thu, 25 Jun 2026 08:57:27 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail-yx1-f41.google.com (mail-yx1-f41.google.com [74.125.224.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3DF1386C1B
-	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jun 2026 08:57:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2908637649D
+	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jun 2026 08:57:25 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782377845; cv=none; b=kiPkurTaqU+rtdNClgKSMA8GiDFbt0zhXwGvQgDbO5Dcznrta3eXvS44aZVdglvxZNQc1xhYMTIWdsqQcFpAjeSy5xG5JfD5fPx4E9QOQSlNolPVtmtDi0tXtB2zKOsN3JSXJgYGBLQ9jwlaIvK0FzgDR8gY1yuXTaKqOI7og6U=
+	t=1782377847; cv=none; b=nouI8YFLnNJz1Z0F4BwFV5pZkXx+cQhwKGUuxXt7yl2cC73YwInj/gT9l59WCU3qMMT7uozKbA5PSYTKGaWNH62RaRTA+NstcEr219S5aF5UNLA0jwzumchzBtzJYYiGnR8ukMLbnZTSlusqQ7L2eW7Iy5f1SJIUy8BRy22Ij/8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782377845; c=relaxed/simple;
-	bh=lmA4nhBvMT9tW7gbg3hSIPL7ZKk1QgJkw5SszEVlhEU=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Q3kdsp6uJzNrpu952RXoi0yABkQUspEbi0u3+Hc8ZOpyfguND4KdwjHoaBfnMFyjB4u/OHdySRulVdkFX6r4Az2nCp3ccsb/os7u5PSSLt1CynvSBxKjLU9FWwVnAcXWSoyTz3iNJYgOtfofwJrPxBTijWn5+BSzVkCs/W6HqZ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nyBJrK/P; arc=none smtp.client-ip=74.125.224.41
-Received: by mail-yx1-f41.google.com with SMTP id 956f58d0204a3-662d484ff3bso1936705d50.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jun 2026 01:57:22 -0700 (PDT)
+	s=arc-20240116; t=1782377847; c=relaxed/simple;
+	bh=z3ifyXo4P4eBwNsPbrBccOs5hNTXuDWJynVPrxskX78=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=eMFWYuRTjQY41fuzQap6pSevxIrfpKWARIhXfKbPdoSwYALCJrM+9yzRjQlDbS3XO9LuffOSrIpgeU0Tjrv0iWAeKci8vRXyj/XQNKXGimK3k8Cek6GhwO7ZV1U34JqE1yAlAWgIVdr6IXz/FK6XxPhL5PxAxWJB8nzLnKOBo04=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZZf0L1Zx; arc=none smtp.client-ip=74.125.224.41
+Received: by mail-yx1-f41.google.com with SMTP id 956f58d0204a3-662dc387b7aso2182451d50.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jun 2026 01:57:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782377842; x=1782982642; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=B4FF8nNbzEIIdzHCql4jtvlByyo4hD6ECsylMtCq6+k=;
-        b=nyBJrK/PAJzyRkC4h9pJmpFDaHqmVztYM7KOQ7RrSH6iiDoxGzzhovt1nPuWbtOIBg
-         3CB596vWBVCxUkgjxumQpYhFPaY94doST4s7K3ndB8yCJHgeNt9V7SjqgEDj9qQY9Qp5
-         sAJ9YtPuPygc/k80f6GypAPzJRpTIgt6+ZUYLzHtf4O7BMlCzKrU320iqbbqvyBh1tSy
-         TnbstpgsWAosJXY5MINV88gKtT9vmWo/gVGz45CWggcInbAziz2bdDf2fQEjm1gxIY4b
-         WqwWtA/eoHPHHUEEfjpLY8t15tr48gAs3GskSY3/rYpX93xq+HvA8ebUkHKxHqVMI+Xt
-         ktHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782377842; x=1782982642;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1782377845; x=1782982645; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=B4FF8nNbzEIIdzHCql4jtvlByyo4hD6ECsylMtCq6+k=;
-        b=WTPrDwb7+8HclRw/CNYoTlUHl3R3ASoAzbGD5QIKTg505U/GmHo894DJClbJabnlg0
-         VZ1YMoPaKWOdeX3+y7Ach8kEJN8lJb9JoF0E2JP2oIKOJ+nUDLCJ1W5rnXyiTV7kB1Qj
-         Wr+p0VvCCd89lCa4jhRmmUjBjgP9xNTi2dho13COgG6Ne9Hxlm1/ttDPNnxY+xznLZPV
-         9YJC9yaveiW4OD/gN0u2MSacO2h+JDqwf4loQahXYNp0lFND2DciCt3132jrPmg7yXTp
-         pb/pA8ZtOQqkJcXdNkDKZeRDalElzGx0HZEJ8zhFEWlc/vug2HFJz4KUMcMUSUNF5mpS
-         th6g==
-X-Forwarded-Encrypted: i=1; AHgh+Rpqz502HmDh0svazsgJXUaf3Md8lxQf8HG2PUeI+74yCny2p5gxaMM1EOaV23pmqRL3AZ+nmbxMT0ATd1RG@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxyg1dnKTkee6GDGBR1zIhxvKsm/saG80ckkSzK6z39hrKY4mUA
-	+9NbhvGxk/D3SA3AhZZWUeyAMki/iX405meX+RrRphIR66JukhvaDbe6
-X-Gm-Gg: AfdE7cmXTIY133UDKVynTFBGHzHCDaIePeK/HJYsdZAhERMEJIFJHX0F9DCoQrr7Th2
-	p3F7HVJZx2Wc+9fNYjd6UlxOT7ioDHZI2ozMp/UtJIn2Qq+D41f0o5V4ddbsDYNW0zmj/BiALjY
-	YfhzOunc+MZ34hy8PbdUj0PT7Ry+2ZGe6A3EVhF5Kk6MN+7zVWNRDtxudXfS1ihIUA2DeEo5bYC
-	o/3fXRq3l/Ep4VC/bAFkRSLgDvjRWU4+o9dy51wcCzfdZuL43Me4zxa1+dtyZOvzQ22w4vH6aY9
-	eqIoyRezBWENE4Wp7+gjYd4+J/n38KxsvTDrRoj/g/AZsBR97B2po5ehqDSfhlG5JWilkEteVUr
-	JtL/Nx+67OhB1ZFUXVIBrgO1YHcXon98ESg8apJu50NU/JQmqEZFzom+70S2N2Slgi2jNONk4BZ
-	2MN5KBQcI9RvIW44GNlxQjBUmsFV8R9CgUqRGl
-X-Received: by 2002:a05:690e:e8f:b0:662:e0b5:33b with SMTP id 956f58d0204a3-66487debde5mr1230262d50.8.1782377841950;
-        Thu, 25 Jun 2026 01:57:21 -0700 (PDT)
+        bh=YCYjeG3UoXuLJvf4tB6q96AYo9bWZwxnIXnqLkpJp/o=;
+        b=ZZf0L1ZxHi5kzTyxX+QGcQdakZhBt2nHzu8s2gHK94spNSevw8zxb/KmPwD/J9AyrV
+         HMdRRtdpKcOyWvysL9cuXvDf5QyGicwh5OlsRBpR/xanV0Fvpxdp4Wb+W61Y4lZGBQYg
+         K2LOTKSMuM9+FVfL+FXzVTkEyacc7IYf+8T3EcNU91juRqfIBJTIrONysIL4/gCo2S7H
+         99SeVJnAg22Jp+7RIbYdBjKBkWS0JJ5wTb03OO8PKOQ4W0IjXjKPoh6qYpLR8AUdnR9X
+         rg3rcKVy0f6caeI9nDyxyJfDcUqsDfaLE/x9zEQothxCjzfeiKOc5hEJoVGRZsWWYdOG
+         +V1A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782377845; x=1782982645;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=YCYjeG3UoXuLJvf4tB6q96AYo9bWZwxnIXnqLkpJp/o=;
+        b=opkKa52YYD5jTticLnC7lAUBsYirYH31Uf0VzSMLM5djngAjbtVvlN59undmCa7pVr
+         I/vtrmKYdJohjEbMSnrezMcxeuxu58DGkfOiLnux2gKqGq3IGBGMt8DZ87PSqWFoSFZi
+         rbx7HaN7uUoRgRhmEN+tC6J9kAWo5hDLEDwfUP/jAFyFVu5O05rrFG9RjgNqurlQ9ov5
+         H0zrOuH59TAxNMNxK8m8G3r2EVzI4LRM19ugKy8ob/HgALMMRDBaGP6ihjRx9P+AhuTS
+         0Cnoe8ySfuuBAJELX0+zh86ZjUjYzPfROaA/4kE+PM4SJnbOKYEOD4+NSsfuIVsc74ds
+         nn1Q==
+X-Forwarded-Encrypted: i=1; AHgh+Rrjfex0FK8nUlXbXX4XCVPEY8KDq8h5UidB4s9Dh8qT2nuJBopSUvxYmqTa5qY/uGsqEWCzthMpoy8giNzq@vger.kernel.org
+X-Gm-Message-State: AOJu0YyOaZ4GO38x1mEsFeSjh9vfivYWTZtXw0/qaQ/TcX4BPFOKyzCR
+	tlvci4EDsCSQB42s7chMfk0PuAYupDs1cqoaPzPh1VNKAt4OwPOkGP7X
+X-Gm-Gg: AfdE7ckomeF821qMLh8nUJsnRc2n8Ul1wormIGz7ttsg9rCuaI6wFJi/DGPenQtNxSP
+	RgtOv2MKwlxvpPGV5sjp9lN3TnmcyKWajpwr2vu5uxQ4W69ytgvrV6V5bnWjkpHNvt+TqUZG5em
+	r5mnW6Kr0Dmo8Oas/0zRysQlBm4xSqTDHaE+4pPAXx6GcwH4laPBxClz/EqwZ/yZVNJNP9CbEHp
+	5ybvynisdu3IKlDxFhGpHKGN/CDfPkzDNO6PwEPe8vaVtLXtaWEtuuLT5eU7b7kmkyVdDDD2yYj
+	LGvdkPxMUFlaP0hJ7bux8szEqubchd+wv7LznLd6ef22M3Ug6n0J8hSO2yXC35GPxjcUxJ+5jt8
+	GBDAUY4YYx+bz8MH7Tpm2wOWeRsmbIfU/CTZwhQ3+y8BWGQNItQ6xS61wwogElvt+gXw3ymx1j/
+	VJv70L7mrLwcU/PP5n0DcXJwxFG4IZnZQYJtrD
+X-Received: by 2002:a53:ac9b:0:b0:660:5a7b:9d7f with SMTP id 956f58d0204a3-66487c7810amr1149739d50.15.1782377845163;
+        Thu, 25 Jun 2026 01:57:25 -0700 (PDT)
 Received: from Dev-Null-MSI ([2a0d:3344:52ac:a808:98a4:4381:be45:536f])
-        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-6647f785f6bsm1105061d50.6.2026.06.25.01.57.19
+        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-6647f785f6bsm1105061d50.6.2026.06.25.01.57.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Jun 2026 01:57:21 -0700 (PDT)
+        Thu, 25 Jun 2026 01:57:24 -0700 (PDT)
 From: Yousef Alhouseen <alhouseenyousef@gmail.com>
 To: Srinivas Kandagatla <srini@kernel.org>,
 	Amol Maheshwari <amahesh@qti.qualcomm.com>
@@ -84,10 +86,12 @@ Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org,
 	Yousef Alhouseen <alhouseenyousef@gmail.com>
-Subject: [PATCH 1/3] misc: fastrpc: reject oversized DMA allocations
-Date: Thu, 25 Jun 2026 10:56:57 +0200
-Message-ID: <20260625085659.4469-1-alhouseenyousef@gmail.com>
+Subject: [PATCH 2/3] misc: fastrpc: fix map cleanup paths
+Date: Thu, 25 Jun 2026 10:56:58 +0200
+Message-ID: <20260625085659.4469-2-alhouseenyousef@gmail.com>
 X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260625085659.4469-1-alhouseenyousef@gmail.com>
+References: <20260625085659.4469-1-alhouseenyousef@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -110,7 +114,7 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	TO_DN_SOME(0.00)[];
 	FREEMAIL_CC(0.00)[oss.qualcomm.com,arndb.de,linuxfoundation.org,vger.kernel.org,lists.freedesktop.org,gmail.com];
 	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-114474-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-114475-lists,linux-arm-msm=lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
 	FORGED_RECIPIENTS(0.00)[m:srini@kernel.org,m:amahesh@qti.qualcomm.com,m:konrad.dybcio@oss.qualcomm.com,m:arnd@arndb.de,m:gregkh@linuxfoundation.org,m:linux-arm-msm@vger.kernel.org,m:dri-devel@lists.freedesktop.org,m:linux-kernel@vger.kernel.org,m:alhouseenyousef@gmail.com,s:lists@lfdr.de];
@@ -129,55 +133,63 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	ALIAS_RESOLVED(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,vger.kernel.org:from_smtp]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 1A5E16C4035
+X-Rspamd-Queue-Id: 5B4066C403B
 
-FastRPC keeps invoke and mmap buffer sizes in u64 fields, but coherent
-DMA allocation takes a size_t. On 32-bit builds, a size above SIZE_MAX
-can be truncated before allocation while the larger value is still used
-in the message sent to the DSP.
+fastrpc_create_maps() can attach dma-bufs for every scalar argument,
+including handle arguments beyond the input and output buffer count.
+fastrpc_context_free() only dropped references up to nbufs, leaving
+handle maps attached after invoke cleanup.
 
-Reject sizes that cannot fit in size_t before allocating the DMA buffer.
-Also make the inline payload alignment step overflow-aware so a
-near-U64_MAX accumulator cannot wrap before the later bounds checks.
+fastrpc_map_attach() also falls through to fastrpc_map_put() after
+manually detaching and putting the dma-buf on late errors. Leave the map
+object in a state that matches the resources still owned by the release
+path so the attachment and dma-buf are not released twice.
 
 Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
 ---
- drivers/misc/fastrpc.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/misc/fastrpc.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-index bfdf8ab6a..8992b5c0c 100644
+index 8992b5c0c..50f90e17e 100644
 --- a/drivers/misc/fastrpc.c
 +++ b/drivers/misc/fastrpc.c
-@@ -437,6 +437,9 @@ static int __fastrpc_buf_alloc(struct fastrpc_user *fl, struct device *dev,
- {
- 	struct fastrpc_buf *buf;
+@@ -580,7 +580,7 @@ static void fastrpc_context_free(struct kref *ref)
+ 	cctx = ctx->cctx;
+ 	fl = ctx->fl;
  
-+	if (size > SIZE_MAX)
-+		return -EOVERFLOW;
-+
- 	buf = kzalloc_obj(*buf);
- 	if (!buf)
- 		return -ENOMEM;
-@@ -1035,8 +1038,14 @@ static int fastrpc_get_payload_size(struct fastrpc_invoke_ctx *ctx, int metalen,
- 			u64 len = ctx->olaps[oix].mend -
- 				  ctx->olaps[oix].mstart;
+-	for (i = 0; i < ctx->nbufs; i++)
++	for (i = 0; i < ctx->nscalars; i++)
+ 		fastrpc_map_put(ctx->maps[i]);
  
--			if (ctx->olaps[oix].offset == 0)
--				size = ALIGN(size, FASTRPC_ALIGN);
-+			if (ctx->olaps[oix].offset == 0) {
-+				u64 aligned;
-+
-+				if (check_add_overflow(size, FASTRPC_ALIGN - 1,
-+						       &aligned))
-+					return -EOVERFLOW;
-+				size = aligned & ~(FASTRPC_ALIGN - 1);
-+			}
+ 	if (ctx->buf)
+@@ -917,7 +917,7 @@ static int fastrpc_map_attach(struct fastrpc_user *fl, int fd,
+ 	table = dma_buf_map_attachment_unlocked(map->attach, DMA_BIDIRECTIONAL);
+ 	if (IS_ERR(table)) {
+ 		err = PTR_ERR(table);
+-		goto map_err;
++		goto detach_err;
+ 	}
+ 	map->table = table;
  
- 			if (check_add_overflow(size, len, &size))
- 				return -EOVERFLOW;
+@@ -966,9 +966,15 @@ static int fastrpc_map_attach(struct fastrpc_user *fl, int fd,
+ 	return 0;
+ 
+ map_err:
++	dma_buf_unmap_attachment_unlocked(map->attach, map->table,
++					  DMA_BIDIRECTIONAL);
++	map->table = NULL;
++detach_err:
+ 	dma_buf_detach(map->buf, map->attach);
++	map->attach = NULL;
+ attach_err:
+ 	dma_buf_put(map->buf);
++	map->buf = NULL;
+ get_err:
+ 	fastrpc_map_put(map);
+ 
 -- 
 2.54.0
 
