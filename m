@@ -1,198 +1,150 @@
-Return-Path: <linux-arm-msm+bounces-114562-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-114563-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id 3FtrIalEPWo10ggAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-114562-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2026 17:09:29 +0200
+	id aX5NGOBEPWpC0ggAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-114563-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2026 17:10:24 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id CF5206C6F27
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2026 17:09:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8E5F36C6F3E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2026 17:10:23 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=thundersoft.com header.s=default header.b=Ia7Xplho;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-114562-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-114562-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=none) header.from=thundersoft.com;
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=aZmF5pj9;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-114563-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-114563-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 42DBD3003EAF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2026 15:08:51 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id C036E30892CE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2026 15:09:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 23FF43E5A0B;
-	Thu, 25 Jun 2026 15:08:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 142533E7BB9;
+	Thu, 25 Jun 2026 15:09:02 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-m8351.xmail.ntesmail.com (mail-m8351.xmail.ntesmail.com [156.224.83.51])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A47031C695;
-	Thu, 25 Jun 2026 15:08:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FE783E5A0B;
+	Thu, 25 Jun 2026 15:09:00 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782400130; cv=none; b=WX4WmvFsLA71yLG4oOtgqt25ONpLS+eKZnB2AxrZPXbzBY6gv3AGLAxv6lbg1lw2/0+PPho+x7J5DoQDl9aDkN/Xjz++AdRd92GM+bIRKGVmxK9j59DowcmKK78dkRrKQDoz37zjUCxJJUuMj+lq8lti1/iItLjH2E4xf63z0Nc=
+	t=1782400142; cv=none; b=jIk12LfPZMtDkIcpMqvfjAnAHz8/XghVoKvifuy3oVnk3lpXE/KOUMTOqnCTGfhKNLwktxkzadskvXLLH98kf+nRRpRCObt0X5thJ15xxjiiZSF5ETCId5v4LaFEntHNcWisiH+GTeWQO4TqUGA5NKdA2UyoXEbG0/YQRWhBXaM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782400130; c=relaxed/simple;
-	bh=5PDI949WqwECacuZSse14ihAIvpV6sTw4T0OgiRTigI=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N+2+sxDjt85OCf/8cRTkJe9woQ5/u+5co9UzlYldbr9bpLPLUeGfakA/ZuKIz4Ken8byaHNkX+dc48X3V05kP5JW+ZzxSQ0S+dmL7/QMcggrmqmOc13S5wB3r6nr9UHSYMQxJ5+zbVNUxxyYycULnquXHGSWf5siQeOb1EeOvd8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=thundersoft.com; spf=pass smtp.mailfrom=thundersoft.com; dkim=pass (1024-bit key) header.d=thundersoft.com header.i=@thundersoft.com header.b=Ia7Xplho; arc=none smtp.client-ip=156.224.83.51
-Received: from tsdl-HP-EliteDesk-880-G6-Tower-PC.. (unknown [36.129.139.90])
-	by smtp.qiye.163.com (Hmail) with ESMTP id 43c686575;
-	Thu, 25 Jun 2026 23:08:41 +0800 (GMT+08:00)
-From: Hongyang Zhao <hongyang.zhao@thundersoft.com>
-To: konrad.dybcio@oss.qualcomm.com
-Cc: andersson@kernel.org,
-	conor+dt@kernel.org,
-	devicetree@vger.kernel.org,
-	hongyang.zhao@thundersoft.com,
-	konradybcio@kernel.org,
-	krzk+dt@kernel.org,
-	linux-arm-msm@vger.kernel.org,
+	s=arc-20240116; t=1782400142; c=relaxed/simple;
+	bh=wb3YymQHTTqDd/1+3iz20LPAouCVq5tEF0n0NyEW7Ps=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qSzq9dGt8kwngnkONrmXteRpaE4uCiTe72Grvik9O74tEbzumj6eG7Wvl9O0E2fQyt24It0cl6YufEz+KhB1M4b/j4f2T7RepNirV2Bx7YQP9CVQR42Ax/kFB7aOKUaeid5zhz2zG1llUiQfprLDlTb5XIyq8OF8GvNRFMNt8wA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aZmF5pj9; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE6D11F000E9;
+	Thu, 25 Jun 2026 15:08:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1782400140;
+	bh=wb3YymQHTTqDd/1+3iz20LPAouCVq5tEF0n0NyEW7Ps=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=aZmF5pj9JqgGoG3goPhL7wN9EgGirf1OC3bYS1AX3N9TiQLU9n692/sZu66Ku3jrw
+	 qyxppIMe2CugHklsWBHbyDAoQ19UWdObB/Wabkfpe73aQ6R9RqR8bpVCZwgKlxcSkj
+	 fvWra+TX7L597drAjuEDsojctchhj8KOyejTrjkl/OkmIZUq9t8NzU8rt5MTXLIxm8
+	 XMpRhV7Y3RBu9/dkbplSwQ8tRFdvN9vgEjFrjjs6gPdQwLF691RVF15OlEtQJRjPKy
+	 nsA/WH0w6EWAqEdF6noaEzDBds9UVek4ADSvwnCXfldzjrEkqXIMVahFDPMMjQk/MQ
+	 1m39BkFUWhcbw==
+Date: Thu, 25 Jun 2026 16:08:56 +0100
+From: Mark Brown <broonie@kernel.org>
+To: Praveen Talari <praveen.talari@oss.qualcomm.com>
+Cc: bjorn.andersson@oss.qualcomm.com,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	robh@kernel.org,
-	rosh@debian.org
-Subject: Re: [PATCH] arm64: dts: qcom: qcs6490-rubikpi3: Enable cameras
-Date: Thu, 25 Jun 2026 23:08:21 +0800
-Message-ID: <20260625150821.3579971-1-hongyang.zhao@thundersoft.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <a4073f5a-1965-4a6c-ba39-c236429e2db7@oss.qualcomm.com>
-References: <a4073f5a-1965-4a6c-ba39-c236429e2db7@oss.qualcomm.com>
+	Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>,
+	aniket.randive@oss.qualcomm.com,
+	chandana.chiluveru@oss.qualcomm.com
+Subject: Re: [PATCH] spi: core: Abort active target transfer on controller
+ suspend
+Message-ID: <011f20d7-a7ef-46c9-b68e-4638f34d6937@sirena.org.uk>
+References: <20260625-abort_active_transfer_duirng_s2r-v1-1-7439e3585ad7@oss.qualcomm.com>
+ <730c2055-b29f-419d-99f2-bc4df3b6a2f7@sirena.org.uk>
+ <4ceb69dd-4c4f-46b4-93d2-4e4c7bf0146b@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-HM-Tid: 0a9eff537ae809d5kunmce1d94d1ce236
-X-HM-MType: 1
-X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFITzdXWRgWCB1ZQUpXWS1ZQUlXWQ8JGhUIEh9ZQVlCTksaVkkYSUkYGR9OGhpPQ1YVFA
-	kWGhdVEwETFhoSFyQUDg9ZV1kYEgtZQVlITVVKSUJVSkhCVUJLWVdZFhoPEhUdFFlBWU9LSFVKS0
-	lPT09IVUpLS1VKQktLWQY+
-DKIM-Signature: a=rsa-sha256;
-	b=Ia7XplhoNo65RRM2WKXPWw6WzgZ2Y5FO6mn6VyLdasrnrJypduTQ8qUj0CRLv3l7ibUnheek2cnN4J2CFeryZ89NSVwk/Y7DrwsJ5uqe6u251dOK0JhOlml+gj1iviPrdRD8iBxSl3setuqKDJtwT8ZrJDYH8qi4Q7FCCZryB2s=; c=relaxed/relaxed; s=default; d=thundersoft.com; v=1;
-	bh=jXIh1pNtTKhdJ3oiCrH8Lqr6TNXGeF7i0dedwODPk4A=;
-	h=date:mime-version:subject:message-id:from;
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="PUDGEEEyaabuSaGP"
+Content-Disposition: inline
+In-Reply-To: <4ceb69dd-4c4f-46b4-93d2-4e4c7bf0146b@oss.qualcomm.com>
+X-Cookie: If in doubt, mumble.
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [0.84 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
-	MID_CONTAINS_FROM(1.00)[];
+X-Spamd-Result: default: False [-7.26 / 15.00];
+	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
+	SIGNED_PGP(-2.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_MISSING_CHARSET(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[thundersoft.com,none];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	MIME_GOOD(-0.20)[multipart/signed,text/plain];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
-	R_DKIM_ALLOW(-0.20)[thundersoft.com:s=default];
 	MAILLIST(-0.15)[generic];
-	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-114563-lists,linux-arm-msm=lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:praveen.talari@oss.qualcomm.com,m:bjorn.andersson@oss.qualcomm.com,m:konrad.dybcio@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:linux-spi@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:mukesh.savaliya@oss.qualcomm.com,m:aniket.randive@oss.qualcomm.com,m:chandana.chiluveru@oss.qualcomm.com,s:lists@lfdr.de];
+	FROM_HAS_DN(0.00)[];
+	FORGED_SENDER(0.00)[broonie@kernel.org,linux-arm-msm@vger.kernel.org];
+	MIME_TRACE(0.00)[0:+,1:+,2:~];
+	RCVD_COUNT_THREE(0.00)[4];
 	FORWARDED(0.00)[lists@lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_SENDER(0.00)[hongyang.zhao@thundersoft.com,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS(0.00)[m:konrad.dybcio@oss.qualcomm.com,m:andersson@kernel.org,m:conor+dt@kernel.org,m:devicetree@vger.kernel.org,m:hongyang.zhao@thundersoft.com,m:konradybcio@kernel.org,m:krzk+dt@kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:robh@kernel.org,m:rosh@debian.org,m:conor@kernel.org,m:krzk@kernel.org,s:lists@lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-114562-lists,linux-arm-msm=lfdr.de];
-	RCVD_COUNT_THREE(0.00)[4];
-	DKIM_TRACE(0.00)[thundersoft.com:+];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	MIME_TRACE(0.00)[0:+];
-	PRECEDENCE_BULK(0.00)[];
+	MISSING_XM_UA(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[hongyang.zhao@thundersoft.com,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_NONE(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[11];
 	ALIAS_RESOLVED(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[broonie@kernel.org,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[9];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,vger.kernel.org:from_smtp,amazonaws.com:url,thundersoft.com:dkim,thundersoft.com:email,thundersoft.com:mid,thundersoft.com:from_mime]
+	TO_DN_SOME(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,vger.kernel.org:from_smtp,sirena.org.uk:mid]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: CF5206C6F27
+X-Rspamd-Queue-Id: 8E5F36C6F3E
 
-Hi Konrad,
 
-Thanks for the review.
+--PUDGEEEyaabuSaGP
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-On 6/16/26 9:29 AM, Hongyang Zhao wrote:
-> > Enable the two Raspberry Pi camera connectors on RubikPi 3 with
-> > IMX219 sensors. CAM1 is connected to CCI1 and CSIPHY1, while CAM2
-> > is connected to CCI0 and CSIPHY4.
-> >
-> > Add the shared 24 MHz camera oscillator, camera power enable
-> > regulators, CAMSS endpoints, CCI sensor nodes and privacy LED GPIOs.
-> >
-> > Signed-off-by: Hongyang Zhao <hongyang.zhao@thundersoft.com>
-> > ---
->
-> [...]
->
-> > +	vreg_cam1_pwr: regulator-camera1-pwr {
-> > +		compatible = "regulator-fixed";
-> > +
-> > +		regulator-name = "vreg_camera1_pwr";
-> > +		regulator-min-microvolt = <3300000>;
-> > +		regulator-max-microvolt = <3300000>;
-> > +
-> > +		gpio = <&tlmm 57 GPIO_ACTIVE_HIGH>;
-> > +		enable-active-high;
-> > +
-> > +		pinctrl-0 = <&cam1_pwr_en>;
-> > +		pinctrl-names = "default";
-> > +
-> > +		vin-supply = <&vreg_vcc3v3_output>;
-> > +	};
-> > +
-> > +	vreg_cam2_pwr: regulator-camera2-pwr {
-> > +		compatible = "regulator-fixed";
-> > +
-> > +		regulator-name = "vreg_camera2_pwr";
-> > +		regulator-min-microvolt = <3300000>;
-> > +		regulator-max-microvolt = <3300000>;
-> > +
-> > +		gpio = <&tlmm 58 GPIO_ACTIVE_HIGH>;
-> > +		enable-active-high;
-> > +
-> > +		pinctrl-0 = <&cam2_pwr_en>;
-> > +		pinctrl-names = "default";
-> > +
-> > +		vin-supply = <&vreg_vcc3v3_output>;
-> > +	};
+On Thu, Jun 25, 2026 at 08:29:05PM +0530, Praveen Talari wrote:
+> On 25-06-2026 18:57, Mark Brown wrote:
 
-> Are these supplies part of the baseboard?
+> > We need to check for an active message here, drivers are going to
+> > assume there's an in progress operation to cancel - for example the
+> > pxa2xx driver unconditionally sets cur_msg->status during abort which is
+> > going to go badly without a cur_msg.
 
-Yes. These are board-level camera power switches on RUBIK Pi 3.
+> Yes, i got it. Our spi driver had that check in target_abort.
 
-The public schematic shows this on page 13, in the Camera1&2 sheet:
-https://thundercomm.s3-accelerate.amazonaws.com/uploads/web/rubik-pi-3/RUBIKPI3-IOB-V02-RELEASE.pdf
+> is it fine?
 
-CAMERA1_PWR_EN and CAMERA2_PWR_EN are driven from the SOM side and gate
-the camera connector power rails derived from VCC3V3_OUTPUT.
+> if (ctrl->cur_msg && spi_controller_is_target(ctlr) && ctlr->target_abort)
 
-> [...]
->
-> > +	ports {
-> > +		#address-cells = <1>;
-> > +		#size-cells = <0>;
-> > +
-> > +		/* CAM1 is routed to CSI1 / CSIPHY1. */
+I think so.
 
-> I believe these comments are self-explanatory given the names of the labels
+--PUDGEEEyaabuSaGP
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Ack, I will drop these comments in v2.
+-----BEGIN PGP SIGNATURE-----
 
-> [...]
->
-> > +	cam1_privacy_led_state: cam1-privacy-led-state {
-> > +		pins = "gpio18";
-> > +		function = "gpio";
-> > +		drive-strength = <8>;
-> > +		output-low;
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmo9RIcACgkQJNaLcl1U
+h9BJ5Af/fJGkt0fPGKlGtPSegCkjfBk32Ag3FO8IEztIJ3ShGyTdrcuYM6sfpF5w
+K0H3m/KaViSQuPXDfoYo6mFHV0H8NuoW0QYYlKBRL76iPI9wvN0Rce+8L481t/MG
+X9BQU7ED+4GtM0RWsOTJmeYOjiZfxRBk0DDWyi2ZulE89J9YUWEu4U8hxyiphSPi
+rpKQ0UK8rHCwEkQ6lwkVV474diScaZKC2nZBQ3t93C7k5B4NsCbcDvHmgIo+rOMY
+Mz90aArtgM2C13995VU+iyeDe9RKJogINTgPaSy+J2ZDyiL3yco61/8lhEaf3LjW
+sQrvbIO9Pa06lG+PFkLjTgvm9ZVB8A==
+=etqW
+-----END PGP SIGNATURE-----
 
-> Please drop the output-foo properties from TLMM pins, the GPIO
-> state will be controlled by the driver
-
-Ack, I will drop the output-low/output-high properties from the TLMM
-pinctrl states and let the GPIO consumers drive the state.
-
-Thanks,
-Hongyang
+--PUDGEEEyaabuSaGP--
 
