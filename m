@@ -1,101 +1,104 @@
-Return-Path: <linux-arm-msm+bounces-114573-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-114574-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id FAtkH0OSPWrB4AgAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-114573-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2026 22:40:35 +0200
+	id J8E7CE2TPWrt4AgAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-114574-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2026 22:45:01 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id E016B6C88E4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2026 22:40:34 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 623876C895B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2026 22:45:00 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=cay3Jf4t;
-	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=LxLx3Pso;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-114573-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-114573-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=EiG4sWlS;
+	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=H8pkl5ES;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-114574-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-114574-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=reject) header.from=qualcomm.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 8276A3096812
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2026 20:39:31 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 6934F3076F28
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2026 20:39:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2DF7936EAB0;
-	Thu, 25 Jun 2026 20:39:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 54795371049;
+	Thu, 25 Jun 2026 20:39:25 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B57CC3B6364
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1DC430D3F6
 	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jun 2026 20:39:18 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782419963; cv=none; b=FFVdjSKBNiY0bggOk4oKnpoCn7/WC2Fy2XSD7au0IEk5Kx077kCG83yWCqpTse1bf1w84K5bDhsPXDeuvPTn8eWL5OyFWqsvfBQqiLeayDsubrBuWcdvuWaR10awJKPqvTXdue38wbmnD/QhETUY2UVqdzlBys3vrrugRsQNc0A=
+	t=1782419965; cv=none; b=Ayrwu48HSnuONSWGnS2KuA3uy1/JbXo8iVctv4sac+BU1UCPh4I63wpgR4NyInC/Xrb9dKES9EL9Wi7V16BECmMKdpGgIOJllVQVHfEqaPwL7jQvTAPur1OSq1MEWdf70lIGZOtuMbDmezErd7eugLOd0tyVv8bwvu8lis3kkdE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782419963; c=relaxed/simple;
-	bh=i+0AAz3WDNLaIrf5TpMkoF5mSyPu7bbMM7mmjXJH9WU=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=X2/6g5AQx9GXFl4FGe7WYg8PhND1TH9346xvvH23Z7HxtQ8Bq42bG1g0Y5gElb2nLDAtn+EgeCMmo9Cakw7IpMMdCox2jnHU6tKRhIUZZ3ww1l41kMrQ1pnGA9m9m1KcOx/Al0TMex6ajNl9mUmlC+w+KRWm20tmrHciEyaR8Uc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=cay3Jf4t; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=LxLx3Pso; arc=none smtp.client-ip=205.220.180.131
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65PFe9Hi2801479
-	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jun 2026 20:39:15 GMT
+	s=arc-20240116; t=1782419965; c=relaxed/simple;
+	bh=ISmYNvUoaB96MgkLalgc04Cap0JuQBWjqWuLI2ENf+g=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=GzaKXrfBGO8/qkQYWNfWrmdZx6YTwLvo69qjV5X44QVjF8Mo6OpfMFJabM6PlpDvPxNDS5fg+ZrfAS0aqMy+XOvdVsINLTmWDl3jbyme04q24kY4LmPIIGyA+QNI6mY5spiRWuIeLfFK0xAhI/aNVIxuYIfz0Bc6rEhPl/0qDLw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=EiG4sWlS; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=H8pkl5ES; arc=none smtp.client-ip=205.220.180.131
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65PFeJ0K2737270
+	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jun 2026 20:39:16 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=wQ0wPa9pi/vo3Mf8WPQJr0
-	IWTIlooFDEEgQnkHn1StA=; b=cay3Jf4thwdk9ESA2CKIAlvIAYcruFdbSVmlLk
-	cBb2uCuNnpnTiQd7O9f9dKVhVOTM1mzevbMvu4pVbLE0b1wXzMy4hkhM0Gmcd2rS
-	UpRuSGCaWtlc7B48W/A2UbSHx2ZKEqZNkFppcIMBba+o/CnPVzyDPCdUaVtx7RwP
-	y1LbrusxmcwIfSK28cxYG7N5D8b8jO8mz48cHhBI7XGna9r+K3vSrcNA28j5fh4q
-	I82enO3aAzDcEEl+KJpeGktEIsxhfzjL2lhf543sW6ou7XTbOgpsuQG7d1vkTTo9
-	i5hEFsF/2RwGTmYbjkWmXmIacY8u1kfvPGL6Id6//BuIZqkw==
-Received: from mail-dl1-f71.google.com (mail-dl1-f71.google.com [74.125.82.71])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f0uhmm752-1
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	pcF4bTF2Bkbvr18UUoB77o3pNngPmQjwF7EVwOZWLAQ=; b=EiG4sWlSjqQi94Cf
+	LC3x3UW9pxYgRnJL3EbnRBICNA8zTHDmCWxWjPRhX6GRj5fsCMVt8ZbVwjgMURV7
+	FMABSJ028E3JJHzk5PSmlWApevrK3mPQCYc5ftX6LzKfLvOi5Ea1bOdDlV9ju64d
+	k7qMMZ6xyFKLKWsmUwgeKtXmfRVft8rJX6ZXsyvxPCacULwDegXjwsTe6Db2DQ87
+	wfWpMUDDi05HQZsD91sy33bHCBiBtAGqrWmtVWMiwYCRjua9TAjxSjNGnqp5OsZU
+	aEe0mBGsSvW4KkBDXkk4APnzxx3jfTtr1g6OT9lyWPwqITHBJYgk1YKvk5JLROke
+	oEOFzw==
+Received: from mail-dl1-f69.google.com (mail-dl1-f69.google.com [74.125.82.69])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f0ya8uapn-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jun 2026 20:39:15 +0000 (GMT)
-Received: by mail-dl1-f71.google.com with SMTP id a92af1059eb24-139c6673856so498316c88.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jun 2026 13:39:15 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jun 2026 20:39:16 +0000 (GMT)
+Received: by mail-dl1-f69.google.com with SMTP id a92af1059eb24-137fc6f8e9fso607956c88.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jun 2026 13:39:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=oss.qualcomm.com; s=google; t=1782419955; x=1783024755; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=wQ0wPa9pi/vo3Mf8WPQJr0IWTIlooFDEEgQnkHn1StA=;
-        b=LxLx3PsolJoPpIYMq1/MbDN0qJ04jY9Dx7Ttcc7w/fP3b6KRlGml567PiW3Ro5SoRd
-         Sy4PeQCFV14TOn6V4yi9tJS+2DGk4PVgH8gWrAR5nibiL7p9bJ73E03ouyyfNnPIXWGJ
-         vdk/szIXYD3HbQ9pBA7wVw1/fa/2oCnnCCD/hz3xIot7xpltDidVPhVX//AwH0v4e1RS
-         kNvYlZKAUfkipUzvJfMd/+0EG8uBPGl46B1orV5SjmQchCwy6RxomWnBnVx2lW0lM8Ry
-         7y+C4OxnS/7H/g9XRkLzyl+/lHx2Ejav/9dTF/Z3JOWVYODcfsYheOHs9DKxLhdxYOEp
-         uJdQ==
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=pcF4bTF2Bkbvr18UUoB77o3pNngPmQjwF7EVwOZWLAQ=;
+        b=H8pkl5ESpZUDyTTBMBMN4CIPTYz/7GbF5q4FY2TTKuOFREfSfLH6rAKSMuO8VODg50
+         HjtH+DVyV82nXtkWpEEXLhWtDiupvvnhmpxlFSRYxfmq/cAe5N3NGRayGAFwMeIWRJ1v
+         KMoDcQv6IRBRzJQBWeI6VNJLW96mdXVWLMNO1uAub6/GFFfAf5JHJrY/RYTTCu4rYHfT
+         3D5EsBxf86zXNkROC90SSYMmy8Z90fzJw3e10CdaC0ZWGSN/GGP9VdDM/zz18ShQlEU/
+         1bWEKEn2oHOSlcICYID5tQu+AhVq/sU7TD8ln3hGjHKjr3lYzfklJ9savyiKWU7Ms2xB
+         VJOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20251104; t=1782419955; x=1783024755;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=wQ0wPa9pi/vo3Mf8WPQJr0IWTIlooFDEEgQnkHn1StA=;
-        b=V7x2sxNMvlSDf6sHg0AeYsseWveYo1PTT8nqWVqFmS+yLPlFaQgR23svxsLDXCDTWp
-         4gk8m+1gDiZ2GQk7NdwjI7qYJ5xc4Phr897bMX/DsgzSlfZLwhcB+kZPavNXCZLIbj/X
-         x1RDYzEb8tPCtwOqsC17X6kM+AM+0SA3/CQjkvadPWlJG0ZgBI6MzKF3u1Ab5KlFFNxa
-         jrpCWBfVCScr9Df9VuWwvNqn/FBff6jPDDylDh3eig6hBBMgHh6f9cshT5TJ83ngwPLE
-         KfEsj9YL4cwAn9qMDmJnqDLydySli+ODdb+2mbGECj0LT3wAhwyqHbZb1n1UCanGOh5t
-         B6Jg==
-X-Gm-Message-State: AOJu0Ywb6Gzrq/Vnq9zpfigl/GpRIQm3fgeMXiv8AJGNpxn+luPqjACh
-	ZEx2rR8DmzScxPXRJpg4Y9z6YZDoCg8oZ6Bss89pnW44lDDD76cYbZsWdD7SLn8hAD9chWAIrXj
-	kqnBEQWZdSvu7P3DnnQIwGaq+Aj3BLDa+qJPh74WWRKrFONWO0s0+Wt/iRwoqvwrbVwPJ
-X-Gm-Gg: AfdE7clVXT8dxRCQR/0nATloBejb2zCgg2XdY2q3R6T9EaE+gxHnuT0zAiWAM/bHsUC
-	zMOXqkuXJuhneIWTflJUMRFEXvzBwhy11xneWTGt0xBlwCIP7/ILcsihtFAjn0/5omvP2Hckxdi
-	tpm6vieJ/NAYDxLm4cwypml8zecUywMgSD6ofja5Wx7XkKlcLpPBNTDc/pE54taLZ2lxbiY98H0
-	nfcEa/uvdj5iRy/jxYMRVLDtPWAxkMxO1y+81DGzJpmOTmfGUPsf7O1rnbUbt3kzlbKxyrGdict
-	C9ypdlLJtmnVDNd2ZDo3f8emWybBLtW2rCCIMlYY9sEI0+bGoXx4A95PZs0E//BUr7LkxtaQqKx
-	jbewTYvk1+9nHMs0OwRq5j2dzZ2Dm/vohqSH5Laei8yc0UDDx
-X-Received: by 2002:a05:7022:ea21:b0:139:8172:76b2 with SMTP id a92af1059eb24-139dbaa7203mr3356182c88.21.1782419954625;
-        Thu, 25 Jun 2026 13:39:14 -0700 (PDT)
-X-Received: by 2002:a05:7022:ea21:b0:139:8172:76b2 with SMTP id a92af1059eb24-139dbaa7203mr3356150c88.21.1782419954100;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=pcF4bTF2Bkbvr18UUoB77o3pNngPmQjwF7EVwOZWLAQ=;
+        b=cjl3E649PEi3sbN1BfptlK12LllI2xUx+fNUkU+tpcrOSqcAe7sFoXjenPdirt7o2B
+         fb1mYAEwimDODFTqS79k8NwygaslyT0X98Rt8llSJp6ShJLi1CFULv8se1B6kgVGjrPH
+         kRUGSdVsOYQEtG8vgBnwFMSIT67uMFEA3/9GzmhA09jEIIh2hiY8Eu3kIsjm54maX0K0
+         6XODt7+z97eJ7v51MGEAXkUBIQKx/vGfgsy2QLMDrmHIRTzmKVC2I3IBTAICAAOWHf+P
+         sZI7c6K6vlwGMZVxV6x1Vb7G7oQE76fSGJpoWdcHjbzK+InoGyx8j4e5dGEcxoq2y4nV
+         vpQA==
+X-Gm-Message-State: AOJu0YyXSRPszdLRHCfwTTVPQMdMXzmCnG9QAkmBUzFXIYvLO/5NJGND
+	O6XT3ld8Dxvu1A3pKEcOWA3/Uey3+uoNiKG9CsuMLEiuoyKzmXkFJ552t/vUvk7QcB870szd1XI
+	nA7hoPmDv5A7imtgbCvncca+S8OjkMod2EoCU2VO6s8HyzjgG5V/6ZLwkdk1ZhARFg6w2
+X-Gm-Gg: AfdE7cmrNNDDfzMf6PQP/coIkrv78t6uA6tf6yZ37Qh+hRHLr76meuqgQ4FQqdbrQIA
+	dzwk1WVSVETm47r9qkXfT3iqTOdJoIsez837i3gkP4rtOIpz+KrEkeJhf4DoCpsUy5BGmUBf+Ct
+	GNP5aOZcAJE/1laTjkyz+vvegP3QzCNZQam+mm14MVtxPvw6fqJG2X8wkp4gRYjQJcr8bYEh/Kd
+	k2aqb8S4UWXP+X2tLDuSbTV/uW6QdUxzTz9QXbauPNUjuqbjjXa3Dlg8mFk7m9M1xfg+MqKDaR1
+	9khYGUQJFzrbYFtbtH8VxHccqG7hp+GYtrKuKyngKuJzjyUQtj/XbjavH5XfgcBROLyuJZi3c+y
+	m2yR+7ai940H5sZFjcmZp7gCwtGvGIfod9oIQrurZs44eSV8X
+X-Received: by 2002:a05:7022:788:b0:136:c443:80e5 with SMTP id a92af1059eb24-139db9f6888mr3647288c88.6.1782419955385;
+        Thu, 25 Jun 2026 13:39:15 -0700 (PDT)
+X-Received: by 2002:a05:7022:788:b0:136:c443:80e5 with SMTP id a92af1059eb24-139db9f6888mr3647263c88.6.1782419954850;
         Thu, 25 Jun 2026 13:39:14 -0700 (PDT)
 Received: from [169.254.0.3] (Global_NAT1.qualcomm.com. [129.46.96.20])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-139d8ddcd34sm10858623c88.0.2026.06.25.13.39.13
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-139d8ddcd34sm10858623c88.0.2026.06.25.13.39.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Jun 2026 13:39:13 -0700 (PDT)
+        Thu, 25 Jun 2026 13:39:14 -0700 (PDT)
 From: Matthew Leung <matthew.leung@oss.qualcomm.com>
-Subject: [PATCH v4 0/2] PCI: qcom: Add PCIe support for upcoming Hawi SoC
-Date: Thu, 25 Jun 2026 20:38:57 +0000
-Message-Id: <20260625-hawi-pcie-v4-0-1a578603cd86@oss.qualcomm.com>
+Date: Thu, 25 Jun 2026 20:38:58 +0000
+Subject: [PATCH v4 1/2] dt-bindings: PCI: qcom: Document the Hawi PCIe
+ Controller
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -103,13 +106,10 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-B4-Tracking: v=1; b=H4sIAOGRPWoC/3XOTQ6CMBAF4KuYrq2ZtlDBlfcwLmCYSo2CtoAaw
- t0t/kRMdNPkNS/fm555cpY8W8165qiz3tZVCNF8xrDMqh1xW4TMJEgNMWheZhfLT2iJGy0iFWM
- WSUAW+idHxl4f1mb7zL7N94TNCLwajs5tGGk+tdL6pna3xwWdGH/fY8lkrBMcOGAqIAVtlhSva
- +8X5zY7YH08LsLDRqyTE0CmU0AGoKBkiRpRKsA/gPoAWnxdoAJglEgSyE2u6BcwDMMdHgq69lI
- BAAA=
-X-Change-ID: 20260506-hawi-pcie-f61435ca420c
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260625-hawi-pcie-v4-1-1a578603cd86@oss.qualcomm.com>
+References: <20260625-hawi-pcie-v4-0-1a578603cd86@oss.qualcomm.com>
+In-Reply-To: <20260625-hawi-pcie-v4-0-1a578603cd86@oss.qualcomm.com>
 To: Bjorn Helgaas <bhelgaas@google.com>,
         Lorenzo Pieralisi <lpieralisi@kernel.org>,
         =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
@@ -121,52 +121,52 @@ Cc: linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         Matthew Leung <matthew.leung@oss.qualcomm.com>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1782419953; l=2300;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1782419953; l=7084;
  i=matthew.leung@oss.qualcomm.com; s=20260428; h=from:subject:message-id;
- bh=i+0AAz3WDNLaIrf5TpMkoF5mSyPu7bbMM7mmjXJH9WU=;
- b=lpd/QUzmVBs06zOMfbwXTuUN+pgdY32SFFRwkrj2d7jUlld75+y3T0UpNWu1IAERG6oXsorxZ
- HIeMqsU79MmCuB594dOWZ5KNSnWZ+cU5vywiacdnBKqQS3C3jSAEtXr
+ bh=ISmYNvUoaB96MgkLalgc04Cap0JuQBWjqWuLI2ENf+g=;
+ b=wCvh6TtumtqBeuKAE5MATG7RmIOCnKyhOhHmXQ0Auz1HUPHeNJfPeYdze96a0Cq78BSfE4gky
+ COEJugXVgB3DL6/ms4p73ADdViJITTKETM7p2CQ3Vre/sp5X8TJN0U1
 X-Developer-Key: i=matthew.leung@oss.qualcomm.com; a=ed25519;
  pk=aT25ggJo5PMHLN9N+TsZ3s/BVU++kEYuiFebPWe21+o=
-X-Authority-Analysis: v=2.4 cv=cqerVV4i c=1 sm=1 tr=0 ts=6a3d91f3 cx=c_pps
- a=JYo30EpNSr/tUYqK9jHPoA==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI1MDE3OCBTYWx0ZWRfXx4LyITzVc1tk
+ +Sx16JRWLMq5ZMtuCVcw7axNQd1jSmcOf8zueEp+TAXyZYKuBqsF8uFiTeMni+CkQ9lgvTZ1PKK
+ DWCTo7GIIXCDmeYe/bS9eAentLJD05M=
+X-Proofpoint-GUID: HPydOs6QUytZSRPyJxoHkdplwxQ82Qlw
+X-Proofpoint-ORIG-GUID: HPydOs6QUytZSRPyJxoHkdplwxQ82Qlw
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI1MDE3OCBTYWx0ZWRfXwVEbElxWNW4H
+ GtvEqjutoVcLGGblL7+FcJFiuUhjiVP75Ha4QBOIG8WmEXZGzXQxcbXup/+gESk2hNXo+LKxUx7
+ 8uQPsfQG0oiV2+IpaATpRPiByq+kmlDdF5kbVIGebrqcb03pDUOFX48KTBayEidUA+7J4bisN/z
+ ZTAMuVDHcPWQ4rdgxXnEQ2hWr1ZuIHOtRGMpCjMKw8cLs+m2QNOiOaIcJbKDUG+AmH4/HyQCzr7
+ RXu8c2oAw09JVJO6KfRKCg3eABsMOe9NbUXlX2HYCeD4nailubpqjxJKmUv7PpksNRgZnqo/2Gi
+ loZwBpM//RBIC/13SjCYVkr5V/INPp9LcCGmbJQjB2UToKIATeBJudMPjrww1AcxDR2nrcy2+x5
+ ReMDvceY69IqMN7JpyDT3Zh4x1SaqqFb51Rj5VVPguIIjGfiqUmDlkeP2xhF8MqVao0VUbLDKvz
+ /kseMmjdJ+HeLKWmE6w==
+X-Authority-Analysis: v=2.4 cv=Z+Xc2nRA c=1 sm=1 tr=0 ts=6a3d91f4 cx=c_pps
+ a=kVLUcbK0zfr7ocalXnG1qA==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
  a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=bC-a23v3AAAA:8 a=EUspDBNiAAAA:8 a=VwQbUJbxAAAA:8 a=1XWaLZrsAAAA:8
- a=yFGAn9Q8HXAzXJEDlGEA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=Fk4IpSoW4aLDllm1B1p-:22 a=FO4_E8m0qiDe52t0p3_H:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI1MDE3OCBTYWx0ZWRfX99IEF1j4HO3v
- kTrblYULoikfRkwe3e/4jYnyExXq3rxI/TxLf2/exmNG4Fd7nOoEasfV51icjKjln+E4lFF3Yiw
- OC8/kHXCAnV5eK3zvFFsIK4iptnB+iUzn4dSPX3aWfNVbTGr6JFiv3LSJeL3xQNljRHrfG2ljYS
- 3j2B5sFhY58xI0LUrbVo3IhPpcwc1OeeGo7j3OtD5wVG8N2lBYDT1z94nKAbKi6qk77WBtYw3uJ
- +YbNcZxR8os3i+H4FWllhDbpkdfsdkrGe0gXsxeZNNmsnBEa5pFePPRRgjq+MhgR1qgu0gXHrF6
- 1vDGLVxVepu/PxhZZUWj96VX9NxEqsCNk8qiieCLDTvl1t9oGtBK7vFp8Lx9sgL2VyGcylqae3w
- YmDSvfxnqqMMNcmMCPDOJFQJ6jO7KJxR51f06GiTyK/coPf3t7HwvGPhkQ55akH+B3H35liwZir
- E0f4iFUpPco6xZH/Rtw==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI1MDE3OCBTYWx0ZWRfX6/HJdbTsSjZt
- vYHojIYNHCKk/oAVSbV5Fp+DtUb9yTHrCUxhfFitpTnKN0/GLU98R4cmk5CfeEDd1k0tahEVsVW
- W83V9Pz39gzvxVnIjp4Lcc0ixjrKlAY=
-X-Proofpoint-GUID: f4g4B5efkdO96kn0Qr_wdwAb6fkp0QXH
-X-Proofpoint-ORIG-GUID: f4g4B5efkdO96kn0Qr_wdwAb6fkp0QXH
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=gEfo2CItAAAA:8 a=EUspDBNiAAAA:8 a=VwQbUJbxAAAA:8 a=ICk-tmyBBRKrNCK0fOMA:9
+ a=QEXdDO2ut3YA:10 a=vr4QvYf-bLy2KjpDp97w:22 a=sptkURWiP4Gy88Gu7hUp:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-25_02,2026-06-24_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 clxscore=1015 bulkscore=0 phishscore=0 priorityscore=1501
- malwarescore=0 suspectscore=0 impostorscore=0 spamscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606250178
+ clxscore=1015 malwarescore=0 bulkscore=0 suspectscore=0 phishscore=0
+ spamscore=0 adultscore=0 lowpriorityscore=0 priorityscore=1501
+ impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2606250178
 X-Rspamd-Action: no action
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-114573-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-114574-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	FORGED_SENDER(0.00)[matthew.leung@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FORGED_SENDER_MAILLIST(0.00)[];
@@ -175,7 +175,7 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	MIME_TRACE(0.00)[0:+];
 	FORWARDED(0.00)[lists@lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
@@ -189,63 +189,220 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: E016B6C88E4
+X-Rspamd-Queue-Id: 623876C895B
 
-This series adds PCIe support for the Qualcomm Hawi SoC. The Hawi
-platform features two PCIe controllers: one capable of Gen3 x2 operation
-and one capable of Gen4 x1 operation. The first patch adds the device
-tree bindings documentation for the Hawi PCIe controller, and the second
-patch adds driver support by enabling the Hawi compatible string in the
-existing qcom PCIe driver.
+Add a dedicated schema for the PCIe controllers found on the Hawi
+platform.
 
 Signed-off-by: Matthew Leung <matthew.leung@oss.qualcomm.com>
 ---
-Changes in v4:
-- Dropped minItems constraints from reg, clocks, interrupts, and resets
-- Link to v3: https://patch.msgid.link/20260618-hawi-pcie-v3-0-f31880bfb3ec@oss.qualcomm.com
-
-Changes in v3:
-- Updated binding example to use ephemeral values, removing cross-tree
-  dependencies
-- Link to v2: https://patch.msgid.link/20260529-hawi-pcie-v2-0-de87c6cc230c@oss.qualcomm.com
-
-Changes in v2:
-- Rebased onto a newer linux-next snapshot
-- Previously required dependency series are now queued on linux-next
-- Added minItems constraint for clocks
-- Moved description comments for clock-names, reg-names, and reset-names
-  into 'description' entries in the devicetree bindings.
-- Removed maxItems constraint for clocks, regs, resets for the fixed
-  size 'items' list
-- Link to v1: https://patch.msgid.link/20260508-hawi-pcie-v1-0-0c910906f7e5@oss.qualcomm.com
-
-To: Lorenzo Pieralisi <lpieralisi@kernel.org>
-To: Krzysztof Wilczyński <kwilczynski@kernel.org>
-To: Manivannan Sadhasivam <mani@kernel.org>
-To: Rob Herring <robh@kernel.org>
-To: Bjorn Helgaas <bhelgaas@google.com>
-To: Krzysztof Kozlowski <krzk+dt@kernel.org>
-To: Conor Dooley <conor+dt@kernel.org>
-To: Bjorn Andersson <andersson@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org
-Cc: linux-pci@vger.kernel.org
-Cc: devicetree@vger.kernel.org
-Cc: linux-kernel@vger.kernel.org
-
----
-Matthew Leung (2):
-      dt-bindings: PCI: qcom: Document the Hawi PCIe Controller
-      PCI: qcom: Add support for Hawi
-
  .../devicetree/bindings/pci/qcom,hawi-pcie.yaml    | 196 +++++++++++++++++++++
- drivers/pci/controller/dwc/pcie-qcom.c             |   1 +
- 2 files changed, 197 insertions(+)
----
-base-commit: e2cae00c05d196491c318196792297f2dfbaa02c
-change-id: 20260506-hawi-pcie-f61435ca420c
+ 1 file changed, 196 insertions(+)
 
-Best regards,
---  
-Matthew Leung <matthew.leung@oss.qualcomm.com>
+diff --git a/Documentation/devicetree/bindings/pci/qcom,hawi-pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,hawi-pcie.yaml
+new file mode 100644
+index 000000000000..2c999ca6b205
+--- /dev/null
++++ b/Documentation/devicetree/bindings/pci/qcom,hawi-pcie.yaml
+@@ -0,0 +1,196 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/pci/qcom,hawi-pcie.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm Hawi PCI Express Root Complex
++
++maintainers:
++  - Bjorn Andersson <andersson@kernel.org>
++  - Manivannan Sadhasivam <mani@kernel.org>
++
++description:
++  Qualcomm Hawi SoC (and compatible) PCIe root complex controller is based on
++  the Synopsys DesignWare PCIe IP.
++
++properties:
++  compatible:
++    const: qcom,hawi-pcie
++
++  reg:
++    items:
++      - description: Qualcomm specific registers
++      - description: DesignWare PCIe registers
++      - description: External local bus interface registers
++      - description: ATU address space
++      - description: PCIe configuration space
++      - description: MHI registers
++
++  reg-names:
++    items:
++      - const: parf
++      - const: dbi
++      - const: elbi
++      - const: atu
++      - const: config
++      - const: mhi
++
++  clocks:
++    items:
++      - description: PCIe Auxiliary clock
++      - description: PCIe Configuration clock
++      - description: PCIe Master AXI clock
++      - description: PCIe Slave AXI clock
++      - description: PCIe Slave Q2A AXI clock
++      - description: PCIe Aggre NoC AXI clock
++      - description: PCIe Config NoC AXI clock
++
++  clock-names:
++    items:
++      - const: aux
++      - const: cfg
++      - const: bus_master
++      - const: bus_slave
++      - const: slave_q2a
++      - const: noc_aggr
++      - const: cnoc_sf_axi
++
++  interrupts:
++    minItems: 9
++    maxItems: 9
++
++  interrupt-names:
++    items:
++      - const: msi0
++      - const: msi1
++      - const: msi2
++      - const: msi3
++      - const: msi4
++      - const: msi5
++      - const: msi6
++      - const: msi7
++      - const: global
++
++  resets:
++    items:
++      - description: PCIe core reset
++      - description: PCIe link down reset
++
++  reset-names:
++    items:
++      - const: pci
++      - const: link_down
++
++required:
++  - power-domains
++  - resets
++  - reset-names
++
++allOf:
++  - $ref: qcom,pcie-common.yaml#
++
++unevaluatedProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/gpio/gpio.h>
++    #include <dt-bindings/interconnect/qcom,icc.h>
++    #include <dt-bindings/interrupt-controller/arm-gic.h>
++
++    soc {
++        #address-cells = <2>;
++        #size-cells = <2>;
++
++        pcie@1c00000 {
++            compatible = "qcom,hawi-pcie";
++            reg = <0 0x01c00000 0 0x3000>,
++                  <0 0x40000000 0 0xf1d>,
++                  <0 0x40000f20 0 0xa8>,
++                  <0 0x40001000 0 0x1000>,
++                  <0 0x40100000 0 0x100000>,
++                  <0 0x01c03000 0 0x1000>;
++            reg-names = "parf", "dbi", "elbi", "atu", "config", "mhi";
++            ranges = <0x01000000 0x0 0x00000000 0x0 0x40200000 0x0 0x100000>,
++                     <0x02000000 0x0 0x40300000 0x0 0x40300000 0x0 0x3d00000>;
++
++            bus-range = <0x00 0xff>;
++            device_type = "pci";
++            linux,pci-domain = <0>;
++            num-lanes = <2>;
++
++            #address-cells = <3>;
++            #size-cells = <2>;
++
++            clocks = <&gcc_pcie_0_aux_clk>,
++                     <&gcc_pcie_0_cfg_ahb_clk>,
++                     <&gcc_pcie_0_mstr_axi_clk>,
++                     <&gcc_pcie_0_slv_axi_clk>,
++                     <&gcc_pcie_0_slv_q2a_axi_clk>,
++                     <&gcc_aggre_noc_pcie_axi_clk>,
++                     <&gcc_cnoc_pcie_sf_axi_clk>;
++            clock-names = "aux",
++                          "cfg",
++                          "bus_master",
++                          "bus_slave",
++                          "slave_q2a",
++                          "noc_aggr",
++                          "cnoc_sf_axi";
++
++            dma-coherent;
++
++            interrupts = <GIC_ESPI 205 IRQ_TYPE_LEVEL_HIGH>,
++                         <GIC_ESPI 206 IRQ_TYPE_LEVEL_HIGH>,
++                         <GIC_ESPI 207 IRQ_TYPE_LEVEL_HIGH>,
++                         <GIC_ESPI 208 IRQ_TYPE_LEVEL_HIGH>,
++                         <GIC_ESPI 209 IRQ_TYPE_LEVEL_HIGH>,
++                         <GIC_ESPI 210 IRQ_TYPE_LEVEL_HIGH>,
++                         <GIC_ESPI 211 IRQ_TYPE_LEVEL_HIGH>,
++                         <GIC_ESPI 212 IRQ_TYPE_LEVEL_HIGH>,
++                         <GIC_ESPI 204 IRQ_TYPE_LEVEL_HIGH>;
++            interrupt-names = "msi0", "msi1", "msi2", "msi3",
++                              "msi4", "msi5", "msi6", "msi7", "global";
++            #interrupt-cells = <1>;
++            interrupt-map-mask = <0 0 0 0x7>;
++            interrupt-map = <0 0 0 1 &intc 0 0 GIC_ESPI 213 IRQ_TYPE_LEVEL_HIGH>, /* int_a */
++                            <0 0 0 2 &intc 0 0 GIC_ESPI 214 IRQ_TYPE_LEVEL_HIGH>, /* int_b */
++                            <0 0 0 3 &intc 0 0 GIC_ESPI 215 IRQ_TYPE_LEVEL_HIGH>, /* int_c */
++                            <0 0 0 4 &intc 0 0 GIC_ESPI 216 IRQ_TYPE_LEVEL_HIGH>; /* int_d */
++
++            interconnects = <&pcie_anoc_master_pcie_0 QCOM_ICC_TAG_ALWAYS
++                             &mc_virt_slave_ebi1 QCOM_ICC_TAG_ALWAYS>,
++                            <&gem_noc_master_appss_proc QCOM_ICC_TAG_ACTIVE_ONLY
++                             &cnoc_main_slave_pcie_0 QCOM_ICC_TAG_ACTIVE_ONLY>;
++            interconnect-names = "pcie-mem", "cpu-pcie";
++
++            iommu-map = <0x0 &apps_smmu 0x1000 0x1>,
++                        <0x100 &apps_smmu 0x1001 0x1>;
++
++            pinctrl-0 = <&pcie0_default_state>;
++            pinctrl-names = "default";
++
++            power-domains = <&gcc_pcie_0_phy_gdsc>;
++
++            resets = <&gcc_pcie_0_bcr>,
++                     <&gcc_pcie_0_link_down_bcr>;
++            reset-names = "pci", "link_down";
++
++            msi-map = <0x0 &gic_its 0x1000 0x1>,
++                      <0x100 &gic_its 0x1001 0x1>;
++            msi-map-mask = <0xff00>;
++
++            pcie@0 {
++                device_type = "pci";
++                reg = <0x0 0x0 0x0 0x0 0x0>;
++                bus-range = <0x01 0xff>;
++
++                #address-cells = <3>;
++                #size-cells = <2>;
++                ranges;
++
++                phys = <&pcie0_phy>;
++                wake-gpios = <&tlmm 104 GPIO_ACTIVE_HIGH>;
++                reset-gpios = <&tlmm 102 GPIO_ACTIVE_LOW>;
++            };
++        };
++    };
+
+-- 
+2.34.1
 
 
