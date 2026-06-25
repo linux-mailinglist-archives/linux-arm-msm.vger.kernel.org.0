@@ -1,115 +1,153 @@
-Return-Path: <linux-arm-msm+bounces-114438-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-114439-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id yYcwOjqRPGrFpQgAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-114438-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2026 04:23:54 +0200
+	id B8V1GnChPGqzpwgAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-114439-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2026 05:33:04 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3BC0B6C25E3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2026 04:23:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B6F616C2947
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2026 05:33:03 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=proton.me header.s=lhjreogzzragvezzbpqetq5pkq.protonmail header.b=hC25C7qQ;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-114438-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-114438-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=quarantine) header.from=proton.me;
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=ebdE0jcG;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-114439-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-114439-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id AC1B83020A46
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2026 02:23:12 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 8D9AF3010392
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2026 03:32:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 12FE736A36C;
-	Thu, 25 Jun 2026 02:23:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 34A742C11FD;
+	Thu, 25 Jun 2026 03:32:44 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-4316.protonmail.ch (mail-4316.protonmail.ch [185.70.43.16])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78790233723;
-	Thu, 25 Jun 2026 02:23:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 267B91E9B37;
+	Thu, 25 Jun 2026 03:32:42 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782354191; cv=none; b=DfZC9qYeEYKi2yw0OM+m/PRgL7pfi8gpn74prnaboCCI+DGK9uem5YX8U3y3t1PzDMc88ddcwb+HvS6fg6SLWJI5q1MGnT755meaF7Qvh0QCjafsFPoaN0UIC+wcaIaelsedO7GMipS449y/3D97CVmjSu0Ko6F4djHETIy5Bn8=
+	t=1782358364; cv=none; b=jCv1CjW71+xXwF+Oge2xP4crd41yoW9OpsYGY3w+AVMSX++1aygJhMWaOnTKVI4U0BHAhB+1l+0ehUTMj/HpKD2AfCBtc/YmS7mMZ6N/4agZAjOuyViTePBCOwuPaEkkCHn0zkWxNA0/Zvmn9tN9pHRbXEQUDPHfydsxYs610DU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782354191; c=relaxed/simple;
-	bh=JnOh6DAm+iyJOY8k9lF1wLJxsL5PuyoGuxA7tFKj+gQ=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gOV0MKlUUviGQsZjorDIQmFNg/0ae0qz08cwvTEB8nw3aqmBqIpbtWcxbHaECtsaToyW+H1dM/enHiv4bndjoCUgaH1Z711a+CJ17tMHANgk/yiwgx+EjTk41fsFIqpzoO7PxS1BgPe8hnLcHLe5OBNYlu8eOqQpF4B5+3uADvs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=hC25C7qQ; arc=none smtp.client-ip=185.70.43.16
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
-	s=lhjreogzzragvezzbpqetq5pkq.protonmail; t=1782354178; x=1782613378;
-	bh=JnOh6DAm+iyJOY8k9lF1wLJxsL5PuyoGuxA7tFKj+gQ=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=hC25C7qQy5j6iwI4a0K1wmFvikllCXNDl6SKSxdSkhxW0mxWxC6eSr/7iO1N8UWzT
-	 2g3rMnIkX2Dtro8UcbuKCPzvYLMi+iegQ4wTwEnFtnQruqOKFmI7LGugF4KOqJOIx9
-	 WFdHwFJyvAhX7Dac/lJ8sBMpht9lnNnFFrI00IAuxq/RuQizk4P7vMbGZ7CeUXLP8P
-	 v6YresBYDL6L5lvmxQxVU6TC4TWHZ++kFj6zDsUHWxHb1stLECEFDMoX4LF/T2B/EA
-	 ihkU8Cl0Nr50OyD5rQij5eitWnQ4EY5qCg/9iqXDc8zcd87hsxWgSj9LBWiLnwREwE
-	 B6ud6H57li8IQ==
-Date: Thu, 25 Jun 2026 02:22:52 +0000
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, Bjorn Andersson <andersson@kernel.org>, Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, Brian Masney <bmasney@redhat.com>, Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Rob Clark <robin.clark@oss.qualcomm.com>, Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>, "Joerg Roedel (AMD)" <joro@8bytes.org>, Vinod Koul <vkoul@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>
-From: Esteban Urrutia <esteuwu@proton.me>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, iommu@lists.linux.dev, linux-arm-kernel@lists.infradead.org, linux-phy@lists.infradead.org
-Subject: Re: [PATCH 1/8] clk: qcom: dispcc-sm8450: Fix mdss clocks
-Message-ID: <9bc524b9-c6da-47a1-a7cf-abeb131416a7@proton.me>
-In-Reply-To: <65873506-1a9a-40ec-ac67-60f61a0b4b4c@oss.qualcomm.com>
-References: <20260622-sm8450-qol-v1-0-37e2ee8df9da@proton.me> <20260622-sm8450-qol-v1-1-37e2ee8df9da@proton.me> <65873506-1a9a-40ec-ac67-60f61a0b4b4c@oss.qualcomm.com>
-Feedback-ID: 147889766:user:proton
-X-Pm-Message-ID: 2189097c3afc9ff31fb66855912a0f096fff92fc
+	s=arc-20240116; t=1782358364; c=relaxed/simple;
+	bh=JGheuopsp2mLIfIpiy73fg30l7DNifCBvmhk/hhKNFk=;
+	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
+	 Message-Id:Subject; b=paxeecUabw5Vn20Pj9QA1DT5mMsrwnSrlygR865m3ByFmp1ZpnSYrVCkCEW4rCiVGWEKw04AXdteABoRPf9zWf2LcnC6n4FaklUVT6Y0MMN7yt6d4qLsY9XGTp1ZaguxrqKSSf79928GlwPC/JccddQJlsswsef6UeBn5N0FW54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ebdE0jcG; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85B7F1F000E9;
+	Thu, 25 Jun 2026 03:32:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1782358362;
+	bh=OQmdu86f3xGWit3FX5euECxwtL9jKKb6r1TC7QBOJpg=;
+	h=Date:From:Cc:To:In-Reply-To:References:Subject;
+	b=ebdE0jcGtbeWg4C6LNbOJu5KpB52Fhcii0PQgI7VOWesWOY5xH3q2GIErdY4mOFz0
+	 2UrVBA8mC9VS+yiIM+B8bXGgz3G4GBeNH54v+q2c+Nxt1tPwLXdz5LhPK2uhjvU9EE
+	 J08qaMsK7Ccj1r8YszpL7c+lzhc/s/HnbQ6nMrsgyuKRR7ZQo1VSkqGw20tBTRVZIu
+	 omY+/JUDFJ+ZYGTJYy+RRSNIPrRCYye0M0I4uwEcfuB+m618tTUEgn7Km3eH7EBt/H
+	 bOc7bDPYSNoY0UHZOsDQnRwdd1FUeW02llsTqZFvzDBibK9H+rNE2aGKbzz8jh1+at
+	 NEE261B0ZvN0g==
+Date: Wed, 24 Jun 2026 22:32:41 -0500
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+From: "Rob Herring (Arm)" <robh@kernel.org>
+Cc: Subbaraman Narayanamurthy <subbaraman.narayanamurthy@oss.qualcomm.com>, 
+ Lee Jones <lee@kernel.org>, devicetree@vger.kernel.org, 
+ kernel@oss.qualcomm.com, Dmitry Torokhov <dmitry.torokhov@gmail.com>, 
+ Bjorn Andersson <andersson@kernel.org>, linux-kernel@vger.kernel.org, 
+ David Collins <david.collins@oss.qualcomm.com>, 
+ Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, linux-input@vger.kernel.org, 
+ Stephen Boyd <sboyd@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+ linux-arm-msm@vger.kernel.org
+To: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
+In-Reply-To: <20260624-qcom-spmi-haptics-v2-2-b9118e60f3e3@oss.qualcomm.com>
+References: <20260624-qcom-spmi-haptics-v2-0-b9118e60f3e3@oss.qualcomm.com>
+ <20260624-qcom-spmi-haptics-v2-2-b9118e60f3e3@oss.qualcomm.com>
+Message-Id: <178235836163.1577089.873414193711217000.robh@kernel.org>
+Subject: Re: [PATCH v2 2/3] dt-bindings: mfd: qcom,spmi-pmic: Document
+ haptics device
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-4.16 / 15.00];
+	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
+	MID_CONTAINS_FROM(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[proton.me,quarantine];
-	R_DKIM_ALLOW(-0.20)[proton.me:s=lhjreogzzragvezzbpqetq5pkq.protonmail];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-114439-lists,linux-arm-msm=lfdr.de];
+	RCVD_COUNT_THREE(0.00)[4];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-114438-lists,linux-arm-msm=lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:konrad.dybcio@oss.qualcomm.com,m:andersson@kernel.org,m:mturquette@baylibre.com,m:sboyd@kernel.org,m:bmasney@redhat.com,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:robin.clark@oss.qualcomm.com,m:will@kernel.org,m:robin.murphy@arm.com,m:joro@8bytes.org,m:vkoul@kernel.org,m:neil.armstrong@linaro.org,m:linux-arm-msm@vger.kernel.org,m:linux-clk@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:devicetree@vger.kernel.org,m:iommu@lists.linux.dev,m:linux-arm-kernel@lists.infradead.org,m:linux-phy@lists.infradead.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
-	FORGED_SENDER(0.00)[esteuwu@proton.me,linux-arm-msm@vger.kernel.org];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[22];
-	RCVD_COUNT_THREE(0.00)[3];
-	MIME_TRACE(0.00)[0:+];
-	FORWARDED(0.00)[lists@lfdr.de];
 	FROM_HAS_DN(0.00)[];
+	FORGED_SENDER(0.00)[robh@kernel.org,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[16];
+	FORGED_RECIPIENTS(0.00)[m:subbaraman.narayanamurthy@oss.qualcomm.com,m:lee@kernel.org,m:devicetree@vger.kernel.org,m:kernel@oss.qualcomm.com,m:dmitry.torokhov@gmail.com,m:andersson@kernel.org,m:linux-kernel@vger.kernel.org,m:david.collins@oss.qualcomm.com,m:kamal.wadhwa@oss.qualcomm.com,m:conor+dt@kernel.org,m:krzk+dt@kernel.org,m:linux-input@vger.kernel.org,m:sboyd@kernel.org,m:konradybcio@kernel.org,m:linux-arm-msm@vger.kernel.org,m:fenglin.wu@oss.qualcomm.com,m:dmitrytorokhov@gmail.com,m:conor@kernel.org,m:krzk@kernel.org,s:lists@lfdr.de];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FORWARDED(0.00)[lists@lfdr.de];
+	FREEMAIL_CC(0.00)[oss.qualcomm.com,kernel.org,vger.kernel.org,gmail.com];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[esteuwu@proton.me,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[proton.me:+];
-	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	FROM_NEQ_ENVFROM(0.00)[robh@kernel.org,linux-arm-msm@vger.kernel.org];
+	TO_DN_SOME(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MISSING_XM_UA(0.00)[];
 	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,proton.me:dkim,proton.me:mid,proton.me:from_mime,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,vger.kernel.org:from_smtp]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 3BC0B6C25E3
+X-Rspamd-Queue-Id: B6F616C2947
 
-On 6/23/26 11:50 AM, Konrad Dybcio wrote:
-> This can also be fixed by migrating to use qcom_cc_driver_data,
-> which takes a list of alpha PLLs to be configured, and thenthere's
-> a switch-statement in clk-alpha-pll.c that always assigns the
-> correct function
 
-If this is done, should a patch that migrates to qcom_cc_driver_data and a
-patch that fixes the issue be sent, or should only a single patch be sent?
+On Wed, 24 Jun 2026 19:00:37 -0700, Fenglin Wu wrote:
+> Some of the Qualcomm SPMI PMIC has haptics device in it, add it in the
+> device list.
+> 
+> Signed-off-by: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
+> ---
+>  Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml | 4 ++++
+>  1 file changed, 4 insertions(+)
+> 
 
-Regards,
-Esteban
+My bot found errors running 'make dt_binding_check' on your patch:
+
+yamllint warnings/errors:
+
+dtschema/dtc warnings/errors:
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/input/qcom,spmi-haptics.yaml: properties:qcom,vmax-microvolt: '$ref' should not be valid under {'const': '$ref'}
+	hint: Standard unit suffix properties don't need a type $ref
+	from schema $id: http://devicetree.org/meta-schemas/core.yaml
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/input/qcom,spmi-haptics.example.dtb: haptics@f000 (qcom,spmi-haptics): qcom,vmax-microvolt: 1300000 is not of type 'array'
+	from schema $id: http://devicetree.org/schemas/property-units.yaml
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.kernel.org/project/devicetree/patch/20260624-qcom-spmi-haptics-v2-2-b9118e60f3e3@oss.qualcomm.com
+
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
 
 
