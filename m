@@ -1,283 +1,284 @@
-Return-Path: <linux-arm-msm+bounces-114603-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-114604-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id u88HLH4QPmqp/QgAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-114603-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jun 2026 07:39:10 +0200
+	id NEP0C3USPmoE/ggAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-114604-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jun 2026 07:47:33 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2917D6CA6D5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jun 2026 07:39:10 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id DBFB96CA75A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jun 2026 07:47:32 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=gmail.com header.s=20251104 header.b="I/f4P/dh";
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-114603-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-114603-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=none) header.from=gmail.com;
+	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=eUKipxJ7;
+	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=JBCbmv5a;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-114604-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-114604-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=reject) header.from=qualcomm.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 34CF2300A7F8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jun 2026 05:39:09 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id DC4403028C6F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jun 2026 05:47:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 13158389E13;
-	Fri, 26 Jun 2026 05:39:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 82B0F3CAA25;
+	Fri, 26 Jun 2026 05:47:28 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-dy1-f173.google.com (mail-dy1-f173.google.com [74.125.82.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69DD63C6611
-	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jun 2026 05:39:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BD1F3C9ECF
+	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jun 2026 05:47:27 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782452347; cv=none; b=h24GMqOOiwgW3SUEmsWQeQbvFF0cBeAurlm2lbtlwUEBM+lsnhbYHmCm8N+mrtj2SvejVNDs+xCK+mjh4ET9Ug2ANY6TS4nW0O7FCAXDwE7UaxOGSg/bV/LlJ2GA9S2kxa5Shz4yd3ss8HJWm+Y9yAIxr8mJDRXgZ4xq5RJ/6iE=
+	t=1782452848; cv=none; b=hJRjYyUZy0ORHzXyZFsuQQEeukp4Y5CtaSevTJABWMzzClRiD5MMcRzvE03jHqfUG1qlaNCleETZOK/joK2kuP+KjpTvGLCGDHmePjVaC8dHU5OzstOJoV96HOLMY/yfSoNOASwqO+YRICUsevgBZBfmNrui9RgI7SA4I5pJNUk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782452347; c=relaxed/simple;
-	bh=yg1iR2eX+aSwl1WeDbQ1iGJMeExq9sx+kGcLa1kbL6Q=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=n7uTvYHjjnKjGRDgO7BrXcE/ghzMtq7kh22OfkHddfXvPMWXTtFwlCWcAVqjhTkExV0d3wQ8iIsR2mgyg1UEsCVj1myQrXGIk20RH0k5FoSGtcG3AXOqmm+Oiunwt+vjzl80iunia6zM2sE49yeDkS+8fLNNi0dH7MD0ZTs5DrQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=I/f4P/dh; arc=none smtp.client-ip=74.125.82.173
-Received: by mail-dy1-f173.google.com with SMTP id 5a478bee46e88-30bbe98c3f0so904735eec.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jun 2026 22:39:04 -0700 (PDT)
+	s=arc-20240116; t=1782452848; c=relaxed/simple;
+	bh=r18zUcCEtt3q4VZvrJxgIv1cyuMWFYL1BvadhzW/xf4=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=hpJEE9j3bM+OIbVIm8omY2G1LWa1eVqccPz93bqZCJ0E5QGf1GQrKVsJDfM07VzOBjOiZCWuaT0HZ8ERSB4L7KFdqpseTACYoCo1iUZnOWD32EU3mEVW8kmbA8LGwGvClhVtz8Z49MgQ3KN82B16HkXlVgH79fdbRtfTYJhTJqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=eUKipxJ7; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=JBCbmv5a; arc=none smtp.client-ip=205.220.180.131
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65Q2ilq9003564
+	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jun 2026 05:47:26 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=L0vlrvagyMguXc/y0gIFf7
+	fDulN127IXK95c6qxEp8c=; b=eUKipxJ7xsy0pa9IUsEcQdNcMU0HlfOq/V5vfy
+	1NPKh6y/ATyazRpCwAma9J+6r4doXTScl7KEXreEx8me3RoubFawSLqqEQeRyOOz
+	ijYt2CzjItfynAzJxmFKULBfjDC0dB9XiFsr0oRt2X9aUjVZ3pyEEKTb/4Ly4euy
+	bRJ87OIPGX08sykeLMQFYwcFrhWzlAM5EffG0Mk6XVo3QMH2qzthFHGs1/b1HVEz
+	ozea2dIjkR7uJhLnce8bPUt3AKkcAzT49ibF+YDh6qH7ejt1ACTocdY2wbwjVJqN
+	XHQwBoPKpP9qK+0dLbFCr8ceY78D4QdwcEmR/xYXaAZIjoOg==
+Received: from mail-yw1-f199.google.com (mail-yw1-f199.google.com [209.85.128.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f1fct8xre-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jun 2026 05:47:25 +0000 (GMT)
+Received: by mail-yw1-f199.google.com with SMTP id 00721157ae682-8067fa066bcso27167067b3.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jun 2026 22:47:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782452343; x=1783057143; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=PhqZPVerKLJBXebvWPDJC0C1pTu6QcXLOIWVjWqdOYk=;
-        b=I/f4P/dh+jCMG5RpP6ArymqE1ISPTSS6gZIqambDTuSrDMh840Vd7CDU+vSkOqhait
-         F4xA0y9ByvMN7QFYY6qhTT3zAcDFNtPQpTauM7bVo3YiUUIOWknhQs6/jwZPVPV1UHD9
-         reAKweUqgyNuF/XsyxgCXgryMJQ9alWRmRDeBqFztGoX2Q8irPyKNS1/BtFy5Xz1I/3j
-         TKOP/aKgx1qzPHX7vDHPSoSjvRDHdaBevRx2NurMxb2SkPKG7xmPwn0GdV27yroqo9kL
-         h3rnGCcvHTVCiGklrOZs05xRaiqA5SRwStMMyLBmYhtni2HGUfSmPA0lbDXhUi1jKWpe
-         2BFQ==
+        d=oss.qualcomm.com; s=google; t=1782452845; x=1783057645; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=L0vlrvagyMguXc/y0gIFf7fDulN127IXK95c6qxEp8c=;
+        b=JBCbmv5aEDPH8dyF3ncTDtIMo6lnu3YZZeXpG8tnhINucslhaS8l1zmrU4uXKsApMS
+         Vqqvj0XRtb6PgHfEj9OrF+uU1bfDmBJHSJsemlyLEp7Akivjl9ba5eGZlEjazBaCRL+5
+         6WVgDCo2+kL1L8eXFhiPTMpVzXesxmiKySz7sHeTYUqCd6IqN2A7fZ4Q82aXqoNGkezd
+         67thaDX9XhfKtU1HikKWD6PbOAFic1DrQvSiyTjBVq6jg7GqQzfcNBpZqFBfeEV3st5C
+         cTtnW7ewwNAc8vwNG1Akcp1jyKK5npCbrIRTZxh8AqBBrviPkmp51Sh1iQ9r4f/rzRcG
+         1ZiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782452343; x=1783057143;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=PhqZPVerKLJBXebvWPDJC0C1pTu6QcXLOIWVjWqdOYk=;
-        b=oIruCkeVCK0AvEmcQqWPU0vvSzQifkIRVT2ImC0vZNA+9dG8zPzQ421YCI4iTdBi60
-         pVYlYLSv1pdvJgdTMmFqMrzncIgndJHoMQB/rTFgGJ9urc3GNvQOeHZMQg2CIF0TuQ3s
-         0kV4pcoiw267Zn6Xi+4num4wNxjIIVIxoF9UOHIV2yRLTtx0FMOvvxnq1pOsaYK2vS6h
-         djtL52tJ1HZbDbRxrITBuDih3vL2raB10e01y9+dN+TyB+1FEHWFlsbIgm0mgRCMxMww
-         fF1iJ4ya3B+VVZO8NQyRBI7RXGS49YazwBS4avLB9j5qO2z+ZX40KtrpnK4kjgZxrAbT
-         MraA==
-X-Forwarded-Encrypted: i=1; AHgh+Rp1otNdHem1cElmR0Au2muiErrUUPBRhAtAZ1Mz/ZFepsgevoXKWhheOCtMe6iez9j46aS/x7rmJBNx4JCf@vger.kernel.org
-X-Gm-Message-State: AOJu0YzKUNXApkvpwpE9kdsGFlBaasrkjIGqxbgXNj3XLdjHBxb4JbVR
-	Kfhgbhih63D6akVF7qqJwtqtO08HhYduJRoNRypAXT3HANGeT42YefVM
-X-Gm-Gg: AfdE7clIF0NkuZJ8KLfLFJABGa1B2x6AEYHmsJKbG+vq7PxtJaJEjOo3MkpXuxsAClA
-	HYKIMaWL80I/bpuWRNNNoeLXwQuU6pDgnDX4eBsPsTVxacNC5HDQrL/OzM4xorlhp2xFm+UKmpy
-	XweW9p38bFEct7wU20ygsa5iltf1ikGFQ7s8Y++UYQzefDEAsmvFnxZlcDubZWypNXZXUmBPsjF
-	iqqV12u9tQKTdvbswg9n+bxKlU9w0rwqq7uekX+msUjD6cJmbaB7eJf5HxWOSRgj1QRvPvOu5a/
-	mwVjjEqcbB/kX+qC6vvsFDpbPx8+0XH12vUOA5pXBiEA/L3tU3n4cxRNF0JzZsl43R+ZDBe3kaN
-	zovo5wqADMzoB0kP6s1E+8m88maeedD93+kErVyIQdF1X33W7T+TGh3kuBpsclbOV3QYPo5sUPH
-	lhw9cn9b3XqmvNfpm/ku+4njF/yt828UzK7IidyH3FTl5jTgXF2Qjx6A==
-X-Received: by 2002:a05:693c:23c9:b0:30b:c6f0:1cd9 with SMTP id 5a478bee46e88-30c84d7f362mr5143316eec.26.1782452343350;
-        Thu, 25 Jun 2026 22:39:03 -0700 (PDT)
-Received: from google.com ([2a00:79e0:2ebe:8:a474:bf4a:4966:8d97])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-30c7c570b7bsm13347671eec.12.2026.06.25.22.39.01
+        d=1e100.net; s=20251104; t=1782452845; x=1783057645;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=L0vlrvagyMguXc/y0gIFf7fDulN127IXK95c6qxEp8c=;
+        b=suz8NCnotmIbXKLTXw+dZHfJLuDOBcB0wTiaMzYxaw2cJNcww0EUDlozjg//jZyGK0
+         wuFC1q1HvcmPU33FDUR3PMwpgH+L/H8WkLZ7Z1kUiZn7t2fjPGoBtAK6b4H0Dn53Bbo1
+         iGXBUJX8ZpjfhYerGht4ukbVcfqp4/fWqgveVz7Li3gal4lz/iRxGdU9cJ7u8kylG2Qk
+         5auDdenOhRbbpW53wKJ2a+TYQ3eZIZml8sFxxWUDi+6w+TZI8rFDpLHI7A8Bl3U8/n2S
+         kr+f9WqR5RIl4wqx2sE9NT5QfOuBT52Xtq2U98fXrTzGbnrICLVnD4KP7LiYHp1E39wb
+         uGkw==
+X-Gm-Message-State: AOJu0YxitY3jerUb2SjzqO9vmF16B9JiywHivZNM3bn7P7toRnWmg4Dj
+	emAZr/CuxLVD8++QAG/CioxoYgWMdgLT8NDbo91ltUUWFSMNoURnIkKnKQfHEnFyNgR6LRYBapp
+	3J2wX0STnHIpXKdAyt2DUzwFJqPwAhG2u0l+PepsgqBKNqk2LUrBK6+Uu4KQFfCDELQZcm/3MKY
+	ze
+X-Gm-Gg: AfdE7cmFuLsivgj9nV9V1c+H1B+Ju/59e0JEVgihd9vYH/uuqbxf6M1heTYGBe6kiBu
+	OiFwD2QaQa6ysp9f577uKXdEcluyTHLgLczcZO6IoEtfeBvDhvVJBIj2RjgK24JcFIH9vCU9lFB
+	PtODZsvza/yrq/kAl5asXkdf4CKLqTVyHiOXaz9RAMp1igV4qWX6WK2c7jnlIi6EYc8/GxQhORM
+	OdR5gRmngrXe86BbTT+nFPEGue6nYrpjjFc/8swI30QRKMqFJK5ruWVDopgRCLYyjMDxLVcCNi0
+	OLKUB9PDO+Pq5wkYJ3Sq92oXDvvL5yWTQi5rhJoPOnQvmasgx7r2ZWD99hFGGgQ6SMthNeuP2UP
+	1bqmkV5Ld5+YBboQYlbgC50ge0dSl5OAzwo9dGE1durVU1wthAaBjkbdspY9RN8zLGGgpf+Dev6
+	eNnGk6/6Z6yhIJvdY1wcWhjvqD5w8WBQ==
+X-Received: by 2002:a05:690c:e191:20b0:80b:9efe:4a8 with SMTP id 00721157ae682-80b9efe0a3emr8621557b3.6.1782452845209;
+        Thu, 25 Jun 2026 22:47:25 -0700 (PDT)
+X-Received: by 2002:a05:690c:e191:20b0:80b:9efe:4a8 with SMTP id 00721157ae682-80b9efe0a3emr8621447b3.6.1782452844803;
+        Thu, 25 Jun 2026 22:47:24 -0700 (PDT)
+Received: from agents-Mac-mini.local (108-89-202-162.lightspeed.sndgca.sbcglobal.net. [108.89.202.162])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-80259d20d84sm80029787b3.0.2026.06.25.22.47.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Jun 2026 22:39:02 -0700 (PDT)
-Date: Thu, 25 Jun 2026 22:38:59 -0700
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-To: David Heidelberg <david@ixit.cz>
-Cc: Krzysztof Kozlowski <krzk@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
-	Rob Herring <robh@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	"Jason A. Donenfeld" <Jason@zx2c4.com>, Matthias Schiffer <matthias.schiffer@ew.tq-group.com>, 
-	Vincent Huang <vincent.huang@tw.synaptics.com>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, linux-input@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, phone-devel@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] arm64: dts: qcom: sdm845-oneplus: Update
- compatible to include model
-Message-ID: <aj4QUY5p7gqLplVT@google.com>
-References: <20260523-synaptics-rmi4-dt-v2-2-0645122babdc@ixit.cz>
- <ahdoBl3qCTyvlYJf@google.com>
- <1d0e7e31-f808-4347-955a-7246dea208f5@ixit.cz>
- <742c7a13-9465-40e8-8990-e679712e9784@ixit.cz>
- <ajtaUb4YmyZTDLmQ@google.com>
- <52b7dd3a-3f6f-474c-8386-4fc2776b185b@ixit.cz>
- <ajxakXFuKAkhdZLN@google.com>
- <f81e4d83-90d9-47c8-aee9-319df3f8b0fb@kernel.org>
- <aj1OhZQjO5nNYlAo@google.com>
- <32affded-bae2-46c4-a702-2054fbfe46a8@ixit.cz>
+        Thu, 25 Jun 2026 22:47:24 -0700 (PDT)
+From: Jason Pettit <jason.pettit@oss.qualcomm.com>
+Subject: [PATCH v2 0/3] X2 Elite HP EliteBook X G2q support
+Date: Thu, 25 Jun 2026 22:47:19 -0700
+Message-Id: <20260625-glymur-send-v2-0-00905324ffbf@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <32affded-bae2-46c4-a702-2054fbfe46a8@ixit.cz>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAGkSPmoC/42S3WojMQyFX2Xw9TpI/p+wLPseS1lkW26mbWbS8
+ SS0lLz7OpMQKNuL3hhk+3w6HOlDVJ4HrmLbfYiZT0MdprEV6kcn0o7GR5ZDbrVQoBw47OXjy/v
+ +OMvKY5aI2mVlNKEC0RSHmcvwttL+PFzreoxPnJYL4vZj5tdja7Ncv4kDLWnXmmw77YqJ0XsDJ
+ TubA4RCzgUbE5sI2veBrPGlrJy7CqxxGiGoZGzWFDWiL9ZggWxyD9E5yJS8/qyigoG4gPJNplA
+ nxGi088YV0hh1dBzZuHhR7blWWoPYdj/XHMw9h7/5IE8oUVJGcJ4CN+zvqdbN65Fe0rTfb9rx6
+ 2uMVRqCtYgbZbVyrm+cOsRhU2l8pvm7GKe0fB4Psk4pNTdegkROPkab+sLpuxgD+j7cK0k3PwU
+ 4ZOtLy4e+JkWqLC83w7LtRn5b5M2VEZcd2A11meb3dcFOuI789g6fdqmlCLIkQyqVlqX/37d4O
+ J/P/wAwBl+1sQIAAA==
+X-Change-ID: 20260619-glymur-send-1136d243a120
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Akhil P Oommen <akhilpo@oss.qualcomm.com>,
+        Mahadevan P <mahadevan.p@oss.qualcomm.com>,
+        Sibi Sankar <sibi.sankar@oss.qualcomm.com>,
+        Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
+        Ananthu C V <ananthu.cv@oss.qualcomm.com>,
+        Jason Pettit <jason.pettit@oss.qualcomm.com>
+X-Mailer: b4 0.15.2
+X-Proofpoint-GUID: beatjM0tieF01eHRK9sIFCsNlVagqMpG
+X-Proofpoint-ORIG-GUID: beatjM0tieF01eHRK9sIFCsNlVagqMpG
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI2MDA0MyBTYWx0ZWRfX2HSmYgDZo896
+ sNdn8tn7xt7P9Im04eFlRer9kTZCA5U5rLcGzYLjr1ArAa57ag0BKaHIG9LKKF3Lf71A/fWVOP0
+ //C4JAEj3Lh701xeKCJF8yrKjAh11cR+JTBtolOBzgwzCLZFiseWVNmPMXOTexnsuTqE7etrv5s
+ h0Jg6taFRruou+jLBeT7kkqXIBraInoMxzsP3txchtSFpfkkZIuuqZFr1MFCqyLP/OrB07NLmvw
+ f3EZvrmbBHxeJLYetAZNl2jhqjsnHzyFKySRjoQHQo+UA2LXkp8UOIZZo+1wtzuNl5COXg3n5jN
+ 4KuISOoj+9Qh3xYS4iSU/fcVMYNc/oaAszGTSlM9YnwQP3rifwy8HiyLwzZbCz0Fml1WxN1JlAg
+ Fd1lintsoOLo235VlkXPLGKCwFdmnqCNf5Xvk8TP5xTEcK9mG1oBH6b/qcRLhxb9o4U8PkG/8fo
+ t/cbrTp6OprxFyodO5A==
+X-Authority-Analysis: v=2.4 cv=FPkrAeos c=1 sm=1 tr=0 ts=6a3e126d cx=c_pps
+ a=72HoHk1woDtn7btP4rdmlg==:117 a=AgdIAmbgiPN5lz+IpyuXaA==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=v_Pz4op7f3T_4hR4KoUA:9 a=QEXdDO2ut3YA:10
+ a=kA6IBgd4cpdPkAWqgNAz:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI2MDA0MyBTYWx0ZWRfXxjKj0hjdyhdS
+ Zraacxj4ICnvsWpG4pyOQ0hDV7DFRKrKOp6VWlD5RqsLN8Pdrq4ZJFtqIyvPWLcCOgmqsN0MwxT
+ njml8wfnaqS3sALiRK58+qDc6NSjw2Y=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-26_01,2026-06-24_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 clxscore=1015 priorityscore=1501 malwarescore=0 adultscore=0
+ bulkscore=0 impostorscore=0 phishscore=0 suspectscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606260043
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCPT_COUNT_TWELVE(0.00)[16];
-	TAGGED_FROM(0.00)[bounces-114603-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_FROM(0.00)[gmail.com];
-	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-114604-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[14];
 	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER(0.00)[dmitrytorokhov@gmail.com,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS(0.00)[m:david@ixit.cz,m:krzk@kernel.org,m:krzk+dt@kernel.org,m:konrad.dybcio@oss.qualcomm.com,m:robh@kernel.org,m:conor+dt@kernel.org,m:Jason@zx2c4.com,m:matthias.schiffer@ew.tq-group.com,m:vincent.huang@tw.synaptics.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:linux-input@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:phone-devel@vger.kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
 	FORWARDED(0.00)[lists@lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	MISSING_XM_UA(0.00)[];
+	FORGED_RECIPIENTS(0.00)[m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:akhilpo@oss.qualcomm.com,m:mahadevan.p@oss.qualcomm.com,m:sibi.sankar@oss.qualcomm.com,m:jingyi.wang@oss.qualcomm.com,m:ananthu.cv@oss.qualcomm.com,m:jason.pettit@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FORGED_SENDER(0.00)[jason.pettit@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[dmitrytorokhov@gmail.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	ALIAS_RESOLVED(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,qualcomm.com:email,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,vger.kernel.org:from_smtp];
 	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[jason.pettit@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	ALIAS_RESOLVED(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,qualcomm.com:email,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,ixit.cz:email]
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 2917D6CA6D5
+X-Rspamd-Queue-Id: DBFB96CA75A
 
-On Thu, Jun 25, 2026 at 08:39:15PM +0200, David Heidelberg wrote:
-> On 25/06/2026 18:57, Dmitry Torokhov wrote:
-> > Hi Krzysztof,
-> > 
-> > On Thu, Jun 25, 2026 at 10:23:54AM +0200, Krzysztof Kozlowski wrote:
-> > > On 25/06/2026 06:53, Dmitry Torokhov wrote:
-> > > > On Wed, Jun 24, 2026 at 04:37:25PM +0200, David Heidelberg wrote:
-> > > > > On 24/06/2026 06:28, Dmitry Torokhov wrote:
-> > > > > > Hi David,
-> > > > > > 
-> > > > > > On Sun, Jun 21, 2026 at 07:11:45PM +0200, David Heidelberg wrote:
-> > > > > > > On 28/05/2026 00:13, David Heidelberg wrote:
-> > > > > > > > On 27/05/2026 23:56, Dmitry Torokhov wrote:
-> > > > > > > > > Hi David,
-> > > > > > > > > 
-> > > > > > > > > On Sat, May 23, 2026 at 11:45:35AM +0200, David Heidelberg via B4 Relay wrote:
-> > > > > > > > > > From: David Heidelberg <david@ixit.cz>
-> > > > > > > > > > 
-> > > > > > > > > > We know the driver is reporting s3706b, introduce the compatible so we
-> > > > > > > > > > can more easily introduce quirks for weird touchscreen replacements in
-> > > > > > > > > > followup series.
-> > > > > > > > > > 
-> > > > > > > > > > Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> > > > > > > > > > Signed-off-by: David Heidelberg <david@ixit.cz>
-> > > > > > > > > > ---
-> > > > > > > > > >     arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi | 2 +-
-> > > > > > > > > >     1 file changed, 1 insertion(+), 1 deletion(-)
-> > > > > > > > > > 
-> > > > > > > > > > diff --git a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-> > > > > > > > > > b/arch/ arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-> > > > > > > > > > index 6b7378cf4d493..148164d456a5a 100644
-> > > > > > > > > > --- a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-> > > > > > > > > > +++ b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-> > > > > > > > > > @@ -475,17 +475,17 @@ bq27441_fg: bq27441-battery@55 {
-> > > > > > > > > >         };
-> > > > > > > > > >     };
-> > > > > > > > > >     &i2c12 {
-> > > > > > > > > >         status = "okay";
-> > > > > > > > > >         clock-frequency = <400000>;
-> > > > > > > > > >         synaptics-rmi4-i2c@20 {
-> > > > > > > > > > -        compatible = "syna,rmi4-i2c";
-> > > > > > > > > > +        compatible = "syna,rmi4-s3706b", "syna,rmi4-i2c";
-> > > > > > > > > 
-> > > > > > > > > So I believe we established that this device (s3706b) does not in fact
-> > > > > > > > > implement rmi4 protocol properly. Why do we have "syna,rmi4-i2c" as a
-> > > > > > > > > fallback? Shouldn't it be just "syna,rmi4-s3706b"?
-> > > > > > > > 
-> > > > > > > > The vendor supplies s3706b which does implement the RMI4 properly.
-> > > > > > > > 
-> > > > > > > > The 3rd party replacement impersonating original parts may not implement
-> > > > > > > > it properly, but I don't address this issue in this initial submission.
-> > > > > > > > 
-> > > > > > > > With this compatible we know which original part is used by the vendor
-> > > > > > > > and installed in the phones, so later we can deduct specific sequences
-> > > > > > > > for the replacement aftermarket parts to keep phone touchscreen working
-> > > > > > > > same as they do on Android without affecting other devices.
-> > > > > > > 
-> > > > > > > Hello Dmitry.
-> > > > > > > 
-> > > > > > > May I ask what is currently preventing this series from moving forward?
-> > > > > > > 
-> > > > > > > The first version was posted in 2023 [1]. I picked it up again in 2025 [2]
-> > > > > > > and am now on the 9th iteration (this patchset). At this point, the series
-> > > > > > > has been under discussion for well over a year, with relatively little
-> > > > > > > feedback and increasingly long gaps between review rounds.
-> > > > > > > 
-> > > > > > > The current approach is based on the guidance I have received so far,
-> > > > > > > including suggestions from the device-tree maintainers. When concerns were
-> > > > > > > raised, I tried to address them and rework the series accordingly.
-> > > > > > > 
-> > > > > > > What I am struggling with is understanding what specific issue still needs
-> > > > > > > to be resolved before these patches can be accepted. If there are remaining
-> > > > > > > requirements, objections to the approach, or technical concerns that I have
-> > > > > > > not addressed, I would appreciate having them stated explicitly so I can
-> > > > > > > work on them.
-> > > > > > > 
-> > > > > > > I also split out the straightforward, self-contained changes in the hope
-> > > > > > > that at least those could progress independently while I continued working
-> > > > > > > on any follow-up requirements. However, even those patches do not appear to
-> > > > > > > be moving forward.
-> > > > > > > 
-> > > > > > > Could you please clarify what outcome you would like to see from this
-> > > > > > > series, and what concrete changes would be required to get it accepted?
-> > > > > > 
-> > > > > > I am still confused about how you want to differentiate between the full
-> > > > > > RMI4 support vs the OnePlus flavor. The "syna,rmi4-s3706b", as you
-> > > > > > mentioned, implements RMI4 protocol properly, so we do not need to
-> > > > > > actually have it documented neither in binding nor in DTS.
-> > > > > 
-> > > > > --- part 1 ---
-> > > > > 
-> > > > > This series addresses identification within device-tree. It's normal
-> > > > > recommended practice.
-> > > > > 
-> > > > > If we know, the device ships specific, but **compliant** variant, we just
-> > > > > put it as compatible = "more-specific", "less-specific"; in this case
-> > > > > "syna,rmi4-s3706b", "syna,rmi4-i2c"
-> > > > > 
-> > > > > This approach is used everywhere. This has nothing to do with after-market parts.
-> > > > 
-> > > > We do this in many cases, sometimes when a part has different timings or
-> > > > maybe additional functionality compared to the base model.
-> > > 
-> > > Generic expectation is to have always dedicated front compatible for
-> > > every device. rmi4-i2c is not really specific enough, more like a
-> > > family, thus a specific device compatible is essential by the DT rules.
-> > 
-> > Essential in what way? What will break if such compatible is not there?
-> > We have lived without it for many years and will continue live happily
-> > without it for years to come.
-> 
-> Hi Dmitry, Krzystof,
-> 
-> Device tree should describe the hardware, rmi4-i2c isn't the exact model of
-> hardware used, the real hardware is Synaptics S3706B. Device-tree should,
-> where possible, describe the actual hardware used.
-> 
-> > 
-> > We keep having this conversation each time there is self-describing
-> > protocol that does not require knowledge of a specific part number:
-> > i2c-hid, rmi4, spi-hid coming over soon.
-> 
-> While the protocol doesn't require this knowledge, where is the issue
-> provide the model, at least in the places where we know it?
-> 
-> Does it making things worse to describe hardware in more detail?
+This series adds initial device-tree support for the HP EliteBook X G2q
+14" Next Gen AI PC (product SKU C4JG0AV, board 8E91), a Snapdragon X2
+Elite (Glymur) laptop.
 
-OK, I applied the binding change, the dts change should go through some
-other tree.
+The board was brought up and validated on real hardware. The electrical
+description (PMIC rails, PHY supplies, the HDMI bridge wiring) was
+verified against the live unit rather than copied from a Glymur CRD.
 
-Thanks.
+Working on this laptop with this series applied:
 
--- 
-Dmitry
+  - Internal eDP panel (samsung,atna33xc20)
+  - 2x USB Type-C with DisplayPort alt-mode and USB
+  - Chassis HDMI output
+  - Chassis USB-A host port
+  - Fingerprint reader
+  - NVMe SSD on PCIe5
+  - Wi-Fi, Bluetooth
+  - Keyboard, touchpad, touchscreen, lid switch
+  - Adreno GPU and GMU (Freedreno GL on Mesa)
+  - Audio playback and capture
+  - Real-time clock
+  - Compute DSP (cDSP)
+
+This patch series builds upon the recent work of Qualcomm engineers to
+enable another Glymur-based laptop.
+
+Like its peer submissions, the camera support is missing today.
+
+This has the same known dependencies as other boards on this
+platform (audio, GPU, SoCCP series).
+
+The GPU device-tree patches come from the partially merged Glymur GPU DT
+v5 series at
+https://lore.kernel.org/all/20260522-glymur-gpu-dt-v5-0-562c406b210c@oss.qualcomm.com/
+
+SCMI on this configuration needs CONFIG_QCOM_CPUCP_MBOX built in (=y).
+
+The bindings patch is independent and can be reviewed/applied on its own.
+The board patch can be reviewed in parallel with the GPU, LPASS and SoCCP
+SoC series. Until those land in the target tree, it will trip the expected
+"Label or path ... not found" dtc error. As with the X2 Elite Lenovo Yoga
+Slim 7x submission, this v1 is expected to trigger some dt-bindings warnings
+that come from the in-flight dependency series, not from the board patch
+itself.
+
+Signed-off-by: Jason Pettit <jason.pettit@oss.qualcomm.com>
+---
+Changes in v2:
+- Enable the PMIC RTC (qcom,no-alarm + qcom,uefi-rtc-info)
+- Add the SMB2370 eUSB2 repeaters on usb_0/usb_1
+- Enable the compute DSP (remoteproc_cdsp / fastrpc)
+- Addressed comments from reviewers on v1
+- Link to v1: https://lore.kernel.org/linux-arm-msm/20260620-glymur-send-v1-0-fc4a2cfd107c@oss.qualcomm.com
+
+---
+Jason Pettit (3):
+      dt-bindings: arm: qcom: Add HP EliteBook X G2q 14 AI
+      arm64: dts: qcom: Add HP EliteBook X G2q 14 AI
+      firmware: qcom: scm: Allow QSEECOM on HP EliteBook X G2q 14 AI
+
+ Documentation/devicetree/bindings/arm/qcom.yaml    |    1 +
+ arch/arm64/boot/dts/qcom/Makefile                  |    1 +
+ .../boot/dts/qcom/glymur-hp-elitebook-x-g2q.dts    | 1019 ++++++++++++++++++++
+ drivers/firmware/qcom/qcom_scm.c                   |    1 +
+ 4 files changed, 1022 insertions(+)
+---
+base-commit: dd60bcf0ad17dd15d6d4d677315c4cf9827445f9
+change-id: 20260619-glymur-send-1136d243a120
+prerequisite-patch-id: 36f4bb7740fd65d808fa6685bce4b03798a547ff
+prerequisite-patch-id: 054631082c45d3ab3117f541f0d4d90b660dac73
+prerequisite-patch-id: af18aef027c45213c11b436746fa31b3b6ebe46b
+prerequisite-message-id: <20260419-glymur_dp-v1-1-ad1067a8e8ae@oss.qualcomm.com>
+prerequisite-patch-id: 7cb9a168c33491bf91ece900a2218aa7b4b68ddd
+prerequisite-message-id: <20260523085511.2532669-1-sibi.sankar@oss.qualcomm.com>
+prerequisite-patch-id: 43e96d8a5063f51e2b5ee75fc8c9e10682e5670c
+prerequisite-patch-id: 2e71d345f84a821d89da2a6064954409fdb1277d
+prerequisite-patch-id: 0b9f5995044bb3d3ffda227ac986b755fa118c63
+prerequisite-message-id: <20260623-knp-soccp-v7-0-1ec7bb5c9fec@oss.qualcomm.com>
+prerequisite-patch-id: 8459bcae98ac156f6576657fe9233badcd385218
+prerequisite-patch-id: b5182f879cdd23c5a0c64bf09b40213b71059b51
+prerequisite-patch-id: c962e3f24c435e91ae563bbba9e396bf277ff0ad
+prerequisite-patch-id: b9cd65895f55e9d76ba28ef8f9aaf6cdefe1b9d3
+prerequisite-patch-id: 6484d1056e30f2027e81eee375d979197754bc12
+prerequisite-patch-id: fa7954f6fd2d27a6f0e805c9643b70e7e201c503
+prerequisite-message-id: <20260403-glymur-soccp-v3-1-f0e8d57f11ba@oss.qualcomm.com>
+prerequisite-patch-id: 48c26c428cbeaa674a615704d1abeb87e4e965c8
+
+Best regards,
+--  
+Jason Pettit <jason.pettit@oss.qualcomm.com>
+
 
