@@ -1,500 +1,267 @@
-Return-Path: <linux-arm-msm+bounces-114713-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-114714-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id v94+EAjkPmqZMgkAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-114713-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jun 2026 22:41:44 +0200
+	id Qo1SAvHlPmrlMgkAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-114714-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jun 2026 22:49:53 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id C865E6D00D6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jun 2026 22:41:43 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9B37B6D0148
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jun 2026 22:49:52 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=Xjkds+57;
-	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=VwC+Nb8E;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-114713-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c09:e001:a7::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-114713-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=mmgBY5Ms;
+	dkim=pass header.d=oss.qualcomm.com header.s=google header.b="X/CIbtcf";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-114714-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-114714-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=reject) header.from=qualcomm.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id BF3C13026AD1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jun 2026 20:41:42 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id EDC51300B61B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jun 2026 20:49:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6699D3BF660;
-	Fri, 26 Jun 2026 20:41:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8472A3BADAA;
+	Fri, 26 Jun 2026 20:49:45 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A27BB3BF676
-	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jun 2026 20:41:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26083243951
+	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jun 2026 20:49:43 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782506502; cv=none; b=RUnBgKiQZNNkpLsIB6NSL4kOfUKxp5t9GPfY3zygb4YYIH9NwtCRgb3t86h35e2dwsj+wAvVabN1VY7LqjsQAceUuV196yiZkcZIYFoXNOunKh6gqjf0TwhnzN7ML4cQstZ5iMGkvK5nWQC2asjpnj6lemXb+PfswWHy0a/f/8A=
+	t=1782506985; cv=none; b=QRFvVYLbuNHTtogRq0lekjqb0PrMxZjHXZPtZVLf6nT3aTwDDeg5/ywrW0k/kDzakLBlcQFtRepvzNcRD0BbG/N/90X7nJ/vh4M9K19utz6Yy6ehZRO+S0QXDrKvPspcPfR1jX3wPPS5FzpWekJdxlA5JSApuTkE6alwkphpQsc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782506502; c=relaxed/simple;
-	bh=2Ulc0SWF8262TTAGsof0ZzS0ft816yhExp9dW2keXn0=;
+	s=arc-20240116; t=1782506985; c=relaxed/simple;
+	bh=fKeIsblTZ0E23FHRZVpCwRr64HLAxL+Wv28mrFvs1Vc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lKTmYFa4uGQSJaNCDtBDZV0/ZPxLX+y1c3+KHOCWmpJo2260QNkbAqa5ncWgIaqfkgAAqv+Cr1wSwYz6KmvfccCCwKwupttSvt6KDPzUtYrZ+kFYRwfFCtlTr5YxE832EzvN+p0lhot1FCgq3WFpaBxr88CcLCPefwdap3H6Z9Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Xjkds+57; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=VwC+Nb8E; arc=none smtp.client-ip=205.220.180.131
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65QJ8arp1980854
-	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jun 2026 20:41:39 GMT
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZslsQJ6Dt9AbovMtdNjjEQvH5Ts/1tLgYfUAVGCp0qQSAKRmy+/UXVjS4bhDHbU+Mp6ixSF7AVMoM/n2ixdQJrbTjknQpJVzfrAP/Y+OQeaFggh6ZWnMMvluB6xq5x84gHkpb18SQpUQ3wcqag5TM0rvxTs7c5x6LDUicpYpu7s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=mmgBY5Ms; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=X/CIbtcf; arc=none smtp.client-ip=205.220.180.131
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65QJaISo2324348
+	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jun 2026 20:49:43 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=1uaGDXBW7Kq2zoKPgn7o7FFe
-	mmz8E/gP79jq5g9mVQc=; b=Xjkds+57Dv5n2+7wLveuOQqMfFuJrIZOpRqz/qhM
-	eHoWOqTwnj+3hWHvxA1thaGFnVYtXyvor2zE0dd/sQ8+abmgcg/5SH4VRJEYeT+L
-	UdwOiw8MfZyRXVBIYBd4aM9+HIhpwfFU8YyTh+fZAIHDbdyBi3N9O7E2V6S7kXZg
-	KaNnf14O8VmBYlRWfXZotB+23q8UB6Jj4OC33y8x7sY7uweeHfWSnsEYUptaAXH+
-	n6Vk8UKy4NF1H673BpD/gnMbmvKwE+OR+oEMnNx7Lq+G87RX7TavqULlmEagm7Zb
-	dfxkLUCRHOd6El0gHdbE7/EdugdJqsxLlzTzYTp5Jok5ZQ==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f1p2ttj74-1
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	2ky5oJQblObHqyE+E/5ZcFxz4/F4Xq5LfboN+e/NPrg=; b=mmgBY5MsyBNarjGq
+	fCkNbaKz90Ha1k+46FNVNXlo1ap1dhf9TJmVaTuMznzEwv6wr8Uu/rbmc26oy0RQ
+	oTkATT0fUsjjOhKWN8wsH1vBu8EHhANjBCLn6d3SUm/OXYoswaw6NPDSg7sWNbk8
+	Aw50wT4mBGPlxuU41Twl3oehLQ9kZsUHVdznR9wRiVnv128HODRg5riSiJwU+H42
+	HGZbAs1V11m6dWJaLoa5qPpuwWghr0oIwJoBwP3pzj54cewSWxchOK93zEVjOUHD
+	1pLmCSxBcvpwIjaWdRmZTrRe+Fl1U1eAZuSQcyfcDhprcktNrG5fXmHigvVLfD5Q
+	oXQuag==
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com [209.85.219.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f1yqv07au-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jun 2026 20:41:39 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-915f6ff639aso320735785a.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jun 2026 13:41:39 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jun 2026 20:49:42 +0000 (GMT)
+Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-8e05aa49693so38034976d6.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jun 2026 13:49:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1782506499; x=1783111299; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=1uaGDXBW7Kq2zoKPgn7o7FFemmz8E/gP79jq5g9mVQc=;
-        b=VwC+Nb8EEr5+KJ8sEELK9Gs3oYQh4uZ2WnJxfBhbTe3e5BN8d792ri6VkCaKeSIVOb
-         0OGdaMVZqs6tHIRR4yay7wlNCBS+dP4MeR4WI4aHOVohRtT0kEckGgVpsl6HlY55Ueva
-         MGEnn4Dy4yKllpeWLbItihWor2PZ7xxS1sGr9fryFTzkH1tFcSfahpMioeU4iqRZg8ZW
-         k6LOipcMioQRa1tggWUmpIQw1O1JLQhoPVb5d1HFPJU+nzub2aKSxidvhQrIv/ewpqSC
-         uaj02dQsE5xo1zj1oE/P+O+C6V97UcJbhDuW8UeUIdEFejgmKq4syw9TXybxDvIjWWbH
-         hz8w==
+        d=oss.qualcomm.com; s=google; t=1782506982; x=1783111782; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=2ky5oJQblObHqyE+E/5ZcFxz4/F4Xq5LfboN+e/NPrg=;
+        b=X/CIbtcfDLncXebaZ3xMUMpVGks+gToaCpP7IDvV1PQpXvzXOjKXmAvVJYmvn2I0d+
+         EaEUYWOfXtpF3h84NBYwpuOikRWI3l2acZ/Bd9NZnLt5zfheKumaUt1pSZE+H+8F7hOy
+         aFdMnT6UDjgLBMyjaOfqS0s17drvpwwMVS0z/aui+lxU6+z2c+8dWO0tSp2Zqx3Z1FKK
+         kfzKy0Kf3ePv1ky2KlLvlJ0OYDyUSW4hiAjCEGCbSkYYscWbp/1fwE5CnwtSfCVDEc1R
+         k/PrNW9laXkTyywKPfHNDK5y/1O1OXlzZ7FsGun/T0tH3pDips8uIIglYmS/NktGaZXB
+         cYug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782506499; x=1783111299;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=1uaGDXBW7Kq2zoKPgn7o7FFemmz8E/gP79jq5g9mVQc=;
-        b=BqM3XcdfNGwtOw7qiMSL/7ZBYRLTFc2byUQThQ1IJ1XFP8cwWfXbHz79t9XUAn1kdF
-         +9PKRNZyVm2fBf1noXtPh/3QcpRmz6hi2KyCJaDEpawo9OzZf5h4BlM32lh74MQ+3TWY
-         oEnSRwsOgchW8GpyflwbMC/85gXRHN5+itIOsZrVnSjrawiaSf3df1BABUcdEn8HK1UU
-         jUAvmDRjDGi3L25Nn5PJNR5OXSu2G6G7WBD9C8bPC6WK2VGvhfhE/lBbKqSt7qtxlkPa
-         Zj5GNNKxjb/qJ8T4WT8ybuP3i1Ja5Xx81Bp4Q6Kmbb1L40QYbN0z84LXnwTPeRz9V9dF
-         Gdvw==
-X-Forwarded-Encrypted: i=1; AFNElJ+dSeh5ZQyXri/EiFYRKiNcjV6iCe4XVNVi6aB2hUbnxXD+FoJD58rIBP7bMxRiE4ANy3XgimrA6VhGNi0h@vger.kernel.org
-X-Gm-Message-State: AOJu0YwTRIi6xHy4nStrj85ApgAZG5sS7dWBHacbctZVWwtexs4fF6+H
-	4cN6ulBkPMJMEaffPLUp3hDguAcqEBvYLkCprRggyfb8gzn68kfYMuHCaEGaTmngY0srihgRf8+
-	FfTQ16+K6kMvcn7F1USC/E120BMGljBGJQ2nN237No4JTq1R6RuTzFbp8zFhlV36ZrSyv
-X-Gm-Gg: AfdE7cl0ZlCAaSjH7mrNzxAPOwnD5vCKlZqOB/S/7j4/BszH3uOfG6EgQy1Q7k1/MZw
-	4eY7zJfb/lakJUPwbAhcc2tKhxd1+jNim4HF4WvNedPiZGpPQZHc5t++GiH5NkoJGPwzyYpNk0V
-	H4/MfNxdOL7+S5jOY8a3YUFKDDgfVz5rYQhcZEIPmEYVpa6Hn4BhlUtbOxSbg2HT6PxNQVm+rTR
-	J+H+YKP/NrRVUeznmidkBrxGXaWr1cInTXNfqyfva2dZmlMyy7pA4FeCVwkOQMMyCnG5gJc8blG
-	Q99a4/flG5oLPtRZW6unziNGTOBp6uBINDWtWr3awZy83113ZrqBvCDALwE7l/H+tDq3cX3gDO8
-	j5OsLrEqPAPmQZ9/KO+ls1KMzv3GfFVMesEZOG6v4hGEIX2u2L+fY9qHdMjKhF9MIFYyN4ljAod
-	/U/0moLTLr1JiEKPEIpJZMQY4B
-X-Received: by 2002:a05:620a:44d4:b0:925:eb05:d194 with SMTP id af79cd13be357-9293d4b2daamr1286064985a.57.1782506498910;
-        Fri, 26 Jun 2026 13:41:38 -0700 (PDT)
-X-Received: by 2002:a05:620a:44d4:b0:925:eb05:d194 with SMTP id af79cd13be357-9293d4b2daamr1286057785a.57.1782506498017;
-        Fri, 26 Jun 2026 13:41:38 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1782506982; x=1783111782;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=2ky5oJQblObHqyE+E/5ZcFxz4/F4Xq5LfboN+e/NPrg=;
+        b=LiErTHTXxxXGnJzLOTK9mVSe4zrGrAefXWlAPYcMAWqu6+GvRTTHPVOwOfzTaEd1VM
+         VFLoTfWhVf0d0p+0NQaSjiR9TfmsitMTTz1sFNvAn3wCjHJxyr24Z6P+kfyuaAzs/pgf
+         VE+aA2Dg6OavHHccRSJq5qgkjJ2OZXP5eCOwyqQNNMgQLwK/304vDxyK6e1ZYf0+5NwE
+         FZDiNzu3Y1CQX6mlAz5hACKbDhC9eko4f0ca8Ba7BXBM5oVwuj4VLpTiZ+Ew0lb3Id7j
+         yl85QGa6omG8jkxLy6b+z0ma2QGkrrhfhe48MjZnFpng3P/6C/aQPGsk5JQHg1RadNcu
+         +aGg==
+X-Forwarded-Encrypted: i=1; AFNElJ/2fxkY5d1Ds7hzWEw2Y9cmSfU4zijmpsHr3hqI1eVTH+GIfLpRC8qkL49Gx7HWYJgpQgNHU8eo8hWYtncG@vger.kernel.org
+X-Gm-Message-State: AOJu0YxiN70A15rdfy51SsWuVxk8Xv7AErBCCJnGBPE6kGbl0iUB6DoO
+	p8LeK1RxV2/7phHLu2aA/4XbQXa2DBXhbU6SoMxmuj6UMLlt4CMkpbLQ7xs1UbLZe/6D7FOoqAN
+	zpiBp5B8vqUXSx5y528oII3XmcmIC0oxgk4Lp+NT8xMAVRxqRkNQ0LQbnHz8lz1gyXPQ4
+X-Gm-Gg: AfdE7clUKHTa0P8fRFZ/bg8vslnI9HOcfcVXt9g2aqn6R88xsMBf7B4rijdtICCTIaW
+	dXjfQCW0STYRvupyUffEcNdE8RIRxtccDI+PZw9A8LXwlvDcbpPCW2U4xrK4qEkgySksoIS+ILI
+	riz4FxMWS4nw/OjQxGkLccMg1VEIu8b26MXzHmkfp/+MLcKpCT5u1NXnnvAOPRjqVhZ6Yx8ZOUf
+	PXKJWxlazQYqx5R416NK2j05dhrSxrG/+e7lOAhzpmeUJKHu8qndhJUzdjwNG7IHIzOAYvlG6eE
+	X/jAGTdVqS5rSn256XIr5AVW4oWi2QWgkaSZ+HvKzlDVpM9ap6dAatWn2R56Z0ZnseQ1BEw+fVa
+	0honkapx4qfFIkfMZ/ZwfIvjuaQarc/9VMkXejwlihH8ifCOGxPxUFoAIs3vZeCxJk7nJcnFzay
+	OzaitEdnSNvcVYROUj74gj1MnK
+X-Received: by 2002:a05:620a:a911:b0:929:e498:c102 with SMTP id af79cd13be357-929e498c1b1mr877303985a.14.1782506982064;
+        Fri, 26 Jun 2026 13:49:42 -0700 (PDT)
+X-Received: by 2002:a05:620a:a911:b0:929:e498:c102 with SMTP id af79cd13be357-929e498c1b1mr877296885a.14.1782506981109;
+        Fri, 26 Jun 2026 13:49:41 -0700 (PDT)
 Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3999b1b143fsm52646381fa.39.2026.06.26.13.41.33
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5ad6954a617sm3697560e87.2.2026.06.26.13.49.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 26 Jun 2026 13:41:35 -0700 (PDT)
-Date: Fri, 26 Jun 2026 23:41:31 +0300
+        Fri, 26 Jun 2026 13:49:39 -0700 (PDT)
+Date: Fri, 26 Jun 2026 23:49:36 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Arpit Saini <arpit.saini@oss.qualcomm.com>
-Cc: Neil Armstrong <neil.armstrong@linaro.org>,
-        Jessica Zhang <jesszhan0024@gmail.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Rob Herring <robh@kernel.org>,
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: Doug Anderson <dianders@chromium.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Mahadevan P <mahadevan.p@oss.qualcomm.com>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
         Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, ayushi.makhija@oss.qualcomm.com,
-        rajeevny@qti.qualcomm.com
-Subject: Re: [PATCH v3 2/2] drm/panel: add Ilitek ILI7807S panel driver
-Message-ID: <5pvhrsikc3spr5jworztun7pjpgnkfihxvqd3dthhn7yeoud56@vcajuuwqplvo>
-References: <20260624-ili7807s-v3-0-ddf37052a289@oss.qualcomm.com>
- <20260624-ili7807s-v3-2-ddf37052a289@oss.qualcomm.com>
+        Conor Dooley <conor+dt@kernel.org>,
+        cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Mahadevan P <mahap@qti.qualcomm.com>, Stephen Boyd <sboyd@kernel.org>
+Subject: Re: [PATCH v2 0/3] arm64: dts: qcom: kodiak: Enable 4-lane DP via
+ QMP Combo PHY
+Message-ID: <xcirlthd4ck2mf7r6corjw3mmd4gx3hbm6wty5grodhr63wxvr@4glvc4vdvpqt>
+References: <20260429-kodiak_v2-v2-0-c3a703cc30eb@oss.qualcomm.com>
+ <ag_QL5DIo7MxsdYU@baldur>
+ <84ed2c32-16d0-4c29-a06a-9242eeb8e86e@oss.qualcomm.com>
+ <CAD=FV=XQH3kng7MV=Jr=HmZQc4TEUCq+V3TsLNChr5vUHUtXAg@mail.gmail.com>
+ <d4641613-dcf0-4437-9aaf-dede83afe04b@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260624-ili7807s-v3-2-ddf37052a289@oss.qualcomm.com>
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI2MDE3MCBTYWx0ZWRfX+JKxYVG7sZqJ
- vuEKoI6qNq/U/Kf5qkNGQqpyvZnFFqYqZSeJimFhL6aaDDTgKWbDdIfioSoxXVJ/FT+ofB/fXxe
- mvAWlCV68DIlFgEnMkKZXAu5eMo11ZA=
-X-Proofpoint-GUID: _XC6SI_2B9sHfZFBnVZd5X-kvIJZcP_g
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI2MDE3MCBTYWx0ZWRfX0V1lKYmfgLCo
- ojeC5eGryME4aAEyI4zgn9/rrdMGOF+KZJAza7fppUPIa14yzchOaphEmvmNs+OQ1a4oHa4NrVD
- PZjE+oIlZ7Ij4tYZNQlwmPWR5qutUNZx3D4PjhHbagr6AsLGb+k5L8iOxGk6zOl1V9/FeVrMAwr
- NLEU8cbo1rBz7dJFd/1AomySGScsY1uvXtaFulXYkS08TyysBt4XuDJJI/PaLjKsNatiRzKg/Pc
- UGJKGfE756QC/nWvr9Zxm4281BsVAz2rdfNsY/D1/YIPPKFhLV/h2gZdz2nkEh6cAZjrf+1SK8T
- Kn0zH0V1qCYiQ885pp2aSTnzHvxVBT2Jj5ROj0pgkvq8b8GuNNjezJuzJXeU46/9D+bWaFAoK0M
- 28g0avWz+0FZ9WaSiVXRi0CbQZTrHt+roevAI4OSWHJ+IZiThWgH4XYgbH/26Q2kN2YpjCwhFon
- pMXqDf5UiTXHVsmenFg==
-X-Proofpoint-ORIG-GUID: _XC6SI_2B9sHfZFBnVZd5X-kvIJZcP_g
-X-Authority-Analysis: v=2.4 cv=IM8yzAvG c=1 sm=1 tr=0 ts=6a3ee403 cx=c_pps
- a=50t2pK5VMbmlHzFWWp8p/g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <d4641613-dcf0-4437-9aaf-dede83afe04b@oss.qualcomm.com>
+X-Authority-Analysis: v=2.4 cv=aoiCzyZV c=1 sm=1 tr=0 ts=6a3ee5e6 cx=c_pps
+ a=UgVkIMxJMSkC9lv97toC5g==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
  a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22 a=EUspDBNiAAAA:8
- a=UkQgNfaBbZvMdpwfnggA:9 a=CjuIK1q_8ugA:10 a=IoWCM6iH3mJn3m4BftBB:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22 a=EUspDBNiAAAA:8
+ a=qgbJk5cZIR8ycAwPhMgA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=1HOtulTD9v-eNWfpl4qZ:22
+X-Proofpoint-GUID: lHYVO-9ID5CxRpLOTgvB44clBoh4SrQc
+X-Proofpoint-ORIG-GUID: lHYVO-9ID5CxRpLOTgvB44clBoh4SrQc
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI2MDE3MiBTYWx0ZWRfX/G1SXEoNAgkK
+ vvZcglpeB/9Ug2Q3VFFvA8dwFsxLL7W+jCtC2sHkDWe9uz7LIrMF2fvd/4FwtCMfJdRjBQg+faA
+ qiKpF4TCCAys/LQw0cEuiKj009+FEMI=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI2MDE3MiBTYWx0ZWRfX7QvfElPrWaEv
+ MuOc5qBzT57LUBH33ZLHZZhmlYniu6qe/rNgdsP522Fyh5P2aCnd//4OUdApoiV0OrTKuQQ4SkY
+ 0+DwV5aIAFFKdh16OgNwccGne2M7QjnMxsSZEDsvtr5I82Kr/poreLndCemsECzD10sLUXD2bhu
+ gXbx57Z3uwmhSNh5LGPefoxn9kB+2t0RjX4/Hk28GQlQmy/rQMTfBjNNDwFrZ8Cp7tjQALaEula
+ uPg7mKn7pQgEt779WhRwtW2MwnGFnk9PUrVGgG2kmgzjVu7Ls029gXpvJK6DNfNGtlh8P9v2TxA
+ 7L6WkWqyUYSTPGZ+a8ILOilzc+8+98ozuh7vZk08MW9g+3ryyjqqWShm3DIAZpQXmPwbaTZrbOO
+ 0ijjqpXM5U3ruKpPhwux0QtRlwIeCDif4NkAJORFvoGf0WHDyPRGK6HyWKWR46xCEXophx7t4fQ
+ q6StgZAWNmFzEvRFUWA==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-26_05,2026-06-26_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 bulkscore=0 malwarescore=0 adultscore=0 lowpriorityscore=0
- impostorscore=0 priorityscore=1501 phishscore=0 suspectscore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606260170
+ phishscore=0 priorityscore=1501 suspectscore=0 lowpriorityscore=0
+ impostorscore=0 bulkscore=0 malwarescore=0 spamscore=0 adultscore=0
+ clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2606260172
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-0.16 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	MID_RHS_NOT_FQDN(0.50)[];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-114713-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:arpit.saini@oss.qualcomm.com,m:neil.armstrong@linaro.org,m:jesszhan0024@gmail.com,m:maarten.lankhorst@linux.intel.com,m:mripard@kernel.org,m:tzimmermann@suse.de,m:airlied@gmail.com,m:simona@ffwll.ch,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linux-arm-msm@vger.kernel.org,m:dri-devel@lists.freedesktop.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:ayushi.makhija@oss.qualcomm.com,m:rajeevny@qti.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	TAGGED_FROM(0.00)[bounces-114714-lists,linux-arm-msm=lfdr.de];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,qualcomm.com:email,oss.qualcomm.com:dkim,oss.qualcomm.com:from_mime,vger.kernel.org:from_smtp,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo];
 	FORGED_SENDER(0.00)[dmitry.baryshkov@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[17];
-	FREEMAIL_CC(0.00)[linaro.org,gmail.com,linux.intel.com,kernel.org,suse.de,ffwll.ch,vger.kernel.org,lists.freedesktop.org,oss.qualcomm.com,qti.qualcomm.com];
+	RCPT_COUNT_TWELVE(0.00)[14];
+	FORGED_RECIPIENTS(0.00)[m:konrad.dybcio@oss.qualcomm.com,m:dianders@chromium.org,m:andersson@kernel.org,m:mahadevan.p@oss.qualcomm.com,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:cros-qcom-dts-watchers@chromium.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:mahap@qti.qualcomm.com,m:sboyd@kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	FORWARDED(0.00)[lists@lfdr.de];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,vcajuuwqplvo:mid,sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,qualcomm.com:dkim,qualcomm.com:email,oss.qualcomm.com:dkim,oss.qualcomm.com:from_mime];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	MISSING_XM_UA(0.00)[];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[dmitry.baryshkov@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MISSING_XM_UA(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: C865E6D00D6
+X-Rspamd-Queue-Id: 9B37B6D0148
 
-On Wed, Jun 24, 2026 at 02:23:52PM +0530, Arpit Saini wrote:
-> Add a DRM panel driver for the DLC DLC0697 1080x1920@60Hz MIPI DSI
-> panel based on the Ilitek ILI7807S display controller.
+On Fri, Jun 26, 2026 at 06:02:12PM +0200, Konrad Dybcio wrote:
+> On 6/22/26 12:11 AM, Doug Anderson wrote:
+> > Hi,
+> > 
+> > On Fri, Jun 19, 2026 at 8:34 AM Konrad Dybcio
+> > <konrad.dybcio@oss.qualcomm.com> wrote:
 > 
-> The panel operates in video burst mode with four data lanes using
-> RGB888 pixel format.
+> [...]
 > 
-> Signed-off-by: Arpit Saini <arpit.saini@oss.qualcomm.com>
-> ---
->  drivers/gpu/drm/panel/Kconfig                 |  12 ++
->  drivers/gpu/drm/panel/Makefile                |   1 +
->  drivers/gpu/drm/panel/panel-ilitek-ili7807s.c | 293 ++++++++++++++++++++++++++
->  3 files changed, 306 insertions(+)
 > 
-> diff --git a/drivers/gpu/drm/panel/Kconfig b/drivers/gpu/drm/panel/Kconfig
-> index 7450b27622a2..1cbaac1bf545 100644
-> --- a/drivers/gpu/drm/panel/Kconfig
-> +++ b/drivers/gpu/drm/panel/Kconfig
-> @@ -264,6 +264,18 @@ config DRM_PANEL_HYDIS_HV101HD1
+> >>>
+> >>> Are you sure that herobrine has 4 lanes routed on the PCB?
+> >>
+> >> +Doug any chance you still have schematics for that old boy?
+> >>
+> >> Bjorn, perhaps we could switch to a model where we define the max
+> >> capabilities (i.e. 4-lane 8.1 GHz link) in the SoC DTs and only limit
+> >> them as necessary? Not meeting these is borderline a board defect anyway
+> > 
+> > Bleh, I'd forgotten what a pain it was to look at herobrine schematics
+> > with the whole qcard "abstraction".
+> > 
+> > My memory and a quick glance at schematics makes me say that herobrine
+> > only has 2 lanes of DP. The problem is that this SoC really wasn't
+> > designed with a laptop in mind. I seem to remember there only being
+> > one USB 3 port and it is muxed with two of the DP lanes (since the SoC
+> > is designed to drive a single Type-C port). In order to support all of
+> > the ports that a laptop should have, you pretty much need to feed that
+> > one USB 3 port into a USB hub and hardcode the DP to always use two
+> > lanes.
+
+This matches my memory and the abstractions that Stephen has been trying
+to implement.
+
+> > 
+> > The two DP lanes then go to a mux where they can be routed either
+> > towards the left Type C port or the right Type C port.
+> > 
+> > In terms of whether we can support the 8.1 GHz link speed, I remember
+> > much debate during the project, but I don't recall all the details. I
+> > think the discussion was that we were supposed to support the higher
+> > speeds, but we had to disable them because they weren't working. From
+> > my fuzzy memory, it was unclear whether the problem was known to be
+> > hardware or software related. I can try to dig deeper if it's
+> > relevant.
+> 
+> If anyone still has herobrine easily accessible, I guess a smoke test
+> with a high res display and this:
+
+I remember that it was not stable. HBR3 worked in some cases and didn't
+in the other cases. So, I'd rather not touch the old grampa and leave it
+as is.
+
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
+> index 5c5e4f1dd221..a39e418fdabb 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
+> @@ -464,7 +464,7 @@ &mdss_dp {
 >  
->  	  If M is selected the module will be called panel-hydis-hv101hd1
+>  &mdss_dp_out {
+>         data-lanes = <0 1>;
+> -       link-frequencies = /bits/ 64 <1620000000 2700000000 5400000000>;
+> +       link-frequencies = /bits/ 64 <1620000000 2700000000 5400000000 8100000000>;
+>  };
 >  
-> +config DRM_PANEL_ILITEK_ILI7807S
-> +	tristate "Ilitek ILI7807S-based panels"
-> +	depends on OF
-> +	depends on DRM_MIPI_DSI
-> +	depends on BACKLIGHT_CLASS_DEVICE
-> +	help
-> +	  Say Y if you want to enable support for panels based on the
-> +	  Ilitek ILI7807S display controller, such as the DLC DLC0697
-> +	  1080x1920 MIPI DSI panel.
-> +
-> +	  If M is selected the module will be called panel-ilitek-ili7807s.
-> +
->  config DRM_PANEL_ILITEK_IL9322
->  	tristate "Ilitek ILI9322 320x240 QVGA panels"
->  	depends on OF && SPI
-> diff --git a/drivers/gpu/drm/panel/Makefile b/drivers/gpu/drm/panel/Makefile
-> index c2c5cf817116..c3002b351cb8 100644
-> --- a/drivers/gpu/drm/panel/Makefile
-> +++ b/drivers/gpu/drm/panel/Makefile
-> @@ -26,6 +26,7 @@ obj-$(CONFIG_DRM_PANEL_HIMAX_HX83112B) += panel-himax-hx83112b.o
->  obj-$(CONFIG_DRM_PANEL_HIMAX_HX83121A) += panel-himax-hx83121a.o
->  obj-$(CONFIG_DRM_PANEL_HIMAX_HX8394) += panel-himax-hx8394.o
->  obj-$(CONFIG_DRM_PANEL_HYDIS_HV101HD1) += panel-hydis-hv101hd1.o
-> +obj-$(CONFIG_DRM_PANEL_ILITEK_ILI7807S) += panel-ilitek-ili7807s.o
->  obj-$(CONFIG_DRM_PANEL_ILITEK_IL9322) += panel-ilitek-ili9322.o
->  obj-$(CONFIG_DRM_PANEL_ILITEK_ILI9341) += panel-ilitek-ili9341.o
->  obj-$(CONFIG_DRM_PANEL_ILITEK_ILI9805) += panel-ilitek-ili9805.o
-> diff --git a/drivers/gpu/drm/panel/panel-ilitek-ili7807s.c b/drivers/gpu/drm/panel/panel-ilitek-ili7807s.c
-> new file mode 100644
-> index 000000000000..8ddfab2693ec
-> --- /dev/null
-> +++ b/drivers/gpu/drm/panel/panel-ilitek-ili7807s.c
-> @@ -0,0 +1,293 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-> + */
-> +
-> +#include <linux/backlight.h>
-> +#include <linux/delay.h>
-> +#include <linux/gpio/consumer.h>
-> +#include <linux/module.h>
-> +#include <linux/of.h>
-> +#include <linux/regulator/consumer.h>
-> +
-> +#include <drm/drm_mipi_dsi.h>
-> +#include <drm/drm_modes.h>
-> +#include <drm/drm_panel.h>
-> +#include <drm/drm_probe_helper.h>
-> +
-> +struct panel_desc {
-> +	const struct drm_display_mode *mode;
-> +	unsigned int lanes;
-> +	enum mipi_dsi_pixel_format format;
-> +	unsigned long mode_flags;
-> +	void (*init)(struct mipi_dsi_multi_context *dsi_ctx);
-> +};
-> +
-> +struct ili7807s {
-> +	struct drm_panel panel;
-> +	struct mipi_dsi_device *dsi;
-> +	const struct panel_desc *desc;
-> +
-> +	struct regulator_bulk_data *supplies;
-> +	struct gpio_desc *reset_gpio;
-> +};
-> +
-> +static const struct regulator_bulk_data ili7807s_supplies[] = {
-> +	{ .supply = "vddi" },
-> +	{ .supply = "avdd" },
-> +	{ .supply = "avee" },
-> +};
-> +
-> +static inline struct ili7807s *to_ili7807s(struct drm_panel *panel)
-> +{
-> +	return container_of(panel, struct ili7807s, panel);
-> +}
-> +
-> +static void ili7807s_reset(struct ili7807s *ctx)
-> +{
-> +	gpiod_set_value_cansleep(ctx->reset_gpio, 0);
-> +	usleep_range(10000, 11000);
-> +	gpiod_set_value_cansleep(ctx->reset_gpio, 1);
-> +	usleep_range(10000, 11000);
-> +	gpiod_set_value_cansleep(ctx->reset_gpio, 0);
-> +	usleep_range(10000, 11000);
-
-This looks like the reset being active-low. Please define it as is in
-the DT and use normal (hold = 1, drop = 0) semantics in the driver.
-
-> +}
-> +
-> +static void dlc0697_init_sequence(struct mipi_dsi_multi_context *dsi_ctx)
-> +{
-> +	mipi_dsi_dcs_soft_reset_multi(dsi_ctx);
-> +	mipi_dsi_msleep(dsi_ctx, 120);
-> +
-> +	mipi_dsi_dcs_write_seq_multi(dsi_ctx, 0xff, 0x78, 0x07, 0x00);
-> +	mipi_dsi_dcs_write_seq_multi(dsi_ctx, 0x35, 0x00);
-
-mipi_dsi_dcs_set_tear_on_multi()
-
-> +	mipi_dsi_dcs_write_seq_multi(dsi_ctx, 0x5e, 0x09, 0x99);
-
-MIPI_DCS_SET_CABC_MIN_BRIGHTNESS
-
-> +	mipi_dsi_dcs_write_seq_multi(dsi_ctx, 0x53, 0x24);
-
-MIPI_DCS_WRITE_CONTROL_DISPLAY
-
-> +	mipi_dsi_dcs_write_seq_multi(dsi_ctx, 0x55, 0x01);
-
-MIPI_DCS_WRITE_POWER_SAVE
-
-> +	mipi_dsi_dcs_write_seq_multi(dsi_ctx, 0x51, 0x3f, 0xff);
-
-mipi_dsi_dcs_set_display_brightness_large_multi(). Also please use
-0x1fff instead of the full brightness.
-
-> +
-> +	mipi_dsi_dcs_exit_sleep_mode_multi(dsi_ctx);
-> +	mipi_dsi_msleep(dsi_ctx, 120);
-> +
-> +	mipi_dsi_dcs_set_display_on_multi(dsi_ctx);
-> +	mipi_dsi_msleep(dsi_ctx, 20);
-> +}
-> +
-> +static int ili7807s_on(struct ili7807s *ctx)
-> +{
-> +	struct mipi_dsi_multi_context dsi_ctx = { .dsi = ctx->dsi };
-> +
-> +	ctx->dsi->mode_flags |= MIPI_DSI_MODE_LPM;
-
-Drop, set it in probe()
-
-> +
-> +	ctx->desc->init(&dsi_ctx);
-> +
-> +	ctx->dsi->mode_flags &= ~MIPI_DSI_MODE_LPM;
-
-Drop
-
-> +
-> +	return dsi_ctx.accum_err;
-> +}
-> +
-> +static int ili7807s_off(struct ili7807s *ctx)
-> +{
-> +	struct mipi_dsi_multi_context dsi_ctx = { .dsi = ctx->dsi };
-> +
-> +	ctx->dsi->mode_flags |= MIPI_DSI_MODE_LPM;
-
-Drop
-
-> +
-> +	mipi_dsi_dcs_set_display_off_multi(&dsi_ctx);
-> +	mipi_dsi_msleep(&dsi_ctx, 20);
-> +
-> +	mipi_dsi_dcs_enter_sleep_mode_multi(&dsi_ctx);
-> +	mipi_dsi_msleep(&dsi_ctx, 120);
-> +
-> +	ctx->dsi->mode_flags &= ~MIPI_DSI_MODE_LPM;
-
-Drop
-
-> +
-> +	return dsi_ctx.accum_err;
-> +}
-> +
-> +static int ili7807s_prepare(struct drm_panel *panel)
-> +{
-> +	struct ili7807s *ctx = to_ili7807s(panel);
-> +	int ret;
-> +
-> +	ret = regulator_bulk_enable(ARRAY_SIZE(ili7807s_supplies), ctx->supplies);
-> +	if (ret < 0) {
-> +		dev_err(ctx->panel.dev, "failed to enable regulators: %d\n", ret);
-> +		return ret;
-> +	}
-> +
-> +	msleep(20);
-> +
-> +	ili7807s_reset(ctx);
-> +
-> +	ret = ili7807s_on(ctx);
-> +	if (ret < 0) {
-> +		dev_err(ctx->panel.dev, "failed to initialise panel: %d\n", ret);
-> +		goto err;
-> +	}
-> +
-> +	return 0;
-> +
-> +err:
-> +	gpiod_set_value_cansleep(ctx->reset_gpio, 1);
-> +
-> +	regulator_bulk_disable(ARRAY_SIZE(ili7807s_supplies), ctx->supplies);
-> +	return ret;
-> +}
-> +
-> +static int ili7807s_unprepare(struct drm_panel *panel)
-> +{
-> +	struct ili7807s *ctx = to_ili7807s(panel);
-> +	int ret;
-> +
-> +	ret = ili7807s_off(ctx);
-> +	if (ret < 0)
-> +		dev_err(ctx->panel.dev, "failed to disable panel: %d\n", ret);
-> +
-> +	gpiod_set_value_cansleep(ctx->reset_gpio, 1);
-> +
-> +	regulator_bulk_disable(ARRAY_SIZE(ili7807s_supplies), ctx->supplies);
-> +
-> +	return 0;
-> +}
-> +
-> +static int ili7807s_get_modes(struct drm_panel *panel,
-> +			      struct drm_connector *connector)
-> +{
-> +	struct ili7807s *ctx = to_ili7807s(panel);
-> +
-> +	return drm_connector_helper_get_modes_fixed(connector, ctx->desc->mode);
-> +}
-> +
-> +static const struct drm_panel_funcs ili7807s_panel_funcs = {
-> +	.prepare = ili7807s_prepare,
-> +	.unprepare = ili7807s_unprepare,
-> +	.get_modes = ili7807s_get_modes,
-> +};
-> +
-> +static int ili7807s_bl_update_status(struct backlight_device *bl)
-> +{
-> +	struct mipi_dsi_device *dsi = bl_get_data(bl);
-> +	u16 brightness = backlight_get_brightness(bl);
-> +	int ret;
-> +
-> +	dsi->mode_flags &= ~MIPI_DSI_MODE_LPM;
-> +
-> +	ret = mipi_dsi_dcs_set_display_brightness_large(dsi, brightness);
-> +
-> +	dsi->mode_flags |= MIPI_DSI_MODE_LPM;
-> +
-> +	return ret;
-> +}
-> +
-> +static const struct backlight_ops ili7807s_bl_ops = {
-> +	.update_status = ili7807s_bl_update_status,
-> +};
-> +
-> +static struct backlight_device *ili7807s_create_backlight(struct mipi_dsi_device *dsi)
-> +{
-> +	struct device *dev = &dsi->dev;
-> +	const struct backlight_properties props = {
-> +		.type           = BACKLIGHT_RAW,
-> +		.brightness     = 0x3fff,
-> +		.max_brightness = 0x3fff,
-> +	};
-> +
-> +	return devm_backlight_device_register(dev, dev_name(dev), dev, dsi,
-> +					      &ili7807s_bl_ops, &props);
-> +}
-> +
-> +static const struct drm_display_mode dlc0697_mode = {
-> +	.clock = 131911,
-
-= (1080 + 18 + 2 + 16) * (1920 + 26 + 4 + 20) * 60 / 1000
-
-> +
-> +	.hdisplay    = 1080,
-> +	.hsync_start = 1080 + 18,
-> +	.hsync_end   = 1080 + 18 + 2,
-> +	.htotal      = 1080 + 18 + 2 + 16,
-> +
-> +	.vdisplay    = 1920,
-> +	.vsync_start = 1920 + 26,
-> +	.vsync_end   = 1920 + 26 + 4,
-> +	.vtotal      = 1920 + 26 + 4 + 20,
-> +
-> +	.width_mm  = 0,
-> +	.height_mm = 0,
-
-Do you really don't know the dimensions of the panel you are
-contributing?
-
-> +	.type = DRM_MODE_TYPE_DRIVER | DRM_MODE_TYPE_PREFERRED,
-> +};
-> +
+>  /* NVMe drive, enabled on a per-board basis */
+> 
+> would be the quickest way to confirm that. Although we can just leave
+> it as-is if it's problematic.. I think you said there's some folks that
+> still use it a couple years ago
 
 -- 
 With best wishes
