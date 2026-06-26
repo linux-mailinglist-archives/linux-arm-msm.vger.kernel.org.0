@@ -1,121 +1,139 @@
-Return-Path: <linux-arm-msm+bounces-114680-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-114681-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id OXvANDiOPmp2HwkAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-114680-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jun 2026 16:35:36 +0200
+	id bs+qCj6OPmp5HwkAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-114681-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jun 2026 16:35:42 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 428B56CDF98
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jun 2026 16:35:36 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id 68B416CDF9E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jun 2026 16:35:41 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=ideasonboard.com header.s=mail header.b=OaYJp02L;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-114680-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-114680-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=none) header.from=ideasonboard.com;
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=kR7G670S;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-114681-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 104.64.211.4 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-114681-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id E462C304408A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jun 2026 14:33:17 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 375A1302DE92
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jun 2026 14:33:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A66A53F8224;
-	Fri, 26 Jun 2026 14:33:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1B28C3F825A;
+	Fri, 26 Jun 2026 14:33:55 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D3903F6C2C;
-	Fri, 26 Jun 2026 14:33:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1363137C910;
+	Fri, 26 Jun 2026 14:33:53 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782484396; cv=none; b=ctCZYxlZ9/T0vse5fY0V6v0E6nB1BSOMaXDx2HPm4axWmeQznNXiOMpnO1yMnt5SMx2EJ+k4tXi2M9Lue1JozrmrL+aXyTri3UGzN5wSv8/RLeITvXV2jKcT7z1jdackX+hy/TsSvlhLgB474T4oxWPsSXYoM1ESrLXWVyz3urw=
+	t=1782484435; cv=none; b=hFwMdBzfrT1I91tpUWzX+emcW0NTIp5UKyJK4siv/hjM/c522KogWgMrKzIoXV9ppF+KgdPnOQBpQygB3UZJwCNin5G8XjAyg0M5ms5BzE51wzW2a04JYOXRDTzbeH7RGiOJyOVZ1i8KlhH7vPH0FY+QAVncUKj7f5p5AuM9KLE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782484396; c=relaxed/simple;
-	bh=CZ0z/+7L9rBI6NAopwzlR5/H/pl2Sg7uOENYiAE89Ak=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rHuySFXAb35QDQN0jMy/0BHkHd1VAh1inEzfVTI/+hRA3CFvNZORbTnABtcgU84homo5QXV0uvVzZKDfm0M4cBQAvJw4LZQ0GnKI0qPu4v6T/etBgdiz16K2A8adYsPkOdK04ZCVXQ+BdyijadoLxyrpxMRlU46EU10h9aTpiVc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com; spf=pass smtp.mailfrom=ideasonboard.com; dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b=OaYJp02L; arc=none smtp.client-ip=213.167.242.64
-Received: from killaraus.ideasonboard.com (2001-14ba-70f3-e800--a06.rev.dnainternet.fi [IPv6:2001:14ba:70f3:e800::a06])
-	by perceval.ideasonboard.com (Postfix) with ESMTPSA id EA78C174;
-	Fri, 26 Jun 2026 16:32:30 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-	s=mail; t=1782484351;
-	bh=CZ0z/+7L9rBI6NAopwzlR5/H/pl2Sg7uOENYiAE89Ak=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=OaYJp02L6ggXbNKJ/p2G+39jSfZv0m5HXuoGPk5gwlYg45jbwCXrNgBQABA/rtwSX
-	 xHDRhxB62BtiG8pCegOGjkel7zkI0idDXw2VeWyHUqi/4jZXyDdxPGMcHS1nW7M8v5
-	 aB8LSibRy+/Jc2bFx4uj682WX9fxn98nDwtTMMKI=
-Date: Fri, 26 Jun 2026 17:33:10 +0300
-From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-To: Kieran Bingham <kieran.bingham@ideasonboard.com>
-Cc: Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Jacopo Mondi <jacopo@jmondi.org>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Jimmy Su <jimmy.su@intel.com>,
-	Matthias Fend <matthias.fend@emfend.at>,
-	Mikhail Rudenko <mike.rudenko@gmail.com>,
-	Daniel Scally <dan.scally@ideasonboard.com>,
-	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
-	Michael Riesch <michael.riesch@collabora.com>,
-	Benjamin Mugnier <benjamin.mugnier@foss.st.com>,
-	Sylvain Petinot <sylvain.petinot@foss.st.com>,
-	Paul Elder <paul.elder@ideasonboard.com>,
-	Martin Kepplinger <martin.kepplinger@puri.sm>,
-	Quentin Schulz <quentin.schulz@theobroma-systems.com>,
-	Tommaso Merciai <tomm.merciai@gmail.com>,
-	Svyatoslav Ryhel <clamor95@gmail.com>,
-	Richard Acayan <mailingradian@gmail.com>,
-	Thierry Reding <thierry.reding@kernel.org>,
-	Jonathan Hunter <jonathanh@nvidia.com>, Frank Li <Frank.Li@nxp.com>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Magnus Damm <magnus.damm@gmail.com>,
-	Heiko Stuebner <heiko@sntech.de>, linux-kernel@vger.kernel.org,
-	linux-media@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-tegra@vger.kernel.org, linux@ew.tq-group.com,
-	imx@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
-	linux-rockchip@lists.infradead.org
-Subject: Re: [PATCH v2 4/8] ARM: tegra: Convert to new media orientation
- definitions
-Message-ID: <20260626143310.GF2363897@killaraus.ideasonboard.com>
-References: <20260626-kbingham-orientation-v2-0-47178be927b4@ideasonboard.com>
- <20260626-kbingham-orientation-v2-4-47178be927b4@ideasonboard.com>
+	s=arc-20240116; t=1782484435; c=relaxed/simple;
+	bh=NqfACnz2t+zOVA2tuFmiayVrUDbhu5OGqN+rIrYyF+E=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=nbBOafezwCxzJPVpDGsiV2ODQ5dnKMrdi28on9Z7MxqI8OzfsfPLUwh1Ok0gAaK7AM/NUn634xb90AXh+7NcbcJnOTqB4kENnDDN0+dcxiW5SBLNCCroBb++euXeAJcqZugZKOz2AnbT8ab5zrA3trwyO/Uay7/xDu3WHdK+5tU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kR7G670S; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE4751F000E9;
+	Fri, 26 Jun 2026 14:33:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1782484433;
+	bh=nr1+olveQQc4q70Gwdp75TQ73UljPDFD7Qs6pi1LWiM=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=kR7G670Scq9B+9we1PGLwzkEnigxCjxV7fEJQ68Kv/UpqbfsqlBVwozPF969srkdy
+	 6bk6hKHw+WhKx0kiel30G68P3eqn5U/cJbVRpJqsftBl05NhAIt6pQA34mo789+8Oq
+	 ZUqGhFX+lV+Sy7D073M40eP3rQlrlOyJpJ2qHMU5RRGg9+5nspy9rlMMcuhfzeY2mP
+	 xcxngCLDOvIdU82X3SzUB0hbkNOX8mIej4W0Zav7i5j70dnzEWcv4oM8Zno6Qpabs2
+	 jXwixxP3bXFGLextAYtpHWt1eE9RLDw/0RfAszqku6UyUeZSyKXyeZNCd3jt7+cR1r
+	 9/WasLA3vjkzg==
+Message-ID: <04b4f1b0-4d8f-41eb-9b6f-d90b88aec2ff@kernel.org>
+Date: Fri, 26 Jun 2026 15:33:49 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260626-kbingham-orientation-v2-4-47178be927b4@ideasonboard.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC 00/12] RFC: Devicetree-ACPI hybrid mode
+To: Hans de Goede <johannes.goede@oss.qualcomm.com>,
+ "Rafael J . Wysocki" <rafael@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: Srinivas Kandagatla <srini@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Dmitry Baryshkov
+ <lumag@kernel.org>,
+ Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+ Abel Vesa <abel.vesa@oss.qualcomm.com>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-acpi@vger.kernel.org
+References: <pskkNka1-QtLVb1tcyyUSjNNeMAWUUOLyvn0XSpq55AyeqXnEjOWDCXF1pWVAufJEya52NTx6ZCXz5dMHcMlyQ==@protonmail.internalid>
+ <20260623145225.143218-1-johannes.goede@oss.qualcomm.com>
+From: Bryan O'Donoghue <bod@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=bod@kernel.org; keydata=
+ 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
+In-Reply-To: <20260623145225.143218-1-johannes.goede@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-5.16 / 15.00];
+	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[ideasonboard.com,none];
-	R_DKIM_ALLOW(-0.20)[ideasonboard.com:s=mail];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	FORGED_RECIPIENTS(0.00)[m:johannes.goede@oss.qualcomm.com,m:rafael@kernel.org,m:andersson@kernel.org,m:konradybcio@kernel.org,m:srini@kernel.org,m:krzk+dt@kernel.org,m:lumag@kernel.org,m:bartosz.golaszewski@oss.qualcomm.com,m:abel.vesa@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-acpi@vger.kernel.org,m:krzk@kernel.org,s:lists@lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-114680-lists,linux-arm-msm=lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:kieran.bingham@ideasonboard.com,m:mchehab@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:jacopo@jmondi.org,m:sakari.ailus@linux.intel.com,m:jimmy.su@intel.com,m:matthias.fend@emfend.at,m:mike.rudenko@gmail.com,m:dan.scally@ideasonboard.com,m:jacopo.mondi@ideasonboard.com,m:michael.riesch@collabora.com,m:benjamin.mugnier@foss.st.com,m:sylvain.petinot@foss.st.com,m:paul.elder@ideasonboard.com,m:martin.kepplinger@puri.sm,m:quentin.schulz@theobroma-systems.com,m:tomm.merciai@gmail.com,m:clamor95@gmail.com,m:mailingradian@gmail.com,m:thierry.reding@kernel.org,m:jonathanh@nvidia.com,m:Frank.Li@nxp.com,m:s.hauer@pengutronix.de,m:kernel@pengutronix.de,m:festevam@gmail.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:geert+renesas@glider.be,m:magnus.damm@gmail.com,m:heiko@sntech.de,m:linux-kernel@vger.kernel.org,m:linux-media@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-tegra@vger.kernel.org,m:linux@ew.tq-group.com,m:imx@lists
- .linux.dev,m:linux-arm-kernel@lists.infradead.org,m:linux-arm-msm@vger.kernel.org,m:linux-renesas-soc@vger.kernel.org,m:linux-rockchip@lists.infradead.org,m:krzk@kernel.org,m:conor@kernel.org,m:mikerudenko@gmail.com,m:tommmerciai@gmail.com,m:geert@glider.be,m:magnusdamm@gmail.com,s:lists@lfdr.de];
 	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_SENDER(0.00)[laurent.pinchart@ideasonboard.com,linux-arm-msm@vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[42];
-	FREEMAIL_CC(0.00)[kernel.org,jmondi.org,linux.intel.com,intel.com,emfend.at,gmail.com,ideasonboard.com,collabora.com,foss.st.com,puri.sm,theobroma-systems.com,nvidia.com,nxp.com,pengutronix.de,glider.be,sntech.de,vger.kernel.org,ew.tq-group.com,lists.linux.dev,lists.infradead.org];
-	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER(0.00)[bod@kernel.org,linux-arm-msm@vger.kernel.org];
 	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[12];
+	TAGGED_FROM(0.00)[bounces-114681-lists,linux-arm-msm=lfdr.de];
+	MIME_TRACE(0.00)[0:+];
 	FORWARDED(0.00)[lists@lfdr.de];
 	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
@@ -123,127 +141,48 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[laurent.pinchart@ideasonboard.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[ideasonboard.com:+];
-	MID_RHS_MATCH_FROMTLD(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[bod@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	MID_RHS_MATCH_FROM(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt,renesas];
-	MISSING_XM_UA(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,killaraus.ideasonboard.com:mid,ideasonboard.com:dkim,ideasonboard.com:email,ideasonboard.com:from_mime,vger.kernel.org:from_smtp]
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 428B56CDF98
+X-Rspamd-Queue-Id: 68B416CDF9E
 
-On Fri, Jun 26, 2026 at 01:07:56PM +0100, Kieran Bingham wrote:
-> The orientation property for video interface devices now has definitions
-> to prevent hardcoded integer values for the enum options.
-> 
-> Update the users throughout the nvidia device trees to use the new
-> definitions.
-> 
-> Signed-off-by: Kieran Bingham <kieran.bingham@ideasonboard.com>
-> ---
->  arch/arm/boot/dts/nvidia/tegra30-asus-nexus7-grouper-common.dtsi | 3 ++-
->  arch/arm/boot/dts/nvidia/tegra30-asus-transformer-common.dtsi    | 3 ++-
->  arch/arm/boot/dts/nvidia/tegra30-lg-p895.dts                     | 4 +++-
->  arch/arm/boot/dts/nvidia/tegra30-lg-x3.dtsi                      | 3 ++-
->  4 files changed, 9 insertions(+), 4 deletions(-)
-> 
-> diff --git a/arch/arm/boot/dts/nvidia/tegra30-asus-nexus7-grouper-common.dtsi b/arch/arm/boot/dts/nvidia/tegra30-asus-nexus7-grouper-common.dtsi
-> index 892d718294dd..a7fdd194300c 100644
-> --- a/arch/arm/boot/dts/nvidia/tegra30-asus-nexus7-grouper-common.dtsi
-> +++ b/arch/arm/boot/dts/nvidia/tegra30-asus-nexus7-grouper-common.dtsi
-> @@ -3,6 +3,7 @@
->  #include <dt-bindings/input/gpio-keys.h>
->  #include <dt-bindings/input/input.h>
->  #include <dt-bindings/media/video-interfaces.h>
-> +#include <dt-bindings/media/video-interface-devices.h>
->  #include <dt-bindings/power/summit,smb347-charger.h>
->  #include <dt-bindings/thermal/thermal.h>
->  
-> @@ -991,7 +992,7 @@ front-camera@48 {
->  			vdd-supply = <&vddio_cam>;
->  			vaa-supply = <&avdd_cam1>;
->  
-> -			orientation = <0>; /* Front camera */
-> +			orientation = <MEDIA_ORIENTATION_FRONT>;
->  
->  			assigned-clocks = <&tegra_car TEGRA30_CLK_VI_SENSOR>,
->  					  <&tegra_car TEGRA30_CLK_CSUS>;
-> diff --git a/arch/arm/boot/dts/nvidia/tegra30-asus-transformer-common.dtsi b/arch/arm/boot/dts/nvidia/tegra30-asus-transformer-common.dtsi
-> index bf1c3a31d406..76286e15684c 100644
-> --- a/arch/arm/boot/dts/nvidia/tegra30-asus-transformer-common.dtsi
-> +++ b/arch/arm/boot/dts/nvidia/tegra30-asus-transformer-common.dtsi
-> @@ -3,6 +3,7 @@
->  #include <dt-bindings/input/gpio-keys.h>
->  #include <dt-bindings/input/input.h>
->  #include <dt-bindings/media/video-interfaces.h>
-> +#include <dt-bindings/media/video-interface-devices.h>
->  #include <dt-bindings/thermal/thermal.h>
->  
->  #include "tegra30.dtsi"
-> @@ -1262,7 +1263,7 @@ front-camera@48 {
->  			vdd-supply = <&vdd_1v8_cam>;
->  			vaa-supply = <&avdd_2v85_fcam>;
->  
-> -			orientation = <0>; /* Front camera */
-> +			orientation = <MEDIA_ORIENTATION_FRONT>;
->  
->  			assigned-clocks = <&tegra_car TEGRA30_CLK_VI_SENSOR>,
->  					  <&tegra_car TEGRA30_CLK_CSUS>;
-> diff --git a/arch/arm/boot/dts/nvidia/tegra30-lg-p895.dts b/arch/arm/boot/dts/nvidia/tegra30-lg-p895.dts
-> index 896639599c12..28680063bcc0 100644
-> --- a/arch/arm/boot/dts/nvidia/tegra30-lg-p895.dts
-> +++ b/arch/arm/boot/dts/nvidia/tegra30-lg-p895.dts
-> @@ -1,6 +1,8 @@
->  // SPDX-License-Identifier: GPL-2.0
->  /dts-v1/;
->  
-> +#include <dt-bindings/media/video-interface-devices.h>
-> +
->  #include "tegra30-lg-x3.dtsi"
->  
->  / {
-> @@ -132,7 +134,7 @@ front-camera@48 {
->  			vdd-supply = <&vt_1v8_front>;
->  			vaa-supply = <&vt_2v8_front>;
->  
-> -			orientation = <0>; /* Front camera */
-> +			orientation = <MEDIA_ORIENTATION_FRONT>;
->  
->  			assigned-clocks = <&tegra_car TEGRA30_CLK_VI_SENSOR>,
->  					  <&tegra_car TEGRA30_CLK_CSUS>;
-> diff --git a/arch/arm/boot/dts/nvidia/tegra30-lg-x3.dtsi b/arch/arm/boot/dts/nvidia/tegra30-lg-x3.dtsi
-> index 60e8a19aa70e..c58e3026a115 100644
-> --- a/arch/arm/boot/dts/nvidia/tegra30-lg-x3.dtsi
-> +++ b/arch/arm/boot/dts/nvidia/tegra30-lg-x3.dtsi
-> @@ -4,6 +4,7 @@
->  #include <dt-bindings/input/input.h>
->  #include <dt-bindings/leds/common.h>
->  #include <dt-bindings/media/video-interfaces.h>
-> +#include <dt-bindings/media/video-interface-devices.h>
->  #include <dt-bindings/mfd/max77620.h>
->  #include <dt-bindings/thermal/thermal.h>
->  
-> @@ -1216,7 +1217,7 @@ rear-camera@10 {
->  			dvdd-supply = <&vdd_1v2_rear>;
->  			avdd-supply = <&vdd_2v7_rear>;
->  
-> -			orientation = <1>; /* Rear camera */
-> +			orientation = <MEDIA_ORIENTATION_REAR>;
+On 23/06/2026 15:52, Hans de Goede wrote:
+> Comments, thoughts ?
 
-This should be MEDIA_ORIENTATION_BACK. And you should compile all the
-device trees the series touch.
+Throw out DT and just do this...
 
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+One thing I like about this approach TBH is that you don't do the easy 
+thing of presuming to push the hard work into the bootloader - thus 
+creating a dependency on bootloader.
 
->  			rotation = <90>;
->  
->  			nvmem = <&m24c08>;
+We've had _alot_ of problems doing DT selectivity to get OSes installed 
+on arm64 laptops. You mentioned I2C-HID devices and EC controllers which 
+I agree are a good and obvious targets.
 
--- 
-Regards,
+I don't think this can replace a full and complete DT but, then I don't 
+think that should be the objective.
 
-Laurent Pinchart
+Much like installing cursed OSes like Windows on "normal" laptops or x86 
+machines, you'd expect to boot in ACPI mode have enough of the OS 
+running to install more of the OS - which I think _can_ be a viable 
+objective with an ACPI-DT translator.
+
+Sadly OpenBSD could boot all the way to console on the Qcom laptops 
+where Linux could not - because ACPI support was better there.
+
+And, we have Nvidia laptops coming too, Windows laptops which will parse 
+ACPI tables to boot.
+
+There's almost no upside in having ACPI data and not trying to make 
+maximal use of it, especially if you don't have a DT supplied by 
+antecedent boot stages.
+
+---
+bod
 
