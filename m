@@ -1,156 +1,174 @@
-Return-Path: <linux-arm-msm+bounces-114708-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-114709-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id mDsGNeCvPmoEKQkAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-114708-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jun 2026 18:59:12 +0200
+	id NEWfJQ2wPmoPKQkAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-114709-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jun 2026 18:59:57 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 379306CF4D3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jun 2026 18:59:12 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8EF7D6CF4ED
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jun 2026 18:59:56 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=linaro.org header.s=google header.b=T6z3ulcM;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-114708-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-114708-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=none) header.from=linaro.org;
+	dkim=fail ("headers rsa verify failed") header.d=ideasonboard.com header.s=mail header.b=XavWwpTs;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-114709-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c15:e001:75::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-114709-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=fail reason="SPF not aligned (relaxed)" header.from=ideasonboard.com (policy=none);
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 642B03026311
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jun 2026 16:54:47 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 8E1AE300AD9E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jun 2026 16:58:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6696E358372;
-	Fri, 26 Jun 2026 16:54:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3C95C3FFFA1;
+	Fri, 26 Jun 2026 16:58:36 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE40E3F076C
-	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jun 2026 16:54:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 639283F9F4D;
+	Fri, 26 Jun 2026 16:58:34 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782492884; cv=none; b=k80vkPXDl54x7v9ETXwcl7ueHhwgsD5cnjd5Ue6j3dFOurchXlLoMi1+o7RvkZ2mGGMgW+UVbDCU3iCBnpGfUUAq1V7c9daL0bGYgaa+7bgu2MNzxk+N8FgYcJG4zx8kzxy7LgfcXehMRZzXd/M6Tv+BD3LF9XZ0Al5mV4gEvOA=
+	t=1782493116; cv=none; b=QrIIdpvdFqYU2AHl+98oS8yzaZUi99WZ4IWUGTsrUyFbGZkiKbXXfLMVD1aRSaL4t818Vn9QUTN+g3ut3W9PDK4tFRL04fBFSYPE6+DlJyKCLADnBuB8loEbg/Lzm0cnY2Yx2rxvkldFniuBwgqbFH8T2FDTQVsmi3iN5UEw/mM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782492884; c=relaxed/simple;
-	bh=fKTJ1JAhY3w0fwcvqwtPlg3OQRNBZIK+CixEEFGGcXg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=krp62cl8coMLJaQVN3RpWIql95Ks0TbavVZX8pdQ8nPXeWgRQF6eIs5kf6ZDJLAEYD7CWMa/BlnMWIeW5lNBwKTGrmgo3Zf4ReiQYy0irMAAVoYjIDTaDt0Jjk1oLC9vTTk++VM0yB30QYlzoAUcVo/KrBijdKOAxMSv1UvLrY0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=T6z3ulcM; arc=none smtp.client-ip=209.85.208.182
-Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-399768126easo565221fa.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jun 2026 09:54:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1782492881; x=1783097681; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from:references
-         :cc:to:subject:user-agent:mime-version:date:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=Miwfu54VewAT4zmyOF6r2Ug5ds6NVzgQEiIbDd7lUBI=;
-        b=T6z3ulcMqFI04QuEnxY1BebugkSHRlEDU5RuLPMRtXEfg5u6GAXm8rJs0ghaxDJ3RQ
-         L+RSV9El1+o770lbpKNBYqECsndq85xhPgyMJDjCnU8TLh/m4CMvCu9NG6ubfCD9QKkR
-         cIJTGt9OX8XX4QVbQU7zmZDIyCAcfvigsfA5MipOzs5UI6PyZUsKh8L0Vh4TZcsPCEcY
-         vDZIiD9oY0S5Odfju7pwwxF5CTpIQbdGyZgnBVVLAub20PsmmyMVS175DMlqJVKGIZjc
-         cSqIq/g+RAfBCMnHpf+4EJtQ8RxKZMG7DxLqkwEPo7jEAx3f4FsXr/jsK4TZusHR6EBS
-         GQ7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782492881; x=1783097681;
-        h=content-transfer-encoding:content-type:in-reply-to:from:references
-         :cc:to:subject:user-agent:mime-version:date:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=Miwfu54VewAT4zmyOF6r2Ug5ds6NVzgQEiIbDd7lUBI=;
-        b=Hdnq5TSym0u31XUvKIHYQxf2WEVCJNbTtzg4GwhV1JwlG7Kh9Birr3zIpRDo0BohFf
-         krqR9ORRKuWeWUpj79lHHMyf8xj7qTPYC93QiIFg3BNw2GL8nl/BOq6ypJbW+HXqgeM9
-         H8Esix87sfsuD0uOqVRQ1Tyz7PgcsS2CCRYF74vnHC7e6mGpIG/yP9s5+CayFYoNsWTt
-         LBuhTxdrNUsqjrl3d1yGiyg7qkI5rGsZRGKGWSmH7WWF0p3RVbNN2gQoVBKgkHmQO0Z/
-         hybSxoa1P31ITTsfiYpTOkWSiYqQtEwoKlZjz+lDwxCcfmoDoswHru8hzSbx/pjLQ1ON
-         f5Cw==
-X-Gm-Message-State: AOJu0YzCXMTx7Ik5s0Oa6o+l2vVD0zfnJpKPA0RyM5MIvDexE4ROUuqF
-	F0AldY8Rtrkw8H4OHVSGJZ+Hqw+X2w1gxk98EFpIRC6lVRajejRYbd7Sti8cNw+mXJo=
-X-Gm-Gg: AfdE7cn31oylRHknM9Z7llQY9q3hXF5IT0qHhEUHccLnty9MVb45v7hQk+wt0Tjvvpk
-	g1z/ScpEBtPAfmZzw6BNPaqTGOyclPYTB4/HUAgQ4bBvKmzV5t2JwOIMDPWmu2XJHM0WYm+iuAN
-	NmsNAC33E9QdjEhbhifN1LHJqcn7vY0G6r2DPbI2CYJZHUyFMh6DVpEgBFMr62ILuV7cuUjtR9U
-	ATTdKLI88bWIFHloaDde5Z9Ob53kZEmknQIGkXGJpjEUh9QeIZNgn+JVdyrs2f+v2UJvN1pPF6r
-	/9p83szEJwN7PTgNLOi1g8K7asxtQ9BQEGeSIh5C8coOlP2KP2E+gbfX/r4I0d39baYDLB1zyH/
-	KLOJuGQ4UdRFaWPRRTGagjJqg/1yYmZ+6qvxfx2zFttm+iS5ofzI+7fI64k6z7schwsAXIIezkj
-	BxZbDf0NW64pe15JYBRKslVJpcVrO4dE4hF2ziMoSerVXBu2kzET67GSV46sxjV9Jkox0=
-X-Received: by 2002:a2e:bd83:0:b0:393:bb14:9b1 with SMTP id 38308e7fff4ca-39acb54fcafmr8570941fa.2.1782492880838;
-        Fri, 26 Jun 2026 09:54:40 -0700 (PDT)
-Received: from [192.168.1.100] (91-159-24-186.elisa-laajakaista.fi. [91.159.24.186])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-39ad31a81adsm11932621fa.28.2026.06.26.09.54.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 26 Jun 2026 09:54:40 -0700 (PDT)
-Message-ID: <41a76941-2e21-49ce-b0cd-0ae6a8b2eb1f@linaro.org>
-Date: Fri, 26 Jun 2026 19:54:39 +0300
+	s=arc-20240116; t=1782493116; c=relaxed/simple;
+	bh=tctF25yDjX2h/D8jTaVAW8rgtRGo6jx+AhqWLDpBgto=;
+	h=Content-Type:MIME-Version:In-Reply-To:References:Subject:From:Cc:
+	 To:Date:Message-ID; b=PBKTrt3jVWTfD9aXD1FN1++zvIOOvdN5rBph+7yEq/t5tJiS8l2tG6ZjlQxjtp+m0qeHqCyPsb9vRPY0g+ZVFa+tg34vFg2KGIk5d66vbmcXzTJrzgqKLDnY49piOENcz5fyx3q2fi7DAkXdzOqABNYH8jMfKSSq6tzpBg+0ghU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com; spf=pass smtp.mailfrom=ideasonboard.com; dkim=fail (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b=XavWwpTs reason="signature verification failed"; arc=none smtp.client-ip=213.167.242.64
+Received: from monstersaurus.ideasonboard.com (cpc89244-aztw30-2-0-cust6594.18-1.cable.virginm.net [86.31.185.195])
+	by perceval.ideasonboard.com (Postfix) with ESMTPSA id D3CD91E7;
+	Fri, 26 Jun 2026 18:57:49 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
+	s=mail; t=1782493070;
+	bh=tctF25yDjX2h/D8jTaVAW8rgtRGo6jx+AhqWLDpBgto=;
+	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+	b=XavWwpTshvR2O36bfPMEeGMaH0w7ZdslrtG03Qazu+OZnaOrAdHxWil5SaIhIb0cY
+	 JMvAYnk+2anzMx7HlygYjieq5FydLfCQQ2JSjFiBcLiE61AZt31R9BdllD2TjmFZbd
+	 IcL7snuNtXIT11WheBb0ccOUTcoe4r1AFdHxHaok=
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] clk: qcom: enable ALWAYS_ON for titan_top_gdsc
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Brian Masney <bmasney@redhat.com>, Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20260626-camcc-sc8280xp-titan-top-v1-1-2ca246886493@redhat.com>
- <bcf9fd99-454f-4ac2-8357-b0775be42d41@oss.qualcomm.com>
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <bcf9fd99-454f-4ac2-8357-b0775be42d41@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20260626143310.GF2363897@killaraus.ideasonboard.com>
+References: <20260626-kbingham-orientation-v2-0-47178be927b4@ideasonboard.com> <20260626-kbingham-orientation-v2-4-47178be927b4@ideasonboard.com> <20260626143310.GF2363897@killaraus.ideasonboard.com>
+Subject: Re: [PATCH v2 4/8] ARM: tegra: Convert to new media orientation definitions
+From: Kieran Bingham <kieran.bingham@ideasonboard.com>
+Cc: Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Jacopo Mondi <jacopo@jmondi.org>, Sakari Ailus <sakari.ailus@linux.intel.com>, Jimmy Su <jimmy.su@intel.com>, Matthias Fend <matthias.fend@emfend.at>, Mikhail Rudenko <mike.rudenko@gmail.com>, Daniel Scally <dan.scally@ideasonboard.com>, Jacopo Mondi <jacopo.mondi@ideasonboard.com>, Michael Riesch <michael.riesch@collabora.com>, Benjamin Mugnier <benjamin.mugnier@foss.st.com>, Sylvain Petinot <sylvain.petinot@foss.st.com>, Paul Elder <paul.elder@ideasonboard.com>, Martin Kepplinger <martin.kepplinger@puri.sm>, Quentin Schulz <quentin.schulz@theobroma-systems.com>, Tommaso Merciai <tomm.merciai@gmail.com>, Svyatoslav Ryhel <clamor95@gmail.com>, Richard Acayan <mailingradian@gmail.com>, Thierry Reding <thierry.reding@kernel.org>, Jonathan Hunter <jonathanh@nvidia.com>, Frank Li <Frank.Li@nxp.com>, Sascha Hauer <s.hauer@pengutronix.
+ de>, Pengutronix Kernel Team <kernel@pengutronix.de>, Fabio Estevam <festevam@gmail.com>, Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, Geert Uytterhoeven <geert+renesas@glider.be>, Magnus Damm <magnus.damm@gmail.com>, Heiko Stuebner <heiko@sntech.de>, linux-kernel@vger.kernel.org, linux-media@vger.kernel.org, devicetree@vger.kernel.org, linux-tegra@vger.kernel.org, linux@ew.tq-group.com, imx@lists.linux.dev, linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org, linux-rockchip@lists.infradead.org
+To: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Date: Fri, 26 Jun 2026 17:58:28 +0100
+Message-ID: <178249310801.36676.2030968701607803461@ping.linuxembedded.co.uk>
+User-Agent: alot/0.9.1
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [1.14 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
+	R_DKIM_REJECT(1.00)[ideasonboard.com:s=mail];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
 	MAILLIST(-0.15)[generic];
+	DMARC_POLICY_SOFTFAIL(0.10)[ideasonboard.com : SPF not aligned (relaxed),none];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[linaro.org:+];
-	FORWARDED(0.00)[lists@lfdr.de];
-	TAGGED_FROM(0.00)[bounces-114708-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-114709-lists,linux-arm-msm=lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:mchehab@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:jacopo@jmondi.org,m:sakari.ailus@linux.intel.com,m:jimmy.su@intel.com,m:matthias.fend@emfend.at,m:mike.rudenko@gmail.com,m:dan.scally@ideasonboard.com,m:jacopo.mondi@ideasonboard.com,m:michael.riesch@collabora.com,m:benjamin.mugnier@foss.st.com,m:sylvain.petinot@foss.st.com,m:paul.elder@ideasonboard.com,m:martin.kepplinger@puri.sm,m:quentin.schulz@theobroma-systems.com,m:tomm.merciai@gmail.com,m:clamor95@gmail.com,m:mailingradian@gmail.com,m:thierry.reding@kernel.org,m:jonathanh@nvidia.com,m:Frank.Li@nxp.com,m:s.hauer@pengutronix. de,m:kernel@pengutronix.de,m:festevam@gmail.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:geert+renesas@glider.be,m:magnus.damm@gmail.com,m:heiko@sntech.de,m:linux-kernel@vger.kernel.org,m:linux-media@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-tegra@vger.kernel.org,m:linux@ew.tq-group.com,m:imx@lists.linux.dev,m:linux-arm-kernel@lis
+ ts.infradead.org,m:linux-arm-msm@vger.kernel.org,m:linux-renesas-soc@vger.kernel.org,m:linux-rockchip@lists.infradead.org,m:laurent.pinchart@ideasonboard.com,m:krzk@kernel.org,m:conor@kernel.org,m:mikerudenko@gmail.com,m:tommmerciai@gmail.com,m:geert@glider.be,m:magnusdamm@gmail.com,s:lists@lfdr.de];
+	FORGED_SENDER(0.00)[kieran.bingham@ideasonboard.com,linux-arm-msm@vger.kernel.org];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_SENDER(0.00)[vladimir.zapolskiy@linaro.org,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS(0.00)[m:konrad.dybcio@oss.qualcomm.com,m:bmasney@redhat.com,m:andersson@kernel.org,m:mturquette@baylibre.com,m:sboyd@kernel.org,m:bryan.odonoghue@linaro.org,m:linux-arm-msm@vger.kernel.org,m:linux-clk@vger.kernel.org,m:linux-kernel@vger.kernel.org,s:lists@lfdr.de];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[42];
+	RCVD_COUNT_THREE(0.00)[4];
+	MIME_TRACE(0.00)[0:+];
+	FORWARDED(0.00)[lists@lfdr.de];
 	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[ideasonboard.com:-];
 	TO_DN_SOME(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[vladimir.zapolskiy@linaro.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	ALIAS_RESOLVED(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[9];
+	FROM_NEQ_ENVFROM(0.00)[kieran.bingham@ideasonboard.com,linux-arm-msm@vger.kernel.org];
+	PRECEDENCE_BULK(0.00)[];
+	FREEMAIL_CC(0.00)[kernel.org,jmondi.org,linux.intel.com,intel.com,emfend.at,gmail.com,ideasonboard.com,collabora.com,foss.st.com,puri.sm,theobroma-systems.com,nvidia.com,nxp.com,pengutronix. de,pengutronix.de,glider.be,sntech.de,vger.kernel.org,ew.tq-group.com,lists.linux.dev,lists.infradead.org];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,linaro.org:dkim,linaro.org:mid,linaro.org:from_mime]
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt,renesas];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo,vger.kernel.org:from_smtp,ping.linuxembedded.co.uk:mid,ideasonboard.com:from_mime,ideasonboard.com:email]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 379306CF4D3
+X-Rspamd-Queue-Id: 8EF7D6CF4ED
 
-On 6/26/26 19:32, Konrad Dybcio wrote:
-> On 6/26/26 6:26 PM, Brian Masney wrote:
->> With the introduction of sync_state support in the clk and pmdomain
->> subsystems, the following warning happens when the unused clocks are
->> shutdown in camcc-sc8280xp:
-> 
-> Stuck at _on_ sounds wrong.. does clk_ignore_unused / removing
-> the sync state from the clock part only resolve this? There may
-> be a clock dependency for the TITAN_TOP_GDSC that we're failing to
-> describe
-> 
+Quoting Laurent Pinchart (2026-06-26 15:33:10)
+> On Fri, Jun 26, 2026 at 01:07:56PM +0100, Kieran Bingham wrote:
+> > The orientation property for video interface devices now has definitions
+> > to prevent hardcoded integer values for the enum options.
+> >=20
+> > Update the users throughout the nvidia device trees to use the new
+> > definitions.
+> >=20
+> > Signed-off-by: Kieran Bingham <kieran.bingham@ideasonboard.com>
+> > ---
+> >  arch/arm/boot/dts/nvidia/tegra30-asus-nexus7-grouper-common.dtsi | 3 +=
++-
+> >  arch/arm/boot/dts/nvidia/tegra30-asus-transformer-common.dtsi    | 3 +=
++-
+> >  arch/arm/boot/dts/nvidia/tegra30-lg-p895.dts                     | 4 +=
+++-
+> >  arch/arm/boot/dts/nvidia/tegra30-lg-x3.dtsi                      | 3 +=
++-
+> >  4 files changed, 9 insertions(+), 4 deletions(-)
+> >=20
+<snip>
+> > diff --git a/arch/arm/boot/dts/nvidia/tegra30-lg-x3.dtsi b/arch/arm/boo=
+t/dts/nvidia/tegra30-lg-x3.dtsi
+> > index 60e8a19aa70e..c58e3026a115 100644
+> > --- a/arch/arm/boot/dts/nvidia/tegra30-lg-x3.dtsi
+> > +++ b/arch/arm/boot/dts/nvidia/tegra30-lg-x3.dtsi
+> > @@ -4,6 +4,7 @@
+> >  #include <dt-bindings/input/input.h>
+> >  #include <dt-bindings/leds/common.h>
+> >  #include <dt-bindings/media/video-interfaces.h>
+> > +#include <dt-bindings/media/video-interface-devices.h>
+> >  #include <dt-bindings/mfd/max77620.h>
+> >  #include <dt-bindings/thermal/thermal.h>
+> > =20
+> > @@ -1216,7 +1217,7 @@ rear-camera@10 {
+> >                       dvdd-supply =3D <&vdd_1v2_rear>;
+> >                       avdd-supply =3D <&vdd_2v7_rear>;
+> > =20
+> > -                     orientation =3D <1>; /* Rear camera */
+> > +                     orientation =3D <MEDIA_ORIENTATION_REAR>;
+>=20
 
-Let me remind that there is a series, which solves this problem in a proper
-and elegant way, it would be nice to get the review tags though:
+It must have been hot when I typed that one out...
 
-[1] https://lore.kernel.org/linux-clk/20260331140142.892579-1-vladimir.zapolskiy@linaro.org/
+> This should be MEDIA_ORIENTATION_BACK. And you should compile all the
+> device trees the series touch.
 
--- 
-Best wishes,
-Vladimir
+Indeed, I got caught out by these being in arm, with the others in arm64
+even though I explicitly pulled these out to a separate patch!
+
+Fixed up and now I have compiled also with:
+
+make O=3Darm32 ARCH=3Darm multi_v7_defconfig
+make O=3Darm32 ARCH=3Darm dtbs -j32
+
+which looks clean.
+
+> Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+
+Thanks
+
+Kieran
+
+>=20
+> >                       rotation =3D <90>;
+> > =20
+> >                       nvmem =3D <&m24c08>;
+>=20
+> --=20
+> Regards,
+>=20
+> Laurent Pinchart
 
