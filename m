@@ -1,144 +1,190 @@
-Return-Path: <linux-arm-msm+bounces-114687-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-114688-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id 68vqCKWQPmpkIAkAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-114687-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jun 2026 16:45:57 +0200
+	id iApMOeuVPmpCIgkAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-114688-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jun 2026 17:08:27 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 88A066CE124
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jun 2026 16:45:56 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id B076F6CE536
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jun 2026 17:08:27 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=BVD8uPN3;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-114687-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-114687-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=quarantine) header.from=kernel.org;
+	dkim=none;
+	dmarc=fail reason="SPF not aligned (relaxed), No valid DKIM" header.from=radxa.com (policy=none);
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-114688-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.232.135.74 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-114688-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id ADD6230062E2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jun 2026 14:44:41 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id EB008300E2B2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jun 2026 15:08:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0D2223F8715;
-	Fri, 26 Jun 2026 14:44:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2BB8737BE7A;
+	Fri, 26 Jun 2026 15:08:17 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from smtpbgau1.qq.com (smtpbgau1.qq.com [54.206.16.166])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AEE83F928E
-	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jun 2026 14:44:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7E6437BE75;
+	Fri, 26 Jun 2026 15:08:11 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782485079; cv=none; b=MCsVAfQEmLgr4bkwnxBDX/ytJxVoT4suF7ExZTVzsSjJzCKcAS2XoWu/zFoy/Q4E+h9AD6RYkEXouU/YOSBgEJADSh2bdbTfhDZd+7kOMdZdTBH80WXf/wd9Vy84P9MJnk4iCbCQbNmAHE2lsedmOEuUnnScmUDi+yUwg3YJOfA=
+	t=1782486496; cv=none; b=amTqH9MDdO3QvS9zvgN3o3S7NbCGM4HMgYrzBvSZED0d36c691kVAPyl8W1Qp1XqNedXWKl9ZiTLWBYeRYN5Vh3WYVxtqJj3O1iznZlZkxckfgc4CVGqlzJN6IpfcqWEt7Twyy+42woAQgmvpNVvmVC9c9biip5d/DmHJBmajmY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782485079; c=relaxed/simple;
-	bh=wo7pqiPSksjfBjenX/Wxro0deCHdEvK5J0TuZLF/5UY=;
-	h=From:In-Reply-To:MIME-Version:References:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=j9+jdOmLp6ZVwyE3poSPyLcVLP4QuZCh1u7S4FkJG6zJ4yvVN3BpAmMWmUJENDG6RrWLB5QxYYxW5xiG+nZB0UN60tm4VvobTWfXuc5piuY60WQqa7tItJGIc8w7glLVs56hUXBEIuAQFabYn8s/9sMyOWnIxN125oNGak7pVqE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BVD8uPN3; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6E141F00ACA
-	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jun 2026 14:44:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782485078;
-	bh=wo7pqiPSksjfBjenX/Wxro0deCHdEvK5J0TuZLF/5UY=;
-	h=From:In-Reply-To:References:Date:Subject:To:Cc;
-	b=BVD8uPN3vhmt0tTw0rj494F8jx124fRzJEOPzknnpt+UojIS+RA447uyv4AR1801l
-	 EJKnXcXWotk8q0TVzCl3xTH2SGjMWRZhmYyVq3zgj4Pp8ltjXOenXA9FjQobCEjyVE
-	 N6IVR+t6Pe2eAOiHBKkQahrPf7G8jkR3e19/aLlzm6uyp5QYQ/ZaOLPw7sr3KiNJg0
-	 +t7JBrUXF2i4RjfX3AWgH/bSQz/5dJFOQMRh1wOC63qi7kflaSWud9i8t4Qdr6J4F0
-	 nzm2Huw3SqXGDEy8cXLIihvlvaO4lGshb97ke4DoaH/UOKgQSbn1cGG7wHX4E+bFFo
-	 DdqY4O/i5UtKQ==
-Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-5ad54546171so715607e87.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jun 2026 07:44:38 -0700 (PDT)
-X-Gm-Message-State: AOJu0Ywwh3BsTzCaHngyHYcd9JG5y7Q11tS+/Uagrux20j1gM3OqRZCl
-	z+mG/sOdHv6E4TB29xo/5RxbBTW88kuxvEyPC7ag9LzgWlw8EXxSQHKo3SvVwztwmwHW0d7t06q
-	ilvdq8E3KjM+Ygxe8ixAzizEtmZbAQ6/9c6zM+rXbUQ==
-X-Received: by 2002:a05:6512:1325:b0:5a8:8db6:b3d with SMTP id
- 2adb3069b0e04-5aea1f4b9aamr2215524e87.24.1782485077659; Fri, 26 Jun 2026
- 07:44:37 -0700 (PDT)
-Received: from 969154062570 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 26 Jun 2026 07:44:35 -0700
-Received: from 969154062570 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 26 Jun 2026 07:44:35 -0700
-From: Bartosz Golaszewski <brgl@kernel.org>
-In-Reply-To: <CAD++jL=_27BOr28Pi_UqjDpJSuRztYGKO2CXynOvwSVpe1-uBA@mail.gmail.com>
+	s=arc-20240116; t=1782486496; c=relaxed/simple;
+	bh=oZ2ipTt5slb1AoUB2bJ8LzEXXOAuXu+rODC9ZqClg5E=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=kSPxgJiPV7YJe/zPa5xhgVyemHPNcYxF7i718HFudiA7Gea918q1OhC1oqeCPAD7xIYIobqgmuLmKUL2ZWj6DYOk7/1Fhhfklka+C57h4t8zgvSty7f1HqlQhSjXIz7OpXyPvYViq/2+OP28/fhEJbta3aSOhjORXACYVxL4FwA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com; spf=pass smtp.mailfrom=radxa.com; arc=none smtp.client-ip=54.206.16.166
+X-QQ-mid: esmtpsz10t1782486463tcf80c42d
+X-QQ-Originating-IP: XGbe/E/kD0BLuFvNEizjzePgIMr6sFBBH8jL35vBlk4=
+Received: from [192.168.30.32] ( [116.234.26.110])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Fri, 26 Jun 2026 23:07:36 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 2305747257967665330
+EX-QQ-RecipientCnt: 13
+From: Xilin Wu <sophon@radxa.com>
+Date: Fri, 26 Jun 2026 23:07:32 +0800
+Subject: [PATCH] arm64: dts: qcom: sc8280xp: Fix DWC3 core register size
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260610-pmg1110-gpio-v1-0-a9c50cd8b5d9@oss.qualcomm.com>
- <20260610-pmg1110-gpio-v1-2-a9c50cd8b5d9@oss.qualcomm.com> <CAD++jL=_27BOr28Pi_UqjDpJSuRztYGKO2CXynOvwSVpe1-uBA@mail.gmail.com>
-Date: Fri, 26 Jun 2026 07:44:35 -0700
-X-Gmail-Original-Message-ID: <CAMRc=Me+ZBSMaOYGRUKonA=dbNkHY3Ovag0J4E8rr8oESSkGdA@mail.gmail.com>
-X-Gm-Features: AVVi8CdivKvRCew0jR-PMn3z_xAGV9V8TCmmlzMbwwdMXjc2U3bvSB-7dauR6_Q
-Message-ID: <CAMRc=Me+ZBSMaOYGRUKonA=dbNkHY3Ovag0J4E8rr8oESSkGdA@mail.gmail.com>
-Subject: Re: [PATCH 2/2] pinctrl: qcom: spmi-gpio: Add PMG1110 GPIO support
-To: Linus Walleij <linusw@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	David Collins <david.collins@oss.qualcomm.com>, 
-	Subbaraman Narayanamurthy <subbaraman.narayanamurthy@oss.qualcomm.com>, 
-	Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>, kernel@oss.qualcomm.com, 
-	linux-gpio@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
-	Fenglin Wu <fenglin.wu@oss.qualcomm.com>, Bartosz Golaszewski <brgl@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260626-sc8280xp-fix-dwc3-reg-size-v1-1-ddcba897b19d@radxa.com>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXMSwrCQBCE4auEXtswTqCZeBVxEWfK2C5imPYRD
+ Ll7Wt0UfFD8CxmqwujQLFTxUtP76NjvGsrXfhzAWtwUQ5QgUdhyiinME1905vLOLVcMbPoBp65
+ H6UTEhzwwVfjpFz+e/rbn+Yb8+BZpXTfH69ZMfgAAAA==
+X-Change-ID: 20260626-sc8280xp-fix-dwc3-reg-size-89aed9666d96
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Johan Hovold <johan+linaro@kernel.org>, 
+ Krishna Kurapati <quic_kriskura@quicinc.com>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>, linux-arm-msm@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ stable@vger.kernel.org, Xilin Wu <sophon@radxa.com>
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2255; i=sophon@radxa.com;
+ h=from:subject:message-id; bh=oZ2ipTt5slb1AoUB2bJ8LzEXXOAuXu+rODC9ZqClg5E=;
+ b=owGbwMvMwCVmdFg0fe08Iz/G02pJDFl2U3dyKv27fqORkeFL/8bO3+XZTye5zt0hsq1jS9muv
+ Z+e/H51saOUhUGMi0FWTJFFIZ5hLntl7rWnYqV6MHNYmUCGMHBxCsBEDgszMmx7v3be56xZAZXT
+ 1BM5VM7w6Z/btu+BmIFopY20EP+iCClGhhOu4s7SyYLfopP8FtZnXjxmpHmAITRsk6Dl3IAzve/
+ z2QE=
+X-Developer-Key: i=sophon@radxa.com; a=openpgp;
+ fpr=205F009D07796DD6E516752E32C31567AD9E324E
+X-QQ-SENDSIZE: 520
+Feedback-ID: esmtpsz:radxa.com:qybglogicsvrsz:qybglogicsvrsz3b-0
+X-QQ-XMAILINFO: MRY6qckr/MVJ+kK2INdi9MNLI6iaV7EwGQ9aTrw/wrvsp5SttcyIwP+h
+	/PvBBf+CXWZGRcJRde8Xtn0ljVviJWEWjEzCvcZcg6pQSjnxHEJZs6eo7c/PbTUXrRS3S5I
+	SK2lmvzKahlOQjfpNCYcflT/b6DIkq2ppIBGqffrglh16u5ygKg/G6f9vCc3IDbkEaiIVV0
+	dVHnzF2cGGd6YMZ9iAMd0C9ay3sYKtUMjAWUMn/jQHodTQJnjvVKNUN6FbF9v4sQEQ/AizM
+	k5wCPx8rcCGH8mj8ywes5zoAPyqRWnhMaBk6mWZEYEVR0hV4NSMBv8RaKu8/BdLTbNj9c4u
+	n32DgyQ2S01g5kul2wSl1+xudFfClHnTcVBR0Fiy6mcCm9zH9cszvbN6rSbCDdKWGHXubjB
+	ozxzvJE9hOB8B41WPqf2tjKWGbnAtqz1LDZJQ0hw4Pij5Mq96+l0HklG1g6zHFA4VdXxCOE
+	TZrYKtOzj9d3BxES1kbfa/hQ2pvQRgF3bBRhQOqbJ+XcA8mS85b5SQnMpljo0vOYgBISSNB
+	ro9HXBlWIafiv08GGZjy4P8ZhjGKdGZVbaupyUKMoiOSPE7yKqzqrBhTIkdaamaLo21X//f
+	EvT8vWQvm/3FlrZZaC5X44hefYptXEfiOGgsYuP8otob2Tq3yHEAyu4/eG4iuiJCES0BzWe
+	Md3FRz3FAt4IVzLLWZiZAinmfz+selQ4nuRjxpEH2OV2SEsawdsf5kIsL5rp5l8E3zgf4/z
+	wiZkUGb4fkXDJ4gcsPHHary20TUJK4Gs2p0lGceVrvUC9JecbVDWW0zN0VEYKfikNQqBniX
+	iJs6mWqfeB8XGvBC4YYF6Vch087e9OLAR0ihr+gCCiXlR2QC34YOJzkG0F3EFRCs3qjWfBq
+	TeoNV9oiRJuuX/WkmktxqBoggB1draWld4/XHX3b0iabDlF3hXkGr/ljFqFVrA/ZdsYpp01
+	Xkr5XsoPndRSpmKxigYDejTi4FuvzQSvzOuL0Sh0AX+4qkycTtkC1MYSBOZwb8Ds9BpEFNG
+	ssKhFuW4fIqF881BYL
+X-QQ-XMRINFO: OWPUhxQsoeAVwkVaQIEGSKwwgKCxK/fD5g==
+X-QQ-RECHKSPAM: 0
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-5.16 / 15.00];
-	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
+X-Spamd-Result: default: False [0.14 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
 	MAILLIST(-0.15)[generic];
+	DMARC_POLICY_SOFTFAIL(0.10)[radxa.com : SPF not aligned (relaxed), No valid DKIM,none];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-114687-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:linusw@kernel.org,m:linux-arm-msm@vger.kernel.org,m:andersson@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:david.collins@oss.qualcomm.com,m:subbaraman.narayanamurthy@oss.qualcomm.com,m:kamal.wadhwa@oss.qualcomm.com,m:kernel@oss.qualcomm.com,m:linux-gpio@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:konrad.dybcio@oss.qualcomm.com,m:fenglin.wu@oss.qualcomm.com,m:brgl@kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,qualcomm.com:email,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,mail.gmail.com:mid];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[16];
-	FORGED_SENDER(0.00)[brgl@kernel.org,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS(0.00)[m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:johan+linaro@kernel.org,m:quic_kriskura@quicinc.com,m:krzk@kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:stable@vger.kernel.org,m:sophon@radxa.com,m:conor@kernel.org,m:johan@kernel.org,s:lists@lfdr.de];
+	RCVD_COUNT_THREE(0.00)[4];
+	FORGED_SENDER(0.00)[sophon@radxa.com,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[13];
+	TAGGED_FROM(0.00)[bounces-114688-lists,linux-arm-msm=lfdr.de];
 	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	FORWARDED(0.00)[lists@lfdr.de];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	MISSING_XM_UA(0.00)[];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[brgl@kernel.org,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	TO_DN_SOME(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[sophon@radxa.com,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[7]
+	MID_RHS_MATCH_FROM(0.00)[];
+	R_DKIM_NA(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt,linaro];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[radxa.com:email,radxa.com:mid,radxa.com:from_mime,sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,vger.kernel.org:from_smtp]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 88A066CE124
+X-Rspamd-Queue-Id: B076F6CE536
 
-On Fri, 26 Jun 2026 15:00:36 +0200, Linus Walleij <linusw@kernel.org> said:
-> On Wed, Jun 10, 2026 at 9:05=E2=80=AFAM Fenglin Wu <fenglin.wu@oss.qualco=
-mm.com> wrote:
->
->
->> Add PMG1110 GPIO support with its compatible string and match data.
->>
->> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
->> Signed-off-by: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
->
-> Acked-by: Linus Walleij <linusw@kernel.org>
->
-> Bartosz will queue the patch, I think.
->
-> Yours,
-> Linus Walleij
->
+The SC8280XP DWC3 core register regions are currently described as 0xcd00
+bytes, but the hardware register block extends further. In particular, the
+DWC_usb31 LLUCTL registers start at 0xd024 and are accessed by the DWC3
+driver when a controller is limited to SuperSpeed using
+maximum-speed = "super-speed".
 
-I will go through the pending patches next week. Thanks.
+With the shorter resource, probing such a controller can fault when the
+driver programs LLUCTL.FORCE_GEN1. Use the correct 0xd950-byte register
+size for all SC8280XP DWC3 core instances.
 
-Bart
+Fixes: 152d1faf1e2f ("arm64: dts: qcom: add SC8280XP platform")
+Fixes: 3170a2c906c6 ("arm64: dts: qcom: sc8280xp: Add USB DWC3 Multiport controller")
+Cc: stable@vger.kernel.org
+Signed-off-by: Xilin Wu <sophon@radxa.com>
+---
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+index a2bd6b10e475..d06f79b7680c 100644
+--- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+@@ -4034,7 +4034,7 @@ usb_2: usb@a4f8800 {
+ 
+ 			usb_2_dwc3: usb@a400000 {
+ 				compatible = "snps,dwc3";
+-				reg = <0 0x0a400000 0 0xcd00>;
++				reg = <0 0x0a400000 0 0xd950>;
+ 				interrupts = <GIC_SPI 133 IRQ_TYPE_LEVEL_HIGH>;
+ 				iommus = <&apps_smmu 0x800 0x0>;
+ 				phys = <&usb_2_hsphy0>, <&usb_2_qmpphy0>,
+@@ -4100,7 +4100,7 @@ usb_0: usb@a6f8800 {
+ 
+ 			usb_0_dwc3: usb@a600000 {
+ 				compatible = "snps,dwc3";
+-				reg = <0 0x0a600000 0 0xcd00>;
++				reg = <0 0x0a600000 0 0xd950>;
+ 				interrupts = <GIC_SPI 803 IRQ_TYPE_LEVEL_HIGH>;
+ 				iommus = <&apps_smmu 0x820 0x0>;
+ 				phys = <&usb_0_hsphy>, <&usb_0_qmpphy QMP_USB43DP_USB3_PHY>;
+@@ -4179,7 +4179,7 @@ usb_1: usb@a8f8800 {
+ 
+ 			usb_1_dwc3: usb@a800000 {
+ 				compatible = "snps,dwc3";
+-				reg = <0 0x0a800000 0 0xcd00>;
++				reg = <0 0x0a800000 0 0xd950>;
+ 				interrupts = <GIC_SPI 810 IRQ_TYPE_LEVEL_HIGH>;
+ 				iommus = <&apps_smmu 0x860 0x0>;
+ 				phys = <&usb_1_hsphy>, <&usb_1_qmpphy QMP_USB43DP_USB3_PHY>;
+
+---
+base-commit: 30ffa8de54e5cc80d93fd211ca134d1764a7011f
+change-id: 20260626-sc8280xp-fix-dwc3-reg-size-89aed9666d96
+
+Best regards,
+--  
+Xilin Wu <sophon@radxa.com>
+
 
