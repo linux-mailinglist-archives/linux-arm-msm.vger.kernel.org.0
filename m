@@ -1,104 +1,104 @@
-Return-Path: <linux-arm-msm+bounces-114618-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-114619-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id iJ8pEN5VPmoCEAkAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-114618-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jun 2026 12:35:10 +0200
+	id mYW3KL1YPmoJEQkAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-114619-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jun 2026 12:47:25 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id D08676CC1F9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jun 2026 12:35:09 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id F035D6CC2A3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jun 2026 12:47:24 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=BROBLdNi;
-	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=OsK0ulVz;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-114618-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.232.135.74 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-114618-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=iD7nxymC;
+	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=V7Dza1B1;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-114619-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-114619-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=reject) header.from=qualcomm.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 48B9A304614E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jun 2026 10:35:09 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id BB0F73008233
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jun 2026 10:47:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3C3A83B71BB;
-	Fri, 26 Jun 2026 10:35:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8C7583B71BB;
+	Fri, 26 Jun 2026 10:47:22 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D15983EB0EF
-	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jun 2026 10:34:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FA3A37C935
+	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jun 2026 10:47:21 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782470105; cv=none; b=FgUuG3/SC3fvgB6YXtpj9YS50xVLQYACMIDnnVDAGZ1RkvXnghMABKCu4ATxruC6Hh0BJE7mPzCm8OXlaZcGk4anr+N/Xe6oap9czB1ZyNaEBdZCpT2UxjpGHmJAYyKb4+S+hsoWVV6rett0JSOGp5U2WCnsqhjSAQKa+72nPFk=
+	t=1782470842; cv=none; b=Ua+6j2KZsQ/lGLtdcpVSn/Z7EWRiAPY6V7MDLEFVHszcOrhaaRfEdZMOg8pcLlirT6I/ksi/KPZBJSIId+15oJ9lJ+BYhby2xiWA2q+8Y6Lqn3ioK5/1R8zAxD7r+4ULrFUpGToYdX+w22F3wkkU+cquGAhXUKVHbw6wVRcQ//g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782470105; c=relaxed/simple;
-	bh=0LAfCFigjk2pkH8reI7J4X9T4M/8EOT9+5bL0XpqUDc=;
+	s=arc-20240116; t=1782470842; c=relaxed/simple;
+	bh=SIf4Wby4OinN2UZ1ibS707vwvEHsMXIll5sjBwiWY4E=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=fxABQxtVCYnq/1aL6tCJ7FAcja9WjJay6on+TPbAJ4EV0QyJGPu8NdiTz3a5i9iIpFey+lKINBS9bcp++KCo81AvAvXHq1c6eLbSAYNpeUJcrjgUCz39HP2L2nWZhNgZHkryKD+LoxQ6CCosuICnkWL/98J7VDPZwpOgznG65Oo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=BROBLdNi; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=OsK0ulVz; arc=none smtp.client-ip=205.220.168.131
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65Q9xY5h410636
-	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jun 2026 10:34:54 GMT
+	 In-Reply-To:Content-Type; b=HyPyX0Ug7Ndwt4WfGzvjMsnvT6a1r5G6Oysfit2QT3nFtkUht3vjmKlxL/2G5WLGeZUs7FxUD4XtCZGRziR1Ndvx2GYKIR6GBdgBUzOhr6FHCRqdvhX4BKBFkzgKH6vzVqnbTMr97cif0GjDGCDGabtBs62VyBU/ULHwadZy0Oo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=iD7nxymC; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=V7Dza1B1; arc=none smtp.client-ip=205.220.168.131
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65QAcoB63384269
+	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jun 2026 10:47:20 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	n28v+zrgL+6691cycJAuIiEzsIce2TWx4xB2oYyWdls=; b=BROBLdNiS4D19cMs
-	ZLc9IRdFDh2RxDcd1yPiiAWEB925wrxTZFRO3sOODQbiMvfrzpSrBl1EqgZHwsBa
-	YrTWmTW2Dj1280YLKXhJu3v5FiXPyRrfOMm0UNiJCOxotnmdsklDQXNVz02g6xuv
-	exX80+deKqNxk2BbqderGhRQerqR4fra8972xZT6n/3r/dIofrJDRpAkz2c/aMs9
-	/HIkcaL5/Ph2hw707kIU+DwdgymKSKNbNqoTA4wfVnntJmTq/p76nH4HMOVl0QcP
-	oapD3kEtr99gPqyZVC6ZXJTqz/FBh3zLAIhSsC0wHmER2bUr6zbdyqMD4dePNKOs
-	9NyqXQ==
-Received: from mail-dl1-f72.google.com (mail-dl1-f72.google.com [74.125.82.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f1j1nhgq1-1
+	PChBsdJTdy39hlcQc2xrVoLyCX7474bgwLOt0FMf6Ls=; b=iD7nxymCDFJjKejM
+	yeACrs8LlvKBV3jswNLTh9psxaiW925eHUDLfBLMJfzSiROAU3dbupadpJwMvfLa
+	h2JHcUBRcIL8wvD9gun5NNueROnQ/3zkjJ6g1y8vo/nseg2QDL+0GXjQ97XyRfMP
+	bsZrUWOeb6z+nZ0oiTuF6juHHQOHsjTBD5GERvNKQac86Lojqjd0fFuZdM7HUn7M
+	fv9N0L1X39Y6EgYGYMvanQeNvLQlTURU5+7TezrCFUYYyDs0UBJ8xA+A1w6UdTNm
+	WcvliyHGhaxwusIwekR63QIMEPE/otIMFHKdN9UN7hr8tcP6TL6bWCJee12h+wrV
+	YZX6bQ==
+Received: from mail-dy1-f199.google.com (mail-dy1-f199.google.com [74.125.82.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f19m3ub71-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jun 2026 10:34:54 +0000 (GMT)
-Received: by mail-dl1-f72.google.com with SMTP id a92af1059eb24-1383723dfddso288698c88.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jun 2026 03:34:54 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jun 2026 10:47:20 +0000 (GMT)
+Received: by mail-dy1-f199.google.com with SMTP id 5a478bee46e88-30c95b0e22aso2330689eec.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jun 2026 03:47:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1782470094; x=1783074894; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1782470840; x=1783075640; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=n28v+zrgL+6691cycJAuIiEzsIce2TWx4xB2oYyWdls=;
-        b=OsK0ulVzak5iURRQcw/K/leqwl0qSncIquPB48gt2S064vM+S25qNGsF3K8huF0zF7
-         PDn3u51+jfoCAvE/0RvuFSdp/xk/1AOZYTLent+0z41XiSfyl9jeXHRPxLGR0E44tIg6
-         PLiP8KFDpOt99WJmPRs9OcvK6ZCWpqjNiF9kNKJOxQ/jsP+xsF3ktMn/0FuxlFx+yh70
-         LtQ0Y+U9/krbmAUaYqEZ9w5iD9iK9jO0Y6VtknKoU9MwqD+Ituo1DcuJxan/wvFHxbP+
-         dVrMzUlKq5T9dpBKy8E3ChjBbQgqUEQOYB6FMWycn3JvfPSwQtMsx7VYiqy0O6l4DCd4
-         iAcQ==
+        bh=PChBsdJTdy39hlcQc2xrVoLyCX7474bgwLOt0FMf6Ls=;
+        b=V7Dza1B1J0iNLME01bocYO6FAT9fVNw8FI7GaTS2YvGe1Xre3N3Lh+NyOj7YGl6M+4
+         S2YNOZ2azpME6EEJVDfYPhWmNKAw05larcRzV4kjIh8WJTG6gAF8aMt/+WWvj+NiHe3U
+         7DP2yjCp1DnLqCbfkyvwzfvBHXpRKruY7qiPNVUl98Tr4kc6dDeqEgeVttXb7HbavKT2
+         e78yHpCvqESt+TXQAUIsdwJj6NC9k0lcNEvStKx0/rw1ShKfqJ13J7WPYxDJbSlTRbOj
+         uI0NjbpO4H4hSOl4xYVel0nfcP+Qj67BTqV1duWmjx2Qbo1Qemi0A/x7jmUop+CzCtKG
+         IBCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782470094; x=1783074894;
+        d=1e100.net; s=20251104; t=1782470840; x=1783075640;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=n28v+zrgL+6691cycJAuIiEzsIce2TWx4xB2oYyWdls=;
-        b=gYBud8ezS4YjUWsZq5KiIlHfxRuQdyJUl5KfypLrkpN8v78sXDfTWqCL8byKqPV1bq
-         DcBnyxhtZ7lO+RyaXpkpuUWI21mE3dNBFzlceaov5izgyQylL4A2T8SMatBSHkG7nSmI
-         4bk1lhlg0b3wtR2E9DpKOZZn8BQNukJ1bCzwPoDWBhPooNDhs5T6rIKAy7mJLG3DJ8Zt
-         2YxbCT4oI62XBQeePQ2VEvwXTJkZ9cUmOYNaRjfuIkLbI+l4JKmwRAUIQgXirRQPjNMB
-         u14x2QuGopx8X2KUw/FkiwcDw+OV4xX+iwmcxEsDIsBiiGPcbiFoOLgg0y1f3ah6w+hn
-         +ZQQ==
-X-Forwarded-Encrypted: i=1; AHgh+RoCNotRvEqwCOFM8Z/FNilrbw0xrc3TB3TsEanuCu+N8Vf7uOH696ihYlUkQCIOihIVekoL5dqNpFbdEDlC@vger.kernel.org
-X-Gm-Message-State: AOJu0YzCh+s4NrZ2Hn50ylyuLV95h06fxgyJ0KHQfKvm4o0c2nXvK3bG
-	zjvk+/3mhDR3LFubUURVswQK+/O2Hz6amwVS6ebw36CXLa85+B7MmmAYjBbeHEn2UyvpFmJ/98l
-	DmcwhVEMBgMwsUgFHzoXGkZxGgFuZW/Bh3CKlParAfr+UkV+igDYB9IDAeKIj9W77k2Xs
-X-Gm-Gg: AfdE7clZp0ZUpQENqVennDo6AnwFDlDZqQpPjaDddvFuAxC3/OhO6BfqM+IPKx4fWxX
-	YNrf53J1SazmF0O0mvNXoVJ7wfTZKpFt6/RwAGGrnWWaL9mTM2JSWLYkoq8aStPjrOuIw1yWLxk
-	4Pk/zzf86ZK4DKIMjc2yqLwbvy/Qo0zsD4iXAOiHbwrFyQBar0+cRDCf//atsrkr+ZQI01j3IyU
-	xLz9cd/J4LzRMkfC6eNKvlqYWny9a4OslNuo9qednqSB6gy0fv9fKQ6W8/5rvJOpkpyoDuwfRPu
-	dxzncummt12Sc9rG12areUya+q3WCI6aUXvHY4AVOH9Awb0BL1jY0+XHGGs6jDA4NwV5iuuSaIN
-	Kqkr9gjTeOh1wMiHqDXHl/W7WV7x9UnbaP8C4HXzN
-X-Received: by 2002:a05:7300:2144:b0:304:13f3:e461 with SMTP id 5a478bee46e88-30c84d0ed61mr6718913eec.3.1782470093527;
-        Fri, 26 Jun 2026 03:34:53 -0700 (PDT)
-X-Received: by 2002:a05:7300:2144:b0:304:13f3:e461 with SMTP id 5a478bee46e88-30c84d0ed61mr6718867eec.3.1782470092953;
-        Fri, 26 Jun 2026 03:34:52 -0700 (PDT)
+        bh=PChBsdJTdy39hlcQc2xrVoLyCX7474bgwLOt0FMf6Ls=;
+        b=kFjtJEII+3b3jdzzhR9wjwmMCcSMz6rcUmnJE2OxqtGakDCgQI6V1G6i35vXheckOE
+         7isD2jObIRYXdqQwV4OqyGX7QW0+CyA/23YyvvQrdypSFvTnOYz0EL+EJ1jx4I5l6WRO
+         IGVOnoRsVKRXg0ivFxk81xCLR1moi/BdZtyjKjhaMAYeH38x+Kic8I9L3BeCg9pRpnre
+         l4UFowMVl9u0xIP9We9J+LHn7N9cE/yQGFWnK6wR60r27WTHld1iiGfKciGJx/WxRgK2
+         Avq98GaRaal+bARqtJXih34Fs2M8D/WnwlisNKC4azMLMzXRNKGtnPe5JWhmf8Z2csgd
+         IIYA==
+X-Forwarded-Encrypted: i=1; AHgh+Rr2xGEYR/dDbwc7JD3jhOeDInIBoTp5NIPV08T05BI2N35vuwsNub9Acem2K/+nC7tVdn+iuMeGrSAfh4lS@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxle9xPyl3eckpnSCPNiOF9oUrqAuupGGAnOhYl3VFCeAM68hcc
+	4kpTn2dhWZ6Tb8aoVbs6HFsYkIo4uK3tyDflnpu+7i6KxkqR0lGAf0HKCIOLYor0fCBPgajwXp1
+	o+v73WaLHy3fgY+vQgVFTXEXKwoSueD3jZvzeEBfu5jFmgSUn78PKuuhx6lYcefwE57ac
+X-Gm-Gg: AfdE7clMrAmr80AXMN1icv50Q782S2rq+VICCRGNFW3dKgYGgGjivQEZbULHNOob53C
+	rEb+GCoIgKeAoifsN8GjdEyw5y8Ej4+G3Fk6tBaSWwmnJ0A+5sMTz4aHoER51eCDw2cyS+2UrmT
+	17Q/bAYtCjaYRwple2yJ25otAV2uZSu0BlpmBI6V5rb2Q04favO6AWT1JDkx1p4rnhoYbvGvcH+
+	RwrhsVAJNIWScwFoYxtnZ8zOtLco7DX76EC+xJumq81haVHePPiiYP/yRPF6NEwjPSsogjPklgY
+	c1ydSHXjwjz3Kgu7tnL2TCjmmZhybxiUtW1302L3tc8aY2o7e/FEHnEHl1jrB/+dWn9X5sJGZ2k
+	rv1N9pKlxHNLmU+LRx7GbgzAHsi4cE7f4Ryzmo9Y8
+X-Received: by 2002:a05:7301:37c4:b0:304:ab8:f899 with SMTP id 5a478bee46e88-30c84bcdac4mr6511047eec.8.1782470839599;
+        Fri, 26 Jun 2026 03:47:19 -0700 (PDT)
+X-Received: by 2002:a05:7301:37c4:b0:304:ab8:f899 with SMTP id 5a478bee46e88-30c84bcdac4mr6510992eec.8.1782470838306;
+        Fri, 26 Jun 2026 03:47:18 -0700 (PDT)
 Received: from [10.218.25.225] ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-30c944999adsm9482228eec.24.2026.06.26.03.34.43
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-30c7c4ca240sm17658216eec.4.2026.06.26.03.47.09
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 26 Jun 2026 03:34:52 -0700 (PDT)
-Message-ID: <4b00ec54-6fbb-485a-af9f-a2bd145ddeb6@oss.qualcomm.com>
-Date: Fri, 26 Jun 2026 16:04:41 +0530
+        Fri, 26 Jun 2026 03:47:17 -0700 (PDT)
+Message-ID: <e65e6153-10b4-403e-ac40-10687ea5cb68@oss.qualcomm.com>
+Date: Fri, 26 Jun 2026 16:17:08 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -109,7 +109,7 @@ User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH RFC 00/12] mm/vmalloc: migrate vmap_area indexing from
  rb-tree to maple-tree
 Content-Language: en-US
-To: Matthew Wilcox <willy@infradead.org>, Uladzislau Rezki <urezki@gmail.com>
+To: Uladzislau Rezki <urezki@gmail.com>, Matthew Wilcox <willy@infradead.org>
 Cc: Andrew Morton <akpm@linux-foundation.org>,
         "Liam R. Howlett" <liam@infradead.org>,
         Alice Ryhl <aliceryhl@google.com>,
@@ -130,42 +130,43 @@ Cc: Andrew Morton <akpm@linux-foundation.org>,
         Sudeep Holla <sudeep.holla@kernel.org>
 References: <20260613-vmalloc_maple-v1-0-0aa740bb944b@oss.qualcomm.com>
  <ai3kkIpaR0aT_6q5@casper.infradead.org> <ai_LVreyRWx-RDEd@pc636>
- <ajGQ_WPT3Ra2kPCQ@casper.infradead.org>
+ <ajGQ_WPT3Ra2kPCQ@casper.infradead.org> <ajPDDkV7yqWlhPIh@pc636>
 From: Pranjal Arya <pranjal.arya@oss.qualcomm.com>
-In-Reply-To: <ajGQ_WPT3Ra2kPCQ@casper.infradead.org>
+In-Reply-To: <ajPDDkV7yqWlhPIh@pc636>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: 0V_WhNhKZEsXAdCMrqTumU6Hwy4TeqQ2
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI2MDA4NSBTYWx0ZWRfX+cnPM4a+E544
- qSBDwQRyu02o6Gc7GgcB1PBiJJ6yLzS99jsTXzdS/10oMeRwwvmiY22GJ4/DX50mcZV7AZ3wWuj
- VDNcJl2W1WpHC4TT0G8/I8EHs+FQzwv6XGG1QfTd/o4VU2Q/HaRGjXQ66JxsVXqKKrJoN/vg9xL
- ChZd5OH+W3UnTLzZvVNqomPJXUrWaE14KZy7pEybFUEQC7DBHyx1wMCJA+HwpF3xYfNipm+GLl6
- 5wPsm4ns0gp2/2mPjgK7DmQZVKCJMMs6nfBPQXzaUuQEa4gS9tCgHsEnNb75vK0LnOGqQTKCNH0
- FhJiYcRonBUekZMY2fg78f9Kx/FTfeq03JNF8G7qWmEmX+smiRFOobfX5fpZ5rAfgX3CHjVLt0a
- cs6k/f5KZlpx6cBqoMTVopnciYdoVNV4BhdSg9cjc7y63Fhl16c7HvSEPkBcqtkGkkLmvS8ImLr
- nM+jash0MJqFdwmNq6g==
-X-Authority-Analysis: v=2.4 cv=W+cIkxWk c=1 sm=1 tr=0 ts=6a3e55ce cx=c_pps
- a=bS7HVuBVfinNPG3f6cIo3Q==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI2MDA4NyBTYWx0ZWRfX9HLhO4Bp+z0s
+ ESKhMQ5a4A+6DmL1YffbFA/z7KjxHyYCXhg5QJF+MDnLYiXHbKEg5MZXbrec0uma5c8VeG52mVM
+ 0TZnuzBBH1t3i9TvdYl+bJhQi/tVyZg=
+X-Proofpoint-GUID: Htr_u1vZNy0EQPniMrVxx2GJ2FV0gy3A
+X-Proofpoint-ORIG-GUID: Htr_u1vZNy0EQPniMrVxx2GJ2FV0gy3A
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI2MDA4NyBTYWx0ZWRfX8Z1/x6Y4mJfV
+ xKfUEpuqgPuvBNrhqaOYkQeiRc6h0JMUp2xyLqOnbOK+qM/kL6TyFOdibLECp4ISDO7/al1KE+C
+ pb/HEkNoq0eBKIlSdQHESrlqAH3z0YJgcMYmESrBCdEIrs3itDIL7LfDuUTTHEnuy0+UVxc9q+B
+ uTyzOFG86+1XXpBoJ2XkI/HAjxJq1XzJNgnveeOKgAkK9eb7AAImuemmjpW8jTOEKnJ8yvZEdWX
+ V9XgEDWhJRP/F95/eFJcydYHug397yIPBj+MSyKGdJhv2zFG0rgZuJVoZvLY6T/faf7oj9lJgBA
+ OdeC1O4Fz4dSalClMhQwZLH4DRgSPEtPGhS+2ea6uafXwJC5cR8oNZ95xp1qtzKNL7uXUoYhi2r
+ 9eNUkQngiKOqSkTk9yq+U4JEOmm0D0CBTBDtM7leQe8wqyw9GlOgISM6SJRCVKY03mFcyrWpN1z
+ grRCA3PYw158w6HajpQ==
+X-Authority-Analysis: v=2.4 cv=Vv0Txe2n c=1 sm=1 tr=0 ts=6a3e58b8 cx=c_pps
+ a=cFYjgdjTJScbgFmBucgdfQ==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
  a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
- a=qSOC8k_MCT-xwaH91gwA:9 a=QEXdDO2ut3YA:10 a=vBUdepa8ALXHeOFLBtFW:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI2MDA4NSBTYWx0ZWRfX1kyxI05JVI5U
- hG/luFMERbmzwj4fAnNrtPl5irwie09HpAocgocQcIsqUl4WTXP8zjJ8lqTle1Ve/FxjmxSsUWw
- /GUpPyxsJoQer0r3Q1RCRHEY+fwYXT0=
-X-Proofpoint-ORIG-GUID: 0V_WhNhKZEsXAdCMrqTumU6Hwy4TeqQ2
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=O-PE4fd2i0mDks678lIA:9 a=QEXdDO2ut3YA:10 a=scEy_gLbYbu1JhEsrz4S:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-26_03,2026-06-24_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 impostorscore=0 malwarescore=0 priorityscore=1501 spamscore=0
- bulkscore=0 phishscore=0 lowpriorityscore=0 adultscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606260085
+ lowpriorityscore=0 suspectscore=0 clxscore=1015 priorityscore=1501
+ adultscore=0 malwarescore=0 impostorscore=0 spamscore=0 bulkscore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2606260087
 X-Rspamd-Action: no action
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
@@ -173,15 +174,15 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	RCVD_TLS_LAST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
 	RCPT_COUNT_TWELVE(0.00)[28];
-	TAGGED_FROM(0.00)[bounces-114618-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-114619-lists,linux-arm-msm=lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	FORWARDED(0.00)[lists@lfdr.de];
-	FREEMAIL_TO(0.00)[infradead.org,gmail.com];
-	FORGED_RECIPIENTS(0.00)[m:willy@infradead.org,m:urezki@gmail.com,m:akpm@linux-foundation.org,m:liam@infradead.org,m:aliceryhl@google.com,m:andrewjballance@gmail.com,m:linux-arm-msm@vger.kernel.org,m:linux-mm@kvack.org,m:linux-kernel@vger.kernel.org,m:maple-tree@lists.infradead.org,m:ljs@kernel.org,m:praan@google.com,m:will@kernel.org,m:Suzuki.Poulose@arm.com,m:neil.armstrong@linaro.org,m:smostafa@google.com,m:balbirs@nvidia.com,m:surenb@google.com,m:elver@google.com,m:dvyukov@google.com,m:glider@google.com,m:shuah@kernel.org,m:dev.jain@arm.com,m:jackmanb@google.com,m:puranjay@kernel.org,m:santosh.shukla@amd.com,m:wkarny@gmail.com,m:sudeep.holla@kernel.org,s:lists@lfdr.de];
+	FREEMAIL_TO(0.00)[gmail.com,infradead.org];
+	FORGED_RECIPIENTS(0.00)[m:urezki@gmail.com,m:willy@infradead.org,m:akpm@linux-foundation.org,m:liam@infradead.org,m:aliceryhl@google.com,m:andrewjballance@gmail.com,m:linux-arm-msm@vger.kernel.org,m:linux-mm@kvack.org,m:linux-kernel@vger.kernel.org,m:maple-tree@lists.infradead.org,m:ljs@kernel.org,m:praan@google.com,m:will@kernel.org,m:Suzuki.Poulose@arm.com,m:neil.armstrong@linaro.org,m:smostafa@google.com,m:balbirs@nvidia.com,m:surenb@google.com,m:elver@google.com,m:dvyukov@google.com,m:glider@google.com,m:shuah@kernel.org,m:dev.jain@arm.com,m:jackmanb@google.com,m:puranjay@kernel.org,m:santosh.shukla@amd.com,m:wkarny@gmail.com,m:sudeep.holla@kernel.org,s:lists@lfdr.de];
 	FORGED_SENDER(0.00)[pranjal.arya@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FREEMAIL_CC(0.00)[linux-foundation.org,infradead.org,google.com,gmail.com,vger.kernel.org,kvack.org,lists.infradead.org,kernel.org,arm.com,linaro.org,nvidia.com,amd.com];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,qualcomm.com:dkim];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,vger.kernel.org:from_smtp,qualcomm.com:dkim,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:from_mime];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
@@ -196,61 +197,124 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
 	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: D08676CC1F9
+X-Rspamd-Queue-Id: F035D6CC2A3
 
 
 
-On 6/16/2026 11:37 PM, Matthew Wilcox wrote:
-> On Mon, Jun 15, 2026 at 11:52:22AM +0200, Uladzislau Rezki wrote:
->> On Sun, Jun 14, 2026 at 12:15:28AM +0100, Matthew Wilcox wrote:
->>> What I don't understand is why you maintain a separate "free" tree.
->>> It should not be necessary any more, but maybe you tried removing it
->>> already and found a performance problem?
+On 6/18/2026 3:36 PM, Uladzislau Rezki wrote:
+> On Tue, Jun 16, 2026 at 07:07:57PM +0100, Matthew Wilcox wrote:
+>> On Mon, Jun 15, 2026 at 11:52:22AM +0200, Uladzislau Rezki wrote:
+>>> On Sun, Jun 14, 2026 at 12:15:28AM +0100, Matthew Wilcox wrote:
+>>>> What I don't understand is why you maintain a separate "free" tree.
+>>>> It should not be necessary any more, but maybe you tried removing it
+>>>> already and found a performance problem?
+>>>
+>>> We maintain it in order to split several entities. That prevents
+>>> interfering between allocated data and vmap-free-space manager.
+>>> So in that case one context can easily access allocated data, for
+>>> example vread iterator, etc., whereas another can do an allocation.
+>>>
+>>> So by splitting parts i minimize lock-contention.
 >>
->> We maintain it in order to split several entities. That prevents
->> interfering between allocated data and vmap-free-space manager.
->> So in that case one context can easily access allocated data, for
->> example vread iterator, etc., whereas another can do an allocation.
+>> Sure, but there are many ways to reduce lock contention.  One is to not
+>> take locks at all; the maple tree is RCU-safe, so you can read the tree
+>> holding only the RCU read lock, as long as you obey the RCU rules.
 >>
->> So by splitting parts i minimize lock-contention.
+>> Specifically:
+>>  - Write side has to RCU-free the objects that are stored in the tree
+>>  - Read side has to trylock the objects it finds (and retry the walk
+>>    if the trylock fails)
+>>  - Read side can see a mixture of objects if the tree is changed while
+>>    it is reading, but for any given index in the tree it is guaranteed
+>>    to see one of the objects which has been referred to by that index.
+>>    That is, if the write side overwrites an index that referred to
+>>    object A with object B, the reader will see either object A or B.
+>>    It will not see NULL and it will not see any other object.
+>>  - If the write side stores both object C and object D in the tree,
+>>    the read side may see neither, both, only C or only D.
+>>
+> Some thoughts about it.
 > 
-> Sure, but there are many ways to reduce lock contention.  One is to not
-> take locks at all; the maple tree is RCU-safe, so you can read the tree
-> holding only the RCU read lock, as long as you obey the RCU rules.
+> Having the tree which is RCU safe is good for sure. We can benefit from
+> at least in the: vmallocinfo scanning/dumping, possibly in the vread_iter()
+> when access to /proc/kcore and other places(which i need to check carefully).
+> But this is for read-only traversal.
 > 
-> Specifically:
->  - Write side has to RCU-free the objects that are stored in the tree
->  - Read side has to trylock the objects it finds (and retry the walk
->    if the trylock fails)
->  - Read side can see a mixture of objects if the tree is changed while
->    it is reading, but for any given index in the tree it is guaranteed
->    to see one of the objects which has been referred to by that index.
->    That is, if the write side overwrites an index that referred to
->    object A with object B, the reader will see either object A or B.
->    It will not see NULL and it will not see any other object.
->  - If the write side stores both object C and object D in the tree,
->    the read side may see neither, both, only C or only D.
 
-Acknowledged & I'll implement this approach for find_vmap_area():
+I agree. The RCU safe busy tree is a foundation that enables lockless
+read only traversal. Will implement it in next patchset.
 
-Write side:
-  Every vmap_area that was previously freed with kmem_cache_free() will
-  now be freed via call_rcu(&va->rcu, vmap_area_free_rcu).
+> Switching to gap-based approach requires quite a bit of refactoring and it
+> should be a full switch without any hybrid schemes or mixes. I expect that
+> we remove more code then adding because of some parts will become hidden
+> like lookups/reserving range/erase, etc which is good.
+> 
+> - replacing free_vmap_area to maple-tree gap based approach;
+> - rewriting pcpu-allocator which lives in the end of vmalloc space;
+> - refactoring per-cpu allocator which is also part of vmalloc space;
+> - vread iterator;
+> - vmalloc dump path;
+> - vmap_node logic(use gap-reserve to minimize contention);
+> - and more...
+> 
+> To me such rewrite makes sense if we end up in something structural not
+> just because maple tree exists. The criteria i would go with are: at least
+> same performance level, remove more then add, the design stays at least in
+> same good shape.
+> 
+> There are some drawback i am thinking of. One of them is maple insert path,
+> mas_store_gfp()? First we need to find an empty area, then set-range and do
+> mas_store_gfp() that uses gfp flag for its internal allocation. If we are
+> under spin-lock sleeping is not possible, using NOWAIT or ATOMIC is not a
+> case thus we should somehow pre-allocate outside the lock and store the range
+> without any allocation.
+> 
 
-Read side:
-  find_vmap_area() will walk vn->busy.mt under rcu_read_lock()
-  using mas_walk() (RCU safe tree traversal) & will then validate
-  the found object using READ_ONCE before returning it.
+I am planning to have following approach on this:
 
-The maple tree guarantees that for any single index the reader will see
-either the old or the new object, not NULL. To ensure this, I'll set
-MT_FLAGS_USE_RCU on vn->busy.mt in the mt_init_flags() call.
+  1. mas_preallocate(GFP_NOWAIT | __GFP_NOWARN) + mas_store_prealloc
+     will be fast path. The preallocate attempt will be non sleeping and,
+     if it succeeds, the subsequent store won't require allocation.
 
-With these changes, find_vmap_area() which is called on every vfree(),
-vmalloc_to_page(), vmalloc_to_pfn() will no longer acquire any
-spinlock on the lookup path.
+  2. mas_store_gfp(GFP_ATOMIC | __GFP_NOWARN) fallback: if
+     preallocate fails (rare but possible under memory pressure),
+     GFP_ATOMIC will make a non sleeping allocation attempt inline.
 
-Does it sound like a good plan ?
+  3. vmap_retry_list recovery queue: if both above fail, the VA will be
+     added to a non indexed retry list.  The allocator will scan the list
+     on subsequent calls, and purge workers will drain it. This will avoid
+     any leak or panic under sustained slab pressure.
+
+Neither GFP_NOWAIT nor GFP_ATOMIC can sleep under a spinlock. The retry
+will queue provide the correctness backstop to avoid GFP_KERNEL
+blocking inside the lock.
+
+> The allocator operation:
+>  - finds an empty range;
+>  - publishes VA that blocks that range.
+> 
+> those two have to be serialized among other writes. Otherwise two CPUs can use
+> same empty range and both try to reserve them. If preallocate outside the lock,
+> the "alloc" side has to validate that a selected range is still empty and only
+> then store VA to block the range.
+> 
+
+Sure. Both will be called under a lock. Holding both under the same lock
+is the better serialization approach. No two concurrent allocators will
+observe the same gap and both succeed. In the next patchset, I'll
+explicitly add a comment on the lock declaration describing this approach
+in commit message.
+
+> I think it is worth to prototype something to see how it would go. I may be
+> missing something for sure.
+> 
+> Thank you for your input!
+> 
+> --
+> Uladzislau Rezki
+
+Thank you for the detailed design questions. This will make upcoming
+patchset substantially cleaner than the RFC.
 
 BR,
 Pranjal
