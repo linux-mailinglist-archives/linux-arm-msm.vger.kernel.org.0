@@ -1,57 +1,104 @@
-Return-Path: <linux-arm-msm+bounces-114584-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-114585-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id jQvVOVWxPWq/5ggAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-114584-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jun 2026 00:53:09 +0200
+	id qLprBgzePWou7QgAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-114585-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jun 2026 04:03:56 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 44A406C9106
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jun 2026 00:53:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 60E906C9A47
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jun 2026 04:03:55 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=fail ("headers rsa verify failed") header.d=igalia.com header.s=20170329 header.b=ewzwAMhZ;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-114584-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-114584-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=fail reason="SPF not aligned (relaxed)" header.from=igalia.com (policy=none);
+	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=XymeawGh;
+	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=RSL3CRgf;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-114585-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-114585-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=reject) header.from=qualcomm.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id F37C8301C8B3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jun 2026 22:53:07 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 156CD303F055
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jun 2026 02:03:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9D0BF33ADA3;
-	Thu, 25 Jun 2026 22:53:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5744425F984;
+	Fri, 26 Jun 2026 02:03:53 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from fanzine2.igalia.com (fanzine2.igalia.com [213.97.179.56])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE7A230276A
-	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jun 2026 22:53:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DDA870809
+	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jun 2026 02:03:51 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782427987; cv=none; b=NKbvkE4VFklVAFkmgbjBJ6uFcFAUex0+F+f2oSLxGgrAx05ASXfVIs4qjsIYSuYPaXJinLilyVBB9aQKLDZrJ47648qWyLg2AsMhXsW20gYJxeEFBPmIE55yLAwlOyIu1Jwx8HsYV4YlQbVD9TevWgEolZ5ffQ3JP9oo3NBceJs=
+	t=1782439433; cv=none; b=EHmjwtLYrPt9FfJYw8vn2gTeTtXrmrdvwemsh38xuJmdOz8xHWQ+p3kJT9QOjTNuIc2zhPzTEukWMzVYxksdbYekNt7LbcLTXeAmMMxLUjz4Ot0DKHPLTscBZpeUSNIbex04beTtzs2ryzlFfU4WlLSivPAm13CQBAahJ2MQsiY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782427987; c=relaxed/simple;
-	bh=cIU4ub4aSgL4mqvF3DKLGdtmFap/CgsSLn0qsiJKfkk=;
+	s=arc-20240116; t=1782439433; c=relaxed/simple;
+	bh=RVsfiJ/p1QOSvJO42EhNCyE++k3dWTEWvNXh7/stvMg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=lJ9pbKdN8bVsSsK2AgS6FUwGnJS+eGaVg8Y/V5HllS+VwUJ0dTfGIzpuSchKu0Cxnyr3xyiHRqN2Pkni32nNKw3YNOKV5Svzfp4JP8pq+5/sDAMPz5eGcWOgs6AMqofH3J1LAkplNWpoBcGaWOX4QKAj7RqEy8raVaFHBcwe+Xk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=Igalia.com; spf=pass smtp.mailfrom=Igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=ewzwAMhZ; arc=none smtp.client-ip=213.97.179.56
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
-	s=20170329; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
-	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=SeQUkQiyF5X1qXChmHKlCt3Ean9AaLLtMUxpoOPrDqQ=; b=ewzwAMhZsdUzL05xcHfw2gF0Gs
-	FVvpUnxl1S5o5h7Qft0lAkVpDrY+OD3G8E/9XCnQ7T5CFFajBjc7JJ+PKcAQqKwRg9PtYSZDiUpqH
-	ODY16qntmkVyBHs1mU9DdHLaXxoiJJHt8drdw2VvuXJnPpVczIMM/jKeNUFjVXFgA54Zu7/ZzKOm5
-	ewlHNTU6bLdXzxsutNjlbre3kjIe/gcdXqwB0jZZYXAOWpTnQN7v5snlrzDfsQiERd3HG1xWxT0f0
-	3jteVOWk+NxcVci6vigmHUZRVRHPFXnCWx6j/0D5zbLOotm3CM/pn+043YRJgfzYNluU/HfoJnZyZ
-	m5peeCOQ==;
-Received: from c-73-157-168-91.hsd1.or.comcast.net ([73.157.168.91] helo=[192.168.1.133])
-	by fanzine2.igalia.com with esmtpsa 
-	(Cipher TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_128_GCM:128) (Exim)
-	id 1wcsvy-005G2R-Ot; Fri, 26 Jun 2026 00:52:34 +0200
-Message-ID: <3691d76a-4a9c-41ea-ba3b-de08d6c90260@Igalia.com>
-Date: Thu, 25 Jun 2026 15:52:25 -0700
+	 In-Reply-To:Content-Type; b=EeYLerqCoVNT2s0ykoF65kO4jrVo1Ofd9VgwTtz1kD5NkGOJF60jeIaDTDp2NbdkEBfPjcXl3xBGVyx7EUrR0dwjRmHN67icDsn3NWAAZEjISz06cNonou2nMH55r/BjhRMARbAvrnhZY9B7G+NY4pwCaqiauRkttXtEdxw+xG8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=XymeawGh; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=RSL3CRgf; arc=none smtp.client-ip=205.220.168.131
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65PMZTLN3080558
+	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jun 2026 02:03:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	fI2OuhHoYS1TEYwzBIeud1+ZcMcRB/y8x6pd7S0Vn/c=; b=XymeawGhpcsDSqSg
+	l/SiQg5HzhqXg+aGThmSRpAqJ38b3ZwY5lSRI/Fi/D9F9VakXrzsmiZzdkiUaNS9
+	LvTNgHOxwdYRvZuUnii/m4sV/F8n7I88g2nEZjIfbyWQTJSFpKet28i5lcehlBJ2
+	yODzKN4Mx/2UfbdNBcRgqhs9g/pFD5ygR1SdQ+caOmB2IT5R5NDSm+KA27eylngB
+	Ux9kBQ9Pi4ke11Hut1RUGC2MiJz6Itll5q5lbLEFLT0qzd9HWyUTt+tWMQwjG3uG
+	xLEWQVdk3Ald1BeC0Q1EhEF4HSUUC9NYRzD6mR3C9M8SYndHmxSdrc4IRBmc7Iq+
+	CTp6UA==
+Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com [209.85.215.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f0ymv48wd-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jun 2026 02:03:51 +0000 (GMT)
+Received: by mail-pg1-f200.google.com with SMTP id 41be03b00d2f7-c8bad49b171so260684a12.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jun 2026 19:03:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1782439430; x=1783044230; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=fI2OuhHoYS1TEYwzBIeud1+ZcMcRB/y8x6pd7S0Vn/c=;
+        b=RSL3CRgfNzqNhgn1opLvLvPPZTpQcPNcWxss6UQcBoE3XJrY6yb5aMUTHfrizmVwKo
+         +p9SJU0fHDYD2y6yQbCwAC1t9GvDnrjnZz3oJiCD0H29M77DlFMFrm4zpANo5YKAUJ1N
+         E5QvkbdaEjlOxxOtoBSE5Sf+KBKdoKwDkA9J5efyYh2GtSlc5fGoDoj6WyRwj5hIVVNA
+         Csuiaa8A4fEuVWt9qEbP0QYYrV3SuxkYZPCr/I6BN9dzWe7n4moSZG4SmnNxiES/8zsq
+         3wbu5nMaywILNOSyrme5O6LhEZLRHL5Io+3yfGG6Rw1sHdCVYnvF3x3rH91V+QnbOzEg
+         LLzw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782439430; x=1783044230;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=fI2OuhHoYS1TEYwzBIeud1+ZcMcRB/y8x6pd7S0Vn/c=;
+        b=qRhYCpy8K5sgFjb5k5CrxM9tChFpcuIIu4fBFDTS5GcVhqwFVoEAMUM/pWethoFcMp
+         1wdV80eVKNhetU2d+vze8nzcL8BhxH8Eu4EiZELgmZwDSunUmaP2jdGV+YzMjEvoGiGM
+         1mJvf/Kx5YQRdkCFYI8zYqAeo+dbO8VRN5V6yUncuYSN6wLrru5u+EOJLvLM9jhf3L++
+         YbH/pcw/zob07/5tv3iL6tUtLY8iWlHBx8jFj1GOXUrQKgIk3m2MQldw2zeiie4dseki
+         Qrb4jWxVA131qZQQh71MAgpnIDX8tyY+jnjw7OXp+FSZl6tP1K62YJ3dv3mQx63oJVvM
+         ig4Q==
+X-Forwarded-Encrypted: i=1; AFNElJ+QDoGlnqLu7GStUliA5VVoJBOVOShCDSSvw72gCxXcw3h/MxkqeShOCKMGnEkNOAAM4diRmI/2NsL10/aV@vger.kernel.org
+X-Gm-Message-State: AOJu0YwjmrRxgZO1kdWDnwO1Y0TvX1LZJSmWEliG9gf+UuVABp2/HGFP
+	QzHwnqqLEaTZ0gadDIxTWB/7Zs2qbBqE/jN2GLSg9ktbQgSRezNceO8wYNF/V0b0H638eQYatUQ
+	DhpPWmzuJaqaHqV5nok6UFkYC+6lbNUq8FYpFlP2jemOnbFbz8kQaofYMYJ3/TVK0kn/7
+X-Gm-Gg: AfdE7ckOdU92Y0jZ+6Db83AAN0jt+mzn0eOoV3lzw1cjXAjUrHhSBpIL12ATQQYikXW
+	tRQv3cgxCQPf/0RwoGD0rupDjai/MEpxsqALCulz2tP4nm9rekg29L6zipxCmZWw78GwiL/d5Gd
+	j2UfZFZCB1Wikh0yzmTac9USiJsInjKPMtlqHcbvuXezWiX34erTwhzKYS4PW+lThe9RlRAdGSo
+	/slSQ6dI8T5qyrj74YF8i9h1gsamkJ7dEJ99igyW/0fKaVZBHIqg+U452QrxxNzqSdJVswKyy+r
+	a+fZVw36lL5G+OF0wzXY8rKgWUxmaz+XuFHxDSBkbQT4bMA4rz/as2PdwqG3fxl9aK2WkNdgIz1
+	9nr0tG2ukyaGC3dCzjBax8yvgzNO5jNY=
+X-Received: by 2002:a05:6a21:3994:b0:3b4:8818:fd34 with SMTP id adf61e73a8af0-3bd4ae0fae1mr5588781637.25.1782439430521;
+        Thu, 25 Jun 2026 19:03:50 -0700 (PDT)
+X-Received: by 2002:a05:6a21:3994:b0:3b4:8818:fd34 with SMTP id adf61e73a8af0-3bd4ae0fae1mr5588728637.25.1782439429938;
+        Thu, 25 Jun 2026 19:03:49 -0700 (PDT)
+Received: from [10.64.68.243] ([114.94.8.21])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c92bd55985asm2535896a12.31.2026.06.25.19.03.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 25 Jun 2026 19:03:49 -0700 (PDT)
+Message-ID: <065853f5-b11b-4316-814e-202f07acb6ea@oss.qualcomm.com>
+Date: Fri, 26 Jun 2026 10:03:41 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -59,152 +106,162 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/7] drm/amd/display: don't check colorop status if its
- in an inactive pipeline
-To: Melissa Wen <mwen@igalia.com>, airlied@gmail.com,
- alexander.deucher@amd.com, alex.hung@amd.com, aurabindo.pillai@amd.com,
- christian.koenig@amd.com, contact@emersion.fr, daniels@collabora.com,
- harry.wentland@amd.com, maarten.lankhorst@linux.intel.com,
- mripard@kernel.org, simona@ffwll.ch, siqueira@igalia.com,
- sunpeng.li@amd.com, tzimmermann@suse.de
-Cc: Uma Shankar <uma.shankar@intel.com>,
- Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>,
- Xaver Hugl <xaver.hugl@kde.org>,
- Pekka Paalanen <pekka.paalanen@collabora.com>,
- Louis Chauvet <louis.chauvet@bootlin.com>,
- Matthew Schwartz <matthew.schwartz@linux.dev>,
- amd-gfx@lists.freedesktop.org, kernel-dev@igalia.com,
- Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov
- <lumag@kernel.org>, Sean Paul <sean@poorly.run>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
- intel-xe@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
- Sashiko <sashiko-bot@kernel.org>, dri-devel@lists.freedesktop.org
-References: <20260609121230.1358786-1-mwen@igalia.com>
- <20260609121230.1358786-4-mwen@igalia.com>
-Content-Language: en-GB
-From: John Harrison <John.Harrison@Igalia.com>
-In-Reply-To: <20260609121230.1358786-4-mwen@igalia.com>
+Subject: Re: [PATCH v2 2/2] arm64: dts: qcom: kaanapali: fix traceNoC probe
+ issue
+To: Leo Yan <leo.yan@arm.com>
+Cc: Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        Tingwei Zhang <tingwei.zhang@oss.qualcomm.com>,
+        Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
+        Abel Vesa <abel.vesa@oss.qualcomm.com>,
+        Mike Leach <mike.leach@arm.com>, James Clark <james.clark@linaro.org>,
+        Yuanfang Zhang <yuanfang.zhang@oss.qualcomm.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, coresight@lists.linaro.org,
+        linux-arm-kernel@lists.infradead.org
+References: <20260624-fix-tracenoc-probe-issue-v2-0-786520f62f21@oss.qualcomm.com>
+ <20260624-fix-tracenoc-probe-issue-v2-2-786520f62f21@oss.qualcomm.com>
+ <f0634a64-1141-4ff9-9033-825e3c75d28d@oss.qualcomm.com>
+ <f39ec59f-97c4-4d5f-bf02-560adae312d9@oss.qualcomm.com>
+ <471d7a92-3629-4274-a303-8906d3626037@arm.com>
+ <25d7d3a1-58e0-4f25-a73a-59a978130c47@oss.qualcomm.com>
+ <20260624151610.GC575984@e132581.arm.com>
+ <a13fb65c-726b-4c99-b741-29040c4564d0@oss.qualcomm.com>
+ <20260625085643.GD575984@e132581.arm.com>
+Content-Language: en-US
+From: Jie Gan <jie.gan@oss.qualcomm.com>
+In-Reply-To: <20260625085643.GD575984@e132581.arm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=DqBmPm/+ c=1 sm=1 tr=0 ts=6a3dde07 cx=c_pps
+ a=oF/VQ+ItUULfLr/lQ2/icg==:117 a=Uz3yg00KUFJ2y2WijEJ4bw==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=bmbh54CRVxo00WvuETkA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=3WC7DwWrALyhR5TkjVHa:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI2MDAxNCBTYWx0ZWRfXzmmz7VRscG5S
+ Jrx+lD9wtpG/e1vq9uUlBIaQsa4FKNPvL+ML5dtKi2XpwobnHlFR8kZ8b2yYSLbvRrmdL0Go2Wk
+ ZZpyH4Ye6UdDKQymwCzhPB9wTT2JquA=
+X-Proofpoint-ORIG-GUID: yhjrgDlas34K5tZopwfymFBnZpNhXvfz
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI2MDAxNCBTYWx0ZWRfXzwAC38E13RCP
+ ZkUpQrqIkF9tlh7o4CwE31xV8T6hvlN46hzT91TOxYS5LjKYGar2NWEgZiIz5P2AVlQQM0md+l8
+ XFMpamTVa6qbNuCacdhksLRQRAz4stZkg8RTh/8g7HsZa94WYbP8TWsp0kBrMWbazVBwTCtvX+F
+ 1rYxd8n8d22gk9Ya4o6rYE182KQciZ7GkmmhUofeKf5ILFY+quIaNYg6I+PscAi2la9V2jOh5jJ
+ vpi+ZzhUuP0XTAiOKor0Vb/Ck3tLjCWuBuvnzHn99QBjmoBwqhXUQZVzBnajf7iIPtEYO+SJBEz
+ SgYuL7zaH/0iR8EEvfwy71557p5lJGrNf4N2fSSHVZ4YaCeoUvGD4vHpVZYDTrQdcAkWh7FdepH
+ ADa2KB+0nMVvPbSEnzT+0LYkllrmz9ankNYGNQkraH1wHdeTBs+9atPagBvAFGCeq2J3x2NTG8L
+ wuCsa+TQVM6TXhzgJkA==
+X-Proofpoint-GUID: yhjrgDlas34K5tZopwfymFBnZpNhXvfz
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-25_03,2026-06-24_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 lowpriorityscore=0 priorityscore=1501 malwarescore=0
+ suspectscore=0 bulkscore=0 adultscore=0 spamscore=0 impostorscore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2606260014
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-0.36 / 15.00];
-	R_DKIM_REJECT(1.00)[igalia.com:s=20170329];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
-	DMARC_POLICY_SOFTFAIL(0.10)[igalia.com : SPF not aligned (relaxed),none];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-114585-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:mwen@igalia.com,m:airlied@gmail.com,m:alexander.deucher@amd.com,m:alex.hung@amd.com,m:aurabindo.pillai@amd.com,m:christian.koenig@amd.com,m:contact@emersion.fr,m:daniels@collabora.com,m:harry.wentland@amd.com,m:maarten.lankhorst@linux.intel.com,m:mripard@kernel.org,m:simona@ffwll.ch,m:siqueira@igalia.com,m:sunpeng.li@amd.com,m:tzimmermann@suse.de,m:uma.shankar@intel.com,m:chaitanya.kumar.borah@intel.com,m:xaver.hugl@kde.org,m:pekka.paalanen@collabora.com,m:louis.chauvet@bootlin.com,m:matthew.schwartz@linux.dev,m:amd-gfx@lists.freedesktop.org,m:kernel-dev@igalia.com,m:robin.clark@oss.qualcomm.com,m:lumag@kernel.org,m:sean@poorly.run,m:marijn.suijten@somainline.org,m:linux-arm-msm@vger.kernel.org,m:freedreno@lists.freedesktop.org,m:intel-xe@lists.freedesktop.org,m:intel-gfx@lists.freedesktop.org,m:sashiko-bot@kernel.org,m:dri-devel@lists.freedesktop.org,s:lists@lfdr.de];
-	RCVD_COUNT_THREE(0.00)[4];
-	FREEMAIL_TO(0.00)[igalia.com,gmail.com,amd.com,emersion.fr,collabora.com,linux.intel.com,kernel.org,ffwll.ch,suse.de];
-	FORGED_SENDER(0.00)[John.Harrison@Igalia.com,linux-arm-msm@vger.kernel.org];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,qualcomm.com:dkim,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:from_mime,vger.kernel.org:from_smtp];
+	FORGED_SENDER(0.00)[jie.gan@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[19];
+	FORGED_RECIPIENTS(0.00)[m:leo.yan@arm.com,m:suzuki.poulose@arm.com,m:konrad.dybcio@oss.qualcomm.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:tingwei.zhang@oss.qualcomm.com,m:jingyi.wang@oss.qualcomm.com,m:abel.vesa@oss.qualcomm.com,m:mike.leach@arm.com,m:james.clark@linaro.org,m:yuanfang.zhang@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:coresight@lists.linaro.org,m:linux-arm-kernel@lists.infradead.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-114584-lists,linux-arm-msm=lfdr.de];
-	FORWARDED(0.00)[lists@lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FROM_HAS_DN(0.00)[];
+	FORWARDED(0.00)[lists@lfdr.de];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	ALIAS_RESOLVED(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[John.Harrison@Igalia.com,linux-arm-msm@vger.kernel.org];
+	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	DKIM_TRACE(0.00)[igalia.com:-];
-	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[jie.gan@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	ALIAS_RESOLVED(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[33];
+	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TO_DN_SOME(0.00)[]
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 44A406C9106
+X-Rspamd-Queue-Id: 60E906C9A47
 
-On 6/9/26 13:51, Melissa Wen wrote:
-> If colorop BYPASS property is true, but the colorop isn't part of an
-Should this say 'is false'?
 
-John.
 
-> active/transient active color pipeline, this colorop status should not
-> be taken into account when checking if a plane color pipeline is
-> actually active. For example, if the userspace doesn't explicitly set a
-> colorop obj to bypass but deactivates its color pipeline by setting
-> plane COLOR_PIPELINE to bypass, it means that colorop is inactive
-> regardless of its BYPASS property status.
->
-> Reported-by: Sashiko <sashiko-bot@kernel.org>
-> Fixes: d3a549f4df78 ("drm/amd/display: Use overlay cursor when color pipeline is active")
-> Signed-off-by: Melissa Wen <mwen@igalia.com>
-> ---
->   .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 31 +++++++++++++------
->   1 file changed, 21 insertions(+), 10 deletions(-)
->
-> diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-> index ba7f98a87808..2edec3e1b838 100644
-> --- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-> +++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-> @@ -12590,9 +12590,9 @@ static int add_affected_mst_dsc_crtcs(struct drm_atomic_commit *state, struct dr
->    * @use_old: if true, inspect the old colorop states; otherwise the new ones
->    *
->    * A color pipeline may be selected (color_pipeline != NULL) but still is
-> - * inactive if every colorop in the chain is bypassed.  Only return
-> - * true when at least one colorop has bypass == false, meaning the cursor
-> - * would be subjected to the transformation in native mode.
-> + * inactive if every colorop in the chain is bypassed. Only return true when at
-> + * least one active colorop has bypass == false, meaning the cursor would be
-> + * subjected to the transformation in native mode.
->    *
->    * Return: true if the pipeline modifies pixels, false otherwise.
->    */
-> @@ -12600,18 +12600,29 @@ static bool dm_plane_color_pipeline_active(struct drm_atomic_commit *state,
->   					   struct drm_plane *plane,
->   					   bool use_old)
->   {
-> -	struct drm_colorop *colorop;
-> -	struct drm_colorop_state *old_colorop_state, *new_colorop_state;
-> -	int i;
-> +	struct drm_plane_state *plane_state = use_old ?
-> +					      drm_atomic_get_old_plane_state(state, plane) :
-> +					      drm_atomic_get_new_plane_state(state, plane);
-> +	struct drm_colorop *colorop, *pipeline;
-> +	struct drm_colorop_state *cstate;
->   
-> -	for_each_oldnew_colorop_in_state(state, colorop, old_colorop_state, new_colorop_state, i) {
-> -		struct drm_colorop_state *cstate = use_old ? old_colorop_state : new_colorop_state;
-> +	pipeline = plane_state ? plane_state->color_pipeline :
-> +				 plane->state->color_pipeline;
-Why would plane_state be null? And if it is, why is it correct to use 
-plane->state rather than the old or new state as requested by the 
-use_old flag? Seems like there should be a comment to explain this.
+On 6/25/2026 4:56 PM, Leo Yan wrote:
+> On Thu, Jun 25, 2026 at 09:01:18AM +0800, Jie Gan wrote:
+> 
+> [...]
+> 
+>>>> However, I believe it is acceptable to allocate an ATID for the itNoC device
+>>>> and the issue can be fixed with this way.
+>>>
+>>> I think so.
+>>
+>> Hi Suzuki/Leo
+>>
+>> Which solution do you prefer to address the issue?
+> 
+> I will leave this to Suzuki.
+> 
+>> The interconnect traceNoC platform driver is intended for the itnoc device,
+>> implying that no TPDM devices are connected to it. So, if I modify it to
+>> allocate an ATID, I think it would be better to rename the “itnoc” node
+>> accordingly? Or it's ok to leave it as-is?
+>>
+>> BTW, the traceNoC device definitely is an AMBA device with CID/PID
+>> registers.
+> 
+> Just to share a bit thoughts on the driver's design.
+> 
+> I think it would be better to keep the probe function generic. The AMBA
+> probe should not be specific to TraceNoC, and the platform probe should
+> not be only dedicated to the interconnect TraceNoC. The probe function
+> should simply handle a device that appears on either the AMBA bus or the
+> platform bus.
+> 
+> So the question is: if allocat an ATID for all traceNoC devices, do you
+> still need to distinguish TraceNoC types? If no, then the code can be
+> unified.
+> 
 
->   
-> -		if (cstate->colorop->plane != plane)
-> -			continue;
-> +	if (!pipeline)
-> +		return false;
-> +
-> +	drm_for_each_colorop_in_pipeline(colorop, pipeline) {
-> +		cstate = use_old ?
-> +			 drm_atomic_get_old_colorop_state(state, colorop) :
-> +			 drm_atomic_get_new_colorop_state(state, colorop);
-> +
-> +		if (!cstate)
-> +			cstate = colorop->state;
-Same question as above. Why would there not be a old/new state and if 
-there isn't, why is it correct to use the current state when a check 
-against the old/new state was explicitly requested?
+Hi Leo,
 
-John.
+To be honest, I would prefer not to modify the interconnect platform 
+driver. On some Qualcomm platforms, multiple itnoc devices reside within 
+small blocks(one or more than one for each block) and are connected to a 
+dummy source. In such cases, two ATIDs are allocated for a path (the 
+dummy source and the itnoc), which is inefficient. This is why the itnoc 
+platform driver created to avoid this waste.
 
->   		if (!cstate->bypass)
->   			return true;
->   	}
-> +
->   	return false;
->   }
->   
+The TraceNoC (called as AG TraceNoC) is a generic TraceNoC device which 
+connected to multiple source and link devices, aggregating data from all 
+source devices into a single output path.
+
+This device is implemented as an AMBA device but lacks proper hardware 
+configuration. As a result, it must be handled in the driver as a 
+workaround, which unfortunately breaks the original design intent.
+
+Thanks,
+Jie
+
+> Thanks,
+> Leo
 
 
