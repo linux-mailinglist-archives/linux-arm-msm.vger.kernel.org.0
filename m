@@ -1,103 +1,57 @@
-Return-Path: <linux-arm-msm+bounces-114727-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-114728-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id y7kAAh6gP2rWVAkAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-114727-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jun 2026 12:04:14 +0200
+	id 8tJzB66/P2qeXwkAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-114728-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jun 2026 14:18:54 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5EF836D1B82
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jun 2026 12:04:13 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id 054436D1E7E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jun 2026 14:18:52 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=jOpN5XtI;
-	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=KFyZ0xgi;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-114727-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-114727-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=reject) header.from=qualcomm.com;
+	dkim=pass header.d=kernel.org header.s=k20201202 header.b=VAhpU2Ey;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-114728-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 104.64.211.4 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-114728-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 37B1D307C3FD
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jun 2026 10:02:36 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 1923230095DE
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jun 2026 12:18:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 29C0439E9AC;
-	Sat, 27 Jun 2026 10:02:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8FF8832B99E;
+	Sat, 27 Jun 2026 12:18:48 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61D403A2543
-	for <linux-arm-msm@vger.kernel.org>; Sat, 27 Jun 2026 10:02:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BE4223394B;
+	Sat, 27 Jun 2026 12:18:48 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782554545; cv=none; b=UE/ikJV0lHeCTS82df5QbjVNz3TVc0Voqp4Bz52PaUGvlaf4kcmk7nY0fHKxsgiNS07lqoxuCnqAM5yJD7ZKkgNhBbn0NTIf4iqZ+sk1KRkYMEEVlUBNmJf2UnnfFpGCqen38ghjm/J1NJxgk1VQbZpKouzPbSshJ3iRdSN28mo=
+	t=1782562728; cv=none; b=YsPYddJ6bQLmgnFNLR+Jx3B8VpZoOGuNNDJJ9ePG81p95XbbY+5s+w5cDyWcQCWW9C4EKS5XAn+UXXOI7vVFaPFEYu/joFejB4KNeHDm8R/b6U6A8xQZkxMMTXNvy7s8HA8fSMYd98PhL2w36nMMCEqUvDEU8ifw/lg9orJkjbg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782554545; c=relaxed/simple;
-	bh=UeK4KDV2zCJzlI5/32AXknd3k1RL9pZDuToVAxaLaNU=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=DeqHkYa42h4uGuA1G2t/S1lK9LwXzGEIWiC2eVtu5uRk0DQ0+NjBD72VfIovpxdPKmgiw8CVz0k7XQJKjKr3myAbgWWDT7EZcwIBqBKq/0VmsNa92Di7gamiv3bkkY7SUn9BAKOyk1iRA+pQ9qkl1rW+MIhqSmu3KFOBR1XIKzE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=jOpN5XtI; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=KFyZ0xgi; arc=none smtp.client-ip=205.220.180.131
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65R9ZnSh719799
-	for <linux-arm-msm@vger.kernel.org>; Sat, 27 Jun 2026 10:02:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	wtYVUAEPVR9ahjS/rrbW/Zs8Qq1WbmZx0IgRc0p0CZY=; b=jOpN5XtI8GITkjB3
-	ef69bG+iVRTgSMT4Wv4EscjoOhBlFsaedZebEN8dF2MfGpXiUQuDch0QtwAWAD7K
-	fPN5jriLRvRajI/yQoYlpUTl9zxQPpIBTjHGoXcg4DnZwPlVKxkB1c5XH5Hf3sxx
-	VhiRqUGXmOASPuLhRYqNpdfeglwCcHp5LNEk4Pr1emU0B81cVCfcvwoPYxx3XkHH
-	xvWGTllXcJmURQaPIco84xezyQVy1AS4kqzUaGs2anA0ECZqpBotWtm/GmKF7HIm
-	qbyE7FaaA+6X1dkqlN1aDU9rnXaRnWO8R9+1eV/9T9+/s8lod0FB2faA/sMoXkKo
-	e+QqTw==
-Received: from mail-dl1-f70.google.com (mail-dl1-f70.google.com [74.125.82.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f26x8gk2k-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Sat, 27 Jun 2026 10:02:22 +0000 (GMT)
-Received: by mail-dl1-f70.google.com with SMTP id a92af1059eb24-137f3465368so433578c88.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 27 Jun 2026 03:02:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1782554541; x=1783159341; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=wtYVUAEPVR9ahjS/rrbW/Zs8Qq1WbmZx0IgRc0p0CZY=;
-        b=KFyZ0xgif8CuW/M86jSQ1LDmcmQgIy7nqLEa+NoCYOrOPjexgr/gO9sr3FNO55R7z6
-         AoNzPjUdS9z9nll/cUlKs227JyrwaBcw0BhDmGFatE+w+ovveBgTg6QIIpLHXx5capjV
-         JRP7Mhn1gOTYiYDBfpxExbmFo9mZgCqXkwtBNkB/573O/geZmAfutFbfcvYudgYluIxu
-         t7OxoVFUlJ3jesEDyw4EknGJwuqM7HyadTXqz/quL86AfiD8dI58544wh0+weAdj3lom
-         FKNdP5ed3XHe83wkUpXcok/jvm+S46z4FojuZ98QRb3BM8ZncBCehKZuL7K4qGGCl12j
-         BHpg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782554541; x=1783159341;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=wtYVUAEPVR9ahjS/rrbW/Zs8Qq1WbmZx0IgRc0p0CZY=;
-        b=j+0gve6nJeyUkb0dm681ndFCIy3+fK7Z1CfZ4rKL3mUaSDqKl/NiTGCHuXdHypvJPX
-         R2MQvnCWWOcEGUYy1iBrDD5sD/N5Y9y0pufFbxUcaovdhPR/YuHAAOcWdSpi2BlaD7GZ
-         kZ5dKsOFb/hdwu2I/L79CGnlmkvyJiBJViSR2JV+MQgY/SWLQB1T71Wdi4rfF1iCpgRV
-         Es6t4FLdmwXnXMAaJHrvb4xDsSEit3H1lJtGK6GHyW579gchjKvXJNeu5dHJp3XO36ZI
-         5Gc2cgQHZhSMlRbtuXIHyZH+v3fm21R2wBk3U1qM6FYGeEuzt8pmN4sWX/B0Onq+Lq+Q
-         SDEw==
-X-Gm-Message-State: AOJu0YwArg3ZZock2TDz0hUdTD7YmMnOm5mffqG0ADyKCMr5rQjLTyWL
-	NwD2XfsWkhmc4cwCqFdTEjyGlEjqO7ZT89IWF/rpR1fBwybAwnBq6QwPiz6Hv4PG21XCvuz202P
-	pZTUOjtzfhhwnBFTInkCJ1dUX/43jYhpiYxyTpW3hA2WTLUQoQXBoZT9xBTKppiv7QHkm
-X-Gm-Gg: AfdE7cmawfJYhTCSnGzXnAF8Zw0zP5TMFdT5t/PAOoc0clwKlLzSPJ0a1jSfLNyCGlQ
-	XJKu4cjz/oEaFDM1sxlMbOQx2oiVKFkV/YA0M7zFSXk3CqadUp98Wx7/DQ42eL+LRiUsrDeEX69
-	JSCvASKTVlipqJBkD4zJrdrCXux5x22cffHIiDE75FaGPjH1AXHDWHeAIFXpWBIMK39NS+gOi7o
-	V9KONqsd9otaTss6pdaeHMa00r1ZG0mLBzavBNLP7OEk6MhFitJo5TwpSo1Td6KBd9I72WZcsL8
-	k5TG+UBhlsiEGZFAOyG7gXqunIG1r8toLouR24+T7sTBUvukyRUljYnFU5uW5gx30qXs9VyhEMU
-	Va95v/jK0Tm1ry6A2mewdO5B16XdTSpTawY2/Yw==
-X-Received: by 2002:a05:7022:5f08:b0:139:dfe0:bc03 with SMTP id a92af1059eb24-139dfe0bcadmr4906446c88.18.1782554541355;
-        Sat, 27 Jun 2026 03:02:21 -0700 (PDT)
-X-Received: by 2002:a05:7022:5f08:b0:139:dfe0:bc03 with SMTP id a92af1059eb24-139dfe0bcadmr4906421c88.18.1782554540716;
-        Sat, 27 Jun 2026 03:02:20 -0700 (PDT)
-Received: from hu-naala-hyd.qualcomm.com ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-139d90e95c6sm38446568c88.11.2026.06.27.03.02.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 27 Jun 2026 03:02:20 -0700 (PDT)
-From: Nabige Aala <nabige.aala@oss.qualcomm.com>
-Date: Sat, 27 Jun 2026 15:31:39 +0530
-Subject: [PATCH 5/5] arm64: dts: qcom: Shikra LT9611UXD support
+	s=arc-20240116; t=1782562728; c=relaxed/simple;
+	bh=eivawmkvEg3QOzOWv3jCpgD4FqmH/lPvupBZyhy3T98=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=W5BZf0vqt7eKHEWl79c7PsKTNc9dAkwrSwUDZlboF2MDKH7jjq9Y0vuhap5q1WIIv6P1RGxqaZMI4aArMaOh7ZwaO+WNoNOaZro8pe572/O5k9icl3gzSolhxi6/G4Fo5a08IdqydHXC9H/W6mLY1z7jLIYiVTTI4e2s0ogOtPg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VAhpU2Ey; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 0375EC2BCB3;
+	Sat, 27 Jun 2026 12:18:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1782562728;
+	bh=eivawmkvEg3QOzOWv3jCpgD4FqmH/lPvupBZyhy3T98=;
+	h=From:Date:Subject:To:Cc:Reply-To:From;
+	b=VAhpU2EyEL2zGGmgO60SjJbLfc4ka1tLn5BfvUAOnmI62ieB4UNM1bHJZPy+ElNbW
+	 YF77HbFRdHvoPQRs5BUG2QnkHLhD+RA5byMIEEfkmLp6JEwAJGXMc+jzQ94ti5nSdx
+	 qdx/daGmodFXM5vE9gu/R/3Nx4xSHkJgWtDHge4bUMkTvOlVC9XcqU2BVppPCoNJvg
+	 4YCqJ1YQ0wzVlboBgBVjNiPoCvRy+S6jMZINwmMbba4GtALxrWtOcr6KUQHu1uaoFa
+	 qv2lh9rexxBtAgS03GHDM67ebuqCSJUqUfkJjlHyao/58t5CUd7NgM7HXIhLkaPB9a
+	 rO0xnkubU28Tg==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ECA16C43458;
+	Sat, 27 Jun 2026 12:18:47 +0000 (UTC)
+From: Sam Day via B4 Relay <devnull+me.samcday.com@kernel.org>
+Date: Sat, 27 Jun 2026 22:18:45 +1000
+Subject: [PATCH RFC] drm/msm/mdss: keep mdp1-mem interconnect alive during
+ suspend on SDM845
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -106,245 +60,156 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260627-shikra-dt-changes-v1-5-449a402673d0@oss.qualcomm.com>
-References: <20260627-shikra-dt-changes-v1-0-449a402673d0@oss.qualcomm.com>
-In-Reply-To: <20260627-shikra-dt-changes-v1-0-449a402673d0@oss.qualcomm.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, arpit.saini@oss.qualcomm.com,
-        mohit.dsor@oss.qualcomm.com,
-        Nabige Aala <nabige.aala@oss.qualcomm.com>
-X-Mailer: b4 0.16-dev-d5d98
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1782554515; l=3322;
- i=nabige.aala@oss.qualcomm.com; s=20260520; h=from:subject:message-id;
- bh=PGNaUF4uPiP0kFTxpYA7DYuBi0F9EtUmDruUpYdKV8Q=;
- b=Hkgcgfdmf4agREu0MI+plJmhiT08tG6hvbN6NKGFQTG/u/S6uUa2Sp4UXCuozCPQHtG9tZGAW
- GDFWjfZLEKSAJh4aWf6iUi4mQjbi/gnC4MwCrv+pB1I2J0QbLB3+3wv
-X-Developer-Key: i=nabige.aala@oss.qualcomm.com; a=ed25519;
- pk=PYHJom8sPos1IGkrbCCsWiE7XTBQrQZd9jzAo051tgw=
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI3MDA4NiBTYWx0ZWRfX/w70Pb4e26v5
- jmAjWeUorJIYTscgRSmsPC2hk7tMMSk4qQW3VEUfZMgXM7JI5bUKGqPdUn9eowRiRjAzVuBC6X7
- PdYHsrgCqPhzY5n31InT6MlQsFxHl/A=
-X-Authority-Analysis: v=2.4 cv=D+N37PRj c=1 sm=1 tr=0 ts=6a3f9fae cx=c_pps
- a=SvEPeNj+VMjHSW//kvnxuw==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
- a=EUspDBNiAAAA:8 a=oLo0L6-00J8s2reelZIA:9 a=QEXdDO2ut3YA:10
- a=Kq8ClHjjuc5pcCNDwlU0:22
-X-Proofpoint-GUID: SzoiFL8JKIK5dJ2qp7tHYqzF0uLr90DO
-X-Proofpoint-ORIG-GUID: SzoiFL8JKIK5dJ2qp7tHYqzF0uLr90DO
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI3MDA4NiBTYWx0ZWRfXxMPnoXZsDTZz
- 9ps4KHKWRTMTsjkSD8d9eGOSIVMnet8prAe8hJbZBKGRF2FfEl0/qfkQSmGS06dupaSLI06vdoV
- aCN4t9LSWciJLT17ntj/3EGKopDctUpulO6Dok0u9j8NbcH69ZyfLkCow+FUoqury49k3EpTU4N
- 1V+iR67HfeJmXeL42geSgghkNHkMPI5tXmHW0sVb9Jux/PnpyqK9sYcDYhio5YuAXS5Jbifg9b2
- rszghTwh+XWHVAxnn/M2Q+H2sXvGOWDHPOXv01NA5oGSQRKv7Kxez5wjC3UBbPfneu4HaAg17oo
- 2QcDLAURydMrYHiu4Unf394J71UjCOsfDQLHvOI0DpDTYXetTofceFogtCJg/tkE5dbsUbHpOmQ
- DpgljPBtUfC4k61ytr8NC3vdTZaQSqf1tDy0jodUIZw4hevxW3kucsMyNmDLq8YfyznNojzlmFK
- 17jWJ0aDnzVEVEzKccA==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-27_01,2026-06-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 clxscore=1015 suspectscore=0 bulkscore=0 impostorscore=0
- malwarescore=0 lowpriorityscore=0 adultscore=0 spamscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606270086
+Message-Id: <20260627-rfc-sdm845-interconnect-collapse-workaround-v1-1-608a38de3715@samcday.com>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/x3NPQ7CMAxA4atUnrHUlhIqVqQegBUxBMcBi+JUT
+ vmRqt6diPFb3lsgswlnOFQLGL8lS9KCZlMB3b3eGCUUQ1u3rnbtHi0S5vDsux2KzmyUVJlmpDS
+ OfsqMn2QPb+mlAa++odh3jvw2QilOxlG+/9sZTsMRLuv6A65c+oGCAAAA
+X-Change-ID: 20260627-rfc-sdm845-interconnect-collapse-workaround-ba1cf846ca3f
+To: Rob Clark <robin.clark@oss.qualcomm.com>, 
+ Dmitry Baryshkov <lumag@kernel.org>, 
+ Abhinav Kumar <abhinav.kumar@linux.dev>, 
+ Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>, 
+ Marijn Suijten <marijn.suijten@somainline.org>, 
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+ freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+ phone-devel@vger.kernel.org, Sam Day <me@samcday.com>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1782562727; l=3411;
+ i=me@samcday.com; s=20240502; h=from:subject:message-id;
+ bh=BMiudGPsxROy8BnSvYjoc4O7qJ+BrrRqh/a8bYRWcC0=;
+ b=PsiWZuMwX4x8LrKzl/Bcpfpzq6k3TOSP+hKPP+Lr33iH54+T1jbS5Lx9oIUOWAal8GqgdqqRe
+ 4sGzPTD4htnBmYL4x356+P81ZtZfsL07HxZUmvi3bp68XLqVc1LCe6q
+X-Developer-Key: i=me@samcday.com; a=ed25519;
+ pk=bzyS0akxWMqr9+AXzgBRIp28KKpEOs+GjYMc2yf+aeU=
+X-Endpoint-Received: by B4 Relay for me@samcday.com/20240502 with
+ auth_id=595
+X-Original-From: Sam Day <me@samcday.com>
+Reply-To: me@samcday.com
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-5.16 / 15.00];
+	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	FORWARDED(0.00)[lists@lfdr.de];
-	TAGGED_FROM(0.00)[bounces-114727-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_TO(0.00)[oss.qualcomm.com,kernel.org,linux.dev,gmail.com,poorly.run,somainline.org,ffwll.ch];
 	RCVD_TLS_LAST(0.00)[];
+	FORGED_RECIPIENTS(0.00)[m:robin.clark@oss.qualcomm.com,m:lumag@kernel.org,m:abhinav.kumar@linux.dev,m:jesszhan0024@gmail.com,m:sean@poorly.run,m:marijn.suijten@somainline.org,m:airlied@gmail.com,m:simona@ffwll.ch,m:linux-arm-msm@vger.kernel.org,m:dri-devel@lists.freedesktop.org,m:freedreno@lists.freedesktop.org,m:linux-kernel@vger.kernel.org,m:phone-devel@vger.kernel.org,m:me@samcday.com,s:lists@lfdr.de];
+	FORGED_SENDER(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_SENDER(0.00)[nabige.aala@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS(0.00)[m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:arpit.saini@oss.qualcomm.com,m:mohit.dsor@oss.qualcomm.com,m:nabige.aala@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,vger.kernel.org:from_smtp,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:from_mime,qualcomm.com:dkim,qualcomm.com:email];
 	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[nabige.aala@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-114728-lists,linux-arm-msm=lfdr.de,me.samcday.com];
+	RCPT_COUNT_TWELVE(0.00)[14];
+	FORWARDED(0.00)[lists@lfdr.de];
+	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	HAS_REPLYTO(0.00)[me@samcday.com];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
+	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[11];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCVD_COUNT_SEVEN(0.00)[7]
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	REPLYTO_DOM_NEQ_TO_DOM(0.00)[];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[samcday.com:replyto,samcday.com:email,samcday.com:mid,vger.kernel.org:from_smtp]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 5EF836D1B82
+X-Rspamd-Queue-Id: 054436D1E7E
 
-From: Mohit Dsor <mohit.dsor@oss.qualcomm.com>
+From: Sam Day <me@samcday.com>
 
-Device tree changes to support lt9611uxd hdmi-dsi driver.
+If the peak vote for mdp1-mem is allowed to drop to zero, it seems to
+cause the fabric to collapse that path entirely, which causes the device
+to bus stall and fatally reset.
 
-Signed-off-by: Mohit Dsor <mohit.dsor@oss.qualcomm.com>
+This issue was identified specifically on sdm845-oneplus-fajita, so this
+workaround is applied narrowly to SDM845's MDSS.
+
 ---
- arch/arm64/boot/dts/qcom/shikra-iqs-evk.dts | 122 ++++++++++++++++++++++++++++
- 1 file changed, 122 insertions(+)
+This RFC patch is a spiritual successor to the "Addressing stability
+issues on SDM845 with the -next tree" series sent by David and Petr 6
+months ago.
 
-diff --git a/arch/arm64/boot/dts/qcom/shikra-iqs-evk.dts b/arch/arm64/boot/dts/qcom/shikra-iqs-evk.dts
-index fd691d53a0fa..9cc4a1c6e4ed 100644
---- a/arch/arm64/boot/dts/qcom/shikra-iqs-evk.dts
-+++ b/arch/arm64/boot/dts/qcom/shikra-iqs-evk.dts
-@@ -23,6 +23,36 @@ chosen {
- 		stdout-path = "serial0:115200n8";
- 	};
- 
-+	hdmi-connector {
-+		compatible = "hdmi-connector";
-+		type = "a";
-+
-+		port {
-+			hdmi_con: endpoint {
-+				remote-endpoint = <&lt9611_out>;
-+			};
-+		};
-+	};
-+
-+	vreg_lt9611_vcc: regulator-lt9611-vcc {
-+		compatible = "regulator-fixed";
-+		regulator-name = "lt9611_vcc";
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+		gpio = <&pm8150_gpios 4 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&hdmi_reg_en>;
-+	};
-+
-+	vreg_lt9611_vdd: regulator-lt9611-vdd {
-+		compatible = "regulator-fixed";
-+		regulator-name = "lt9611_vdd";
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <1800000>;
-+		regulator-always-on;
-+	};
-+
- 	vreg_wcn_3p3: regulator-wcn-3p3 {
- 		compatible = "regulator-fixed";
- 		regulator-name = "wcn_3p3";
-@@ -68,6 +98,78 @@ vreg_pmu_ch1: ldo4 {
- 	};
- };
- 
-+&i2c4 {
-+	status = "okay";
-+
-+	lt9611uxd: lt9611uxd@41 {
-+		compatible = "lontium,lt9611uxd";
-+		reg = <0x41>;
-+		interrupts-extended = <&tlmm 85 IRQ_TYPE_EDGE_FALLING>;
-+		reset-gpios = <&tlmm 76 GPIO_ACTIVE_HIGH>;
-+		vcc-supply = <&vreg_lt9611_vcc>;
-+		vdd-supply = <&vreg_lt9611_vdd>;
-+		lontium,port-select = <1>; /* PORT_SELECT_B */
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&lt9611_irq_pin &lt9611_rst_pin>;
-+
-+		ports {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+
-+			port@0 {
-+				reg = <0>;
-+
-+				lt9611_a: endpoint {
-+					remote-endpoint = <&mdss_dsi0_out>;
-+				};
-+			};
-+
-+			port@2 {
-+				reg = <2>;
-+
-+				lt9611_out: endpoint {
-+					remote-endpoint = <&hdmi_con>;
-+				};
-+			};
-+		};
-+	};
-+};
-+
-+&mdss {
-+	status = "okay";
-+};
-+
-+&mdss_dsi0 {
-+	vdda-supply = <&pm8150_l11>;
-+	status = "okay";
-+
-+};
-+
-+&mdss_dsi0_out {
-+	remote-endpoint = <&lt9611_a>;
-+	data-lanes = <0 1 2 3>;
-+};
-+
-+&mdss_dsi0_phy {
-+	status = "okay";
-+};
-+
-+&pm8150_gpios {
-+	hdmi_reg_en: hdmi-reg-en-state {
-+		pins = "gpio4";
-+		function = PMIC_GPIO_FUNC_NORMAL;
-+		bias-disable;
-+	};
-+};
-+
-+&pm8150_l11 {
-+	/* DSI VDDA - must be at NOM voltage for PHY PLL lock */
-+	regulator-min-microvolt = <1232000>;
-+	regulator-max-microvolt = <1232000>;
-+	regulator-allow-set-load;
-+};
-+
- &remoteproc_cdsp {
- 	firmware-name = "qcom/shikra/cdsp.mbn";
- 
-@@ -103,6 +205,26 @@ &sdhc_1 {
- 	status = "okay";
- };
- 
-+&tlmm {
-+	lt9611_irq_pin: lt9611-irq-state {
-+		pins = "gpio85";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-pull-up;
-+	};
-+
-+	lt9611_rst_pin: lt9611-rst-state {
-+		pins = "gpio76";
-+		function = "gpio";
-+		drive-strength = <8>;
-+		output-high;
-+	};
-+};
-+
-+&uart0 {
-+	status = "okay";
-+};
-+
- &uart8 {
- 	status = "okay";
- 
+As Dmitry pointed out, the patch introduces leakages to the runtime PM
+refcounting. In practice, this means that MDSS never actually gets
+suspended, which is why the patch appeared to "fix" the issue.
 
+The deeper root cause is that, when msm_mdss_disable() runs and unvotes
+the mdp1-mem interconnect bandwidth, that seems to collapse the fabric
+entirely and causes the bus stall -> hang -> reboot behaviour.
+
+I've confirmed that a tiny non-zero peak bandwidth vote keeps the fabric
+alive and avoids the issue.
+
+Of course, this is still a fairly egregious hack, but it *does* allow
+blanking to suspend and resume DSI + DPU + MDSS properly without the bus
+stall.
+
+Here's what I've validated with instrumentation:
+
+ * DSI host disable, IRQ disable, PLL state save, host power-off, link
+   clock disable, regulator disable, SFPB disable, and PHY disable all
+   complete successfully before the fatal reset occurrs.
+ * DPU runtime suspend also completes. The bandwidth accounting was
+   checked and confirmed to reach runtime suspend with 0 refs, with no
+   pending frame state.
+ * The device survives through MDSS clock disabling and mdp0-mem
+   zero voting, it's really just the mdp1-mem zero vote that is isolated
+   as the cause of the stall + reset.
+
+So, I'm not really sure where to go from here. I'm sure that this
+workaround is not suitable for inclusion upstream as it still seems to
+be papering over an underlying issue... But it's unclear to me if this is
+some kind of hardware quirk on SDM845, a problem with the SDM845 DT
+wiring, a driver issue, or something else entirely.
+
+I'd appreciate any advice on how to further diagnose this issue and what
+direction to take from here.
+
+Kind regards,
+-Sam
+
+Link: https://lore.kernel.org/phone-devel/20251213-stability-discussion-v1-0-b25df8453526@ixit.cz/
+Signed-off-by: Sam Day <me@samcday.com>
+---
+ drivers/gpu/drm/msm/msm_mdss.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/gpu/drm/msm/msm_mdss.c b/drivers/gpu/drm/msm/msm_mdss.c
+index 9087c4b290db..c635380b2ac3 100644
+--- a/drivers/gpu/drm/msm/msm_mdss.c
++++ b/drivers/gpu/drm/msm/msm_mdss.c
+@@ -284,8 +284,12 @@ static int msm_mdss_disable(struct msm_mdss *msm_mdss)
+ 
+ 	clk_bulk_disable_unprepare(msm_mdss->num_clocks, msm_mdss->clocks);
+ 
+-	for (i = 0; i < msm_mdss->num_mdp_paths; i++)
+-		icc_set_bw(msm_mdss->mdp_path[i], 0, 0);
++	for (i = 0; i < msm_mdss->num_mdp_paths; i++) {
++		if (of_device_is_compatible(msm_mdss->dev->of_node, "qcom,sdm845-mdss") && i == 1)
++			icc_set_bw(msm_mdss->mdp_path[i], 0, 1);
++		else
++			icc_set_bw(msm_mdss->mdp_path[i], 0, 0);
++	}
+ 
+ 	if (msm_mdss->reg_bus_path)
+ 		icc_set_bw(msm_mdss->reg_bus_path, 0, 0);
+
+---
+base-commit: 5a66900afbd6b2a063eebad35294038a654de2b0
+change-id: 20260627-rfc-sdm845-interconnect-collapse-workaround-ba1cf846ca3f
+
+Best regards,
 -- 
-2.34.1
+Sam Day <me@samcday.com>
+
 
 
