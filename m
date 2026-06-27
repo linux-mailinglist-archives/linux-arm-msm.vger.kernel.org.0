@@ -1,224 +1,258 @@
-Return-Path: <linux-arm-msm+bounces-114721-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-114722-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id N2x8LTqdP2oPVAkAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-114721-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jun 2026 11:51:54 +0200
+	id xawYBKmfP2qYVAkAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-114722-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jun 2026 12:02:17 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0D3366D1AD9
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jun 2026 11:51:54 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 115586D1B3E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jun 2026 12:02:16 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=linaro.org header.s=google header.b=QncM65aG;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-114721-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-114721-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=none) header.from=linaro.org;
+	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=ULkVnaIC;
+	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=Fu2dA37k;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-114722-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c15:e001:75::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-114722-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=reject) header.from=qualcomm.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id BEA75301546D
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jun 2026 09:51:52 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 1EF853008CB2
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jun 2026 10:02:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4C693396B73;
-	Sat, 27 Jun 2026 09:51:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2CC6D39A4D8;
+	Sat, 27 Jun 2026 10:02:04 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDC36391E51
-	for <linux-arm-msm@vger.kernel.org>; Sat, 27 Jun 2026 09:51:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D15CA391837
+	for <linux-arm-msm@vger.kernel.org>; Sat, 27 Jun 2026 10:02:02 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782553912; cv=none; b=tTnOHhRrM8BaQ6shpnFFGgl1SIvJr2Itei1nfpXvc3H47ku1tjGfPRKiObLEYduLkAgGX92LmOx7yhcdsvRpMYc9X0vQBYf8R0UFuKTyWsw9miswRwsJMCAkqUAKHcXOgGJ99/Vlc07lIowEXEP/5orwYGAXBHSOp62mZ2wtxjI=
+	t=1782554524; cv=none; b=TiEWy7bWdCIKBf2M1fBVZkSXVyuGh4trXKtlc6PBuJCc0aAhWJjXUT5aN7IkmCs/eKP45z/hyi1vxiOVPpbFkP4BN9cJB8ieZevTzQwmix1yjzdPfF9hIE0QVIFWzLQgQG+N3749FOMK+ohV6CwwRZd0yLA+Twg2SFe5lmG7qJo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782553912; c=relaxed/simple;
-	bh=qxBTjKasMHqvbqtN1gvUmV8p7xZ0oZADgXOJVLPl7As=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=WfUVP2X/nt58AM+E6lcaVl342IwCJHuqFNXGere6jCHQlwrA7nCZ5xXvgeXH0Mf68Q+CGv+PpHMeQcR36yzP+TgoIe8CIIx7TzeT+xAVw68Q8pW6ZqGcs1msCC1yK87zIkIUGXfNiBCk4LeA8tedT200k69QPearpIb1JciBfJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=QncM65aG; arc=none smtp.client-ip=209.85.128.50
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4926d6b177eso6876185e9.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 27 Jun 2026 02:51:50 -0700 (PDT)
+	s=arc-20240116; t=1782554524; c=relaxed/simple;
+	bh=F+1vuwUREseEO8fmrN+L5VPd0Kb9dANgwZTePjZ5YTU=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=pF+UC8+H+xDPnGyabilBO/Pokg8A1APiOtUBM1kkHqlcAtHYiC3uQV3Bnp1SvY38hhlDNEhKhZp8k0ttaJlrlG75d+Q4ygTXi6+PSdJZMgXNg/fdkQkQXjiJCguhercdfXS9t9CUHQsmReFM2YMBkmelMg6amQESgKWpKp+s3Ow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ULkVnaIC; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Fu2dA37k; arc=none smtp.client-ip=205.220.180.131
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65R9ZWGi731997
+	for <linux-arm-msm@vger.kernel.org>; Sat, 27 Jun 2026 10:02:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=EVWpvntptBmcOLqqewmuNr
+	YlXqpbIZ+aNpYVUgqbp1I=; b=ULkVnaICzqpPwEJlWtE/J9AJtipLUeJL98K1KN
+	ocOXZI9Xhde5RCkzog7eRySMzkQiLT142/N4JXup9n/JhKTtaXerm9YnQ19lTGv+
+	H7fr7K7tA46G+4IczxZ5s/ohTWk3YTHg9sO6c5xHHSqUxB4J1WPvb8AEOhvNCOmP
+	S0n2VzWJMNZi+z3TGYOXF4g0uBaXkja9hZS2sFu0DeFWFBUUMPnalEgFHgm27cMe
+	CbxdOjvwZCxuM2bsI/zC5mB2ioUNXThXecm4dg+8ekwrKW6SRoBmtPDlwZb6GFsq
+	xU5dJbdvaZs02GkwbpLVNvjY0IfrODjhMvJTwq3AKsT+HfSA==
+Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com [74.125.82.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f26turjy3-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Sat, 27 Jun 2026 10:02:01 +0000 (GMT)
+Received: by mail-dy1-f198.google.com with SMTP id 5a478bee46e88-30c1f6c5559so2011535eec.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 27 Jun 2026 03:02:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1782553909; x=1783158709; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=eQ5hBcDFXzdMMWhKi4/R32A+an3Job3dVyCIe2d2DCE=;
-        b=QncM65aGq1zsZDAFH0F3kQGGtYFxCr4pf5a+Tu8cXVwqKqRZiXBNOLp2oZlDMfx1Dq
-         crq6IJRuZedcxDSoGx07ByUYQ9VRUNgaui/6oDTvQjJXQ8MxrQGzJYpBcDR9j0f2ofSL
-         +3PIfqds79wj8Mm2wMAR5Hwsq4ZqWhwJb/7tIBpD0sQ9yGTNpnK2wukaXRC0cqwAamcA
-         ChZrl5CI69BJ5xIh8MGxOJYbj3e4H6dKvc+mLfudQjRmsLv5kQl4aydCpRAYeGpk0GMo
-         uygEKVLuxdIEcU64QYx0c0yckAh1YkBUFXvB2qChcNiRPjJzXYc0LCR8ZAG2dwLckysz
-         /U0g==
+        d=oss.qualcomm.com; s=google; t=1782554520; x=1783159320; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=EVWpvntptBmcOLqqewmuNrYlXqpbIZ+aNpYVUgqbp1I=;
+        b=Fu2dA37kJ8orAm9yYATo8EH7Pla0QXOBw010Y1eGjPClc2mXrTx0fyR61h4Z6tz3XM
+         zqLV6rCHtTHARcJ/oRV61H1prkHQWuQNuWHKVVJAEATkLhFiD+wrUfhHlXL2tb/Q4p/M
+         OkQCicIpQBZFVN9gBq8Kvdhp+D2njxynSTwdbrtD6Ctmpt9Gy6HahHIGvb1yF0+DC+6a
+         wXMjfVlNdhaylRuj4cxZdjyENRWFCqCt9ACrogBWlxHJiAPKHcB2Q4aqIZf4U2FjU6QE
+         sAELsRdUXPjzyj08b/ePoOnyh5DkyTUXGfKUFazNTSGhbnInPkpDbWsF06T72rHIHqqh
+         q38A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782553909; x=1783158709;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=eQ5hBcDFXzdMMWhKi4/R32A+an3Job3dVyCIe2d2DCE=;
-        b=iVBLgtmVponB9uGNNIA4L9knc0ZneDPt835oKIyE7eoIHjeTi1jmGcxs2PhGigeB7h
-         wEtq+lf4r3ZKye7ITItfLdSY13HyUYbMNJfeHMm/znCApkx9NZiCDCCwZ7HnevLh351l
-         6lfksOFUGFMtNYdBK9rNl/uRVW1I4u7r9FcHvUt4K09cP6VUzYnomCl5qPYvHrhuCUhm
-         SS4xh92b/7C8Qz6J84GNxQTPrLAC1eVqEmAM5+eIATuIH/kHbAN/qU4OlfqPsl6OHsSN
-         meu80+gDd9wijYm5ZF4rvH4bjEcmcgGSpkRuyeRVQmLzNooDCEsg78xKU6CbwM5I0rFC
-         dchQ==
-X-Gm-Message-State: AOJu0YwJv+r4NXqZwFaoMQm0Wd8LSEaKCHFWxWgO7GQUB3LhqY/i986d
-	rkhMcrNtCJiP3T6X/w89nz4fJG2ksOvQgiw/2tdiaupNGAE/4DTT4Hy5/ryHNedfBE4=
-X-Gm-Gg: AfdE7cl6euCPBFlFU8umNF7URRynwnSKb68DKYRQHzz9ezEo/5v58gWl2JNcNuMoNy5
-	3kiDslui6sZbcmqocDytZIrtvXxfIfT59ahviC+MxXnVHmwd3TTRCS8C3Dtj5juSPWR1K7u31RI
-	ppqFQ4OsZUunVBo6wxrwflkDEH0aLcv8I37sEZHH7fStfS5YQS3/lIsaAHYZRbpKvIMgwhTryG2
-	/7xc2JA3MUDyYnOnVm3XKaMGexfA4q7n9VBhINOFtLhnKmsnidqFS+BuONdMlPWBqe0JP34EJg7
-	3h4KkjNKollI55S3vs6U4ua2aQUtOCjNTqpo/HzzxLhA+KmLh25oZXpJ97TRhNG21Ixg2EDw1YD
-	oNQCVmKCrZi3xICs+KrxjCFzwGE+jUhyO/pEQCc8MD50TCNVxBgJI1nwHQDWDgCGNRnuSlvcgjC
-	XGbkBo0M18mAkQOxV3+smjyCs=
-X-Received: by 2002:a05:600c:1f91:b0:490:b724:507d with SMTP id 5b1f17b1804b1-4926684a61fmr138221645e9.11.1782553909003;
-        Sat, 27 Jun 2026 02:51:49 -0700 (PDT)
-Received: from [192.168.0.101] ([109.76.8.183])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49269086ab7sm223569085e9.13.2026.06.27.02.51.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 27 Jun 2026 02:51:48 -0700 (PDT)
-Message-ID: <556dc88a-42c0-4d5a-8a37-bc4959d72ffa@linaro.org>
-Date: Sat, 27 Jun 2026 10:51:47 +0100
+        d=1e100.net; s=20251104; t=1782554520; x=1783159320;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=EVWpvntptBmcOLqqewmuNrYlXqpbIZ+aNpYVUgqbp1I=;
+        b=dNdYRiA6ndBhhRLqbiAR14cbqnJCq2vfxsn/4RPtvVl3WJvGwdNiabcO7iA+xsckmz
+         Y8sY9jg08fPWwsbDsFhh9DJCCKz4+Z0EE9oqHo/oz6KqQd/vN2LOFXegozUGwPqsLanm
+         JTqCC1Wzpray5gPMirSLio9Q4kkqMd1sWlG+8ioeN7+JiKuDU36w9h8iE5MqnufNCM8o
+         regp7Cip2w4RGbSpTgPRnv3lgAL1e5huOIpB/lwEvfYzDPZ5dtzXftgzoAM1jCa1LFnG
+         MiF5QdFMcqvxRFOHzT7urutWHfTzQmC57B1f3XpGtbwhZfqy6XnlwIwTHaXPeBKyy0HH
+         nSIA==
+X-Gm-Message-State: AOJu0Yxtc0TkwH5GFOYAAGFFP2FmqGM1EZt2y5l4HYvOgGJ/SPGv18h6
+	SpIjy5oLGTxAHMIAFbdY7bg/AhBzPVMeZYyOU+cwuj46y50xaWmHVQBByw4L/4I5HhJvYwCTOIc
+	k++SxlstVvU8dXtTIiBCwYBas14mm19AF2Q6wI8mTSEHV1dzTqN3Vvcq3lgKn7Ch75QM/
+X-Gm-Gg: AfdE7cldi87Zbob71erEKv07jykJKe56qhogyYPMxy9NkYlxgBh0msDgtMQfBNQTVXF
+	LyPsaPGurl4YVvD+RWW2isb1qP2Tm6rWT7JLHKgBEyY89PV8L0ahKA85SIS7q0a8KN97REcnjbU
+	n530Ti7hWzGICbRCs9CVPIDUUomqHuq4Q+oXKMeg0XhILNpO9SnkxVbf4YUPuKw0E4xEHGQXFaR
+	RhYoYU0RKCVthbx35pbgizdx0FAZRQoGkYmEjf1OlaGEdHCiAWVUMaUZw8B2WBSBAdnrhGHWK57
+	w1fvRcpWx5ode1qunnqnMvO62/XI3YrzzpiIc1yu+EQkgB4ZYGUSiHCyQpD7mk5pA47CyWKrisa
+	+uq22esmxUDrXmA89tXYyCVkT7emZWjWSf0WeIA==
+X-Received: by 2002:a05:7022:914:b0:139:7a47:ab68 with SMTP id a92af1059eb24-139dbbcc212mr9246859c88.37.1782554520416;
+        Sat, 27 Jun 2026 03:02:00 -0700 (PDT)
+X-Received: by 2002:a05:7022:914:b0:139:7a47:ab68 with SMTP id a92af1059eb24-139dbbcc212mr9246835c88.37.1782554519801;
+        Sat, 27 Jun 2026 03:01:59 -0700 (PDT)
+Received: from hu-naala-hyd.qualcomm.com ([202.46.22.19])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-139d90e95c6sm38446568c88.11.2026.06.27.03.01.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 27 Jun 2026 03:01:59 -0700 (PDT)
+From: Nabige Aala <nabige.aala@oss.qualcomm.com>
+Subject: [PATCH 0/5] arm64: qcom: dts: Add display support for Shikra
+Date: Sat, 27 Jun 2026 15:31:34 +0530
+Message-Id: <20260627-shikra-dt-changes-v1-0-449a402673d0@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] clk: qcom: enable ALWAYS_ON for titan_top_gdsc
-To: Brian Masney <bmasney@redhat.com>, Bjorn Andersson
- <andersson@kernel.org>, Michael Turquette <mturquette@baylibre.com>,
- Stephen Boyd <sboyd@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20260626-camcc-sc8280xp-titan-top-v1-1-2ca246886493@redhat.com>
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260626-camcc-sc8280xp-titan-top-v1-1-2ca246886493@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAH6fP2oC/yXM3QpAQBCG4VvRHJuyW9bPrcjBsoOh0A5Scu8Wh
+ 09f33uBkGcSKKMLPB0svMwBKo6gHezcE7ILBp1okxhtUAaevEW34b8L5k7prKEiVS6F8Fs9dXx
+ +zar+LXszUru9IbjvB+yt4d11AAAA
+X-Change-ID: 20260626-shikra-dt-changes-8d127be951d5
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, arpit.saini@oss.qualcomm.com,
+        mohit.dsor@oss.qualcomm.com,
+        Nabige Aala <nabige.aala@oss.qualcomm.com>
+X-Mailer: b4 0.16-dev-d5d98
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1782554515; l=3380;
+ i=nabige.aala@oss.qualcomm.com; s=20260520; h=from:subject:message-id;
+ bh=F+1vuwUREseEO8fmrN+L5VPd0Kb9dANgwZTePjZ5YTU=;
+ b=goyzx4KXA+AOAzYVTSCrTSMlFfZ0+qMIiht3NlLRAi92uV+hZgN1UTvjJ3kRVLBS/iOWdF/JS
+ p91sNxrXSRGCXlkmGBp+1Ji+N5W6UkrW5fuRO0doq93amp1NME14DxW
+X-Developer-Key: i=nabige.aala@oss.qualcomm.com; a=ed25519;
+ pk=PYHJom8sPos1IGkrbCCsWiE7XTBQrQZd9jzAo051tgw=
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI3MDA4NiBTYWx0ZWRfXyeiS6+jOPvP8
+ rGtUIUT5W4FkSTvIBSYHeVw9RtXZ42hnv/VkfNpW/Z11y4HRbwFYVSvt+AM0mHnd1LoIfBk3FJF
+ huph0xR1jv1gZrLKbihvdBpB9whO1zY=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI3MDA4NiBTYWx0ZWRfX072VvN4AuZlK
+ OhDsGaCj4QuHL/mMscpy5FJziDUNtLkynLo2h90rGQn/22EjbzAUfvmJoMMF+uKRSDk8EliH0y1
+ /FeSC9gv6Mpu5c0bUSWTa9T8hcjpLOoQg72kw/KZwQD6kYpPlP4u6R3dax8iyUMHJyVFJ51Bg9w
+ JMy0tdBfwbjOMvuEWbrAkwwSwPzGT8EOOqAZUXJwUoPgb0D05NrYnGCagY7l/U/eB1r+8VTQe4I
+ 9ridZYcLpK7KrYea0OZtGYVvpyQ1KHpZqjFRLKL/iD4utvuup58LHPpjwqBX50cFMSaYIqupz1w
+ 3kivoBBEtY+K8266wVvZ3X1+OMpAw8EtLXzl6bxavVR48waU60aEuj24X6xoredLP/s+If1txxr
+ GCimodL3T4BcNlgVlYNEpGYdQlLJ+R0Hasy84y3pfOOS7mP2YJuCitiMKuflWn2n1woaVJ6XV/i
+ +OLO3lUNKpvt/ust6xA==
+X-Proofpoint-GUID: nbYA7R9zpWGGBnrcx3FKKIf6jTCB4L8F
+X-Proofpoint-ORIG-GUID: nbYA7R9zpWGGBnrcx3FKKIf6jTCB4L8F
+X-Authority-Analysis: v=2.4 cv=DY8nbPtW c=1 sm=1 tr=0 ts=6a3f9f99 cx=c_pps
+ a=wEP8DlPgTf/vqF+yE6f9lg==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
+ a=EUspDBNiAAAA:8 a=Kz8-B0t5AAAA:8 a=VwQbUJbxAAAA:8 a=zvx2cZ7kDf5G4oDAlPgA:9
+ a=QEXdDO2ut3YA:10 a=bBxd6f-gb0O0v-kibOvt:22 a=RuZk68QooNbwfxovefhk:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-27_01,2026-06-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 malwarescore=0 bulkscore=0 clxscore=1015 impostorscore=0
+ lowpriorityscore=0 spamscore=0 priorityscore=1501 suspectscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606270086
 X-Rspamd-Action: no action
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[linaro.org:+];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	FORWARDED(0.00)[lists@lfdr.de];
-	TAGGED_FROM(0.00)[bounces-114721-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-114722-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_SENDER(0.00)[bryan.odonoghue@linaro.org,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS(0.00)[m:bmasney@redhat.com,m:andersson@kernel.org,m:mturquette@baylibre.com,m:sboyd@kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-clk@vger.kernel.org,m:linux-kernel@vger.kernel.org,s:lists@lfdr.de];
+	FORGED_SENDER(0.00)[nabige.aala@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS(0.00)[m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:arpit.saini@oss.qualcomm.com,m:mohit.dsor@oss.qualcomm.com,m:nabige.aala@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	FROM_HAS_DN(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo,qualcomm.com:dkim,qualcomm.com:email];
 	TO_DN_SOME(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[bryan.odonoghue@linaro.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[nabige.aala@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
 	ALIAS_RESOLVED(0.00)[];
 	MID_RHS_MATCH_FROM(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[7];
+	RCPT_COUNT_SEVEN(0.00)[11];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,vger.kernel.org:from_smtp,linaro.org:dkim,linaro.org:mid,linaro.org:from_mime]
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 0D3366D1AD9
+X-Rspamd-Queue-Id: 115586D1B3E
 
-On 26/06/2026 17:26, Brian Masney wrote:
-> With the introduction of sync_state support in the clk and pmdomain
-> subsystems, the following warning happens when the unused clocks are
-> shutdown in camcc-sc8280xp:
-> 
->      [   15.408367] titan_top_gdsc status stuck at 'on'
->      [   15.408429] WARNING: drivers/clk/qcom/gdsc.c:178 at gdsc_toggle_logic+0x14c/0x160, CPU#2: kworker/u32:1/14
->      [   15.408462] Modules linked in: bnep vfat fat ath11k_pci(+) ath11k mac80211 cfg80211 mhi libarc4 snd_soc_wcd938x snd_soc_wcd938x_sdw snd_soc_wcd_classh hci_uart snd_soc_wcd_common
->      snd_soc_sc8280xp soundwire_qcom snd_soc_wcd_mbhc snd_soc_qcom_sdw slimbus snd_soc_qcom_common regmap_sdw btqca btrtl qcom_camss soundwire_bus btbcm btintel snd_soc_sdca snd_soc_lpass_wsa_macro
->      bluetooth snd_soc_lpass_tx_macro snd_soc_lpass_va_macro snd_soc_lpass_rx_macro snd_soc_hdmi_codec snd_soc_lpass_macro_common videobuf2_dma_sg ov5675 v4l2_fwnode videobuf2_memops
->      qcom_spmi_adc5 snd_soc_core qcom_spmi_adc_tm5 videobuf2_v4l2 snd_seq snd_seq_device videobuf2_common v4l2_async qcom_vadc_common qcom_spmi_temp_alarm pm8941_pwrkey industrialio videodev
->      snd_compress rfkill ac97_bus snd_pcm_dmaengine qcom_tsens mc qcom_edac snd_pcm pci_pwrctrl_pwrseq qcom_cpufreq_hw snd_timer snd qcomtee soundcore tee leds_gpio joydev binfmt_misc zram
->      lz4hc_compress governor_simpleondemand panel_edp msm xhci_plat_hcd nvme nvme_core dwc3 qcom_pm8008_regulator
->      [   15.408688]  ucsi_glink nvme_keyring nvme_auth pmic_glink_altmode udc_core typec_ucsi aux_hpd_bridge qcom_battmgr ulpi ubwc_config socinfo ocmem drm_gpuvm qcom_q6v5_pas drm_exec
->      qcom_pil_info leds_qcom_lpg gpu_sched led_class_multicolor rtc_pm8xxx qcom_pbs qcom_common drm_display_helper qcom_pon qcom_glink_smem qcom_glink ghash_ce pwrseq_qcom_wcn gpio_sbu_mux
->      qcom_stats phy_qcom_qmp_combo qcom_q6v5 gf128mul cec dispcc_sc8280xp phy_qcom_edp camcc_sc8280xp i2c_qcom_cci qcom_sysmon drm_dp_aux_bus mdt_loader aux_bridge qcom_pm8008 i2c_hid_of_elan
->      dwc3_qcom_legacy llcc_qcom icc_bwmon gpi typec qcom_refgen_regulator phy_qcom_qmp_usb nvmem_qfprom qcom_ipcc phy_qcom_snps_femto_v2 gpucc_sc8280xp pinctrl_sc8280xp_lpass_lpi qcom_hwspinlock
->      pinctrl_lpass_lpi lpasscc_sc8280xp qrtr qcom_aoss pmic_glink pdr_interface phy_qcom_qmp_pcie qcom_smd qcom_pdr_msg icc_osm_l3 qcom_wdt qmi_helpers qcom_rng smp2p rpmsg_core gpio_keys pwm_bl
->      smem hid_multitouch fuse i2c_dev
->      [   15.408928] CPU: 2 UID: 0 PID: 14 Comm: kworker/u32:1 Not tainted 7.1.0+ #2 PREEMPT(lazy)
->      [   15.408937] Hardware name: LENOVO 21BX0016US/21BX0016US, BIOS N3HET88W (1.60 ) 03/14/2024
->      [   15.408942] Workqueue: pm pm_runtime_work
->      [   15.408959] pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
->      [   15.408967] pc : gdsc_toggle_logic+0x14c/0x160
->      [   15.408978] lr : gdsc_toggle_logic+0x14c/0x160
->      [   15.408987] sp : ffff8000800f3b40
->      [   15.408991] x29: ffff8000800f3b40 x28: 0000000000000000 x27: 0000000000000000
->      [   15.409003] x26: 0000000000000000 x25: 0000000000000000 x24: 0000000000000000
->      [   15.409014] x23: 0000000000000000 x22: 0000000000000001 x21: ffffa33f298fca88
->      [   15.409024] x20: 0000000000000000 x19: ffffa33f298fc5b0 x18: 00cd15db75dacefd
->      [   15.409035] x17: 000000040044ffff x16: ffffa33f3b1a3d88 x15: 726f776b80000002
->      [   15.409045] x14: ffffffffffffffff x13: 0000000000000028 x12: 0101010101010101
->      [   15.409056] x11: 7f7f7f7f7f7f7f7f x10: fefeff3039313274 x9 : ffffa33f3a5edafc
->      [   15.409067] x8 : ffff8000800f3780 x7 : 0000000000000001 x6 : 0000000000000001
->      [   15.409078] x5 : ffff000bf3ca1288 x4 : 0000000000000000 x3 : ffff5cccb6a3f000
->      [   15.409088] x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffff000080ae0000
->      [   15.409098] Call trace:
->      [   15.409103]  gdsc_toggle_logic+0x14c/0x160 (P)
->      [   15.409115]  gdsc_disable+0x4c/0x190
->      [   15.409126]  _genpd_power_off+0xa0/0x1a8
->      [   15.409137]  genpd_power_off.part.0+0x180/0x2a0
->      [   15.409149]  genpd_runtime_suspend+0x218/0x310
->      [   15.409155]  __rpm_callback+0x50/0x1f8
->      [   15.409166]  rpm_callback+0x7c/0x90
->      [   15.409175]  rpm_suspend+0xe8/0x690
->      [   15.409185]  pm_runtime_work+0xd0/0xe0
->      [   15.409195]  process_one_work+0x18c/0x518
->      [   15.409208]  worker_thread+0x190/0x320
->      [   15.409218]  kthread+0x110/0x130
->      [   15.409227]  ret_from_fork+0x10/0x20
-> 
-> Let's go ahead and add the flag ALWAYS_ON to titan_top_gdsc so that it
-> is not disabled in the unused clock sweep.
-> 
-> Fixes: ff93872a9c616 ("clk: qcom: camcc-sc8280xp: Add sc8280xp CAMCC")
-> Signed-off-by: Brian Masney <bmasney@redhat.com>
-> Assisted-by: Claude:claude-opus-4-6
-> ---
->   drivers/clk/qcom/camcc-sc8280xp.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/clk/qcom/camcc-sc8280xp.c b/drivers/clk/qcom/camcc-sc8280xp.c
-> index 18f5a3eb313e..52e1a786083f 100644
-> --- a/drivers/clk/qcom/camcc-sc8280xp.c
-> +++ b/drivers/clk/qcom/camcc-sc8280xp.c
-> @@ -2803,7 +2803,7 @@ static struct gdsc titan_top_gdsc = {
->   	.pd = {
->   		.name = "titan_top_gdsc",
->   	},
-> -	.flags = RETAIN_FF_ENABLE,
-> +	.flags = ALWAYS_ON | RETAIN_FF_ENABLE,
->   	.pwrsts = PWRSTS_OFF_ON,
->   };
->   
-> 
-> ---
-> base-commit: 6c94b38b83a04c43ea49004275f0391404051093
-> change-id: 20260626-camcc-sc8280xp-titan-top-196cf6757b49
-> 
-> Best regards,
+This series adds display support for the Qualcomm Shikra platform.
 
-If it is stuck at on, that is almost certainly because one of the child 
-gdscs is still on.
+It introduces the Shikra MDSS display subsystem support at the SoC
+level, and enables display on the Shikra CQS EVK, CQM EVK and IQS
+EVK  boards with the required DSI panel nodes. It also adds LT9611UXD
+support for HDMI output.
 
-Hmm, I should probably fix my bootloader on x13s and see if I can 
-repliate this bug.
+Nabige Aala (5):
+    arm64: dts: qcom: shikra: Add MDSS display subsystem
+    arm64: dts: qcom: shikra-cqm-evk: Enable display and add ili7807s panel
+    arm64: defconfig: Enable ILI7807S DSI panel driver
+    arm64: dts: qcom: shikra-cqs-evk: Enable display and add ili7807s panel
+    arm64: dts: qcom: Shikra LT9611UXD support
 
+ arch/arm64/boot/dts/qcom/shikra-cqm-evk.dts 		| 104 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/shikra-cqs-evk.dts 		| 104 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/shikra-iqs-evk.dts 		| 124 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/shikra.dtsi        		| 203 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++--
+ arch/arm64/configs/defconfig                		| 1 +
+ 5 files changed, 534 insertions(+), 2 deletions(-)
+
+prerequisite-message-id: <20260611-shikra-dt-v5-0-103ed26a8529@oss.qualcomm.com>
+prerequisite-message-id: <20260608-shikra-dt-m1-v4-0-2114300594a6@oss.qualcomm.com>
+prerequisite-message-id: <20260604-shikra-dispcc-gpucc-v4-0-8204f1029311@oss.qualcomm.com>
+prerequisite-message-id: <20260608-shikra-display-v4-0-88a846afdd5d@oss.qualcomm.com>
+prerequisite-message-id: <20260618-ili7807s-v2-0-b3f0c109b102@oss.qualcomm.com>
+prerequisite-message-id: <20260508134009.4582-1-syyang@lontium.com>
+prerequisite-message-id: <20260611-lt9611-b4-send-v1-0-42abbcd3bb1e@oss.qualcomm.com>
+
+To: Bjorn Andersson <andersson@kernel.org>
+To: Konrad Dybcio <konradybcio@kernel.org>
+To: Rob Herring <robh@kernel.org>
+To: Krzysztof Kozlowski <krzk+dt@kernel.org>
+To: Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: devicetree@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+Cc: arpit.saini@oss.qualcomm.com
+Cc: mohit.dsor@oss.qualcomm.com
+
+Signed-off-by: arpit.saini@oss.qualcomm.com
+Signed-off-by: mohit.dsor@oss.qualcomm.com
+Signed-off-by: Nabige Aala <nabige.aala@oss.qualcomm.com>
 ---
-bod
+Arpit Saini (3):
+      arm64: dts: qcom: shikra-cqm-evk: Enable display and add ili7807s panel
+      arm64: defconfig: Enable ILI7807S DSI panel driver
+      arm64: dts: qcom: shikra-cqs-evk: Enable display and add ili7807s panel
+
+Mohit Dsor (1):
+      arm64: dts: qcom: Shikra LT9611UXD support
+
+Nabige Aala (1):
+      arm64: dts: qcom: shikra: Add MDSS display subsystem
+
+ arch/arm64/boot/dts/qcom/shikra-cqm-evk.dts | 104 ++++++++++++++
+ arch/arm64/boot/dts/qcom/shikra-cqs-evk.dts | 104 ++++++++++++++
+ arch/arm64/boot/dts/qcom/shikra-iqs-evk.dts | 122 +++++++++++++++++
+ arch/arm64/boot/dts/qcom/shikra.dtsi        | 203 +++++++++++++++++++++++++++-
+ arch/arm64/configs/defconfig                |   1 +
+ 5 files changed, 532 insertions(+), 2 deletions(-)
+---
+base-commit: f28fb4ff0d25819c58341fec6e3953f1ebb1fc2e
+change-id: 20260626-shikra-dt-changes-8d127be951d5
+
+Best regards,
+--  
+Nabige Aala <nabige.aala@oss.qualcomm.com>
+
 
