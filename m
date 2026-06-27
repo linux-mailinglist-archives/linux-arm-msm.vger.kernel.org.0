@@ -1,286 +1,157 @@
-Return-Path: <linux-arm-msm+bounces-114732-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-114735-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id koaNHC8NQGq7bQkAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-114732-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jun 2026 19:49:35 +0200
+	id QznCJ2MNQGrUbQkAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-114735-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jun 2026 19:50:27 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id BEEDC6D26C6
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jun 2026 19:49:34 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4516B6D2702
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jun 2026 19:50:27 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=gmail.com header.s=20251104 header.b=D+APVrVB;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-114732-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-114732-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=none) header.from=gmail.com;
+	dkim=pass header.d=kernel.org header.s=k20201202 header.b=oMZ39IuF;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-114735-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-114735-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 5415C300D974
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jun 2026 17:49:32 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 2BC76301F9B9
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jun 2026 17:50:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 906A033DEF7;
-	Sat, 27 Jun 2026 17:49:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EB3C134389F;
+	Sat, 27 Jun 2026 17:50:18 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-vs1-f53.google.com (mail-vs1-f53.google.com [209.85.217.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17899325490
-	for <linux-arm-msm@vger.kernel.org>; Sat, 27 Jun 2026 17:49:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5A253112BD;
+	Sat, 27 Jun 2026 17:50:18 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782582571; cv=none; b=R9shBHKPAF5kvbbSDUhwXuqRyWmQFVMj08/J9bAxmB3/3HOPvrYQHNg2FooWi1WwzKm2mk9rrzfgbcKBw9qqxEE/v8JFKjnvtZ5LmUwvFOiNRzvfSHJjFZkEFG5dVgXcOLBilgtE+QwXcvEXXU13ZMFY9y84ll2x9RHVy0fQcTk=
+	t=1782582618; cv=none; b=eAAeIGq7Xy6uzjwu8r7x4vGCByuUYOStDx1bUoAEBKPAS686wKPeKdlMXGC4bYtlPhPtDZvJBznoB+ng8Hn7lz6WfvdiKiRhJgysnIOBVwu1A6GxWcGKmU1qGy2deyk2NRatX6msTWxlXOUWMlzODeBsGGp/11j+u4LFYZy5gqk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782582571; c=relaxed/simple;
-	bh=YA+1i/UnBYMi612cEFEOy+3MzER+Xfj7iA6l8jGXb4M=;
-	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uqBWml+sZkZLyg3tgy3QWUrv+O87pvRvuZ80rDtczf5Wgo6yto2O9I/3FkFj/I+vhxgFODDK2NfOTzrlCZA2Jf6Ma0Q2cxq0emG7r4fRbVPkP/4UBoQKuhzsPUWPYpC5apcJmHKqjk27WwGuY+hwyQUVSRZrQ70/uoTpSELuNvI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=D+APVrVB; arc=none smtp.client-ip=209.85.217.53
-Received: by mail-vs1-f53.google.com with SMTP id ada2fe7eead31-734dfaa3d9bso1368707137.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 27 Jun 2026 10:49:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782582569; x=1783187369; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=+uflCN5dEoFADXWjqBtV9JZXNhAeBkbLG/4dD0z7b4I=;
-        b=D+APVrVB7sDaioieVdmISDPXpLFAuW6Z8ACka+jIwp7ns0TQdWs5MEy+Z/dxvn8VAa
-         e29T4yf7lV++S7Zg1KPGSJLqvjfqzUAvUEu7tSGmqaCsQogJoe9MO5ZfM/HH/GhY8ux0
-         YW6ZINIMDlm8qugBnJpjrCnTOHTSXKlAPJF11MzR2txP/MrDTMvFDy0oCu+HsC/1rWic
-         5RnQmKwAXJpxLkTmgZLfBFUKtZnCgcM2yM4bDprDEVL6jHCMPi1e3zAqIe9XmKpm9HEA
-         GY5jXZXmdNMNEJwgCkWWPPLSrpsmhX+cbfcTpaZTE+Q/IJm4Gxe+tsxjkBwBxlPFhi9j
-         4y8Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782582569; x=1783187369;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:date:from:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=+uflCN5dEoFADXWjqBtV9JZXNhAeBkbLG/4dD0z7b4I=;
-        b=FbE2fOHigSrjEmfsLA7CveRju3YNJ3LqthN5h7UuAs4A4RLm+Tv/htHzxfNPQq8DiM
-         M1jqk7lqv6dP5Cg12OlFz1gKId3ha5twfgyaUlp0940FrDZfqap4eAiau0psrJ23rUHi
-         HxC2xjSGNhBn3N10qSGGnS5IhWJcpYOpRec7wrlsQIknz/tRj13717h2bEibtv7QAeso
-         uECOj7WV0RDscn62AjcwwPTBRd3u94GKKm4+3SvQ8iguihsjCeDWpfL7HIR1oBoXMDdM
-         ICDbL5ul43Qqo2ajbWEuIekVeNYb5dpQqOvYJqV5wDQ21dBy+qk2ewZfacJ/hM85Ga8Q
-         dQRw==
-X-Forwarded-Encrypted: i=1; AHgh+RqA/XD428ACEf1ZzJz72q9xTjH7l/A9BzYt+M4sfu0UKYysfkkHlvaLdqSAg2B3KNBZa9AuqMxiBnHotDV5@vger.kernel.org
-X-Gm-Message-State: AOJu0YzwtFrzyrQ3cstJuKHOVDIQgVUkUv2Vsn8TSCxXYch++aBuCGWg
-	hmqV/03M4igOgVk1082+m/xsCjY2RpqwUqgsMRWAzRzkD/VKxzNF6eAp
-X-Gm-Gg: AfdE7cmgUO4Pnb2pIwLKEgmaiHwXsVpv9MxVY36xxw7lf8sefOcjamoSGbA4STH00mh
-	OhaycXd95fjQKTSlbDtyAUN9yyZhU6i+KKyg0UI9jOg3yrIhuRWUBq9qzhAjZO6PM+iJKYKbEEa
-	+CfpvGNYucjYeKSNhMps7vsypNL4JaIDNGPfxMOWDH2pPmRFgwP8ov4WJhMvVLZ4aQTJul0JAoH
-	SzPJcI+pq3YyvZCmwFupcIxMjUg4PCGk8fTMUWjH0DeEsR/4ERRN1GNlljmSzZPIOerH55JmzYQ
-	DSC3QKbVZfByCM39wOWEH2bLv8rOkoBdJsQBQaU/nkaEhuw67DSbUELPognpc0F1SffN8jzzwWB
-	q4DmF2gU3apQjv5lMm+ayHPsOZi95NFyUfxjBKbj7CJl3XMSq7g+ajFjpJudEDKYQaXlvqOrJ7h
-	ffZ+rfxujOOKn0VZJqRQnY3c5P3m6QZe3AKIufUNGxuSO/
-X-Received: by 2002:a05:6102:440f:b0:730:db02:1d08 with SMTP id ada2fe7eead31-73434452fd5mr5471882137.10.1782582569056;
-        Sat, 27 Jun 2026 10:49:29 -0700 (PDT)
-Received: from localhost (d-24-145-72-22.fl.cpe.atlanticbb.net. [24.145.72.22])
-        by smtp.gmail.com with ESMTPSA id a1e0cc1a2514c-96916e5b10dsm2811280241.4.2026.06.27.10.49.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 27 Jun 2026 10:49:28 -0700 (PDT)
-From: Yury Norov <yury.norov@gmail.com>
-X-Google-Original-From: Yury Norov <ynorov@nvidia.com>
-Date: Sat, 27 Jun 2026 13:49:27 -0400
-To: David Laight <david.laight.linux@gmail.com>
-Cc: Robin Murphy <robin.murphy@arm.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
-	Russell King <linux@armlinux.org.uk>, Frank Li <Frank.Li@nxp.com>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Ingo Molnar <mingo@redhat.com>,
-	Arnaldo Carvalho de Melo <acme@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Jiri Olsa <jolsa@kernel.org>, Ian Rogers <irogers@google.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	James Clark <james.clark@linaro.org>,
-	Thomas Gleixner <tglx@kernel.org>, Borislav Petkov <bp@alien8.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Len Brown <lenb@kernel.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Danilo Krummrich <dakr@kernel.org>,
-	Chanwoo Choi <cw00.choi@samsung.com>,
-	MyungJoo Ham <myungjoo.ham@samsung.com>,
-	Kyungmin Park <kyungmin.park@samsung.com>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Xu Yilun <yilun.xu@intel.com>, Tom Rix <trix@redhat.com>,
-	Moritz Fischer <mdf@kernel.org>,
-	Yicong Yang <yangyicong@hisilicon.com>,
-	Jonathan Cameron <jic23@kernel.org>,
-	Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>,
-	Jason Gunthorpe <jgg@ziepe.ca>, Leon Romanovsky <leon@kernel.org>,
-	Dan Williams <djbw@kernel.org>,
-	Vishal Verma <vishal.l.verma@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>, Ira Weiny <ira.weiny@intel.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Shuai Xue <xueshuai@linux.alibaba.com>,
-	Will Deacon <will@kernel.org>,
-	Jiucheng Xu <jiucheng.xu@amlogic.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Kevin Hilman <khilman@baylibre.com>,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Jing Zhang <renyu.zj@linux.alibaba.com>,
-	Xu Yang <xu.yang_2@nxp.com>, Linu Cherian <lcherian@marvell.com>,
-	Gowthami Thiagarajan <gthiagarajan@marvell.com>,
-	Ji Sheng Teoh <jisheng.teoh@starfivetech.com>,
-	Khuong Dinh <khuong@os.amperecomputing.com>,
-	Daniel Lezcano <daniel.lezcano@kernel.org>,
-	Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>,
-	Yury Norov <yury.norov@gmail.com>, Kees Cook <kees@kernel.org>,
-	Thomas =?iso-8859-1?Q?Wei=DFschuh?= <thomas.weissschuh@linutronix.de>,
-	Aboorva Devarajan <aboorvad@linux.ibm.com>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Ilkka Koskinen <ilkka@os.amperecomputing.com>,
-	Besar Wicaksono <bwicaksono@nvidia.com>, Ma Ke <make24@iscas.ac.cn>,
-	Chengwen Feng <fengchengwen@huawei.com>,
-	linux-arm-kernel@lists.infradead.org, imx@lists.linux.dev,
-	linux-kernel@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
-	linux-perf-users@vger.kernel.org, linux-acpi@vger.kernel.org,
-	driver-core@lists.linux.dev, linux-pm@vger.kernel.org,
-	linux-rockchip@lists.infradead.org, linux-fpga@vger.kernel.org,
-	linux-rdma@vger.kernel.org, nvdimm@lists.linux.dev,
-	linux-pci@vger.kernel.org, linux-amlogic@lists.infradead.org,
-	linux-cxl@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 13/16] perf: Use sysfs_emit() for cpumask show callbacks
-Message-ID: <akANJ-AT7nHpRMq-@yury>
-References: <20260528183625.870813-1-ynorov@nvidia.com>
- <20260528183625.870813-14-ynorov@nvidia.com>
- <7e980b99-1e4e-408b-8ebd-4d28116e7ad5@arm.com>
- <20260529130619.12f24264@pumpkin>
+	s=arc-20240116; t=1782582618; c=relaxed/simple;
+	bh=I3bvbarQGG1JG360vnVYjew40hnVIm2x4NllJX1eEF8=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=QSIaUpP//YpQB4AC9Dvkt9czIqfadKk83X0Myt1w6Qhp12IHFUXdQkJG3vMgcTlfbfC8C/IhLNnm6Zk35DMS7Ddw6WqENN7SxvIdlkKm0k708pE64CK29c5TNiQ/4SSDk+gcWOiDFbwwmYn3j2+i9TsNnuopfMRV3lBMfoxOwz4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oMZ39IuF; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 5C406C2BCB3;
+	Sat, 27 Jun 2026 17:50:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1782582618;
+	bh=I3bvbarQGG1JG360vnVYjew40hnVIm2x4NllJX1eEF8=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=oMZ39IuFSYd2MaFVv2vdzVEtNC5InwOYoAaXUXWDfLdZ3NFbS8X27lB0O46gWTr5/
+	 upcESnnojgL3NbeHQ1D0nOBIcTdTgvsDCN6+FBoU0ws856rrimmbeU3neXGRvzk+Fv
+	 ml8SWfBAkDIRKTQCo/vTA6TLLbRYW3Jw3n5ZgTtrBB04L51x+bdw5l/OoEW9cWXYUI
+	 lb+j/sNz4jZbA+xtd8Yi7Yz+QqBUFzbDkLJ3khqB9mw5hi90yqmB7duGAxxZsITYyR
+	 VF0hat0WD4jg+LBZB1jWVSNdVDmVOz/mUqScWIypYibBCjLwWSdU2S85V34w0PNqZp
+	 IroHL3+OshHBw==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 426F5C43458;
+	Sat, 27 Jun 2026 17:50:18 +0000 (UTC)
+From: David Heidelberg via B4 Relay <devnull+david.ixit.cz@kernel.org>
+Subject: [PATCH v2 0/2] Recognize Snapdragon SDM850
+Date: Sat, 27 Jun 2026 19:50:14 +0200
+Message-Id: <20260627-sda850-v2-0-44bf46ade42e@ixit.cz>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260529130619.12f24264@pumpkin>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAFYNQGoC/2XMQQ6CMBCF4auQWTumLbRpXHkPwgI7o8wGTEsal
+ PTuFrYu/5eXb4fEUTjBrdkhcpYky1zDXBoI0zi/GIVqg1HGKWdaTDR6q9A9bNDcdc6ZAPX8jvy
+ U7YT6ofYkaV3i53SzPtY/ImvUSESeq+Et+btssl7DF4ZSyg+ZKh5kmgAAAA==
+X-Change-ID: 20260623-sda850-6b5c1e44662c
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, David Heidelberg <david@ixit.cz>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=766; i=david@ixit.cz;
+ h=from:subject:message-id;
+ bh=I3bvbarQGG1JG360vnVYjew40hnVIm2x4NllJX1eEF8=;
+ b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBqQA1YK8glQipsbPDu59baTNOyWXpD07/knJtmu
+ 1MsIYw1FFqJAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCakANWAAKCRBgAj/E00kg
+ cghdEAC3bJd1iiMqAS4n+igQBHlJZI6soKc3516kYlKVnjZjAS6lTiFzcRyjs5Q2tlv71lyybdw
+ 8a6eh4b8oKwocHHvgkJtpQKIU3UatIi7qUNwqrVXDJQ0XxQHvHa8AvlscO3qseB/b8XRmY5JuMf
+ CkHzbkfdXpEP3dB1b6xlxHbhiHWmMQ+tE7gMxUXVgiuXdi3wjWMJD2T7Hy8AsNk0mjUI9oxe2zZ
+ rCPQACacNgu9ufz1KkbyKjHCUfq3EZKuAM2happ7qGBKLjsbyywZIzRqkBoKFlfVngfHhHV7SLH
+ xkeliIp1PURR4huylAXI5kcLzA+VTy4WOjbjlKuIlFuTArT2tkj8lA2nFJvjOPBV6XchzC5pmJf
+ dV7xn8Q3ntyqWO6LUXlZPTTC3L2DAiRuimMLZeqZfLJS5thZYAlJYketE3EJ8wqQHLssm3BQRtW
+ mWUyGF4IHIHUOCIo7kLrTuajEjrXYwhpD98BYy25fClteKTKoT3y17RcgKaCfjcDa/jE3WBCSz4
+ seKvgG7vB0asSR72ttZfQRDnA26WHlMDafMOYktOcvofpNaqVFLj6HiEARSo7aw6/v8+KNfwIDP
+ nBPYZUPidt0rkqnbgCQQoh2iN3efM+sg/xGmekgCvqSrpE/dpZAKropGCdlZkrRxXfryfUCN7h0
+ PQDKiKARvKHRVnQ==
+X-Developer-Key: i=david@ixit.cz; a=openpgp;
+ fpr=D77A09CFEEDC2BBD53A7047460023FC4D3492072
+X-Endpoint-Received: by B4 Relay for david@ixit.cz/default with auth_id=355
+X-Original-From: David Heidelberg <david@ixit.cz>
+Reply-To: david@ixit.cz
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-0.16 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-5.16 / 15.00];
+	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-114732-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-114735-lists,linux-arm-msm=lfdr.de,david.ixit.cz];
 	RCVD_TLS_LAST(0.00)[];
+	FORGED_RECIPIENTS(0.00)[m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:david@ixit.cz,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:david.laight.linux@gmail.com,m:robin.murphy@arm.com,m:akpm@linux-foundation.org,m:linux@rasmusvillemoes.dk,m:linux@armlinux.org.uk,m:Frank.Li@nxp.com,m:s.hauer@pengutronix.de,m:kernel@pengutronix.de,m:festevam@gmail.com,m:maddy@linux.ibm.com,m:mpe@ellerman.id.au,m:npiggin@gmail.com,m:chleroy@kernel.org,m:peterz@infradead.org,m:mingo@redhat.com,m:acme@kernel.org,m:namhyung@kernel.org,m:mark.rutland@arm.com,m:alexander.shishkin@linux.intel.com,m:jolsa@kernel.org,m:irogers@google.com,m:adrian.hunter@intel.com,m:james.clark@linaro.org,m:tglx@kernel.org,m:bp@alien8.de,m:dave.hansen@linux.intel.com,m:hpa@zytor.com,m:rafael@kernel.org,m:lenb@kernel.org,m:gregkh@linuxfoundation.org,m:dakr@kernel.org,m:cw00.choi@samsung.com,m:myungjoo.ham@samsung.com,m:kyungmin.park@samsung.com,m:heiko@sntech.de,m:lpieralisi@kernel.org,m:yilun.xu@intel.com,m:trix@redhat.com,m:mdf@kernel.org,m:yangyicong@hisilicon.com,m:jic23@kernel.org,m:dennis.dalessandro@cornelisnetworks.com,m:jgg
- @ziepe.ca,m:leon@kernel.org,m:djbw@kernel.org,m:vishal.l.verma@intel.com,m:dave.jiang@intel.com,m:ira.weiny@intel.com,m:bhelgaas@google.com,m:xueshuai@linux.alibaba.com,m:will@kernel.org,m:jiucheng.xu@amlogic.com,m:neil.armstrong@linaro.org,m:khilman@baylibre.com,m:jbrunet@baylibre.com,m:martin.blumenstingl@googlemail.com,m:renyu.zj@linux.alibaba.com,m:xu.yang_2@nxp.com,m:lcherian@marvell.com,m:gthiagarajan@marvell.com,m:jisheng.teoh@starfivetech.com,m:khuong@os.amperecomputing.com,m:daniel.lezcano@kernel.org,m:rui.zhang@intel.com,m:lukasz.luba@arm.com,m:yury.norov@gmail.com,m:kees@kernel.org,m:thomas.weissschuh@linutronix.de,m:aboorvad@linux.ibm.com,m:ritesh.list@gmail.com,m:ilkka@os.amperecomputing.com,m:bwicaksono@nvidia.com,m:make24@iscas.ac.cn,m:fengchengwen@huawei.com,m:linux-arm-kernel@lists.infradead.org,m:imx@lists.linux.dev,m:linux-kernel@vger.kernel.org,m:linuxppc-dev@lists.ozlabs.org,m:linux-perf-users@vger.kernel.org,m:linux-acpi@vger.kernel.org,m:driver-core@lists.linu
- x.dev,m:linux-pm@vger.kernel.org,m:linux-rockchip@lists.infradead.org,m:linux-fpga@vger.kernel.org,m:linux-rdma@vger.kernel.org,m:nvdimm@lists.linux.dev,m:linux-pci@vger.kernel.org,m:linux-amlogic@lists.infradead.org,m:linux-cxl@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:davidlaightlinux@gmail.com,s:lists@lfdr.de];
-	FREEMAIL_TO(0.00)[gmail.com];
-	MIME_TRACE(0.00)[0:+];
-	TO_DN_SOME(0.00)[];
-	RECEIVED_HELO_LOCALHOST(0.00)[];
-	FORWARDED(0.00)[lists@lfdr.de];
-	FORGED_SENDER(0.00)[yurynorov@gmail.com,linux-arm-msm@vger.kernel.org];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_CC(0.00)[arm.com,linux-foundation.org,rasmusvillemoes.dk,armlinux.org.uk,nxp.com,pengutronix.de,gmail.com,linux.ibm.com,ellerman.id.au,kernel.org,infradead.org,redhat.com,linux.intel.com,google.com,intel.com,linaro.org,alien8.de,zytor.com,linuxfoundation.org,samsung.com,sntech.de,hisilicon.com,cornelisnetworks.com,ziepe.ca,linux.alibaba.com,amlogic.com,baylibre.com,googlemail.com,marvell.com,starfivetech.com,os.amperecomputing.com,linutronix.de,nvidia.com,iscas.ac.cn,huawei.com,lists.infradead.org,lists.linux.dev,vger.kernel.org,lists.ozlabs.org];
+	TO_DN_SOME(0.00)[];
+	FORGED_SENDER(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
+	MIME_TRACE(0.00)[0:+];
+	FORWARDED(0.00)[lists@lfdr.de];
+	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FREEMAIL_FROM(0.00)[gmail.com];
-	RCVD_COUNT_FIVE(0.00)[5];
-	RCPT_COUNT_GT_50(0.00)[90];
+	REPLYTO_DOM_NEQ_TO_DOM(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[yurynorov@gmail.com,linux-arm-msm@vger.kernel.org];
+	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	DKIM_TRACE(0.00)[gmail.com:+];
+	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	ALIAS_RESOLVED(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	MISSING_XM_UA(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,arm.com:email,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
+	HAS_REPLYTO(0.00)[david@ixit.cz];
+	RCPT_COUNT_SEVEN(0.00)[9];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,ixit.cz:replyto,ixit.cz:email,ixit.cz:mid]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: BEEDC6D26C6
+X-Rspamd-Queue-Id: 4516B6D2702
 
-On Fri, May 29, 2026 at 01:06:19PM +0100, David Laight wrote:
-> On Fri, 29 May 2026 12:05:08 +0100
-> Robin Murphy <robin.murphy@arm.com> wrote:
-> 
-> > On 2026-05-28 7:36 pm, Yury Norov wrote:
-> > > These callbacks are sysfs show paths.
-> > > 
-> > > Use sysfs_emit() and cpumask_pr_args() to emit the masks.
-> > > 
-> > > This prepares for removing cpumap_print_to_pagebuf().  
-> > 
-> > TBH, looking at this diff I think it only shows the value of having a 
-> > helper to abstract the boilerplate...
-> > 
-> > I'm not sure I agree with the argument of removing something entirely 
-> > just because it may occasionally be misused, but could we at least have 
-> > something like:
-> > 
-> > #define sysfs_emit_cpumask(buf, mask) \
-> > 	sysfs_emit((buf), "%*pbl\n", cpumask_pr_args(mask))
-> >
-> > to save the mess in all the many places where the current 
-> > cpumap_print_to_pagebuf() usage _is_ entirely appropriate?
+Useful for sdm850 devices in tree and also will be used by Comma AI comma three
 
-This way you have to add 2 wrappers:
+Signed-off-by: David Heidelberg <david@ixit.cz>
+---
+Changes in v2:
+- It's not SDA850, but classic SDM850. (Konrad)
+- Add consumer of the define (socinfo). (Krzysztof)
+- Link to v1: https://lore.kernel.org/r/20260623-sda850-v1-1-ddd8e62c85d8@ixit.cz
 
- #define sysfs_emit_cpulist(buf, mask) \
- 	sysfs_emit((buf), "%*pbl\n", cpumask_pr_args(mask))
+---
+David Heidelberg (2):
+      dt-bindings: arm: qcom,ids: Add SoC ID for Snapdragon SDM 850
+      soc: qcom: socinfo: Add SoC ID for SDM850
 
- and
+ drivers/soc/qcom/socinfo.c         | 1 +
+ include/dt-bindings/arm/qcom,ids.h | 1 +
+ 2 files changed, 2 insertions(+)
+---
+base-commit: 948efecf22e49aa4bf55bb73ec79a0ddcfd38571
+change-id: 20260623-sda850-6b5c1e44662c
 
- #define sysfs_emit_cpumask(buf, mask) \
- 	sysfs_emit((buf), "%*pb\n", cpumask_pr_args(mask))
+Best regards,
+-- 
+David Heidelberg <david@ixit.cz>
 
-There are people who complain even about DIV_ROUND_UP(), how hard it is
-to keep all that helpers in memory, and all that things.
 
-https://lore.kernel.org/all/20260304124805.GB2277644@noisy.programming.kicks-ass.net/
-
-Disagree about DIV_ROUND_UP() (because yeah, I'm bad in math), but
-this sysfs_emit_cpumask() is a complete syntax redundancy.
-
-Once we have it, people will do this type of things:
-
-        tmp = kmalloc(PAGE_SIZE);
-        sysfs_emit_cpumask(tmp, mask);
-        sysfs_emit(buf, "my prefix: %s\n", tmp);
-        kfree(tmp);
-
-Patch #1 in this series is one example. My series that removes
-bitmap_print_to_pagebuf() will give you more:
-
-https://lore.kernel.org/all/20260303200842.124996-2-ynorov@nvidia.com/
-
-It doesn't mean that *you* will misuse the API. It means that *I* will
-have to inspect the codebase for that type of bugs periodically.
-
-So, the overall state is simple: we've got well-established
-printf()-like functions that people know and understand, and we also
-have exotic APIs here and there with a non-standard interface and a
-clear potential to misuse. In this case, they have historical roots,
-but now we don't need them.
-
-> That has the advantage of letting you change how it is done (again)
-> without having to find all the callers.
-
-You mean things like silencing the prints or adding a prefix?
-
-If you believe that perf subsystem would benefit from it - that's
-OK. Just please keep it local. The kernel globally doesn't need to
-'change how it is done' beyond the lib/vsprintf.  The kernel really
-needs people to use something that the other people are familiar with.
-
-Thanks,
-Yury
 
