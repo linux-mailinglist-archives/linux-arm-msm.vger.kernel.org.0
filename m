@@ -1,240 +1,258 @@
-Return-Path: <linux-arm-msm+bounces-114761-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-114763-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id h44eLdj2QGpzjwkAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-114761-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jun 2026 12:26:32 +0200
+	id CG0uHOYCQWrNkAkAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-114763-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jun 2026 13:17:58 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0EB0A6D39F9
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jun 2026 12:26:32 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 68AB66D3AC1
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jun 2026 13:17:57 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=ideasonboard.com header.s=mail header.b=MnlJhnpn;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-114761-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-114761-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=none) header.from=ideasonboard.com;
-	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
+	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=TtHxviPO;
+	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=SKjpTPgU;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-114763-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c15:e001:75::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-114763-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=reject) header.from=qualcomm.com;
+	arc=pass ("subspace.kernel.org:s=arc-20240116:i=2")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 82C83304CEB9
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jun 2026 10:22:54 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 1A2943004DA9
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jun 2026 11:17:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5AB973A1695;
-	Sun, 28 Jun 2026 10:22:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 005C23A1695;
+	Sun, 28 Jun 2026 11:17:49 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0A7339F190;
-	Sun, 28 Jun 2026 10:22:52 +0000 (UTC)
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782642174; cv=none; b=Gf8PeIsOUSN6+wJkhWJLBj82teG+GrN+gxeClPo6pPjh0WuuxpwBBarx5J0m2pawKf+IeZeQMCmh9Ay/9xtiGGb7OUhYzKhH6X7GGm0A21lRs1j77sPhqwy6SDomokADsqIxvzKbm+BB+2yrqfhP88UXA6sEwpafz7C2+QGmeME=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782642174; c=relaxed/simple;
-	bh=dPsbWhdsRJFV1RVWCdtYwJ/p4Y6zPhVV6Vx4WeLxgNQ=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=SVkk5GV3bQ7LiwtdPPpVH9Yhgj8uM7+L1DsOs9eafuwOUQIIWyeyKUqxl5hAUKdeSVoj9Pra4vtHwH4Gc2KmAYpsYMNzc1mRlF5O+VsKXDwNOiLGEuCD/zBW/iH1KV4ZmTihkdxSjELcycI7+oANWkhEaAIURv5kEUhXGdqeTaE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com; spf=pass smtp.mailfrom=ideasonboard.com; dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b=MnlJhnpn; arc=none smtp.client-ip=213.167.242.64
-Received: from ping.linuxembedded.co.uk (cpc89244-aztw30-2-0-cust6594.18-1.cable.virginm.net [86.31.185.195])
-	by perceval.ideasonboard.com (Postfix) with ESMTPSA id A8AF715B2;
-	Sun, 28 Jun 2026 12:21:48 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-	s=mail; t=1782642110;
-	bh=dPsbWhdsRJFV1RVWCdtYwJ/p4Y6zPhVV6Vx4WeLxgNQ=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=MnlJhnpn/yyaPY9ohyf1XUkeGYUZA3IrM9vUMvIK/uGaNiGWtpAQLu7kByUcU3Bac
-	 nGPwwlygL2fy6ddKkIUKYUIYbPHakX0FM7/z7nCfjVSuyuX/inCFYmZAakUnYE9QZc
-	 hggmHWoxqKcl8m5FrY0m+zSahw9ULRCIfk0B5Tmg=
-From: Kieran Bingham <kieran.bingham@ideasonboard.com>
-Date: Sun, 28 Jun 2026 11:22:22 +0100
-Subject: [PATCH v3 7/7] arm64: dts: rockchip: Convert to new media
- orientation definitions
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1C412E6CAB
+	for <linux-arm-msm@vger.kernel.org>; Sun, 28 Jun 2026 11:17:46 +0000 (UTC)
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782645468; cv=pass; b=HL65l6IpubM1G0vNr3z+h98z7hg9bqKT4GbeFhcSmk4/BlPIp6rmjolHUa1C+MHnQQC8w0ahWnYoKUw4tXlUjOUUcFERdEsLW9Rb2AHaj8WixO/IDd2e/19TyziAhDOw46DuBGxvcmT1Al5ANeTM3j53OjtmOUrihb16lApuFuU=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782645468; c=relaxed/simple;
+	bh=/Rom9OzbBDvzqL47K6L16xkbWk+al5r08XLPE9atwTM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=KLhpbbQ7pMImqMsmSPnEs4Mx72Qhdg6Wa+xjgU87dbymiWDkjWeL8q0WBQplruO9xj57Rxi/Pouibu1U6T/RUtTaubhLWx2BgoYZ4m12XdaY5iTETV0/oSN+Jpv+NX9tgNCH44YuDV2M3/PESjgEOGfdhDuByZTwm0ckntgzVao=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=TtHxviPO; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=SKjpTPgU; arc=pass smtp.client-ip=205.220.168.131
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65S9Q5e03592964
+	for <linux-arm-msm@vger.kernel.org>; Sun, 28 Jun 2026 11:17:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=08H1iIchRh/u7bYE0GFBizac
+	WQgfsaPUywhrusHq414=; b=TtHxviPOQTL9MqGBZEIEoB9adv24VdofDwdz58Vg
+	OFyiXkmxHK/xu9KlGy9Kf+kO4W69fV/upj6OTYdz3ifPQwK9hQ4NWu9tyw7tXBFq
+	54TxOmkZbyQNBWYaJ3K/gYGSk3c/VtXsdu6S9lz7EyiqwF5VDUPpHs90C6ESG8i2
+	DscUvCUL6qYIyaXPheHvznX10ZXw6kNyhKuYK5YM8FQqcucSW5KdhgmdqdC+yaiI
+	3lO4fRh2U7xEnOLy1/aJ5AERBO5rNllC0EKQf4VPLSOoSJcmKLFug6qAR3ZDLuwi
+	0ejVGLgrQDFS3Q1LQvVzJAY9Z1UuV8nWS/VUr/0tAf+Z1g==
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com [209.85.216.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f27pf2nbs-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Sun, 28 Jun 2026 11:17:46 +0000 (GMT)
+Received: by mail-pj1-f71.google.com with SMTP id 98e67ed59e1d1-37fc0aaa94cso578422a91.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 28 Jun 2026 04:17:46 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782645465; cv=none;
+        d=google.com; s=arc-20260327;
+        b=jhW3wfx+Lez6inRrXYppv2HE5kKRbQuh3m93D55g4+YD9MNO7vxf3g9D86tNS0X99l
+         VUygwcKXyZNG1H0Y7t2AkD6lsGZL8nj/BM+O/Oxe/Bqn/FAFkzXFU38yYjjOHuIvtZ7V
+         Ah2hNa3xpIP1tAlS+kLqwWSL1LnHOMotElMHsuDfIdpdcKZh3S/INxAtTS/FA56kV4Qe
+         YOctWjxPcp9KwgpVHFV/pM0/vEszrI96E0cqvEkBgx9a3qi4z0cXvIZycZr5KJI6FvLP
+         P62tn/xwSsSpp/rZG1/22Fkmd9Hx4+gxUk85/ZGEP4jUQq1RAf7S1K36kpbvkl9+9ak6
+         lLXg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=08H1iIchRh/u7bYE0GFBizacWQgfsaPUywhrusHq414=;
+        fh=6/r9PfI91qpZArLfSTUdyjtWg+qBcpVP8CC4nYSCXjg=;
+        b=ZWMcHltFhNAonblESanzuKIgqK3HgPyWJJYse/VbBHzTjPUe5D4AYdMgmZmJ9UjuDv
+         XxrGseDm/GVvJZQkCJTgOxSxbosYa9LReTB/tmXXL/65x+/RCxXT/XxvOEIxeJQg+tdi
+         MU3RV7Sedk6PH+rigEFbo8xrlj5bcKNHlVOmKKKt4ppY3aQWm/OMlgIPH693xuWwtG7n
+         fdQ2tfMLCrDROZzUfpVv50zdsY9xXvL5oPb8BzTXdVERvwmOGi4ck2sbyyE0ZKhPdtFO
+         7n3ehYFMyYN+Xde6B+upJv2zdm9Quu10Fk4iXn9Oqn9O6S1nPvyWVwuhhZRhK27pwRwZ
+         be3g==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1782645465; x=1783250265; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=08H1iIchRh/u7bYE0GFBizacWQgfsaPUywhrusHq414=;
+        b=SKjpTPgUGY5sFI052cjMVYnF2i/NEh0t9gnEniKefGnVjoUh/2K+2rokZ12ZFDplZu
+         yTF/IkYS7z08OuXEQYIm8qO4YeO9yrimBD5mdDgfz5J0xX2+FmnQ9ha3QI13SOQ64qo6
+         N3FeRvBc5n0sKXXVFV2cNNYfDPLNPdqdU+lz1nF0iqaBVYwz3plxmSUyo0r2CyN2+NxL
+         KAHnEO9lsM2H7hX+uaNVCyhPJVVMou8GJDeRQk3Nr20dQRMvxHAJhTGIMBdQ05rSvCiR
+         8XxUjvCzhthGKwdWPEVigBtj3h/E8TbXA97VldytekXuza2sLgpybtjrfHcoK6cNd/sX
+         NX5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782645465; x=1783250265;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=08H1iIchRh/u7bYE0GFBizacWQgfsaPUywhrusHq414=;
+        b=F3gDxyPeQCP55eAiBbEgqVhS3e6eoPNXe78dSM+82IsLevklMSIoAVwn42x/ZKmqdy
+         V1SXLMpHexZPNe3/cu8kZnJYom1XRNebN8wcXh7R2/5lS/72gJ91igZrfMVVTz/GKjgd
+         VsLQz/CDIZh+IMg+GBlLMxQFkCElafHGDfhdRFX9iGq8d5KYXaRgmRzdbG9/XDKhpoEg
+         Y4xWlov///lGMH7WEojI7iDHUp3LBjzZdNrhqahDOPDnBsVt73s2otV67YFnARGoRTWE
+         k35asHyWC51dU2xZ7VHMZzyNLDI2JqsRJ9Q7sJ4cAws7d/YtrUoszdALOgwCg8QQi29X
+         lnWw==
+X-Forwarded-Encrypted: i=1; AHgh+RraL6kgGkh8JFE236o0MCA9h7rK+16dJ8BOpC8UboCeXLTds3M5MrjXxoR83ExQoeqCDiJvEEj9njyR6kW6@vger.kernel.org
+X-Gm-Message-State: AOJu0YzPR1U0/axvcqvVvyywIjvS1Ei9E4j38+vGN1UWtXtNGKq4x4hR
+	hktLAHkBibG6EGycFISvUJVNWb3fhwtKjwDdbjGGQImd/vd6EgCF04UrhQ4LAQNFDl+sDxUpnk1
+	YqIDFEq0NWxogq7ENcJc3PN2iUpICyv+4oVSXkE2RRMogvfDOKaDKNawwJsJOImvTV2x+DoHjKe
+	u4O0SJeCw6mLI7j24y1LjZFj/ueyntPXNqhNAzKPEhqoxji9UgPdQARQ==
+X-Gm-Gg: AfdE7cnqVarv+TLJmcEeB68DiV4JJ4xyPJ99aQIY8JJABTspEBB6l/MOY3uFnlUY4CT
+	Cz30TFGLp0ETPXOcYOhhyFR1E8bCDLgYW1FoLlZNQ90cIuixi1nVSWrIwQJaut/Dj5/CkbqmGfY
+	2FE2XG+pUvC8z0RkF4uZ4ycZZroQCN0gH+RpHQcpyqni1yMsmIOC887YnCmn1/T3U5nVWwclm2b
+	Llx1Fi71Eitlz561fYgUGWW6CfHhA==
+X-Received: by 2002:a17:90b:3fcf:b0:37e:2053:348f with SMTP id 98e67ed59e1d1-37f817e509cmr5371904a91.25.1782645465310;
+        Sun, 28 Jun 2026 04:17:45 -0700 (PDT)
+X-Received: by 2002:a17:90b:3fcf:b0:37e:2053:348f with SMTP id
+ 98e67ed59e1d1-37f817e509cmr5371886a91.25.1782645464763; Sun, 28 Jun 2026
+ 04:17:44 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260628-kbingham-orientation-v3-7-4ed92968aff8@ideasonboard.com>
-References: <20260628-kbingham-orientation-v3-0-4ed92968aff8@ideasonboard.com>
-In-Reply-To: <20260628-kbingham-orientation-v3-0-4ed92968aff8@ideasonboard.com>
-To: Mauro Carvalho Chehab <mchehab@kernel.org>, 
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Jacopo Mondi <jacopo@jmondi.org>, 
- Sakari Ailus <sakari.ailus@linux.intel.com>, Jimmy Su <jimmy.su@intel.com>, 
- Matthias Fend <matthias.fend@emfend.at>, 
- Mikhail Rudenko <mike.rudenko@gmail.com>, 
- Daniel Scally <dan.scally@ideasonboard.com>, 
- Jacopo Mondi <jacopo.mondi@ideasonboard.com>, 
- Michael Riesch <michael.riesch@collabora.com>, 
- Benjamin Mugnier <benjamin.mugnier@foss.st.com>, 
- Sylvain Petinot <sylvain.petinot@foss.st.com>, 
- Laurent Pinchart <laurent.pinchart@ideasonboard.com>, 
- Paul Elder <paul.elder@ideasonboard.com>, 
- Martin Kepplinger <martin.kepplinger@puri.sm>, 
- Quentin Schulz <quentin.schulz@theobroma-systems.com>, 
- Tommaso Merciai <tomm.merciai@gmail.com>, 
- Svyatoslav Ryhel <clamor95@gmail.com>, 
- Richard Acayan <mailingradian@gmail.com>, 
- Thierry Reding <thierry.reding@kernel.org>, 
- Jonathan Hunter <jonathanh@nvidia.com>, Frank Li <Frank.Li@nxp.com>, 
- Sascha Hauer <s.hauer@pengutronix.de>, 
- Pengutronix Kernel Team <kernel@pengutronix.de>, 
- Fabio Estevam <festevam@gmail.com>, Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, 
- Geert Uytterhoeven <geert+renesas@glider.be>, 
- Magnus Damm <magnus.damm@gmail.com>, Heiko Stuebner <heiko@sntech.de>
-Cc: linux-kernel@vger.kernel.org, linux-media@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-tegra@vger.kernel.org, 
- linux@ew.tq-group.com, imx@lists.linux.dev, 
- linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
- linux-renesas-soc@vger.kernel.org, linux-rockchip@lists.infradead.org, 
- Kieran Bingham <kieran.bingham@ideasonboard.com>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1782642139; l=3957;
- i=kieran.bingham@ideasonboard.com; s=20260207; h=from:subject:message-id;
- bh=dPsbWhdsRJFV1RVWCdtYwJ/p4Y6zPhVV6Vx4WeLxgNQ=;
- b=rRE0N0u6PkN10gU6tGRTxFeSk15U9jeCp5Aj+C5fl9qbB1KxwyPCiqAq3XB+68p/huApvYpv/
- 7tqC6W61Lg7Bd64K260+0189mCY+zFoJ8eSSqx4wusH3j/L/jme1njX
-X-Developer-Key: i=kieran.bingham@ideasonboard.com; a=ed25519;
- pk=FVXKN7YuwHc6UtbRUeTMAmranfsQomA+vnilfglWdaY=
+References: <20260429-kodiak_v2-v2-0-c3a703cc30eb@oss.qualcomm.com>
+ <20260429-kodiak_v2-v2-2-c3a703cc30eb@oss.qualcomm.com> <hej6absxu6nsuktv7tsegduyrduv7diq5zx7dt2a4xp3pe6gxl@b2xscorilbvn>
+ <akCFlxiGT-vHNM-x@baldur>
+In-Reply-To: <akCFlxiGT-vHNM-x@baldur>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Date: Sun, 28 Jun 2026 14:17:33 +0300
+X-Gm-Features: AVVi8CcoKIG01MrYDJCZXznA7AF4_rDKObCyVvw0QuDn2wAQl--Q8li2DLWAFHg
+Message-ID: <CAO9ioeVd=fcd5SF-J8Vo9DNEz_QzyRvo25-7i-FxGUv3j4qbAA@mail.gmail.com>
+Subject: Re: [PATCH v2 2/3] arm64: dts: qcom: kodiak: move dp data-lanes to
+ SoC dtsi
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Mahadevan P <mahadevan.p@oss.qualcomm.com>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Mahadevan P <mahap@qti.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI4MDA5OCBTYWx0ZWRfXzxPKHKxI2z/c
+ JKZKOewFl0inZWlXHshxPlzbrWCjKcwMHlqStUc01h7x29qgGY/9ztFO8EVBhFtJ2eV/w4Okoi9
+ 9zS2fu4QhfIkE+wi7YHlysKnDFkPwoA=
+X-Proofpoint-GUID: 87HhrCDxKIJQ9Zx1U238DzIig-aBybvW
+X-Proofpoint-ORIG-GUID: 87HhrCDxKIJQ9Zx1U238DzIig-aBybvW
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI4MDA5OCBTYWx0ZWRfXw5JsflKXNdzm
+ 4kdP6CtanYMSGL0ZL1cCYyrQCU6B/ZEBI9I/+RxOgF2LnKakPsMeinWOQNGC8AHf0Qa8D97X6RG
+ 4o1pCdFMi0sKWn1a47G1qwhurErrmxVkyiHPOK4OteMhDGKqGlDqPBw4dW1x8LaQ2l0m2nrrU2A
+ 9psL0+jG/EGVWc3TIrLnKardSXAYAQ+JG8iqPwUJiRZvq5g2CyiSjbOtEvCwOhQdMWl4K81jZBM
+ g3mWUVKPPKD8mqBmHiGQYoRgkKdMn3Md7VHaVhEoAoPOMZH4VVuriceY+S+O1W6pTjSVDUyJzoj
+ /ieG3jGLkiy8dOY10zSh1MNWUcrWTh4UDbuZJrA2VPSPocn9jxan/BDsRyMoH1mHGCbCSELW58S
+ vKeQSa3f2eVHaOpXkv0XzHqAAOAb6tmz/RcJCVGSQ+NcKyG73mUtt/veQKWxwOjvMgS/Z1XxTqr
+ 26GpDPO+gvsfLaHywxA==
+X-Authority-Analysis: v=2.4 cv=R7Mz39RX c=1 sm=1 tr=0 ts=6a4102da cx=c_pps
+ a=UNFcQwm+pnOIJct1K4W+Mw==:117 a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10
+ a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
+ a=DJpcGTmdVt4CTyJn9g5Z:22 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
+ a=Dppsg50_g3HS2MGcJhcA:9 a=QEXdDO2ut3YA:10 a=uKXjsCUrEbL0IQVhDsJ9:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-28_03,2026-06-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 adultscore=0 clxscore=1015 impostorscore=0 priorityscore=1501
+ malwarescore=0 lowpriorityscore=0 spamscore=0 bulkscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606280098
 X-Rspamd-Action: no action
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[ideasonboard.com,none];
-	R_DKIM_ALLOW(-0.20)[ideasonboard.com:s=mail];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-114761-lists,linux-arm-msm=lfdr.de];
-	RCVD_COUNT_THREE(0.00)[4];
 	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_TO(0.00)[kernel.org,jmondi.org,linux.intel.com,intel.com,emfend.at,gmail.com,ideasonboard.com,collabora.com,foss.st.com,puri.sm,theobroma-systems.com,nvidia.com,nxp.com,pengutronix.de,glider.be,sntech.de];
-	FORGED_SENDER(0.00)[kieran.bingham@ideasonboard.com,linux-arm-msm@vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[43];
-	FORGED_RECIPIENTS(0.00)[m:mchehab@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:jacopo@jmondi.org,m:sakari.ailus@linux.intel.com,m:jimmy.su@intel.com,m:matthias.fend@emfend.at,m:mike.rudenko@gmail.com,m:dan.scally@ideasonboard.com,m:jacopo.mondi@ideasonboard.com,m:michael.riesch@collabora.com,m:benjamin.mugnier@foss.st.com,m:sylvain.petinot@foss.st.com,m:laurent.pinchart@ideasonboard.com,m:paul.elder@ideasonboard.com,m:martin.kepplinger@puri.sm,m:quentin.schulz@theobroma-systems.com,m:tomm.merciai@gmail.com,m:clamor95@gmail.com,m:mailingradian@gmail.com,m:thierry.reding@kernel.org,m:jonathanh@nvidia.com,m:Frank.Li@nxp.com,m:s.hauer@pengutronix.de,m:kernel@pengutronix.de,m:festevam@gmail.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:geert+renesas@glider.be,m:magnus.damm@gmail.com,m:heiko@sntech.de,m:linux-kernel@vger.kernel.org,m:linux-media@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-tegra@vger.kernel.org,m:linux@ew.tq-group.com,m:imx@lis
- ts.linux.dev,m:linux-arm-kernel@lists.infradead.org,m:linux-arm-msm@vger.kernel.org,m:linux-renesas-soc@vger.kernel.org,m:linux-rockchip@lists.infradead.org,m:kieran.bingham@ideasonboard.com,m:krzk@kernel.org,m:conor@kernel.org,m:mikerudenko@gmail.com,m:tommmerciai@gmail.com,m:geert@glider.be,m:magnusdamm@gmail.com,s:lists@lfdr.de];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FORWARDED(0.00)[lists@lfdr.de];
+	TAGGED_FROM(0.00)[bounces-114763-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
+	FORGED_SENDER(0.00)[dmitry.baryshkov@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_RECIPIENTS(0.00)[m:andersson@kernel.org,m:mahadevan.p@oss.qualcomm.com,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:cros-qcom-dts-watchers@chromium.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:mahap@qti.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	FORWARDED(0.00)[lists@lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	MISSING_XM_UA(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	ALIAS_RESOLVED(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[6];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[kieran.bingham@ideasonboard.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[ideasonboard.com:+];
-	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt,renesas];
+	FROM_NEQ_ENVFROM(0.00)[dmitry.baryshkov@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	ALIAS_RESOLVED(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,ideasonboard.com:dkim,ideasonboard.com:email,ideasonboard.com:mid,ideasonboard.com:from_mime,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
+	RCPT_COUNT_SEVEN(0.00)[11];
+	TO_DN_SOME(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo,qualcomm.com:dkim,qualcomm.com:email,vger.kernel.org:from_smtp,mail.gmail.com:mid]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 0EB0A6D39F9
+X-Rspamd-Queue-Id: 68AB66D3AC1
 
-The orientation property for video interface devices now has definitions
-to prevent hardcoded integer values for the enum options.
+On Sun, 28 Jun 2026 at 05:26, Bjorn Andersson <andersson@kernel.org> wrote:
+>
+> On Fri, Jun 26, 2026 at 11:50:40PM +0300, Dmitry Baryshkov wrote:
+> > On Wed, Apr 29, 2026 at 12:10:41PM +0530, Mahadevan P wrote:
+> > > From: Mahadevan P <mahap@qti.qualcomm.com>
+> > >
+> > > The connection between the QMP Combo PHY and the DisplayPort controller
+> > > is fixed in SoC, so move the data-lanes property to kodiak.dtsi and
+> > > drop the per-board overrides.
+> > >
+> > > Also remove the redundant remote-endpoint cross-links and
+> > > orientation-switch property from qcs6490-rb3gen2 and
+> > > qcs6490-thundercomm-rubikpi3, which are already defined in kodiak.dtsi.
+> >
+> > Separate commit.
+> >
+> > >
+> > > Signed-off-by: Mahadevan P <mahadevan.p@oss.qualcomm.com>
+> > > ---
+> > >  arch/arm64/boot/dts/qcom/kodiak.dtsi                          |  1 +
+> > >  arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts            |  4 ----
+> > >  arch/arm64/boot/dts/qcom/qcm6490-particle-tachyon.dts         |  4 ----
+> > >  arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts                  | 11 -----------
+> > >  arch/arm64/boot/dts/qcom/qcs6490-thundercomm-minipc-g1iot.dts |  1 -
+> > >  arch/arm64/boot/dts/qcom/qcs6490-thundercomm-rubikpi3.dts     |  3 ---
+> > >  arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi                |  1 -
+> > >  7 files changed, 1 insertion(+), 24 deletions(-)
+> > >
+> > > diff --git a/arch/arm64/boot/dts/qcom/kodiak.dtsi b/arch/arm64/boot/dts/qcom/kodiak.dtsi
+> > > index 96ac3656ab5a..0acc6917d7aa 100644
+> > > --- a/arch/arm64/boot/dts/qcom/kodiak.dtsi
+> > > +++ b/arch/arm64/boot/dts/qcom/kodiak.dtsi
+> > > @@ -5704,6 +5704,7 @@ dp_in: endpoint {
+> > >                                     port@1 {
+> > >                                             reg = <1>;
+> > >                                             mdss_dp_out: endpoint {
+> > > +                                                   data-lanes = <0 1>;
+> >
+> > This is not true. The SoC has 4 lanes going from the DP controller to
+> > the QMP PHY.
+> >
+>
+> Does this property really denote the number of lanes and mapping the
+> internal pipe between DP TX and PHY? Doesn't it tell how the external
+> mapping looks like?
 
-Update the users throughout the rockchip device trees to use the new
-definitions.
+The external mappings are described as a part of the QMP PHY (see
+sc7180-ecs-liva-qc710.dts as one of the recent examples). On the other
+hand, this property should describe the internal mappings (i.e.
+platforms should have 4 lanes here, in some cases in a weird order,
+like talos.dtsi).
 
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Kieran Bingham <kieran.bingham@ideasonboard.com>
-
----
-
-v3:
-- Remove:
-    arch/arm64/boot/dts/rockchip/rk3588-rock-5b-plus-radxa-cam4k-cam0.dtso
-    arch/arm64/boot/dts/rockchip/rk3588-rock-5b-plus-radxa-cam4k-cam1.dtso
-
-When the core change land in linux-next, I'll resend the conflicting
-changes.
----
- arch/arm64/boot/dts/rockchip/px30-pp1516.dtsi                     | 3 ++-
- arch/arm64/boot/dts/rockchip/px30-ringneck-haikou-video-demo.dtso | 3 ++-
- arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts             | 5 +++--
- 3 files changed, 7 insertions(+), 4 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/rockchip/px30-pp1516.dtsi b/arch/arm64/boot/dts/rockchip/px30-pp1516.dtsi
-index 192791993f05..d58d6ee6241e 100644
---- a/arch/arm64/boot/dts/rockchip/px30-pp1516.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/px30-pp1516.dtsi
-@@ -6,6 +6,7 @@
- /dts-v1/;
- #include <dt-bindings/gpio/gpio.h>
- #include <dt-bindings/input/input.h>
-+#include <dt-bindings/media/video-interface-devices.h>
- #include <dt-bindings/pinctrl/rockchip.h>
- #include "px30.dtsi"
- 
-@@ -413,7 +414,7 @@ camera@36 {
- 		dvdd-supply = <&vcc_cam_dvdd>;
- 		dovdd-supply = <&vcc_cam_dovdd>;
- 		lens-focus = <&focus>;
--		orientation = <0>;
-+		orientation = <MEDIA_ORIENTATION_FRONT>;
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&cif_clkout_m0 &cam_pwdn>;
- 		reset-gpios = <&gpio2 RK_PB0 GPIO_ACTIVE_LOW>;
-diff --git a/arch/arm64/boot/dts/rockchip/px30-ringneck-haikou-video-demo.dtso b/arch/arm64/boot/dts/rockchip/px30-ringneck-haikou-video-demo.dtso
-index 760d5139f95d..2168db9168a5 100644
---- a/arch/arm64/boot/dts/rockchip/px30-ringneck-haikou-video-demo.dtso
-+++ b/arch/arm64/boot/dts/rockchip/px30-ringneck-haikou-video-demo.dtso
-@@ -16,6 +16,7 @@
- #include <dt-bindings/gpio/gpio.h>
- #include <dt-bindings/interrupt-controller/irq.h>
- #include <dt-bindings/leds/common.h>
-+#include <dt-bindings/media/video-interface-devices.h>
- #include <dt-bindings/pinctrl/rockchip.h>
- 
- &{/} {
-@@ -185,7 +186,7 @@ camera@36 {
- 		dvdd-supply = <&cam_dvdd_1v2>;
- 		dovdd-supply = <&cam_dovdd_1v8>;
- 		lens-focus = <&focus>;
--		orientation = <0>;
-+		orientation = <MEDIA_ORIENTATION_FRONT>;
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&cif_clkout_m0>;
- 		reset-gpios = <&pca9670 6 GPIO_ACTIVE_LOW>;
-diff --git a/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts b/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
-index 8d26bd9b7500..6608c777f185 100644
---- a/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
-@@ -13,6 +13,7 @@
- #include <dt-bindings/input/gpio-keys.h>
- #include <dt-bindings/input/linux-event-codes.h>
- #include <dt-bindings/leds/common.h>
-+#include <dt-bindings/media/video-interface-devices.h>
- #include "rk3399-s.dtsi"
- 
- / {
-@@ -455,7 +456,7 @@ wcam: camera@1a {
- 		reg = <0x1a>;
- 		clocks = <&cru SCLK_CIF_OUT>; /* MIPI_MCLK0, derived from CIF_CLKO */
- 		lens-focus = <&wcam_lens>;
--		orientation = <1>; /* V4L2_CAMERA_ORIENTATION_BACK */
-+		orientation = <MEDIA_ORIENTATION_BACK>;
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&camera_rst_l>;
- 		reset-gpios = <&gpio1 RK_PA0 GPIO_ACTIVE_LOW>;
-@@ -487,7 +488,7 @@ ucam: camera@36 {
- 		clocks = <&cru SCLK_CIF_OUT>; /* MIPI_MCLK1, derived from CIF_CLK0 */
- 		clock-names = "xvclk";
- 		dovdd-supply = <&vcc1v8_dvp>;
--		orientation = <0>; /* V4L2_CAMERA_ORIENTATION_FRONT */
-+		orientation = <MEDIA_ORIENTATION_FRONT>;
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&camera2_rst_l &dvp_pdn0_h>;
- 		powerdown-gpios = <&gpio2 RK_PB4 GPIO_ACTIVE_LOW>;
+Ideally SC7280 Herobrine should be updated to follow the current
+style, but it is complicated as almost nobody has the actual hardware.
 
 -- 
-2.52.0
-
+With best wishes
+Dmitry
 
