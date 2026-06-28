@@ -1,53 +1,53 @@
-Return-Path: <linux-arm-msm+bounces-114748-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-114749-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id eY2SBeneQGpmiwkAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-114748-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jun 2026 10:44:25 +0200
+	id DEpcFD7fQGpuiwkAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-114749-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jun 2026 10:45:50 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 13CB36D370F
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jun 2026 10:44:24 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id B4CB56D3718
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jun 2026 10:45:49 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=MLqXu9oG;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-114748-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 104.64.211.4 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-114748-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=WEtlk9Tq;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-114749-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-114749-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 413793004CB7
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jun 2026 08:44:21 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id C2056300DD58
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jun 2026 08:45:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 88F6B372EF3;
-	Sun, 28 Jun 2026 08:44:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8F469285CAD;
+	Sun, 28 Jun 2026 08:45:47 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D13B305057;
-	Sun, 28 Jun 2026 08:44:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FAA11E2858;
+	Sun, 28 Jun 2026 08:45:46 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782636257; cv=none; b=qGp0cxLwSpKEKQ3v4RX+jifSyR6z5jrbUSEmwglQVxgzRkkOhu36EEU4x9MZZPTKtnyuYFBAnR06To+s1/heXwlcVN2bHD250VrqOJs1VBJIS4CWTwsz3p+/4PYg1pNYtQRGdvRVhqKSQAOxXVGQEV6fxVY/EVYUPWKp2bped1c=
+	t=1782636347; cv=none; b=P8wuVaIRJVtvsT/5NdMr98JOm2KW7e5LHeQu2DRiyuapWOyCKa9/zMDT/poAaK6Eb0dEifo607/owbvFmfy2CdfcWcnR69WXWoJWBDtk/8wW9vXSvlOCa74n6xyO+9rjR3eBFSNxOMxyQPIFIac0/kbHEA6R4R1Qnvc0+yGNRPk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782636257; c=relaxed/simple;
-	bh=laWz/PWzk7WsqKDkxiCO/3cJBC7ORlLSKlI/yWMEuqs=;
+	s=arc-20240116; t=1782636347; c=relaxed/simple;
+	bh=8K/Y+isCMCpGMTTeb5Jd88PLMFBCOm0Gc9gZjA5lvuk=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=WbSQcTT9A1FC/4jlDqdy/yq9eNsiEkipfG2Tpp2hyuKFA4NVQooivFJnlqvJLer0hpiF2SfYHmxfJGxrfhHiI4RDMJurgLgDuEh8fymnYM1AfXmnrM+GTo2sJNugJB8c+QIjGTJ5XTc6kY6NiLwUsepJE2SY8Vk8Ac/SQYieEDw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MLqXu9oG; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C10791F000E9;
-	Sun, 28 Jun 2026 08:44:09 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=Tm25OzWd1zgtCkRAKskOHMHlxYURrq9e2UlPMUUW8zKPD/5TU9k16pf1qa/a4SSqrH2DLyP5mulj2AQU+p1Ho9mZJHt/dDViOTFsrYW5gX7bpWT0ptbovS8JW2y6NS574k8EPoqw/5Ncs1OjGQaag/DR1wyqoz64NsP8RNSc63E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WEtlk9Tq; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F51E1F000E9;
+	Sun, 28 Jun 2026 08:45:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782636255;
-	bh=FBoMAHCtH8Ri/28sMpEUa1oUvQsHO1sXb4qphcRiN9k=;
+	s=k20260515; t=1782636346;
+	bh=+O8UYxz1/OaYR+z9/Aria6UaSuFLU3u3GO6D8wdpVP4=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=MLqXu9oGFic/n+k6lkp9XZMETh6J2KGZeS3Ueiro7ME6Fg8TAaXTAorn74/Y2M5DR
-	 y2N3Sq6n8DkjZbmuXIwNsXVQWKWylO13iGSDY2q7RAjaif5Oo2umqzOuTEvuZrObpC
-	 8Kmci3Tx/026HwS9hiDUy3F9EY6YmCS1gRmfiXu5vRYfduzaRIDDeblCItlW8s+HeT
-	 82GsHMjX8YKhNkztLsy2frpWMT3yljpUQ8IM8RtxXj2eXFjgangyUzxWl/AzssU6Es
-	 G82Rs4m5J3JeofsaZv4R6Yv6GGkGFoWqSZ48pyhlrEBlqcE00fDmnBrEN2q6fhX5hO
-	 slAP1tE8gtD3A==
-Message-ID: <cfb45d95-7bf1-47dc-96f2-2ea4e9be9e70@kernel.org>
-Date: Sun, 28 Jun 2026 10:44:04 +0200
+	b=WEtlk9TqxqGeTFKiTZJfRB7ubSBZFpc2Rk9tg39MlumCNUAx2wG3sRKNoBLg7amul
+	 IJTqaGYiqtUIeb7t0iYJJ1e533X8MM2f5PU5NxU8uUgdxfuqP41YufVWgv5+wVluI0
+	 67bWOs/qQkH9aIpi+E+5GNS1aysfsYXWtDm/Nr3YTLAdnK+2OTR2A6IXQQStld2JjK
+	 Wo2VrwdP2HxMxIGNZsdkksFwDUrY84JmgK1qn0MbHmcao8s+qnGdzr8gGvsis4UyG7
+	 JRrT9MdRqRNX3xlD+uPHUpfbTRy91F0NxZFhJKwj1PU2gzmz4LJ6FaNXExPZOsRLVT
+	 eO2Aj8qXfzJ5A==
+Message-ID: <39b4dd07-d0f5-458e-8739-0572b5d50870@kernel.org>
+Date: Sun, 28 Jun 2026 10:45:39 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -55,7 +55,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/5] arm64: defconfig: Enable ILI7807S DSI panel driver
+Subject: Re: [PATCH 5/5] arm64: dts: qcom: Shikra LT9611UXD support
 To: Nabige Aala <nabige.aala@oss.qualcomm.com>,
  Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
@@ -64,7 +64,7 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, arpit.saini@oss.qualcomm.com,
  mohit.dsor@oss.qualcomm.com
 References: <20260627-shikra-dt-changes-v1-0-449a402673d0@oss.qualcomm.com>
- <20260627-shikra-dt-changes-v1-3-449a402673d0@oss.qualcomm.com>
+ <20260627-shikra-dt-changes-v1-5-449a402673d0@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -110,7 +110,7 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  K9bCVaboTA2T77QYkRcRJYSsO1alGX0ome/hMLD1daXlkrNUp1HWa3K4iytLRXjCSIorWiGs
  n+q3krnpXu3TFkA8qtOFZMdnIiFuiq1yLT8hptsV5xh1TA2nsVvSYiaCr3q4s4BKjS/KrLDb
  qoxzw8ISjdUp4pA85vb6YLCmb39NgidD+7PmAr65lBNveIFynTgsja1rRQ4=
-In-Reply-To: <20260627-shikra-dt-changes-v1-3-449a402673d0@oss.qualcomm.com>
+In-Reply-To: <20260627-shikra-dt-changes-v1-5-449a402673d0@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Rspamd-Action: no action
@@ -118,18 +118,18 @@ X-Spamd-Result: default: False [-5.16 / 15.00];
 	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-114748-lists,linux-arm-msm=lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:nabige.aala@oss.qualcomm.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:arpit.saini@oss.qualcomm.com,m:mohit.dsor@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	TAGGED_FROM(0.00)[bounces-114749-lists,linux-arm-msm=lfdr.de];
+	RCVD_COUNT_THREE(0.00)[4];
 	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
 	MIME_TRACE(0.00)[0:+];
-	RCVD_COUNT_THREE(0.00)[4];
+	FORGED_RECIPIENTS(0.00)[m:nabige.aala@oss.qualcomm.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:arpit.saini@oss.qualcomm.com,m:mohit.dsor@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	FORWARDED(0.00)[lists@lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	DKIM_TRACE(0.00)[kernel.org:+];
@@ -143,26 +143,42 @@ X-Spamd-Result: default: False [-5.16 / 15.00];
 	RCPT_COUNT_SEVEN(0.00)[11];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo,vger.kernel.org:from_smtp,qualcomm.com:email]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,vger.kernel.org:from_smtp]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 13CB36D370F
+X-Rspamd-Queue-Id: B4CB56D3718
 
 On 27/06/2026 12:01, Nabige Aala wrote:
-> From: Arpit Saini <arpit.saini@oss.qualcomm.com>
+> From: Mohit Dsor <mohit.dsor@oss.qualcomm.com>
 > 
-> Enable the ILI7807S 1080x1920 video-mode DSI panel driver as a module,
-> used on the Shikra board.
+> Device tree changes to support lt9611uxd hdmi-dsi driver.
+> 
+> Signed-off-by: Mohit Dsor <mohit.dsor@oss.qualcomm.com>
 
-So that's a v4, no changelog, tags ignored, comments not responded and
-also ignored.
+Incomplete DCO
 
-You got yourself one NAK, now second:
+...
 
-NAK
+> +
+>  	vreg_wcn_3p3: regulator-wcn-3p3 {
+>  		compatible = "regulator-fixed";
+>  		regulator-name = "wcn_3p3";
+> @@ -68,6 +98,78 @@ vreg_pmu_ch1: ldo4 {
+>  	};
+>  };
+>  
+> +&i2c4 {
+> +	status = "okay";
+> +
+> +	lt9611uxd: lt9611uxd@41 {
 
-Address the comments before you send the next version.
+No. Nice try. Instead of fixing broken driver (I reported this), you
+send broken workaround which is in clear violations of coding style and
+DT spec.
+
+That's a poor way to upstream things. Just throwing the code over the wall.
+
 
 Best regards,
 Krzysztof
