@@ -1,367 +1,291 @@
-Return-Path: <linux-arm-msm+bounces-114804-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-114793-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id bUpzJmSTQWoksQkAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-114804-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jun 2026 23:34:28 +0200
+	id XAApG9xmQWoPpgkAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-114793-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jun 2026 20:24:28 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id E6DB66D5036
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jun 2026 23:34:27 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id C06D56D49C5
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jun 2026 20:24:27 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=smankusors.com header.s=hostingermail-a header.b=DRGjv59l;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-114804-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-114804-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=none) header.from=smankusors.com;
+	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=iHB71d6a;
+	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=gsCLhl0P;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-114793-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-114793-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=reject) header.from=qualcomm.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id BCEEB30094EC
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jun 2026 21:34:26 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 7BE113001AC8
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jun 2026 18:24:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F3C7F37DEBF;
-	Sun, 28 Jun 2026 21:34:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 992742FC037;
+	Sun, 28 Jun 2026 18:24:25 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from fennec.ash.relay.mailchannels.net (fennec.ash.relay.mailchannels.net [23.83.222.58])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E34F3112A5;
-	Sun, 28 Jun 2026 21:34:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E7302580CF
+	for <linux-arm-msm@vger.kernel.org>; Sun, 28 Jun 2026 18:24:24 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782682463; cv=none; b=nr1ETT9DcUCLpfMb5a8bqw9w+SXGhbhZw19O6ClHQOsqeXvu3eRiP1Dn5rf6wz6fFfUyGRZpfVwzlp4wokfD33lDeO3n11mvBZWHakwpn8E8NYx5csJ36nkkbOhOJewzLBfjwRsGajrDGsDRfGhBsaOW3wiLnBnfLxz8Ps+xcnQ=
+	t=1782671065; cv=none; b=fvEilYvNgsTs4ZTr7lldyIxjvYUnnj/XeDV30lllvipR0BjnEgdXXIybAbMswQaWnsasmrajR6iWXvFGIK+9j8spUW04N0V4xExmC7AdR/CjHVGK/cKpKpzpG709LzCV/cXBWw1pGjFfVJidDthcJMK7eCrlPn6jnQLG3LLSCvo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782682463; c=relaxed/simple;
-	bh=ftzaO/0kKRUTtQT9Zw0WUsPZiLW9b7J3CSdYXaZhi+s=;
-	h=Message-ID:MIME-Version:Subject:To:References:From:In-Reply-To:
-	 Content-Type:Date; b=UkaPLar0IWDIypriekVdUObFE3rEkegfp/sf8Y6d0l5eIpL3gHHm6sT4wtTPYHYIv+867C92DfqVUssl/+pwtkgEIQ+nsXZvMAZyHusZxa3J3OCAYWljjXhXS926A9TErbVdo6xtkS4rhpJOooWn75qBnnbYRUORNaIIG2jaBAM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=smankusors.com; spf=pass smtp.mailfrom=smankusors.com; dkim=pass (2048-bit key) header.d=smankusors.com header.i=@smankusors.com header.b=DRGjv59l; arc=none smtp.client-ip=23.83.222.58
-X-Sender-Id: hostingeremail|x-authuser|linux@smankusors.com
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
-	by relay.mailchannels.net (Postfix) with ESMTP id F0B11381A79;
-	Sun, 28 Jun 2026 18:07:27 +0000 (UTC)
-Received: from fr-int-smtpout12.hostinger.io (trex-green-8.trex.outbound.svc.cluster.local [100.99.1.210])
-	(Authenticated sender: hostingeremail)
-	by relay.mailchannels.net (Postfix) with ESMTPA id 6CF90380EBE;
-	Sun, 28 Jun 2026 18:07:25 +0000 (UTC)
-X-Sender-Id: hostingeremail|x-authuser|linux@smankusors.com
-X-MC-Relay: Neutral
-X-MailChannels-SenderId: hostingeremail|x-authuser|linux@smankusors.com
-X-MailChannels-Auth-Id: hostingeremail
-X-Share-Stretch: 79d3553416ae5251_1782670047803_12563860
-X-MC-Loop-Signature: 1782670047803:2529304705
-X-MC-Ingress-Time: 1782670047802
-Received: from fr-int-smtpout12.hostinger.io (fr-int-smtpout12.hostinger.io
- [148.222.54.46])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
-	by 100.99.1.210 (trex/7.1.5);
-	Sun, 28 Jun 2026 18:07:27 +0000
-Received: from [IPV6:2001:448a:c030:3ec5:e141:122a:a8ef:3b86] (unknown [IPv6:2001:448a:c030:3ec5:e141:122a:a8ef:3b86])
-	(Authenticated sender: linux@smankusors.com)
-	by smtp.hostinger.com (smtp.hostinger.com) with ESMTPSA id 4gpHS849yjz1xqs;
-	Sun, 28 Jun 2026 18:07:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=smankusors.com;
-	s=hostingermail-a; t=1782670043;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=R3pZ5oPhkP9vU5CqRTcuBBv2KKbVQ2p6dlNIocwzGys=;
-	b=DRGjv59lgnIlOWLGspQuKZG/xD88WhO41+HyHX0oQlHjtVCXE8D9xPGSDRlllEGXikgg5r
-	9eYatEZPzcxjI3FrwrpRC+GEZVE+TDCkgK1N+faOaZzZ9MRtgYkDFTxWD0SMBClqupZqIA
-	H4yZ6o/cm4Z1kSfxoHgYP1Zfz2DD+HVv4jul7cN6FA3P7jEmfTmqIbmP5Cq8F1pdegVOSd
-	H4m19JkMmR8jTY3Aify24ua1H8Fun1ZGc+DvpohztQQJ9SDDthSEd9y7nMCdfA5PeEiFMs
-	1nMKd7h+Zm1eYqbGUMMBIOpiHRXHh2tx76FruUis9t3oIZhS2VZUC+mcC2fvKw==
-Message-ID: <5c374231-33dc-4082-95c1-1046286fbb13@smankusors.com>
+	s=arc-20240116; t=1782671065; c=relaxed/simple;
+	bh=75L9Gwo4Nbyb7dmgSjP5dJBoAyyIjloISpF52plkp3I=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=CGpSteV4NSdYzOeI6xqD8osHIVQaOR06eipJyY8EMUYdY3Nu+GEp+lYercDC/cs25P6+OYccXnJzEmqWEKvQFFVbAAgiJkCI2CWoaln+r7PmaWtjgpwsGl5KNEBSjJ/wgeFc9eHCHCqS3N2XOWHxpceIq44ZHAqhZ/QzIGHlX1E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=iHB71d6a; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=gsCLhl0P; arc=none smtp.client-ip=205.220.168.131
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65SHjAu8444927
+	for <linux-arm-msm@vger.kernel.org>; Sun, 28 Jun 2026 18:24:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=uNyxdOLXPvrnl8aepSQH6t
+	OHrLPu9lyqtOJV4hZUZBM=; b=iHB71d6a12wWorhyr4tE4zsiS50LJiPXqDQgrz
+	L7hOht1Dhr3qJWpbQ3/GAvP7yX3fIp6i8ZSi3RavSnXRfI2kOQsN5H7pv8n0hZOb
+	T8RFEht9dYmUwbghDklagUAcYufaB7lSJLnyuspWTu6CJFICoidN9x1tcwBmv/DZ
+	5Z0/Z6Ui3/QJkhUCJftuMdl6bvWm36Hq7iJtMiyE2MTtkH+BdUSO1AZe7XfBxBxW
+	DazyYyEcI7AmLRaVuAiz9peRm3diJ68qn3R9aZJfS2dTUL4P5VFI2/iMDFLt6Pid
+	Uj02lbujDbPi++rh6pMAKarqtaEH73lglxm5Nbz+RJGWV1iQ==
+Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com [74.125.82.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f27083cqe-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Sun, 28 Jun 2026 18:24:23 +0000 (GMT)
+Received: by mail-dy1-f200.google.com with SMTP id 5a478bee46e88-30c17f62afdso2354351eec.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 28 Jun 2026 11:24:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1782671063; x=1783275863; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=uNyxdOLXPvrnl8aepSQH6tOHrLPu9lyqtOJV4hZUZBM=;
+        b=gsCLhl0PbCr/G6UszK9xHB5kSoH0NwyE5Rl63oZpaqS/Iqn2HL4tk7YnB+0XBU3XZA
+         7RVzLOHT7zKWhZsW2o151ki4WNZdy3RfgDjVuW7hn4CUyZ2MKr7fRYN6hl93zf0z/uWm
+         6zjBrd7MCyyCP3IroPDjCAzA7CHxTlcURq7AAyq01xIMdwEVkhDWalmARizjCOVVfaz0
+         dEGd914gpi6xBbEbH6NsyzvtT7SdP3+7Jwru+q0EhYrVTgqzazXx/5XzJbm/XXGjEX4R
+         T5EiCm10bZCaI/6lOXjSv8PM5a3Ft7rSy1xHDut0WFQtNjarj0vMQNBgSX2FId+h61rU
+         gcLg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782671063; x=1783275863;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=uNyxdOLXPvrnl8aepSQH6tOHrLPu9lyqtOJV4hZUZBM=;
+        b=Y9iIF+m+KWd2g5ZGauOm3AGoVCusGn1EKoJREeBKofq+e9OrLum2e7onP3mg1E8uGX
+         JgVdfdVLhBuMw1wTLmdh5LyLQmKHXq7oEvThjMkotxjvZMeG/mqnEK1wMfbYFXvqYmZ6
+         Jazh4y57HUn9zXly2rdrYsxYCW8LtzelUVoODz/lawPRr5bBebMc975MFzMeQRUBBuXx
+         WoStqAVr5XPK+ct9jl4gKhbF49lVnbIX+nSqP6QKLhZkOoV9GdHXOL9ItaMCFm6pul3q
+         Yw4eTgcjNAhFiNg1BvG82YY0R65bLDsr/VsNgWeuxJOd2XRUU4aivsqkkzLoPfLQUkMA
+         NvXg==
+X-Forwarded-Encrypted: i=1; AHgh+Rq4yYsMk+ekuqlMcdrm8YbzbFtKlCGXkqT6RSagfApMBhNRr5kHXuUSnMSX1VAFXhNAJJSNEd9mx9LYtRmu@vger.kernel.org
+X-Gm-Message-State: AOJu0YyH3zheeK3/1tBofyQRr5qTy2tiUt1WK72ARJhNkoXjf394g0gY
+	HcRmzXvTgeRxpkq64Z8/1gKiM8HcnLYtthxsFHONxrpCKcGvGwzdenJtxtYBdmkeumQQQn/7cs+
+	ui6sA3NCFpj1/pDkl/+Qgz3h4q426l8zwKz/vsnI2prgWb16ccgovq118+DZDJ17LdkB6
+X-Gm-Gg: AfdE7clR6jZhpsZamxZL9bdZzrlZOaoMbaemHit/Gqq1SisjAqlU+QHmtznXemt8Ba0
+	3Mim6uV9do6KFjefv7cJLgjKfwGT79e0wgL9bd4xcwy6Ttn3ItkVqWBUQJmn7vH7KTkAPfrtpNp
+	2lMTr2b/ubr9Bxv6TNylOXRG+NZz+xM+6FF4QhpX0/7jUjYSN9z9loXBeuRTM8sS4bF9F/NzX5m
+	+bPlqiun1aCgiV7cafgbSiPs2lb5m6bfHsNmp68Ydl1Ctalt9FU0LMkgGEH7HZv6FfY4eT1KSUC
+	chNxuhxqGmV3hYQv3S5voWeHMiyh2myHopTt3kbk7TFKAZkOZYZ/8EOTPixEcrDgGL7w+hVNidf
+	RkzSkETqpd5nvNa5GJFqAAvPurjS0rDXYUUM=
+X-Received: by 2002:a05:7300:ec18:b0:30c:ab96:7306 with SMTP id 5a478bee46e88-30cab96771emr7743519eec.22.1782671062557;
+        Sun, 28 Jun 2026 11:24:22 -0700 (PDT)
+X-Received: by 2002:a05:7300:ec18:b0:30c:ab96:7306 with SMTP id 5a478bee46e88-30cab96771emr7743467eec.22.1782671061966;
+        Sun, 28 Jun 2026 11:24:21 -0700 (PDT)
+Received: from hu-akhilpo-hyd.qualcomm.com ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-30c7c8b1a75sm37508218eec.19.2026.06.28.11.24.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 28 Jun 2026 11:24:21 -0700 (PDT)
+From: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+Subject: [PATCH v3 0/8] drm/msm: Add support for Shikra GPU (A704)
+Date: Sun, 28 Jun 2026 23:53:53 +0530
+Message-Id: <20260628-shikra-gpu-v3-0-9b28a3b167e1@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH] clk: qcom: hfpll: return lock timeout from enable
- paths
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Pengpeng Hou <pengpeng@iscas.ac.cn>, Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Brian Masney <bmasney@redhat.com>,
- linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- linux-kernel@vger.kernel.org, Herman van Hazendonk <github.com@herrie.org>,
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-References: <20260623060517.10889-1-pengpeng@iscas.ac.cn>
- <8e7a4cd1-ff17-4052-938b-5cb2ee8576f0@oss.qualcomm.com>
- <36f37fa0-94f3-498b-86ca-b431436750e1@smankusors.com>
- <198ad9ab-6e8e-4c67-afc2-01962ea12dde@oss.qualcomm.com>
-Content-Language: en-US
-From: Antony Kurniawan Soemardi <linux@smankusors.com>
-In-Reply-To: <198ad9ab-6e8e-4c67-afc2-01962ea12dde@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Date: Sun, 28 Jun 2026 18:07:20 +0000 (UTC)
-X-CM-Envelope: MS4xfMnMUDzyWZ9kT6/x0RikgWISa4wo6tY6SonRmRl9WFSeegop82rBIUroccnDfVLHKitqSetTrrG/6vgDVQzvn6MDEnqvDDQlHUk98mu3oe9ZBEd8Sk8C x2UjyzeaUlGRTOz/UU+hd74gd9Jik3ceEzvatAYMhTpMgd8xxTl9Oj3CAZY7XXhAy0jup4MhpwT7k7ju9Qa5MwGdLaq3BZ0dAmlQ2kBg/1HqODUmIhFZDj4H KxCiGKEvmkEhlYzpI05GzME2gAKfFsjpXEQ6cDFq0vy3X3mnD1Pt6xSArDTCUhJzDekEWckLIYPRVQmu4L0oaxwr+HWZnSuntNnxH3MwBGb8KuBHxhcDzRPp gvGKR1UiSOeCxKDUusHOOadjbr6y373dlISlYvRqm5eLiBs5ZpuLgF2Ih+pI//A0anGS++GNQsRIHXF9GUcD7lPHMYnmpMUmuhTVMebsUH7La8/P+kLcpn1k 6FBCI1/SCRZ8LH+EgLrMQuV7pSyJPmFWKFQebYY1FukgVPQgZ5VM3oEJkfOJRJBUPP4Hd/J8lR9yrRq2ToJeufzlcp1X6eqQTCMxKh4gGQ614BftRa/b34FI wwgmKdoaK0Pbr+mbGE/gzwmjEqROrcZ6eJp9CsaxhPhXSZuNH0J44n0L9nQNLGJtkSB0xK3SJ54LsgD15MurLW3u
-X-CM-Analysis: v=2.4 cv=UN2PHzfy c=1 sm=1 tr=0 ts=6a4162db a=oKaQ5CoHEv9wptLToLHpSA==:617 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=CqCiEOEOAXGEPVoBDjUA:9 a=QEXdDO2ut3YA:10
-X-AuthUser: linux@smankusors.com
+X-B4-Tracking: v=1; b=H4sIALlmQWoC/43Q3WrDIBQH8FcJXs+ixnwyxt5j9ELNsZE2H9VEO
+ krefSfpVjbWwW4OHNGf/3OuJIB3EEidXImH6IIbemzSp4SYVvUHoK7BnggmcpaziobWHb2ih3G
+ mmUyFbkBZZguCD0YP1l027G2PfevCNPj3zY58PX3IRE4ZrRoGrDJKc569DiHszrM6maHrdljIq
+ kXxTeDZD0GgIKxoeCoLk1r9QFhuAT2cZxxyuqUkWgWg6yU31UkPl4nefJGvA3UQgtpWUCfPn9H
+ L+8fGUD92WM3pGGjM1imkAYtzCID0V4aXP0guvshmojFHJte50VnZaFkU/2aYvDMujBgLN4M1S
+ gRLwaTlTFQp5w/A/bJ8AHPEn0AJAgAA
+X-Change-ID: 20260609-shikra-gpu-5432bdeaf0f7
+To: Rob Clark <robin.clark@oss.qualcomm.com>, Sean Paul <sean@poorly.run>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jesszhan0024@gmail.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        "Joerg Roedel (AMD)" <joro@8bytes.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc: Bibek Kumar Patro <bibek.patro@oss.qualcomm.com>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        iommu@lists.linux.dev, Akhil P Oommen <akhilpo@oss.qualcomm.com>,
+        Aditya Sherawat <asherawa@qti.qualcomm.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        Imran Shaik <imran.shaik@oss.qualcomm.com>,
+        Komal Bajaj <komal.bajaj@oss.qualcomm.com>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1782671052; l=3664;
+ i=akhilpo@oss.qualcomm.com; s=20240726; h=from:subject:message-id;
+ bh=75L9Gwo4Nbyb7dmgSjP5dJBoAyyIjloISpF52plkp3I=;
+ b=PgRzW4o2SddLK47Q3Hm5eNNFLiSkki9yVLGnmz57FrcBQ8JSkSDQa680Sqq/oBzheZtbPJobX
+ hxTLBJgd66XDIsUa5+sMHBz5AH7d4P8S6U7bNs3OOxACVuEo85A2Aam
+X-Developer-Key: i=akhilpo@oss.qualcomm.com; a=ed25519;
+ pk=lmVtttSHmAUYFnJsQHX80IIRmYmXA4+CzpGcWOOsfKA=
+X-Authority-Analysis: v=2.4 cv=ObKoyBTY c=1 sm=1 tr=0 ts=6a4166d7 cx=c_pps
+ a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=e5mUnYsNAAAA:8 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=QyemgOkiUGGnp4gUInsA:9
+ a=QEXdDO2ut3YA:10 a=6Ab_bkdmUrQuMsNx7PHu:22 a=Vxmtnl_E_bksehYqCbjh:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI4MDE2NSBTYWx0ZWRfX8Cn7Gwa2Qzgo
+ HqqzxGvdtfMTxYjnoXg9TFM9DEob16NH3DiE0C0HKRks4Q+Id7C9myjhCFoHNfKsylRiHROGd4G
+ o6wdk7jjdX15leWFojnw4WoUdlTkcqOFaV80bc05nE3TLsD1zyXAcNXsIDkJZCZ+2ge1PvrF4DY
+ sHn5skNV6es5ki0F/ybzMMahkMeUWr15lYyhQTIaaveyjyhXd26XxmjtqGStba01GoA8iIroGc7
+ hL+J0RpagnoiL6exbjotxd9L+TCDxRfH21Yomsr3qlsZfZcfPtuh64hUXNEVxP1F54HvD/H1qlb
+ Ps+10rT9E4AoZgX+HqbghiJXQtlk6h9l79qrsugXxiM9alTJn4p/IR1uKRmUZRwqyqcB8U36ydT
+ GrZf4gTBCbrnu5u99UD7mc5907oVtPGWqfQM2IzAok4JQP4cmilgZYbPYcLC5tRHBqM1BWlIdM6
+ sxp3l3HKkKuSFfwl/3w==
+X-Proofpoint-ORIG-GUID: 01ixNB-ZQ0vA4EscAKQVwaqJKwY-v0on
+X-Proofpoint-GUID: 01ixNB-ZQ0vA4EscAKQVwaqJKwY-v0on
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI4MDE2NSBTYWx0ZWRfX5TXMz4Sor+XA
+ WwgnFuU+KpPCeeBm55201YwyTbF0OoJCML3zt5aXeSIAhoLAuCmZxDbO64QIYB8LlubgmjNNQtX
+ w2lOX3sMXee7D8i0sHdzWatqrfjIu4o=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-28_05,2026-06-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 spamscore=0 lowpriorityscore=0 suspectscore=0
+ impostorscore=0 clxscore=1015 bulkscore=0 malwarescore=0 adultscore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2606280165
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[smankusors.com,none];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
-	R_DKIM_ALLOW(-0.20)[smankusors.com:s=hostingermail-a];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[smankusors.com:+];
-	FORWARDED(0.00)[lists@lfdr.de];
-	TAGGED_FROM(0.00)[bounces-114804-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-114793-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[34];
+	FORWARDED(0.00)[lists@lfdr.de];
+	FREEMAIL_TO(0.00)[oss.qualcomm.com,poorly.run,kernel.org,linux.dev,gmail.com,somainline.org,ffwll.ch,linux.intel.com,suse.de,arm.com,8bytes.org];
+	FORGED_RECIPIENTS(0.00)[m:robin.clark@oss.qualcomm.com,m:sean@poorly.run,m:konradybcio@kernel.org,m:lumag@kernel.org,m:abhinav.kumar@linux.dev,m:jesszhan0024@gmail.com,m:marijn.suijten@somainline.org,m:airlied@gmail.com,m:simona@ffwll.ch,m:maarten.lankhorst@linux.intel.com,m:mripard@kernel.org,m:tzimmermann@suse.de,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:will@kernel.org,m:robin.murphy@arm.com,m:joro@8bytes.org,m:andersson@kernel.org,m:bibek.patro@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:dri-devel@lists.freedesktop.org,m:freedreno@lists.freedesktop.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-arm-kernel@lists.infradead.org,m:iommu@lists.linux.dev,m:akhilpo@oss.qualcomm.com,m:asherawa@qti.qualcomm.com,m:krzysztof.kozlowski@oss.qualcomm.com,m:konrad.dybcio@oss.qualcomm.com,m:dmitry.baryshkov@oss.qualcomm.com,m:imran.shaik@oss.qualcomm.com,m:komal.bajaj@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	FORGED_SENDER(0.00)[akhilpo@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_SENDER(0.00)[linux@smankusors.com,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS(0.00)[m:konrad.dybcio@oss.qualcomm.com,m:pengpeng@iscas.ac.cn,m:andersson@kernel.org,m:mturquette@baylibre.com,m:sboyd@kernel.org,m:bmasney@redhat.com,m:linux-arm-msm@vger.kernel.org,m:linux-clk@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:github.com@herrie.org,m:dmitry.baryshkov@oss.qualcomm.com,s:lists@lfdr.de];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,gitlab.freedesktop.org:url,qualcomm.com:dkim,qualcomm.com:email,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,vger.kernel.org:from_smtp,linux.it:email,iscas.ac.cn:email];
-	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[linux@smankusors.com,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[akhilpo@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	ALIAS_RESOLVED(0.00)[];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	TO_DN_SOME(0.00)[];
 	MID_RHS_MATCH_FROM(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[11];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: E6DB66D5036
+X-Rspamd-Queue-Id: C06D56D49C5
 
-On 6/24/2026 2:39 PM, Konrad Dybcio wrote:
-> On 6/24/26 3:57 AM, Antony Kurniawan Soemardi wrote:
->> On 6/23/2026 4:43 PM, Konrad Dybcio wrote:
->>> On 6/23/26 8:05 AM, Pengpeng Hou wrote:
->>>> The HFPLL enable helper waits for the lock bit but ignores the
->>>> regmap_read_poll_timeout() result. The polling condition is also
->>>> inconsistent with clk_hfpll_init(), which treats the lock bit being set
->>>> as the locked state.
->>>>
->>>> Wait for the lock bit to become set, return timeout errors from the
->>>> helper, and propagate those errors through clk_hfpll_enable() and
->>>> clk_hfpll_set_rate() instead of enabling the output unconditionally.
->>>>
->>>> Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
->>>> ---
->>>
->>> This looks good on the surface..
->>>
->>> +Herman, Anthony, Dmitry could you please give this a spin on 8x60?
->>>
->>> Konrad
->>
->> Just to clarify, this patch impacts cpufreq and gpufreq for Qualcomm
->> Krait era, is that correct?
-> 
-> Seems that way - cpu, L2, and GPU, maybe others
+Adreno A704 GPU found in Shikra is an IP reuse of A702 GPU with very 
+minimal changes. The only KMD facing difference is the chipid and the
+zap firmware which is specified via devicetree.
 
-nope, tested on Sony Xperia SP (MSM8960T), the phone hangs
+Mesa side support is already merged:
+https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/41762
 
-[    0.000000] Booting Linux on physical CPU 0x0
-[    0.000000] Linux version 7.1.0 (pmos@03766073382c) (Alpine clang 
-version 22.1.8, LLD 22.1.8) #10 SMP Sun Jun 28 17:50:44 UTC 2026
-[    0.000000] CPU: ARMv7 Processor [512f04d0] revision 0 (ARMv7), 
-cr=10c5787d
-[    0.000000] CPU: div instructions available: patching division code
-[    0.000000] CPU: PIPT / VIPT nonaliasing data cache, PIPT instruction 
-cache
-[    0.000000] OF: fdt: Machine model: Sony Xperia SP
-[    0.000000] random: crng init done
-[    0.000000] earlycon: msm_serial_dm0 at MMIO 0x1a040000 (options 
-'115200n8')
-[    0.000000] printk: legacy bootconsole [msm_serial_dm0] enabled
-[    0.000000] Memory policy: Data cache writealloc
-[    0.000000] efi: UEFI not found.
-[    0.000000] cma: Reserved 64 MiB at 0xbc000000
-[    0.000000] OF: reserved mem: Reserved memory: No reserved-memory 
-node in the DT
-[    0.000000] Zone ranges:
-[    0.000000]   DMA      [mem 0x0000000080200000-0x00000000b01fffff]
-[    0.000000]   Normal   empty
-[    0.000000]   HighMem  [mem 0x00000000b0200000-0x00000000bfffffff]
-[    0.000000] Movable zone start for each node
-[    0.000000] Early memory node ranges
-[    0.000000]   node   0: [mem 0x0000000080200000-0x00000000bfffffff]
-[    0.000000] Initmem setup node 0 [mem 
-0x0000000080200000-0x00000000bfffffff]
-[    0.000000] On node 0, zone DMA: 512 pages in unavailable ranges
-[    0.000000] percpu: Embedded 20 pages/cpu s49932 r8192 d23796 u81920
-[    0.000000] Kernel command line: console=ttyMSM0 earlycon earlyprintk 
-fw_devlink=permissive 
-pmos_boot_uuid=af65c02d-2fac-4fb9-ac5c-342f6ee9acdf pmos_root_uuid=02s
-[    0.000000] Unknown kernel command line parameters "earlyprintk 
-pmos_boot_uuid=af65c02d-2fac-4fb9-ac5c-342f6ee9acdf 
-pmos_root_uuid=02b642f1-ec7b-4d1c-8212-ebdce18.
-[    0.000000] printk: log buffer data + meta data: 131072 + 409600 = 
-540672 bytes
-[    0.000000] Dentry cache hash table entries: 131072 (order: 7, 524288 
-bytes, linear)
-[    0.000000] Inode-cache hash table entries: 65536 (order: 6, 262144 
-bytes, linear)
-[    0.000000] Built 1 zonelists, mobility grouping on.  Total pages: 261632
-[    0.000000] mem auto-init: stack:all(zero), heap alloc:off, heap free:off
-[    0.000000] SLUB: HWalign=64, Order=0-3, MinObjects=0, CPUs=2, Nodes=1
-[    0.000000] ftrace: allocating 71217 entries in 209 pages
-[    0.000000] ftrace: allocated 209 pages with 4 groups
-[    0.000000] rcu: Hierarchical RCU implementation.
-[    0.000000] rcu:     RCU event tracing is enabled.
-[    0.000000] rcu:     RCU restricting CPUs from NR_CPUS=16 to 
-nr_cpu_ids=2.
-[    0.000000]  Rude variant of Tasks RCU enabled.
-[    0.000000]  Tracing variant of Tasks RCU enabled.
-[    0.000000] rcu: RCU calculated value of scheduler-enlistment delay 
-is 10 jiffies.
-[    0.000000] rcu: Adjusting geometry for rcu_fanout_leaf=16, nr_cpu_ids=2
-[    0.000000] RCU Tasks Rude: Setting shift to 1 and lim to 1 
-rcu_task_cb_adjust=1 rcu_task_cpu_ids=2.
-[    0.000000] NR_IRQS: 16, nr_irqs: 16, preallocated irqs: 16
-[    0.000000] rcu: srcu_init: Setting srcu_struct sizes based on 
-contention.
-[    0.000000] clocksource: jiffies: mask: 0xffffffff max_cycles: 
-0xffffffff, max_idle_ns: 19112604462750000 ns
-[    0.000000] clocksource: dg_timer: mask: 0xffffffff max_cycles: 
-0xffffffff, max_idle_ns: 283149695806 ns
-[    0.000003] sched_clock: 32 bits at 7MHz, resolution 148ns, wraps 
-every 318145725365ns
-[    0.008509] Switching to timer-based delay loop, resolution 148ns
-[    0.021062] Console: colour dummy device 80x30
-[    0.022498] Calibrating delay loop (skipped), value calculated using 
-timer frequency.. 13.50 BogoMIPS (lpj=67500)
-[    0.026739] CPU: Testing write buffer coherency: ok
-[    0.037149] pid_max: default: 32768 minimum: 301
-[    0.043671] LSM support for eBPF active
-[    0.046794] Mount-cache hash table entries: 2048 (order: 1, 8192 
-bytes, linear)
-[    0.050243] Mountpoint-cache hash table entries: 2048 (order: 1, 8192 
-bytes, linear)
-[    0.058084] VFS: Finished mounting rootfs on nullfs
-[    0.067344] CPU0: thread -1, cpu 0, socket 0, mpidr 80000000
-[    0.070197] qcom_scm: convention: smc legacy
-[    0.079085] Setting up static identity map for 0x80500000 - 0x805000b0
-[    0.083075] rcu: Hierarchical SRCU implementation.
-[    0.086652] rcu:     Max phase no-delay instances is 1000.
-[    0.091980] Timer migration: 1 hierarchy levels; 8 children per 
-group; 1 crossnode level
-[    0.107264] EFI services will not be available.
-[    0.107803] smp: Bringing up secondary CPUs ...
-[    0.113189] CPU1: thread -1, cpu 1, socket 0, mpidr 80000001
-[    0.114181] smp: Brought up 1 node, 2 CPUs
-[    0.121166] SMP: Total of 2 processors activated (27.00 BogoMIPS).
-[    0.124946] CPU: All CPU(s) started in SVC mode.
-[    0.131645] Memory: 914204K/1046528K available (24576K kernel code, 
-3059K rwdata, 8308K rodata, 3072K init, 461K bss, 62808K reserved, 
-65536K cma-reserved, 194560)
-[    0.137540] devtmpfs: initialized
-[    0.176746] VFP support v0.3: implementor 51 architecture 64 part 4d 
-variant 2 rev 0
-[    0.177699] posixtimers hash table entries: 1024 (order: 1, 8192 
-bytes, linear)
-[    0.183800] futex hash table entries: 512 (32768 bytes on 1 NUMA 
-nodes, total 32 KiB, linear).
-[    0.210792] DMI: not present or invalid.
-[    0.212311] NET: Registered PF_NETLINK/PF_ROUTE protocol family
-[    0.216112] DMA: preallocated 256 KiB pool for atomic coherent 
-allocations
-[    0.234714] thermal_sys: Registered thermal governor 'step_wise'
-[    0.234948] cpuidle: using governor menu
-[    0.241913] No ATAGs?
-[    0.244049] hw-breakpoint: Failed to enable monitor mode on CPU 0.
-[    0.262963] Serial: AMBA PL011 UART driver
-[    0.285450] /soc/clock-controller@900000: Fixed dependency cycle(s) 
-with /soc/clock-controller@28000000
-[    0.286260] /soc/usb@12500000: Fixed dependency cycle(s) with 
-/soc/usb@12500000/ulpi/phy
-[    0.294023] /soc/usb@12500000/ulpi/phy: Fixed dependency cycle(s) 
-with /soc/usb@12500000
-[    0.302327] /soc/clock-controller@28000000: Fixed dependency cycle(s) 
-with /soc/clock-controller@900000
-[    0.329630] /soc/clock-controller@900000: Fixed dependency cycle(s) 
-with /soc/clock-controller@28000000
-[    0.351469] /soc/usb@12500000: Fixed dependency cycle(s) with 
-/soc/usb@12500000/ulpi/phy
-[    0.351769] /soc/usb@12500000/ulpi/phy: Fixed dependency cycle(s) 
-with /soc/usb@12500000
-[    0.369289] kprobes: kprobe jump-optimization is enabled. All kprobes 
-are optimized if possible.
-[    0.394747] raid6: using neon recovery algorithm
-[    0.561191] raid6: int32x1  gen()    92 MB/s
-[    0.733047] raid6: int32x2  gen()    99 MB/s
-[    0.904827] raid6: int32x4  gen()   162 MB/s
-[    1.076823] raid6: int32x8  gen()   205 MB/s
-[    1.248860] raid6: neonx1   gen()   785 MB/s
-[    1.420782] raid6: neonx2   gen()  1047 MB/s
-[    1.592689] raid6: neonx4   gen()   907 MB/s
-[    1.764529] raid6: neonx8   gen()   934 MB/s
-[    1.764570] raid6: using algorithm neonx2 gen() 1047 MB/s
-[    1.936416] raid6: .... xor() 630 MB/s, rmw enabled
-[    1.954284] iommu: Default domain type: Translated
-[    1.954336] iommu: DMA domain TLB invalidation policy: strict mode
-[    1.960850] SCSI subsystem initialized
-[    1.969167] usbcore: registered new interface driver usbfs
-[    1.969334] usbcore: registered new interface driver hub
-[    1.973637] usbcore: registered new device driver usb
-[    1.983264] pps_core: LinuxPPS API ver. 1 registered
-[    1.983977] pps_core: Software ver. 5.3.6 - Copyright 2005-2007 
-Rodolfo Giometti <giometti@linux.it>
-[    1.989049] PTP clock support registered
-[    1.998685] EDAC MC: Ver: 3.0.0
-[    2.002983] scmi_core: SCMI protocol bus registered
-[    2.010594] vgaarb: loaded
-[    2.017546] clocksource: Switched to clocksource dg_timer
-[    2.048670] NET: Registered PF_INET protocol family
-[    2.048993] IP idents hash table entries: 16384 (order: 5, 131072 
-bytes, linear)
-[    2.054734] tcp_listen_portaddr_hash hash table entries: 512 (order: 
-0, 4096 bytes, linear)
-[    2.060149] Table-perturb hash table entries: 65536 (order: 6, 262144 
-bytes, linear)
-[    2.068274] TCP established hash table entries: 8192 (order: 3, 32768 
-bytes, linear)
-[    2.076241] TCP bind hash table entries: 8192 (order: 5, 131072 
-bytes, linear)
-[    2.084002] TCP: Hash tables configured (established 8192 bind 8192)
-[    2.091130] UDP hash table entries: 512 (order: 3, 28672 bytes, linear)
-[    2.097811] NET: Registered PF_UNIX/PF_LOCAL protocol family
-[    2.105019] RPC: Registered named UNIX socket transport module.
-[    2.109698] RPC: Registered udp transport module.
-[    2.115225] RPC: Registered tcp transport module.
-[    2.120187] RPC: Registered tcp-with-tls transport module.
-[    2.124774] RPC: Registered tcp NFSv4.1 backchannel transport module.
-[    2.130267] PCI: CLS 0 bytes, default 64
-[    2.140192] Initialise system trusted keyrings
-[    2.147886] Trying to unpack rootfs image as initramfs...
-[    2.171410] workingset: timestamp_bits=14 (anon: 9) max_order=18 
-bucket_order=4 (anon: 9)
-[    2.195378] NFS: Registering the id_resolver key type
-[    2.195508] Key type id_resolver registered
-[    2.214561] Key type id_legacy registered
-[    2.214759] nfs4filelayout_init: NFSv4 File Layout Driver Registering...
-[    2.217858] nfs4flexfilelayout_init: NFSv4 Flexfile Layout Driver 
-Registering...
-[    2.227868] Key type asymmetric registered
-[    2.231752] Asymmetric key parser 'x509' registered
-[    2.235860] Block layer SCSI generic (bsg) driver version 0.4 loaded 
-(major 245)
-[    2.268473] io scheduler mq-deadline registered
-[    2.268570] io scheduler kyber registered
-[    2.272081] io scheduler bfq registered
-[    2.276199] xor: measuring software checksum speed
-[    2.282001]    neon            :  1506 MB/sec
-[    2.290889]    32regs          :   517 MB/sec
-[    2.297519]    8regs           :   499 MB/sec
-[    2.301990]    arm4regs        :   744 MB/sec
-[    2.302054] xor: using function: neon (1506 MB/sec)
-[    2.543901] ledtrig-cpu: registered to indicate activity on CPUs
-[    2.679716] L2 @ Undefined rate. Forcing new rate
+Included the DT bits in the v3 revision.
 
+-Akhil.
+
+Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+---
+Changes in v3:
+- Rebase on top of next-20260626
+- Included GPU related DT patches
+- Link to v2: https://lore.kernel.org/r/20260615-shikra-gpu-v2-0-2f2d1347c3fb@oss.qualcomm.com
+
+Changes in v2:
+- Add a new patch to document the GPU SMMU bindings
+- Capture trailers
+- Link to v1: https://lore.kernel.org/r/20260609-shikra-gpu-v1-0-9d0e09cab115@oss.qualcomm.com
+
+---
+Aditya Sherawat (6):
+      dt-bindings: display/msm/gpu: Add support for A704 GPU
+      drm/msm/adreno: Add support for A704 GPU
+      arm64: dts: qcom: shikra: Add A704 GPU support
+      arm64: dts: qcom: shikra-cqm-evk: Enable A704 GPU
+      arm64: dts: qcom: shikra-cqs-evk: Enable A704 GPU
+      arm64: dts: qcom: shikra-iqs-evk: Enable A704 GPU
+
+Bibek Kumar Patro (2):
+      dt-bindings: arm-smmu: Document GPU SMMU for Shikra SoC
+      arm64: dts: qcom: shikra: Add Adreno SMMU node
+
+ .../devicetree/bindings/display/msm/gpu.yaml       |   1 +
+ .../devicetree/bindings/iommu/arm,smmu.yaml        |   2 +
+ arch/arm64/boot/dts/qcom/shikra-cqm-evk.dts        |   8 ++
+ arch/arm64/boot/dts/qcom/shikra-cqs-evk.dts        |   8 ++
+ arch/arm64/boot/dts/qcom/shikra-iqs-evk.dts        |   8 ++
+ arch/arm64/boot/dts/qcom/shikra.dtsi               | 127 +++++++++++++++++++++
+ drivers/gpu/drm/msm/adreno/a6xx_catalog.c          |   2 +-
+ 7 files changed, 155 insertions(+), 1 deletion(-)
+---
+base-commit: 10a31245d8ba950c7fe87face7d0c190009cb572
+change-id: 20260609-shikra-gpu-5432bdeaf0f7
+prerequisite-message-id: <20260608-shikra-gcc-rpmcc-clks-v5-0-94cefe092ee3@oss.qualcomm.com>
+prerequisite-patch-id: 59bb0a7828e41f546f734f127d81da83c0adcda9
+prerequisite-patch-id: 197da6bcb15cadc47869dba88c8020987b25c335
+prerequisite-patch-id: 8ec9c1eb03f052ae232ed54117abed38672c23f6
+prerequisite-patch-id: 350db4f4bcdfc0fad9ed57cd5b1723f85ad44f5d
+prerequisite-message-id: <20260612-shikra-dt-v6-0-6b6cb58db477@oss.qualcomm.com>
+prerequisite-patch-id: 3a689e8dda5fd2755b689d94d095806b3f2e6eed
+prerequisite-patch-id: ac83151a889855498d36288ddd36216d451340c8
+prerequisite-patch-id: 2357cac636e019eaf14d6a493a1c72bca56fe405
+prerequisite-patch-id: 2885f299e711582da312ca9d13983d296a3dd5dc
+prerequisite-patch-id: 91af5f3c01e766a53ce8de69aa21847a2d6bbbf8
+prerequisite-message-id: <20260604-shikra-dispcc-gpucc-v4-0-8204f1029311@oss.qualcomm.com>
+prerequisite-patch-id: 67fa5f31ee5109470da23db3b513721580f4c86f
+prerequisite-patch-id: 0e79e46bc5a88849a2f0a410b39c08f3244dfed3
+prerequisite-patch-id: 0396ac157aba73a5afd7ba4a8a744847f5a7b433
+prerequisite-patch-id: 2b1aecd97b9c073a1b323138cd7a98cb34e3715f
+prerequisite-patch-id: 823bc7bc713f6fce1b9de47a266307f1829636b9
+prerequisite-patch-id: 8a8a9df61f7c7c51d7ea9cdacc52b7bdd917f12c
+prerequisite-patch-id: 5b89b41d7c729c23b3b1fff9b5f572f4baa915ca
+prerequisite-patch-id: acd08e91e5e2c6f4799879e48481b07167c0a400
+prerequisite-patch-id: c9f2942207341ad4f450b20f049199f35188c02a
+prerequisite-patch-id: dd62ebff6be6a2e2d32743812d35ec54daf91d00
+prerequisite-patch-id: 3a6e9752793f2d7b084008b47daed10ea572064a
+prerequisite-patch-id: 3338cdc5915c1e6b991067d3a7afb734c182663e
+prerequisite-patch-id: a3026c858ffdfd3bfafc837e72c67fffe46021eb
+
+Best regards,
 -- 
-Thanks,
-Antony K. S.
+Akhil P Oommen <akhilpo@oss.qualcomm.com>
+
 
