@@ -1,213 +1,194 @@
-Return-Path: <linux-arm-msm+bounces-115211-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-115212-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id Qg7uOvybQmp7+gkAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-115211-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2026 18:23:24 +0200
+	id ei1vGWmeQmoL+wkAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-115212-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2026 18:33:45 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id D58D86DD4B9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2026 18:23:24 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id A9E746DD5FA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2026 18:33:44 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=intel.com header.s=Intel header.b=XUh5lqOG;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115211-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.232.135.74 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115211-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=none) header.from=intel.com;
+	dkim=pass header.d=linaro.org header.s=google header.b=RCSymXuE;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115212-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115212-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=none) header.from=linaro.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id EE01C301AB81
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2026 16:23:23 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id EDEFC3026C19
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2026 16:29:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9976144D03B;
-	Mon, 29 Jun 2026 16:23:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3589B37C0E7;
+	Mon, 29 Jun 2026 16:29:12 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.17])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCFE937C11C;
-	Mon, 29 Jun 2026 16:23:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82DCC449EC2
+	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jun 2026 16:29:10 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782750198; cv=none; b=owM4QpLmrkahAVgrqs5JFoR0lFDzgofa/gDYDf4FfGAl2kBA4Yhmi+6cc7jJpielHtMjgKD2XnX1LWnydAAA/MCxUde0ZbjQPY4NrFRVlNoBqkGuhFqnp62wkL2EooWA61OE8arhfFRKh8KD+Xl4Nl1yxJQ3ltJ2Qz5inM4SDGQ=
+	t=1782750552; cv=none; b=BO684aIgrl/gjIBiprVeRnkCtz7NzDQ0bWJB1L0Ul97FffqbNBebA7W/IqSkDbE5wgdxmMfW7xylcgKx93CrpldTSXmV2a1r3im0NWKjqBOsLy16EEgWaXpxSLL49HfYLp2uvo2rg0uVKcXjF4kNCa3wqnLZDdrcStWEnmfvxo4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782750198; c=relaxed/simple;
-	bh=60Kkhn1S4xFp8KF1ZAF46WPmvC0pF6KOvaZqQh2Mlf4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=b8rWrCByepTNYNmoCV7qBk1LFvloGKC6EPVDI2SPteW94xvNHwo6thFWGbCAjpoc39aK4yfXa6nEDDy166aM1kf4/VR5FdVh2I4DcPMWUZuVdD364SOki6U6QZh54vbVaZDt2Jho4KwMcEZWqWo/HpIVa3egFNi8SCIEDlWRgok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=XUh5lqOG; arc=none smtp.client-ip=198.175.65.17
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1782750197; x=1814286197;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=60Kkhn1S4xFp8KF1ZAF46WPmvC0pF6KOvaZqQh2Mlf4=;
-  b=XUh5lqOG7e40hPihuH2jgk5xQ/GzbvFEk+m2Al0tfQThrr2AJoRATROb
-   pl1/dHkRS+rxWEqhDjD3t+Bctb0rHUJlluhmSenAhd6AFRvO3vfbiPoYg
-   jTzF3a7OAQrGE6BuiXVI3z6L+5R7H4SJhlSgTrVBFV7XaNsP6/OYrz47U
-   FO2Hr9lD+tzP7MjBON94ne4N0yiuex75fYqeLwDn9AuoyWVohKlzgeZ5O
-   RkcadvbYng+4kTIG/WK2u1XooArWAckObng2uOJu2EMMOLg3PzLY5dAiC
-   0imZlnO1t55X1xaMVfuqg7vb5sf7i0wj90u+q1z48Y3wH9jhzd8ZKpP8w
-   w==;
-X-CSE-ConnectionGUID: fMrWV1YGS0WgZZhEI/S5Gw==
-X-CSE-MsgGUID: bHUpvzGsScON9AZIM1DNmA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11832"; a="83476036"
-X-IronPort-AV: E=Sophos;i="6.24,232,1774335600"; 
-   d="scan'208";a="83476036"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
-  by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Jun 2026 09:23:15 -0700
-X-CSE-ConnectionGUID: tfo8W8J/QcSmRxl6mSfrug==
-X-CSE-MsgGUID: qa+c086/QemtMiZKLSzfAA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.24,232,1774335600"; 
-   d="scan'208";a="256920930"
-Received: from kniemiec-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.244.207])
-  by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Jun 2026 09:23:02 -0700
-Date: Mon, 29 Jun 2026 19:23:00 +0300
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Cc: Lee Jones <lee@kernel.org>,
-	Mark Brown <broonie@opensource.wolfsonmicro.com>,
-	Thierry Reding <thierry.reding@avionic-design.de>,
-	Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Srinivas Kandagatla <srini@kernel.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Vinod Koul <vkoul@kernel.org>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Danilo Krummrich <dakr@kernel.org>, Rob Herring <robh@kernel.org>,
-	Saravana Kannan <saravanak@kernel.org>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
-	Andi Shyti <andi.shyti@kernel.org>, Joerg Roedel <joro@8bytes.org>,
-	Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
-	Doug Berger <opendmb@gmail.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
-	Ulf Hansson <ulfh@kernel.org>, Frank Li <Frank.Li@nxp.com>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Thomas =?iso-8859-1?Q?Hellstr=F6m?= <thomas.hellstrom@linux.intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-	Peter Chen <peter.chen@kernel.org>,
-	Paul Cercueil <paul@crapouillou.net>, Bin Liu <b-liu@ti.com>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Maximilian Luz <luzmaximilian@gmail.com>,
-	Hans de Goede <hansg@kernel.org>,
-	Ilpo =?iso-8859-1?Q?J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Benjamin Herrenschmidt <benh@kernel.crashing.org>, brgl@kernel.org,
-	linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org,
-	driver-core@lists.linux.dev, devicetree@vger.kernel.org,
-	linuxppc-dev@lists.ozlabs.org, linux-i2c@vger.kernel.org,
-	iommu@lists.linux.dev, linux-pm@vger.kernel.org,
-	imx@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
-	intel-xe@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
-	linux-usb@vger.kernel.org, linux-mips@vger.kernel.org,
-	platform-driver-x86@vger.kernel.org, stable@vger.kernel.org,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>
-Subject: Re: [PATCH v2 00/19] driver core: count references of the platform
- device's fwnode, not OF node
-Message-ID: <akKb5LPBIMenF9yD@ashevche-desk.local>
-References: <20260629-pdev-fwnode-ref-v2-0-8abe2513f96e@oss.qualcomm.com>
+	s=arc-20240116; t=1782750552; c=relaxed/simple;
+	bh=7Oi/H9oHgLZ74YzIl6biA9rABQ4jltAfpUljqljAvJ0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=BXzvuKQaFh9FSUEilHsxzsVLP2BofOvIngGKLE/NxLX6+KGA9GgSkKUF8jQZm/GIZ0EBdD9S5h+Em5d/6ORTWWk1CVE9ZutG1e+RDq3gClmwpjwLcfNrCKT/Ce6bJys0fdHQg5c9QIlDtK7lCMCLI1F605I/6ri3qv1RyR6i2FQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=RCSymXuE; arc=none smtp.client-ip=209.85.208.170
+Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-39b1593e87bso793001fa.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jun 2026 09:29:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1782750549; x=1783355349; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from:references
+         :cc:to:subject:user-agent:mime-version:date:message-id:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=kBpmlADvOekPTeSlrl6GX0ZXy3z1mOub8IDaEgLjsi4=;
+        b=RCSymXuENd2HtkhFDdB5rYu1FnN70n02U6Zkj2BBp43m245UdOo9GpMJnAF0cfNRf7
+         ECmBOwGCAmsvuj7dtZJnyei1xgg3hbELNzf3ObB9LSnmnf561R8G6FNVkT82Znryn3qT
+         lTGHnHPg+/U1AbfEfuWiHZyD/yNQyB6ZFoLQVquJxTwJrtfGU/zr7+ZcnQ7Ms4IG5Wq/
+         XDBrwsTl/T5TUqnupQju4OEGZ4emVjcQdCbIT31XIYwretsX4im+nCZbUK/OVKWk2mBd
+         u3F5h9Fhc2Xl3eNFu/S7VYn52iImRoq3iqQRirMMvXzfxEZHkhSQHx1RckyGbC03CR5Y
+         4w/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782750549; x=1783355349;
+        h=content-transfer-encoding:content-type:in-reply-to:from:references
+         :cc:to:subject:user-agent:mime-version:date:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=kBpmlADvOekPTeSlrl6GX0ZXy3z1mOub8IDaEgLjsi4=;
+        b=WA7Np4OY8Xdxn6ykoJgj6HWkD6V2iyy9ouw/ZnRrQ7p5pkIqfYKTXbk35oQXA/Xs2L
+         bRGwgNZ5MC6gst6tkf8va5VpRnWwos6qr97FVneTJyQEwbC6e9nAepAOc5sOSGnfJfzd
+         Z6WUZsJfboWt/SS7syy4VsDrYYHImedLHKv0BbYlvY7K9/AOHlTwjeoV7TMBd+IgyBi7
+         Jb0szqy9xO1kAkOAuFFC9uJ93VnyTd4hEvYSIzPeeuy3auRfP/qj4rKpMPHJlv9wbob8
+         cbpJXE81y0QIAj/SlAycxv/T1Hitc3xChurSTs9JJOdl/bttK01L/qiduVVBkPruYSuA
+         bVWg==
+X-Forwarded-Encrypted: i=1; AHgh+RqZOb9qyXL1xKRTEG4LAuEW/9ExhgnLjYqm6k0GLbJdCODdavA9qXMSO5kBFWV7pgCcOMbwh08rV29lcVJY@vger.kernel.org
+X-Gm-Message-State: AOJu0YxGMn+oxBL5BIRyAHsUVLg0TKFi15ERKVWPyzVeVdJFXlgIv+iF
+	gm0bRrwXUbQ/KYh44QrOueAv6cjLgjY4GlmYE5ekFqnH6vscn17fPLWA3F6p+s+SyIo=
+X-Gm-Gg: AfdE7clJexh94o7QcM2yA0MkKZUPgC2FLuNVPwg+hZvvxAcS9rHiMv0NmkphpA5J8A/
+	p3HuOj9a7EOeCrNQttpnfAZNEvoCDUnWs5vsSJo7w8JKL7Iat4sFRV+SBLg36QEhippp88zzVdZ
+	79I3/cc3jULjwAFWy6FDvBN7qbetIVCsoTkEyjhjVA3NgsqqeC2MgLkvA1ultkkm4Eu9KXQKu+f
+	xOvuRPpt600RiLzSGtqWzt5hKSPn7RDqls6miE5SmFTNc8fX7Zork6yUJQ4m1jlSYMRmC9yfBs7
+	0b3aZdFes8zpje8zJNbvh3dvMIZWgcQFHTkO6TZeB4am/Un+QWjM/0Zy+aTpuj+rZkQ/bcXEph9
+	w468Xhvyfk07aOUsBJNsaXRe8CeY1FM/S7Sf53aRzqi+my0yoNvo0t7sj9Uobh7WsrxIrS/Bzzs
+	EgfSLFr8ANYlLYX67PvqoBl1Yv0cBy68Jkxusc8QVq6QuupyR8NsgZuVX91YR8ctO9tnI=
+X-Received: by 2002:a05:651c:2109:b0:396:981c:94a2 with SMTP id 38308e7fff4ca-39acb6dfbd8mr20834501fa.7.1782750548642;
+        Mon, 29 Jun 2026 09:29:08 -0700 (PDT)
+Received: from [192.168.1.100] (91-159-24-186.elisa-laajakaista.fi. [91.159.24.186])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-39b100758f0sm7626001fa.22.2026.06.29.09.29.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 29 Jun 2026 09:29:08 -0700 (PDT)
+Message-ID: <444b26fb-b2f3-4ebf-9197-1fabec6bfd00@linaro.org>
+Date: Mon, 29 Jun 2026 19:29:07 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260629-pdev-fwnode-ref-v2-0-8abe2513f96e@oss.qualcomm.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
- krs, Bertel Jungin Aukio 5, 02600 Espoo
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] clk: qcom: enable ALWAYS_ON for titan_top_gdsc
+To: Brian Masney <bmasney@redhat.com>
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20260626-camcc-sc8280xp-titan-top-v1-1-2ca246886493@redhat.com>
+ <bcf9fd99-454f-4ac2-8357-b0775be42d41@oss.qualcomm.com>
+ <41a76941-2e21-49ce-b0cd-0ae6a8b2eb1f@linaro.org>
+ <akJQ7ZFODBjHrqFt@redhat.com>
+ <03596c5b-9448-49e3-a035-25c0475df9be@linaro.org>
+ <akKO16q4rTbS2vx7@redhat.com>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+In-Reply-To: <akKO16q4rTbS2vx7@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-3.66 / 15.00];
-	WHITELIST_SPF_DKIM(-3.00)[intel.com:d:+,kernel.org:s:+];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[intel.com,none];
-	R_DKIM_ALLOW(-0.20)[intel.com:s=Intel];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-115211-lists,linux-arm-msm=lfdr.de];
-	TO_DN_SOME(0.00)[];
-	RCVD_TLS_LAST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
+	DKIM_TRACE(0.00)[linaro.org:+];
 	FORWARDED(0.00)[lists@lfdr.de];
-	HAS_ORG_HEADER(0.00)[];
-	FORGED_SENDER(0.00)[andriy.shevchenko@linux.intel.com,linux-arm-msm@vger.kernel.org];
-	FREEMAIL_CC(0.00)[kernel.org,opensource.wolfsonmicro.com,avionic-design.de,gmail.com,lunn.ch,davemloft.net,google.com,redhat.com,linuxfoundation.org,linux.ibm.com,ellerman.id.au,8bytes.org,arm.com,broadcom.com,nxp.com,pengutronix.de,intel.com,linux.intel.com,ffwll.ch,crapouillou.net,ti.com,kernel.crashing.org,vger.kernel.org,lists.linux.dev,lists.ozlabs.org,lists.infradead.org,lists.freedesktop.org,sang-engineering.com];
-	FORGED_RECIPIENTS(0.00)[m:bartosz.golaszewski@oss.qualcomm.com,m:lee@kernel.org,m:broonie@opensource.wolfsonmicro.com,m:thierry.reding@avionic-design.de,m:sebastian.hesselbarth@gmail.com,m:andrew+netdev@lunn.ch,m:davem@davemloft.net,m:edumazet@google.com,m:kuba@kernel.org,m:pabeni@redhat.com,m:srini@kernel.org,m:gregkh@linuxfoundation.org,m:vkoul@kernel.org,m:rafael@kernel.org,m:dakr@kernel.org,m:robh@kernel.org,m:saravanak@kernel.org,m:maddy@linux.ibm.com,m:mpe@ellerman.id.au,m:npiggin@gmail.com,m:chleroy@kernel.org,m:andi.shyti@kernel.org,m:joro@8bytes.org,m:will@kernel.org,m:robin.murphy@arm.com,m:opendmb@gmail.com,m:florian.fainelli@broadcom.com,m:bcm-kernel-feedback-list@broadcom.com,m:ulfh@kernel.org,m:Frank.Li@nxp.com,m:s.hauer@pengutronix.de,m:kernel@pengutronix.de,m:festevam@gmail.com,m:matthew.brost@intel.com,m:thomas.hellstrom@linux.intel.com,m:rodrigo.vivi@intel.com,m:airlied@gmail.com,m:simona@ffwll.ch,m:peter.chen@kernel.org,m:paul@crapouillou.net,m:b-liu@ti.com,m:p.za
- bel@pengutronix.de,m:luzmaximilian@gmail.com,m:hansg@kernel.org,m:ilpo.jarvinen@linux.intel.com,m:krzk@kernel.org,m:benh@kernel.crashing.org,m:brgl@kernel.org,m:linux-kernel@vger.kernel.org,m:netdev@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-sound@vger.kernel.org,m:driver-core@lists.linux.dev,m:devicetree@vger.kernel.org,m:linuxppc-dev@lists.ozlabs.org,m:linux-i2c@vger.kernel.org,m:iommu@lists.linux.dev,m:linux-pm@vger.kernel.org,m:imx@lists.linux.dev,m:linux-arm-kernel@lists.infradead.org,m:intel-xe@lists.freedesktop.org,m:dri-devel@lists.freedesktop.org,m:linux-usb@vger.kernel.org,m:linux-mips@vger.kernel.org,m:platform-driver-x86@vger.kernel.org,m:stable@vger.kernel.org,m:wsa+renesas@sang-engineering.com,m:sebastianhesselbarth@gmail.com,m:andrew@lunn.ch,s:lists@lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-115212-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
+	FORGED_SENDER(0.00)[vladimir.zapolskiy@linaro.org,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS(0.00)[m:bmasney@redhat.com,m:konrad.dybcio@oss.qualcomm.com,m:andersson@kernel.org,m:mturquette@baylibre.com,m:sboyd@kernel.org,m:bryan.odonoghue@linaro.org,m:linux-arm-msm@vger.kernel.org,m:linux-clk@vger.kernel.org,m:linux-kernel@vger.kernel.org,s:lists@lfdr.de];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	TO_DN_SOME(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[andriy.shevchenko@linux.intel.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[intel.com:+];
-	RCPT_COUNT_GT_50(0.00)[67];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	MISSING_XM_UA(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[vladimir.zapolskiy@linaro.org,linux-arm-msm@vger.kernel.org];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	ALIAS_RESOLVED(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
-	TAGGED_RCPT(0.00)[linux-arm-msm,netdev,renesas];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,linux.intel.com:from_mime,sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,ashevche-desk.local:mid]
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[9];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,linaro.org:dkim,linaro.org:mid,linaro.org:from_mime,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: D58D86DD4B9
+X-Rspamd-Queue-Id: A9E746DD5FA
 
-On Mon, Jun 29, 2026 at 11:12:23AM +0200, Bartosz Golaszewski wrote:
-> Platform device core provides helper interfaces for dealing with
-> dynamically created platform devices. Most users should use
-> platform_device_register_full() which encapsulates most of the
-> operations but some modules will want to use the split approach of
-> calling platform_device_alloc() + platform_device_add() separately for
-> various reasons.
-> 
-> With many platform devices now using dynamic software nodes as their
-> primary firmware nodes and with the platform device interface being
-> extended to also better cover the use-cases of secondary software nodes,
-> I believe it makes sense to switch to counting the references of all
-> kinds of firmware nodes.
-> 
-> To that end, I identified all users of platform_device_alloc() that also
-> assign dev.of_node or dev.fwnode manually. I noticed five cases where
-> the references are not increased as they should (patches 1-5 fix these
-> users) and provided three new functions in platform_device.h that now
-> become the preferred interfaces for assigning firmware nodes to dynamic
-> platform devices (in line with platform_device_add_data(),
-> platform_device_add_resources(), etc.). The bulk of the patches in this
-> series are small driver conversions to port all users to going through
-> the new functions that now encapsulate the refcount logic. With that
-> done, the final patch seamlessly switches to counting the references of
-> all firmware node types.
-> 
-> This effort is prerequisite of removing platform_device_release_full()
-> and unifying the release path for dynamic platform devices using
-> unmanaged software nodes.
-> 
-> Merging strategy: The entire series should go through the driver core
-> tree, possibly with an immutable branch provided to solve any potential
-> conflicts though these are rather unlikely.
+Hi Brian,
 
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-for patches 2-4 assuming they will be accompanied with patch 19 at the same
-time.
+On 6/29/26 18:27, Brian Masney wrote:
+> Hi Vladimir,
+> 
+> On Mon, Jun 29, 2026 at 04:00:46PM +0300, Vladimir Zapolskiy wrote:
+>> commenting the series I was also directed by Konrad's review comment on it.
+>> In addition one problem, which I immediate observe, is that camcc_sc8280xp_desc
+>> misses the necessary .use_rpm flag, can you please do me a favour and test
+>> my series plus the add-on change below?
+>>
+>> diff --git a/drivers/clk/qcom/camcc-sc8280xp.c b/drivers/clk/qcom/camcc-sc8280xp.c
+>> index 18f5a3eb313e..a15e9754bfb2 100644
+>> --- a/drivers/clk/qcom/camcc-sc8280xp.c
+>> +++ b/drivers/clk/qcom/camcc-sc8280xp.c
+>> @@ -2995,6 +2995,8 @@ static const struct qcom_cc_desc camcc_sc8280xp_desc = {
+>>   	.num_resets = ARRAY_SIZE(camcc_sc8280xp_resets),
+>>   	.gdscs = camcc_sc8280xp_gdscs,
+>>   	.num_gdscs = ARRAY_SIZE(camcc_sc8280xp_gdscs),
+>> +	.use_rpm = true,
+>> +	.cc_gdsc = &titan_top_gdsc,
+>>   };
+>>   static const struct of_device_id camcc_sc8280xp_match_table[] = {
+> 
+> I tried with this initially, however it fails with:
+> 
+> [    8.193803] camcc-sc8280xp ad00000.clock-controller: Unbalanced pm_runtime_enable!
+> 
+> I see that pm_runtime_enable() is called from common.c when use_rpm is
+> enabled. So I removed all of that from camcc-sc8280xp.c with the
+> attached patch.
+> 
+
+I believe the updated change is correct.
+
+> It still fails with:
+> 
+> [    8.204595] camcc-sc8280xp ad00000.clock-controller: probe with driver camcc-sc8280xp failed with error -22
+> 
+> I suspect the use_rpm flag requires a more thorough migration.
+> 
+
+Likely it does. Unfortunately I don't have an sc8280xp powered board to get
+more information about this particular failure, but please give me some time
+to check, if I can reproduce the same issue on SM8250/RB5, if its CAMCC is
+added under the runtime PM framework.
+
+Thank you for the performed testing.
 
 -- 
-With Best Regards,
-Andy Shevchenko
-
-
+Best wishes,
+Vladimir
 
