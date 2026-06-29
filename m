@@ -1,81 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-115006-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-115007-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id 1tbxMhJbQmpG5QkAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-115006-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2026 13:46:26 +0200
+	id ez3YGyxYQmqO5AkAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-115007-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2026 13:34:04 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2E1E36D99A6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2026 13:46:26 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2ABDE6D97BA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2026 13:34:04 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=chromium.org header.s=google header.b=HuDAJGgs;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115006-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115006-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=chromium.org header.s=google header.b="Mc7/j5UN";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115007-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.232.135.74 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115007-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=none) header.from=chromium.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id AAD4C3152275
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2026 11:31:18 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id B6847303EFA4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2026 11:31:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B34C63B9DA5;
-	Mon, 29 Jun 2026 11:30:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EA5713FF1A3;
+	Mon, 29 Jun 2026 11:30:54 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
+Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C1882AD16
-	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jun 2026 11:30:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CE843E4C9F
+	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jun 2026 11:30:53 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782732653; cv=none; b=m97KbE69+q+MqrbwE3KMVvo8IG9JdculBPm8fKAeROL/wwJAdqxiPDE6YJglw5rP1QwfQeqFG9DXFRGfPLDb90VYMV3LiXdDDMXsng6axXKIJ8OUDyFbXjcniKppG0U+eKfnfrZGsS6cOkhTBZOtw63xeqJyd+v/hNhG8C7Gduk=
+	t=1782732654; cv=none; b=Dw6bC82zMI8A5l5WAmUaWuHseOxkt4JH9QFWHLEClsddN1Yz2/YGZzA1k9ab4cZ/5/lyPnqs4ehqy1p02n3fVkrGGQGP1y3x5b6mWFGc9s1DGeuEYFClKBqvVrF5UT3d3yNHpSjlEIkEDsW2CJJOdOSESBufjAG/SdAUEmKAHwU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782732653; c=relaxed/simple;
-	bh=tLCipdQXdvk+X54XG19H4WEIV0LYjVmOIozs8kbuuLg=;
+	s=arc-20240116; t=1782732654; c=relaxed/simple;
+	bh=YbebCHn0Us0Y7R7dMxOqglnHArY6LjK6GM4T60ivYzs=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Ej//HbiSBZyoBWlzx8NYzHBsXMMXcryDs6RqL3xxVTnqIEVO2IvZtNshO99sT0E2uo7wFqZySDRc0Y4P6tZcvZSHS1pwJnHLNbjphkquis6nBoVOeWYHoi1gZsk59U7AVvmVmS5PMgKsneixfhZKmztdhwxrm8WRgoW8Mhpt54g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=HuDAJGgs; arc=none smtp.client-ip=209.85.167.47
-Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-5aeb17c2564so848699e87.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jun 2026 04:30:51 -0700 (PDT)
+	 In-Reply-To:To:Cc; b=hyqSsmPe+JYVHWV9CUkZ5qdR1ZQg6yUn9IbNtBZs5I8XlJvUIlEeVFWf46iyIgGKlNuFYZ6L9mySvswYiFZDN/emqDSvVjnxONmwa++oHoH9aGFyMkqR2u/+6Qp4Cz5DKfqUhn89/K7SeKNBX5HcqLbSuZEbdHZBeUPeNcFcng0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=Mc7/j5UN; arc=none smtp.client-ip=209.85.208.169
+Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-3996c9eeebeso24785681fa.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jun 2026 04:30:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1782732650; x=1783337450; darn=vger.kernel.org;
+        d=chromium.org; s=google; t=1782732651; x=1783337451; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Bk3k4V5ThSK0Ndvgs05PXxcs1Go1E6a1gwU7BLVejWc=;
-        b=HuDAJGgsJH43pXvVoE/pxaIcw6a7dsGbA7NTUgOu1eF6sFF+acXOl4+IeyRpqlIjXO
-         tJHJi0y2jYi3iPAtYSO3Ey64MCBFVDW2O4iJJVzpT46Ay9jTaz/kPR9/bMC8PsDMiaEE
-         dBEt1VX090luz8nXZojvm2BRXpUrIXr8lFdGY=
+        bh=v68a3GvjDt67EscXY2lZ/DlUh5IwMqRFPnauIX/l0kI=;
+        b=Mc7/j5UNN9cvHq38q7od6oyG0fe0pUQgESITNzw0OFCxtqujF2NwKozXZ5em0pKYir
+         h7S3xBwmEVBJEii2v0/CWP+zjpKEvxE6dpY0Z5+3gk/Rf9N465nYShCVW6JhgxOsutm5
+         Xp3+wMSnJVaIX4TO8cIxSzOQHyVAwcMFnLZkQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782732650; x=1783337450;
+        d=1e100.net; s=20251104; t=1782732651; x=1783337451;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=Bk3k4V5ThSK0Ndvgs05PXxcs1Go1E6a1gwU7BLVejWc=;
-        b=kwYnumJX0tiM8v0LYfIHef+k+pyfzX73LFvf4DTSBCWDaQWLvNuyOVjkPh9SqRtFZF
-         ItXalQoyz28nI/rfPH/DZtiksZPARNOSM6Clpvdvf5oXTD+uuoVUt7sDg+c5O+P0dYmx
-         kt/NZTbZRV4nZNKhRUYm0+7wZ2vqptTRo80cTMYCxtigeYxUplc4NMjCGtUvopjkwnDQ
-         Er6kjFWGjrJj2rSzOTCNdVTTSrixcA1xfE8/MfRyOL6UiqQimZA4r7Z78Uegsa0kGWVi
-         a5je/D8lL6tkzdnpvgmsuVnF++fez/vnMZz4LEZaTgBuXz6OjWL+LBWOlT3qoYt07678
-         bI2Q==
-X-Forwarded-Encrypted: i=1; AHgh+RqaCf1WYteKVkEb6n8J1giiZsH10TrLf3cqIEiS/5Z2TYZhNZjDu00oKFvU8O7gxNr7TJ+ldGCzCNOMRySh@vger.kernel.org
-X-Gm-Message-State: AOJu0YxNcIWy2OT1NE4ZmiTiI8FFf0THaApZWlnGjDAn+NYGiIYygmc5
-	/Oy4+17D+MYZZSCSIfxNFEHRDWm7bfJa0/SfrYcrN6ejcEvua1+VhxuWavC1ogIK5A==
-X-Gm-Gg: AfdE7cn/yNrGhzOSgHiUvqFB230Oz07n6QOHoBycl2IpLcO4M2/SRZnPE633rjVS4oj
-	DZRMxV2xOKY4wkH6e73wmLY05fB9145tpEzGLW59nU0KbAfDTAI1Xy1pZ8wm3SwNBvhmjro6lU3
-	4K5xiRxDbdI2yI7Czl8eO9MAFmvACHN0p1HRfaOvh2gdnoxTcF78pQF3qs8+XC2Rki/rKlL4kcx
-	tybnZUt7O+h4SpOQifyORyDwooMyGjzVNjFJkX06RLooluDzc2xn2r2lZJ9/O7S8shYqHrwfOv0
-	9DpI+TT5MZfLLqBLetN9Z3h3+6h53VXQBBkdJpzpUjx0FUkS0NWDrZBY5JesP89Kqf1FG6XfrHx
-	34IlrLU1YOoUUB2+iEJMshRYbQJUkQE++ufMXWC+tCEkQ86iLGP3amg/FnkNqsi1mRAe997UNfN
-	hmJ9sNM8Nz3Eh+2u6bM8bLGEvKlxFeqIJHQd0/szWnOxJkmI/5NOev2ZfkZEUHvu9wdNtk
-X-Received: by 2002:a05:6512:4007:b0:5ae:b981:3393 with SMTP id 2adb3069b0e04-5aeb9813418mr839912e87.42.1782732650359;
-        Mon, 29 Jun 2026 04:30:50 -0700 (PDT)
+        bh=v68a3GvjDt67EscXY2lZ/DlUh5IwMqRFPnauIX/l0kI=;
+        b=BgcCug9S3YVLvqHGbAOZtg1UdIoE5WTt0BQQT0n3niqX1pWmB8hN7yiQjovbUGuVjV
+         kGcNc5IsugOu7HPxYE4WNBzizXqwzvvrkoWPC9AAtd/l9GgIBsrD2vF5f8g2VblRHOMO
+         0PSUGxKGwlbKRLKUvQ7LAw6rBUe93+eWT9DVw1q0Oa7XVGOs2c9INM8yhUdIRLueJJcS
+         vHkacksSWnNGa3qkllWzm98j/VFil/2C2LRnE0B4VKdSL9pQ2goV6R3olkfaM3tBjXuf
+         bmwXIp0/1FuQxuaw14/LCi3QOj+T2ixEwZMQZl1HwlNRUnU/zUt+fSm1PSKbed7+C2cE
+         JfOQ==
+X-Forwarded-Encrypted: i=1; AHgh+RqLMigUMxlo/e/Lkldd4KcdJztZrX6SGUxs7Xkpk+L5+ZTcixGccr7/AG8GQU0sKN+Sd7LOQWNlX3XbNZz1@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxll5621a4V9uXGRWlRsHqOmrLfh5Pu4xZRDByYSp45+GFg0SW8
+	JqhXyQ0NjvQTTfUXSM7jNYAGD96sl5zSF+rmN1+7PherSOvk/72ntA76a4OhkpEagw==
+X-Gm-Gg: AfdE7cmVocoXH/cYut954jgvbWczmdXOexlYZLa9NM6y6Aatcvqp6iJRLzmBJwu/eKL
+	SClkcEalYgp6vBTYLlKlupJOSxTHLoUg8JECSrGhdPX0ZSGd0FQbO78bdRmbVTY+4OUmF61EWSz
+	g1ZuRb41u1xEMMS4IOjiNSOOkJObovS5NYj8e6zOEUZNA4yrT/pEtV31RbwvXBziH70OGzjE5A2
+	FjmDsnU252Sl3KmyM5rIfAqQ/YMPTeImRr2keVuSZv9ZVksMO6XoAI3bky3w7VKAR+zV6qzsOoR
+	3fW5RmP2JpsktHEFxJ+orWyMd/ujNAjSRrVU0G7HkbmoyuB+HgWkJD2AMJewU2gBoYtEtkgIkia
+	4KH4bxkKtwI61MvfgNZYBcFH7z7sRzcrHWLAyK7xWLOp/g6MNikUu5YDI32LPzCKdSld6VgV6zm
+	d6DgSTU/Vj4RSdBkWBu6/BiGwweUUBQsniJxJHmk0g4SUXWn+NVZjzoF+8ET2i5IKAuNQ4
+X-Received: by 2002:a05:6512:2523:b0:5aa:690c:6636 with SMTP id 2adb3069b0e04-5aea1f593d7mr3418663e87.26.1782732651474;
+        Mon, 29 Jun 2026 04:30:51 -0700 (PDT)
 Received: from ribalda.c.googlers.com (216.148.88.34.bc.googleusercontent.com. [34.88.148.216])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5aea2cffc04sm3597745e87.17.2026.06.29.04.30.49
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5aea2cffc04sm3597745e87.17.2026.06.29.04.30.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Jun 2026 04:30:49 -0700 (PDT)
+        Mon, 29 Jun 2026 04:30:50 -0700 (PDT)
 From: Ricardo Ribalda <ribalda@chromium.org>
-Date: Mon, 29 Jun 2026 11:30:42 +0000
-Subject: [PATCH 1/9] media: em28xx-video: Remove unneeded semicolons
+Date: Mon, 29 Jun 2026 11:30:43 +0000
+Subject: [PATCH 2/9] media: iris: Replace ternary conditionals with max()
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -84,7 +84,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260629-cocci-7-2-v1-1-5884c80ee3b6@chromium.org>
+Message-Id: <20260629-cocci-7-2-v1-2-5884c80ee3b6@chromium.org>
 References: <20260629-cocci-7-2-v1-0-5884c80ee3b6@chromium.org>
 In-Reply-To: <20260629-cocci-7-2-v1-0-5884c80ee3b6@chromium.org>
 To: Mauro Carvalho Chehab <mchehab@kernel.org>, 
@@ -106,12 +106,12 @@ X-Rspamd-Action: no action
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[chromium.org,none];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
 	R_DKIM_ALLOW(-0.20)[chromium.org:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-115006-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-115007-lists,linux-arm-msm=lfdr.de];
 	RCPT_COUNT_TWELVE(0.00)[18];
 	MIME_TRACE(0.00)[0:+];
 	RCVD_TLS_LAST(0.00)[];
@@ -127,55 +127,49 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[ribalda@chromium.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
 	ALIAS_RESOLVED(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,vger.kernel.org:from_smtp,chromium.org:dkim,chromium.org:email,chromium.org:mid,chromium.org:from_mime]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,chromium.org:dkim,chromium.org:email,chromium.org:mid,chromium.org:from_mime,sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 2E1E36D99A6
+X-Rspamd-Queue-Id: 2ABDE6D97BA
 
-There is no need to add a semicolon after a switch statement.
+The max() macro is simpler to read than the current construction, it
+also makes cocci happier, which currently throws these warnings:
 
-It also makes cocci a bit uneasy. It triggers the following warnings:
-
-./usb/em28xx/em28xx-cards.c:4085:2-3: Unneeded semicolon
-./usb/em28xx/em28xx-core.c:635:2-3: Unneeded semicolon
+./platform/qcom/iris/iris_vpu_buffer.c:703:13-15: WARNING opportunity for max()
+./platform/qcom/iris/iris_vpu_buffer.c:583:23-25: WARNING opportunity for max()
 
 Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
 ---
- drivers/media/usb/em28xx/em28xx-cards.c | 2 +-
- drivers/media/usb/em28xx/em28xx-core.c  | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/media/platform/qcom/iris/iris_vpu_buffer.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/usb/em28xx/em28xx-cards.c b/drivers/media/usb/em28xx/em28xx-cards.c
-index fbfb74eab475..133bc1082d57 100644
---- a/drivers/media/usb/em28xx/em28xx-cards.c
-+++ b/drivers/media/usb/em28xx/em28xx-cards.c
-@@ -4082,7 +4082,7 @@ static void em28xx_check_usb_descriptor(struct em28xx *dev,
- 			dev->analog_ep_bulk = e->bEndpointAddress;
- 		}
- 		return;
--	};
-+	}
+diff --git a/drivers/media/platform/qcom/iris/iris_vpu_buffer.c b/drivers/media/platform/qcom/iris/iris_vpu_buffer.c
+index fb6f1016415e..faebb5472866 100644
+--- a/drivers/media/platform/qcom/iris/iris_vpu_buffer.c
++++ b/drivers/media/platform/qcom/iris/iris_vpu_buffer.c
+@@ -580,7 +580,7 @@ static u32 hfi_buffer_line_av1d(u32 frame_width, u32 frame_height,
+ 		ALIGN(size_av1d_qp(frame_width, frame_height), DMA_ALIGNMENT);
+ 	opbwr8 = size_av1d_lb_opb_wr1_nv12_ubwc(frame_width, frame_height);
+ 	opbwr10 = size_av1d_lb_opb_wr1_tp10_ubwc(frame_width, frame_height);
+-	opbwrbufsize = opbwr8 >= opbwr10 ? opbwr8 : opbwr10;
++	opbwrbufsize = max(opbwr8, opbwr10);
+ 	size = ALIGN((size + opbwrbufsize), DMA_ALIGNMENT);
+ 	if (is_opb) {
+ 		vpss_lb_size = size_vpss_lb(frame_width, frame_height);
+@@ -700,7 +700,7 @@ static u32 hfi_buffer_ibc_av1d(u32 frame_width, u32 frame_height)
+ 
+ 	ibc8 = size_av1d_ibc_nv12_ubwc(frame_width, frame_height);
+ 	ibc10 = size_av1d_ibc_tp10_ubwc(frame_width, frame_height);
+-	size = ibc8 >= ibc10 ? ibc8 : ibc10;
++	size = max(ibc8, ibc10);
+ 
+ 	return ALIGN(size, DMA_ALIGNMENT);
  }
- 
- /*
-diff --git a/drivers/media/usb/em28xx/em28xx-core.c b/drivers/media/usb/em28xx/em28xx-core.c
-index 5bbb082dbed9..d4197e37f637 100644
---- a/drivers/media/usb/em28xx/em28xx-core.c
-+++ b/drivers/media/usb/em28xx/em28xx-core.c
-@@ -632,7 +632,7 @@ void em2828X_decoder_vmux(struct em28xx *dev, unsigned int vin)
- 	default:
- 		dev_dbg(&dev->intf->dev, "EM2828X_SVIDEO\n");
- 		break;
--	};
-+	}
- 
- 	em28xx_write_reg(dev, 0x24, 0x00);
- 	em28xx_write_reg(dev, 0x25, 0x02);
 
 -- 
 2.55.0.rc0.799.gd6f94ed593-goog
