@@ -1,81 +1,83 @@
-Return-Path: <linux-arm-msm+bounces-115011-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-115012-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id cQ5POMNZQmrj5AkAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-115011-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2026 13:40:51 +0200
+	id H+5dJkdbQmpg5QkAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-115012-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2026 13:47:19 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5671F6D989D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2026 13:40:51 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 000156D99D3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2026 13:47:18 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=chromium.org header.s=google header.b=GGBgxMf1;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115011-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115011-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=chromium.org header.s=google header.b="NxzTI0/s";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115012-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115012-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=none) header.from=chromium.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 319883075435
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2026 11:32:13 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id D5BC632107F2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2026 11:32:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 29A39402B9E;
-	Mon, 29 Jun 2026 11:31:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C0B9403AE4;
+	Mon, 29 Jun 2026 11:31:01 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1E05401497
-	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jun 2026 11:30:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC8A440242D
+	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jun 2026 11:30:58 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782732660; cv=none; b=VB8N/3zPMizSocbDHLxBgwAVfEZG1CIDz4t014sFYvUWE82Mv4xXyHrrFIsYLZEX7zqrIcWFKZmSmIIu1Egu8A3tfIFxPosp0RLHCe3s3L0/JiToJ01A8UiT1VW+MlEIad4Kxjm8iJS/n/qqmFScfGW99HJIh78YxuV7pRX/HxE=
+	t=1782732661; cv=none; b=aQznyjiZDEME+8k8ZEmiyBF2GHlCXLRLLStOdIpkGuG7RSlIB1jZCy5acrUBnOoN/N3GKls1KgDhYZ4CQ3HialGNpRv8DMxA0yzhRS7M03yn+u76DSx1U5qqPxTireuWXFYrSvgKRU5JfVZnAKzpk0GFz05axtGCzkMViD/uFE4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782732660; c=relaxed/simple;
-	bh=aGuMKUQmxb48Y5Tzunx5RYEssJcocgsBIKxGX87PXRU=;
+	s=arc-20240116; t=1782732661; c=relaxed/simple;
+	bh=T+u31/tYPCIKbHePCAx6XE3/fgW1CfS9TMPZrMbED38=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=aqKQecTydlFIXgjfh7HL89I88oQ8QGHAuyTYrUZsKjW7MEYuFqZfI9e46Jq44e4qlozlM8yCvWL7YDwzYwyAD+rpx319SpS4dEIuzyLqsEd+/opxS/tjc3Y7KDQA0VFYa9em2pFwXclBwoYjf6Os1/658OXRNC6HCp5ANRaOGTo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=GGBgxMf1; arc=none smtp.client-ip=209.85.167.45
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-5aeb7467a8dso959094e87.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jun 2026 04:30:57 -0700 (PDT)
+	 In-Reply-To:To:Cc; b=GH8KYxOVItDADA+ppsOK89U3yh89740GEZHPXcodoIW9oR5g94G28Gtc7dlq0f+I3JG4BlwOcgG69moPOfuaNW0r+EuwRBlzQa1LL2mYQXkFE6e8sqAONsXd5AI3KWHcHIxwLQDK2hT2vki070t9i+i+xZgj0wQwavFugkO/CvM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=NxzTI0/s; arc=none smtp.client-ip=209.85.167.45
+Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-5aebba706b3so450866e87.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jun 2026 04:30:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1782732656; x=1783337456; darn=vger.kernel.org;
+        d=chromium.org; s=google; t=1782732657; x=1783337457; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=GTtLPL74GADi3kWDd9SrAAeq3VH8vL4XzQwNytgsK20=;
-        b=GGBgxMf1KYW4Yum3WaMJEoNVkGvwckLbfYMmqJBATiqyzwUboSjkc3uo4BYvTOUMFo
-         XT1fhrNkc4VlKVD5Az5YD+1XVciKjsXco296yeQNmNKl53Glv2Hh2p0awTblhR4Lgf6i
-         acRplIK3zVkAuVnKKPE+K5TC46s3tbETiVkvM=
+        bh=5sHjaE+SllLx+V+I0hkc13cI6sSMbqhb4Wet+ebSYTM=;
+        b=NxzTI0/s2mITMGEHDHkbU6l4WC08lCHCfwnRd4qOe/272GDpRT5eC9O5K0tOV67KC4
+         FqClaXzf1lYd0C91g89JPx1WSohEN9ZArp7t07YEz1ExfUwjZKhuWzvOQCt5PYH46cdb
+         45vCxCgabXzulzwiqLMu39EYaptsrgGqmWk+k=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782732656; x=1783337456;
+        d=1e100.net; s=20251104; t=1782732657; x=1783337457;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=GTtLPL74GADi3kWDd9SrAAeq3VH8vL4XzQwNytgsK20=;
-        b=iLbHpMUYwYMRAW+ttvu3+KCQodBlwVtwAFWEGYBRm2AqLQbWpOl6b+PjX2mLerDDRY
-         9FMqF7lPV21o32hLiik2kb4/IexnSOE7dQD96rGTFcThRsvy+45uFs/MQuS6RG+rqTq1
-         Lr5abGrKK7E88FrSSmvF+Z4XYeS+dTmISA3w2z700JzuGaMoH3oFCyueLUp1F752SCeW
-         ZlQMEzt0diWSiMfs3R2RjP4s9pqaMTK6J+2Lf1+plRF4IDkJAyZHDS3mrbM8WdTexsEq
-         8b8fMmpsiM/PJk/7JCYfdOCcJlhrWT/dBpOuGCbp8IubTOHZDAQEp302j35C0JbQm6Yn
-         MQmg==
-X-Forwarded-Encrypted: i=1; AHgh+RrK8rusdbaSTHXTW5qtRxVE2KLrXnvMgcav56rcOxltY93EZUtLfegHh9x7dWRFhv94El90JvBR1jJywrA0@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw70Cv/oZNWMulH5ZBWTgy1jDlg6EazI4DbDkHEdAOc+Q8J5iaL
-	2LTHfEKKXqnC1l8VlFyyaObRg0pCBq0wAHvAHbp3eZl1UpYhEd41pUGzmoa742sXPg==
-X-Gm-Gg: AfdE7cmMrurSNCrWutvYvAeC/508a9NLXLtN2rPKubxZx8y9+KIcV+6TXD+cgu6ww8L
-	CyxsJqa9U1/+q/Qdf13E86xysUeMn0fFLjrvrkWkBPB70lkL54qxYogMAqQJ3D4uZFLysDRyWJz
-	cIyYDz+OEw/UM+v+m8T86esyk3AsNzJF/cRPzMgv25CRY5QTJGuYiIi3kAvJjysgljsE/MFQ1eE
-	YDABBGxEGRsmnemJtTug3cXpepPY9c8BUwyijrXDZEaeUvUPp6B+ktpb5CkszXgYHSHvDZ/HKMR
-	P3HHoN27L0IFVVR6N0Oqi8pgDzOH0CBmxVQAzWLAVirjpnk90oR7V6jF3ViwUUa5XZMHjpwkWwb
-	+60cp3l+rNqkSpvwTA78kFUaChDYzegvSkXqhd2KTP5MgQBTWVqaWgYxnDIeAYdJVrQdBJnOQBj
-	Ndrdr3yoMQCkQIqpTEedkULRXPRXvFQX2dIkR/Uas/zM8ntbjP/+ILcUPS+CzsUNwUFSrL
-X-Received: by 2002:a05:6512:1092:b0:5ae:b62b:68b2 with SMTP id 2adb3069b0e04-5aeb62b6bcemr1256585e87.2.1782732656034;
+        bh=5sHjaE+SllLx+V+I0hkc13cI6sSMbqhb4Wet+ebSYTM=;
+        b=VKUdi/U8LYZFMlJqy4ACWt3IjtNc7K4zWXwqzXHKSRZIw67ELQIGJtC7w+KgJUH3lw
+         mbSa/tg86loK4L2Oin3aZDim+usqdez/VcqoZj54X4SxO28+YKXwUN/XNbDDN9jV8meV
+         BlbQalB4bvnRw+SmyyEpPhTGliSHEubY6pw86O5uLWz4eyTHbdNGHnvZdMwzp9SP+rNs
+         vnWsU0aSd8X32uMXriy1ovX1NffxR5PLezrN25bhXtuJogPLzUo86l+HlcLCMMf6AOT8
+         ESxTzUMaJcg7O9OO/MeRo5s/47w/khMlhu37XF0RMHvPt9uw2qCzORD0pkZqWSejOKNG
+         yDjQ==
+X-Forwarded-Encrypted: i=1; AHgh+RqqiO7wmdu8R+aQ9QzYPJHaxDAMVRkEERDCQe80OL+2EvHXQ7Qw6sJ5lkWJwGM2DTTWyT92DrHN/C6d7VU9@vger.kernel.org
+X-Gm-Message-State: AOJu0YwuHa2DhWBpbVbC+WFVT3A60AWvpT9ZUEElkIV9VKN7urr7iXgM
+	VU0L+kI7eoiBuKSVGrXOEo+YvFWZmqIqbkXrRCez962oPudZQ74bDxPkijBZzUFHJQ==
+X-Gm-Gg: AfdE7cl9IE0usmHdi3ZDuTFxlt7y96crLmMIraDWoW64VxerckjdwLvfdgkq0v77Zhi
+	Vlukfj5K8Zp+ql4iCKe5nYk0LOvAWZa13WnulojAnfTxz7nwW1C78DGfSWrNhckbwIleDV+erZI
+	bY+HkD6KprS9QL6EEdcUrHnTUtTPdxV5zxO/0itazRjuN73TmnnJ9ixAuz249PbPLUX4x3CNqS4
+	xy5BQTVt69vbpt12RtLs3ezHSEOUjOUciVdzkc0wX+c4qghY11Frs8EfMwgmPLGBQDWIkqd9RyS
+	nLw61fq1+uA5h+1Igl66AszfBjUUDJnz7rGodV6oLl3+I9Allsi3QrCOqnwkzsL9UhZ7HrxMXkZ
+	VFSJf9ybJRb4YXFHbsKX/E9ZFiXbdwsbWte+BstFUQzlLbrGufe5OwDvknTBtm5teE/7xMjJ5z/
+	poNTjpGvvcLK0Jg4bsRWWyw8+BT0tmTSStCCBf4IDLkPr3tYI0bcRv5iCSwAbiZEh/IiSsoUquT
+	yPJMTc=
+X-Received: by 2002:a05:6512:350d:b0:5ae:bae2:f0df with SMTP id 2adb3069b0e04-5aebae2f1e2mr482972e87.10.1782732656837;
         Mon, 29 Jun 2026 04:30:56 -0700 (PDT)
 Received: from ribalda.c.googlers.com (216.148.88.34.bc.googleusercontent.com. [34.88.148.216])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5aea2cffc04sm3597745e87.17.2026.06.29.04.30.55
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5aea2cffc04sm3597745e87.17.2026.06.29.04.30.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Jun 2026 04:30:55 -0700 (PDT)
+        Mon, 29 Jun 2026 04:30:56 -0700 (PDT)
 From: Ricardo Ribalda <ribalda@chromium.org>
-Date: Mon, 29 Jun 2026 11:30:47 +0000
-Subject: [PATCH 6/9] media: dvb-frontends/helene: Rename priv variable
+Date: Mon, 29 Jun 2026 11:30:48 +0000
+Subject: [PATCH 7/9] media: drivers/media/dvb-core: Split
+ dvb_frontend_open()
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -84,7 +86,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260629-cocci-7-2-v1-6-5884c80ee3b6@chromium.org>
+Message-Id: <20260629-cocci-7-2-v1-7-5884c80ee3b6@chromium.org>
 References: <20260629-cocci-7-2-v1-0-5884c80ee3b6@chromium.org>
 In-Reply-To: <20260629-cocci-7-2-v1-0-5884c80ee3b6@chromium.org>
 To: Mauro Carvalho Chehab <mchehab@kernel.org>, 
@@ -106,12 +108,12 @@ X-Rspamd-Action: no action
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[chromium.org,none];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	R_DKIM_ALLOW(-0.20)[chromium.org:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-115011-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-115012-lists,linux-arm-msm=lfdr.de];
 	RCPT_COUNT_TWELVE(0.00)[18];
 	MIME_TRACE(0.00)[0:+];
 	RCVD_TLS_LAST(0.00)[];
@@ -127,131 +129,206 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[ribalda@chromium.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	ALIAS_RESOLVED(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[chromium.org:dkim,chromium.org:email,chromium.org:mid,chromium.org:from_mime,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,vger.kernel.org:from_smtp]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,vger.kernel.org:from_smtp,chromium.org:dkim,chromium.org:email,chromium.org:mid,chromium.org:from_mime]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 5671F6D989D
+X-Rspamd-Queue-Id: 000156D99D3
 
-Coccinelle triggers a false positive where it thinks that the priv
-variable in helene_attach_s and helene_attach is the same variable as
-helene_probe. This is due to a bad heuristic in cocci.
+Move the actual opening to its own function.
 
-We have reported it to cocci, but until/if this is fixed, renaming a
-local variable is a good compromise to fix this warning:
-
-./dvb-frontends/helene.c:1049:2-7: WARNING: invalid free of devm_ allocated data
-./dvb-frontends/helene.c:1013:2-7: WARNING: invalid free of devm_ allocated data
+Not intended code change. This is a preparation for the next patch.
 
 Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
 ---
- drivers/media/dvb-frontends/helene.c | 56 ++++++++++++++++++------------------
- 1 file changed, 28 insertions(+), 28 deletions(-)
+ drivers/media/dvb-core/dvb_frontend.c | 148 ++++++++++++++++++----------------
+ 1 file changed, 80 insertions(+), 68 deletions(-)
 
-diff --git a/drivers/media/dvb-frontends/helene.c b/drivers/media/dvb-frontends/helene.c
-index 993280fefc2c..5fbb466cc8af 100644
---- a/drivers/media/dvb-frontends/helene.c
-+++ b/drivers/media/dvb-frontends/helene.c
-@@ -995,22 +995,22 @@ struct dvb_frontend *helene_attach_s(struct dvb_frontend *fe,
- 		const struct helene_config *config,
- 		struct i2c_adapter *i2c)
+diff --git a/drivers/media/dvb-core/dvb_frontend.c b/drivers/media/dvb-core/dvb_frontend.c
+index d082b6c57c76..d99b0348df54 100644
+--- a/drivers/media/dvb-core/dvb_frontend.c
++++ b/drivers/media/dvb-core/dvb_frontend.c
+@@ -2760,77 +2760,25 @@ static __poll_t dvb_frontend_poll(struct file *file, struct poll_table_struct *w
+ 	return 0;
+ }
+ 
+-static int dvb_frontend_open(struct inode *inode, struct file *file)
++static int __dvb_frontend_open(struct inode *inode, struct file *file)
  {
--	struct helene_priv *priv = NULL;
-+	struct helene_priv *pr = NULL;
+ 	struct dvb_device *dvbdev = file->private_data;
+ 	struct dvb_frontend *fe = dvbdev->priv;
+ 	struct dvb_frontend_private *fepriv = fe->frontend_priv;
+-	struct dvb_adapter *adapter = fe->dvb;
+ 	int ret;
  
--	priv = kzalloc_obj(struct helene_priv);
--	if (priv == NULL)
-+	pr = kzalloc_obj(struct helene_priv);
-+	if (!pr)
- 		return NULL;
--	priv->i2c_address = (config->i2c_address >> 1);
--	priv->i2c = i2c;
--	priv->set_tuner_data = config->set_tuner_priv;
--	priv->set_tuner = config->set_tuner_callback;
--	priv->xtal = config->xtal;
-+	pr->i2c_address = (config->i2c_address >> 1);
-+	pr->i2c = i2c;
-+	pr->set_tuner_data = config->set_tuner_priv;
-+	pr->set_tuner = config->set_tuner_callback;
-+	pr->xtal = config->xtal;
- 
- 	if (fe->ops.i2c_gate_ctrl)
- 		fe->ops.i2c_gate_ctrl(fe, 1);
- 
--	if (helene_x_pon(priv) != 0) {
--		kfree(priv);
-+	if (helene_x_pon(pr) != 0) {
-+		kfree(pr);
- 		return NULL;
+-	dev_dbg(fe->dvb->device, "%s:\n", __func__);
+-	if (fe->exit == DVB_FE_DEVICE_REMOVED)
+-		return -ENODEV;
+-
+-	if (adapter->mfe_shared == 2) {
+-		mutex_lock(&adapter->mfe_lock);
+-		if ((file->f_flags & O_ACCMODE) != O_RDONLY) {
+-			if (adapter->mfe_dvbdev &&
+-			    !adapter->mfe_dvbdev->writers) {
+-				mutex_unlock(&adapter->mfe_lock);
+-				return -EBUSY;
+-			}
+-			adapter->mfe_dvbdev = dvbdev;
+-		}
+-	} else if (adapter->mfe_shared) {
+-		mutex_lock(&adapter->mfe_lock);
+-
+-		if (!adapter->mfe_dvbdev)
+-			adapter->mfe_dvbdev = dvbdev;
+-
+-		else if (adapter->mfe_dvbdev != dvbdev) {
+-			struct dvb_device
+-				*mfedev = adapter->mfe_dvbdev;
+-			struct dvb_frontend
+-				*mfe = mfedev->priv;
+-			struct dvb_frontend_private
+-				*mfepriv = mfe->frontend_priv;
+-			int mferetry = (dvb_mfe_wait_time << 1);
+-
+-			mutex_unlock(&adapter->mfe_lock);
+-			while (mferetry-- && (mfedev->users != -1 ||
+-					      mfepriv->thread)) {
+-				if (msleep_interruptible(500)) {
+-					if (signal_pending(current))
+-						return -EINTR;
+-				}
+-			}
+-
+-			mutex_lock(&adapter->mfe_lock);
+-			if (adapter->mfe_dvbdev != dvbdev) {
+-				mfedev = adapter->mfe_dvbdev;
+-				mfe = mfedev->priv;
+-				mfepriv = mfe->frontend_priv;
+-				if (mfedev->users != -1 ||
+-				    mfepriv->thread) {
+-					mutex_unlock(&adapter->mfe_lock);
+-					return -EBUSY;
+-				}
+-				adapter->mfe_dvbdev = dvbdev;
+-			}
+-		}
+-	}
+-
+ 	if (dvbdev->users == -1 && fe->ops.ts_bus_ctrl) {
+ 		if ((ret = fe->ops.ts_bus_ctrl(fe, 1)) < 0)
+-			goto err0;
+-
+-		/* If we took control of the bus, we need to force
+-		   reinitialization.  This is because many ts_bus_ctrl()
+-		   functions strobe the RESET pin on the demod, and if the
+-		   frontend thread already exists then the dvb_init() routine
+-		   won't get called (which is what usually does initial
+-		   register configuration). */
++			return ret;
++
++		/*
++		 * If we took control of the bus, we need to force
++		 * reinitialization.  This is because many ts_bus_ctrl()
++		 * functions strobe the RESET pin on the demod, and if the
++		 * frontend thread already exists then the dvb_init() routine
++		 * won't get called (which is what usually does initial
++		 * register configuration).
++		 */
+ 		fepriv->reinitialise = 1;
  	}
  
-@@ -1019,10 +1019,10 @@ struct dvb_frontend *helene_attach_s(struct dvb_frontend *fe,
+@@ -2871,8 +2819,6 @@ static int dvb_frontend_open(struct inode *inode, struct file *file)
  
- 	memcpy(&fe->ops.tuner_ops, &helene_tuner_ops_s,
- 			sizeof(struct dvb_tuner_ops));
--	fe->tuner_priv = priv;
--	dev_info(&priv->i2c->dev,
--			"Sony HELENE Sat attached on addr=%x at I2C adapter %p\n",
--			priv->i2c_address, priv->i2c);
-+	fe->tuner_priv = pr;
-+	dev_info(&pr->i2c->dev,
-+		 "Sony HELENE Sat attached on addr=%x at I2C adapter %p\n",
-+		 pr->i2c_address, pr->i2c);
- 	return fe;
+ 	dvb_frontend_get(fe);
+ 
+-	if (adapter->mfe_shared)
+-		mutex_unlock(&adapter->mfe_lock);
+ 	return ret;
+ 
+ err3:
+@@ -2891,9 +2837,75 @@ static int dvb_frontend_open(struct inode *inode, struct file *file)
+ err1:
+ 	if (dvbdev->users == -1 && fe->ops.ts_bus_ctrl)
+ 		fe->ops.ts_bus_ctrl(fe, 0);
+-err0:
+-	if (adapter->mfe_shared)
+-		mutex_unlock(&adapter->mfe_lock);
++
++	return ret;
++}
++
++static int dvb_frontend_open(struct inode *inode, struct file *file)
++{
++	struct dvb_device *dvbdev = file->private_data;
++	struct dvb_frontend *fe = dvbdev->priv;
++	struct dvb_adapter *adapter = fe->dvb;
++	int ret;
++
++	dev_dbg(fe->dvb->device, "%s:\n", __func__);
++	if (fe->exit == DVB_FE_DEVICE_REMOVED)
++		return -ENODEV;
++
++	if (!adapter->mfe_shared)
++		return __dvb_frontend_open(inode, file);
++
++	if (adapter->mfe_shared == 2) {
++		mutex_lock(&adapter->mfe_lock);
++		if ((file->f_flags & O_ACCMODE) != O_RDONLY) {
++			if (adapter->mfe_dvbdev &&
++			    !adapter->mfe_dvbdev->writers) {
++				mutex_unlock(&adapter->mfe_lock);
++				return -EBUSY;
++			}
++			adapter->mfe_dvbdev = dvbdev;
++		}
++	} else {
++		mutex_lock(&adapter->mfe_lock);
++
++		if (!adapter->mfe_dvbdev) {
++			adapter->mfe_dvbdev = dvbdev;
++		} else if (adapter->mfe_dvbdev != dvbdev) {
++			struct dvb_device
++				*mfedev = adapter->mfe_dvbdev;
++			struct dvb_frontend
++				*mfe = mfedev->priv;
++			struct dvb_frontend_private
++				*mfepriv = mfe->frontend_priv;
++			int mferetry = (dvb_mfe_wait_time << 1);
++
++			mutex_unlock(&adapter->mfe_lock);
++			while (mferetry-- && (mfedev->users != -1 ||
++					      mfepriv->thread)) {
++				if (msleep_interruptible(500)) {
++					if (signal_pending(current))
++						return -EINTR;
++				}
++			}
++
++			mutex_lock(&adapter->mfe_lock);
++			if (adapter->mfe_dvbdev != dvbdev) {
++				mfedev = adapter->mfe_dvbdev;
++				mfe = mfedev->priv;
++				mfepriv = mfe->frontend_priv;
++				if (mfedev->users != -1 ||
++				    mfepriv->thread) {
++					mutex_unlock(&adapter->mfe_lock);
++					return -EBUSY;
++				}
++				adapter->mfe_dvbdev = dvbdev;
++			}
++		}
++	}
++
++	ret = __dvb_frontend_open(inode, file);
++	mutex_unlock(&adapter->mfe_lock);
++
+ 	return ret;
  }
- EXPORT_SYMBOL_GPL(helene_attach_s);
-@@ -1031,22 +1031,22 @@ struct dvb_frontend *helene_attach(struct dvb_frontend *fe,
- 		const struct helene_config *config,
- 		struct i2c_adapter *i2c)
- {
--	struct helene_priv *priv = NULL;
-+	struct helene_priv *pr = NULL;
  
--	priv = kzalloc_obj(struct helene_priv);
--	if (priv == NULL)
-+	pr = kzalloc_obj(struct helene_priv);
-+	if (!pr)
- 		return NULL;
--	priv->i2c_address = (config->i2c_address >> 1);
--	priv->i2c = i2c;
--	priv->set_tuner_data = config->set_tuner_priv;
--	priv->set_tuner = config->set_tuner_callback;
--	priv->xtal = config->xtal;
-+	pr->i2c_address = (config->i2c_address >> 1);
-+	pr->i2c = i2c;
-+	pr->set_tuner_data = config->set_tuner_priv;
-+	pr->set_tuner = config->set_tuner_callback;
-+	pr->xtal = config->xtal;
- 
- 	if (fe->ops.i2c_gate_ctrl)
- 		fe->ops.i2c_gate_ctrl(fe, 1);
- 
--	if (helene_x_pon(priv) != 0) {
--		kfree(priv);
-+	if (helene_x_pon(pr) != 0) {
-+		kfree(pr);
- 		return NULL;
- 	}
- 
-@@ -1055,10 +1055,10 @@ struct dvb_frontend *helene_attach(struct dvb_frontend *fe,
- 
- 	memcpy(&fe->ops.tuner_ops, &helene_tuner_ops_t,
- 			sizeof(struct dvb_tuner_ops));
--	fe->tuner_priv = priv;
--	dev_info(&priv->i2c->dev,
--			"Sony HELENE Ter attached on addr=%x at I2C adapter %p\n",
--			priv->i2c_address, priv->i2c);
-+	fe->tuner_priv = pr;
-+	dev_info(&pr->i2c->dev,
-+		 "Sony HELENE Ter attached on addr=%x at I2C adapter %p\n",
-+		 pr->i2c_address, pr->i2c);
- 	return fe;
- }
- EXPORT_SYMBOL_GPL(helene_attach);
 
 -- 
 2.55.0.rc0.799.gd6f94ed593-goog
