@@ -1,202 +1,186 @@
-Return-Path: <linux-arm-msm+bounces-114880-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-114881-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id erVINgsrQmoH1QkAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-114880-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2026 10:21:31 +0200
+	id mAFDAEorQmoZ1QkAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-114881-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2026 10:22:34 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id D60AC6D772B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2026 10:21:30 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id A128E6D775E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2026 10:22:33 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=PKYIA4K8;
-	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=ib9Z28Uw;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-114880-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c15:e001:75::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-114880-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=reject) header.from=qualcomm.com;
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b="MM/swq+/";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-114881-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-114881-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 0E6F43008C83
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2026 08:21:17 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 8E447300B541
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2026 08:22:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 17B423EA97A;
-	Mon, 29 Jun 2026 08:21:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1813F3E9F93;
+	Mon, 29 Jun 2026 08:22:10 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 777DE3C343C
-	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jun 2026 08:21:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 618273C343C;
+	Mon, 29 Jun 2026 08:22:07 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782721274; cv=none; b=HLP+GB01/Tw8GaaE3dJlWjfT/QTwylhXz34BM1iwU1VKNr36gV8ePs9CiM9n2jdoezrHMfdOoo39rXCuR0c4BGZb4Hy9T1if8AZCh+KpCEXb/cJZUtIkBt1M5JKTje/cOWsGhgrxXFFYAl92p5o71oObjI61S4CcAn2pkLJLdeg=
+	t=1782721329; cv=none; b=rW5NPo0pslBXJYc1dDBEfHYtlT4K5IJ5NOUEV3ZUZJQyu4gWD6FE/c/1w1xmOzS4yMQJAy1ttxNv+k9lZL2HwZV+nekessn7IelUb5KjaY3vB9/yofOjI7bbE5ghNOTMir97wYcBKemUFuMJIVzCb0/2iUII1fxHKPa80ZefQfw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782721274; c=relaxed/simple;
-	bh=19bsCcsmbWBA2J5T8belQs5CPNmzQymzeF4aAeBu0f0=;
+	s=arc-20240116; t=1782721329; c=relaxed/simple;
+	bh=yKusn79KwbrEg3D9I4t24OWk4gQ1Qu/IOk6Ez3ri9Pg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=e+9SZISF7lm7wtu0vYBgERMxD59oaaFGNQ6GJt17p0/rOYIRzRCIeQYH1kJf8GW6aFZLDeiGbB+JB1XJtuIhDBIB57xqLTDjTupDQ/YGgZw+3ksBSl7/0NVxkxWZ4uPGLhKwISBpYMi7/4CRRFRRhlwqBm5bsHT00GXLQxZF26w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=PKYIA4K8; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=ib9Z28Uw; arc=none smtp.client-ip=205.220.168.131
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65T7DqjZ2188726
-	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jun 2026 08:21:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=lWxO6LQZLUQAJzOYM2xHkVek
-	pymet/2dgmsuICKY63M=; b=PKYIA4K8AS48AQLbJX82jzM2q+/PzW26RkGFM6r+
-	AQK6x5yVZSMCT7lg1wMRPm2xQowK86BmvpNE+6Lvw/J01DgD+jKRGL8ou9+PPNkS
-	hA8gp7GOZH+l/8J1d3jxHpTnKC3I9sQtHCOfAtVUBYQyN+XHJ8zSVnh0l73suzpU
-	6gI/72pk4TPIcHJKvjBtvfHfjqL3tY3eVfOwJgRfBXaIn86MrGdd86TUiNfXRdTb
-	6MTZcj9a1wPOEcYq3bo/x9hxyp8bdqqy6JN3yUydo5nYodSQ0mQJ0cGqyHeGPjy7
-	9oA1SB7qcKA5fpNft1sH9mwZmDo4Cnyj92m0BmJCnLMivg==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f3m4tr8ms-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jun 2026 08:21:11 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-92b8fc5cc89so417236285a.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jun 2026 01:21:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1782721271; x=1783326071; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=lWxO6LQZLUQAJzOYM2xHkVekpymet/2dgmsuICKY63M=;
-        b=ib9Z28UwkcvLqI44pcSlr3979ojkhZewIZGz6XtEZa9DRuWLJDy4VTy02prQ0ViqvM
-         EsGuH4Li0e4/1eymaq8qtMGWA310yI7MOzJ3SBRiiqLi6L++nmuxNqPVhd1fVatemd0R
-         eRVzjh8IpILvdjpYvpPhVFT4t2pq/tuRg1HncmtFd1pfjz7Iq+wzcicm/xvV9VlZHABG
-         cjXFvrYxom7DclShFBciNpBT0HPe9LYUK2D5ulDrUjjlRArJYBzMqmuciv+4YzuTneZ7
-         PULK4DVHOnZgErswBdj/9TWXZhmnZ33fFv3+uus8tWIVrmR9hkCel2hOvK9KM7B3iExX
-         LdYw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782721271; x=1783326071;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=lWxO6LQZLUQAJzOYM2xHkVekpymet/2dgmsuICKY63M=;
-        b=S9lb2p5fXVe0iX2X8FmjouLykzQhGQz9IyrQC3Vac3M02Qv5WOywvwlBPXfQS8XXLP
-         MILEb7GM62owv7WwziXOaJ0+pFVE2RN5zpIJSVfGunDeZPITu19hF5YaBndbFY0RdRM+
-         L35DWllip2xgbqFxKD5Ym9i4buLIZE/CA/hCzjGTEv+jrHb6a4hR3M0laq56xbCM62NE
-         7aePdjP/P8EmcfBEW1lIlUNFOQ50uLvcFx4syOSWpAQB43kO7PyUah9mtSjIJCzcthcC
-         0Aq+KLt0N8UrcbYbsR/L9CKTD7lEsokZTgVa7d1TsuVfyskigZJc9O5nexV9Vtay3TO+
-         kkdA==
-X-Forwarded-Encrypted: i=1; AFNElJ9WGbrrsP4Kl2P2BwJ100tkCARaW0dkHVt8qr8OhYJMd2z0SnLEQGq2KYnuIWujIDhxeQb65UMvqtk8JRdq@vger.kernel.org
-X-Gm-Message-State: AOJu0YzldGpXPjM5vxs8d8MFcVyKbsTUsLhImqFKDKXar+mi4x5NsfEB
-	+CU+WK6VxYP46DbTYtltnN76nbhkgB9mwff0zw2NibvIxKRc3y7xjdB1qtGtS9cH2bPicOO8o2t
-	1Dp6/EFXnRn9YuNWDhivr3As1HXmmsbdwcd9VR3w470dEXIDpyOTVIodt6APVM20vhn6t
-X-Gm-Gg: AfdE7cl91eqPzppo8gKnjM8wo5vIDs39uTvKzg6qTAPqTVPD7Q/V+IdD/P48nD2daHs
-	d0WA95DZfWGJDo0Zg6VoRKCpP9paD0759MNx3EqT6Fm1HDVDjEFwEAS3olbFj47JR8LVFY5NbY1
-	AU5TkVrsXq+Dz00Mis5csviy5enKOm8ScabslrbY8X490F8j6Lh+h59wCsorqiTODtNGdoVleiK
-	0VwBM6NbMHNKZnyyBFQKWPT1BHWm4suD7JRHidHFxBbUwliop9ls9SrT5YqevcQohH6aQD9VANg
-	+MIQFQW0AaMFB4ahVaWDCnepYn8Vy9p98bdEyeum/ZiZ5NVv58/DrqHKQTjcDAqS0Vd866I4oi3
-	EHEhSb/AEr3PSCPkp37tlfm6SLfV52gedX5nFGFFgDKUrqFmVhRwYHp/oC25OZW/oZ31Nl3n6pm
-	gW1YgOPbD77hh9QRF92U8GOFll
-X-Received: by 2002:a05:620a:28c4:b0:92e:52df:3523 with SMTP id af79cd13be357-92e52df3fe0mr275004785a.8.1782721270753;
-        Mon, 29 Jun 2026 01:21:10 -0700 (PDT)
-X-Received: by 2002:a05:620a:28c4:b0:92e:52df:3523 with SMTP id af79cd13be357-92e52df3fe0mr275000685a.8.1782721270097;
-        Mon, 29 Jun 2026 01:21:10 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-39aee2d65d4sm16765571fa.41.2026.06.29.01.21.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Jun 2026 01:21:09 -0700 (PDT)
-Date: Mon, 29 Jun 2026 11:21:07 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Varadarajan Narayanan <varadarajan.narayanan@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, Brian Masney <bmasney@redhat.com>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/2] clk: qcom: apss-ipq-pll: Add IPQ5210 support
-Message-ID: <7smlazccqigokclnnbwl7alqgqfi4dgbaqlpygg3db23yyvxtz@eaed2ucv7v2b>
-References: <20260629-apss-clk-v1-0-8c92fe118ce4@oss.qualcomm.com>
- <20260629-apss-clk-v1-2-8c92fe118ce4@oss.qualcomm.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=oELQUu9b5hj4yuKCvDeO/73oeLELq8x5pMwJe02Kk9NROLYZ+FL6sCMTebk84ZU8iGwAKTLrp52s6LULGhacML+chyl37I2DZxl9H0UoquO3aZFfnmPicfM13UXs/+7lYiCqUEyt5RUglwUlvggkUGa1TxdCIOGchB2J5lrTuLg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MM/swq+/; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBABE1F00A3F;
+	Mon, 29 Jun 2026 08:22:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1782721327;
+	bh=iAxmFHuidiONJITAk4OsD6egnPPOI7pNLRnDMvxzO4w=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=MM/swq+/Q3P9Fov5m3VAhpuj3kXFVIVyWrSteq+Tir1K1zOA/zOWHBEwgHnpStX4E
+	 W+kQvbTXjbp/31NabZgkk8HhSpv1ZnlP8aQtaei+/vBpmcwpPwGQ5+HXdjbUS41DvC
+	 HqhSmhSnsfsZHcjY32H4oLxt8gIQYr7Bv1B6d4wCi0D6sShp1c1l6GNrbisvk8MkYa
+	 DMqfK1l2aqPoTXPtxoOu+sYMgRVGZV+B5iLhwpFJyRJCv1lvgMU4tJcpirrAr8Hs3F
+	 g5loHCEMSU6Ut0NgC23qnph9mifKMLmWFdHLXlESnhEE6igi5R+Vfafoq8j8l+MS0s
+	 5FeFNpWysQdAQ==
+Date: Mon, 29 Jun 2026 09:22:02 +0100
+From: Sudeep Holla <sudeep.holla@kernel.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Hans de Goede <johannes.goede@oss.qualcomm.com>,
+	Sudeep Holla <sudeep.holla@kernel.org>,
+	"Rafael J . Wysocki" <rafael@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Srinivas Kandagatla <srini@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Dmitry Baryshkov <lumag@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-acpi@vger.kernel.org
+Subject: Re: [RFC 00/12] RFC: Devicetree-ACPI hybrid mode
+Message-ID: <20260629-optimal-vermilion-salamander-0190fc@sudeepholla>
+References: <20260623145225.143218-1-johannes.goede@oss.qualcomm.com>
+ <20260626-friendly-ammonite-of-holiness-aabefb@sudeepholla>
+ <obvpvyx3kmzcdc5nxmx4inlpiqugjxdgzfzmdxzfqqy4qqwt7l@y2zyrtso6yk4>
+ <20260627-miniature-skink-of-superiority-234091@sudeepholla>
+ <2dbfkh3djdrvklsin7zcy53g3wpc76dd4iosxgahbd26zssmx5@zpkplzscllx3>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260629-apss-clk-v1-2-8c92fe118ce4@oss.qualcomm.com>
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI5MDA2NSBTYWx0ZWRfX6ZyokhlL1EZl
- V3fj0vfPJv2wbKWmmcFCIRogKm4EuH9R73sd20/p+agzwh2B1l3AvTuouDJ7X7V5OGz6kl3UzFE
- a214I3RXoZ055ewDHTGpy3YDSdbo7HUtYJ/K87tOpG6ovTJ6i/iEWOHGie1B27OmWRlxkqKGVnz
- l7bnV6NApFhC8K6wxl9XVTghr3XmgN+Vy5DM2iXiAqT0Oa12/BwZS5R6v13q7yePWzad5M6Em2l
- SYdAoiDFTSLoMtc8OMocqTgTgjl+ye3q6jYzU1O2xzZMiEl5IzJFelXcrU4HczKDvPeWNcBLnLq
- y78fcEY2f2XPmXgyrw+SvIISBygC4YbwZnImvJujm+0AJissZThXr7kvZU/crZUAj/GgSqqRlZt
- yyPCFpgtIh7X/j1AxrKd15euP95H6Esztbm5WTg0Malir1nRCDVlGgYnR1IR4Snk6SVFrDLp248
- xfWMLVDnQL5EUK6ZB3w==
-X-Authority-Analysis: v=2.4 cv=R58z39RX c=1 sm=1 tr=0 ts=6a422af7 cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22 a=EUspDBNiAAAA:8
- a=vcd5Yh-9S4NXlGS7D9AA:9 a=CjuIK1q_8ugA:10 a=PEH46H7Ffwr30OY-TuGO:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI5MDA2NSBTYWx0ZWRfX7YbMZGzjZ/vP
- aEImTamn7LtrcI7N2rrxg+2si/ShjqFY/JoBI48A+Np0jp5G5ZvtyDO+Py+V7WhrqkiLUhHl2at
- D9SeIZsd0k+N1h9zFbKsoEH7pDmKeN0=
-X-Proofpoint-ORIG-GUID: AX0gi7H35wgGAxyTtVLhaP4C3MebOp43
-X-Proofpoint-GUID: AX0gi7H35wgGAxyTtVLhaP4C3MebOp43
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-29_02,2026-06-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 spamscore=0 suspectscore=0 phishscore=0 clxscore=1015
- adultscore=0 malwarescore=0 priorityscore=1501 bulkscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606290065
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <2dbfkh3djdrvklsin7zcy53g3wpc76dd4iosxgahbd26zssmx5@zpkplzscllx3>
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-0.16 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-4.66 / 15.00];
+	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	FORGED_RECIPIENTS(0.00)[m:dmitry.baryshkov@oss.qualcomm.com,m:johannes.goede@oss.qualcomm.com,m:sudeep.holla@kernel.org,m:rafael@kernel.org,m:andersson@kernel.org,m:konradybcio@kernel.org,m:srini@kernel.org,m:krzk+dt@kernel.org,m:lumag@kernel.org,m:bartosz.golaszewski@oss.qualcomm.com,m:abel.vesa@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-acpi@vger.kernel.org,m:krzk@kernel.org,s:lists@lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-114880-lists,linux-arm-msm=lfdr.de];
-	RCPT_COUNT_TWELVE(0.00)[12];
-	FORGED_SENDER(0.00)[dmitry.baryshkov@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FORWARDED(0.00)[lists@lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:varadarajan.narayanan@oss.qualcomm.com,m:andersson@kernel.org,m:mturquette@baylibre.com,m:sboyd@kernel.org,m:bmasney@redhat.com,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-clk@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,qualcomm.com:email,vger.kernel.org:from_smtp,sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo];
-	MISSING_XM_UA(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[dmitry.baryshkov@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	RCVD_COUNT_THREE(0.00)[4];
 	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	ALIAS_RESOLVED(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[14];
+	FORGED_SENDER(0.00)[sudeep.holla@kernel.org,linux-arm-msm@vger.kernel.org];
+	MIME_TRACE(0.00)[0:+];
+	FORWARDED(0.00)[lists@lfdr.de];
+	TAGGED_FROM(0.00)[bounces-114881-lists,linux-arm-msm=lfdr.de];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	ALIAS_RESOLVED(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[sudeep.holla@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[7]
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MISSING_XM_UA(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,vger.kernel.org:from_smtp]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: D60AC6D772B
+X-Rspamd-Queue-Id: A128E6D775E
 
-On Mon, Jun 29, 2026 at 10:08:43AM +0530, Varadarajan Narayanan wrote:
-> The Application Processor Subsystem on the IPQ5210 platform sources
-> its clock from the Huayra PLL. Add the configuration data necessary
-> to set it up.
+On Sun, Jun 28, 2026 at 10:23:15PM +0300, Dmitry Baryshkov wrote:
+> On Sat, Jun 27, 2026 at 03:12:31PM +0100, Sudeep Holla wrote:
+> > On Fri, Jun 26, 2026 at 11:57:47PM +0300, Dmitry Baryshkov wrote:
+> > > On Fri, Jun 26, 2026 at 04:52:41PM +0100, Sudeep Holla wrote:
+> > > > On Tue, Jun 23, 2026 at 04:52:13PM +0200, Hans de Goede wrote:
+> > > > > Hi All,
+> > > > > 
+> > > > > Currently as soon as the kernel boots with a populated DT provided then
+> > > > > the arch/arm64 code sets acpi_disabled=1 and the complete ACPI subsystem
+> > > > > gets disabled. On WoA Snapdragon laptops where the factory Windows OS
+> > > > > actually boots using these tables this is not necessarily desirable.
+> > > > > 
+> > > > 
+> > > > I am bit lost reading the very first statement here.
+> > > > 
+> > > > Who is populating DT and why ? It seems that is the source of the problem.
+> > > > 
+> > > > If windows can boot with ACPI tables, why is it causing issues for the
+> > > > Linux kernel, any specifics?
+> > > 
+> > > Windows uses a separate beast called PEP, which nobody wanted to
+> > > implement for these platforms up to now. You can find a lot of ACPI
+> > > dumps for these devices at [1].
+> > > 
+> > 
+> > Agreed and I assume that is the reason why we want DT.
 > 
-> Signed-off-by: Varadarajan Narayanan <varadarajan.narayanan@oss.qualcomm.com>
-> ---
->  drivers/clk/qcom/apss-ipq-pll.c | 19 +++++++++++++++++++
->  1 file changed, 19 insertions(+)
+> Not completely... Using DT forces us to reimplement bits and pieces for
+> these laptops. E.g. drivers for EC, battery, etc.
 > 
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Not entirely clear still. I mean use ACPI for those as well.
 
+> > 
+> > > > IOW why is DT populated which creates the problem you are trying to address
+> > > > here.
+> > > 
+> > > Most of the laptops resemble other Qualcomm platforms, which use DT for
+> > > hardware description. In some cases, it is the same platform being used
+> > > for both mobile, IoT and laptops. It was more or less natural to reuse
+> > > existing support.
+> > > 
+> > 
+> > Sure, just use DT then, why are we even talking about mixed/hybrid mode.
+> > It gives no incentive to OEMs using PEP to get away from it and use
+> > standard ACPI or improve if anything is missing.
+> 
+> Well. Here we are talking about the laptops which were being sold since
+> 2018. I doubt there will be a UEFI update for all these models.
+> 
+
+This problem is discussed multiple times and yet OEMs are not interested in
+fixing it 🙁.
+
+> > 
+> > So I don't like this idea of mixing at all. Use ACPI or DT, make up you
+> > mind. You can't expect to get the best of both worlds if you are not improving
+> > the missing parts in either of those. This is just a shortcut.
+> 
+> So, if we need to append the DSDT, what would be the best way to do it?
+> Something like Surface platform drivers, providing extra device nodes?
+> 
+
+CONFIG_ACPI_TABLE_UPGRADE allows to override the ACPI tables via initrd IIRC.
 
 -- 
-With best wishes
-Dmitry
+Regards,
+Sudeep
 
