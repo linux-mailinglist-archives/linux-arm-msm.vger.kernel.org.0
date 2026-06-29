@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-115062-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-115063-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id Gn8MDgFnQmqn6QkAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-115062-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2026 14:37:21 +0200
+	id V357AkFoQmoG6gkAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-115063-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2026 14:42:41 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id ACD946DA56A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2026 14:37:20 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id A89A86DA6AD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2026 14:42:40 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=LzaVIJgs;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115062-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115062-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=N9kcot1+;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115063-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115063-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 7B02931BDADF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2026 12:30:49 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id D6BC030AB23F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2026 12:31:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7BC2542189A;
-	Mon, 29 Jun 2026 12:25:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 34EA2421A02;
+	Mon, 29 Jun 2026 12:25:23 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B9DB41C31C;
-	Mon, 29 Jun 2026 12:25:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11F37406816;
+	Mon, 29 Jun 2026 12:25:21 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782735920; cv=none; b=CfhfG10PTXoQkzFn9Ng8GwHZzA0wFTFdgoo0cKY1iIau0zk9vlL5KcKNQr5j7UyzjtCpCXz6bO44fNnkVbr12+sVjDrcXcjkmBmmJ2i6nibLfh9yqzKNFw4VsLCBRir1+K4PfW+Ue5ZpOf0J0lpQoO9Oe625obWt9SgvW/bZu4I=
+	t=1782735923; cv=none; b=VWuDPRtKc7qC+FaHPohMJB7I5p2E3zkRjIg7C9o33tJ75BGvZCJmsqYyqenFbU4al42qorU2YCCWWpROFB69bwRgua+LKKSfW+smuuxQQ5oT+szmJS+r3UC2at6zEh35A0991BaxLdkz5+IhG4oyslesvTTqF8MyIog/C817vq4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782735920; c=relaxed/simple;
-	bh=u0nsZQuzBuEkyG5AVCQS4ioqkGTOpC7ZvpTtzOMEHP8=;
+	s=arc-20240116; t=1782735923; c=relaxed/simple;
+	bh=V/YEuS6ePdn2AU6bLoodBLXQZgoSyfPhXCqAJsC0Sx4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tc1w0QgRRUtdtvDzwtpxLlGRju+NHSstnklNm1itWqqFpDfT22E1c5LqGm2Ph4RvSV+U/ePZAOsrqocvuZ42WE5YGsg9e3CxMBTe0RpBB+8V3Uh6WnyyHcEmPrrtjOC8c8SoJlxX8o6sAVoHpYsdSYTTo9NDRI0zhXVyqJrCTqo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LzaVIJgs; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1854A1F000E9;
-	Mon, 29 Jun 2026 12:25:18 +0000 (UTC)
+	 MIME-Version; b=GRB2wphRHA8DHPUGVM/0tU1BGevHQKmm7D6wzaCgi8cXenzrUCg9z0atzna0LHBHV65xhWqb+STU7BUnM5zOWsUaGBRJg9BhcO0DETAYkO5/8XG13eTL0c6WzHjEKbPp9OCEmNx7FdMYe8/1Z+VxEb2jIYQzOujOHBymDw6nEG8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=N9kcot1+; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E66421F00A3A;
+	Mon, 29 Jun 2026 12:25:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782735918;
-	bh=Jss+F81DP/cs0B/Pcj9h2s0BrMlGB7h7WXj2K0PFk1s=;
+	s=k20260515; t=1782735921;
+	bh=rHOb9ve3jYcE/W9RyXVRFM5l4Jk2KuXJSM2ur2HmA8o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LzaVIJgsys62G+Y5l1WPaL5KQg6Z9HDAWxSbs7bAkvDQSJaO1VHm9gvWufC4VLmRZ
-	 jM7dpVcbVkF0SaP5Ojhs2zhRfm/Pm/c57mYs4zRHf+LvG8Gz2lV5Zd7jFguf/A+Aer
-	 MvdUsRxGB7wdbuOShGZQOpB/BZ+xQu0z6RpiPRZlQcVRrODtCGFjFyGztrKJcLuJVT
-	 F/kWSDsg+64kaSG4Gtj04lo6i96YLOeVRijxNkFR2Vl4HpUl1qyQJZrEJ1ZttLFyuJ
-	 VZzxp13dMEaBPNzJjC3VctdXBDUgzvzJmDPej1MoZQWyEpxYqX6bktXABOszXoE8oJ
-	 Ilp56I6Xu/UJQ==
+	b=N9kcot1+WY2jypsv4U6kyLKClwmxgtXnpUiiDsh9uB4wjsv/6mJ3uO8Mm+KlvRTpt
+	 x95DOn031RIiOjhD9YBKvRsJ3SWRscOOHqXP5//ffbZRcn2+ZeOGSqWcDJL8lpSdT6
+	 9xiMjnB7g5DmFlroBbERwFk8HFxqwumjaOz9YYOFNe+t1tNkvjM4Dw8POSV8W15821
+	 j0S2qUg2MPsEO6oUCpFNLuavOjl181R825Q1U0o2hykdFp0yv8/ZlyQqKxPThBHA+b
+	 ZaWet0RIDIpDhYPXxPyW/nHY7c+UePobu/bAvV+uoPejolMs3FGhsJpEMMh+z+0i3V
+	 QBTJtGRqk2zcw==
 From: Lorenzo Stoakes <ljs@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: Russell King <linux@armlinux.org.uk>,
@@ -122,9 +122,9 @@ Cc: Russell King <linux@armlinux.org.uk>,
 	Rik van Riel <riel@surriel.com>,
 	Harry Yoo <harry@kernel.org>,
 	Jann Horn <jannh@google.com>
-Subject: [PATCH 28/30] mm/vma: use guard clauses in can_vma_merge_[before, after]()
-Date: Mon, 29 Jun 2026 13:23:39 +0100
-Message-ID: <213918ef85ed427d29d0635db6b07b15280d3bb0.1782735110.git.ljs@kernel.org>
+Subject: [PATCH 29/30] tools/testing/vma: default VMA flag bits to 64-bit
+Date: Mon, 29 Jun 2026 13:23:40 +0100
+Message-ID: <27cd07f6dd862d92410cf9db03f7c11e5f66854d.1782735110.git.ljs@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <cover.1782735110.git.ljs@kernel.org>
 References: <cover.1782735110.git.ljs@kernel.org>
@@ -143,7 +143,7 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	MID_CONTAINS_FROM(1.00)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_MISSING_CHARSET(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
@@ -151,7 +151,7 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	FREEMAIL_CC(0.00)[armlinux.org.uk,kernel.org,siemens-energy.com,HansenPartnership.com,gmx.de,redhat.com,alien8.de,linux.intel.com,mev.co.uk,visionengravers.com,pengutronix.de,gmail.com,ffwll.ch,suse.de,oss.qualcomm.com,ideasonboard.com,nvidia.com,amd.com,shazbot.org,zeniv.linux.org.uk,linux.dev,google.com,infradead.org,samsung.com,goodmis.org,huawei.com,vger.kernel.org,lists.infradead.org,lists.freedesktop.org,lists.linux.dev,kvack.org,googlegroups.com,surriel.com];
-	TAGGED_FROM(0.00)[bounces-115062-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-115063-lists,linux-arm-msm=lfdr.de];
 	FORWARDED(0.00)[lists@lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	FORGED_RECIPIENTS(0.00)[m:akpm@linux-foundation.org,m:linux@armlinux.org.uk,m:dinguyen@kernel.org,m:schuster.simon@siemens-energy.com,m:James.Bottomley@HansenPartnership.com,m:deller@gmx.de,m:jarkko@kernel.org,m:tglx@kernel.org,m:mingo@redhat.com,m:bp@alien8.de,m:dave.hansen@linux.intel.com,m:x86@kernel.org,m:abbotti@mev.co.uk,m:hsweeten@visionengravers.com,m:l.stach@pengutronix.de,m:airlied@gmail.com,m:simona@ffwll.ch,m:patrik.r.jakobsson@gmail.com,m:maarten.lankhorst@linux.intel.com,m:mripard@kernel.org,m:tzimmermann@suse.de,m:robin.clark@oss.qualcomm.com,m:lumag@kernel.org,m:tomi.valkeinen@ideasonboard.com,m:thierry.reding@kernel.org,m:mperttunen@nvidia.com,m:jonathanh@nvidia.com,m:christian.koenig@amd.com,m:ray.huang@amd.com,m:ankita@nvidia.com,m:alex@shazbot.org,m:viro@zeniv.linux.org.uk,m:brauner@kernel.org,m:djbw@kernel.org,m:muchun.song@linux.dev,m:osalvador@suse.de,m:david@kernel.org,m:surenb@google.com,m:liam@infradead.org,m:willy@infradead.org,m:m.szyprowski@samsung.com,m
@@ -167,73 +167,38 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	DKIM_TRACE(0.00)[kernel.org:+];
 	RCPT_COUNT_GT_50(0.00)[75];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	ALIAS_RESOLVED(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,vger.kernel.org:from_smtp]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: ACD946DA56A
+X-Rspamd-Queue-Id: A89A86DA6AD
 
-Rather than combining a bunch of conditionals in a single expression,
-simplify by inverting the mergeability requirements into guard clauses.
+With all of the sanitisers turned on, setting the VMA flag bits depth to
+128 by default results in overly long build times.
 
-that is - instead of checking what must be true for the conditions to be
-met, instead check the inverse of the requirements and return false if any
-are true, defaulting to true.
-
-No functional change intended.
+Reduce this to 64 - we can always manipulate these later for testing of
+larger bitmaps as needed.
 
 Signed-off-by: Lorenzo Stoakes <ljs@kernel.org>
 ---
- mm/vma.c | 27 ++++++++++++++-------------
- 1 file changed, 14 insertions(+), 13 deletions(-)
+ tools/testing/vma/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/mm/vma.c b/mm/vma.c
-index 5c3062e0e706..7201199fc668 100644
---- a/mm/vma.c
-+++ b/mm/vma.c
-@@ -215,13 +215,13 @@ static void init_multi_vma_prep(struct vma_prepare *vp,
-  */
- static bool can_vma_merge_before(struct vma_merge_struct *vmg)
- {
--	if (is_mergeable_vma(vmg, /* merge_next = */ true) &&
--	    is_mergeable_anon_vma(vmg, /* merge_next = */ true)) {
--		if (vmg_end_pgoff(vmg) == vma_start_pgoff(vmg->next))
--			return true;
--	}
--
--	return false;
-+	if (!is_mergeable_vma(vmg, /* merge_next = */ true))
-+		return false;
-+	if (!is_mergeable_anon_vma(vmg, /* merge_next = */ true))
-+		return false;
-+	if (vmg_end_pgoff(vmg) != vma_start_pgoff(vmg->next))
-+		return false;
-+	return true;
- }
+diff --git a/tools/testing/vma/Makefile b/tools/testing/vma/Makefile
+index e72b45dedda5..ef6cc558afe1 100644
+--- a/tools/testing/vma/Makefile
++++ b/tools/testing/vma/Makefile
+@@ -10,7 +10,7 @@ OFILES = $(SHARED_OFILES) main.o shared.o maple-shim.o
+ TARGETS = vma
  
- /*
-@@ -235,12 +235,13 @@ static bool can_vma_merge_before(struct vma_merge_struct *vmg)
-  */
- static bool can_vma_merge_after(struct vma_merge_struct *vmg)
- {
--	if (is_mergeable_vma(vmg, /* merge_next = */ false) &&
--	    is_mergeable_anon_vma(vmg, /* merge_next = */ false)) {
--		if (vma_end_pgoff(vmg->prev) == vmg_start_pgoff(vmg))
--			return true;
--	}
--	return false;
-+	if (!is_mergeable_vma(vmg, /* merge_next = */ false))
-+		return false;
-+	if (!is_mergeable_anon_vma(vmg, /* merge_next = */ false))
-+		return false;
-+	if (vma_end_pgoff(vmg->prev) != vmg_start_pgoff(vmg))
-+		return false;
-+	return true;
- }
+ # These can be varied to test different sizes.
+-CFLAGS += -DNUM_VMA_FLAG_BITS=128 -DNUM_MM_FLAG_BITS=128
++CFLAGS += -DNUM_VMA_FLAG_BITS=64 -DNUM_MM_FLAG_BITS=64
  
- static void __vma_link_file(struct vm_area_struct *vma,
+ main.o: main.c shared.c shared.h vma_internal.h tests/merge.c tests/mmap.c tests/vma.c ../../../mm/vma.c ../../../mm/vma_init.c ../../../mm/vma_exec.c ../../../mm/vma.h include/custom.h include/dup.h include/stubs.h
+ 
 -- 
 2.54.0
 
