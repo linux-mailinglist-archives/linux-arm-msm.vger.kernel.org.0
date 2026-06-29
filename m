@@ -1,105 +1,104 @@
-Return-Path: <linux-arm-msm+bounces-114940-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-114941-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id Ez3TLhVCQmqK2wkAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-114940-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2026 11:59:49 +0200
+	id rVtPIAZCQmqD2wkAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-114941-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2026 11:59:34 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5CEAA6D88D7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2026 11:59:49 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id CF57C6D88CF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2026 11:59:33 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=m4F7cJSs;
-	dkim=pass header.d=oss.qualcomm.com header.s=google header.b="I/beJeHD";
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-114940-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-114940-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b="BPQxh9/Q";
+	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=MZTRZbjb;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-114941-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-114941-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=reject) header.from=qualcomm.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 2E19A30E256D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2026 09:51:49 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 38AC0312B43A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2026 09:52:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2D5483FA5FE;
-	Mon, 29 Jun 2026 09:51:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ECF923B47C6;
+	Mon, 29 Jun 2026 09:51:32 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E93043F889E
-	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jun 2026 09:51:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7060037F8DB
+	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jun 2026 09:51:31 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782726673; cv=none; b=XEOpqafOf9rw/0nAlS8gXnKrKBR+pCXfINyNwL19w6rMP0CZMdsTPReQfEZEHW9cfOhmDK+Zdsldj5GpYKdqkOnl3ba87auobWAosQ/YN4vkzbE8zPdwjIrljV0C1UUMHyaZIwFjyWhgwBl/MqKpgDr2NpJNZa/UtasnZ3IvWic=
+	t=1782726692; cv=none; b=mzumo4Od6Sst4NB838S+hJWGsoyEo3qe46OW0S89a3ZKFiwk1uOspDeWTX99rYjieEd2CXdPKQlylOdYeCIhRyPgetkHAISOwIXlAnl+PVeOWKn7exlzO/0bqUcPjv99Fy6BeLeI1Ck+fWLJSj1WGrzugzHJpfcfDPTEztCTrFU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782726673; c=relaxed/simple;
-	bh=clg0AzGHYAP/V3MGodBAGw/7RE1WclMLvIgKBJ9RdiM=;
+	s=arc-20240116; t=1782726692; c=relaxed/simple;
+	bh=RIK6AzKoWfic71CgwczoNE8t9J4BmYslv1IWqoPa434=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Pi1QqVpTENQcV5vNcNRIXR7Oiih63w4ZAR4qLSOWU/TeRurRPiyVjtsBmSSnjklGgor7Se6kJWAOdIPoZg9aWPyAypw29nJLD58mFcrSBgmJnz0xrYknsuj3c8Zu95W555+UMFAeAQYf+hI0g7CMyx/A4I49QO72wC+y1Oc7aWk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=m4F7cJSs; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=I/beJeHD; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=X+2SAFKEPvheReUlfRBnbuFh9fQdY5FkI1PX8eNg6yEh+iWL819rR9iCogFY1O4kWPZcVJLopqD4kh64lAx6J9xeGYJ4yjrjmD3vfs5tSIZTgVRoHCywouNAi5sHu0r8BEGnKURoV9pBfr8C/xhxx3vLolj+oNYvI26PP2YFjj0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=BPQxh9/Q; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=MZTRZbjb; arc=none smtp.client-ip=205.220.168.131
 Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65T8wabp2391294
-	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jun 2026 09:51:11 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65T8wc5p2391840
+	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jun 2026 09:51:30 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	GkCQR8MNxV/qrXyojcsgaOniTxZ4r+JBV6h6codhP2k=; b=m4F7cJSsDLVJ8KQR
-	xRAK8vfkJtOncPfJ4Of0R2q3n5FwWBzepSVlDxzpMsIADkshZgCj/oeIzaoZviL4
-	EwJYZESsriOFsRzC1Lvc6ViLV51T+3U5XK8d4UZXPusEKbgTzAwjFNTL9HH6KWqF
-	9CMtL7byypShWGHjRDEtc6EbagtgvlDsr1WRXp13wvizwHAI++aBrGqkomlc0QZH
-	nPbxi9zp7wF2+dtDkPXxFq1mgAiTPH/TYmAzKukwgrqbjHiD0jD1PkJYFfNJAmCf
-	nFIWDa2Dz9PU6kYAOJjWmleIBu6eBJH/ewzSf+rfAuNy51L7p/302uQpUABPix1l
-	y4M4Uw==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f3nnw87pd-1
+	hjPLHndmLVKQTG4TpiuHBOh11+YSR/gs656clgRuRBY=; b=BPQxh9/QX9qx323n
+	AlpS8CL0dXRqKQYQx7sLhm6VFBFEuFqEPtpsB3fWvXVQPZpcydyvuQq4ikRebJ/n
+	2C9k2/gaaRN5ka+JkoN4teZ9vH+6PbHs3MeSi0T4dCZXQy8bQ2oc7ofjVEDzbApy
+	YOvmNLzaDgS3uyY4wp5pH2tE7c1VdhBHHQTKYH8mmav74kKm89MFurT+dN/P/2RS
+	GbdEMUQcdapnWS/X7dqSxXTmGy32ukitikVXsqk/X5pL61zkJyUEI6So/zxCqTVf
+	GPQurw7NuUcfRrRZ4c9S2yl/yZfXR6mLT12Gs8pDmPz0fPhCuPDDtjWvzqH8yzwC
+	Rs4dyQ==
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f3nnw87qq-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jun 2026 09:51:11 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-92e566bae1bso9773285a.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jun 2026 02:51:11 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jun 2026 09:51:30 +0000 (GMT)
+Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-2c804e38c65so35232495ad.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jun 2026 02:51:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1782726670; x=1783331470; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=GkCQR8MNxV/qrXyojcsgaOniTxZ4r+JBV6h6codhP2k=;
-        b=I/beJeHDpjYCrgx2O92qmp1XXZHX8gJJtbuhX6ZIQ8fOGWRxjyxcJzAMsyMFMojVJN
-         RvCtH265BIvn3bdFjACupFm0ZfQnGx2VLdNwvcxDz/mzs1MCvpGMsLsT1RSYqy+9TuSO
-         9Q/z+D2n2iw1ZwHANQ8S4S0WA4B0KOPT+A4CfFA6LstTUyY3DTf9W+fjMmFnIcOQciAN
-         mFku4qkzIjxdLY+CLLbHqsOptlZMtMskm8irnfKIMZO1m4ZFn7+EsHq+Ii2jtbqzDXUI
-         UMlcFYBEd3DZu3WnDq3yAwUyWtMcZa4SSfV1opLgqX1JR2M133DxZkzmavvHgLbjm08G
-         yABg==
+        d=oss.qualcomm.com; s=google; t=1782726690; x=1783331490; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=hjPLHndmLVKQTG4TpiuHBOh11+YSR/gs656clgRuRBY=;
+        b=MZTRZbjbgK/3w2NvGh0eV4mADjKukSx3qrGBDcWC/Jdr/n50Ws8iwdvUP1EdIKrvvj
+         qWaUfW8Kwt2UjkHNV21pO05ZYYJkRtzRsIQcenM7gJsDH6B3oEq44j9qwrlJLwLRo90r
+         qZgQbisknXD53nUxacb7fijjDx9N/4YSNNnyF4Dt0pc9l5EHzzIr6w0DyHoieEzF0dcw
+         4xbl0qnbNpyEZh7LN8Htzs5tC6V3SRyj5HZnYvU2zGO1Hd4smKsnqQbj419M3huagtVO
+         I7yozFUtPwsiuseVdmQ6aSYfhGNMG9kssBh65lS/AjjZ6J/IiiRy8TmKD3c0TmLQJBtG
+         uiAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782726670; x=1783331470;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=GkCQR8MNxV/qrXyojcsgaOniTxZ4r+JBV6h6codhP2k=;
-        b=UAZYW3F4lPubosV2S/9W1+LbyltrbfmCbm8Lw47kAb/qbKIBCsmD5f4YxigWi+La2c
-         Y5LQ8nCP5mRV6tI4CJE4/qgNavztLG6csxupaXympCpZchvVY7QEMGU/Gxz9CIRP6SGw
-         2JrV96PvJ8IaAphVM7qEw98Y2VMt0uSgVZ4skBpwT/iBQ2EhwwMz7IQOJlz+0hi/nEOg
-         HthjMJVy5fxpfvINkV3YCrD1bsYOlG/wHy8km/NkUkJtF0KsfQWeFtGY8sUpCbKv4oMf
-         U5GCtuJ9kaNMtfjzvgMtoQjkGmFBnkTTAdt9KVeyaA90XHtOYcmT70pxpM8Xc8uinYEM
-         MYig==
-X-Forwarded-Encrypted: i=1; AFNElJ/Ei8YfxLkbpX/imxCRGICXVHove4Gp4kVPfQB+ve787nIneEV6GmhBiohsuElEPqU+khDU8EOuprz91Opf@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx1wgHUS5P2enTgK6pL4YJC8SIyU9HmDIO5th0yo+c3GmMyjO5Q
-	l6PYiuyaF9R3qYYbZ4lK4w1hT6sETt/QFgonCJ+f+pssxKIg6u4mxsEiJc7wbawUd8dYmWCdjwu
-	QlJycA/fx4oM5W6hlv0t77huRwhBwXBCtFg4gtsF7iE2I5ecKf3BWbmFTel+oKxm0JyFb
-X-Gm-Gg: AfdE7ckdy7zqUFw0S7Si9dQAQkGK6aih3fCthNK581pWYmO56LoilypuBRlRcaz2wBb
-	TizGhSRTFSc4RKPP/NLlNyV+jrhg1WZZDhy5zUbjiMTU/9F+doLxBX9NCAs3kTmP4FSJmt07g8j
-	spRpYJNZkibn4PBN8JVcHH6NL/EMMslXO9QrjBbfrNonMB30kRnq7qoyjgC0RheTaW4V9Sau36x
-	hY1HW+bDoKIS1nlr02Lbifto0mY1N5fO+khY6tNRv8JV8QS/gsjdrZjb+wVzBZTy5beAZ4i2yza
-	AHFhjiXiKn7MsafvoZ8tITX2pR0Tmjskt1QPKw3HhC+MrOhMb3g+l48+JeZ6JKuB45QK3QV6JcF
-	ocDKxLNRh7i86TaqwxH55jNewIeVwvRx+ow8=
-X-Received: by 2002:a05:620a:2b46:b0:915:7c1a:1388 with SMTP id af79cd13be357-9293d8a98edmr1528682885a.5.1782726670227;
-        Mon, 29 Jun 2026 02:51:10 -0700 (PDT)
-X-Received: by 2002:a05:620a:2b46:b0:915:7c1a:1388 with SMTP id af79cd13be357-9293d8a98edmr1528679585a.5.1782726669775;
-        Mon, 29 Jun 2026 02:51:09 -0700 (PDT)
-Received: from [192.168.120.170] ([178.235.128.140])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c11fbba677csm744546666b.11.2026.06.29.02.51.06
+        d=1e100.net; s=20251104; t=1782726690; x=1783331490;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=hjPLHndmLVKQTG4TpiuHBOh11+YSR/gs656clgRuRBY=;
+        b=ZDcur5iQStSec1BCtihSQqxsdTXbJqVszSEAPRs9z7JsxKEpUi26LgK/9OvlUtIkSt
+         4p5FlCA2budQZJVgzC+sr0Wj8IKcBM5JCsnA8qm3P82m6fyryjabjBNYLQRi7G+TyHwe
+         QJLGvqkAgO0BF7Jr9NEd1FhSH+ToW7qXl668AAh6Ch90oL3ZHxoGMjXeZOacVtfiKi82
+         wGKlhqQY9D4PywUhZhZPJeiLj67e8+ayCApxsHFlz98VuhQlrugB1pv761U70zjibXbh
+         L4D/6lZRMCPEvVquqGY3wCKG1RV6cxZhw5uSwKi1gXOU9c6otDmCqaZtPYC1688/tELD
+         +TCg==
+X-Forwarded-Encrypted: i=1; AHgh+Rr1dXbCe3i90kjDH7/FgqCaAOmV+Dc3hXNSPwsQNbh4Hc8bojUY6haPCOnNqK2LYhuhYlTxGcBxnsfTCAUj@vger.kernel.org
+X-Gm-Message-State: AOJu0YyCqO0Powj7ww+9F72wfR+IgpOLI4y+gjxcJaYrKodJItxCe8sL
+	u3bS+Nv4l125F/GmrqWg463VpcqIJTJUlAQfPlpvkYzn+oPAZMTGg+sunTi3eiYORDkZWBKt0Tj
+	26rdQJtCrX+y5U1FzmhYe+rMNBPccIkKKvzt3I3idqp/6Cg+tg8uYZ3EfiZqQFANFQmdP
+X-Gm-Gg: AfdE7cntKCNh+lzgICVkyP767vbV7xSWa/ffaIg8thpe+9uG/dIvLqMISCFKmBDtZEr
+	yECO8W/Gcd9JwxnEf+OChoeXWGLHJTG89YLIARp2kL51vEQLUIfQbFH7WiqkIJR+VUXpITuzKlT
+	fjjm4crqW9wBhkDbROakWvqwbZzwxZmt7rIK7DuiRQdEhfxQuvQhdj9C1hwsn7/Jm7rq0zofzq1
+	TRMnZgl+S0btKqdixMTFmzobTlmnR+zmVanupttFfKydLnVfB1bbLshyohKJOon5kG03lEuaOAm
+	Xh19G4buRxpZJRYgFDGQ1qOr+WHZB4UYXUsnkN+LdDmmR5c0P67hoI45KlbBe18c+RRbRLpPCb9
+	HHGqfruS7UnjX+x2AvskxSmPIGXbb4QtlO2ShNIrQ
+X-Received: by 2002:a17:903:32c4:b0:2c9:ff83:41e3 with SMTP id d9443c01a7336-2c9ff834537mr22842555ad.21.1782726689901;
+        Mon, 29 Jun 2026 02:51:29 -0700 (PDT)
+X-Received: by 2002:a17:903:32c4:b0:2c9:ff83:41e3 with SMTP id d9443c01a7336-2c9ff834537mr22842375ad.21.1782726689261;
+        Mon, 29 Jun 2026 02:51:29 -0700 (PDT)
+Received: from [10.206.100.243] ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2c980f15234sm51913875ad.39.2026.06.29.02.51.23
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 29 Jun 2026 02:51:08 -0700 (PDT)
-Message-ID: <050d47ac-9089-4a72-be89-d61fa695c00b@oss.qualcomm.com>
-Date: Mon, 29 Jun 2026 11:51:05 +0200
+        Mon, 29 Jun 2026 02:51:28 -0700 (PDT)
+Message-ID: <8236a2a1-040a-4ef3-ae14-41c1127a749b@oss.qualcomm.com>
+Date: Mon, 29 Jun 2026 15:21:08 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -107,52 +106,47 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 13/13] arm64: dts: qcom: shikra: Add support for
- DISPCC/GPUCC nodes
-To: Imran Shaik <imran.shaik@oss.qualcomm.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+Subject: Re: [PATCH v3 2/2] drm/panel: add Ilitek ILI7807S panel driver
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Neil Armstrong <neil.armstrong@linaro.org>,
+        Jessica Zhang <jesszhan0024@gmail.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Rob Herring <robh@kernel.org>,
         Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Loic Poulain <loic.poulain@oss.qualcomm.com>,
-        Brian Masney <bmasney@redhat.com>
-Cc: Ajit Pandey <ajit.pandey@oss.qualcomm.com>,
-        Taniya Das <taniya.das@oss.qualcomm.com>,
-        Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20260604-shikra-dispcc-gpucc-v4-0-8204f1029311@oss.qualcomm.com>
- <20260604-shikra-dispcc-gpucc-v4-13-8204f1029311@oss.qualcomm.com>
- <77a5213d-6be7-4a86-81ad-3509a499ad12@oss.qualcomm.com>
- <3f8d117c-2ced-480e-bec6-0bd38a60b7c0@oss.qualcomm.com>
+        Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, ayushi.makhija@oss.qualcomm.com,
+        rajeevny@qti.qualcomm.com
+References: <20260624-ili7807s-v3-0-ddf37052a289@oss.qualcomm.com>
+ <20260624-ili7807s-v3-2-ddf37052a289@oss.qualcomm.com>
+ <5pvhrsikc3spr5jworztun7pjpgnkfihxvqd3dthhn7yeoud56@vcajuuwqplvo>
 Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <3f8d117c-2ced-480e-bec6-0bd38a60b7c0@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI5MDA3OSBTYWx0ZWRfXxMOVtsynfQoZ
- snxuUw2LKiV2sRpJtDgor8Ccxln4wW6dXb3k25l7ZFrwolqGDhi0NUTz5hhJJzDCeaakSchVA+f
- BSkULJo5zjOkvdRPlu/UQx/vQCVklyk=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI5MDA3OSBTYWx0ZWRfX62Z9UAsHpBra
- BsUqSrYAQ9LlNSwhIdR95wmhFT5Xf1BhNUMQw8Dx0W1DjSwc20e3WNYcwYqTrxhS5gRCcClaIj4
- L7h9c0l+vf8G4pEL5qjvH19jiaoX6MUQXvWqhMm6GEExfD13LwgOnKFsMIds7hLHAkQJZH4SyzW
- 9Cj0xeXF3sCJSNfFa2SSYaI+iWwbFHM2yW62Q8zGUmEfQ2MkopFtg/sxrv69wAGl52gZdj89/2y
- kWDPLOcbBJwnBHSAx/Q+YO4hNre0kBwzeo7P10EzDBnxm/yScWBoOU+Z9ZpxLXXH7AW4d+rK3fq
- tt4MzuZ6bouUSCuoY550M+tTBJdpETO05MtHN9g3NIMENg6zzZ4yxl8VlCyEvyEUJlQQ/QIOq/O
- 7dj1GIB4sUvmCPhXcKh12dGxbFLQrR+EycCbZTUhjUuFcnV7tkpOj0bojCEg5pcYrIkrJ7zOEAp
- 7aYLJIj/buZUVfHzBBQ==
-X-Proofpoint-GUID: bBUvXkrGa63GtWGmtqDykRbNcDRvaJ6t
-X-Authority-Analysis: v=2.4 cv=cefiaHDM c=1 sm=1 tr=0 ts=6a42400f cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=PRfkaYvzSr8QmIIGAkY2Sg==:17
+From: Arpit Saini <arpit.saini@oss.qualcomm.com>
+In-Reply-To: <5pvhrsikc3spr5jworztun7pjpgnkfihxvqd3dthhn7yeoud56@vcajuuwqplvo>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI5MDA3OSBTYWx0ZWRfX0/zan4cE9SMB
+ doOEMHFJ3ER9n2wtTsNGp1jYIF/5m8I4fz65KwieRcnvx3HXKEC+01YG0pZAz63EOBmIUM4bl/E
+ TKwXZ9CZZMgh9zIcWNGf6GOmO7CVLk0=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI5MDA3OSBTYWx0ZWRfX8p4bSB90Dm3U
+ UKv+ZZVfr+405v43hQApRGZhvcZQn376HTDx2POlykHVB3wo8gnvqGgIEFafIwuJZ2QFSi2X+Sa
+ rC+N9MTU+4nO3MCVIKmD/4/YH4HD4uWDfxf4km2KlNYF6NFDYZroMsB2QxDKX20DppFvRDkYwAF
+ Ljx7xTOcO8o7c8NcTM+Wjb9YNn0IguJ9xVNN8nK8Py3dxUHMKSJpgynnrYlHQEKvVpv9W8Q4zI1
+ YkFGFJWRcKHo6ojWvdd1GYVw6w5LBtjd4Z0pFpYuTYQHT2xR8FZSsmY1D5v1Ao6iOco+zS/g/oH
+ psBXeR3olKJB6yBTk51EKMbNl9UPkjRC16qLxAbBRCMisACjPAChua161JEUF6T+qDqcJ0g6ZBW
+ 9ZydnVI6PCyJm8CvBMGSTN2LUwJFJXT64nHKvOSmB+qoJBmmgFPCVnZRoufJG7RF4sNtPEoBAFf
+ z+TPzrnhivhZKCTPCcg==
+X-Proofpoint-GUID: ho-YzhZ6GeX7bwara1C0uZVGdyi7gWUT
+X-Authority-Analysis: v=2.4 cv=cefiaHDM c=1 sm=1 tr=0 ts=6a424022 cx=c_pps
+ a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
  a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
  a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=EUspDBNiAAAA:8 a=6UAb0L3E1jN75_jUm_YA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=NFOGd7dJGGMPyQGDc5-O:22
-X-Proofpoint-ORIG-GUID: bBUvXkrGa63GtWGmtqDykRbNcDRvaJ6t
+ a=EUspDBNiAAAA:8 a=yukSKlyBphtQfdkUWQ4A:9 a=QEXdDO2ut3YA:10
+ a=GvdueXVYPmCkWapjIL-Q:22
+X-Proofpoint-ORIG-GUID: ho-YzhZ6GeX7bwara1C0uZVGdyi7gWUT
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-29_02,2026-06-26_01,2025-10-01_01
@@ -166,68 +160,344 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-114940-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:from_mime,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,qualcomm.com:dkim,qualcomm.com:email,vger.kernel.org:from_smtp];
-	FORGED_SENDER(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[17];
-	FORGED_RECIPIENTS(0.00)[m:imran.shaik@oss.qualcomm.com,m:andersson@kernel.org,m:mturquette@baylibre.com,m:sboyd@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:konradybcio@kernel.org,m:loic.poulain@oss.qualcomm.com,m:bmasney@redhat.com,m:ajit.pandey@oss.qualcomm.com,m:taniya.das@oss.qualcomm.com,m:jagadeesh.kona@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:linux-clk@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	FORWARDED(0.00)[lists@lfdr.de];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	TO_DN_SOME(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[17];
+	TAGGED_FROM(0.00)[bounces-114941-lists,linux-arm-msm=lfdr.de];
+	MIME_TRACE(0.00)[0:+];
+	RCVD_TLS_LAST(0.00)[];
+	FORGED_RECIPIENTS(0.00)[m:dmitry.baryshkov@oss.qualcomm.com,m:neil.armstrong@linaro.org,m:jesszhan0024@gmail.com,m:maarten.lankhorst@linux.intel.com,m:mripard@kernel.org,m:tzimmermann@suse.de,m:airlied@gmail.com,m:simona@ffwll.ch,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linux-arm-msm@vger.kernel.org,m:dri-devel@lists.freedesktop.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:ayushi.makhija@oss.qualcomm.com,m:rajeevny@qti.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FORGED_SENDER(0.00)[arpit.saini@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_CC(0.00)[linaro.org,gmail.com,linux.intel.com,kernel.org,suse.de,ffwll.ch,vger.kernel.org,lists.freedesktop.org,oss.qualcomm.com,qti.qualcomm.com];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:from_mime,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,qualcomm.com:dkim,qualcomm.com:email,vger.kernel.org:from_smtp];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[arpit.saini@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	ALIAS_RESOLVED(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	TO_DN_SOME(0.00)[];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 5CEAA6D88D7
+X-Rspamd-Queue-Id: CF57C6D88CF
 
-On 6/29/26 8:43 AM, Imran Shaik wrote:
-> 
-> 
-> On 25-06-2026 02:14 pm, Konrad Dybcio wrote:
->> On 6/4/26 7:26 AM, Imran Shaik wrote:
->>> Add support for Display clock controller and GPU clock controller nodes
->>> on Qualcomm Shikra SoCs.
->>>
->>> Signed-off-by: Imran Shaik <imran.shaik@oss.qualcomm.com>
->>> ---
+Hi Dmitry,
 
-[...]
-
->>> +                      "gcc_disp_gpll0_clk_src",
->>> +                      "gcc_disp_gpll0_div_clk_src",
->>> +                      "dsi0_phy_pll_out_byteclk",
->>> +                      "dsi0_phy_pll_out_dsiclk",
->>> +                      "dsi1_phy_pll_out_byteclk",
->>> +                      "dsi1_phy_pll_out_dsiclk",
->>> +                      "sleep_clk";
->>> +            #clock-cells = <1>;
->>> +            #reset-cells = <1>;
->>> +            #power-domain-cells = <1>;
+On 6/27/2026 2:11 AM, Dmitry Baryshkov wrote:
+> On Wed, Jun 24, 2026 at 02:23:52PM +0530, Arpit Saini wrote:
+>> Add a DRM panel driver for the DLC DLC0697 1080x1920@60Hz MIPI DSI
+>> panel based on the Ilitek ILI7807S display controller.
 >>
->> DISP_CC also needs to source power from somewhere!
+>> The panel operates in video burst mode with four data lanes using
+>> RGB888 pixel format.
 >>
-> 
-> The Shikra bindings aligns with the existing Agatti bindings, as it is a re-use. And the Shikra/Agatti DISPCC is on CX rail, and it will be always ON when APPS is active.
+>> Signed-off-by: Arpit Saini <arpit.saini@oss.qualcomm.com>
+>> ---
+>>   drivers/gpu/drm/panel/Kconfig                 |  12 ++
+>>   drivers/gpu/drm/panel/Makefile                |   1 +
+>>   drivers/gpu/drm/panel/panel-ilitek-ili7807s.c | 293 ++++++++++++++++++++++++++
+>>   3 files changed, 306 insertions(+)
+>>
+>> diff --git a/drivers/gpu/drm/panel/Kconfig b/drivers/gpu/drm/panel/Kconfig
+>> index 7450b27622a2..1cbaac1bf545 100644
+>> --- a/drivers/gpu/drm/panel/Kconfig
+>> +++ b/drivers/gpu/drm/panel/Kconfig
+>> @@ -264,6 +264,18 @@ config DRM_PANEL_HYDIS_HV101HD1
+>>   
+>>   	  If M is selected the module will be called panel-hydis-hv101hd1
+>>   
+>> +config DRM_PANEL_ILITEK_ILI7807S
+>> +	tristate "Ilitek ILI7807S-based panels"
+>> +	depends on OF
+>> +	depends on DRM_MIPI_DSI
+>> +	depends on BACKLIGHT_CLASS_DEVICE
+>> +	help
+>> +	  Say Y if you want to enable support for panels based on the
+>> +	  Ilitek ILI7807S display controller, such as the DLC DLC0697
+>> +	  1080x1920 MIPI DSI panel.
+>> +
+>> +	  If M is selected the module will be called panel-ilitek-ili7807s.
+>> +
+>>   config DRM_PANEL_ILITEK_IL9322
+>>   	tristate "Ilitek ILI9322 320x240 QVGA panels"
+>>   	depends on OF && SPI
+>> diff --git a/drivers/gpu/drm/panel/Makefile b/drivers/gpu/drm/panel/Makefile
+>> index c2c5cf817116..c3002b351cb8 100644
+>> --- a/drivers/gpu/drm/panel/Makefile
+>> +++ b/drivers/gpu/drm/panel/Makefile
+>> @@ -26,6 +26,7 @@ obj-$(CONFIG_DRM_PANEL_HIMAX_HX83112B) += panel-himax-hx83112b.o
+>>   obj-$(CONFIG_DRM_PANEL_HIMAX_HX83121A) += panel-himax-hx83121a.o
+>>   obj-$(CONFIG_DRM_PANEL_HIMAX_HX8394) += panel-himax-hx8394.o
+>>   obj-$(CONFIG_DRM_PANEL_HYDIS_HV101HD1) += panel-hydis-hv101hd1.o
+>> +obj-$(CONFIG_DRM_PANEL_ILITEK_ILI7807S) += panel-ilitek-ili7807s.o
+>>   obj-$(CONFIG_DRM_PANEL_ILITEK_IL9322) += panel-ilitek-ili9322.o
+>>   obj-$(CONFIG_DRM_PANEL_ILITEK_ILI9341) += panel-ilitek-ili9341.o
+>>   obj-$(CONFIG_DRM_PANEL_ILITEK_ILI9805) += panel-ilitek-ili9805.o
+>> diff --git a/drivers/gpu/drm/panel/panel-ilitek-ili7807s.c b/drivers/gpu/drm/panel/panel-ilitek-ili7807s.c
+>> new file mode 100644
+>> index 000000000000..8ddfab2693ec
+>> --- /dev/null
+>> +++ b/drivers/gpu/drm/panel/panel-ilitek-ili7807s.c
+>> @@ -0,0 +1,293 @@
+>> +// SPDX-License-Identifier: GPL-2.0-only
+>> +/*
+>> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+>> + */
+>> +
+>> +#include <linux/backlight.h>
+>> +#include <linux/delay.h>
+>> +#include <linux/gpio/consumer.h>
+>> +#include <linux/module.h>
+>> +#include <linux/of.h>
+>> +#include <linux/regulator/consumer.h>
+>> +
+>> +#include <drm/drm_mipi_dsi.h>
+>> +#include <drm/drm_modes.h>
+>> +#include <drm/drm_panel.h>
+>> +#include <drm/drm_probe_helper.h>
+>> +
+>> +struct panel_desc {
+>> +	const struct drm_display_mode *mode;
+>> +	unsigned int lanes;
+>> +	enum mipi_dsi_pixel_format format;
+>> +	unsigned long mode_flags;
+>> +	void (*init)(struct mipi_dsi_multi_context *dsi_ctx);
+>> +};
+>> +
+>> +struct ili7807s {
+>> +	struct drm_panel panel;
+>> +	struct mipi_dsi_device *dsi;
+>> +	const struct panel_desc *desc;
+>> +
+>> +	struct regulator_bulk_data *supplies;
+>> +	struct gpio_desc *reset_gpio;
+>> +};
+>> +
+>> +static const struct regulator_bulk_data ili7807s_supplies[] = {
+>> +	{ .supply = "vddi" },
+>> +	{ .supply = "avdd" },
+>> +	{ .supply = "avee" },
+>> +};
+>> +
+>> +static inline struct ili7807s *to_ili7807s(struct drm_panel *panel)
+>> +{
+>> +	return container_of(panel, struct ili7807s, panel);
+>> +}
+>> +
+>> +static void ili7807s_reset(struct ili7807s *ctx)
+>> +{
+>> +	gpiod_set_value_cansleep(ctx->reset_gpio, 0);
+>> +	usleep_range(10000, 11000);
+>> +	gpiod_set_value_cansleep(ctx->reset_gpio, 1);
+>> +	usleep_range(10000, 11000);
+>> +	gpiod_set_value_cansleep(ctx->reset_gpio, 0);
+>> +	usleep_range(10000, 11000);
+> This looks like the reset being active-low. Please define it as is in
+> the DT and use normal (hold = 1, drop = 0) semantics in the driver.\
+Ack.
+>
+>> +}
+>> +
+>> +static void dlc0697_init_sequence(struct mipi_dsi_multi_context *dsi_ctx)
+>> +{
+>> +	mipi_dsi_dcs_soft_reset_multi(dsi_ctx);
+>> +	mipi_dsi_msleep(dsi_ctx, 120);
+>> +
+>> +	mipi_dsi_dcs_write_seq_multi(dsi_ctx, 0xff, 0x78, 0x07, 0x00);
+>> +	mipi_dsi_dcs_write_seq_multi(dsi_ctx, 0x35, 0x00);
+> mipi_dsi_dcs_set_tear_on_multi()
+>
+>> +	mipi_dsi_dcs_write_seq_multi(dsi_ctx, 0x5e, 0x09, 0x99);
+> MIPI_DCS_SET_CABC_MIN_BRIGHTNESS
+>
+>> +	mipi_dsi_dcs_write_seq_multi(dsi_ctx, 0x53, 0x24);
+> MIPI_DCS_WRITE_CONTROL_DISPLAY
+>
+>> +	mipi_dsi_dcs_write_seq_multi(dsi_ctx, 0x55, 0x01);
+> MIPI_DCS_WRITE_POWER_SAVE
+Ack.
+>
+>> +	mipi_dsi_dcs_write_seq_multi(dsi_ctx, 0x51, 0x3f, 0xff);
+> mipi_dsi_dcs_set_display_brightness_large_multi(). Also please use
+> 0x1fff instead of the full brightness.
+>
+>> +
+>> +	mipi_dsi_dcs_exit_sleep_mode_multi(dsi_ctx);
+>> +	mipi_dsi_msleep(dsi_ctx, 120);
+>> +
+>> +	mipi_dsi_dcs_set_display_on_multi(dsi_ctx);
+>> +	mipi_dsi_msleep(dsi_ctx, 20);
+>> +}
+>> +
+>> +static int ili7807s_on(struct ili7807s *ctx)
+>> +{
+>> +	struct mipi_dsi_multi_context dsi_ctx = { .dsi = ctx->dsi };
+>> +
+>> +	ctx->dsi->mode_flags |= MIPI_DSI_MODE_LPM;
+> Drop, set it in probe()
+Ack.
+>
+>> +
+>> +	ctx->desc->init(&dsi_ctx);
+>> +
+>> +	ctx->dsi->mode_flags &= ~MIPI_DSI_MODE_LPM;
+> Drop
+>
+>> +
+>> +	return dsi_ctx.accum_err;
+>> +}
+>> +
+>> +static int ili7807s_off(struct ili7807s *ctx)
+>> +{
+>> +	struct mipi_dsi_multi_context dsi_ctx = { .dsi = ctx->dsi };
+>> +
+>> +	ctx->dsi->mode_flags |= MIPI_DSI_MODE_LPM;
+> Drop
+>
+>> +
+>> +	mipi_dsi_dcs_set_display_off_multi(&dsi_ctx);
+>> +	mipi_dsi_msleep(&dsi_ctx, 20);
+>> +
+>> +	mipi_dsi_dcs_enter_sleep_mode_multi(&dsi_ctx);
+>> +	mipi_dsi_msleep(&dsi_ctx, 120);
+>> +
+>> +	ctx->dsi->mode_flags &= ~MIPI_DSI_MODE_LPM;
+> Drop
+>
+>> +
+>> +	return dsi_ctx.accum_err;
+>> +}
+>> +
+>> +static int ili7807s_prepare(struct drm_panel *panel)
+>> +{
+>> +	struct ili7807s *ctx = to_ili7807s(panel);
+>> +	int ret;
+>> +
+>> +	ret = regulator_bulk_enable(ARRAY_SIZE(ili7807s_supplies), ctx->supplies);
+>> +	if (ret < 0) {
+>> +		dev_err(ctx->panel.dev, "failed to enable regulators: %d\n", ret);
+>> +		return ret;
+>> +	}
+>> +
+>> +	msleep(20);
+>> +
+>> +	ili7807s_reset(ctx);
+>> +
+>> +	ret = ili7807s_on(ctx);
+>> +	if (ret < 0) {
+>> +		dev_err(ctx->panel.dev, "failed to initialise panel: %d\n", ret);
+>> +		goto err;
+>> +	}
+>> +
+>> +	return 0;
+>> +
+>> +err:
+>> +	gpiod_set_value_cansleep(ctx->reset_gpio, 1);
+>> +
+>> +	regulator_bulk_disable(ARRAY_SIZE(ili7807s_supplies), ctx->supplies);
+>> +	return ret;
+>> +}
+>> +
+>> +static int ili7807s_unprepare(struct drm_panel *panel)
+>> +{
+>> +	struct ili7807s *ctx = to_ili7807s(panel);
+>> +	int ret;
+>> +
+>> +	ret = ili7807s_off(ctx);
+>> +	if (ret < 0)
+>> +		dev_err(ctx->panel.dev, "failed to disable panel: %d\n", ret);
+>> +
+>> +	gpiod_set_value_cansleep(ctx->reset_gpio, 1);
+>> +
+>> +	regulator_bulk_disable(ARRAY_SIZE(ili7807s_supplies), ctx->supplies);
+>> +
+>> +	return 0;
+>> +}
+>> +
+>> +static int ili7807s_get_modes(struct drm_panel *panel,
+>> +			      struct drm_connector *connector)
+>> +{
+>> +	struct ili7807s *ctx = to_ili7807s(panel);
+>> +
+>> +	return drm_connector_helper_get_modes_fixed(connector, ctx->desc->mode);
+>> +}
+>> +
+>> +static const struct drm_panel_funcs ili7807s_panel_funcs = {
+>> +	.prepare = ili7807s_prepare,
+>> +	.unprepare = ili7807s_unprepare,
+>> +	.get_modes = ili7807s_get_modes,
+>> +};
+>> +
+>> +static int ili7807s_bl_update_status(struct backlight_device *bl)
+>> +{
+>> +	struct mipi_dsi_device *dsi = bl_get_data(bl);
+>> +	u16 brightness = backlight_get_brightness(bl);
+>> +	int ret;
+>> +
+>> +	dsi->mode_flags &= ~MIPI_DSI_MODE_LPM;
+>> +
+>> +	ret = mipi_dsi_dcs_set_display_brightness_large(dsi, brightness);
+>> +
+>> +	dsi->mode_flags |= MIPI_DSI_MODE_LPM;
+>> +
+>> +	return ret;
+>> +}
+>> +
+>> +static const struct backlight_ops ili7807s_bl_ops = {
+>> +	.update_status = ili7807s_bl_update_status,
+>> +};
+>> +
+>> +static struct backlight_device *ili7807s_create_backlight(struct mipi_dsi_device *dsi)
+>> +{
+>> +	struct device *dev = &dsi->dev;
+>> +	const struct backlight_properties props = {
+>> +		.type           = BACKLIGHT_RAW,
+>> +		.brightness     = 0x3fff,
+>> +		.max_brightness = 0x3fff,
+>> +	};
+>> +
+>> +	return devm_backlight_device_register(dev, dev_name(dev), dev, dsi,
+>> +					      &ili7807s_bl_ops, &props);
+>> +}
+>> +
+>> +static const struct drm_display_mode dlc0697_mode = {
+>> +	.clock = 131911,
+> = (1080 + 18 + 2 + 16) * (1920 + 26 + 4 + 20) * 60 / 1000
+Ack.
+>> +
+>> +	.hdisplay    = 1080,
+>> +	.hsync_start = 1080 + 18,
+>> +	.hsync_end   = 1080 + 18 + 2,
+>> +	.htotal      = 1080 + 18 + 2 + 16,
+>> +
+>> +	.vdisplay    = 1920,
+>> +	.vsync_start = 1920 + 26,
+>> +	.vsync_end   = 1920 + 26 + 4,
+>> +	.vtotal      = 1920 + 26 + 4 + 20,
+>> +
+>> +	.width_mm  = 0,
+>> +	.height_mm = 0,
+> Do you really don't know the dimensions of the panel you are
+> contributing?
 
-Yes, it will be on, but currently the genpd performance state requests
-(i.e. RPMH states) go to /dev/null because DISP_CC is an orphan
+Ack, will update in v4.
 
-Konrad
+Thanks
+
+Arpit
+
+>> +	.type = DRM_MODE_TYPE_DRIVER | DRM_MODE_TYPE_PREFERRED,
+>> +};
+>> +
 
