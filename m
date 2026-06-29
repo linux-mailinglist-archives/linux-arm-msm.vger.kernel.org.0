@@ -1,173 +1,152 @@
-Return-Path: <linux-arm-msm+bounces-115249-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-115250-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id kGowDOf2QmrWKQoAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-115249-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 00:51:19 +0200
+	id ey8EGo38Qmr5LQoAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-115250-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 01:15:25 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 950066DF18F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 00:51:18 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id BA82F6DF2C8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 01:15:24 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=samcday.com header.s=protonmail3 header.b=Vv3i6Ntx;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115249-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115249-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=none;
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b="ot0qqQP/";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115250-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115250-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 8020B300D713
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2026 22:51:17 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 130FE301497C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2026 23:15:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 685023C457D;
-	Mon, 29 Jun 2026 22:51:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3C0F436C0D6;
+	Mon, 29 Jun 2026 23:15:22 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-06.mail-europe.com (mail-06.mail-europe.com [85.9.210.45])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6230E3B5847;
-	Mon, 29 Jun 2026 22:51:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 368A71632DD;
+	Mon, 29 Jun 2026 23:15:20 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782773475; cv=none; b=TrkEEPxOmZbdO8+GgcgIkPS7zywJ4APLXeGRCaygNAOrb9rbQ0wduKTMOWTiA/mXsaHt6UB/QpD8PFUJn3iyGi+xzciXNifbNzSLDmpiJepejZVtQFm0NHX6px8CCIbIQ2keHfbZlqSdnyqJA9r37jCeEw8ZLrAEGJJp+XEpzA0=
+	t=1782774922; cv=none; b=GQOkrvntxaXCa5ysQeVdPdrNlm0Oh96fJR7veVcOD5DKuAmQ3NL84L9OK+Fz6261qsAgeV9rWedtfWdci1jpcq0ZeHcDTwBPhNvRgLPkVyHA9nXIj15OobZxQyyvru9UriYBAI9fDAn0RhG09ylrn10jCUUtWGn1BoGxLM7oWL4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782773475; c=relaxed/simple;
-	bh=tkwBxMmSOT+KuOoFJZXGBNC5ucNjMDsj4Q95vZ+uw88=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OxHtFiYww+Zac/LrwmXMsacXjmnWs6uF7iGDUP4vHPJsnljc6XesgD7RT+2Wrvw4cM1ine/vsCPYOLlcEyaQZ+qHMCcVPjOQgQpORMUwODhxD8uvEIjF79QGCvtH5KAVFqwt6CUK5RhJlwMWKUD69/2Z+9lszGea17E09TUHQi4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=samcday.com; spf=pass smtp.mailfrom=samcday.com; dkim=pass (2048-bit key) header.d=samcday.com header.i=@samcday.com header.b=Vv3i6Ntx; arc=none smtp.client-ip=85.9.210.45
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samcday.com;
-	s=protonmail3; t=1782773464; x=1783032664;
-	bh=tkwBxMmSOT+KuOoFJZXGBNC5ucNjMDsj4Q95vZ+uw88=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=Vv3i6NtxaOqMSjW2NkoeAKCW9cZQJz1TDfCJldhBDm19VibhfR14R1VTuOHlhfyFF
-	 D7DytWEySjVmYRCjX9u3a5Rwmdq20elYki254gAy3iO4pJsbRaY9wF2xYkv10F/YOn
-	 CNNLWiNyDh7kHYsJM8sIEmrumAg+kfPqUVduRy1osb84CTqGYX5jyMtw9LL69LH2D7
-	 X+QHqFg8jMaZQoNASVh/6yxzid0stHP5MKpmyUJ4uvNyxM7y6qHnQDYLrUePQc9ATF
-	 8+2bNhxaCGcyofdEDibi5tyfQC6nPQd5Bz1oGlQKB1NPn70t0pJ7v1jBb2+OuYKZ4z
-	 M/YrTbvc81l3Q==
-Date: Mon, 29 Jun 2026 22:51:01 +0000
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-From: Sam Day <me@samcday.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: sdm845-oneplus: add panel rails to simplefb
-Message-ID: <6MmdbjsuzuidbfnSBPTziatRh-MvvYkxzODIjsq8bXLfdTs-DzdUHnwdKwSaxueLHWI3nKUEzU-rzwTdlAGbegYrjKf_IeLk-bynAUkxVOA=@samcday.com>
-In-Reply-To: <r8tz7rKt6U-PclpxY-kaU-FgoxyZlZI1h-xRvonHnZFGl83UPA0T_sgF9ZNkSeRNlObH2HHdns2CF-XB1Gvj3foNLFfg-zVhNghcp-Ygl8E=@samcday.com>
-References: <20260616-sdm845-oneplus-simplefb-regulators-v1-1-1db1804acef6@samcday.com> <c4a70b1e-ea48-49d2-afa6-639b73983729@oss.qualcomm.com> <pYvHBJyxrxgzDI2_h79hEn-wmgJbJpQ4z6Gy1doFhulVhtsOLeOyn5C-ZtxpPjNyv68za3FmQyxVF1KK7wRPF5SLGRK6gZC9s2QK8jgXhHQ=@samcday.com> <92735f0d-9672-4f99-8cb5-28dd78eeeb8e@oss.qualcomm.com> <r8tz7rKt6U-PclpxY-kaU-FgoxyZlZI1h-xRvonHnZFGl83UPA0T_sgF9ZNkSeRNlObH2HHdns2CF-XB1Gvj3foNLFfg-zVhNghcp-Ygl8E=@samcday.com>
-Feedback-ID: 25366008:user:proton
-X-Pm-Message-ID: 8ee9728fa354808ebf4ed353ca1355c001f0f962
+	s=arc-20240116; t=1782774922; c=relaxed/simple;
+	bh=5qA20pRRqXQqyqhmgrm9hpsVJ87sWrrB52/4s12fm0o=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=URWQQcC8MBnIzWvXwdwjU4/eu9nWrJGet0boA0Fl6vPCZpbMecNx9izNPtGq8x7kyWdufjeHJXA7ErUPDY+EcfoEtQ8AtISsOaoXrd13BRMkQV/8tiFo2l8Lm/03DauxgE9cFQCemB5XzhomK5JjOdRIvBNvQREWc9ZOIBwUQiQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ot0qqQP/; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4810E1F000E9;
+	Mon, 29 Jun 2026 23:15:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1782774920;
+	bh=PTDwVtGU6wid+Bgktvqm3ZvyMDN9HQ00NiQBzjMDb5o=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=ot0qqQP/lCjO5k6zzU+QNvbWLaxMC7H+3qFT92VX2UvZABSNZ6N/MA2JGDbKJUoW1
+	 4M3ANFO3DORGIYjuAUU/OKyDgSRndVEow6+eo7gKf5g+h6Nta8gSgEIp649T4tfv2a
+	 8Ktiv40iRLVXohmb+zQ3jkItGTS3vZB6ZyGiV6EAadMM+RSY9n/MsJxwkhpr50kHGz
+	 K31LH0XcB6aN8eoHIi7kAdwqtv4A2jLe1FlUnosYLazPLozsAtx0LBNaD3AJjzlXwS
+	 /WnVFsJ7hsxiDjHHixfIDpBA9qNUdqfbiOjfquNqtwGGDI5/40gxsVd0QLBzUBZA0k
+	 MY+MvMrB9YDBw==
+Date: Mon, 29 Jun 2026 16:15:17 -0700
+From: Jakub Kicinski <kuba@kernel.org>
+To: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Cc: Lee Jones <lee@kernel.org>, Mark Brown
+ <broonie@opensource.wolfsonmicro.com>, Thierry Reding
+ <thierry.reding@avionic-design.de>, Sebastian Hesselbarth
+ <sebastian.hesselbarth@gmail.com>, Andrew Lunn <andrew+netdev@lunn.ch>,
+ "David S. Miller" <davem@davemloft.net>, Eric Dumazet
+ <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>, Srinivas Kandagatla
+ <srini@kernel.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Vinod
+ Koul <vkoul@kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>, Danilo
+ Krummrich <dakr@kernel.org>, Rob Herring <robh@kernel.org>, Saravana Kannan
+ <saravanak@kernel.org>, Madhavan Srinivasan <maddy@linux.ibm.com>, Michael
+ Ellerman <mpe@ellerman.id.au>, Nicholas Piggin <npiggin@gmail.com>,
+ "Christophe Leroy (CS GROUP)" <chleroy@kernel.org>, Andi Shyti
+ <andi.shyti@kernel.org>, Andy Shevchenko
+ <andriy.shevchenko@linux.intel.com>, Joerg Roedel <joro@8bytes.org>, Will
+ Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>, Doug Berger
+ <opendmb@gmail.com>, Florian Fainelli <florian.fainelli@broadcom.com>,
+ Broadcom internal kernel review list
+ <bcm-kernel-feedback-list@broadcom.com>, Ulf Hansson <ulfh@kernel.org>,
+ Frank Li <Frank.Li@nxp.com>, Sascha Hauer <s.hauer@pengutronix.de>,
+ Pengutronix Kernel Team <kernel@pengutronix.de>, Fabio Estevam
+ <festevam@gmail.com>, Matthew Brost <matthew.brost@intel.com>, Thomas
+ =?UTF-8?B?SGVsbHN0csO2bQ==?= <thomas.hellstrom@linux.intel.com>, Rodrigo
+ Vivi <rodrigo.vivi@intel.com>, David Airlie <airlied@gmail.com>, Simona
+ Vetter <simona@ffwll.ch>, Peter Chen <peter.chen@kernel.org>, Paul Cercueil
+ <paul@crapouillou.net>, Bin Liu <b-liu@ti.com>, Philipp Zabel
+ <p.zabel@pengutronix.de>, Maximilian Luz <luzmaximilian@gmail.com>, Hans de
+ Goede <hansg@kernel.org>, Ilpo =?UTF-8?B?SsOkcnZpbmVu?=
+ <ilpo.jarvinen@linux.intel.com>, Krzysztof Kozlowski <krzk@kernel.org>,
+ Benjamin Herrenschmidt <benh@kernel.crashing.org>, brgl@kernel.org,
+ linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org,
+ driver-core@lists.linux.dev, devicetree@vger.kernel.org,
+ linuxppc-dev@lists.ozlabs.org, linux-i2c@vger.kernel.org,
+ iommu@lists.linux.dev, linux-pm@vger.kernel.org, imx@lists.linux.dev,
+ linux-arm-kernel@lists.infradead.org, intel-xe@lists.freedesktop.org,
+ dri-devel@lists.freedesktop.org, linux-usb@vger.kernel.org,
+ linux-mips@vger.kernel.org, platform-driver-x86@vger.kernel.org
+Subject: Re: [PATCH v2 09/19] net: bcmgenet: use
+ platform_device_set_of_node()
+Message-ID: <20260629161517.34754824@kernel.org>
+In-Reply-To: <20260629-pdev-fwnode-ref-v2-9-8abe2513f96e@oss.qualcomm.com>
+References: <20260629-pdev-fwnode-ref-v2-0-8abe2513f96e@oss.qualcomm.com>
+	<20260629-pdev-fwnode-ref-v2-9-8abe2513f96e@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-1.66 / 15.00];
+X-Spamd-Result: default: False [-3.66 / 15.00];
+	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
-	R_DKIM_ALLOW(-0.20)[samcday.com:s=protonmail3];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FROM_HAS_DN(0.00)[];
+	TAGGED_FROM(0.00)[bounces-115250-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:konrad.dybcio@oss.qualcomm.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
-	RCVD_COUNT_THREE(0.00)[3];
-	DMARC_NA(0.00)[samcday.com];
-	FORGED_SENDER(0.00)[me@samcday.com,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS(0.00)[m:bartosz.golaszewski@oss.qualcomm.com,m:lee@kernel.org,m:broonie@opensource.wolfsonmicro.com,m:thierry.reding@avionic-design.de,m:sebastian.hesselbarth@gmail.com,m:andrew+netdev@lunn.ch,m:davem@davemloft.net,m:edumazet@google.com,m:pabeni@redhat.com,m:srini@kernel.org,m:gregkh@linuxfoundation.org,m:vkoul@kernel.org,m:rafael@kernel.org,m:dakr@kernel.org,m:robh@kernel.org,m:saravanak@kernel.org,m:maddy@linux.ibm.com,m:mpe@ellerman.id.au,m:npiggin@gmail.com,m:chleroy@kernel.org,m:andi.shyti@kernel.org,m:andriy.shevchenko@linux.intel.com,m:joro@8bytes.org,m:will@kernel.org,m:robin.murphy@arm.com,m:opendmb@gmail.com,m:florian.fainelli@broadcom.com,m:bcm-kernel-feedback-list@broadcom.com,m:ulfh@kernel.org,m:Frank.Li@nxp.com,m:s.hauer@pengutronix.de,m:kernel@pengutronix.de,m:festevam@gmail.com,m:matthew.brost@intel.com,m:thomas.hellstrom@linux.intel.com,m:rodrigo.vivi@intel.com,m:airlied@gmail.com,m:simona@ffwll.ch,m:peter.chen@kernel.org,m:paul@crapouillou.net,m:b
+ -liu@ti.com,m:p.zabel@pengutronix.de,m:luzmaximilian@gmail.com,m:hansg@kernel.org,m:ilpo.jarvinen@linux.intel.com,m:krzk@kernel.org,m:benh@kernel.crashing.org,m:brgl@kernel.org,m:linux-kernel@vger.kernel.org,m:netdev@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-sound@vger.kernel.org,m:driver-core@lists.linux.dev,m:devicetree@vger.kernel.org,m:linuxppc-dev@lists.ozlabs.org,m:linux-i2c@vger.kernel.org,m:iommu@lists.linux.dev,m:linux-pm@vger.kernel.org,m:imx@lists.linux.dev,m:linux-arm-kernel@lists.infradead.org,m:intel-xe@lists.freedesktop.org,m:dri-devel@lists.freedesktop.org,m:linux-usb@vger.kernel.org,m:linux-mips@vger.kernel.org,m:platform-driver-x86@vger.kernel.org,m:sebastianhesselbarth@gmail.com,m:andrew@lunn.ch,s:lists@lfdr.de];
+	FREEMAIL_CC(0.00)[kernel.org,opensource.wolfsonmicro.com,avionic-design.de,gmail.com,lunn.ch,davemloft.net,google.com,redhat.com,linuxfoundation.org,linux.ibm.com,ellerman.id.au,linux.intel.com,8bytes.org,arm.com,broadcom.com,nxp.com,pengutronix.de,intel.com,ffwll.ch,crapouillou.net,ti.com,kernel.crashing.org,vger.kernel.org,lists.linux.dev,lists.ozlabs.org,lists.infradead.org,lists.freedesktop.org];
 	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-115249-lists,linux-arm-msm=lfdr.de];
+	RCVD_COUNT_THREE(0.00)[4];
 	FORWARDED(0.00)[lists@lfdr.de];
+	FORGED_SENDER(0.00)[kuba@kernel.org,linux-arm-msm@vger.kernel.org];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[samcday.com:+];
+	FROM_HAS_DN(0.00)[];
 	MISSING_XM_UA(0.00)[];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	ALIAS_RESOLVED(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[me@samcday.com,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[9];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCPT_COUNT_GT_50(0.00)[65];
+	ALIAS_RESOLVED(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[kuba@kernel.org,linux-arm-msm@vger.kernel.org];
+	PRECEDENCE_BULK(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	MID_RHS_MATCH_FROM(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,netdev];
 	TO_DN_SOME(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[samcday.com:dkim,samcday.com:email,samcday.com:mid,samcday.com:from_mime,qualcomm.com:email,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,vger.kernel.org:from_smtp]
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,vger.kernel.org:from_smtp]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 950066DF18F
+X-Rspamd-Queue-Id: BA82F6DF2C8
 
-Hi Konrad,
+On Mon, 29 Jun 2026 11:12:32 +0200 Bartosz Golaszewski wrote:
+> +	if (dn) {
+> +		struct device_node *np __free(device_node) = bcmgenet_mii_of_find_mdio(priv);
+> +
+> +		platform_device_set_of_node(ppdev, np);
+> +	} else {
 
-On Tuesday, 30 June 2026 at 8:39 AM, Sam Day <me@samcday.com> wrote:
-
-> Hey Konrad,
->=20
-> On Tuesday, 30 June 2026 at 12:24 AM, Konrad Dybcio <konrad.dybcio@oss.qu=
-alcomm.com> wrote:
->=20
-> > On 6/20/26 1:15 AM, Sam Day wrote:
-> > > Hello Konrad,
-> > >
-> > > On Saturday, 20 June 2026 at 1:11 AM, Konrad Dybcio <konrad.dybcio@os=
-s.qualcomm.com> wrote:
-> > >
-> > >> On 6/16/26 7:27 AM, Sam Day via B4 Relay wrote:
-> > >>> From: Sam Day <me@samcday.com>
-> > >>>
-> > >>> These regulators are marked regulator-boot-on, but that doesn't
-> > >>> guarantee they'll stay alive as long as the simplefb does. Adding t=
-he
-> > >>> explicit supplies ensures that booting with MDSS disabled doesn't
-> > >>> switch the panel off 30 seconds after boot.
-> > >>
-> > >> Why would you boot without MDSS if you want the panel to function?
-> > >
-> > > For my particular use-case [1] I'm trying to avoid taking over the di=
-splay
-> > > hardware entirely, and use simplefb until kexecing into the real kern=
-el. In
-> > > this case the user might halt in a pre-boot menu UI for a while.
-> > >
-> > > I can also imagine this being similarly useful for "recovery kernel" =
-use-cases
-> > > where again, it may not be desirable to assume control of MDSS/MDP/DS=
-I blocks.
-> > >
-> > > [1]: https://github.com/samcday/pocketboot
-> >
-> > Can you handle this by adding a panel =3D <&display_panel> property
-> > under simplefb, pointing to the display panel defined in the same
-> > file?
->=20
-> No, that won't work because display_panel is a child of mdss_dsi0, which =
-is
-> a child of mdss. So if those nodes are disabled (which is what I'm trying=
- to
-> achieve), fw_devlink will defer probing simplefb.
-
-I apologize for spamming you with false assertions! I just realized that
-fw_devlink won't step in and enforce such probe deferral unless the propert=
-y
-explicitly ends with -supply.
-
-However, I tried your suggestion and confirm that the LCD_VCI_3V + VDDI_POC
-regulators are still turned off by regulator_init_complete_work(). Since I'=
-ve
-already embarrassed myself once today I'm not going to attempt to speculate=
- as
-to why :)
-
-Cheers,
--Sam
-
->=20
-> BR,
-> -Sam
->=20
-> >
-> > Konrad
-> >
+Please don't blindly use __free() in cases where it's clearly
+unnecessary.
 
