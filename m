@@ -1,404 +1,255 @@
-Return-Path: <linux-arm-msm+bounces-115184-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-115186-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id SWPiCcaJQmqZ9QkAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-115184-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2026 17:05:42 +0200
+	id iM0JNYeLQmoR9gkAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-115186-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2026 17:13:11 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id D3FBD6DC705
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2026 17:05:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3C2D46DC808
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2026 17:13:11 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=Fb4gXdfC;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115184-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c09:e001:a7::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115184-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=quarantine) header.from=kernel.org;
-	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
+	dkim=pass header.d=amd.com header.s=selector1 header.b=d+HWaH8e;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115186-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c09:e001:a7::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115186-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=quarantine) header.from=amd.com;
+	arc=reject ("cv is fail on i=2")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id B365B30A72E7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2026 14:58:11 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id B8F85309B37C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2026 15:06:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C4703426D2B;
-	Mon, 29 Jun 2026 14:57:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 43A82436367;
+	Mon, 29 Jun 2026 15:04:30 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from CH1PR05CU001.outbound.protection.outlook.com (mail-northcentralusazon11010065.outbound.protection.outlook.com [52.101.193.65])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 235FD3E2AA1;
-	Mon, 29 Jun 2026 14:57:09 +0000 (UTC)
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782745032; cv=none; b=k+3WDCFauvgrn3wjhCIfjjQlN18OhLIIUYCZE/vOwlGbxO19o0shaX8WQYww1KfC4bAKEA9grHmTP9qUEbom/hnPm3rC1WQyDqfm7ySvNW2sAFwPE1sUAXcbIpZIWKDBlVXSuqXozawHn1wOPNp9d+Mv7mD/k/2eDciEXwjIl6s=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782745032; c=relaxed/simple;
-	bh=LNgB0LZoHZw0fP3mNzpypR694eprJdbAT8t2kv7BsKU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GI5/5Ra45V/YDwNMQz8ePGi4cIwOMbqC2HJnXjf5w0BEYBatRgQbj7tczWiijqHkQ7/4oIbkOokcphb3MA8FcCQX0eBE4REHvb6MyP2hRLev9vZbyT9xWMfZcF58B7hG+65FCiqyJotAVyWNfsJ7b8uKGTU9MMv6a+ggv3Fs/+A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Fb4gXdfC; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 466751F00A3A;
-	Mon, 29 Jun 2026 14:56:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782745029;
-	bh=c8iLIqBeF3LyAyaueUWtK1sqEjRS1M9AqqZ5Dyw7Z58=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=Fb4gXdfCr+2KFrFMF2IByaqjqN6OTvaWqQOC5SC3n+FH76BIVh2JDagVQM04zbj4i
-	 z9UqiAHTat+mRSFXdSoYoJyzmoUlF3p6Jal6xe6vOj0QLi7S2K5h9jaYFUYjI+BSuq
-	 9d7IwNlxDTjp3VQUkRtwL9oT//Ua6zIzQzWpQkWh48TlIzq75ChfxoMs7JMB6YBa+Q
-	 ZxwQy1+SAoBg4NhXVNiEOzrZ3Dhl/wVvyFl01n5vJfnD+QDhnTEyYlWVs30E2o8W8y
-	 wepBBBkvWmHWS2C9RD6SaF8XQCZzAuIK1yFyi3oKvRdndjk8kenHlAuuXYQ9iZ77Xx
-	 OWjGalyUwbbUQ==
-Date: Mon, 29 Jun 2026 15:56:48 +0100
-From: Lorenzo Stoakes <ljs@kernel.org>
-To: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: Andrew Morton <akpm@linux-foundation.org>, 
-	Russell King <linux@armlinux.org.uk>, Dinh Nguyen <dinguyen@kernel.org>, 
-	Simon Schuster <schuster.simon@siemens-energy.com>, 
-	"James E . J . Bottomley" <James.Bottomley@hansenpartnership.com>, Helge Deller <deller@gmx.de>, 
-	Jarkko Sakkinen <jarkko@kernel.org>, Thomas Gleixner <tglx@kernel.org>, 
-	Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>, 
-	Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org, Ian Abbott <abbotti@mev.co.uk>, 
-	H Hartley Sweeten <hsweeten@visionengravers.com>, Lucas Stach <l.stach@pengutronix.de>, 
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
-	Patrik Jakobsson <patrik.r.jakobsson@gmail.com>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
-	Maxime Ripard <mripard@kernel.org>, Rob Clark <robin.clark@oss.qualcomm.com>, 
-	Dmitry Baryshkov <lumag@kernel.org>, Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>, 
-	Thierry Reding <thierry.reding@kernel.org>, Mikko Perttunen <mperttunen@nvidia.com>, 
-	Jonathan Hunter <jonathanh@nvidia.com>, Christian Koenig <christian.koenig@amd.com>, 
-	Huang Rui <ray.huang@amd.com>, Ankit Agrawal <ankita@nvidia.com>, 
-	Alex Williamson <alex@shazbot.org>, Alexander Viro <viro@zeniv.linux.org.uk>, 
-	Christian Brauner <brauner@kernel.org>, Dan Williams <djbw@kernel.org>, 
-	Muchun Song <muchun.song@linux.dev>, Oscar Salvador <osalvador@suse.de>, 
-	David Hildenbrand <david@kernel.org>, Suren Baghdasaryan <surenb@google.com>, 
-	"Liam R . Howlett" <liam@infradead.org>, Matthew Wilcox <willy@infradead.org>, 
-	Marek Szyprowski <m.szyprowski@samsung.com>, Peter Zijlstra <peterz@infradead.org>, 
-	Arnaldo Carvalho de Melo <acme@kernel.org>, Namhyung Kim <namhyung@kernel.org>, 
-	Masami Hiramatsu <mhiramat@kernel.org>, Oleg Nesterov <oleg@redhat.com>, 
-	Steven Rostedt <rostedt@goodmis.org>, SeongJae Park <sj@kernel.org>, Miaohe Lin <linmiaohe@huawei.com>, 
-	Hugh Dickins <hughd@google.com>, Mike Rapoport <rppt@kernel.org>, Kees Cook <kees@kernel.org>, 
-	Paolo Bonzini <pbonzini@redhat.com>, linux-kernel@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-parisc@vger.kernel.org, linux-sgx@vger.kernel.org, 
-	etnaviv@lists.freedesktop.org, dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
-	freedreno@lists.freedesktop.org, linux-tegra@vger.kernel.org, kvm@vger.kernel.org, 
-	linux-fsdevel@vger.kernel.org, nvdimm@lists.linux.dev, linux-mm@kvack.org, 
-	iommu@lists.linux.dev, linux-perf-users@vger.kernel.org, 
-	linux-trace-kernel@vger.kernel.org, kasan-dev@googlegroups.com, damon@lists.linux.dev, 
-	Pedro Falcato <pfalcato@suse.de>, Rik van Riel <riel@surriel.com>, Harry Yoo <harry@kernel.org>, 
-	Jann Horn <jannh@google.com>
-Subject: Re: [PATCH 19/30] mm: use linear_page_[index, delta]() consistently
-Message-ID: <akKHUPxEVCSlifn5@lucifer>
-References: <cover.1782735110.git.ljs@kernel.org>
- <bf56e2e98b512962a2fb88900d535a0e9e6769d8.1782735110.git.ljs@kernel.org>
- <21c4d96a-cd1b-4c65-8a66-2223df3b6109@suse.de>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C847E42EEBA;
+	Mon, 29 Jun 2026 15:04:28 +0000 (UTC)
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782745470; cv=fail; b=X1Ipwnfz0f5Bcvsw0k9jok9h6m/v+5en1m8H30puvdOOuqJy5o5m+eWlBx0rV5+51OBpsrSpYj0ZjCBe/QQqRdDuCZUN3Hxz1l5yB2whFfvVh6YEcndDHF+8yYlOX9C4IzgC5FH5EQ6G3iteiXZqVVzZJlStshGrJF+X0vM8ovg=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782745470; c=relaxed/simple;
+	bh=L3bJxAWaxDN9h4ZxLzCh4IwKcFGtaNv0I6/o2b/+8Fg=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=bgna4cNbImt4HIHeEfIsJnnCAwfAtmapD71GCUatjDAG+WSR4gNa3wV5R0GnuSxwwQTjxSTocMq4WN36LR5XA+Nb1xU00JcfqF1OwxSQh7U9kAPzbyAmYZUg8hYzuSNyDWyGLdJSEn1OvaLrKUMnPSrL9akNtPuI0tYqwo6oFyA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=d+HWaH8e; arc=fail smtp.client-ip=52.101.193.65
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=jA1gyDBqOiA45CdLLFa8mJA0i8poX14rYf0+z4I1kl5y0FHu+fp07eoofxrOW/ZrHnGg6zUFB6ber+zlCV17Fom4kZ7oyfDBbEjxCSnTfVcGySyPSIOK8Qd54uWFlTYP1kBMF7K3vqICmkeNWi+f4zrZa+tglZAi8VWV/uPlGE36NkZk00riUstQQK2gLXHFZF77386K48t8atdnoMBAjcH+hajaRCpKU6NfY4GrBDTrexSCKjSJx1GR67ttqodjKAzYlnpZjn7dserGVJknDffUEeM1s1l9cEwb7CybL+/7DB816/h/441soKXG7nKusYvp720zeEF1VEaUVvTA5A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=i9dXasEo9k1rOgGIs4HhiuOKstMd796ZuXBsSxLKNGk=;
+ b=pOXouS26lXg7BXzpbiOsWvfByKKKbknZkCCG7ZrXgpOWQUvtlLeAf9ElpejcfB2Qq+k+SzpL6EOkPwDPb5oXc5u2fcI/9KvU616bnrQZRNo3Eys0zHnM6R+vzqTYyILX8QFct+8pPpUdjbtopCrCLIOqNmL6YedE3L67lq6dYc+3IvcsSyLuafLNmPYXbnbbd7FDN9I+9rr1+v3k2WKUUeULbLJgBht2Cs3fDqYVpEiB4t+1Pl/lSuDzkBp1FsY0cuuj2LQI1f6M92yAT/wYcqB548iVjaHgsA3VVCBZIhl2rsTY+LE9RzWSXiylXBbTXXR+5KeBVD78mTSBfuX9HA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=i9dXasEo9k1rOgGIs4HhiuOKstMd796ZuXBsSxLKNGk=;
+ b=d+HWaH8euZBYc6CbLwtNhpi5hjWU59+47sn3Sdz3nWrjJb6dJ1UqrJoRXOHQj/cebjaHC0NN8xdZo5fpZXP3j+w86M8T+bbIwx9lviQ+88lvYdaCwnHTGn6KDPovL50lmyi6/BDhhMlr5uPyo9MnInjWchMwTzNFciWBmOzCiIY=
+Received: from CY1PR12MB9697.namprd12.prod.outlook.com (2603:10b6:930:107::6)
+ by CH3PR12MB7641.namprd12.prod.outlook.com (2603:10b6:610:150::18) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.159.19; Mon, 29 Jun
+ 2026 15:04:19 +0000
+Received: from CY1PR12MB9697.namprd12.prod.outlook.com
+ ([fe80::3a41:55a0:8203:596d]) by CY1PR12MB9697.namprd12.prod.outlook.com
+ ([fe80::3a41:55a0:8203:596d%5]) with mapi id 15.21.0159.018; Mon, 29 Jun 2026
+ 15:04:19 +0000
+Message-ID: <2939bf97-3ed6-4283-a1a9-9480c78c1a9c@amd.com>
+Date: Mon, 29 Jun 2026 20:34:06 +0530
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v20 01/14] dmaengine: constify struct
+ dma_descriptor_metadata_ops
+To: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+ Vinod Koul <vkoul@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
+ Thara Gopinath <thara.gopinath@gmail.com>,
+ Herbert Xu <herbert@gondor.apana.org.au>,
+ "David S. Miller" <davem@davemloft.net>,
+ Udit Tiwari <quic_utiwari@quicinc.com>,
+ Md Sadre Alam <mdalam@qti.qualcomm.com>, Dmitry Baryshkov
+ <lumag@kernel.org>, Manivannan Sadhasivam <mani@kernel.org>,
+ Stephan Gerhold <stephan.gerhold@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Peter Ujfalusi <peter.ujfalusi@gmail.com>,
+ Michal Simek <michal.simek@amd.com>, Frank Li <Frank.Li@kernel.org>,
+ Andy Gross <agross@codeaurora.org>,
+ Neil Armstrong <neil.armstrong@linaro.org>
+Cc: dmaengine@vger.kernel.org, linux-doc@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-crypto@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ brgl@kernel.org, Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+References: <20260629-qcom-qce-cmd-descr-v20-0-56f67da84c05@oss.qualcomm.com>
+ <20260629-qcom-qce-cmd-descr-v20-1-56f67da84c05@oss.qualcomm.com>
+Content-Language: en-US
+From: "Pandey, Radhey Shyam" <radheys@amd.com>
+In-Reply-To: <20260629-qcom-qce-cmd-descr-v20-1-56f67da84c05@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: MA0PR01CA0082.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:a01:ae::12) To CY1PR12MB9697.namprd12.prod.outlook.com
+ (2603:10b6:930:107::6)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <21c4d96a-cd1b-4c65-8a66-2223df3b6109@suse.de>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CY1PR12MB9697:EE_|CH3PR12MB7641:EE_
+X-MS-Office365-Filtering-Correlation-Id: 75153a00-4946-4926-7944-08ded5efb21e
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|366016|1800799024|7416014|23010399003|376014|4143699003|56012099006|11063799006|22082099003|18002099003|921020;
+X-Microsoft-Antispam-Message-Info:
+	S2RYZG1cHhDRdqTxKUrfrKRZh0B+klCVZFYEKumrf4Rwp110Cf15d0236BHkHqFyOVP6DPpE0z/Rksr66+Wel1hQ3Ks4cQv3YrlRRTJ4LZzjXEIHglDM/ecM3yuG1TwILg2Av0ql6liWP37dphmP1F4EH7++PubZ2aTbuMPJchginZ6i0ww9BJ32k9Xt42XZYKFyyu8MJKr6ynlJyIk6DWgreWsDt+8TQo8OObAsmvKzYSvg6ndbNsabLQagp5VCghhq/XW35agGPE4EIUmN4+joiKPHKvClGegLGCoWGkwDbKhfBfzSsrtF63Bo2J/ctCi3WXza2lTj6E7viGZg43k0jWfVmAqeElAexXDN7AZPonaN4cLh6XMA1s/QPKCkUb7HKjELeFlKIXaMNnP9BCoh0t+zxkznX/kR3wpODmDo1Brz3hBOO4PAmlwD/v9cYkvbSbWBJqihdghwWx9LcatoQwWllzYyXuoTUTnZEyIcsfhKTu6fZHZIHKsuas8F8Zuoy6qv3fRX+2C1Eb89ue4gtrS+g0UnKldw4LMHgjxkMImxnXeTVn5S3ZfrYQ4msb7nQO6snhytsszsWHQ3seRjeiM0XvRtVtSm6DnFjmH8dBN2TwptI+fhr1dpDu0VmbGueZ9TB5f6rPaXurcjQgINJDRD8GnJ0loWDx4dhBVKxGe5ivTxDZR1S/VkKWqCgE1DB4R/64wGKYD0sDLHrw==
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CY1PR12MB9697.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(7416014)(23010399003)(376014)(4143699003)(56012099006)(11063799006)(22082099003)(18002099003)(921020);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?c2JmSS8xdVFjS21ETWRHK1hteXp3b1NPU1VLVDN4YTJLMHNZemlwQkE1UzNo?=
+ =?utf-8?B?S1hja2pLWmRsNVo3ZlM5OHRsSER0WjgwY3FQMUZRRllEaGRGck4xN1ZDeHR4?=
+ =?utf-8?B?VmJJc05EODNiQllMZXVsSkxZMzdxK08xZDdyT2JmbDhmQzVDeU5zWktHOWZC?=
+ =?utf-8?B?MWJ4L1IvbHdqT2VmQ3V4dHVrK0tFbkZJVDE2Q2VPZ1d4Q21MOGFRTFNrRzBm?=
+ =?utf-8?B?MHdmdURqSkxnUWFQZXRtOFpublh4d25kRzV2YmhoTFlmYldIekpOMERISXVx?=
+ =?utf-8?B?TTVIekhXbzJvYWExdWtxQ1BxbTA4RWR6Y3EvUXZuYVNNbWZTSkp0UU9TUGpZ?=
+ =?utf-8?B?cmhLSGI2M0szY3AvSm4vc2RLbnhVTC8zSkZ4OGhpVjhpaFZBQldOUDE5K0My?=
+ =?utf-8?B?UXJzODhkNEdtNXRWUVFvdnZKaHQ5Y1N3S25CeDFmdnVyT1BRT2dvWEpqS1o1?=
+ =?utf-8?B?MjFVejZOb0kyN0F3WWxyNnVHbnlTVGcwd3J3d2FDRGl0M2pURVVPQ1JkdjJQ?=
+ =?utf-8?B?S2ZRYURMSXoxV3ZldC9sZWdKdWlUT0ZKcUpmRENmWCtnRkFjWXlvM1dXYmM3?=
+ =?utf-8?B?MmJIWFBDUFZROHhCa3liL1kzZzdhTGo2Rzl6RTZYaTA0K25pRUNjcTNPRUtV?=
+ =?utf-8?B?QWEvVXQ2b3E1VS9NVGdaVnFPQTJqZHVFRnhlL3hFVTI2MmxRUFNUd28vdVhB?=
+ =?utf-8?B?SWczRmtRL095Qi9sc0lCZzRKTXJ3dnoxTlhBbzRTYTRST1lQM3p6SXorc0pB?=
+ =?utf-8?B?emRlSEZKUTNwZGRRaGw4OUtFVFpGUXdLNHBmZzlxSTFZNjJYTjd0elRqcGpG?=
+ =?utf-8?B?VElrcUZNcW5sY2NibjVTV0ZUTEx6SkRSc1hZekgxeW5FM2tKNEdDaWdFa25Z?=
+ =?utf-8?B?QXZkQ0hYQWNrWnhPZ3ZNL1JBTG56OVY0VVFxM0c3c3pGSlJWbG9PR1BlRUhw?=
+ =?utf-8?B?K0ErVm80ZjYyS3FuaHNWRkx4aUxtVUpwM3VsVVM3OCtUM0VuVzJMU0FSaTNj?=
+ =?utf-8?B?b2FCOGFjSEVla2xDdDNVUlYvZkRnVTZ3blRGU2hCN0RITk55L3hiUExtTGJ4?=
+ =?utf-8?B?bWV4NFYyTXpRdDRBdkdDa092bTFwLzc2d3ZGZlF5TkM3WFJCeXk3RHh1U2tW?=
+ =?utf-8?B?alFublJMY054dTFjdzZ0M3VBQjcvU1NtTGlQR2F6UHFHY2VZdTMrckpFYVVO?=
+ =?utf-8?B?UFVVMnMvaFlxTTdEQm1QeGNBa3JPL3FzUHY1MC9xVVUzZ3c5dFl3TFhSWnRC?=
+ =?utf-8?B?RDI5VTErVVJBelpEMVEvVjNncGxPSCsxaHBrUnZMNWtvTnY1KzVXdGtxaE9S?=
+ =?utf-8?B?VHFJbjZ6TnlicnhCM28zRWRGNUxVaFVpODR2bHRHVitNUnBCN3RPQ2hOQUF4?=
+ =?utf-8?B?UDM4RlI1cmRNNlNCRUxzL2YxY2UzZUVzU3NwWGpjUm4zMDdaSlEwYi9hTzhH?=
+ =?utf-8?B?RnpIVDI2bCtYcE83SW0raXBIUktCOEF5R2JaaFFWYmNzaHBBRUQ0VHV5cHZ5?=
+ =?utf-8?B?RmdNRmk1V0tJSm13NXZ6SDBrNEFUczdTRkM4K0pHOW94ZzZvT3B4amI2SlFl?=
+ =?utf-8?B?amtUaVQvYlhleFhISmpSb3V4REN0WDNtd0svcU1RNm9oZUdncWRWYlN2ek5S?=
+ =?utf-8?B?Y0o1U2djMWVsQjZrRUZXZ09rcmFibjVCMktaUkxWNnY0U0NwSzdnd2xIZml3?=
+ =?utf-8?B?MExyUXpCa1ZVMS91dXZhTEswdTZLKzUxTGlLbkgwaHdCblBZMVhNa1pGb05j?=
+ =?utf-8?B?ZWU3OG9XN2VrMDJnUE9uMmU3KzlXT1hwcG9CZWdxVEVxQ0c5VVU2Y0VyQjd1?=
+ =?utf-8?B?eXNkNWptdGNpaUhMekhHSDVGRXdEbDhQYWN4Vk9rWmFtQTl4L3cvaXRWeWZs?=
+ =?utf-8?B?UzlsVWtrNm9oRmJIZUQ4dmxUS1JCOUFvUXI4SzB4Q0ZJcndUZUJQRmxQTno1?=
+ =?utf-8?B?c1pTeUg4QTE0RW1kalJ6dXVIVzFQK1ozUGFISHFoc0NzaGtmcytNbUpWUmpV?=
+ =?utf-8?B?OGlkQmxkZk5UT0hSdGczSy9ya1pEckZFVHU2amx5YjFUVzFRckM0Y1FtZWRW?=
+ =?utf-8?B?TUlOallyZEVXUzR1UlBlSzI2SjFjdU9HN084MGJZM2xzUjhPV1hMVVRvT0FU?=
+ =?utf-8?B?Q3hVb1M2NUpxa0JLZGN2YUkzTTc0ZGwxUkREQldSVnNSNzdFZnVBN3Q1L28y?=
+ =?utf-8?B?NVBuNkVtdmtwNEtab0Z2dFRWb2tyS1RBK3dWTGxxOU0vY0tyWmc5cUoxRk5B?=
+ =?utf-8?B?UTFrbTduRFVTWEZGbnJEMkNpd3FRSndZZ3YrUVdIZFUvQnlxNjdSTkNwQW1k?=
+ =?utf-8?B?c3FxeTdWaDlIMUhZWm5jN3BlTm52OUJPKyt6cVVhRHhXK3VTSUlndz09?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 75153a00-4946-4926-7944-08ded5efb21e
+X-MS-Exchange-CrossTenant-AuthSource: CY1PR12MB9697.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Jun 2026 15:04:19.8719
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: m+BlNyiwEDbPjFUT0SQlkeqCjlEnL8uxSGRM5N4l1v+Yz25KOVzMJ2qkGjSNLpR/
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB7641
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-3.16 / 15.00];
-	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
+X-Spamd-Result: default: False [1.34 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	ARC_REJECT(1.00)[cv is fail on i=2];
+	DMARC_POLICY_ALLOW(-0.50)[amd.com,quarantine];
+	R_DKIM_ALLOW(-0.20)[amd.com:s=selector1];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-115184-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:tzimmermann@suse.de,m:akpm@linux-foundation.org,m:linux@armlinux.org.uk,m:dinguyen@kernel.org,m:schuster.simon@siemens-energy.com,m:James.Bottomley@hansenpartnership.com,m:deller@gmx.de,m:jarkko@kernel.org,m:tglx@kernel.org,m:mingo@redhat.com,m:bp@alien8.de,m:dave.hansen@linux.intel.com,m:x86@kernel.org,m:abbotti@mev.co.uk,m:hsweeten@visionengravers.com,m:l.stach@pengutronix.de,m:airlied@gmail.com,m:simona@ffwll.ch,m:patrik.r.jakobsson@gmail.com,m:maarten.lankhorst@linux.intel.com,m:mripard@kernel.org,m:robin.clark@oss.qualcomm.com,m:lumag@kernel.org,m:tomi.valkeinen@ideasonboard.com,m:thierry.reding@kernel.org,m:mperttunen@nvidia.com,m:jonathanh@nvidia.com,m:christian.koenig@amd.com,m:ray.huang@amd.com,m:ankita@nvidia.com,m:alex@shazbot.org,m:viro@zeniv.linux.org.uk,m:brauner@kernel.org,m:djbw@kernel.org,m:muchun.song@linux.dev,m:osalvador@suse.de,m:david@kernel.org,m:surenb@google.com,m:liam@infradead.org,m:willy@infradead.org,m:m.szyprowski@samsung.com,m
- :peterz@infradead.org,m:acme@kernel.org,m:namhyung@kernel.org,m:mhiramat@kernel.org,m:oleg@redhat.com,m:rostedt@goodmis.org,m:sj@kernel.org,m:linmiaohe@huawei.com,m:hughd@google.com,m:rppt@kernel.org,m:kees@kernel.org,m:pbonzini@redhat.com,m:linux-kernel@vger.kernel.org,m:linux-arm-kernel@lists.infradead.org,m:linux-parisc@vger.kernel.org,m:linux-sgx@vger.kernel.org,m:etnaviv@lists.freedesktop.org,m:dri-devel@lists.freedesktop.org,m:linux-arm-msm@vger.kernel.org,m:freedreno@lists.freedesktop.org,m:linux-tegra@vger.kernel.org,m:kvm@vger.kernel.org,m:linux-fsdevel@vger.kernel.org,m:nvdimm@lists.linux.dev,m:linux-mm@kvack.org,m:iommu@lists.linux.dev,m:linux-perf-users@vger.kernel.org,m:linux-trace-kernel@vger.kernel.org,m:kasan-dev@googlegroups.com,m:damon@lists.linux.dev,m:pfalcato@suse.de,m:riel@surriel.com,m:harry@kernel.org,m:jannh@google.com,m:patrikrjakobsson@gmail.com,s:lists@lfdr.de];
-	FORGED_SENDER(0.00)[ljs@kernel.org,linux-arm-msm@vger.kernel.org];
 	MIME_TRACE(0.00)[0:+];
-	RCVD_COUNT_THREE(0.00)[4];
+	RCPT_COUNT_TWELVE(0.00)[25];
+	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-115186-lists,linux-arm-msm=lfdr.de];
 	FORWARDED(0.00)[lists@lfdr.de];
+	FREEMAIL_TO(0.00)[oss.qualcomm.com,kernel.org,lwn.net,gmail.com,gondor.apana.org.au,davemloft.net,quicinc.com,qti.qualcomm.com,linaro.org,amd.com,codeaurora.org];
+	FORGED_RECIPIENTS(0.00)[m:bartosz.golaszewski@oss.qualcomm.com,m:vkoul@kernel.org,m:corbet@lwn.net,m:thara.gopinath@gmail.com,m:herbert@gondor.apana.org.au,m:davem@davemloft.net,m:quic_utiwari@quicinc.com,m:mdalam@qti.qualcomm.com,m:lumag@kernel.org,m:mani@kernel.org,m:stephan.gerhold@linaro.org,m:andersson@kernel.org,m:peter.ujfalusi@gmail.com,m:michal.simek@amd.com,m:Frank.Li@kernel.org,m:agross@codeaurora.org,m:neil.armstrong@linaro.org,m:dmaengine@vger.kernel.org,m:linux-doc@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-crypto@vger.kernel.org,m:linux-arm-kernel@lists.infradead.org,m:brgl@kernel.org,m:bartosz.golaszewski@linaro.org,m:tharagopinath@gmail.com,m:peterujfalusi@gmail.com,s:lists@lfdr.de];
+	FORGED_SENDER(0.00)[radheys@amd.com,linux-arm-msm@vger.kernel.org];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_CC(0.00)[linux-foundation.org,armlinux.org.uk,kernel.org,siemens-energy.com,hansenpartnership.com,gmx.de,redhat.com,alien8.de,linux.intel.com,mev.co.uk,visionengravers.com,pengutronix.de,gmail.com,ffwll.ch,oss.qualcomm.com,ideasonboard.com,nvidia.com,amd.com,shazbot.org,zeniv.linux.org.uk,linux.dev,suse.de,google.com,infradead.org,samsung.com,goodmis.org,huawei.com,vger.kernel.org,lists.infradead.org,lists.freedesktop.org,lists.linux.dev,kvack.org,googlegroups.com,surriel.com];
+	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[amd.com:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	RCPT_COUNT_GT_50(0.00)[75];
+	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[ljs@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
+	FROM_NEQ_ENVFROM(0.00)[radheys@amd.com,linux-arm-msm@vger.kernel.org];
+	TO_DN_SOME(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	MISSING_XM_UA(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
 	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,vger.kernel.org:from_smtp,lucifer:mid,suse.com:url,sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo]
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,qualcomm.com:email,sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,amd.com:dkim,amd.com:email,amd.com:mid,amd.com:from_mime]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: D3FBD6DC705
+X-Rspamd-Queue-Id: 3C2D46DC808
 
-On Mon, Jun 29, 2026 at 03:56:33PM +0200, Thomas Zimmermann wrote:
-> Hi
->
-> Am 29.06.26 um 14:23 schrieb Lorenzo Stoakes:
-> > There are a number of places where we open code what linear_page_index()
-> > and linear_page_delta() calculate.
-> >
-> > Replace this code with the appropriate functions for consistency.
-> >
-> > No functional change intended.
-> >
-> > Signed-off-by: Lorenzo Stoakes <ljs@kernel.org>
->
-> For the DRM changes:
->
-> Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+> There's no reason for the instances of this struct to be modifiable.
+> Constify the pointer in struct dma_async_tx_descriptor and all drivers
+> currently using it.
+> 
+> Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 
+Reviewed-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
 Thanks!
 
->
-> See below for two additional comments.
->
->
-> > ---
-> >   arch/arm/mm/fault-armv.c              | 2 +-
-> >   arch/x86/kernel/cpu/sgx/virt.c        | 3 ++-
-> >   drivers/comedi/comedi_fops.c          | 3 ++-
-> >   drivers/gpu/drm/etnaviv/etnaviv_gem.c | 3 ++-
-> >   drivers/gpu/drm/gma500/gem.c          | 2 +-
-> >   drivers/gpu/drm/msm/msm_gem.c         | 3 ++-
-> >   drivers/gpu/drm/omapdrm/omap_gem.c    | 5 +++--
-> >   drivers/gpu/drm/tegra/gem.c           | 3 ++-
-> >   drivers/gpu/drm/ttm/ttm_bo_vm.c       | 7 ++++---
-> >   drivers/vfio/pci/nvgrace-gpu/main.c   | 3 ++-
-> >   drivers/vfio/pci/vfio_pci_core.c      | 3 ++-
-> >   mm/nommu.c                            | 2 +-
-> >   mm/vma.c                              | 2 +-
-> >   virt/kvm/guest_memfd.c                | 2 +-
-> >   14 files changed, 26 insertions(+), 17 deletions(-)
-> >
->
-> [...]
->
-> >   #include <linux/io.h>
-> >   #include <linux/uaccess.h>
-> > @@ -2462,7 +2463,7 @@ static int comedi_vm_access(struct vm_area_struct *vma, unsigned long addr,
-> >   {
-> >   	struct comedi_buf_map *bm = vma->vm_private_data;
-> >   	unsigned long offset =
-> > -	    addr - vma->vm_start + (vma->vm_pgoff << PAGE_SHIFT);
-> > +	    addr - vma->vm_start + (vma_start_pgoff(vma) << PAGE_SHIFT);
->
-> This doesn't seem to belong here.
+> ---
+>   drivers/dma/ti/k3-udma.c        | 2 +-
+>   drivers/dma/xilinx/xilinx_dma.c | 2 +-
+>   include/linux/dmaengine.h       | 2 +-
+>   3 files changed, 3 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/dma/ti/k3-udma.c b/drivers/dma/ti/k3-udma.c
+> index 1cf158eb7bdb541c4e7f4f79f65ab70be4311fad..fb21e0df5ab7b20e4e16777b5ff7f61d2ae67b2b 100644
+> --- a/drivers/dma/ti/k3-udma.c
+> +++ b/drivers/dma/ti/k3-udma.c
+> @@ -3408,7 +3408,7 @@ static int udma_set_metadata_len(struct dma_async_tx_descriptor *desc,
+>   	return 0;
+>   }
+>   
+> -static struct dma_descriptor_metadata_ops metadata_ops = {
+> +static const struct dma_descriptor_metadata_ops metadata_ops = {
+>   	.attach = udma_attach_metadata,
+>   	.get_ptr = udma_get_metadata_ptr,
+>   	.set_len = udma_set_metadata_len,
+> diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
+> index 404235c1735384635597e88edc25c67c7d250647..165b11a7c776abc6a8d66d631e19da669644577d 100644
+> --- a/drivers/dma/xilinx/xilinx_dma.c
+> +++ b/drivers/dma/xilinx/xilinx_dma.c
+> @@ -653,7 +653,7 @@ static void *xilinx_dma_get_metadata_ptr(struct dma_async_tx_descriptor *tx,
+>   	return seg->hw.app;
+>   }
+>   
+> -static struct dma_descriptor_metadata_ops xilinx_dma_metadata_ops = {
+> +static const struct dma_descriptor_metadata_ops xilinx_dma_metadata_ops = {
+>   	.get_ptr = xilinx_dma_get_metadata_ptr,
+>   };
+>   
+> diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h
+> index b3d251c9734e95e1b75cf6763d4d2c3a1c6a9910..5244edb90e7e7510bf4460b6a74ee2a7f91c1ccc 100644
+> --- a/include/linux/dmaengine.h
+> +++ b/include/linux/dmaengine.h
+> @@ -623,7 +623,7 @@ struct dma_async_tx_descriptor {
+>   	void *callback_param;
+>   	struct dmaengine_unmap_data *unmap;
+>   	enum dma_desc_metadata_mode desc_metadata_mode;
+> -	struct dma_descriptor_metadata_ops *metadata_ops;
+> +	const struct dma_descriptor_metadata_ops *metadata_ops;
+>   #ifdef CONFIG_ASYNC_TX_ENABLE_CHANNEL_SWITCH
+>   	struct dma_async_tx_descriptor *next;
+>   	struct dma_async_tx_descriptor *parent;
+> 
 
-Ah yeah, I'll move that on a respin thanks!
-
->
-> >   	if (len < 0)
-> >   		return -EINVAL;
-> > diff --git a/drivers/gpu/drm/etnaviv/etnaviv_gem.c b/drivers/gpu/drm/etnaviv/etnaviv_gem.c
-> > index b0436a1e103f..2e4d6d117ee2 100644
-> > --- a/drivers/gpu/drm/etnaviv/etnaviv_gem.c
-> > +++ b/drivers/gpu/drm/etnaviv/etnaviv_gem.c
-> > @@ -6,6 +6,7 @@
-> >   #include <drm/drm_prime.h>
-> >   #include <drm/drm_print.h>
-> >   #include <linux/dma-mapping.h>
-> > +#include <linux/pagemap.h>
-> >   #include <linux/shmem_fs.h>
-> >   #include <linux/spinlock.h>
-> >   #include <linux/vmalloc.h>
-> > @@ -188,7 +189,7 @@ static vm_fault_t etnaviv_gem_fault(struct vm_fault *vmf)
-> >   	}
-> >   	/* We don't use vmf->pgoff since that has the fake offset: */
-> > -	pgoff = (vmf->address - vma->vm_start) >> PAGE_SHIFT;
-> > +	pgoff = linear_page_delta(vma, vmf->address);
-> >   	pfn = page_to_pfn(pages[pgoff]);
-> > diff --git a/drivers/gpu/drm/gma500/gem.c b/drivers/gpu/drm/gma500/gem.c
-> > index 88f1e86c8903..2708e8c68f4c 100644
-> > --- a/drivers/gpu/drm/gma500/gem.c
-> > +++ b/drivers/gpu/drm/gma500/gem.c
-> > @@ -288,7 +288,7 @@ static vm_fault_t psb_gem_fault(struct vm_fault *vmf)
-> >   	/* Page relative to the VMA start - we must calculate this ourselves
-> >   	   because vmf->pgoff is the fake GEM offset */
-> > -	page_offset = (vmf->address - vma->vm_start) >> PAGE_SHIFT;
-> > +	page_offset = linear_page_delta(vma, vmf->address);
-> >   	/* CPU view of the page, don't go via the GART for CPU writes */
-> >   	if (pobj->stolen)
-> > diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
-> > index efd3d3c9a449..cbf723a5d86f 100644
-> > --- a/drivers/gpu/drm/msm/msm_gem.c
-> > +++ b/drivers/gpu/drm/msm/msm_gem.c
-> > @@ -9,6 +9,7 @@
-> >   #include <linux/spinlock.h>
-> >   #include <linux/shmem_fs.h>
-> >   #include <linux/dma-buf.h>
-> > +#include <linux/pagemap.h>
-> >   #include <drm/drm_dumb_buffers.h>
-> >   #include <drm/drm_prime.h>
-> > @@ -360,7 +361,7 @@ static vm_fault_t msm_gem_fault(struct vm_fault *vmf)
-> >   	}
-> >   	/* We don't use vmf->pgoff since that has the fake offset: */
-> > -	pgoff = (vmf->address - vma->vm_start) >> PAGE_SHIFT;
-> > +	pgoff = linear_page_delta(vma, vmf->address);
-> >   	pfn = page_to_pfn(pages[pgoff]);
-> > diff --git a/drivers/gpu/drm/omapdrm/omap_gem.c b/drivers/gpu/drm/omapdrm/omap_gem.c
-> > index 8e013e4f2c6b..00404fb6c29a 100644
-> > --- a/drivers/gpu/drm/omapdrm/omap_gem.c
-> > +++ b/drivers/gpu/drm/omapdrm/omap_gem.c
-> > @@ -5,6 +5,7 @@
-> >    */
-> >   #include <linux/dma-mapping.h>
-> > +#include <linux/pagemap.h>
-> >   #include <linux/seq_file.h>
-> >   #include <linux/shmem_fs.h>
-> >   #include <linux/spinlock.h>
-> > @@ -359,7 +360,7 @@ static vm_fault_t omap_gem_fault_1d(struct drm_gem_object *obj,
-> >   	pgoff_t pgoff;
-> >   	/* We don't use vmf->pgoff since that has the fake offset: */
-> > -	pgoff = (vmf->address - vma->vm_start) >> PAGE_SHIFT;
-> > +	pgoff = linear_page_delta(vma, vmf->address);
-> >   	if (omap_obj->pages) {
-> >   		omap_gem_cpu_sync_page(obj, pgoff);
-> > @@ -407,7 +408,7 @@ static vm_fault_t omap_gem_fault_2d(struct drm_gem_object *obj,
-> >   	const int m = DIV_ROUND_UP(omap_obj->width << fmt, PAGE_SIZE);
-> >   	/* We don't use vmf->pgoff since that has the fake offset: */
-> > -	pgoff = (vmf->address - vma->vm_start) >> PAGE_SHIFT;
-> > +	pgoff = linear_page_delta(vma, vmf->address);
-> >   	/*
-> >   	 * Actual address we start mapping at is rounded down to previous slot
-> > diff --git a/drivers/gpu/drm/tegra/gem.c b/drivers/gpu/drm/tegra/gem.c
-> > index 436394e04812..1d8d27a5ea89 100644
-> > --- a/drivers/gpu/drm/tegra/gem.c
-> > +++ b/drivers/gpu/drm/tegra/gem.c
-> > @@ -13,6 +13,7 @@
-> >   #include <linux/dma-buf.h>
-> >   #include <linux/iommu.h>
-> >   #include <linux/module.h>
-> > +#include <linux/pagemap.h>
-> >   #include <linux/vmalloc.h>
-> >   #include <drm/drm_drv.h>
-> > @@ -564,7 +565,7 @@ static vm_fault_t tegra_bo_fault(struct vm_fault *vmf)
-> >   	if (!bo->pages)
-> >   		return VM_FAULT_SIGBUS;
-> > -	offset = (vmf->address - vma->vm_start) >> PAGE_SHIFT;
-> > +	offset = linear_page_delta(vma, vmf->address);
-> >   	page = bo->pages[offset];
-> >   	return vmf_insert_page(vma, vmf->address, page);
-> > diff --git a/drivers/gpu/drm/ttm/ttm_bo_vm.c b/drivers/gpu/drm/ttm/ttm_bo_vm.c
-> > index a80510489c45..88babf435ac2 100644
-> > --- a/drivers/gpu/drm/ttm/ttm_bo_vm.c
-> > +++ b/drivers/gpu/drm/ttm/ttm_bo_vm.c
-> > @@ -32,6 +32,7 @@
-> >   #define pr_fmt(fmt) "[TTM] " fmt
-> >   #include <linux/export.h>
-> > +#include <linux/pagemap.h>
-> >   #include <drm/ttm/ttm_bo.h>
-> >   #include <drm/ttm/ttm_placement.h>
-> > @@ -208,9 +209,9 @@ vm_fault_t ttm_bo_vm_fault_reserved(struct vm_fault *vmf,
-> >   	if (unlikely(err != 0))
-> >   		return VM_FAULT_SIGBUS;
-> > -	page_offset = ((address - vma->vm_start) >> PAGE_SHIFT) +
-> > -		vma->vm_pgoff - drm_vma_node_start(&bo->base.vma_node);
-> > -	page_last = vma_pages(vma) + vma->vm_pgoff -
-> > +	page_offset = linear_page_index(vma, address) -
-> > +		drm_vma_node_start(&bo->base.vma_node);
-> > +	page_last = vma_end_pgoff(vma) -
-> >   		drm_vma_node_start(&bo->base.vma_node);
->
-> Not your fault, but page_last seems misnamed here.
-
-Yeah :)
-
->
-> Best regards
-> Thomas
->
-> >   	if (unlikely(page_offset >= PFN_UP(bo->base.size)))
-> > diff --git a/drivers/vfio/pci/nvgrace-gpu/main.c b/drivers/vfio/pci/nvgrace-gpu/main.c
-> > index d07dcacb76bd..963fd8ded20d 100644
-> > --- a/drivers/vfio/pci/nvgrace-gpu/main.c
-> > +++ b/drivers/vfio/pci/nvgrace-gpu/main.c
-> > @@ -11,6 +11,7 @@
-> >   #include <linux/jiffies.h>
-> >   #include <linux/sched.h>
-> >   #include <linux/pci-p2pdma.h>
-> > +#include <linux/pagemap.h>
-> >   #include <linux/pm_runtime.h>
-> >   #include <linux/memory-failure.h>
-> > @@ -385,7 +386,7 @@ static unsigned long addr_to_pgoff(struct vm_area_struct *vma,
-> >   	u64 pgoff = vma->vm_pgoff &
-> >   		((1U << (VFIO_PCI_OFFSET_SHIFT - PAGE_SHIFT)) - 1);
-> > -	return ((addr - vma->vm_start) >> PAGE_SHIFT) + pgoff;
-> > +	return linear_page_delta(vma, addr) + pgoff;
-> >   }
-> >   static vm_fault_t nvgrace_gpu_vfio_pci_huge_fault(struct vm_fault *vmf,
-> > diff --git a/drivers/vfio/pci/vfio_pci_core.c b/drivers/vfio/pci/vfio_pci_core.c
-> > index a28f1e99362c..55d4937d495a 100644
-> > --- a/drivers/vfio/pci/vfio_pci_core.c
-> > +++ b/drivers/vfio/pci/vfio_pci_core.c
-> > @@ -19,6 +19,7 @@
-> >   #include <linux/module.h>
-> >   #include <linux/mutex.h>
-> >   #include <linux/notifier.h>
-> > +#include <linux/pagemap.h>
-> >   #include <linux/pci.h>
-> >   #include <linux/pm_runtime.h>
-> >   #include <linux/slab.h>
-> > @@ -1727,7 +1728,7 @@ static vm_fault_t vfio_pci_mmap_huge_fault(struct vm_fault *vmf,
-> >   	struct vm_area_struct *vma = vmf->vma;
-> >   	struct vfio_pci_core_device *vdev = vma->vm_private_data;
-> >   	unsigned long addr = vmf->address & ~((PAGE_SIZE << order) - 1);
-> > -	unsigned long pgoff = (addr - vma->vm_start) >> PAGE_SHIFT;
-> > +	unsigned long pgoff = linear_page_delta(vma, addr);
-> >   	unsigned long pfn = vma_to_pfn(vma) + pgoff;
-> >   	vm_fault_t ret = VM_FAULT_FALLBACK;
-> > diff --git a/mm/nommu.c b/mm/nommu.c
-> > index 60560b2c457e..7333d855e974 100644
-> > --- a/mm/nommu.c
-> > +++ b/mm/nommu.c
-> > @@ -1332,7 +1332,7 @@ static int split_vma(struct vma_iterator *vmi, struct vm_area_struct *vma,
-> >   	*region = *vma->vm_region;
-> >   	new->vm_region = region;
-> > -	npages = (addr - vma->vm_start) >> PAGE_SHIFT;
-> > +	npages = linear_page_delta(vma, addr);
-> >   	if (new_below) {
-> >   		region->vm_top = region->vm_end = new->vm_end = addr;
-> > diff --git a/mm/vma.c b/mm/vma.c
-> > index ee3a8ca13d07..185d07397ca6 100644
-> > --- a/mm/vma.c
-> > +++ b/mm/vma.c
-> > @@ -517,7 +517,7 @@ __split_vma(struct vma_iterator *vmi, struct vm_area_struct *vma,
-> >   		new->vm_end = addr;
-> >   	} else {
-> >   		new->vm_start = addr;
-> > -		new->vm_pgoff += ((addr - vma->vm_start) >> PAGE_SHIFT);
-> > +		new->vm_pgoff += linear_page_delta(vma, addr);
-> >   	}
-> >   	err = -ENOMEM;
-> > diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
-> > index db57c5766ab6..f0e5da490866 100644
-> > --- a/virt/kvm/guest_memfd.c
-> > +++ b/virt/kvm/guest_memfd.c
-> > @@ -440,7 +440,7 @@ static int kvm_gmem_set_policy(struct vm_area_struct *vma, struct mempolicy *mpo
-> >   static struct mempolicy *kvm_gmem_get_policy(struct vm_area_struct *vma,
-> >   					     unsigned long addr, pgoff_t *ilx)
-> >   {
-> > -	pgoff_t pgoff = vma->vm_pgoff + ((addr - vma->vm_start) >> PAGE_SHIFT);
-> > +	pgoff_t pgoff = linear_page_index(vma, addr);
-> >   	struct inode *inode = file_inode(vma->vm_file);
-> >   	*ilx = inode->i_ino;
->
-> --
-> --
-> Thomas Zimmermann
-> Graphics Driver Developer
-> SUSE Software Solutions Germany GmbH
-> Frankenstr. 146, 90461 Nürnberg, Germany, www.suse.com
-> GF: Jochen Jaser, Andrew McDonald, Werner Knoblich, (HRB 36809, AG Nürnberg)
->
->
-
-Cheers, Lorenzo
 
