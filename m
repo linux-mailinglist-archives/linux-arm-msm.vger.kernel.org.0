@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-115054-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-115055-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id T1ZyFpRmQmp46QkAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-115054-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2026 14:35:32 +0200
+	id bkiPMr5nQmri6QkAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-115055-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2026 14:40:30 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 081546DA4DB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2026 14:35:32 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 65B336DA644
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2026 14:40:30 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=ImB78Xm5;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115054-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115054-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=LC8VtPYz;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115055-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115055-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id D926C3075422
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2026 12:28:37 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id D80FF3080774
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2026 12:28:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5AF2540E8E7;
-	Mon, 29 Jun 2026 12:24:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1D07A41166B;
+	Mon, 29 Jun 2026 12:25:00 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5E3340F8F4;
-	Mon, 29 Jun 2026 12:24:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DAB9410D3B;
+	Mon, 29 Jun 2026 12:24:58 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782735897; cv=none; b=oOZiulbsOuDo/7OAoFTaoO7eY1nD3YqssjPSKN544TCOePw3BdTJ1qSw+jRNouUvYu5FZxe21owFR7F63vH3OYNn+g1SDgDULpf6oGaUy34ynIr6shjINCSkkksWmnqjX4Wn9fW/p2uJnIDVlPVE1yoGeg4KZ19dVd+UoNzyM3A=
+	t=1782735900; cv=none; b=a7rvA1Fa/YJj/Nds7tWE6vIoxkq/hHPb8ERv/thGlnUsXIn0GHIG+1t+rjcjpM0hcRHXi9FEXGCM/qpVXBjA/kEQ1mVdRSf14MhiUpcprwt0nHs54nWPbL3TB0iaPkM7SkhewvQKlsiA1cdgCzdWDGSvZjdStIP3fOyoCIMQBNw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782735897; c=relaxed/simple;
-	bh=t4Dqg4wAhRmxu/SFpMe36wsTX3tq8kIQZ9qm/SU91eg=;
+	s=arc-20240116; t=1782735900; c=relaxed/simple;
+	bh=izTKDlAQNVb0GolyWzbVWpzWvA9MCe9RWHqUTZaNSQs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iiGL5Rf1KCzXUKFyRqTSdZi4Ey/ylJ9UbDK492wx3tPqcEhxcMWa0qkuOjud4OcpNEFhvIuhBUx/H5v+PBRLsshO8U/XeVV1oDb4DTcxooDfrdbr3taQOJkzdFbOyC8M7Xf4gl5EluLvdLJ/A27NpL2Tb81N43r8609eFfdOM4Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ImB78Xm5; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 819851F000E9;
-	Mon, 29 Jun 2026 12:24:54 +0000 (UTC)
+	 MIME-Version; b=jnHkqw1+Rajwkfko4tK4H72S6E2lEapm145PWQ7OqF3vr3XKrd30tNiwYq7UC4isdyspD4yM9wc72ly32TP2DFG+PRPnf47K5+n7/8JD4e0rS8vkIDWdx5HHfJQm5AQfhCve6sORGLTNqBA1KIxQ8eqC/sh25d3wFCoj9Jc2mno=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LC8VtPYz; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74A521F000E9;
+	Mon, 29 Jun 2026 12:24:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782735895;
-	bh=q/zmrg1aZZtj5Tmn6K9F810cSj24cLspebCxVYr6+vM=;
+	s=k20260515; t=1782735898;
+	bh=n6T1iWSEXJtO4Ol/BA3gpFHV+/0gKCk1DbIlaaeu8VM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ImB78Xm5cq6RrDbmQ3J6tzrC3HLEzs7wzd0LC9qXAFx7cd4y0IcRNHPEQjaCD2kCv
-	 t7/cUJE9y3I1sPoHMYrCyG34SjvURuw2nRDZurNb2jCyVmORwYVTl6EDHnREKFXwhb
-	 Mbf3AenyI1/h0SqiWNCY23Z13tJZjuXnBQ9SfIzuKiUPMbB3m3+TLCnoGKijqfR3NC
-	 1tp2JiV+gIsscH67BC9LhRi/4QlmripqWzergkvG/ngTTNDMnQd/mgZN6SNyqqbauP
-	 IGwwhnbxNqzXNkjYdSC9Q47btcLisY0PN7QS+5n8ONjQMKE+Ptl6DATcGPdaGI14cl
-	 pHvsw1KC9+rOQ==
+	b=LC8VtPYzfBDn0IT72dDOkbWV0WRSLf9IMTrBsPoKyWemI+ySsQR91N3T+gF5VUjPk
+	 vJ/A02mPxatWNByRseH/44QDY6V7GxURExlUMgpWc6Ak0sIqOgqIB89+Dhtiz3DdaG
+	 0qDDEK3Kw5b+lPx1blaG9h4PjSQv6pYATJEXJn1gVoSDSzHVV2QcCkISf49YvzLmOs
+	 bWKRZVJOCgN/LnWSTThp3BqEnLf6yht4HhcexHl5j948YFGHeGgOFuaos8+m9BA1RV
+	 HjcHH1HvULwL911lM1Mca9m5XW5H0chyhZ42L4YjclZADCKQaoLUCEzOrF3dzZjn7A
+	 Ytzbnh24BtJ6Q==
 From: Lorenzo Stoakes <ljs@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: Russell King <linux@armlinux.org.uk>,
@@ -122,9 +122,9 @@ Cc: Russell King <linux@armlinux.org.uk>,
 	Rik van Riel <riel@surriel.com>,
 	Harry Yoo <harry@kernel.org>,
 	Jann Horn <jannh@google.com>
-Subject: [PATCH 20/30] mm/vma: introduce vma_assert_can_modify()
-Date: Mon, 29 Jun 2026 13:23:31 +0100
-Message-ID: <23c7602c58cacc23ef22618a27af9a2d54addf58.1782735110.git.ljs@kernel.org>
+Subject: [PATCH 21/30] mm/vma: add and use vma_[add/sub]_pgoff()
+Date: Mon, 29 Jun 2026 13:23:32 +0100
+Message-ID: <794044881e454fd8ac13e59d5ff5fc86fca08b03.1782735110.git.ljs@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <cover.1782735110.git.ljs@kernel.org>
 References: <cover.1782735110.git.ljs@kernel.org>
@@ -143,7 +143,7 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	MID_CONTAINS_FROM(1.00)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_MISSING_CHARSET(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
@@ -151,7 +151,7 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	FREEMAIL_CC(0.00)[armlinux.org.uk,kernel.org,siemens-energy.com,HansenPartnership.com,gmx.de,redhat.com,alien8.de,linux.intel.com,mev.co.uk,visionengravers.com,pengutronix.de,gmail.com,ffwll.ch,suse.de,oss.qualcomm.com,ideasonboard.com,nvidia.com,amd.com,shazbot.org,zeniv.linux.org.uk,linux.dev,google.com,infradead.org,samsung.com,goodmis.org,huawei.com,vger.kernel.org,lists.infradead.org,lists.freedesktop.org,lists.linux.dev,kvack.org,googlegroups.com,surriel.com];
-	TAGGED_FROM(0.00)[bounces-115054-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-115055-lists,linux-arm-msm=lfdr.de];
 	FORWARDED(0.00)[lists@lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	FORGED_RECIPIENTS(0.00)[m:akpm@linux-foundation.org,m:linux@armlinux.org.uk,m:dinguyen@kernel.org,m:schuster.simon@siemens-energy.com,m:James.Bottomley@HansenPartnership.com,m:deller@gmx.de,m:jarkko@kernel.org,m:tglx@kernel.org,m:mingo@redhat.com,m:bp@alien8.de,m:dave.hansen@linux.intel.com,m:x86@kernel.org,m:abbotti@mev.co.uk,m:hsweeten@visionengravers.com,m:l.stach@pengutronix.de,m:airlied@gmail.com,m:simona@ffwll.ch,m:patrik.r.jakobsson@gmail.com,m:maarten.lankhorst@linux.intel.com,m:mripard@kernel.org,m:tzimmermann@suse.de,m:robin.clark@oss.qualcomm.com,m:lumag@kernel.org,m:tomi.valkeinen@ideasonboard.com,m:thierry.reding@kernel.org,m:mperttunen@nvidia.com,m:jonathanh@nvidia.com,m:christian.koenig@amd.com,m:ray.huang@amd.com,m:ankita@nvidia.com,m:alex@shazbot.org,m:viro@zeniv.linux.org.uk,m:brauner@kernel.org,m:djbw@kernel.org,m:muchun.song@linux.dev,m:osalvador@suse.de,m:david@kernel.org,m:surenb@google.com,m:liam@infradead.org,m:willy@infradead.org,m:m.szyprowski@samsung.com,m
@@ -167,61 +167,149 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	DKIM_TRACE(0.00)[kernel.org:+];
 	RCPT_COUNT_GT_50(0.00)[75];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	ALIAS_RESOLVED(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
 	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 081546DA4DB
+X-Rspamd-Queue-Id: 65B336DA644
 
-vma_assert_write_locked() and vma_assert_attached() are useful for their
-own purposes, however VMA code absolutely does allow the modification of
-non-write locked VMAs if they are at that point detached (i.e. unreachable
-from anywhere).
+Add helpers for adding or subtracting to a VMA's page offset, exposed
+internally for VMA users within mm in mm/vma.h.
 
-It's therefore useful to be able to assert that a VMA is either
-detached (modification doesn't matter) or write locked (you're explicitly
-locked for modification).
+This is to lay the foundations for tracking anonymous page offset for
+MAP_PRIVATE file-backed mappings, where adding and subtracting from this
+value must be reflected in both the file and anonymous offsets.
 
-Therefore introduce vma_assert_can_modify() for this purpose.
+These are used on VMA split and downward stack expansion.
 
-While we're here, make vma_is_attached() available generally - if
-!CONFIG_PER_VMA_LOCKS, then there's no sense in which a VMA is
-detached (vma_mark_detached() is a noop), so have this default to true in
-this case.
+No functional change intended.
 
 Signed-off-by: Lorenzo Stoakes <ljs@kernel.org>
 ---
- include/linux/mmap_lock.h | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ mm/nommu.c                      |  6 ++++--
+ mm/vma.c                        |  6 +++---
+ mm/vma.h                        | 12 ++++++++++++
+ tools/testing/vma/include/dup.h | 13 ++++++++++++-
+ 4 files changed, 31 insertions(+), 6 deletions(-)
 
-diff --git a/include/linux/mmap_lock.h b/include/linux/mmap_lock.h
-index 04b8f61ece5d..d513286d8160 100644
---- a/include/linux/mmap_lock.h
-+++ b/include/linux/mmap_lock.h
-@@ -506,6 +506,8 @@ static inline __must_check
- int vma_start_write_killable(struct vm_area_struct *vma) { return 0; }
- static inline void vma_assert_write_locked(struct vm_area_struct *vma)
- 		{ mmap_assert_write_locked(vma->vm_mm); }
+diff --git a/mm/nommu.c b/mm/nommu.c
+index 7333d855e974..c7fafcd87c14 100644
+--- a/mm/nommu.c
++++ b/mm/nommu.c
+@@ -41,6 +41,7 @@
+ #include <asm/tlbflush.h>
+ #include <asm/mmu_context.h>
+ #include "internal.h"
++#include "vma.h"
+ 
+ unsigned long highest_memmap_pfn;
+ int heap_stack_gap = 0;
+@@ -1338,7 +1339,8 @@ static int split_vma(struct vma_iterator *vmi, struct vm_area_struct *vma,
+ 		region->vm_top = region->vm_end = new->vm_end = addr;
+ 	} else {
+ 		region->vm_start = new->vm_start = addr;
+-		region->vm_pgoff = new->vm_pgoff += npages;
++		vma_add_pgoff(new, npages);
++		region->vm_pgoff = vma_start_pgoff(new);
+ 	}
+ 
+ 	vma_iter_config(vmi, new->vm_start, new->vm_end);
+@@ -1355,7 +1357,7 @@ static int split_vma(struct vma_iterator *vmi, struct vm_area_struct *vma,
+ 	delete_nommu_region(vma->vm_region);
+ 	if (new_below) {
+ 		vma->vm_region->vm_start = vma->vm_start = addr;
+-		vma->vm_pgoff += npages;
++		vma_add_pgoff(vma, npages);
+ 		vma->vm_region->vm_pgoff = vma_start_pgoff(vma);
+ 	} else {
+ 		vma->vm_region->vm_end = vma->vm_end = addr;
+diff --git a/mm/vma.c b/mm/vma.c
+index 185d07397ca6..cb7222e20c93 100644
+--- a/mm/vma.c
++++ b/mm/vma.c
+@@ -517,7 +517,7 @@ __split_vma(struct vma_iterator *vmi, struct vm_area_struct *vma,
+ 		new->vm_end = addr;
+ 	} else {
+ 		new->vm_start = addr;
+-		new->vm_pgoff += linear_page_delta(vma, addr);
++		vma_add_pgoff(new, linear_page_delta(vma, addr));
+ 	}
+ 
+ 	err = -ENOMEM;
+@@ -556,7 +556,7 @@ __split_vma(struct vma_iterator *vmi, struct vm_area_struct *vma,
+ 
+ 	if (new_below) {
+ 		vma->vm_start = addr;
+-		vma->vm_pgoff += (addr - new->vm_start) >> PAGE_SHIFT;
++		vma_add_pgoff(vma, (addr - new->vm_start) >> PAGE_SHIFT);
+ 	} else {
+ 		vma->vm_end = addr;
+ 	}
+@@ -3305,7 +3305,7 @@ int expand_downwards(struct vm_area_struct *vma, unsigned long address)
+ 				vm_stat_account(mm, vma->vm_flags, grow);
+ 				anon_vma_interval_tree_pre_update_vma(vma);
+ 				vma->vm_start = address;
+-				vma->vm_pgoff -= grow;
++				vma_sub_pgoff(vma, grow);
+ 				/* Overwrite old entry in mtree. */
+ 				vma_iter_store_overwrite(&vmi, vma);
+ 				anon_vma_interval_tree_post_update_vma(vma);
+diff --git a/mm/vma.h b/mm/vma.h
+index 2342516ce00e..47fe35e5307e 100644
+--- a/mm/vma.h
++++ b/mm/vma.h
+@@ -247,6 +247,18 @@ static inline pgoff_t vmg_end_pgoff(const struct vma_merge_struct *vmg)
+ 	return vmg_start_pgoff(vmg) + vmg_pages(vmg);
+ }
+ 
++static inline void vma_add_pgoff(struct vm_area_struct *vma, pgoff_t delta)
++{
++	vma_assert_can_modify(vma);
++	vma->vm_pgoff += delta;
++}
++
++static inline void vma_sub_pgoff(struct vm_area_struct *vma, pgoff_t delta)
++{
++	vma_assert_can_modify(vma);
++	vma->vm_pgoff -= delta;
++}
++
+ #define VMG_STATE(name, mm_, vmi_, start_, end_, vma_flags_, pgoff_)	\
+ 	struct vma_merge_struct name = {				\
+ 		.mm = mm_,						\
+diff --git a/tools/testing/vma/include/dup.h b/tools/testing/vma/include/dup.h
+index 7ed165c8d9bc..41fea90a344d 100644
+--- a/tools/testing/vma/include/dup.h
++++ b/tools/testing/vma/include/dup.h
+@@ -1163,6 +1163,11 @@ static inline struct vm_area_struct *vma_next(struct vma_iterator *vmi)
+ 	return mas_find(&vmi->mas, ULONG_MAX);
+ }
+ 
 +static inline bool vma_is_attached(struct vm_area_struct *vma)
-+		{ return true; }
- static inline void vma_assert_attached(struct vm_area_struct *vma) {}
- static inline void vma_assert_detached(struct vm_area_struct *vma) {}
- static inline void vma_mark_attached(struct vm_area_struct *vma) {}
-@@ -530,6 +532,12 @@ static inline void vma_assert_stabilised(struct vm_area_struct *vma)
- 
- #endif /* CONFIG_PER_VMA_LOCK */
- 
++{
++	return refcount_read(&vma->vm_refcnt);
++}
++
+ /*
+  * WARNING: to avoid racing with vma_mark_attached()/vma_mark_detached(), these
+  * assertions should be made either under mmap_write_lock or when the object
+@@ -1170,7 +1175,13 @@ static inline struct vm_area_struct *vma_next(struct vma_iterator *vmi)
+  */
+ static inline void vma_assert_attached(struct vm_area_struct *vma)
+ {
+-	WARN_ON_ONCE(!refcount_read(&vma->vm_refcnt));
++	WARN_ON_ONCE(!vma_is_attached(vma));
++}
++
 +static inline void vma_assert_can_modify(struct vm_area_struct *vma)
 +{
 +	if (vma_is_attached(vma))
 +		vma_assert_write_locked(vma);
-+}
-+
- static inline void mmap_write_lock(struct mm_struct *mm)
- {
- 	__mmap_lock_trace_start_locking(mm, true);
+ }
+ 
+ static inline void vma_assert_detached(struct vm_area_struct *vma)
 -- 
 2.54.0
 
