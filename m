@@ -1,255 +1,290 @@
-Return-Path: <linux-arm-msm+bounces-115186-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-115187-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id iM0JNYeLQmoR9gkAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-115186-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2026 17:13:11 +0200
+	id wVjuAzuMQmo99gkAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-115187-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2026 17:16:11 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3C2D46DC808
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2026 17:13:11 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 71C216DC87A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2026 17:16:10 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=amd.com header.s=selector1 header.b=d+HWaH8e;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115186-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c09:e001:a7::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115186-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=quarantine) header.from=amd.com;
-	arc=reject ("cv is fail on i=2")
+	dkim=pass header.d=intel.com header.s=Intel header.b=chGXcSAC;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115187-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115187-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=none) header.from=intel.com;
+	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id B8F85309B37C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2026 15:06:01 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 3FDF5307565D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jun 2026 15:07:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 43A82436367;
-	Mon, 29 Jun 2026 15:04:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 056D242848D;
+	Mon, 29 Jun 2026 15:05:59 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from CH1PR05CU001.outbound.protection.outlook.com (mail-northcentralusazon11010065.outbound.protection.outlook.com [52.101.193.65])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C847E42EEBA;
-	Mon, 29 Jun 2026 15:04:28 +0000 (UTC)
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782745470; cv=fail; b=X1Ipwnfz0f5Bcvsw0k9jok9h6m/v+5en1m8H30puvdOOuqJy5o5m+eWlBx0rV5+51OBpsrSpYj0ZjCBe/QQqRdDuCZUN3Hxz1l5yB2whFfvVh6YEcndDHF+8yYlOX9C4IzgC5FH5EQ6G3iteiXZqVVzZJlStshGrJF+X0vM8ovg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782745470; c=relaxed/simple;
-	bh=L3bJxAWaxDN9h4ZxLzCh4IwKcFGtaNv0I6/o2b/+8Fg=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=bgna4cNbImt4HIHeEfIsJnnCAwfAtmapD71GCUatjDAG+WSR4gNa3wV5R0GnuSxwwQTjxSTocMq4WN36LR5XA+Nb1xU00JcfqF1OwxSQh7U9kAPzbyAmYZUg8hYzuSNyDWyGLdJSEn1OvaLrKUMnPSrL9akNtPuI0tYqwo6oFyA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=d+HWaH8e; arc=fail smtp.client-ip=52.101.193.65
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=jA1gyDBqOiA45CdLLFa8mJA0i8poX14rYf0+z4I1kl5y0FHu+fp07eoofxrOW/ZrHnGg6zUFB6ber+zlCV17Fom4kZ7oyfDBbEjxCSnTfVcGySyPSIOK8Qd54uWFlTYP1kBMF7K3vqICmkeNWi+f4zrZa+tglZAi8VWV/uPlGE36NkZk00riUstQQK2gLXHFZF77386K48t8atdnoMBAjcH+hajaRCpKU6NfY4GrBDTrexSCKjSJx1GR67ttqodjKAzYlnpZjn7dserGVJknDffUEeM1s1l9cEwb7CybL+/7DB816/h/441soKXG7nKusYvp720zeEF1VEaUVvTA5A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=i9dXasEo9k1rOgGIs4HhiuOKstMd796ZuXBsSxLKNGk=;
- b=pOXouS26lXg7BXzpbiOsWvfByKKKbknZkCCG7ZrXgpOWQUvtlLeAf9ElpejcfB2Qq+k+SzpL6EOkPwDPb5oXc5u2fcI/9KvU616bnrQZRNo3Eys0zHnM6R+vzqTYyILX8QFct+8pPpUdjbtopCrCLIOqNmL6YedE3L67lq6dYc+3IvcsSyLuafLNmPYXbnbbd7FDN9I+9rr1+v3k2WKUUeULbLJgBht2Cs3fDqYVpEiB4t+1Pl/lSuDzkBp1FsY0cuuj2LQI1f6M92yAT/wYcqB548iVjaHgsA3VVCBZIhl2rsTY+LE9RzWSXiylXBbTXXR+5KeBVD78mTSBfuX9HA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=i9dXasEo9k1rOgGIs4HhiuOKstMd796ZuXBsSxLKNGk=;
- b=d+HWaH8euZBYc6CbLwtNhpi5hjWU59+47sn3Sdz3nWrjJb6dJ1UqrJoRXOHQj/cebjaHC0NN8xdZo5fpZXP3j+w86M8T+bbIwx9lviQ+88lvYdaCwnHTGn6KDPovL50lmyi6/BDhhMlr5uPyo9MnInjWchMwTzNFciWBmOzCiIY=
-Received: from CY1PR12MB9697.namprd12.prod.outlook.com (2603:10b6:930:107::6)
- by CH3PR12MB7641.namprd12.prod.outlook.com (2603:10b6:610:150::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.159.19; Mon, 29 Jun
- 2026 15:04:19 +0000
-Received: from CY1PR12MB9697.namprd12.prod.outlook.com
- ([fe80::3a41:55a0:8203:596d]) by CY1PR12MB9697.namprd12.prod.outlook.com
- ([fe80::3a41:55a0:8203:596d%5]) with mapi id 15.21.0159.018; Mon, 29 Jun 2026
- 15:04:19 +0000
-Message-ID: <2939bf97-3ed6-4283-a1a9-9480c78c1a9c@amd.com>
-Date: Mon, 29 Jun 2026 20:34:06 +0530
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v20 01/14] dmaengine: constify struct
- dma_descriptor_metadata_ops
-To: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
- Vinod Koul <vkoul@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
- Thara Gopinath <thara.gopinath@gmail.com>,
- Herbert Xu <herbert@gondor.apana.org.au>,
- "David S. Miller" <davem@davemloft.net>,
- Udit Tiwari <quic_utiwari@quicinc.com>,
- Md Sadre Alam <mdalam@qti.qualcomm.com>, Dmitry Baryshkov
- <lumag@kernel.org>, Manivannan Sadhasivam <mani@kernel.org>,
- Stephan Gerhold <stephan.gerhold@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Peter Ujfalusi <peter.ujfalusi@gmail.com>,
- Michal Simek <michal.simek@amd.com>, Frank Li <Frank.Li@kernel.org>,
- Andy Gross <agross@codeaurora.org>,
- Neil Armstrong <neil.armstrong@linaro.org>
-Cc: dmaengine@vger.kernel.org, linux-doc@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-crypto@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- brgl@kernel.org, Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-References: <20260629-qcom-qce-cmd-descr-v20-0-56f67da84c05@oss.qualcomm.com>
- <20260629-qcom-qce-cmd-descr-v20-1-56f67da84c05@oss.qualcomm.com>
-Content-Language: en-US
-From: "Pandey, Radhey Shyam" <radheys@amd.com>
-In-Reply-To: <20260629-qcom-qce-cmd-descr-v20-1-56f67da84c05@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: MA0PR01CA0082.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:a01:ae::12) To CY1PR12MB9697.namprd12.prod.outlook.com
- (2603:10b6:930:107::6)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13885425CEA;
+	Mon, 29 Jun 2026 15:05:56 +0000 (UTC)
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782745558; cv=none; b=gdeK2xVKoCeW3gQ2XV9ks2RC84lKGkwxsAi5Mjbd5Bv3K2pmvsBTcveaMBGH/dCxMJ1uB2KQhHnAYXALUSTqx2Qj7mEwLKLAncTcn3naTZ7oRIO9/gUX8QCxR14vlTVw8JSKtZdsmPc0k+O6m+dArfNfPD8r8g4OSE6OLp+x05M=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782745558; c=relaxed/simple;
+	bh=bRzbfqhpmyPBejcqj+nwbdIhOPnJWKOjULbc34cXygA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=DKkqM5XO0E9eqJyYf1XmUznSzM2MnWFxu5hTFRhynGsKKiprFpxJKPNR2iOEU+nqHQr6XutahD8ZB6nQm57YJ/xhGtEfwIj5Ym2tlL+lk1sYDDLxIeX6QyO17onp2OY+WJxYm5PrEOFbozhw0ef52MArnnqbnhJ4MhaffFNAbUM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=chGXcSAC; arc=none smtp.client-ip=198.175.65.14
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1782745558; x=1814281558;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=bRzbfqhpmyPBejcqj+nwbdIhOPnJWKOjULbc34cXygA=;
+  b=chGXcSACjVyD3z0ZvXqHhy11GlDtHNGerOdd0+4BchCaUhCKuhPmchH7
+   5uKN27M6Q2/Z+sk23jxAFqXE9irA4elo7r30rRYYPIpUlipHiCHYTF285
+   UXvBbzAWT0ZXHPC0hA3bFHSx6a5VUDHl46lNV6UcTj+uQjLots6SeBmLi
+   gDOXpipwmy8PVdIBpcCOpWaynbEo+3Zz8MOq09nqMji0f4yckKCPcwuJQ
+   5c/o5FwbnSYPrtbbWaXFuBzdEbJ4nW8E8rTLzT+w0i1vVQR7wfEIZ1w5d
+   j+Hjl+92fNvT7E1vbK4nmM/mv8kECvPQZuH+lR1NafxUR03a2b45zMsLx
+   g==;
+X-CSE-ConnectionGUID: MwZCIE/rT/WVoP6GPiZv5w==
+X-CSE-MsgGUID: UtKtu1UGQueCHJfr+n2kUA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11832"; a="87345561"
+X-IronPort-AV: E=Sophos;i="6.24,232,1774335600"; 
+   d="scan'208";a="87345561"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Jun 2026 08:05:57 -0700
+X-CSE-ConnectionGUID: F9SgGtAaQISMDE7JwrAHgQ==
+X-CSE-MsgGUID: f67Jl0g/RaaF/FFb2vzCnQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.24,232,1774335600"; 
+   d="scan'208";a="252128943"
+Received: from lkp-server02.sh.intel.com (HELO ea128546eb3d) ([10.239.97.151])
+  by orviesa007.jf.intel.com with ESMTP; 29 Jun 2026 08:05:50 -0700
+Received: from kbuild by ea128546eb3d with local (Exim 4.98.2)
+	(envelope-from <lkp@intel.com>)
+	id 1weDYQ-000000007Uj-2oSU;
+	Mon, 29 Jun 2026 15:05:46 +0000
+Date: Mon, 29 Jun 2026 23:05:03 +0800
+From: kernel test robot <lkp@intel.com>
+To: Fenglin Wu <fenglin.wu@oss.qualcomm.com>, linux-arm-msm@vger.kernel.org,
+	Lee Jones <lee@kernel.org>, Pavel Machek <pavel@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Anjelique Melendez <quic_amelende@quicinc.com>,
+	Guru Das Srinagesh <linux@gurudas.dev>
+Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
+	David Collins <david.collins@oss.qualcomm.com>,
+	Subbaraman Narayanamurthy <subbaraman.narayanamurthy@oss.qualcomm.com>,
+	Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>,
+	kernel@oss.qualcomm.com, linux-leds@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Fenglin Wu <fenglin.wu@oss.qualcomm.com>
+Subject: Re: [PATCH v3] leds: rgb: leds-qcom-lpg: Fix LED color balancing in
+ HW pattern mode
+Message-ID: <202606292317.3IsR1hhQ-lkp@intel.com>
+References: <20260629-lpg-rgb-color-balance-fix-v3-1-17796a06d799@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CY1PR12MB9697:EE_|CH3PR12MB7641:EE_
-X-MS-Office365-Filtering-Correlation-Id: 75153a00-4946-4926-7944-08ded5efb21e
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|1800799024|7416014|23010399003|376014|4143699003|56012099006|11063799006|22082099003|18002099003|921020;
-X-Microsoft-Antispam-Message-Info:
-	S2RYZG1cHhDRdqTxKUrfrKRZh0B+klCVZFYEKumrf4Rwp110Cf15d0236BHkHqFyOVP6DPpE0z/Rksr66+Wel1hQ3Ks4cQv3YrlRRTJ4LZzjXEIHglDM/ecM3yuG1TwILg2Av0ql6liWP37dphmP1F4EH7++PubZ2aTbuMPJchginZ6i0ww9BJ32k9Xt42XZYKFyyu8MJKr6ynlJyIk6DWgreWsDt+8TQo8OObAsmvKzYSvg6ndbNsabLQagp5VCghhq/XW35agGPE4EIUmN4+joiKPHKvClGegLGCoWGkwDbKhfBfzSsrtF63Bo2J/ctCi3WXza2lTj6E7viGZg43k0jWfVmAqeElAexXDN7AZPonaN4cLh6XMA1s/QPKCkUb7HKjELeFlKIXaMNnP9BCoh0t+zxkznX/kR3wpODmDo1Brz3hBOO4PAmlwD/v9cYkvbSbWBJqihdghwWx9LcatoQwWllzYyXuoTUTnZEyIcsfhKTu6fZHZIHKsuas8F8Zuoy6qv3fRX+2C1Eb89ue4gtrS+g0UnKldw4LMHgjxkMImxnXeTVn5S3ZfrYQ4msb7nQO6snhytsszsWHQ3seRjeiM0XvRtVtSm6DnFjmH8dBN2TwptI+fhr1dpDu0VmbGueZ9TB5f6rPaXurcjQgINJDRD8GnJ0loWDx4dhBVKxGe5ivTxDZR1S/VkKWqCgE1DB4R/64wGKYD0sDLHrw==
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CY1PR12MB9697.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(7416014)(23010399003)(376014)(4143699003)(56012099006)(11063799006)(22082099003)(18002099003)(921020);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?c2JmSS8xdVFjS21ETWRHK1hteXp3b1NPU1VLVDN4YTJLMHNZemlwQkE1UzNo?=
- =?utf-8?B?S1hja2pLWmRsNVo3ZlM5OHRsSER0WjgwY3FQMUZRRllEaGRGck4xN1ZDeHR4?=
- =?utf-8?B?VmJJc05EODNiQllMZXVsSkxZMzdxK08xZDdyT2JmbDhmQzVDeU5zWktHOWZC?=
- =?utf-8?B?MWJ4L1IvbHdqT2VmQ3V4dHVrK0tFbkZJVDE2Q2VPZ1d4Q21MOGFRTFNrRzBm?=
- =?utf-8?B?MHdmdURqSkxnUWFQZXRtOFpublh4d25kRzV2YmhoTFlmYldIekpOMERISXVx?=
- =?utf-8?B?TTVIekhXbzJvYWExdWtxQ1BxbTA4RWR6Y3EvUXZuYVNNbWZTSkp0UU9TUGpZ?=
- =?utf-8?B?cmhLSGI2M0szY3AvSm4vc2RLbnhVTC8zSkZ4OGhpVjhpaFZBQldOUDE5K0My?=
- =?utf-8?B?UXJzODhkNEdtNXRWUVFvdnZKaHQ5Y1N3S25CeDFmdnVyT1BRT2dvWEpqS1o1?=
- =?utf-8?B?MjFVejZOb0kyN0F3WWxyNnVHbnlTVGcwd3J3d2FDRGl0M2pURVVPQ1JkdjJQ?=
- =?utf-8?B?S2ZRYURMSXoxV3ZldC9sZWdKdWlUT0ZKcUpmRENmWCtnRkFjWXlvM1dXYmM3?=
- =?utf-8?B?MmJIWFBDUFZROHhCa3liL1kzZzdhTGo2Rzl6RTZYaTA0K25pRUNjcTNPRUtV?=
- =?utf-8?B?QWEvVXQ2b3E1VS9NVGdaVnFPQTJqZHVFRnhlL3hFVTI2MmxRUFNUd28vdVhB?=
- =?utf-8?B?SWczRmtRL095Qi9sc0lCZzRKTXJ3dnoxTlhBbzRTYTRST1lQM3p6SXorc0pB?=
- =?utf-8?B?emRlSEZKUTNwZGRRaGw4OUtFVFpGUXdLNHBmZzlxSTFZNjJYTjd0elRqcGpG?=
- =?utf-8?B?VElrcUZNcW5sY2NibjVTV0ZUTEx6SkRSc1hZekgxeW5FM2tKNEdDaWdFa25Z?=
- =?utf-8?B?QXZkQ0hYQWNrWnhPZ3ZNL1JBTG56OVY0VVFxM0c3c3pGSlJWbG9PR1BlRUhw?=
- =?utf-8?B?K0ErVm80ZjYyS3FuaHNWRkx4aUxtVUpwM3VsVVM3OCtUM0VuVzJMU0FSaTNj?=
- =?utf-8?B?b2FCOGFjSEVla2xDdDNVUlYvZkRnVTZ3blRGU2hCN0RITk55L3hiUExtTGJ4?=
- =?utf-8?B?bWV4NFYyTXpRdDRBdkdDa092bTFwLzc2d3ZGZlF5TkM3WFJCeXk3RHh1U2tW?=
- =?utf-8?B?alFublJMY054dTFjdzZ0M3VBQjcvU1NtTGlQR2F6UHFHY2VZdTMrckpFYVVO?=
- =?utf-8?B?UFVVMnMvaFlxTTdEQm1QeGNBa3JPL3FzUHY1MC9xVVUzZ3c5dFl3TFhSWnRC?=
- =?utf-8?B?RDI5VTErVVJBelpEMVEvVjNncGxPSCsxaHBrUnZMNWtvTnY1KzVXdGtxaE9S?=
- =?utf-8?B?VHFJbjZ6TnlicnhCM28zRWRGNUxVaFVpODR2bHRHVitNUnBCN3RPQ2hOQUF4?=
- =?utf-8?B?UDM4RlI1cmRNNlNCRUxzL2YxY2UzZUVzU3NwWGpjUm4zMDdaSlEwYi9hTzhH?=
- =?utf-8?B?RnpIVDI2bCtYcE83SW0raXBIUktCOEF5R2JaaFFWYmNzaHBBRUQ0VHV5cHZ5?=
- =?utf-8?B?RmdNRmk1V0tJSm13NXZ6SDBrNEFUczdTRkM4K0pHOW94ZzZvT3B4amI2SlFl?=
- =?utf-8?B?amtUaVQvYlhleFhISmpSb3V4REN0WDNtd0svcU1RNm9oZUdncWRWYlN2ek5S?=
- =?utf-8?B?Y0o1U2djMWVsQjZrRUZXZ09rcmFibjVCMktaUkxWNnY0U0NwSzdnd2xIZml3?=
- =?utf-8?B?MExyUXpCa1ZVMS91dXZhTEswdTZLKzUxTGlLbkgwaHdCblBZMVhNa1pGb05j?=
- =?utf-8?B?ZWU3OG9XN2VrMDJnUE9uMmU3KzlXT1hwcG9CZWdxVEVxQ0c5VVU2Y0VyQjd1?=
- =?utf-8?B?eXNkNWptdGNpaUhMekhHSDVGRXdEbDhQYWN4Vk9rWmFtQTl4L3cvaXRWeWZs?=
- =?utf-8?B?UzlsVWtrNm9oRmJIZUQ4dmxUS1JCOUFvUXI4SzB4Q0ZJcndUZUJQRmxQTno1?=
- =?utf-8?B?c1pTeUg4QTE0RW1kalJ6dXVIVzFQK1ozUGFISHFoc0NzaGtmcytNbUpWUmpV?=
- =?utf-8?B?OGlkQmxkZk5UT0hSdGczSy9ya1pEckZFVHU2amx5YjFUVzFRckM0Y1FtZWRW?=
- =?utf-8?B?TUlOallyZEVXUzR1UlBlSzI2SjFjdU9HN084MGJZM2xzUjhPV1hMVVRvT0FU?=
- =?utf-8?B?Q3hVb1M2NUpxa0JLZGN2YUkzTTc0ZGwxUkREQldSVnNSNzdFZnVBN3Q1L28y?=
- =?utf-8?B?NVBuNkVtdmtwNEtab0Z2dFRWb2tyS1RBK3dWTGxxOU0vY0tyWmc5cUoxRk5B?=
- =?utf-8?B?UTFrbTduRFVTWEZGbnJEMkNpd3FRSndZZ3YrUVdIZFUvQnlxNjdSTkNwQW1k?=
- =?utf-8?B?c3FxeTdWaDlIMUhZWm5jN3BlTm52OUJPKyt6cVVhRHhXK3VTSUlndz09?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 75153a00-4946-4926-7944-08ded5efb21e
-X-MS-Exchange-CrossTenant-AuthSource: CY1PR12MB9697.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Jun 2026 15:04:19.8719
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: m+BlNyiwEDbPjFUT0SQlkeqCjlEnL8uxSGRM5N4l1v+Yz25KOVzMJ2qkGjSNLpR/
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB7641
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260629-lpg-rgb-color-balance-fix-v3-1-17796a06d799@oss.qualcomm.com>
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [1.34 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
-	ARC_REJECT(1.00)[cv is fail on i=2];
-	DMARC_POLICY_ALLOW(-0.50)[amd.com,quarantine];
-	R_DKIM_ALLOW(-0.20)[amd.com:s=selector1];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+X-Spamd-Result: default: False [-4.16 / 15.00];
+	WHITELIST_SPF_DKIM(-3.00)[intel.com:d:+,kernel.org:s:+];
+	MID_CONTAINS_FROM(1.00)[];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	DMARC_POLICY_ALLOW(-0.50)[intel.com,none];
+	R_DKIM_ALLOW(-0.20)[intel.com:s=Intel];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	RCPT_COUNT_TWELVE(0.00)[25];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-115186-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-115187-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[17];
+	FORGED_SENDER(0.00)[lkp@intel.com,linux-arm-msm@vger.kernel.org];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_RECIPIENTS(0.00)[m:fenglin.wu@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:lee@kernel.org,m:pavel@kernel.org,m:andersson@kernel.org,m:marijn.suijten@somainline.org,m:quic_amelende@quicinc.com,m:linux@gurudas.dev,m:llvm@lists.linux.dev,m:oe-kbuild-all@lists.linux.dev,m:david.collins@oss.qualcomm.com,m:subbaraman.narayanamurthy@oss.qualcomm.com,m:kamal.wadhwa@oss.qualcomm.com,m:kernel@oss.qualcomm.com,m:linux-leds@vger.kernel.org,m:linux-kernel@vger.kernel.org,s:lists@lfdr.de];
 	FORWARDED(0.00)[lists@lfdr.de];
-	FREEMAIL_TO(0.00)[oss.qualcomm.com,kernel.org,lwn.net,gmail.com,gondor.apana.org.au,davemloft.net,quicinc.com,qti.qualcomm.com,linaro.org,amd.com,codeaurora.org];
-	FORGED_RECIPIENTS(0.00)[m:bartosz.golaszewski@oss.qualcomm.com,m:vkoul@kernel.org,m:corbet@lwn.net,m:thara.gopinath@gmail.com,m:herbert@gondor.apana.org.au,m:davem@davemloft.net,m:quic_utiwari@quicinc.com,m:mdalam@qti.qualcomm.com,m:lumag@kernel.org,m:mani@kernel.org,m:stephan.gerhold@linaro.org,m:andersson@kernel.org,m:peter.ujfalusi@gmail.com,m:michal.simek@amd.com,m:Frank.Li@kernel.org,m:agross@codeaurora.org,m:neil.armstrong@linaro.org,m:dmaengine@vger.kernel.org,m:linux-doc@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-crypto@vger.kernel.org,m:linux-arm-kernel@lists.infradead.org,m:brgl@kernel.org,m:bartosz.golaszewski@linaro.org,m:tharagopinath@gmail.com,m:peterujfalusi@gmail.com,s:lists@lfdr.de];
-	FORGED_SENDER(0.00)[radheys@amd.com,linux-arm-msm@vger.kernel.org];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[amd.com:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[radheys@amd.com,linux-arm-msm@vger.kernel.org];
 	TO_DN_SOME(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[6];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[lkp@intel.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[intel.com:+];
 	ALIAS_RESOLVED(0.00)[];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,qualcomm.com:email,sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,amd.com:dkim,amd.com:email,amd.com:mid,amd.com:from_mime]
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,intel.com:dkim,intel.com:email,intel.com:mid,intel.com:from_mime,vger.kernel.org:from_smtp,pattern.data:url]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 3C2D46DC808
+X-Rspamd-Queue-Id: 71C216DC87A
 
-> There's no reason for the instances of this struct to be modifiable.
-> Constify the pointer in struct dma_async_tx_descriptor and all drivers
-> currently using it.
-> 
-> Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Hi Fenglin,
 
-Reviewed-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
-Thanks!
+kernel test robot noticed the following build errors:
 
-> ---
->   drivers/dma/ti/k3-udma.c        | 2 +-
->   drivers/dma/xilinx/xilinx_dma.c | 2 +-
->   include/linux/dmaengine.h       | 2 +-
->   3 files changed, 3 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/dma/ti/k3-udma.c b/drivers/dma/ti/k3-udma.c
-> index 1cf158eb7bdb541c4e7f4f79f65ab70be4311fad..fb21e0df5ab7b20e4e16777b5ff7f61d2ae67b2b 100644
-> --- a/drivers/dma/ti/k3-udma.c
-> +++ b/drivers/dma/ti/k3-udma.c
-> @@ -3408,7 +3408,7 @@ static int udma_set_metadata_len(struct dma_async_tx_descriptor *desc,
->   	return 0;
->   }
->   
-> -static struct dma_descriptor_metadata_ops metadata_ops = {
-> +static const struct dma_descriptor_metadata_ops metadata_ops = {
->   	.attach = udma_attach_metadata,
->   	.get_ptr = udma_get_metadata_ptr,
->   	.set_len = udma_set_metadata_len,
-> diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
-> index 404235c1735384635597e88edc25c67c7d250647..165b11a7c776abc6a8d66d631e19da669644577d 100644
-> --- a/drivers/dma/xilinx/xilinx_dma.c
-> +++ b/drivers/dma/xilinx/xilinx_dma.c
-> @@ -653,7 +653,7 @@ static void *xilinx_dma_get_metadata_ptr(struct dma_async_tx_descriptor *tx,
->   	return seg->hw.app;
->   }
->   
-> -static struct dma_descriptor_metadata_ops xilinx_dma_metadata_ops = {
-> +static const struct dma_descriptor_metadata_ops xilinx_dma_metadata_ops = {
->   	.get_ptr = xilinx_dma_get_metadata_ptr,
->   };
->   
-> diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h
-> index b3d251c9734e95e1b75cf6763d4d2c3a1c6a9910..5244edb90e7e7510bf4460b6a74ee2a7f91c1ccc 100644
-> --- a/include/linux/dmaengine.h
-> +++ b/include/linux/dmaengine.h
-> @@ -623,7 +623,7 @@ struct dma_async_tx_descriptor {
->   	void *callback_param;
->   	struct dmaengine_unmap_data *unmap;
->   	enum dma_desc_metadata_mode desc_metadata_mode;
-> -	struct dma_descriptor_metadata_ops *metadata_ops;
-> +	const struct dma_descriptor_metadata_ops *metadata_ops;
->   #ifdef CONFIG_ASYNC_TX_ENABLE_CHANNEL_SWITCH
->   	struct dma_async_tx_descriptor *next;
->   	struct dma_async_tx_descriptor *parent;
-> 
+[auto build test ERROR on 1795fd2dbe84ef4d393b69a0b2a3b371f810bde5]
 
+url:    https://github.com/intel-lab-lkp/linux/commits/Fenglin-Wu/leds-rgb-leds-qcom-lpg-Fix-LED-color-balancing-in-HW-pattern-mode/20260629-180250
+base:   1795fd2dbe84ef4d393b69a0b2a3b371f810bde5
+patch link:    https://lore.kernel.org/r/20260629-lpg-rgb-color-balance-fix-v3-1-17796a06d799%40oss.qualcomm.com
+patch subject: [PATCH v3] leds: rgb: leds-qcom-lpg: Fix LED color balancing in HW pattern mode
+config: hexagon-allmodconfig (https://download.01.org/0day-ci/archive/20260629/202606292317.3IsR1hhQ-lkp@intel.com/config)
+compiler: clang version 23.0.0git (https://github.com/llvm/llvm-project 6cc609bb250b21b47fc7d394b4019101e9983597)
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20260629/202606292317.3IsR1hhQ-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202606292317.3IsR1hhQ-lkp@intel.com/
+
+All errors (new ones prefixed by >>):
+
+>> drivers/leds/rgb/leds-qcom-lpg.c:1203:3: error: cannot jump from this goto statement to its label
+    1203 |                 goto free_pattern;
+         |                 ^
+   drivers/leds/rgb/leds-qcom-lpg.c:1216:2: note: jump bypasses initialization of variable with __attribute__((cleanup))
+    1216 |         guard(mutex)(&lpg->lock);
+         |         ^
+   include/linux/cleanup.h:422:2: note: expanded from macro 'guard'
+     422 |         CLASS(_name, __UNIQUE_ID(guard))
+         |         ^
+   include/linux/cleanup.h:303:3: note: expanded from macro 'CLASS'
+     303 |                 class_##_name##_constructor
+         |                 ^
+   <scratch space>:39:1: note: expanded from here
+      39 | class_mutex_constructor
+         | ^
+   note: (skipping 3 expansions in backtrace; use -fmacro-backtrace-limit=0 to see all)
+   include/linux/compiler_types.h:16:23: note: expanded from macro '__PASTE'
+      16 | #define __PASTE(a, b) ___PASTE(a, b)
+         |                       ^
+   include/linux/compiler_types.h:15:24: note: expanded from macro '___PASTE'
+      15 | #define ___PASTE(a, b) a##b
+         |                        ^
+   <scratch space>:45:1: note: expanded from here
+      45 | __UNIQUE_ID_unlock_324
+         | ^
+   drivers/leds/rgb/leds-qcom-lpg.c:1216:2: note: jump bypasses initialization of variable with __attribute__((cleanup))
+   include/linux/cleanup.h:422:15: note: expanded from macro 'guard'
+     422 |         CLASS(_name, __UNIQUE_ID(guard))
+         |                      ^
+   include/linux/compiler.h:165:2: note: expanded from macro '__UNIQUE_ID'
+     165 |         __PASTE(__UNIQUE_ID_,                                   \
+         |         ^
+   include/linux/compiler_types.h:16:23: note: expanded from macro '__PASTE'
+      16 | #define __PASTE(a, b) ___PASTE(a, b)
+         |                       ^
+   include/linux/compiler_types.h:15:24: note: expanded from macro '___PASTE'
+      15 | #define ___PASTE(a, b) a##b
+         |                        ^
+   <scratch space>:33:1: note: expanded from here
+      33 | __UNIQUE_ID_guard_323
+         | ^
+   1 error generated.
+
+
+vim +1203 drivers/leds/rgb/leds-qcom-lpg.c
+
+  1177	
+  1178	static int lpg_pattern_mc_set(struct led_classdev *cdev,
+  1179				      struct led_pattern *led_pattern, u32 len,
+  1180				      int repeat)
+  1181	{
+  1182		struct led_classdev_mc *mc = lcdev_to_mccdev(cdev);
+  1183		struct lpg_led *led = container_of(mc, struct lpg_led, mcdev);
+  1184		struct lpg *lpg = led->lpg;
+  1185		struct lpg_channel *chan;
+  1186		struct lpg_pattern pattern;
+  1187		unsigned int triled_mask = 0;
+  1188		unsigned int lo_idx;
+  1189		unsigned int hi_idx;
+  1190		unsigned int scale;
+  1191		unsigned int i, j;
+  1192		int ret;
+  1193	
+  1194		ret = lpg_prepare_pattern(lpg, led_pattern, len, repeat, &pattern);
+  1195		if (ret < 0)
+  1196			return ret;
+  1197	
+  1198		/* Allocate buffer for the per-channel scaled pattern copy */
+  1199		struct led_pattern *scaled __free(kfree) =
+  1200				   kmalloc_array(pattern.len, sizeof(*scaled), GFP_KERNEL);
+  1201		if (!scaled) {
+  1202			ret = -ENOMEM;
+> 1203			goto free_pattern;
+  1204		}
+  1205	
+  1206		for (i = 0; i < led->num_channels; i++)
+  1207			triled_mask |= led->channels[i]->triled_mask;
+  1208		triled_set(lpg, triled_mask, 0);
+  1209	
+  1210		led_mc_calc_color_components(mc, LED_FULL);
+  1211	
+  1212		/*
+  1213		 * Each channel gets its own LUT block scaled by subled_info[i].brightness
+  1214		 * so the pattern respects the configured colour balance.
+  1215		 */
+  1216		guard(mutex)(&lpg->lock);
+  1217	
+  1218		for (i = 0; i < led->num_channels; i++) {
+  1219			chan = led->channels[i];
+  1220			scale = mc->subled_info[i].brightness;
+  1221	
+  1222			for (j = 0; j < pattern.len; j++) {
+  1223				scaled[j].brightness = DIV_ROUND_CLOSEST(
+  1224					(u32)pattern.data[j].brightness * scale, LED_FULL);
+  1225				scaled[j].delta_t = pattern.data[j].delta_t;
+  1226			}
+  1227	
+  1228			if (lpg->lut_base)
+  1229				ret = lpg_lut_store(lpg, scaled, pattern.len, &lo_idx, &hi_idx);
+  1230			else
+  1231				ret = lpg_lut_store_sdam(lpg, scaled, pattern.len, &lo_idx, &hi_idx);
+  1232	
+  1233			if (ret < 0) {
+  1234				/* Free LUT slots already allocated for previous channels */
+  1235				while (i-- > 0) {
+  1236					chan = led->channels[i];
+  1237					lpg_lut_free(lpg, chan->pattern_lo_idx, chan->pattern_hi_idx);
+  1238					chan->pattern_lo_idx = 0;
+  1239					chan->pattern_hi_idx = 0;
+  1240				}
+  1241	
+  1242				goto free_pattern;
+  1243			}
+  1244	
+  1245			chan->ramp_tick_ms = pattern.delta_t;
+  1246			chan->ramp_ping_pong = pattern.ping_pong;
+  1247			chan->ramp_oneshot = repeat != -1;
+  1248			chan->ramp_lo_pause_ms = pattern.lo_pause;
+  1249			chan->ramp_hi_pause_ms = pattern.hi_pause;
+  1250			chan->pattern_lo_idx = lo_idx;
+  1251			chan->pattern_hi_idx = hi_idx;
+  1252		}
+  1253	
+  1254	free_pattern:
+  1255		kfree(pattern.data);
+  1256		if (ret < 0)
+  1257			return ret;
+  1258	
+  1259		lpg_brightness_set(led, cdev, mc->subled_info);
+  1260	
+  1261		return 0;
+  1262	}
+  1263	
+
+--
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
