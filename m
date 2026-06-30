@@ -1,53 +1,53 @@
-Return-Path: <linux-arm-msm+bounces-115552-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-115553-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id 1qdLOho+RGrQrAoAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-115552-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Jul 2026 00:07:22 +0200
+	id gtTqOvQ+RGohrQoAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-115553-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Jul 2026 00:11:00 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 464526E84A6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Jul 2026 00:07:22 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 61FCF6E8549
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Jul 2026 00:11:00 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=BQMjT8mu;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115552-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115552-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=SJMZ5xdh;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115553-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115553-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 08AC73032750
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 22:07:21 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 6D4743025A57
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 22:10:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8F3D5315D43;
-	Tue, 30 Jun 2026 22:07:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7DCD23264F5;
+	Tue, 30 Jun 2026 22:10:56 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93FCC2F8EB8;
-	Tue, 30 Jun 2026 22:07:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17B402ECD32;
+	Tue, 30 Jun 2026 22:10:54 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782857240; cv=none; b=aXDVzEbRRI6fP1p18GxkZYWDIMZxSGgO6Pig9uMPJEAcFpOlUqE6gpUEUjZlSKVEM13RaVsFJbCmESrfNF4TdCrR/kRWwLk3wyvO/EV+Xtab4ffoOpS09BWmapXiEVMueqh5pi4ETXb4X2dKv0wQMP0hbi6hByPSg3R18UJzCcQ=
+	t=1782857456; cv=none; b=rsmLLUMCJt++Cvlyw9xdBXDWD6P8Ql928U3TFuPlK+0+OyoWw4YMcf8GSuk3tCoR9fA1ivtUSJMGhQjsgaDxzW/lrcvoynsp4ptOQfbvR9Y7vR6Ayq2D85uodTqESsRJLf/lPlWKIS1vgZJHl/5unMJ8rsSQjw7mXEDAy9Yb+Tg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782857240; c=relaxed/simple;
-	bh=3RABMYbvDoA1yjBJhnkAoKNe90jv8U+SVL4Y9HXjKSQ=;
+	s=arc-20240116; t=1782857456; c=relaxed/simple;
+	bh=Vv2scWGQ0kFNbUh+ya+AgBz53CyUrlDQJfw0UQis42U=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=fWPLCzHj2yCrhu7fW2U3w/h+s/YPOBczFoE//Iw+4vHrSqPYaHe/mcjA1KjxFg2/VcAZWXFnl8o9DB3qMDjcI5aoWl74w6LuPyvDDNw7eSOdSel+tA6Xhd0NAMR6dRw/AeqplYGkOgOFe8pw5Cq1k1s9DbH67bcF+L+M+zXivz8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BQMjT8mu; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 697661F000E9;
-	Tue, 30 Jun 2026 22:07:17 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=JrLOBEt+wa1K/X3H82VR4kHVorqzoWhXCfZWVM+8y/awZ/6fB3rUmF4/RKHZDdBoj2xSUFMZbcp4563m8Xg9frGSln/cuAm9kNReJ4e128ZcwsWoLL2hUa1C8M51EF/xyC2Q5kYHQWRyTM2PUUFQ2fl/jH1roO/GCZRIoZK+09o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SJMZ5xdh; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7CAD1F000E9;
+	Tue, 30 Jun 2026 22:10:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782857239;
-	bh=Ke9uK1w5qXFWhFmB8YXN1g5nukz4AYuYFuYpQp6CLjM=;
+	s=k20260515; t=1782857454;
+	bh=0hEDDmC2bIFyj6XPUUI1l9f93VmhJc0XsB4WWYndits=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=BQMjT8muvB+WcLAEd5y9cHkSCJkCajtf318uNiV2ds5yV4o2syoT++vuZFcEoEb8o
-	 z2vASv5JvgVzMfjx3k5xtP6V99HUy1HLg1wfeZAc/UaakpjIPTF5kJR3AE3PELIYAd
-	 z3GYE058Dx9r7yHTF3pKOWK8WdTkEOpCb2821FAgrnTpxGKdeav/wmekZXFRfoZ6J3
-	 1NT1AOiPwhQj/4ypRue/pynAnaNwdYcZExYfOJw4ZxgH1HKkSnyoLoQrLyBLWTch8w
-	 o4HZVRA86GMq3O8pRe49xleBIQ272In1pXdZqaj+0TlBrFvPu/7vmLEQrvbNmJ2y75
-	 vzl/MyZLfiqUQ==
-Message-ID: <a2c02dce-b097-4f52-80d4-d63006ebd8c5@kernel.org>
-Date: Tue, 30 Jun 2026 23:07:15 +0100
+	b=SJMZ5xdh6s/td+nFN+cf2EH0aPq+FGlNc1Zl36f4qY6IEsA6clqeL+NjZuih1Kjcd
+	 PcQ1k49oYsNJT5QxjJ+FqnbVE1W3+RKg6CdVwVqwtHYGF1CNqvZ/Ha9hdk+6vhsW7U
+	 hmjcA9MNtqrvLnMoK4d9fIc1qi07LLqoU+h4TczD70nmowsxQ98vP9RjEebZ8YitHj
+	 wTEvH0rZ+9QEos/jTUCNEnos4vlS5OZNf+BF8epOuHUb13w8I8v/r8UtX8M3/iLdit
+	 bSJHPtt4dXi2Lu3ldBTkd421w4tIXJkPA5AfSeNV/70Ty+ZCZhzRoFJY8Fr5/CfmGu
+	 e8ic6TgoSKwsw==
+Message-ID: <6963a75c-c6f1-4ed1-a514-75a0218a307c@kernel.org>
+Date: Tue, 30 Jun 2026 23:10:51 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -55,7 +55,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/2] media: qcom: iris: add dynamic encoder properties
+Subject: Re: [PATCH v3 1/2] media: qcom: iris: improve gop size support for
+ gen1 encoder
 To: Wangao Wang <wangao.wang@oss.qualcomm.com>,
  Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
  Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
@@ -64,8 +65,9 @@ To: Wangao Wang <wangao.wang@oss.qualcomm.com>,
 Cc: quic_qiweil@quicinc.com, Renjiang Han <renjiang.han@oss.qualcomm.com>,
  linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
  linux-kernel@vger.kernel.org
-References: <Z3W2-J864HyF-sbnVW8bg7mP4rdQ-AGsEM_jIIXZEEzjrC0E2wQSfGS3CXZItedQtyxy_aMWtLQmg-iyFEcHpA==@protonmail.internalid>
- <20260624-dynamic_encode-v3-0-f2a2db0ac2af@oss.qualcomm.com>
+References: <20260624-dynamic_encode-v3-0-f2a2db0ac2af@oss.qualcomm.com>
+ <hwcfcJGBNqJeZCFNCfC_HmZHOURrbRLtS0VtpPKvUCDQWKOHcYNh4WmT7ZP34rdPQg7NyhXISXWbLurufscrow==@protonmail.internalid>
+ <20260624-dynamic_encode-v3-1-f2a2db0ac2af@oss.qualcomm.com>
 From: Bryan O'Donoghue <bod@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=bod@kernel.org; keydata=
@@ -111,7 +113,7 @@ Autocrypt: addr=bod@kernel.org; keydata=
  LKSGEglMpiX07M1AotgvylN5C8fjbouoK+/RAMsXkk8jba6rPfuuXPaDjCyyKn6zSVHETnHW
  3AJbgVY50T8STpnxayBQvWbCvu+6NOEjXCbyaOJig+5l0zlGN9XHjdANXC5HnwmyaGRL9YDq
  Jh2nVXVJDincOdQRdKcJjYLqaOAoWrYWSDi1iZGspHBTDrnOvfMQzzHY
-In-Reply-To: <20260624-dynamic_encode-v3-0-f2a2db0ac2af@oss.qualcomm.com>
+In-Reply-To: <20260624-dynamic_encode-v3-1-f2a2db0ac2af@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Rspamd-Action: no action
@@ -119,13 +121,13 @@ X-Spamd-Result: default: False [-5.16 / 15.00];
 	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-115552-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-115553-lists,linux-arm-msm=lfdr.de];
 	FORGED_RECIPIENTS(0.00)[m:wangao.wang@oss.qualcomm.com,m:vikash.garodia@oss.qualcomm.com,m:dikshita.agarwal@oss.qualcomm.com,m:abhinav.kumar@linux.dev,m:mchehab@kernel.org,m:quic_qiweil@quicinc.com,m:renjiang.han@oss.qualcomm.com,m:linux-media@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,s:lists@lfdr.de];
 	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER(0.00)[bod@kernel.org,linux-arm-msm@vger.kernel.org];
@@ -144,22 +146,103 @@ X-Spamd-Result: default: False [-5.16 / 15.00];
 	RCPT_COUNT_SEVEN(0.00)[10];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
 	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,qualcomm.com:email]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 464526E84A6
+X-Rspamd-Queue-Id: 61FCF6E8549
 
 On 24/06/2026 09:51, Wangao Wang wrote:
-> This patch series introduces several enhancements to the Qualcomm Iris
-> encoder driver, improving support for V4L2 controls and enabling more
-> video encoding features.
+> The GOP_SIZE cap was missing an hfi_id, so it would not interact with the
+> firmware but could still save the parameter passed by the client.
+> INTRA_PERIOD was acting as GOP_SIZE here. The code was redundant, so the
+> two caps have been merged.
 
-For future reference a bit more specificity in the overview would be 
-nice "improving controls and enabling more video encoding features" is 
-quite vague.
+Hmm, this really feels like a bug fix. Your first sentence describes a 
+software flaw, which you then remediate.
 
-> All patches have been tested with iris_test_app on gen1:QCS6490,
-> gen2:QCS9100, X1E80100.
+I'd like to see a better description of that - you appear to be saying 
+"but it doesn't matter anyway" - which is perhaps true but still to me 
+feels like you need to actively justify why this _shouldn't_ go back to 
+stable.
+
+> Signed-off-by: Wangao Wang <wangao.wang@oss.qualcomm.com>
+> ---
+>   drivers/media/platform/qcom/iris/iris_ctrls.c           |  2 +-
+>   drivers/media/platform/qcom/iris/iris_hfi_gen1.c        | 16 ++++------------
+>   drivers/media/platform/qcom/iris/iris_platform_common.h |  1 -
+>   3 files changed, 5 insertions(+), 14 deletions(-)
+> 
+> diff --git a/drivers/media/platform/qcom/iris/iris_ctrls.c b/drivers/media/platform/qcom/iris/iris_ctrls.c
+> index 10e33b8a73f60759c4f1cb17b5c95897f0e1468f..391e1fc5f6e2ec8e9cf5ba4e0f76b2d1da3e2a35 100644
+> --- a/drivers/media/platform/qcom/iris/iris_ctrls.c
+> +++ b/drivers/media/platform/qcom/iris/iris_ctrls.c
+> @@ -1293,7 +1293,7 @@ int iris_set_use_and_mark_ltr(struct iris_inst *inst, enum platform_inst_fw_cap_
+>   int iris_set_intra_period(struct iris_inst *inst, enum platform_inst_fw_cap_type cap_id)
+>   {
+>   	const struct iris_hfi_session_ops *hfi_ops = inst->hfi_session_ops;
+> -	u32 gop_size = inst->fw_caps[GOP_SIZE].value;
+> +	u32 gop_size = inst->fw_caps[cap_id].value;
+>   	u32 b_frame = inst->fw_caps[B_FRAME].value;
+>   	u32 hfi_id = inst->fw_caps[cap_id].hfi_id;
+>   	struct hfi_intra_period intra_period;
+> diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen1.c b/drivers/media/platform/qcom/iris/iris_hfi_gen1.c
+> index ca1545d28b5310d8c45a905287dcb69f6184d9cc..eff9216bb50143c0d752051a6400605bbaf3803e 100644
+> --- a/drivers/media/platform/qcom/iris/iris_hfi_gen1.c
+> +++ b/drivers/media/platform/qcom/iris/iris_hfi_gen1.c
+> @@ -171,7 +171,9 @@ static const struct platform_inst_fw_cap inst_fw_cap_sm8250_enc[] = {
+>   		.max = (1 << 16) - 1,
+>   		.step_or_mask = 1,
+>   		.value = 30,
+> -		.set = iris_set_u32
+> +		.hfi_id = HFI_PROPERTY_CONFIG_VENC_INTRA_PERIOD,
+> +		.flags = CAP_FLAG_OUTPUT_PORT,
+> +		.set = iris_set_intra_period,
+>   	},
+>   	{
+>   		.cap_id = ENTROPY_MODE,
+> @@ -240,7 +242,7 @@ static const struct platform_inst_fw_cap inst_fw_cap_sm8250_enc[] = {
+>   		.step_or_mask = 1,
+>   		.value = 0,
+>   		.hfi_id = HFI_PROPERTY_PARAM_VENC_INTRA_REFRESH,
+> -		.flags = CAP_FLAG_OUTPUT_PORT,
+> +		.flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_DYNAMIC_ALLOWED,
+>   		.set = iris_set_ir_period_gen1,
+>   	},
+>   	{
+> @@ -281,16 +283,6 @@ static const struct platform_inst_fw_cap inst_fw_cap_sm8250_enc[] = {
+>   		.value = 0,
+>   		.flags = CAP_FLAG_OUTPUT_PORT,
+>   	},
+> -	{
+> -		.cap_id = INTRA_PERIOD,
+> -		.min = 0,
+> -		.max = 1,
+> -		.step_or_mask = 1,
+> -		.value = 0,
+> -		.hfi_id = HFI_PROPERTY_CONFIG_VENC_INTRA_PERIOD,
+> -		.flags = CAP_FLAG_OUTPUT_PORT,
+> -		.set = iris_set_intra_period,
+> -	},
+>   	{
+>   		.cap_id = LAYER_ENABLE,
+>   		.min = 0,
+> diff --git a/drivers/media/platform/qcom/iris/iris_platform_common.h b/drivers/media/platform/qcom/iris/iris_platform_common.h
+> index c9256f2323dc4521f9eacaeffb0fc08a180de3ff..ff48333ad089894c3393e8ad45903c2603288eb9 100644
+> --- a/drivers/media/platform/qcom/iris/iris_platform_common.h
+> +++ b/drivers/media/platform/qcom/iris/iris_platform_common.h
+> @@ -165,7 +165,6 @@ enum platform_inst_fw_cap_type {
+>   	USE_LTR,
+>   	MARK_LTR,
+>   	B_FRAME,
+> -	INTRA_PERIOD,
+>   	LAYER_ENABLE,
+>   	LAYER_TYPE_H264,
+>   	LAYER_TYPE_HEVC,
+> 
+> --
+> 2.43.0
+> 
+> 
 
 
