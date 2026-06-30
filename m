@@ -1,81 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-115275-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-115276-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id aFJcDQdlQ2pYXwoAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-115275-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 08:41:11 +0200
+	id UEJdFSZkQ2oiXwoAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-115276-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 08:37:26 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id A446D6E0D5B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 08:41:10 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id BDB0B6E0CE2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 08:37:25 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=gmail.com header.s=20251104 header.b=FDi6GPhN;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115275-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115275-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=gmail.com header.s=20251104 header.b=bAkor3Xl;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115276-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115276-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=none) header.from=gmail.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id DE6AC309773A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 06:35:54 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id C35A53059181
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 06:36:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2649930DD2F;
-	Tue, 30 Jun 2026 06:35:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E567928DC4;
+	Tue, 30 Jun 2026 06:35:59 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
+Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B86A5343D66
-	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jun 2026 06:35:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7D583E8660
+	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jun 2026 06:35:53 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782801348; cv=none; b=JKyB6KXjDg9o15Cw79EyzepJkciTTXFYjpLqYX1mv+jVahMeKSacM/DHOYD4Hh6r756naklovpqsRnoR/OwB7nc+Qh2R0C7fJALd6GlA7EfrZyCn3sdOfpwQnpCVcGdKuwLJauphF20yv8ACB45CfmNnjbDsTi2LJ/L3Mb7U99w=
+	t=1782801359; cv=none; b=nr3iAeayOTgUhxbZ8U8MCO1UaTYQuCB4EqPxfFLydTGzQDQElQqfdgomVYQDMT6b/k22KJOM2QiU7H6M+Ng07fWVzDrrhaWNyxE9WdFwBvWtihxoo/r0Rd9fL7/3bfiQzNujXoGpQxdlCz4IhCeRNcU6HZJ/DJ6ZkU3Eej22qDs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782801348; c=relaxed/simple;
-	bh=fTei+vUEtZNmVemds32xGB8uary3SUfKARXY0HPVp94=;
+	s=arc-20240116; t=1782801359; c=relaxed/simple;
+	bh=lksKdJNxdseIQgsIdaceL+4z0cLMAbvL455vq906s+E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=alP2221mSPZzBwm//14rGJelKO5LtKJ63U0IS3VSmt6uLNZAVHbc8wg1t9KKLQD/MgWRs2EgknrKrW18lPso9zdmjOAw9Cu/tThl0qS1LFdoxMrBDI2MoqGJcFVJcaQYm+P3qb9iGaLzHf2iOZpewNBR+f6cR9MRrQur8qzrnaA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FDi6GPhN; arc=none smtp.client-ip=209.85.210.171
-Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-845e363246aso1934637b3a.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jun 2026 23:35:45 -0700 (PDT)
+	 MIME-Version; b=miSjFUkDa9aouqYvek43YPRPysWpmeB5ZJBHUiwMKnG3p7YEkn19GLd4RjxL73z3if/pF+p3wK0Lm9LrSWynvknoT0cC1bCns5HT78pbpkI9bilzxxIX4mUiLwF6JCSJ4HdImD8lwIwiMq45AtEdMeNBAdiyKIK7P9cSBjP6v7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bAkor3Xl; arc=none smtp.client-ip=209.85.210.181
+Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-845ea8924a2so958547b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jun 2026 23:35:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782801345; x=1783406145; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1782801352; x=1783406152; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=SaBgmvHyCdtOOzTM9Q4PIyXVQ3lhLlNUjuQP2hIqGR0=;
-        b=FDi6GPhN+2bto5YvAJvdy8oubusuCrk3xnMmCyh4uxEpjsixGpccJC8MeDbC1MEnNx
-         HqnvLeLxjL1xOBTh9vhgacGlkpYSilamQE/KYapFca7dHByVh/r8s+PiKtFlbdE8VEXd
-         7sRW1WONAZ0iXN/eu4cmO2CZ6fSPDqqRj9c9FRgxEh5pub/EkTg+CN6qPrava7xxd7fK
-         FptGZ7PIVLMDUhbrO/rKx5KlPRUUzvX36cCs1zIMFl7RgeUkDc6KVIauRFqdCgU+6jPz
-         AmNAxjMHsao42G0FF6B1fYH3Tl5LZ6OQSGVV9Pu2G2wN/T8qqOHZQay9H5CyjYGU0jrr
-         gWWw==
+        bh=ahZNFpBmQcYCFe+4l/vw8gEiJ39UflxbVORl1Pl5COY=;
+        b=bAkor3XlUJBY7Q69d6zBfs6cXsBVwEpFo8KL0mIBki+Le6XgdsbUzbjdxGQZz35P+X
+         5OdTp7xLY7lvwGDrOKtTliURe4cYCHEqhtX4wPb1AJtvJXZdfD+SKt2st1fW5M6Jp18i
+         2MTDU7T8AQy/5kxJ68z9wI5o6SrxfliYTK/sU60gOrm6f1mpJ2paNo0zh+PsFb7XebeF
+         k9q9hIcZbEwZYi2uLz3rsTGlsEzjOivIQMnbgl9LQZeoHyrIz3+js1JHyP3MOhD26rwv
+         y5CSg+eNNaZ2DCw/Pkd5nHAmWW7Kx5moup0eDK2By7QbACKfBuK5mjbzOGdy142w9gL8
+         R/hA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782801345; x=1783406145;
+        d=1e100.net; s=20251104; t=1782801352; x=1783406152;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=SaBgmvHyCdtOOzTM9Q4PIyXVQ3lhLlNUjuQP2hIqGR0=;
-        b=o7ifuofwVsrE/8tEga/dckJHBA3JQD2ynXtRy6iAIKbzJduKVT/Ubf9L5knf9V29LD
-         FT2dC1g7xTYp/qX63R6EPr93Si51XSePp/brMGBJWnyiCd7G4VQfdB63JiosyN03fEEo
-         fUDdN23UoJhLsxW0Afv+aH6VfDe/i4e1igPgLzvsygrEifpDNBZX8F2lRLhQ8q14qCiw
-         oFUgFElY0kFO2p3UCKArp29iLzQoQkTDZlaKZXfVfxF+MPNZaeAiBKxbfMJVtO1ANgxo
-         P38/QnMLpP2TPKoox2QdIkuLD4j0oppq0g8jdLTN8DCYwvDSqoS50/1YiazgqTGW/DcX
-         AbXA==
-X-Forwarded-Encrypted: i=1; AHgh+Roy5JtU4UNiiV+6n3rBazDSPp0HuTZeN96VsCfknwVCmcghn1WzK2PzrVKkslEFE+gzZ9y4UA53xZLkMzsH@vger.kernel.org
-X-Gm-Message-State: AOJu0YwmqFJUqOqwC8/2LJB9sQv1jhkpw6/gjc1G0ahYiWWqpQx5SFg9
-	jtE1MnTgYAz73UjLJMc4/Y6DUDhMaW8sH1HuvF0VhOfQxMOwFXY7pF+T
-X-Gm-Gg: AfdE7cmYgwpnlpA6UMy791yxGnxmD9vd7mxJ2uYO4SYMdW0CHIiApyMBShVIzSgvQ1i
-	VxmquAGrDnbAh7MkqJa59jW3+1CefYWxdrUsBnP7rH8CLyC2fWtYmcskHCkopvaInWtJq8mnoic
-	tJ2XI1CxJOGu700sXlap3PJjaFsLx9ck58sdl3tiU0yD/gybLwQetFmN/YYrYiVK8kRxRU8cgP6
-	TAfRrj/yTxrjVy5jNnazulC6A+AU/0TwcOpCogqXTc++3iF62QWuo5fcfABpX+8ccrqv1FwV3dr
-	8L8evOd0w2BvYbn9aR0rxgcf/S9Gl4SZKIkTwzCPxYQILdMaoJs6UtMvnANbr0MS7BwalaQMhf+
-	gZZ93MBgJXRokX25HgkYb03mEsN1q4htwc30WYvugy1zZhZzIzh2bUcUCj+gtN56lV8S+GJmbD8
-	mdN+VT8/IM8bN38kCNxuGCeUlmH4MpnkUHgpKWbJI90KBAqkc=
-X-Received: by 2002:a05:6a00:3e12:b0:845:e873:4248 with SMTP id d2e1a72fcca58-8479f3fa66emr1886818b3a.56.1782801344986;
-        Mon, 29 Jun 2026 23:35:44 -0700 (PDT)
+        bh=ahZNFpBmQcYCFe+4l/vw8gEiJ39UflxbVORl1Pl5COY=;
+        b=ryCQIS5uHNraA6TSjn5T9+aMWVNf9NRVQC8zDV3rElBYoG0mmELr/R+LCBGjPNkch7
+         3kkGUddp9jtqJ7ZADJCXh0oGSL0rNjoRwc/SyyxHqpzWSL5OIVghpwQ/Nw7t6XbgWTbc
+         iK9QbfXTagvqw1jko+FAzSg/P/qlHzsWswYmT+66GHe4i6/HsjCmrJUgRksYMwahR9Qq
+         2r1hhhK5OeuYENDBDKFzBlScj/24u8vZktWh7ZMSDAbwl92qnJYquXHjCJDLeHTNTAE5
+         tySUjGHOy/WyZdNueNPynycAVVBQS3sWrRjRO5z/DVp6o9X0a9e29+Bt0tM04ScSUI1M
+         FyNA==
+X-Forwarded-Encrypted: i=1; AFNElJ/6B2BiEXIgkUntJFMuFQLCLsF2dYqRE1VpO+m8+hHSytpB7lPI3f8WBOFZ23jGuwooywm9ozFVPzsnLBJf@vger.kernel.org
+X-Gm-Message-State: AOJu0YzJKWNnullMy5DtcdfddZvNIz6W88WKOy4hgjqei7ENxaC0aJ3q
+	7p+Lm1YWWoGCbmcVLu5Tle8zrZeRG3anZ0fMQazQyx6RxWTKiMr2ZO6R
+X-Gm-Gg: AfdE7cnR6CMn9uHSLAvOIrqZvGp2KoNETU41hOhqE1aaYfYmWn2dhnDvjv5kZ3WAUPs
+	xQU0bAN0lW+7ZAPwWvp4O8IJn0gNHsLZaGfQgZuEgw+hWWJz+2N0QErv1F7jiDJxWn3ps4CipYS
+	8TlUh0d8KDygsCgqjlIVCNVWQZoa3xZQerhS3BiwKvSfjI0sKWKpPiK886V56kIm6JkEZNg8Ggr
+	pu4/z1OjXJcgUibUnfT/0kVBFIEvTFjqBRidIPl7/9r1lexUP2NpH75lGuhw4D8VrbxqJ48NwbK
+	STiKddHHJjfl6R9OwqP0c4PNbdO0Pk7FEkgLpF2zuu22HOJw/HqDyarZAa1vYvRPII7Oae0nile
+	kwKkldoL1hffSp3KpZWC3YwHgopajj46WEGil3XIjIZB5XLS+OK8YqLC6z3ZnCa0bc9X3C5B54O
+	6QTbaclgxUzAt3xmR4GgF88XVz1pYgIsdyz49YNRveZD7iZMBAY9hOANz+7w==
+X-Received: by 2002:a05:6a00:8cb:b0:845:d2e3:263b with SMTP id d2e1a72fcca58-8479f2b77b8mr1944498b3a.53.1782801352542;
+        Mon, 29 Jun 2026 23:35:52 -0700 (PDT)
 Received: from phuc-desktop.. ([183.91.15.56])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-847a02cd237sm1165061b3a.32.2026.06.29.23.35.38
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-847a02cd237sm1165061b3a.32.2026.06.29.23.35.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Jun 2026 23:35:44 -0700 (PDT)
+        Mon, 29 Jun 2026 23:35:52 -0700 (PDT)
 From: phucduc.bui@gmail.com
 To: Mark Brown <broonie@kernel.org>,
 	Takashi Iwai <tiwai@suse.com>,
@@ -110,9 +110,9 @@ Cc: Support Opensource <support.opensource@diasemi.com>,
 	linux-arm-msm@vger.kernel.org,
 	linux-arm-kernel@lists.infradead.org,
 	bui duc phuc <phucduc.bui@gmail.com>
-Subject: [PATCH 05/27] ASoC: codecs: es9356: Use guard() for mutex locks
-Date: Tue, 30 Jun 2026 13:34:27 +0700
-Message-ID: <20260630063449.503996-6-phucduc.bui@gmail.com>
+Subject: [PATCH 06/27] ASoC: codecs: fs210x: Use guard() for mutex locks
+Date: Tue, 30 Jun 2026 13:34:28 +0700
+Message-ID: <20260630063449.503996-7-phucduc.bui@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260630063449.503996-1-phucduc.bui@gmail.com>
 References: <20260630063449.503996-1-phucduc.bui@gmail.com>
@@ -130,14 +130,14 @@ X-Spamd-Result: default: False [-0.16 / 15.00];
 	R_MISSING_CHARSET(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
 	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
 	FREEMAIL_FROM(0.00)[gmail.com];
-	RCPT_COUNT_TWELVE(0.00)[33];
-	TAGGED_FROM(0.00)[bounces-115275-lists,linux-arm-msm=lfdr.de];
+	TO_DN_SOME(0.00)[];
+	TAGGED_FROM(0.00)[bounces-115276-lists,linux-arm-msm=lfdr.de];
 	FORWARDED(0.00)[lists@lfdr.de];
 	FORGED_RECIPIENTS(0.00)[m:broonie@kernel.org,m:tiwai@suse.com,m:nick.li@foursemi.com,m:herve.codina@bootlin.com,m:support.opensource@diasemi.com,m:lgirdwood@gmail.com,m:perex@perex.cz,m:srini@kernel.org,m:ckeepax@opensource.cirrus.com,m:rf@opensource.cirrus.com,m:matthias.bgg@gmail.com,m:angelogioacchino.delregno@collabora.com,m:shenghao-ding@ti.com,m:kevin-lu@ti.com,m:baojun.xu@ti.com,m:sen@ti.com,m:oder_chiou@realtek.com,m:linusw@kernel.org,m:kuninori.morimoto.gx@renesas.com,m:u.kleine-koenig@baylibre.com,m:zhangyi@everest-semi.com,m:marco.crivellari@suse.com,m:kees@kernel.org,m:sammiee5311@gmail.com,m:arnd@arndb.de,m:rongqianfeng@vivo.com,m:linux-sound@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:patches@opensource.cirrus.com,m:linux-mediatek@lists.infradead.org,m:linux-arm-msm@vger.kernel.org,m:linux-arm-kernel@lists.infradead.org,m:phucduc.bui@gmail.com,m:matthiasbgg@gmail.com,m:phucducbui@gmail.com,s:lists@lfdr.de];
 	MIME_TRACE(0.00)[0:+];
@@ -154,13 +154,13 @@ X-Spamd-Result: default: False [-0.16 / 15.00];
 	DKIM_TRACE(0.00)[gmail.com:+];
 	MID_RHS_MATCH_FROM(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	TO_DN_SOME(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[33];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,vger.kernel.org:from_smtp]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: A446D6E0D5B
+X-Rspamd-Queue-Id: BDB0B6E0CE2
 
 From: bui duc phuc <phucduc.bui@gmail.com>
 
@@ -169,63 +169,237 @@ Merely code refactoring, and no behavior change.
 
 Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
 ---
- sound/soc/codecs/es9356.c | 29 ++++++++++++++++-------------
- 1 file changed, 16 insertions(+), 13 deletions(-)
+ sound/soc/codecs/fs210x.c | 87 ++++++++++++++-------------------------
+ 1 file changed, 30 insertions(+), 57 deletions(-)
 
-diff --git a/sound/soc/codecs/es9356.c b/sound/soc/codecs/es9356.c
-index 8db81d574624..8ef9e70a9316 100644
---- a/sound/soc/codecs/es9356.c
-+++ b/sound/soc/codecs/es9356.c
-@@ -7,6 +7,7 @@
+diff --git a/sound/soc/codecs/fs210x.c b/sound/soc/codecs/fs210x.c
+index 5f381fe063e8..87ae2a154462 100644
+--- a/sound/soc/codecs/fs210x.c
++++ b/sound/soc/codecs/fs210x.c
+@@ -4,6 +4,7 @@
  //
+ // Copyright (C) 2016-2025 Shanghai FourSemi Semiconductor Co.,Ltd.
  
- #include <linux/device.h>
 +#include <linux/cleanup.h>
- #include <linux/mod_devicetable.h>
- #include <linux/module.h>
- #include <linux/soundwire/sdw.h>
-@@ -501,16 +502,19 @@ static int es9356_power_state(struct snd_soc_dai *dai, unsigned char ps, unsigne
+ #include <linux/clk.h>
+ #include <linux/delay.h>
+ #include <linux/i2c.h>
+@@ -770,9 +771,8 @@ static int fs210x_dai_hw_params(struct snd_pcm_substream *substream,
+ 	if (fs210x->devid == FS2105S_DEVICE_ID && fs210x->srate == 16000)
+ 		return -EOPNOTSUPP;
+ 
+-	mutex_lock(&fs210x->lock);
+-	ret = fs210x_set_hw_params(fs210x);
+-	mutex_unlock(&fs210x->lock);
++	scoped_guard(mutex, &fs210x->lock)
++		ret = fs210x_set_hw_params(fs210x);
+ 	if (ret)
+ 		dev_err(fs210x->dev, "Failed to set hw params: %d\n", ret);
+ 
+@@ -789,15 +789,11 @@ static int fs210x_dai_mute(struct snd_soc_dai *dai, int mute, int stream)
+ 
+ 	fs210x = snd_soc_component_get_drvdata(dai->component);
+ 
+-	mutex_lock(&fs210x->lock);
+-
+-	if (!fs210x->is_inited || fs210x->is_suspended) {
+-		mutex_unlock(&fs210x->lock);
+-		return 0;
++	scoped_guard(mutex, &fs210x->lock) {
++		if (!fs210x->is_inited || fs210x->is_suspended)
++			return 0;
  	}
  
- 	/* power state changes are not independent across functions */
--	mutex_lock(&es9356->pde_lock);
--	ret = es9356_pde_transition_delay(es9356, func, pde_entity, ps?ps0:ps3);
--	if (ret) {
--		regmap_write(es9356->regmap,
--			SDW_SDCA_CTL(func, pde_entity, ES9356_SDCA_CTL_REQ_POWER_STATE, 0), ps?ps3:ps0);
--		es9356_pde_transition_delay(es9356, func, pde_entity, ps?ps3:ps0);
--	} else
--		dev_dbg(component->dev, "%s PDE is already %d\n", __func__, ps?ps0:ps3);
+-	mutex_unlock(&fs210x->lock);
 -
--	mutex_unlock(&es9356->pde_lock);
-+	scoped_guard(mutex, &es9356->pde_lock) {
-+		ret = es9356_pde_transition_delay(es9356, func, pde_entity, ps ? ps0 : ps3);
-+		if (ret) {
-+			regmap_write(es9356->regmap,
-+				     SDW_SDCA_CTL(func, pde_entity,
-+						  ES9356_SDCA_CTL_REQ_POWER_STATE, 0),
-+				     ps ? ps3 : ps0);
-+			es9356_pde_transition_delay(es9356, func, pde_entity, ps ? ps3 : ps0);
-+		} else {
-+			dev_dbg(component->dev, "%s PDE is already %d\n", __func__,
-+				ps ? ps0 : ps3);
-+		}
+ 	if (mute) {
+ 		cancel_delayed_work_sync(&fs210x->fault_check_work);
+ 		cancel_delayed_work_sync(&fs210x->start_work);
+@@ -816,15 +812,11 @@ static int fs210x_dai_trigger(struct snd_pcm_substream *substream,
+ 
+ 	fs210x = snd_soc_component_get_drvdata(dai->component);
+ 
+-	mutex_lock(&fs210x->lock);
+-
+-	if (!fs210x->is_inited || fs210x->is_suspended || fs210x->is_playing) {
+-		mutex_unlock(&fs210x->lock);
+-		return 0;
++	scoped_guard(mutex, &fs210x->lock) {
++		if (!fs210x->is_inited || fs210x->is_suspended || fs210x->is_playing)
++			return 0;
+ 	}
+ 
+-	mutex_unlock(&fs210x->lock);
+-
+ 	switch (cmd) {
+ 	case SNDRV_PCM_TRIGGER_START:
+ 	case SNDRV_PCM_TRIGGER_RESUME:
+@@ -852,13 +844,11 @@ static void fs210x_start_work(struct work_struct *work)
+ 
+ 	fs210x = container_of(work, struct fs210x_priv, start_work.work);
+ 
+-	mutex_lock(&fs210x->lock);
++	guard(mutex)(&fs210x->lock);
+ 
+ 	ret = fs210x_dev_play(fs210x);
+ 	if (ret)
+ 		dev_err(fs210x->dev, "Failed to start playing: %d\n", ret);
+-
+-	mutex_unlock(&fs210x->lock);
+ }
+ 
+ static void fs210x_fault_check_work(struct work_struct *work)
+@@ -869,15 +859,12 @@ static void fs210x_fault_check_work(struct work_struct *work)
+ 
+ 	fs210x = container_of(work, struct fs210x_priv, fault_check_work.work);
+ 
+-	mutex_lock(&fs210x->lock);
++	scoped_guard(mutex, &fs210x->lock) {
++		if (!fs210x->is_inited || fs210x->is_suspended || !fs210x->is_playing)
++			return;
+ 
+-	if (!fs210x->is_inited || fs210x->is_suspended || !fs210x->is_playing) {
+-		mutex_unlock(&fs210x->lock);
+-		return;
++		ret = fs210x_reg_read(fs210x, FS210X_05H_ANASTAT, &status);
+ 	}
+-
+-	ret = fs210x_reg_read(fs210x, FS210X_05H_ANASTAT, &status);
+-	mutex_unlock(&fs210x->lock);
+ 	if (ret)
+ 		return;
+ 
+@@ -990,7 +977,7 @@ static int fs210x_effect_scene_get(struct snd_kcontrol *kcontrol,
+ 	if (fs210x->scene_id < 1)
+ 		return -EINVAL;
+ 
+-	mutex_lock(&fs210x->lock);
++	guard(mutex)(&fs210x->lock);
+ 	/*
+ 	 * FS210x has scene(s) as below:
+ 	 * init scene: id = 0
+@@ -999,7 +986,6 @@ static int fs210x_effect_scene_get(struct snd_kcontrol *kcontrol,
+ 	 */
+ 	index = fs210x->scene_id - 1;
+ 	ucontrol->value.integer.value[0] = index;
+-	mutex_unlock(&fs210x->lock);
+ 
+ 	return 0;
+ }
+@@ -1018,7 +1004,7 @@ static int fs210x_effect_scene_put(struct snd_kcontrol *kcontrol,
+ 		return -EINVAL;
+ 	}
+ 
+-	mutex_lock(&fs210x->lock);
++	guard(mutex)(&fs210x->lock);
+ 
+ 	/*
+ 	 * FS210x has scene(s) as below:
+@@ -1028,17 +1014,14 @@ static int fs210x_effect_scene_put(struct snd_kcontrol *kcontrol,
+ 	 */
+ 	scene_id = ucontrol->value.integer.value[0] + 1;
+ 	scene_count = fs210x->amp_lib.scene_count - 1; /* Skip init scene */
+-	if (scene_id < 1 || scene_id > scene_count) {
+-		mutex_unlock(&fs210x->lock);
++	if (scene_id < 1 || scene_id > scene_count)
+ 		return -ERANGE;
+-	}
+ 
+ 	if (scene_id != fs210x->scene_id)
+ 		is_changed = true;
+ 
+ 	if (fs210x->is_suspended) {
+ 		fs210x->scene_id = scene_id;
+-		mutex_unlock(&fs210x->lock);
+ 		return is_changed;
+ 	}
+ 
+@@ -1046,8 +1029,6 @@ static int fs210x_effect_scene_put(struct snd_kcontrol *kcontrol,
+ 	if (ret)
+ 		dev_err(fs210x->dev, "Failed to set scene: %d\n", ret);
+ 
+-	mutex_unlock(&fs210x->lock);
+-
+ 	if (!ret && is_changed)
+ 		return 1;
+ 
+@@ -1061,12 +1042,10 @@ static int fs210x_playback_event(struct snd_soc_dapm_widget *w,
+ 	struct fs210x_priv *fs210x = snd_soc_component_get_drvdata(cmpnt);
+ 	int ret = 0;
+ 
+-	mutex_lock(&fs210x->lock);
++	guard(mutex)(&fs210x->lock);
+ 
+-	if (fs210x->is_suspended) {
+-		mutex_unlock(&fs210x->lock);
++	if (fs210x->is_suspended)
+ 		return 0;
+-	}
+ 
+ 	switch (event) {
+ 	case SND_SOC_DAPM_PRE_PMU:
+@@ -1087,8 +1066,6 @@ static int fs210x_playback_event(struct snd_soc_dapm_widget *w,
+ 		break;
+ 	}
+ 
+-	mutex_unlock(&fs210x->lock);
+-
+ 	return ret;
+ }
+ 
+@@ -1219,11 +1196,9 @@ static int fs210x_probe(struct snd_soc_component *cmpnt)
+ 	if (ret)
+ 		return ret;
+ 
+-	mutex_lock(&fs210x->lock);
+-	ret = fs210x_init_chip(fs210x);
+-	mutex_unlock(&fs210x->lock);
++	guard(mutex)(&fs210x->lock);
+ 
+-	return ret;
++	return fs210x_init_chip(fs210x);
+ }
+ 
+ static void fs210x_remove(struct snd_soc_component *cmpnt)
+@@ -1250,15 +1225,15 @@ static int fs210x_suspend(struct snd_soc_component *cmpnt)
+ 
+ 	regcache_cache_only(fs210x->regmap, true);
+ 
+-	mutex_lock(&fs210x->lock);
+-	fs210x->cur_scene = NULL;
+-	fs210x->is_inited = false;
+-	fs210x->is_playing = false;
+-	fs210x->is_suspended = true;
++	scoped_guard(mutex, &fs210x->lock) {
++		fs210x->cur_scene = NULL;
++		fs210x->is_inited = false;
++		fs210x->is_playing = false;
++		fs210x->is_suspended = true;
+ 
+-	gpiod_set_value_cansleep(fs210x->gpio_sdz, 1); /* Active */
+-	fsleep(30000); /* >= 30ms */
+-	mutex_unlock(&fs210x->lock);
++		gpiod_set_value_cansleep(fs210x->gpio_sdz, 1); /* Active */
++		fsleep(30000); /* >= 30ms */
 +	}
  
- 	if (rate)
- 		regmap_write(es9356->regmap,
-@@ -1092,9 +1096,8 @@ static int es9356_sdca_dev_system_suspend(struct device *dev)
- {
- 	struct es9356_sdw_priv *es9356 = dev_get_drvdata(dev);
+ 	cancel_delayed_work_sync(&fs210x->start_work);
+ 	cancel_delayed_work_sync(&fs210x->fault_check_work);
+@@ -1287,13 +1262,11 @@ static int fs210x_resume(struct snd_soc_component *cmpnt)
+ 		return ret;
+ 	}
  
--	mutex_lock(&es9356->disable_irq_lock);
--	es9356->disable_irq = true;
--	mutex_unlock(&es9356->disable_irq_lock);
-+	scoped_guard(mutex, &es9356->disable_irq_lock)
-+		es9356->disable_irq = true;
+-	mutex_lock(&fs210x->lock);
++	guard(mutex)(&fs210x->lock);
  
- 	return es9356_sdca_dev_suspend(dev);
+ 	fs210x->is_suspended = false;
+ 	ret = fs210x_init_chip(fs210x);
+ 
+-	mutex_unlock(&fs210x->lock);
+-
+ 	return ret;
  }
+ #else
 -- 
 2.43.0
 
