@@ -1,131 +1,110 @@
-Return-Path: <linux-arm-msm+bounces-115510-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-115511-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id 2I8VMZDuQ2r8lgoAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-115510-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 18:28:00 +0200
+	id hV/SFfzuQ2oLlwoAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-115511-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 18:29:48 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 02AF56E6705
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 18:28:00 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id A0DAB6E6743
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 18:29:47 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=oHFP4ENY;
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=0lpiglbc;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=oHFP4ENY;
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=0lpiglbc;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115510-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c15:e001:75::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115510-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=none) header.from=suse.de;
+	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b="mAlJ/J0r";
+	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=FeTlWSWO;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115511-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115511-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=reject) header.from=qualcomm.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 8F2FC301A771
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 16:22:46 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 24FFC30687B1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 16:25:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3CA624779A3;
-	Tue, 30 Jun 2026 16:22:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B7A083E3D96;
+	Tue, 30 Jun 2026 16:25:19 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 666F04779BC
-	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jun 2026 16:22:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 561C93B9933
+	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jun 2026 16:25:18 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782836564; cv=none; b=pVEnGxLyw5JSyV62K+/pEhmp0FV/DUg1KBzakrgVMQtTFoSn0Joc6clsLYwsDt16wzRNqsgesrR0lKe4o9SKK/o/KPdMCeAvzooSMmcBh9CY/icxFEaRNm05tgJytSXXzQ7Pg1/DgJj6fBBFDbOV1UQeOzV3v9cqhbXKGccER9U=
+	t=1782836719; cv=none; b=ZVTD60XaLW3IwO2OIWNRl8S5DcpUts1KRZ05UIPrBp/X1YGsZWwCR24o8fph62cXIZSNs5SoVYt5LqfzTVQCmNKIxfJokJM6ZOD9gyrrB2CsCA+8XT9wqc/N3ErCDkkCHOzFZvz9jUblmN6IabsKKQO00m+iUGL3MF4rowwcn9Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782836564; c=relaxed/simple;
-	bh=f9ATitWeLJc/9n9nbyCbroPua7yy+88T+dCF2C9W+/4=;
+	s=arc-20240116; t=1782836719; c=relaxed/simple;
+	bh=LJM1IPyNPNBoHNOz96SqVkVqWhGlMtd/1O1Nu8VZHCM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kauNosJO1dY64Bsl4Df3n6uYhvFGi9/bTCTSHO+h4urMKMUxQHdzW/T1a5UATZ0y50v5P4m3Oq14Av494Bty57gujfSbE5989c0XCyH9/kfIKzuHY6clurOGW60X+jTzlDbxFEayTsYaC2/IRnTdI7wR53w1ljGOYEN2qtDND4Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=oHFP4ENY; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=0lpiglbc; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=oHFP4ENY; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=0lpiglbc; arc=none smtp.client-ip=195.135.223.131
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id CC4D975E0A;
-	Tue, 30 Jun 2026 16:22:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1782836560; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=3P5pjkD1/OgRERI6ED7nD9LZ5+AzRSareSV95urOYd8=;
-	b=oHFP4ENYNv7g9kLl6zkw6zv73BimWy1yhufP/7bGIu05NSQrEeT55M4BMy0EHq1qx3AlhZ
-	MaHL2S6tHFhC1z69cbiQQOTozoWcUwQjQcy8/X1/qTXhXT0zUzQOLgN5pQ9OnwCHUX0HsK
-	B5O+uVKIhghBy7u11eTWdVIdWYBPxoA=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1782836560;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=3P5pjkD1/OgRERI6ED7nD9LZ5+AzRSareSV95urOYd8=;
-	b=0lpiglbc+8uxUKdL0rSvsTa4T5PxU5MQ6R/5AOHsIORSWnpYHi6oRKpABxz1ssGvdgrcil
-	RSDYwUAR1H5Lp4Ag==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1782836560; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=3P5pjkD1/OgRERI6ED7nD9LZ5+AzRSareSV95urOYd8=;
-	b=oHFP4ENYNv7g9kLl6zkw6zv73BimWy1yhufP/7bGIu05NSQrEeT55M4BMy0EHq1qx3AlhZ
-	MaHL2S6tHFhC1z69cbiQQOTozoWcUwQjQcy8/X1/qTXhXT0zUzQOLgN5pQ9OnwCHUX0HsK
-	B5O+uVKIhghBy7u11eTWdVIdWYBPxoA=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1782836560;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=3P5pjkD1/OgRERI6ED7nD9LZ5+AzRSareSV95urOYd8=;
-	b=0lpiglbc+8uxUKdL0rSvsTa4T5PxU5MQ6R/5AOHsIORSWnpYHi6oRKpABxz1ssGvdgrcil
-	RSDYwUAR1H5Lp4Ag==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 1EED9779A8;
-	Tue, 30 Jun 2026 16:22:36 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id W4P+A0ztQ2oJcQAAD6G6ig
-	(envelope-from <pfalcato@suse.de>); Tue, 30 Jun 2026 16:22:36 +0000
-Date: Tue, 30 Jun 2026 17:22:34 +0100
-From: Pedro Falcato <pfalcato@suse.de>
-To: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>, 
-	Russell King <linux@armlinux.org.uk>, Dinh Nguyen <dinguyen@kernel.org>, 
-	Simon Schuster <schuster.simon@siemens-energy.com>, 
-	"James E . J . Bottomley" <James.Bottomley@hansenpartnership.com>, Helge Deller <deller@gmx.de>, 
-	Jarkko Sakkinen <jarkko@kernel.org>, Thomas Gleixner <tglx@kernel.org>, 
-	Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>, 
-	Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org, Ian Abbott <abbotti@mev.co.uk>, 
-	H Hartley Sweeten <hsweeten@visionengravers.com>, Lucas Stach <l.stach@pengutronix.de>, 
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
-	Patrik Jakobsson <patrik.r.jakobsson@gmail.com>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
-	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
-	Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>, 
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>, Thierry Reding <thierry.reding@kernel.org>, 
-	Mikko Perttunen <mperttunen@nvidia.com>, Jonathan Hunter <jonathanh@nvidia.com>, 
-	Christian Koenig <christian.koenig@amd.com>, Huang Rui <ray.huang@amd.com>, Ankit Agrawal <ankita@nvidia.com>, 
-	Alex Williamson <alex@shazbot.org>, Alexander Viro <viro@zeniv.linux.org.uk>, 
-	Christian Brauner <brauner@kernel.org>, Dan Williams <djbw@kernel.org>, 
-	Muchun Song <muchun.song@linux.dev>, Oscar Salvador <osalvador@suse.de>, 
-	David Hildenbrand <david@kernel.org>, Suren Baghdasaryan <surenb@google.com>, 
-	"Liam R . Howlett" <liam@infradead.org>, Matthew Wilcox <willy@infradead.org>, 
-	Marek Szyprowski <m.szyprowski@samsung.com>, Peter Zijlstra <peterz@infradead.org>, 
-	Arnaldo Carvalho de Melo <acme@kernel.org>, Namhyung Kim <namhyung@kernel.org>, 
-	Masami Hiramatsu <mhiramat@kernel.org>, Oleg Nesterov <oleg@redhat.com>, 
-	Steven Rostedt <rostedt@goodmis.org>, SeongJae Park <sj@kernel.org>, Miaohe Lin <linmiaohe@huawei.com>, 
-	Hugh Dickins <hughd@google.com>, Mike Rapoport <rppt@kernel.org>, Kees Cook <kees@kernel.org>, 
-	Paolo Bonzini <pbonzini@redhat.com>, linux-kernel@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-parisc@vger.kernel.org, linux-sgx@vger.kernel.org, 
-	etnaviv@lists.freedesktop.org, dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
-	freedreno@lists.freedesktop.org, linux-tegra@vger.kernel.org, kvm@vger.kernel.org, 
-	linux-fsdevel@vger.kernel.org, nvdimm@lists.linux.dev, linux-mm@kvack.org, 
-	iommu@lists.linux.dev, linux-perf-users@vger.kernel.org, 
-	linux-trace-kernel@vger.kernel.org, kasan-dev@googlegroups.com, damon@lists.linux.dev, 
-	Rik van Riel <riel@surriel.com>, Harry Yoo <harry@kernel.org>, Jann Horn <jannh@google.com>
-Subject: Re: [PATCH 07/30] mm/rmap: elide unnecessary static inline's in
- interval_tree.c
-Message-ID: <akPs-NFWs5WE3GIq@pedro-suse.lan>
-References: <cover.1782735110.git.ljs@kernel.org>
- <ed5fd5358382217a92f0a6afddcfaa030c933055.1782735110.git.ljs@kernel.org>
+	 Content-Type:Content-Disposition:In-Reply-To; b=uT9eB4jmOsAk2Qv2iyK+e0ctxnAoc5ctFXL3kcbu24z2WqyJ1dva4GiA/bT2F2Gxn7HUcjl7Xy9nisF7RhAZ14fot/hp9F89A4MBpbJbnEWacWT3ZLwQT+KkZpvXe0MBo8QuOaABI+LLoeb1BWsSde+VVrrFABsuqulD8zE0Lo4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=mAlJ/J0r; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=FeTlWSWO; arc=none smtp.client-ip=205.220.180.131
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65UEDBhn2199035
+	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jun 2026 16:25:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=7JztesSv1vX86J3T/3JDiPpZ
+	RdmAAa2v8q5Kg0ahOoE=; b=mAlJ/J0reKFE93bZc17lfsgMcVn/nf0DbOQdsz3b
+	OIqUvd0rxnkq+DCrLEMHOYdWnVDTuDulHsAqfUnB/ppPstFoLGSUzDCgUBlDjpZI
+	9FQXHvj6pOkWcGvL/qsWT0qYQtWAVGw4Hv/qR0tVdL875FTpll+V5fU5ZxkqRzPz
+	ohNSmWdZS6VfcPyGtFfRja5q0a54G3dpk/dUtDYL0jzOxKT87Ctng5HLefWs7zBR
+	/TDm2MUXtX907ovOfOrVP+YHl4QBBV0Fk82JYL2F3q1DEGN/PVcMAUICTU/ldLTf
+	QnVIIIKaPXbQzfR6yK+zSkltegC81laLaByXbiH3vMixbg==
+Received: from mail-dl1-f71.google.com (mail-dl1-f71.google.com [74.125.82.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f4fc08kjh-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jun 2026 16:25:17 +0000 (GMT)
+Received: by mail-dl1-f71.google.com with SMTP id a92af1059eb24-138acbc0e69so21561227c88.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jun 2026 09:25:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1782836716; x=1783441516; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=7JztesSv1vX86J3T/3JDiPpZRdmAAa2v8q5Kg0ahOoE=;
+        b=FeTlWSWO8B6P8wAUEnZ8r4ePnzZe17caJDZrpR4k4M6J1qOXMkCge208iDN0va2wIt
+         Y5nmXkFIyr4mvM55EhQz66WD+JnECiGDLsYHlZQjZbtfisHJFzZz7i2kdAw7+nov9StY
+         6vKQ5Vkhf9dW4POsm8YvqpNvcZUvIiIRWciKFWxKnSW8ssT+4ImPnir5dVt3ko/Ngev/
+         u8+3J0E2d+44X0b64BAfJ40cmNqCLVUnAV5lPbqIJzF1b1ZVZ3XXZ2/q1/VVB4BRUkmJ
+         O6z3DbMf38PfV70waZBF1Tv0VyAZtuhY+KbGAXX7oAW7We5SRuXwxUDvw7+HQJ0jeFR/
+         8nSg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782836716; x=1783441516;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=7JztesSv1vX86J3T/3JDiPpZRdmAAa2v8q5Kg0ahOoE=;
+        b=C6IAZWMFiV3onDX5tn+03hO54vbxqpKZ6ex2SZWDh5cVVSz/bY2mRGeEOKtwbbMbOp
+         K5wa6RmfGLJ2d7LLcPdViT/gXAknDkgmYdqRtORbgWBXqN75y4NH8BXkfhqu4U/tw7I3
+         HTzJq1z+GxlIgeX5sal0vGS1pvGB60P51ENeknOeG0iszdBYnIGS04n0JD1IV6U6DN7y
+         iMPDXkZakkM+nYggxZ9jJAGtIogK0DoKE36hD/d2x+dHUdYEKxy4uYvjOtPEwazicWm1
+         X1R8ju8WJmzySoI2j+rMFY1yk9XNzWv/CqSTXVSRcO2LJ+1iAmxFSacxGWVIJ3xPxmAD
+         VNiA==
+X-Gm-Message-State: AOJu0Yzx1AVO5dsg/xU/nTcOIsqbyoWkn62Z1dYyILXVhZiIwvlixWxj
+	ZQItP2gpf6GQYtzVwivSIiURJ1M9vROqconPfAAI8p2ESsiWRU/GJEjcQFQhYuNA82Gnh8duQgM
+	rG3S7qalvCUXsH5rNDkJy7lTYjDD0Fooq01k2kdyXo602hWbCjrhffoVa219e1OtOduPr
+X-Gm-Gg: AfdE7cnq/injo/sMmFl6EClmdOlG+Cw56xHzX5Q1BSshJwOxf+adVFwMLIkg6V7fNwh
+	i3zR3qleY7LEYE4H8mEYfRGrVqwcLZZpAG6xPmjyQiK6c+yL5IQU6xpHmKnZxrp/NQea5hh8Q/b
+	I+hNpHdYvxNYKFXRbJL7o7ZF3NkSoVpBP5DhNZOOUj/6sk88xYcwY3MwboLe/xf1s6WneqZe1tG
+	8iAXQYKr12g3a3zgKLPgKG0F8BLmD9L3LtwmuuIECehSUjpCY/OumrqU/E9kbAF/BSwvzSmjKZn
+	rxTcPSy5P7USLcYtr+MaO/R9OOeGKY6L7ba+6LEwLxypYfmGZEaqShUSyYNBDT+8VC1x6Pje6t9
+	N5emgOA3WapRUTtdmRQpzMmhgPA1oPaPT3Jkzz5pyZkRRscSfxJk3jrr95CO3k8dm0Nw=
+X-Received: by 2002:a05:7022:23aa:b0:13a:363:ff6c with SMTP id a92af1059eb24-13b2a1acac8mr2861675c88.24.1782836716128;
+        Tue, 30 Jun 2026 09:25:16 -0700 (PDT)
+X-Received: by 2002:a05:7022:23aa:b0:13a:363:ff6c with SMTP id a92af1059eb24-13b2a1acac8mr2861617c88.24.1782836715418;
+        Tue, 30 Jun 2026 09:25:15 -0700 (PDT)
+Received: from hu-mattleun-lv.qualcomm.com (Global_NAT1.qualcomm.com. [129.46.96.20])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-13b2ab2dc1fsm8426555c88.6.2026.06.30.09.25.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 30 Jun 2026 09:25:14 -0700 (PDT)
+Date: Tue, 30 Jun 2026 09:25:12 -0700
+From: Matthew Leung <matthew.leung@oss.qualcomm.com>
+To: Vinod Koul <vkoul@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Subject: Re: [PATCH v3 0/4] phy: qcom: qmp-pcie: Add PCIe PHY support for Hawi
+Message-ID: <akPt6Na523IZXYX/@hu-mattleun-lv.qualcomm.com>
+References: <20260618-hawi-phy-pcie-v3-0-3fa42ca45ea4@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -134,67 +113,156 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ed5fd5358382217a92f0a6afddcfaa030c933055.1782735110.git.ljs@kernel.org>
-X-Spam-Flag: NO
-X-Spam-Level: 
-X-Spam-Score: -2.80
+In-Reply-To: <20260618-hawi-phy-pcie-v3-0-3fa42ca45ea4@oss.qualcomm.com>
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjMwMDE1NiBTYWx0ZWRfX7G52jkVc+I60
+ tn19JaVfPR8mOTqdZZTI8SOsfMRWYlQrfx5JTCXVr4RxibS+8NtAK1wMAlmyirz89seWtZGh/+f
+ SWcq/zxbPJZ0zqFkBpgiBoZyTel4Ed1PKf+p0WMEgFU7g7if6Gf/Es2yTGKX4empLjhFCa6fcyR
+ gWQrG/9ikBAAAyUZB0jNaDSzMoX9QzVN3tfaRLbd6MICeqXJ8W14MJc4ycO73TrVWTqAIUgISLF
+ wH/23YDOks45CKw31YTkhvqj0Zxy1ziozb+BLqQiPxIF9dyK7cdKXXTPsaMQiIjzsQ6uDrHf1GE
+ IFCwQFnmv+eFiuW/zw+KHfqGhvcesqclVovmZ3TqLgsI56lPO6Ma3f79r4uR3KdeDfvkFrddlbr
+ jfacrUidrTUWRAhVe+RabAtkVAv0FQY/z6JszKHJqHT7N9yxdMsyjI46fBL3TD72B3HimAAGDZ0
+ g1cQ+Q+8L5qgax+tp7w==
+X-Proofpoint-GUID: Tlne-L_zwTcP3pTBqT7Qqyk0zwA2kciO
+X-Proofpoint-ORIG-GUID: Tlne-L_zwTcP3pTBqT7Qqyk0zwA2kciO
+X-Authority-Analysis: v=2.4 cv=Ivkutr/g c=1 sm=1 tr=0 ts=6a43eded cx=c_pps
+ a=JYo30EpNSr/tUYqK9jHPoA==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=kj9zAlcOel0A:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=bC-a23v3AAAA:8 a=KKAkSRfTAAAA:8
+ a=JfrnYn6hAAAA:8 a=jj8kymYpkfAu7g8d2q8A:9 a=CjuIK1q_8ugA:10
+ a=Fk4IpSoW4aLDllm1B1p-:22 a=FO4_E8m0qiDe52t0p3_H:22 a=cvBusfyB2V15izCimMoJ:22
+ a=1CNFftbPRP8L7MoqJWF3:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjMwMDE1NiBTYWx0ZWRfX2z+Ua43xoi9I
+ ZqrgptoVOsg+9TXSrcj0LVyg8STpOrWw19tbw09zcn6rW6M6FBzfd4Kr4hishErJY2GzfMztSfe
+ oNnGBmj+M+PBlTS878c6i+ia5nuRaGw=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-30_04,2026-06-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 priorityscore=1501 impostorscore=0 clxscore=1015 malwarescore=0
+ bulkscore=0 adultscore=0 lowpriorityscore=0 suspectscore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606300156
 X-Rspamd-Action: no action
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[suse.de,none];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
-	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[linux-foundation.org,armlinux.org.uk,kernel.org,siemens-energy.com,hansenpartnership.com,gmx.de,redhat.com,alien8.de,linux.intel.com,mev.co.uk,visionengravers.com,pengutronix.de,gmail.com,ffwll.ch,suse.de,oss.qualcomm.com,ideasonboard.com,nvidia.com,amd.com,shazbot.org,zeniv.linux.org.uk,linux.dev,google.com,infradead.org,samsung.com,goodmis.org,huawei.com,vger.kernel.org,lists.infradead.org,lists.freedesktop.org,lists.linux.dev,kvack.org,googlegroups.com,surriel.com];
-	TAGGED_FROM(0.00)[bounces-115510-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER(0.00)[pfalcato@suse.de,linux-arm-msm@vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-115511-lists,linux-arm-msm=lfdr.de];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,qualcomm.com:email,linaro.org:email,vger.kernel.org:from_smtp,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,oss.qualcomm.com:dkim,oss.qualcomm.com:from_mime,msgid.link:url,hu-mattleun-lv.qualcomm.com:mid];
+	FORGED_RECIPIENTS(0.00)[m:vkoul@kernel.org,m:neil.armstrong@linaro.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-phy@lists.infradead.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:krzysztof.kozlowski@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	MIME_TRACE(0.00)[0:+];
-	FORGED_RECIPIENTS(0.00)[m:ljs@kernel.org,m:akpm@linux-foundation.org,m:linux@armlinux.org.uk,m:dinguyen@kernel.org,m:schuster.simon@siemens-energy.com,m:James.Bottomley@hansenpartnership.com,m:deller@gmx.de,m:jarkko@kernel.org,m:tglx@kernel.org,m:mingo@redhat.com,m:bp@alien8.de,m:dave.hansen@linux.intel.com,m:x86@kernel.org,m:abbotti@mev.co.uk,m:hsweeten@visionengravers.com,m:l.stach@pengutronix.de,m:airlied@gmail.com,m:simona@ffwll.ch,m:patrik.r.jakobsson@gmail.com,m:maarten.lankhorst@linux.intel.com,m:mripard@kernel.org,m:tzimmermann@suse.de,m:robin.clark@oss.qualcomm.com,m:lumag@kernel.org,m:tomi.valkeinen@ideasonboard.com,m:thierry.reding@kernel.org,m:mperttunen@nvidia.com,m:jonathanh@nvidia.com,m:christian.koenig@amd.com,m:ray.huang@amd.com,m:ankita@nvidia.com,m:alex@shazbot.org,m:viro@zeniv.linux.org.uk,m:brauner@kernel.org,m:djbw@kernel.org,m:muchun.song@linux.dev,m:osalvador@suse.de,m:david@kernel.org,m:surenb@google.com,m:liam@infradead.org,m:willy@infradead.org,m:m.szyprow
- ski@samsung.com,m:peterz@infradead.org,m:acme@kernel.org,m:namhyung@kernel.org,m:mhiramat@kernel.org,m:oleg@redhat.com,m:rostedt@goodmis.org,m:sj@kernel.org,m:linmiaohe@huawei.com,m:hughd@google.com,m:rppt@kernel.org,m:kees@kernel.org,m:pbonzini@redhat.com,m:linux-kernel@vger.kernel.org,m:linux-arm-kernel@lists.infradead.org,m:linux-parisc@vger.kernel.org,m:linux-sgx@vger.kernel.org,m:etnaviv@lists.freedesktop.org,m:dri-devel@lists.freedesktop.org,m:linux-arm-msm@vger.kernel.org,m:freedreno@lists.freedesktop.org,m:linux-tegra@vger.kernel.org,m:kvm@vger.kernel.org,m:linux-fsdevel@vger.kernel.org,m:nvdimm@lists.linux.dev,m:linux-mm@kvack.org,m:iommu@lists.linux.dev,m:linux-perf-users@vger.kernel.org,m:linux-trace-kernel@vger.kernel.org,m:kasan-dev@googlegroups.com,m:damon@lists.linux.dev,m:riel@surriel.com,m:harry@kernel.org,m:jannh@google.com,m:patrikrjakobsson@gmail.com,s:lists@lfdr.de];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	FORWARDED(0.00)[lists@lfdr.de];
+	FORGED_SENDER(0.00)[matthew.leung@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[suse.de:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
-	MISSING_XM_UA(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[6];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[pfalcato@suse.de,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_GT_50(0.00)[75];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	MISSING_XM_UA(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[matthew.leung@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	TO_DN_SOME(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
+	MID_RHS_MATCH_FROMTLD(0.00)[];
+	TO_DN_SOME(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[10];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email,suse.de:from_mime,pedro-suse.lan:mid,sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo,vger.kernel.org:from_smtp]
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 02AF56E6705
+X-Rspamd-Queue-Id: A0DAB6E6743
 
-On Mon, Jun 29, 2026 at 01:23:18PM +0100, Lorenzo Stoakes wrote:
-> It's not necessary to declare these functions static inline as they are
-> contained within a single compilation unit.
+Hello,
 
-FWIW I don't think it's technically strictly equivalent (I have a vague
-memory of inline lightly suggesting inlining a function to GCC, because of
-compat reasons). Anyway, doesn't really matter, practically any static
-function gets inlined with -O2 anyway.
+Gentle ping for this patch series.
 
+Best regards,
+Matthew Leung
+
+On Thu, Jun 18, 2026 at 09:54:35PM +0000, Matthew Leung wrote:
+> This series adds QMP PCIe PHY support for the Qualcomm Hawi SoC. The Hawi
+> platform features two PCIe PHY configurations: Gen3 x2 and Gen4 x1.
 > 
-> This makes the anonymous interval tree code consistent with the newly
-> updated file-backed interval tree code.
+> The Gen3 x2 PHY uses v10 register definitions, while the Gen4 x1 PHY uses
+> v10.60 register definitions.
 > 
-> No functional change intended.
+> The series adds:
+> - device tree bindings
+> - v10 register offset headers
+> - v10.60 register offset headers
+> - driver support with PHY initialization tables for both configurations
 > 
-> Signed-off-by: Lorenzo Stoakes <ljs@kernel.org>
-
-Reviewed-by: Pedro Falcato <pfalcato@suse.de> 
-
--- 
-Pedro
+> Overlap:
+> The series has overlap with "phy: qcom: Introduce USB support for Hawi"
+> by Ronak Raheja (see link [1]). Both patch series introduce a subset of
+> v10 registers (this series for PCIe and Ronak's for USB). I have
+> coordinated with Ronak regarding the overlap, and we can update the
+> series to resolve any overlap based on the order of merging.
+> 
+> Link: https://lore.kernel.org/all/20260508213234.4643-1-ronak.raheja@oss.qualcomm.com/ [1]
+> 
+> Signed-off-by: Matthew Leung <matthew.leung@oss.qualcomm.com>
+> ---
+> Changes in v3:
+> - Squashed v10 register offsets into a single change
+> - Squashed v10.60 register offsets into a single change
+> - Removed USB mentions from header comments; offsets are PCIe-specific
+> - Reused the tx offset for the v10.60 combined txrx module instead of
+>   introducing a separate txrx offset
+> - Link to v2: https://patch.msgid.link/20260604-hawi-phy-pcie-v2-0-be908d3560db@oss.qualcomm.com
+> 
+> Changes in v2:
+> - Rebased onto v7.1-rc6
+> - Patch 1: no change (Reviewed-by carried forward)
+> - Patch 9: rename QPHY_PCIE_V10_60_PCS_PCS_TX_RX_CONFIG to
+>   QPHY_PCIE_V10_60_PCS_TX_RX_CONFIG to be consistent with the
+>   naming convention used in previous pcs-pcie headers
+> - Patch 10: update usage of renamed macro
+> - Link to v1: https://patch.msgid.link/20260508-hawi-phy-pcie-v1-0-237b894353fc@oss.qualcomm.com
+> 
+> To: Vinod Koul <vkoul@kernel.org>
+> To: Neil Armstrong <neil.armstrong@linaro.org>
+> To: Rob Herring <robh@kernel.org>
+> To: Krzysztof Kozlowski <krzk+dt@kernel.org>
+> To: Conor Dooley <conor+dt@kernel.org>
+> Cc: linux-arm-msm@vger.kernel.org
+> Cc: linux-phy@lists.infradead.org
+> Cc: devicetree@vger.kernel.org
+> Cc: linux-kernel@vger.kernel.org
+> 
+> ---
+> Matthew Leung (4):
+>       dt-bindings: phy: qcom,sc8280xp-qmp-pcie-phy: Add Hawi compatibles
+>       phy: qcom-qmp: Add v10 register offsets
+>       phy: qcom-qmp: Add v10.60 register offsets
+>       phy: qcom: qmp-pcie: Add QMP PCIe PHY support for Hawi
+> 
+>  .../bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml   |   6 +
+>  drivers/phy/qualcomm/phy-qcom-qmp-pcie.c           | 375 +++++++++++++++++++++
+>  drivers/phy/qualcomm/phy-qcom-qmp-pcs-pcie-v10.h   |  18 +
+>  .../phy/qualcomm/phy-qcom-qmp-pcs-pcie-v10_60.h    |  26 ++
+>  drivers/phy/qualcomm/phy-qcom-qmp-pcs-v10.h        |  22 ++
+>  drivers/phy/qualcomm/phy-qcom-qmp-pcs-v10_60.h     |  23 ++
+>  .../phy/qualcomm/phy-qcom-qmp-qserdes-com-v10.h    |  49 +++
+>  .../phy/qualcomm/phy-qcom-qmp-qserdes-com-v10_60.h |  55 +++
+>  .../phy/qualcomm/phy-qcom-qmp-qserdes-txrx-v10.h   |  47 +++
+>  .../qualcomm/phy-qcom-qmp-qserdes-txrx-v10_60.h    | 109 ++++++
+>  drivers/phy/qualcomm/phy-qcom-qmp.h                |  10 +
+>  11 files changed, 740 insertions(+)
+> ---
+> base-commit: 8cd9520d35a6c38db6567e97dd93b1f11f185dc6
+> change-id: 20260506-hawi-phy-pcie-283933b4113e
+> 
+> Best regards,
+> --  
+> Matthew Leung <matthew.leung@oss.qualcomm.com>
+> 
 
