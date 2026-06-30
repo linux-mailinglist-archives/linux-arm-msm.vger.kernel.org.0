@@ -1,52 +1,52 @@
-Return-Path: <linux-arm-msm+bounces-115545-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-115546-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id kOv7BMEpRGpzpwoAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-115545-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 22:40:33 +0200
+	id 7IGuKMopRGp4pwoAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-115546-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 22:40:42 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5F8746E7E49
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 22:40:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2EADE6E7E56
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 22:40:42 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=P3JmURxg;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115545-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115545-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=WbXC1NWD;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115546-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115546-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 013C130776D2
+	by sea.lore.kernel.org (Postfix) with ESMTP id DA5D1313AFB8
 	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 20:35:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A593A47AF6D;
-	Tue, 30 Jun 2026 20:35:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 03AAE47B41D;
+	Tue, 30 Jun 2026 20:35:31 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A30D243367;
-	Tue, 30 Jun 2026 20:35:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F19647AF65;
+	Tue, 30 Jun 2026 20:35:29 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782851730; cv=none; b=US+K0GHGEAvr3BouRzXsrtxDEmsuK8kPrDaFIK92BcRGu0vjshHLEsh8ybLt6PgGGBbr//ttmN2B+spRKzS3qBjv1JKeM7rNMyNK42/DC9RnmHOGwBeXVrovsZ5NAHLA6XufZRpqdIHgEgDWcbDzodzJBc4dot0eG+j68TMLr0s=
+	t=1782851730; cv=none; b=nnNIge03Hciq7Nz4KFYZ6fYY0lRxLf12LFDDSNLxFfVmRTt1c++CJcfkei0btZNyxjMHlrZEW3LofY8BFK4OeO3nHo0PTrHvhHWD2WaWYjO5FJMPZoB90ktHDQ0EUFg22z/mI+9t+/pSimyz0Kefu+OvFDrv+C5eNW0YYbMZeSs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1782851730; c=relaxed/simple;
-	bh=FCcH0cjWHBiKMyK6MUXCng4THBGd8OOACDIv66ppbQA=;
+	bh=tkg8nVEqqXYX43gEKOS3TMQYETGf6DEjhH+0GmLLeeQ=;
 	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
-	 Message-Id:Subject; b=QrLj9z1lh3xtornJjSroyKTPGfvEVPSZsAvmP++OtH/q7srbhk4a8K7znyEKdyG0ch4l+xHMhCGBvwiM44i4F4sD1xCFMKS3vlP2fOQurH8WGwcxnDqELSw1C3PTqsWYIDGaZdTSYc7v5uhM4e/2ykg7Bz7lHkxRaEls7s+GGb0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=P3JmURxg; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDB001F000E9;
-	Tue, 30 Jun 2026 20:35:27 +0000 (UTC)
+	 Message-Id:Subject; b=NNYqP0NPlhEtnERyKhcUb4q9HsAcz/qDQlqJLqQgXom1oBUs5VFVnGI9+mbUyTN0rTcc4vI4sEYBXU+Do7tspvQOfLWeWEnT98gUZQnXKlPZgmNDBoWc+cRjm6GTpNiCBFFKuqO/jYE+7JqHhgMQ5ojIQtb7kMfLX86kkS6iEQg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WbXC1NWD; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D787A1F00A3D;
+	Tue, 30 Jun 2026 20:35:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782851728;
-	bh=xRBkIGoWPjYCazJY1It+LXcF4wxJ+Bg0xHJEQ0RN/bI=;
+	s=k20260515; t=1782851729;
+	bh=qftNGGZWrMmchAzPZPKZHnzgN1AhLH5xq12HS7B9G54=;
 	h=Date:From:Cc:To:In-Reply-To:References:Subject;
-	b=P3JmURxgq4Woubp407/24y6zygp4vn9HNu8Jh9WszFfFqkojpBjlYD8GU2KQZZt8K
-	 ObeMgj08YZvu+eXyDnq4bA6f63MLzBqu2HOFORvkNRGhWql6GMT7Ub0Zr97ZqNZK8u
-	 ja7ACXLuHpdKud4qDjmrH93IrSGT73nBb3eEGSOOghAMo/jocNxr8MGjN+eTMBYnH1
-	 xNV3WbrOaXgMMu/PJmrjyuWqwudD/cEFlMainscDmD0iAudxay4r3C58Wcb78iQYHx
-	 shUHFXzi2m2nhzIRv6kpwtUdmeS2Y3FfG3+Q0IteR7loIeweu3HCl2+lbT3YMVOkYf
-	 vefLTp8VYBmDQ==
-Date: Tue, 30 Jun 2026 15:35:27 -0500
+	b=WbXC1NWDr4Z7ylt3zPbN/9n446x/FYV3nkwEeboT1OX7YrbuwKasMTmEIrO3SsKm5
+	 nkj+ylNvCq5QA3JQ49A2kY367+4uH25COxp3yVZzNZUYXMp1gpR3Q5TaJutYUKDbQd
+	 wqIgbY9GpM8OZbB1u4z+Y48o8RA1P169YmYRCWDP/Czb+WlgXw86stOnMU6gsOZaZU
+	 2m16QZGT4mPKK+vHebttdbn+rBTmYt0w5UkGpp+ebduw+aXwzC7Jd4lYXemLeRiVut
+	 JiHO44kcjdO5Z3/icdJn26/nP2i8kUzc82BHOCxD1/Sbz5/0mq0cCFLjM7BCIZKrsx
+	 cWxxLAx9YfRAQ==
+Date: Tue, 30 Jun 2026 15:35:28 -0500
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
@@ -56,25 +56,24 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 From: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>, 
- =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, 
- Bjorn Andersson <andersson@kernel.org>, Vinod Koul <vkoul@kernel.org>, 
+Cc: =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
+ Neil Armstrong <neil.armstrong@linaro.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, linux-phy@lists.infradead.org, 
+ linux-kernel@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Bartosz Golaszewski <brgl@kernel.org>, Vinod Koul <vkoul@kernel.org>, 
+ linux-arm-msm@vger.kernel.org, Manivannan Sadhasivam <mani@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Lorenzo Pieralisi <lpieralisi@kernel.org>, 
  Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, 
- Bjorn Helgaas <bhelgaas@google.com>, devicetree@vger.kernel.org, 
- Manivannan Sadhasivam <mani@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, linux-kernel@vger.kernel.org, 
- linux-phy@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
- Conor Dooley <conor+dt@kernel.org>, 
- Neil Armstrong <neil.armstrong@linaro.org>, linux-pci@vger.kernel.org, 
- Bartosz Golaszewski <brgl@kernel.org>
+ linux-pci@vger.kernel.org, devicetree@vger.kernel.org, 
+ Bjorn Helgaas <bhelgaas@google.com>
 To: Sushrut Shree Trivedi <sushrut.trivedi@oss.qualcomm.com>
-In-Reply-To: <20260701-shikra-upstream-v1-2-e1a721eb8943@oss.qualcomm.com>
+In-Reply-To: <20260701-shikra-upstream-v1-3-e1a721eb8943@oss.qualcomm.com>
 References: <20260701-shikra-upstream-v1-0-e1a721eb8943@oss.qualcomm.com>
- <20260701-shikra-upstream-v1-2-e1a721eb8943@oss.qualcomm.com>
-Message-Id: <178285172593.288348.3890129606237873483.robh@kernel.org>
-Subject: Re: [PATCH 2/9] dt-bindings: PCI: qcom: Document the Shikra PCIe
- Controller
+ <20260701-shikra-upstream-v1-3-e1a721eb8943@oss.qualcomm.com>
+Message-Id: <178285172702.288391.13610342196466613275.robh@kernel.org>
+Subject: Re: [PATCH 3/9] dt-bindings: PCI: Add bindings for endpoint gpios
 X-Rspamd-Action: no action
 X-Spamd-Result: default: False [-2.66 / 15.00];
 	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
@@ -88,12 +87,12 @@ X-Spamd-Result: default: False [-2.66 / 15.00];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-115545-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-115546-lists,linux-arm-msm=lfdr.de];
 	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
 	RCPT_COUNT_TWELVE(0.00)[18];
 	FORWARDED(0.00)[lists@lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:lpieralisi@kernel.org,m:kwilczynski@kernel.org,m:konradybcio@kernel.org,m:andersson@kernel.org,m:vkoul@kernel.org,m:krishna.chundru@oss.qualcomm.com,m:bhelgaas@google.com,m:devicetree@vger.kernel.org,m:mani@kernel.org,m:krzk+dt@kernel.org,m:linux-kernel@vger.kernel.org,m:linux-phy@lists.infradead.org,m:linux-arm-msm@vger.kernel.org,m:conor+dt@kernel.org,m:neil.armstrong@linaro.org,m:linux-pci@vger.kernel.org,m:brgl@kernel.org,m:sushrut.trivedi@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:kwilczynski@kernel.org,m:neil.armstrong@linaro.org,m:konradybcio@kernel.org,m:linux-phy@lists.infradead.org,m:linux-kernel@vger.kernel.org,m:conor+dt@kernel.org,m:andersson@kernel.org,m:brgl@kernel.org,m:vkoul@kernel.org,m:linux-arm-msm@vger.kernel.org,m:mani@kernel.org,m:krzk+dt@kernel.org,m:lpieralisi@kernel.org,m:krishna.chundru@oss.qualcomm.com,m:linux-pci@vger.kernel.org,m:devicetree@vger.kernel.org,m:bhelgaas@google.com,m:sushrut.trivedi@oss.qualcomm.com,m:conor@kernel.org,m:krzk@kernel.org,s:lists@lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	FORGED_SENDER(0.00)[robh@kernel.org,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
@@ -109,76 +108,31 @@ X-Spamd-Result: default: False [-2.66 / 15.00];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MISSING_XM_UA(0.00)[];
 	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,vger.kernel.org:from_smtp,qualcomm.com:email]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,vger.kernel.org:from_smtp]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 5F8746E7E49
+X-Rspamd-Queue-Id: 2EADE6E7E56
 
 
-On Wed, 01 Jul 2026 00:32:44 +0530, Sushrut Shree Trivedi wrote:
-> Add a dedicated schema for the PCIe controller found on the Shikra
-> platform.
+On Wed, 01 Jul 2026 00:32:45 +0530, Sushrut Shree Trivedi wrote:
+> Add devicetree bindings for TC9563 GPIO's which are
+> used to control endpoint power and reset.
 > 
 > Signed-off-by: Sushrut Shree Trivedi <sushrut.trivedi@oss.qualcomm.com>
 > ---
->  .../devicetree/bindings/pci/qcom,shikra-pcie.yaml  | 211 +++++++++++++++++++++
->  1 file changed, 211 insertions(+)
+>  .../devicetree/bindings/pci/toshiba,tc9563.yaml    | 22 +++++++++++++++++++++-
+>  1 file changed, 21 insertions(+), 1 deletion(-)
 > 
 
 My bot found errors running 'make dt_binding_check' on your patch:
 
 yamllint warnings/errors:
+./Documentation/devicetree/bindings/pci/toshiba,tc9563.yaml:32:9: [warning] wrong indentation: expected 4 but found 8 (indentation)
 
 dtschema/dtc warnings/errors:
-Lexical error: Documentation/devicetree/bindings/pci/qcom,shikra-pcie.example.dts:57.29-36 Unexpected 'GIC_SPI'
-Lexical error: Documentation/devicetree/bindings/pci/qcom,shikra-pcie.example.dts:57.41-60 Unexpected 'IRQ_TYPE_LEVEL_HIGH'
-Lexical error: Documentation/devicetree/bindings/pci/qcom,shikra-pcie.example.dts:58.29-36 Unexpected 'GIC_SPI'
-Lexical error: Documentation/devicetree/bindings/pci/qcom,shikra-pcie.example.dts:58.41-60 Unexpected 'IRQ_TYPE_LEVEL_HIGH'
-Lexical error: Documentation/devicetree/bindings/pci/qcom,shikra-pcie.example.dts:59.29-36 Unexpected 'GIC_SPI'
-Lexical error: Documentation/devicetree/bindings/pci/qcom,shikra-pcie.example.dts:59.41-60 Unexpected 'IRQ_TYPE_LEVEL_HIGH'
-Lexical error: Documentation/devicetree/bindings/pci/qcom,shikra-pcie.example.dts:60.29-36 Unexpected 'GIC_SPI'
-Lexical error: Documentation/devicetree/bindings/pci/qcom,shikra-pcie.example.dts:60.41-60 Unexpected 'IRQ_TYPE_LEVEL_HIGH'
-Lexical error: Documentation/devicetree/bindings/pci/qcom,shikra-pcie.example.dts:61.29-36 Unexpected 'GIC_SPI'
-Lexical error: Documentation/devicetree/bindings/pci/qcom,shikra-pcie.example.dts:61.41-60 Unexpected 'IRQ_TYPE_LEVEL_HIGH'
-Lexical error: Documentation/devicetree/bindings/pci/qcom,shikra-pcie.example.dts:62.29-36 Unexpected 'GIC_SPI'
-Lexical error: Documentation/devicetree/bindings/pci/qcom,shikra-pcie.example.dts:62.41-60 Unexpected 'IRQ_TYPE_LEVEL_HIGH'
-Lexical error: Documentation/devicetree/bindings/pci/qcom,shikra-pcie.example.dts:63.29-36 Unexpected 'GIC_SPI'
-Lexical error: Documentation/devicetree/bindings/pci/qcom,shikra-pcie.example.dts:63.41-60 Unexpected 'IRQ_TYPE_LEVEL_HIGH'
-Lexical error: Documentation/devicetree/bindings/pci/qcom,shikra-pcie.example.dts:64.29-36 Unexpected 'GIC_SPI'
-Lexical error: Documentation/devicetree/bindings/pci/qcom,shikra-pcie.example.dts:64.41-60 Unexpected 'IRQ_TYPE_LEVEL_HIGH'
-Lexical error: Documentation/devicetree/bindings/pci/qcom,shikra-pcie.example.dts:65.29-36 Unexpected 'GIC_SPI'
-Lexical error: Documentation/devicetree/bindings/pci/qcom,shikra-pcie.example.dts:65.41-60 Unexpected 'IRQ_TYPE_LEVEL_HIGH'
-Lexical error: Documentation/devicetree/bindings/pci/qcom,shikra-pcie.example.dts:76.56-75 Unexpected 'IRQ_TYPE_LEVEL_HIGH'
-Lexical error: Documentation/devicetree/bindings/pci/qcom,shikra-pcie.example.dts:77.56-75 Unexpected 'IRQ_TYPE_LEVEL_HIGH'
-Lexical error: Documentation/devicetree/bindings/pci/qcom,shikra-pcie.example.dts:78.56-75 Unexpected 'IRQ_TYPE_LEVEL_HIGH'
-Lexical error: Documentation/devicetree/bindings/pci/qcom,shikra-pcie.example.dts:79.56-75 Unexpected 'IRQ_TYPE_LEVEL_HIGH'
-Lexical error: Documentation/devicetree/bindings/pci/qcom,shikra-pcie.example.dts:83.30-46 Unexpected 'GCC_PCIE_AUX_CLK'
-Lexical error: Documentation/devicetree/bindings/pci/qcom,shikra-pcie.example.dts:84.30-50 Unexpected 'GCC_PCIE_CFG_AHB_CLK'
-Lexical error: Documentation/devicetree/bindings/pci/qcom,shikra-pcie.example.dts:85.30-51 Unexpected 'GCC_PCIE_MSTR_AXI_CLK'
-Lexical error: Documentation/devicetree/bindings/pci/qcom,shikra-pcie.example.dts:86.30-50 Unexpected 'GCC_PCIE_SLV_AXI_CLK'
-Lexical error: Documentation/devicetree/bindings/pci/qcom,shikra-pcie.example.dts:87.30-54 Unexpected 'GCC_PCIE_SLV_Q2A_AXI_CLK'
-Lexical error: Documentation/devicetree/bindings/pci/qcom,shikra-pcie.example.dts:88.30-58 Unexpected 'GCC_DDRSS_MEMNOC_PCIE_SF_CLK'
-Lexical error: Documentation/devicetree/bindings/pci/qcom,shikra-pcie.example.dts:89.30-59 Unexpected 'GCC_PCIE_TILE_AXI_SYS_NOC_CLK'
-Lexical error: Documentation/devicetree/bindings/pci/qcom,shikra-pcie.example.dts:90.30-55 Unexpected 'GCC_QMIP_PCIE_CFG_AHB_CLK'
-Lexical error: Documentation/devicetree/bindings/pci/qcom,shikra-pcie.example.dts:100.39-55 Unexpected 'GCC_PCIE_AUX_CLK'
-Lexical error: Documentation/devicetree/bindings/pci/qcom,shikra-pcie.example.dts:103.44-58 Unexpected 'MASTER_PCIE2_0'
-Lexical error: Documentation/devicetree/bindings/pci/qcom,shikra-pcie.example.dts:103.59-73 Unexpected 'RPM_ALWAYS_TAG'
-Lexical error: Documentation/devicetree/bindings/pci/qcom,shikra-pcie.example.dts:104.40-53 Unexpected 'SLAVE_EBI_CH0'
-Lexical error: Documentation/devicetree/bindings/pci/qcom,shikra-pcie.example.dts:104.54-68 Unexpected 'RPM_ALWAYS_TAG'
-Lexical error: Documentation/devicetree/bindings/pci/qcom,shikra-pcie.example.dts:105.41-56 Unexpected 'MASTER_AMPSS_M0'
-Lexical error: Documentation/devicetree/bindings/pci/qcom,shikra-pcie.example.dts:105.57-71 Unexpected 'RPM_ACTIVE_TAG'
-Lexical error: Documentation/devicetree/bindings/pci/qcom,shikra-pcie.example.dts:106.43-56 Unexpected 'SLAVE_PCIE2_0'
-Lexical error: Documentation/devicetree/bindings/pci/qcom,shikra-pcie.example.dts:106.57-71 Unexpected 'RPM_ACTIVE_TAG'
-Lexical error: Documentation/devicetree/bindings/pci/qcom,shikra-pcie.example.dts:114.30-42 Unexpected 'GCC_PCIE_BCR'
-Lexical error: Documentation/devicetree/bindings/pci/qcom,shikra-pcie.example.dts:117.37-50 Unexpected 'GCC_PCIE_GDSC'
-FATAL ERROR: Syntax error parsing input tree
-make[2]: *** [scripts/Makefile.dtbs:140: Documentation/devicetree/bindings/pci/qcom,shikra-pcie.example.dtb] Error 1
-make[2]: *** Waiting for unfinished jobs....
-make[1]: *** [/builds/robherring/dt-review-ci/linux/Makefile:1669: dt_binding_check] Error 2
-make: *** [Makefile:248: __sub-make] Error 2
 
 doc reference errors (make refcheckdocs):
 
-See https://patchwork.kernel.org/project/devicetree/patch/20260701-shikra-upstream-v1-2-e1a721eb8943@oss.qualcomm.com
+See https://patchwork.kernel.org/project/devicetree/patch/20260701-shikra-upstream-v1-3-e1a721eb8943@oss.qualcomm.com
 
 The base for the series is generally the latest rc1. A different dependency
 should be noted in *this* patch.
