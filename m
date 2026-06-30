@@ -1,75 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-115446-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-115447-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id bdr+NcXGQ2oehgoAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-115446-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 15:38:13 +0200
+	id ZbvSDuPHQ2qwhgoAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-115447-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 15:42:59 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 67EB26E4EDA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 15:38:13 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 746AE6E4F79
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 15:42:58 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=L9knhPPQ;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115446-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.232.135.74 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115446-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=CWrBDadN;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115447-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115447-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id D8D893024E60
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 13:38:12 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 67B9E300D303
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 13:38:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B05B7325483;
-	Tue, 30 Jun 2026 13:38:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F2011336883;
+	Tue, 30 Jun 2026 13:38:40 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B37482FDC28
-	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jun 2026 13:38:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02DAD33263A
+	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jun 2026 13:38:40 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782826690; cv=none; b=Gph/f7sjTriGJeTFJV238yEr1DJ1IW53Tv9/wrQ5O2J45A0OkS/vMtjS3boy4NllIpKeoLG/Ng06/8wDYHVKy8Fx/8Do4dB4LqhLqpFTcWwJMqXqwJ23ARfJfxdpaDfMSVYotvg4hYvuJs3as0C9THCDlIysI45CiwFOkrmG468=
+	t=1782826720; cv=none; b=dctBTpz0H63smiPD2BobhCvagsfsg4IsN12JMsiXEHDtlmWDM1aaNbjWNaBFMO6Gpe7ireTwNWwIxbs+syit4bMVAm+iOyUBRszvK+x4hO5fWgNyDHk+n1HuktIS3+mCKeC6bpVnEP/l/n1AkNj40CFDA6gmbsE/J/wzm4PVzEU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782826690; c=relaxed/simple;
-	bh=lUFn8v5YRDsmKM4TDlx5GnOTpc3PavcaCR8q92eez74=;
+	s=arc-20240116; t=1782826720; c=relaxed/simple;
+	bh=1ENrcvJDdsIm66iYGyaOW5Pbjt+5t86pom1UGSXvLPc=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=h7mO2c8tuouB0DdeX7rhcXm5Qo61BnPbyHJlIjneHK++m+s4WtfGdHDlnZNH0nJiUeIKyLdfDnRpiDXc2cD5GS4xk29oB+kffHj16oDYkj2WORyt/xsc4hxKeB6ovDtM7jhtuDRcPZPpfIcLimpbnu4NbQplwKSYkzqJOaFtonA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L9knhPPQ; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E4D21F00A3E
-	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jun 2026 13:38:09 +0000 (UTC)
+	 To:Cc:Content-Type; b=LswtahL4xoXgWAoqS73T32Gk9qn8v7I3MMsGae1oGTrwrxzoYo5BfzvpG+t9ob9ejmjG/FkQrViNolNSZDISGkiuencCcnnOU5gceaWfieiYTCL0p91+40THUm+QNxfIYBgIaA4YMiFVJ+7oLhVGPsruvOz0/SBBAdVTFNGAjws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CWrBDadN; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD7D21F000E9
+	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jun 2026 13:38:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782826689;
-	bh=lUFn8v5YRDsmKM4TDlx5GnOTpc3PavcaCR8q92eez74=;
+	s=k20260515; t=1782826719;
+	bh=1ENrcvJDdsIm66iYGyaOW5Pbjt+5t86pom1UGSXvLPc=;
 	h=References:In-Reply-To:From:Date:Subject:To:Cc;
-	b=L9knhPPQSDqyoXbkfBNrE65wyPXWe/8DavDXKbDJ3qGPSdVvpYUk/xqDBnbxNIOwG
-	 YvhS5XcuaEJ8lvuD5DIHmuB4+WuL+kVJC+kXEF2fWPbwRYMDDQN1ntWu5f+194Z/5X
-	 QTCAcu1yzkW0nLX6f6SYXbLUEblPG6YIixStzpKSx9OUSkWOmIfgFhQLuM4UYWjF9+
-	 gwYpPIbKiXSnWweDm2dAsDlkV1M2lGCDbaWK4akmwNjCvnkIQZU03IlTdvxBdiq7Pg
-	 erTHWPmuaa2QBdUbMh9mFnm8LHE/gaX150krXNXP3NW+Tgp8WY0YbVGGU8ooKXWfzB
-	 vMluGZWlvHlLQ==
-Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-5aebf9a50b8so462729e87.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jun 2026 06:38:09 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AHgh+RqWgqt0GlaK9orvoMFGHaw9hIL2UoNwjtqpmFZL2rCKPdoKVTbA17sbKPlCShHfoBPEdZKsV2DCjfDYiRQ6@vger.kernel.org
-X-Gm-Message-State: AOJu0YxW0Se9ZHYT7wkKETiYzE0KsMxsP1g3dIiJ5iL5AINCaozMi25U
-	95cme+27l4c/LcPmRsOyVSlF0Srbv79SjNfgdgenqqwMfakoLVgCIA2WCt8nXtvpXi+BFyfsu1v
-	bczqBzTptYcrC3kurTNPnAxOWUvwbr08=
-X-Received: by 2002:a05:6512:800b:10b0:5ae:c003:4b8b with SMTP id
- 2adb3069b0e04-5aec10cda2emr186923e87.59.1782826688214; Tue, 30 Jun 2026
- 06:38:08 -0700 (PDT)
+	b=CWrBDadNRqlfYH3ac7TgRxw71NLdUhmWcgAzGvdIx/GmOam6OEOihk3KYlE0fCQDY
+	 NkpC8MrWoyLpemDGFJiZ2kPNiEL0NY+DbURbHxW5NtWnYHURvBKBLlWVWHRgh/3M2k
+	 XOIx1wm4ngJd31TmrM1wI8WObxyvETAuQzb6ER7toEJoJQ43PrO0VNMe8b1WyxQHiL
+	 Cr6xgvyNpq7MT+quo3iK/iPXaTP4tI6Ftx+nqC8uBpISpVL2V70tb/3eGHxUefh24c
+	 /8C5WhYJ6FKMt5UVh98TpPVu8stSXITqOmOrvTsndmtgjZXuw1bhDOI1+BT/nyxpee
+	 BVsz8qNaw36xg==
+Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-5aec139da7eso216315e87.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jun 2026 06:38:39 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AHgh+RpLKHRzFHMEM+HNnGOAAeJZcF4UXVjV8rsp+4CoNEwn6bb1ZG2e6PYHS5JGtL3q5u65SNLkD56uMMHHH9BL@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxgxiqm1fJ8fCB3HtohNo9r79ydl2zFq2JezeG2Ws8bFp02wd0y
+	Uw+/sqbKOkzl7SleOVwiytDz1qlPX++11YvaVCsAVOR0h637+sTimwJ6dBxPOKbdt8kqlL7tPcp
+	kBj6V4+YCm+B2YXSoaCQyLEPgQTVIWfo=
+X-Received: by 2002:a05:6512:2396:b0:5ae:a9ed:161d with SMTP id
+ 2adb3069b0e04-5aebf983f62mr652982e87.27.1782826718752; Tue, 30 Jun 2026
+ 06:38:38 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260623122732.6439-1-johannes.goede@oss.qualcomm.com>
-In-Reply-To: <20260623122732.6439-1-johannes.goede@oss.qualcomm.com>
+References: <20260623122732.6439-1-johannes.goede@oss.qualcomm.com> <20260623122732.6439-2-johannes.goede@oss.qualcomm.com>
+In-Reply-To: <20260623122732.6439-2-johannes.goede@oss.qualcomm.com>
 From: Linus Walleij <linusw@kernel.org>
-Date: Tue, 30 Jun 2026 14:37:55 +0100
-X-Gmail-Original-Message-ID: <CAD++jL=K-LeY56Zm14Fd7YFhuDBmu_9c1hHLPWx03kJX7x99ZA@mail.gmail.com>
-X-Gm-Features: AVVi8CfNRGKTkTnPcOf2haEeMR-5L9o1eLlK2Wu1gD8o5DDoLSVDoKw3EmNYPMo
-Message-ID: <CAD++jL=K-LeY56Zm14Fd7YFhuDBmu_9c1hHLPWx03kJX7x99ZA@mail.gmail.com>
-Subject: Re: [PATCH 1/2] pinctrl: qcom: Drop unnecessary bitmap_fill() call
-To: Hans de Goede <johannes.goede@oss.qualcomm.com>, Bartosz Golaszewski <brgl@kernel.org>
+Date: Tue, 30 Jun 2026 14:38:26 +0100
+X-Gmail-Original-Message-ID: <CAD++jLm3FHxpG=8b3Fa5jfM0QYkXDSDM8GNEOkujnca=N221vQ@mail.gmail.com>
+X-Gm-Features: AVVi8CckcmyOy8Q8WKy1X1cYcgkGZjxP6kOyh5TJJvbuA6c6gkWaVZm2f_bxRhA
+Message-ID: <CAD++jLm3FHxpG=8b3Fa5jfM0QYkXDSDM8GNEOkujnca=N221vQ@mail.gmail.com>
+Subject: Re: [PATCH 2/2] pinctrl: qcom: Drop unused irq_data argument from msm_gpio_update_dual_edge_pos()
+To: Hans de Goede <johannes.goede@oss.qualcomm.com>
 Cc: Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org, 
 	linux-gpio@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
@@ -79,43 +79,42 @@ X-Spamd-Result: default: False [-5.16 / 15.00];
 	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-115446-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:johannes.goede@oss.qualcomm.com,m:brgl@kernel.org,m:andersson@kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-gpio@vger.kernel.org,s:lists@lfdr.de];
+	TAGGED_FROM(0.00)[bounces-115447-lists,linux-arm-msm=lfdr.de];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
 	FORGED_SENDER(0.00)[linusw@kernel.org,linux-arm-msm@vger.kernel.org];
 	MIME_TRACE(0.00)[0:+];
+	FORGED_RECIPIENTS(0.00)[m:johannes.goede@oss.qualcomm.com,m:andersson@kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-gpio@vger.kernel.org,s:lists@lfdr.de];
 	FORWARDED(0.00)[lists@lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	DKIM_TRACE(0.00)[kernel.org:+];
 	MISSING_XM_UA(0.00)[];
-	RCPT_COUNT_FIVE(0.00)[5];
+	TO_DN_SOME(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[linusw@kernel.org,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCPT_COUNT_THREE(0.00)[4];
 	ALIAS_RESOLVED(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,vger.kernel.org:from_smtp,mail.gmail.com:mid,qualcomm.com:email]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,qualcomm.com:email,mail.gmail.com:mid]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 67EB26E4EDA
+X-Rspamd-Queue-Id: 746AE6E4F79
 
 On Tue, Jun 23, 2026 at 1:27=E2=80=AFPM Hans de Goede
 <johannes.goede@oss.qualcomm.com> wrote:
 
-> Drop an unnecessary bitmap_fill() call from msm_gpio_irq_init_valid_mask(=
-),
-> this is unnecessary because gpiochip_allocate_mask() already does this.
+> The "struct irq_data *d" argument to msm_gpio_update_dual_edge_pos() is
+> unused, drop it.
 >
 > Signed-off-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
 
