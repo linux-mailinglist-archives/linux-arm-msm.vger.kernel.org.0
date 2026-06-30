@@ -1,81 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-115496-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-115497-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id aHm3AKrkQ2qVlAoAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-115496-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 17:45:46 +0200
+	id Cf/qMDbmQ2oGlQoAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-115497-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 17:52:22 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id A4AA96E6131
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 17:45:45 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 69C456E620A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 17:52:22 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=gourry.net header.s=google header.b=OdjAdTKP;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115496-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115496-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=gourry.net header.s=google header.b=vDUgBP8D;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115497-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115497-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=none;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id CFA0C30611CB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 15:42:30 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id B9CD630D9BD2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 15:46:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5D75445106F;
-	Tue, 30 Jun 2026 15:42:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A1410450917;
+	Tue, 30 Jun 2026 15:46:55 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com [209.85.222.181])
+Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0DC8450903
-	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jun 2026 15:42:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B3944657C2
+	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jun 2026 15:46:53 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782834147; cv=none; b=bWtJiS6DYzMkaqBkmbDqNx4JhE8LMc6e7IF8LD6vsD74ZP2H470nu6fea9QkBBdlW9TDJ6R8RQX6duEVtO9Z2Y5aT1OVshDV6ZFwbfQD66pHj7jvJMP+LtatJpHj+cxGSehGTKHQzXL/VdRiZeAap94EapuJTqaZCwt4IWH/Uwo=
+	t=1782834415; cv=none; b=s1k87MapXvsDxMCLttM9ZsOEE6z0Q5ugyDtnaLoNdkSQrvuZljMT4dLyuDZayVrZYp5ob2Drd0yQ9j9uEMKAqqVtaq0jv7wFNdO/CaoOnXAJekjDrcsNUHFavrsZeluOKKm8ryqF8FGJbE37+P/+6e51QhXtf2uNqtZKKbMcC8Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782834147; c=relaxed/simple;
-	bh=G7yBa9qRXwqvk5O66eyJS/F0IvVRBRnFUCu+8taoCIs=;
+	s=arc-20240116; t=1782834415; c=relaxed/simple;
+	bh=dDmXL5XwXaYV+8+puY+mAXsJDpis0aF3tebQ04m+2HU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Gt1SfAc2ZJ1AENM6V3/V9GPENrcXpRkOEWn3xErWyd+xD/UpjCKiYBkqiklZ8lsIXAkwd9uT6aUCS5FOSgVF/Vl5diPw0fIlULw1/5M8km6cO6D5gDWWpjfHZU0cBWfMBwKxmVCItn2h9QLE/pWsKh403aRimZDz1reJ6WNQ8bI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net; spf=pass smtp.mailfrom=gourry.net; dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b=OdjAdTKP; arc=none smtp.client-ip=209.85.222.181
-Received: by mail-qk1-f181.google.com with SMTP id af79cd13be357-92b21f65b60so75225885a.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jun 2026 08:42:24 -0700 (PDT)
+	 Content-Type:Content-Disposition:In-Reply-To; b=f/Q9iOzO8tccuHYYy+KSPPXRRYoyHFDMwFjOXVAXe1Ujxo6Q31/m9Phyzp8U37lcsbbTGDrvjj1FrHor9JmKpcJTtxZrZC7kCcBqt6MHo2YQtpa0ikJJnSQROzl0moB8jckHDcXpe/BubBaMRNzcPqQHPtg7gAmFmTaM8N0WU28=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net; spf=pass smtp.mailfrom=gourry.net; dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b=vDUgBP8D; arc=none smtp.client-ip=209.85.222.169
+Received: by mail-qk1-f169.google.com with SMTP id af79cd13be357-92e663c828dso66769485a.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jun 2026 08:46:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gourry.net; s=google; t=1782834144; x=1783438944; darn=vger.kernel.org;
+        d=gourry.net; s=google; t=1782834412; x=1783439212; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=QB3LlP562wM9vhAInyZtqjaYedctMNHlJgLHcqpXNiE=;
-        b=OdjAdTKP1VGO8zRZIYKW6T7YC7dp4kGd+TLOLZBrfsmVd50jWCMuSIKvP7n5Q3aytm
-         7y2yKNcengqSId/fVcnWUhs+mgEBA+QOUb0OSHXmmarHNnEsbrpU4OURxH2VUa53JCkM
-         POrRA+mpxapavmM5StO0HJvd2wH6vvbHdouA1wzC4B3542vH341QzuvAy02pjh/UL0V+
-         MisLKxDdvdCl3YVgpFGit4upC4z+10tmJoELCaRYpHzDYuL2HyfH2mJ0diC2zJDIF8XW
-         E+p9wtX3S3Axbso4ew8IgNmOl7eHU7jpcJ4DsFh/HdFdxEaBAEhnWmwfQwIcg1w2xssn
-         bhsA==
+        bh=z3V1BQpPjw58FUuLj010lwChkcBGTpKii5KT4CVPULY=;
+        b=vDUgBP8DSx3vav8BjJqPGsXsvPB3didQ/5jzaChUmCxi3DxsAfKWPAk5Pj4i9ciiZK
+         gnS6f1JSsry5+xa1W76dJ0jOwDjXQBqpJ9D2KltXzw0CVFROF6zoZkpLu2y8xe8eZWJz
+         lF9FPyA9sA7EDl7L39UlzMn24nQCENSz5s3ctgtoSQICOcj6zdJWPMfzL75AaBLoH28y
+         6xm4rwSp3HbvuQu/pMTID5HZWQsaMBx93pxeF2wECsXSF61m5NEgiqCjZ58g9XZlcEm/
+         kQE8xXs1T5IOepP6GiwqZaBEXHdL2pxmwPzwFOAlbbQrLipTQZU50SDPh8Fk2Qku94VZ
+         8rfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782834144; x=1783438944;
+        d=1e100.net; s=20251104; t=1782834412; x=1783439212;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=QB3LlP562wM9vhAInyZtqjaYedctMNHlJgLHcqpXNiE=;
-        b=CVv73hqzn7oytLHKFH8VDDAA0zBL9ooalwt3Pq1HmekPirJKLeJj8bNuHM3M7t7Bu1
-         Mko0cKAlf8roZ1iW8jKbuqN5uf9UwN3CYCDDpBTT9OZvu4rSke7OQoG7BfMGzhQM/obW
-         UuhA+e3gRieXCkWAVF2m3rq4nVoXksZp/ykftsYULBccp0f6Bkx+1t4e9inRbUUW2Osa
-         iYS3lZF1dp5zzd8jHjclIpaFIqInpCKdLAa6ePXVSKKA1cex4rHNQc3j+56x9vLxvPdv
-         e5YmcrGp8bXvauf3w76r/ZSldOfVx43HoiFi7tcgV8tXCcISWauSdMwCWxKbwPVwDTT/
-         0iSg==
-X-Forwarded-Encrypted: i=1; AFNElJ98UXmtXcIM3urHVxNPUPU1iHyPDF2fBZdaS4+4lvQ5wioGO9TkWsO7DJxs1h8A7NNWBQ/eRAzf77fqbLd3@vger.kernel.org
-X-Gm-Message-State: AOJu0YypWNkn9OZUZJ+wTneqd3paA3euZpCh0tTwILQFLBT311SC9dEY
-	duk7C/Sm4WCBOSsT0NIr99YLm/5oMJzHOZ0VQwLADNk6J1qX2HfHh7EkhIKfqOr28Po=
-X-Gm-Gg: AfdE7cn3DchQjfhUpCkxL8xcdo+o1pqfR7MHD08YdFdhXeUdf0LD3FfKIajh73OTPpt
-	ElwPoqzphfkuacPFdAC5sYnJk2mxxNwrwp2eDSy+/gLK6BgJf7mpB/PUFvGNqx9t0dS6T/9OaHJ
-	MslSAlAFnLzR/UZlNoVQTUATRtTabDdFtvuLzTcj2D+s4rBwIjhqTRBv43t8ZKv4L5EdRsqDl20
-	/hs9uT4KObytXGbtZpvn6y4iuO0Fgdb2pL85ErFXJzna4p2UA6VQQZIEZ3XRXLzeaQhoDHB1GQP
-	1DJevvodDJ0WYyPKLZ7C6lxuXau8FROvfchggMhwD0MRaeP2+EAC96LhdvSNysP/X6vWFFsbk3v
-	qnOx0iKiB3+sy5/1hn4XcJYpYXIgXstwMijeS2BSiEWaM74p8OHf1Oya2WUrEf/Xwuw8ieK5W8B
-	tcx4NdU7E4SMRRW339WuzVFthP0MTKM3c5gNViNIWNmyh5LIc+x/2V9ayEZUF+gwNDzoXD
-X-Received: by 2002:a05:620a:271d:b0:91e:712d:f79d with SMTP id af79cd13be357-92e6984d3d1mr270456885a.40.1782834143842;
-        Tue, 30 Jun 2026 08:42:23 -0700 (PDT)
+        bh=z3V1BQpPjw58FUuLj010lwChkcBGTpKii5KT4CVPULY=;
+        b=m6Dul9cP+ZL7wlzmBdBvCAYfkzJ34Fp3F3xvh0NqFm5he3WN7IZ20lJSwhJUiwM+6U
+         SyTm9YLSIeK3jKJC1erc5sp1slxp5s9pVodTnGXeD51q5esxN8hjG1qLSFAOtQiLH6/B
+         K36tZ4V029DmWoy4gLBBc+oRTcAFstGH7acSKvexBWGfpmxIBVZyVVfSRpDF6VvWTBO/
+         8DJ9FUBr0iRFk6NqKnw2AkoPzQdXfNfk/3pwiUqIgSLUyhmP2PxZ9lh7nDtLTJIbk9F+
+         UaBkW7Ni/Zmn5zCqm4snhaXoDBaXW2ZeXxqzujuL6zze0SwUAjuxSmA7pg96NCS5u1zp
+         Km1Q==
+X-Forwarded-Encrypted: i=1; AFNElJ9dPYDZITzX31OP7myJ2N6H3XsKcHh4wsLJbSIioIo05D4mhtELVonPU9MuzrCZDZPmkkbQUyuA5ge8x0W5@vger.kernel.org
+X-Gm-Message-State: AOJu0YwAKv7ghzXYxdoLmF/WL/SHokDODDne57begsQxeEn97a3HJ7JC
+	h9DF3Ka67haIe/9W1oS57GmPxTJ1ba45UA+mtZ72B9YDkYFvunc/a1CE0U4qxcVQttY=
+X-Gm-Gg: AfdE7cnc6v5InD+2oCvggiarkucSAwQJC48OKKFi1p57Bw7acumOYHOyEs6QFCSCe6H
+	8VMS0NELQTzNGNgHRDu+8vCoiBFWFKIh7bfhcWdRBmsQsrM/LejXFgssCAKMWspc2RGISvXStHu
+	6E1ThGIa07hDrllG1WkR7ti6g2RAeeuONNikann61TdO9shspi6zz25qVkcz2rdp+ZlopMrbhoH
+	oUdHjF8LmfO7VBtmnWqd97MbTL7DVSalHIn8pwqdDDSspcuOBL+7pIlc13kgIKxQSnSm3y/8V7V
+	C+fiEXOFDsNkRYWRtngcaVl/WwvGZV5G/dQjC9cBY2zUA0/UpkOrS/L1y5P/S8lDJXs38uU1WmR
+	G5HXQIN3Rrn6r1dLdzGNl+LEtJ5qUTlow+2gnPzpzO2lI4fikDMh4ZHXsdOL+LSx8C7l+MV48oi
+	f0xTSoUpssZK2TxvfG7IR6NVBQSfBAQ3NJw7fT29uZUnNHARp6JmEjq266CZm0B4Zhappt
+X-Received: by 2002:a05:620a:2913:b0:915:a47c:f721 with SMTP id af79cd13be357-92e6974d636mr316697685a.21.1782834412151;
+        Tue, 30 Jun 2026 08:46:52 -0700 (PDT)
 Received: from gourry-fedora-PF4VCD3F (pool-173-79-60-52.washdc.fios.verizon.net. [173.79.60.52])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-92e6234dc50sm263249085a.39.2026.06.30.08.42.21
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-92e6233a5acsm267797785a.35.2026.06.30.08.46.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Jun 2026 08:42:23 -0700 (PDT)
-Date: Tue, 30 Jun 2026 11:42:18 -0400
+        Tue, 30 Jun 2026 08:46:51 -0700 (PDT)
+Date: Tue, 30 Jun 2026 11:46:46 -0400
 From: Gregory Price <gourry@gourry.net>
 To: Lorenzo Stoakes <ljs@kernel.org>
 Cc: Andrew Morton <akpm@linux-foundation.org>,
@@ -133,11 +133,11 @@ Cc: Andrew Morton <akpm@linux-foundation.org>,
 	damon@lists.linux.dev, Pedro Falcato <pfalcato@suse.de>,
 	Rik van Riel <riel@surriel.com>, Harry Yoo <harry@kernel.org>,
 	Jann Horn <jannh@google.com>
-Subject: Re: [PATCH 08/30] mm/rmap: rename vma_interval_tree_*() to
- mapping_interval_tree_*()
-Message-ID: <akPj2snngOp5nOYq@gourry-fedora-PF4VCD3F>
+Subject: Re: [PATCH 09/30] mm/rmap: parameterise anon_vma_interval_tree_*()
+ by anon_vma
+Message-ID: <akPk5o_gHD1SxX_0@gourry-fedora-PF4VCD3F>
 References: <cover.1782735110.git.ljs@kernel.org>
- <f95462457025370efd047b9dfb039e76bbddf58b.1782735110.git.ljs@kernel.org>
+ <1c1df7b905ef340cbf2effef769a4e770a8e0eb1.1782735110.git.ljs@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -146,18 +146,18 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <f95462457025370efd047b9dfb039e76bbddf58b.1782735110.git.ljs@kernel.org>
+In-Reply-To: <1c1df7b905ef340cbf2effef769a4e770a8e0eb1.1782735110.git.ljs@kernel.org>
 X-Rspamd-Action: no action
 X-Spamd-Result: default: False [0.34 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MID_RHS_NOT_FQDN(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	R_DKIM_ALLOW(-0.20)[gourry.net:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-115496-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-115497-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS(0.00)[m:ljs@kernel.org,m:akpm@linux-foundation.org,m:linux@armlinux.org.uk,m:dinguyen@kernel.org,m:schuster.simon@siemens-energy.com,m:James.Bottomley@hansenpartnership.com,m:deller@gmx.de,m:jarkko@kernel.org,m:tglx@kernel.org,m:mingo@redhat.com,m:bp@alien8.de,m:dave.hansen@linux.intel.com,m:x86@kernel.org,m:abbotti@mev.co.uk,m:hsweeten@visionengravers.com,m:l.stach@pengutronix.de,m:airlied@gmail.com,m:simona@ffwll.ch,m:patrik.r.jakobsson@gmail.com,m:maarten.lankhorst@linux.intel.com,m:mripard@kernel.org,m:tzimmermann@suse.de,m:robin.clark@oss.qualcomm.com,m:lumag@kernel.org,m:tomi.valkeinen@ideasonboard.com,m:thierry.reding@kernel.org,m:mperttunen@nvidia.com,m:jonathanh@nvidia.com,m:christian.koenig@amd.com,m:ray.huang@amd.com,m:ankita@nvidia.com,m:alex@shazbot.org,m:viro@zeniv.linux.org.uk,m:brauner@kernel.org,m:djbw@kernel.org,m:muchun.song@linux.dev,m:osalvador@suse.de,m:david@kernel.org,m:surenb@google.com,m:liam@infradead.org,m:willy@infradead.org,m:m.szyprow
@@ -178,34 +178,36 @@ X-Spamd-Result: default: False [0.34 / 15.00];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	RCPT_COUNT_GT_50(0.00)[76];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	ALIAS_RESOLVED(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,vger.kernel.org:from_smtp,gourry-fedora-PF4VCD3F:mid,gourry.net:dkim,gourry.net:email,gourry.net:from_mime]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,gourry-fedora-PF4VCD3F:mid,gourry.net:dkim,gourry.net:from_mime,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: A4AA96E6131
+X-Rspamd-Queue-Id: 69C456E620A
 
-On Mon, Jun 29, 2026 at 01:23:19PM +0100, Lorenzo Stoakes wrote:
-> The family of vma_interval_tree_() functions manipulate the
-> address_space (which, of course, is generally referred to as 'mapping')
-> reverse mapping, but are named the 'VMA' interval tree.
+On Mon, Jun 29, 2026 at 01:23:20PM +0100, Lorenzo Stoakes wrote:
+> Similar to what we did with mapping_interval_tree*(), let's declare
+> anon_vma_interval_tree*() in terms of anon_vma rather than rb_root_cached.
 > 
-> VMAs may be mapped by an anon_vma, an address_space, or both. Therefore
-> calling the mapping interval tree a 'VMA' interval tree is rather
-> confusing.
+> In each case the rb tree referenced is &anon_vma->rb_root, so just pass
+> anon_vma and the functions can figure this out themselves.
 > 
-> This is also inconsistent with the anon_vma_interval_tree_*() functions
-> which explicitly reference the rmap object to which they pertain.
-> 
-> Rename the vma_interval_tree_*() functions to mapping_interval_tree_*() to
-> correct this.
-> 
-> No functional change intended.
-> 
-> Signed-off-by: Lorenzo Stoakes <ljs@kernel.org>
+> Additionally, rename 'node' to 'avc', 'index' to 'pgoff_start', and 'last'
+> to 'pgoff_last' to make clear what is being passed.
+>
 
-obligatory "naming is hard", this patch helps, thank you.
+would it be possible to split the pure rename changes out from the
+changed function declarations?  It's hard to pick out this as something
+that needs to be looked at as more than just a %s/x/y/
 
-Reviewed-by: Gregory Price <gourry@gourry.net>
+> +void anon_vma_interval_tree_insert(struct anon_vma_chain *avc,
+> +				   struct anon_vma *anon_vma)
+...
+> -	__anon_vma_interval_tree_insert(node, root);
+> +	__anon_vma_interval_tree_insert(avc, &anon_vma->rb_root);
+
+an annoying request, sorry
+
+~Gregory
 
