@@ -1,179 +1,165 @@
-Return-Path: <linux-arm-msm+bounces-115543-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-115544-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id JiuFCEEnRGrXpgoAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-115543-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 22:29:53 +0200
+	id g+YJEfUnRGoUpwoAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-115544-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 22:32:53 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6D6356E7D4A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 22:29:52 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id D01936E7DA3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 22:32:52 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=none;
-	dmarc=fail reason="SPF not aligned (relaxed), No valid DKIM" header.from=nxsw.ie (policy=quarantine);
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115543-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115543-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=UODlY8XX;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115544-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.232.135.74 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115544-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id A3E7D317484F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 20:24:50 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 422DA302735F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 20:32:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 75B8647A0A5;
-	Tue, 30 Jun 2026 20:24:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 24CEC47AF4B;
+	Tue, 30 Jun 2026 20:32:51 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06AAE364EB0;
-	Tue, 30 Jun 2026 20:24:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 079BE2135C5;
+	Tue, 30 Jun 2026 20:32:49 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782851090; cv=none; b=qOjQa4rdZOa9frK04sRq8yr6Wml91c/HQcCOMJGbhWGv28mphFbJwp1I7optRtDvTb3+LWI/85X5KsOSPy2eBk7G9hOMbYiRRmfICMaDR2VqzspGPMdrLFeiHriWkrwm/bFza91R1Od3jze0GJ+5bBBVaGOZiqk24cIU1goiDbQ=
+	t=1782851571; cv=none; b=cHRGKYO9Pb+MLhoHfqCBRyf3+x0wYKThEMlfxuBeFXluarpExWmmonKUUrjc/FBmQdQ3E6sso0C3iFPTQzETOq7HDM4vDEDrjbV62kJL6BAA3nX76C9jWrHVV0ByFAZPyfJY95CuMt60uq9xBWz3HnUWvYUrb0M9qAJ3S1AK0Jw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782851090; c=relaxed/simple;
-	bh=QjzGeGn2v3vp9cZJ6THBq4bWtJ/VoJClOZkMvZ8MTzA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=dx7vccxDE302aS7E2YuPCoHZ7yMhHAIUA7shZ38qXBVMZ0i9A7qOrL5EJiWZTtv50oG7PIdQZyOBTNeGd5RwNHeo7VGOKr9jWLnZpsrxVKuk5/u5BlKxWSP8b1Z3VcvAndTDBpCLUDJQGGrdDw1ey+9nZwExBQhWoXy9NL3dCl8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6747B1F000E9;
-	Tue, 30 Jun 2026 20:24:46 +0000 (UTC)
-Message-ID: <257f9f48-4831-4f36-84c0-f7e6c257dd3a@nxsw.ie>
-Date: Tue, 30 Jun 2026 21:24:44 +0100
+	s=arc-20240116; t=1782851571; c=relaxed/simple;
+	bh=Yieu/SMxq5J0mC8kb9rgbzQUvx7C8Pf5wPUcwTx11dY=;
+	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
+	 In-Reply-To:To:Cc; b=Il93frFlkU3bh6k6JcVpXxuKvGDiiifSREmhT+d7v1ibHCVhToEHqoCpVWdj/ucgYO+v64AUNM++pdrKnsCAn/vDwq+wp19jRM4aqNffZwgYZPBYYgXOJ/J3I7aGLJp+iEYtC5Efb0q074lqijEucQYD5sOFy5UkJDRNoI4/eQ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UODlY8XX; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AED181F000E9;
+	Tue, 30 Jun 2026 20:32:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1782851569;
+	bh=1A1Noy8LRGtvZrlICTzO9rRKUHCfaLihrFNikt0V8C4=;
+	h=Subject:From:Date:References:In-Reply-To:To:Cc;
+	b=UODlY8XX/WY4jhttC8cENg6ahMfkdnjFLT2WSqRYQS/f+a09Pv+8CGxtbDVlVGfwJ
+	 NCo6SBrqQ1r+eRsSt+6Wg4umWbzkgTr/L9ihH1UFdQBdMeDFBeEv5ByH80Sw71E69T
+	 p3CWfdYPZMCZuLOqjAxTQ+l22ITvliKoBtDJtHxAne+bbAVo3USUXMx1DFb3Eq3VHU
+	 r3W0JdcxeMPiDcFS5+UNuiIhmp8RBWARiy80nIF75/A/KOPXN5zmPRgA14qtxpxGfE
+	 AqYBDU00u8p//61y+1EJbOUTqBQVVd9k0yuayrKjF+POC3H95LqR5KeeJdxfVU0l2L
+	 AWifVimadab4A==
+Received: from [10.30.226.235] (localhost [IPv6:::1])
+	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id D0AD8393A951;
+	Tue, 30 Jun 2026 20:32:34 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/4] dt-bindings: media: qcom: Add JPEG encoder binding
-To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Atanas Filipov <atanas.filipov@oss.qualcomm.com>, linux-media@vger.kernel.org
-Cc: mchehab@kernel.org, robh@kernel.org, krzysztof.kozlowski+dt@linaro.org,
- conor+dt@kernel.org, andersson@kernel.org, quic_vgarodia@quicinc.com,
- quic_jesszhan@quicinc.com, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20260629121750.3469292-1-atanas.filipov@oss.qualcomm.com>
- <20260629121750.3469292-3-atanas.filipov@oss.qualcomm.com>
- <_zZ7OLAmvphzTdIURTW71m_LKDwA-DEQ-a40gIiLYSqgDrdOOEf1bElz53zTbmSaDoqc8PDFyQXa7bycFaSTXw==@protonmail.internalid>
- <569539db-b079-439a-bd05-cb97c30141c1@linaro.org>
- <fbc018f5-c025-4747-85f2-53b45b0f0496@nxsw.ie>
- <IDwf-TUUNejblXqaFbAmpHIv49qp0PH0KB_H5HGcm1Wlj5zYf-q8Sota7H77GgDFcvhI2RHMCYmKRaDn0Q09fg==@protonmail.internalid>
- <0161b69d-62fb-46b8-a43a-df0c8af4956a@linaro.org>
-From: Bryan O'Donoghue <bod.linux@nxsw.ie>
-Content-Language: en-US
-In-Reply-To: <0161b69d-62fb-46b8-a43a-df0c8af4956a@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH v2 00/12] Bluetooth: btusb/btqca/hci_sync: Clean up btusb
+ and fix several bugs
+From: patchwork-bot+bluetooth@kernel.org
+Message-Id: 
+ <178285155338.267316.7362111098834622157.git-patchwork-notify@kernel.org>
+Date: Tue, 30 Jun 2026 20:32:33 +0000
+References: <20260625-bt_bugfix-v2-0-93396a6f7d5e@oss.qualcomm.com>
+In-Reply-To: <20260625-bt_bugfix-v2-0-93396a6f7d5e@oss.qualcomm.com>
+To: Zijun Hu <zijun.hu@oss.qualcomm.com>
+Cc: marcel@holtmann.org, luiz.dentz@gmail.com, quic_rjliao@quicinc.com,
+ brgl@kernel.org, ytkim@qca.qualcomm.com, quic_bgodavar@quicinc.com,
+ mka@chromium.org, quic_tjiang@quicinc.com, zijun_hu@icloud.com,
+ linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
+ luiz.von.dentz@intel.com, linux-arm-msm@vger.kernel.org,
+ bartosz.golaszewski@oss.qualcomm.com, dmitry.baryshkov@oss.qualcomm.com
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [1.54 / 15.00];
-	DMARC_POLICY_QUARANTINE(1.50)[nxsw.ie : SPF not aligned (relaxed), No valid DKIM,quarantine];
+X-Spamd-Result: default: False [-3.66 / 15.00];
+	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FROM_HAS_DN(0.00)[];
-	TAGGED_FROM(0.00)[bounces-115543-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_CC(0.00)[holtmann.org,gmail.com,quicinc.com,kernel.org,qca.qualcomm.com,chromium.org,icloud.com,vger.kernel.org,intel.com,oss.qualcomm.com];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:vladimir.zapolskiy@linaro.org,m:atanas.filipov@oss.qualcomm.com,m:linux-media@vger.kernel.org,m:mchehab@kernel.org,m:robh@kernel.org,m:krzysztof.kozlowski+dt@linaro.org,m:conor+dt@kernel.org,m:andersson@kernel.org,m:quic_vgarodia@quicinc.com,m:quic_jesszhan@quicinc.com,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:krzysztof.kozlowski@linaro.org,m:conor@kernel.org,s:lists@lfdr.de];
-	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[13];
-	FORGED_SENDER(0.00)[bod.linux@nxsw.ie,linux-arm-msm@vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-115544-lists,linux-arm-msm=lfdr.de,bluetooth];
+	RCPT_COUNT_TWELVE(0.00)[16];
+	FORGED_SENDER(0.00)[patchwork-bot@kernel.org,linux-arm-msm@vger.kernel.org];
 	MIME_TRACE(0.00)[0:+];
 	FORWARDED(0.00)[lists@lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FORGED_RECIPIENTS(0.00)[m:zijun.hu@oss.qualcomm.com,m:marcel@holtmann.org,m:luiz.dentz@gmail.com,m:quic_rjliao@quicinc.com,m:brgl@kernel.org,m:ytkim@qca.qualcomm.com,m:quic_bgodavar@quicinc.com,m:mka@chromium.org,m:quic_tjiang@quicinc.com,m:zijun_hu@icloud.com,m:linux-bluetooth@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:luiz.von.dentz@intel.com,m:linux-arm-msm@vger.kernel.org,m:bartosz.golaszewski@oss.qualcomm.com,m:dmitry.baryshkov@oss.qualcomm.com,m:luizdentz@gmail.com,s:lists@lfdr.de];
+	FROM_NEQ_ENVFROM(0.00)[patchwork-bot@kernel.org,linux-arm-msm@vger.kernel.org];
+	MISSING_XM_UA(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	TO_DN_SOME(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[bod.linux@nxsw.ie,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
 	MID_RHS_MATCH_FROM(0.00)[];
-	R_DKIM_NA(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,nxsw.ie:mid,nxsw.ie:from_mime]
+	TO_DN_SOME(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	FROM_NO_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,intel.com:email]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 6D6356E7D4A
+X-Rspamd-Queue-Id: D01936E7DA3
 
-On 30/06/2026 14:32, Vladimir Zapolskiy wrote:
-> On 6/30/26 16:19, Bryan O'Donoghue wrote:
->> On 29/06/2026 14:38, Vladimir Zapolskiy wrote:
->>>> +                interconnects =
->>>> +                    <&gem_noc MASTER_AMPSS_M0 0 &config_noc SLAVE_CAMERA_CFG 0>,
->>>> +                    <&mmss_noc MASTER_CAMNOC_HF 0 &mc_virt SLAVE_EBI_CH0 0>,
->>>> +                    <&mmss_noc MASTER_CAMNOC_SF 0 &mc_virt SLAVE_EBI_CH0 0>,
->>>> +                    <&mmss_noc MASTER_CAMNOC_ICP 0 &mc_virt SLAVE_EBI_CH0 0>;
->>>> +                interconnect-names = "cpu-cfg",
->>>> +                                     "hf-mnoc",
->>>> +                                     "sf-mnoc",
->>>> +                                     "icp-mnoc";
->>> Since the proper option for describing this hardware is to have it as
->>> a child device tree node of CAMSS device tree node, which should serve
->>> or be percepted as a bus, it makes no sense to repeat and moreover rename
->>> bus/parent's resources, here is the list:
->>>
->>> * "hf_axi", "sf_axi", "core_ahb", "cpas_ahb" and "cnoc_axi" clocks,
->>> * Titan GDSC power domain and all four interconnects.
->>>
->>> Only "jpeg" clock and iommus are left specific to the hardware description
->>> of this IP under CAMSS, right? Thus, it should be reflected like this in
->>> the dt description as well, and the complexity of shared resource management
->>> has to be done in the driver, which might be tedious unfortunately, but
->>> certainly doable.
->>
->> JPEG should be able to vote for its individual NoC / CamNoC dependencies
->> / requirements.
-> 
-> There is no individual interconnects, JPEG interconnects are equal to
-> bus/parent CAMSS ones.
+Hello:
 
-Not true.
+This series was applied to bluetooth/bluetooth-next.git (master)
+by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-As a matter of fact, the JPEG encoder has no use-case for the ICP MNOC, 
-now that I look at this again.
+On Thu, 25 Jun 2026 22:19:45 -0700 you wrote:
+> This series cleans up btusb in preparation for adding a new chip,
+> QCC2072, and fixes several pre-existing bugs found along the way.
+> 
+> Bug fixes:
+> - qca_set_bdaddr() waited for HCI_EV_VENDOR, but the controller replies
+>   with a Command Complete event.
+> - btusb_set_bdaddr_wcn6855() sent the BD_ADDR without byte-swapping it.
+> - btusb QCA populated devcoredump fields on devices where devcoredump is
+>   not enabled.
+> - BTUSB_IGNORE is a bitmask and must be tested with '&', not '=='.
+> 
+> [...]
 
-Even if the list is identical the clocks, bandwidth, opp tables 
-represent individual consumers with individual votes.
->>
->> Both GDSCs and interconnects should be described in the sub-node.
-> 
-> Why to do it in each child, if GDSCs and interconnects are CAMSS bus/domain
-> specific? There is no acceptable explanation so far.
+Here is the summary with links:
+  - [v2,01/12] Bluetooth: btqca: Fix qca_set_bdaddr() waiting for wrong HCI event
+    https://git.kernel.org/bluetooth/bluetooth-next/c/1718f3a121dd
+  - [v2,02/12] Bluetooth: btusb: Fix BD_ADDR byte order in btusb_set_bdaddr_wcn6855()
+    https://git.kernel.org/bluetooth/bluetooth-next/c/cb9fed45d399
+  - [v2,03/12] Bluetooth: btusb: Record matched usb_device_id into btusb_data
+    https://git.kernel.org/bluetooth/bluetooth-next/c/97138867591e
+  - [v2,04/12] Bluetooth: btusb: QCA: Fix populating devcoredump fields on unenabled devices
+    https://git.kernel.org/bluetooth/bluetooth-next/c/0a7575521e2e
+  - [v2,05/12] Bluetooth: btusb: QCA: move qca_dump out of struct btusb_data
+    https://git.kernel.org/bluetooth/bluetooth-next/c/bafbbfe43876
+  - [v2,06/12] Bluetooth: hci_sync: Introduce __hci_reset_sync() for device drivers
+    https://git.kernel.org/bluetooth/bluetooth-next/c/dc4d5e617358
+  - [v2,07/12] Bluetooth: btqca: Simplify qca_send_reset() by using __hci_reset_sync()
+    https://git.kernel.org/bluetooth/bluetooth-next/c/6ccd5c9a56dd
+  - [v2,08/12] Bluetooth: btusb: Simplify btusb_shutdown_qca() by using __hci_reset_sync()
+    https://git.kernel.org/bluetooth/bluetooth-next/c/738df2031c56
+  - [v2,09/12] Bluetooth: hci_sync: Simplify hci_reset_sync()
+    https://git.kernel.org/bluetooth/bluetooth-next/c/a16a8312f80f
+  - [v2,10/12] Bluetooth: hci_event: Log error for HCI reset status error in hci_cc_reset()
+    (no matching commit)
+  - [v2,11/12] Bluetooth: btusb: Reduce a redundant assignment in btusb_probe()
+    https://git.kernel.org/bluetooth/bluetooth-next/c/37ecdbcfd7cb
+  - [v2,12/12] Bluetooth: btusb: Use & instead of == to test bitflag BTUSB_IGNORE
+    https://git.kernel.org/bluetooth/bluetooth-next/c/5d490bc8bda1
 
-As we've already established some of the power-domains are function 
-specific - for example MXA in the PHYs.
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
 
->> There's no functional linkage between CAMSS/IFE and JPEG - they are
->> peers within the CAMSS power-island. Over time we will migrate to
-> 
-> I do not refer to any "functional linkage".
-> 
->> individual nodes for IFE CSID and these too will appear inside of the
->> CAMSS "bus" -> JPEG etc should describe their nocs and power-domains
->> individually.
->>
->> camss@X{
->> 	camnoc@{}
->> 	csid@{
->> 		interconnects = <gem_noc>, <cam_noc>;
->> 	};
->> 	jpeg@ {
->> 		interconnects = <gem_noc>, <cam_noc>;
->> 	};
->> 	ife@ {
->> 		interconnects = <gem_noc>, <cam_noc>;
->> 	};
->> };
-> 
-> It makes sense only if the lists of interconnects are different, this
-> is not the case.
-> 
-> --
-> Best wishes,
-> Vladimir
 
 
