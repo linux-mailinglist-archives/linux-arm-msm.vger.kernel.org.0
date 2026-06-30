@@ -1,425 +1,437 @@
-Return-Path: <linux-arm-msm+bounces-115330-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-115331-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id zs5uJUmGQ2qAaAoAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-115330-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 11:03:05 +0200
+	id IpFnEkWGQ2p9aAoAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-115331-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 11:03:01 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 61DB06E1E04
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 11:03:04 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id DEC2A6E1E00
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 11:02:59 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=C6ARIhKH;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115330-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115330-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=quarantine) header.from=kernel.org;
+	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=JkrWGodw;
+	dkim=pass header.d=oss.qualcomm.com header.s=google header.b="Ddbd/Q6r";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115331-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115331-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=reject) header.from=qualcomm.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 7DFF1303A50F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 09:01:55 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id EB7CE301EC4A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 09:02:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F364231E825;
-	Tue, 30 Jun 2026 09:01:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8EB6D37F8BD;
+	Tue, 30 Jun 2026 09:02:58 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B78440D580;
-	Tue, 30 Jun 2026 09:01:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F912261B8D
+	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jun 2026 09:02:56 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782810114; cv=none; b=Fqwx+yaABkFJr1qJHgRLmwJnPF2Gcm/N2/lwIAZQw9s6enIRMmZYUAYlurwE2zH5tfWvhHQe21IGIiHtk42kvim28LSSQ+Tc+1gxfCCD4Ebh9gZ0tnJvP7cWzKEDYGtNIGFd+Swzki19Xqxs+9DzPT75QxL9ZQxf6rZmwxd+rSg=
+	t=1782810178; cv=none; b=kMKPNy6qNH7RhrUQc84YexJlZwT0pp1NT+5lx4SVYEGmcsdmLNQ/wXwZk2HdDQqTXsoYT4g2P+llozMsQDkq2fRCXUcLcjRe+RVVJsTE7FG+daFWTJlva8PLtXEFT+WLJAwCj7ffCsaNo0N0XCa4yYgd/52PytXYIIjaofwjPmc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782810114; c=relaxed/simple;
-	bh=0ubUFLWoUO2d8LLAVfZZDA5eWj53YXqM96r8YT5Z5w8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ZNmnhmJSmGumbnGD5kOY8nZvAfBjBPuKe/tl+bO7MbC/oHay9h6j7l5tcLIls7C2vdGwOgniOTINA1VlIwY1SWAl9haA8FgDgWQ7fVBA2jLPmh5RteSJR4jBpFbi0p/WECchgP/xcgEdkocVyaf20gQtvBrniK72FPPEmFfQQvE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=C6ARIhKH; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3307B1F00A3A;
-	Tue, 30 Jun 2026 09:01:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782810113;
-	bh=Aj0Y8e+jfIEJdQHEXGpdBlV6xnmdMpeoP0iP3JkIPXk=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=C6ARIhKH4dXu0XG5o/v4EwsYbHVmPYcEESZecetdjP/WZ78M11idkPc/PPiBF65E0
-	 IrZ6+6fGUJfu4GXNKBb2nrnqaY7UolG4l/QsJmxIZGzRbfpneelYv5rmCvjsOPPxD7
-	 OaxZ3b84OQT/EbayW46E38zzS00vaULRo1VN+aYaCLpuHf1BItltqfZkyC0jjvfmD7
-	 +U9jMMs+g9ClSjcxNtuU95Dy/dJqRSm/lK73aAp0w80y2lJeYTv5JnCV8ubNaOaODT
-	 KeUJzo4mABcx7GMsAahOsnUHLDTgHsNoSMx1vLuOXNvxnjEQoLNawycGkfbIN7msgR
-	 MfDw446AevffQ==
-Message-ID: <ce8696b2-4598-44c6-9739-c2820da11995@kernel.org>
-Date: Tue, 30 Jun 2026 11:01:44 +0200
+	s=arc-20240116; t=1782810178; c=relaxed/simple;
+	bh=ClzjTDByFdtV1hOdXvvbIGOspmbUT9SEv8vZOG9G0qM=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=fNj3Kodv/RjcwvYKBJcyL2DKExST+4330gjw4/exhoPpVrzcpxckUlafwA7fGu81Q3wBwPAQco95c8FuFSJdMrkt2iFiNNN7pHZvtnEO4vq61voZN85mPmRBRFFV9BRyjc3Z/qXnUg5R8h4pXYb3ATk6VfV2G49gy8FUbffI6R0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=JkrWGodw; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Ddbd/Q6r; arc=none smtp.client-ip=205.220.168.131
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65U6CMcS1088682
+	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jun 2026 09:02:55 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=5pgrFdf6l/LP8HdUy9LmfA
+	ejKky5DKLGarNpceFhpEo=; b=JkrWGodwPk4peLAk+qMWZC0AXyzy2Q+fkc7M+d
+	TH/GbQibgMmRAQbv+eBwrN5zg/UBUc7Ggqmo9DHdNDX7Cm8dteG+c9/c9jAn3enK
+	FWMO45aCZTNrTaL7lS/GFpP/exxKV0hctZbyh+xP/grKQPDmgfjyqXucGm5LZ3B8
+	HZLDQoBxBoKpuco6yizfi4P5lE7XbkxOtgdCqlP0egZTYGNcZtMDKWonrpq4Q76z
+	61j64nFvKyxiqkne8TKaV4jShKJ5cqbARHfVzuIcJEGMHrwUCHRND19WJrH4eJWc
+	h4ERVFLU0ghKuek20KERTdqTS6kUdTao3+1qp/fT5x9zu/fg==
+Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com [74.125.82.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f462fha11-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jun 2026 09:02:55 +0000 (GMT)
+Received: by mail-dy1-f197.google.com with SMTP id 5a478bee46e88-30ba395b047so618333eec.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jun 2026 02:02:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1782810175; x=1783414975; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=5pgrFdf6l/LP8HdUy9LmfAejKky5DKLGarNpceFhpEo=;
+        b=Ddbd/Q6rmtdQRT1OXatAzkT9JdtQ/QoqWZy8VFs2AdaFivyTuZ/ntt8FfLOws+wKdG
+         /5mDj/YGePqyJjNdUXCm9kCMjZT0RY8gagDaTf8MzBl3phrsfCvzaCEqZaOULwIqnPiy
+         VzRU0Eey/qGOXjYiIa4IWzhyGTsdC2MCl07A5/Umhv7v6auGyXptUdPPvJHpk1O73nsN
+         fZbar89GnJ7V36ASv/TCKe+qF5BzGh1X0vUDiCSehRo4eoLLfeYN2DLkLK08N7Hm+UOh
+         Kcvw+fE7RVCbwQH3oPTKHMcCI/lB7IR+iLZdFVW4M2o2bCfNcxaH2khKHJwrlg1K+4Um
+         XClQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782810175; x=1783414975;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=5pgrFdf6l/LP8HdUy9LmfAejKky5DKLGarNpceFhpEo=;
+        b=MWGq/25cZbj5KNyq9Elb/KjVwicr4sHL3Mptl3AB1AgSCbNn18g+OMR1zQJWLQkX1l
+         7CTGgJY2YZfHFMBdRdDCRBt4HkzVGRX7NXi4iu0dZX0NvTtctZ/MrJW6uTLYAuO7jPOh
+         PWJfWpVeczM7/wFthoeaxtDo2ZAk5mCsq+7S6SeF6DMln1TwU8hpzP7n2ZE+UTNVYu3c
+         hHch/dl/rAGGRiYxeZAWCjhXEjY35KH4rFdPq5gei53lVRN3aHiXy+corzFIUNLa36oC
+         HxCePJ3wKry5H6Tg57xdhLY/v/Bsfitb0o9NilZ8rIweh+wazPiKzjWDoyjQ8SyJCKTt
+         GVdg==
+X-Gm-Message-State: AOJu0YyNGY+C22sDQNDUzXX0MZ7KvPG/Q+h5LeiHT3O6AVStBH7E66Er
+	LZ57UfOMs0ZLh2LsYTLhXVUZB6rQtC+5VmeofUa+lt6L+FF+WwWeb+VZNgy87W/fg8VHdrD3Qkg
+	gq7PO6NnssN0jWTiRNIK+jZmS1qq+uYd43gD666tT1wA4Vv7/mET7Xoxblg9OY4pG6mdN8Mj+bj
+	s7
+X-Gm-Gg: AfdE7cnBOMydygZg7OTYgNzloORG7HVqRUI7/Mt4Pi6Rpiqj+7G5bGHTW9ePFQIUj53
+	EPL2lQLafSgCTfiNZi0DXocUzMN0htJ5Ovd9Kfgl73yhdOymlYrmS6863x9Ui8sztIV1h0qSnsC
+	KGxekVPuCOsxxmEXqrmv4pcv0HgB07TEJ8mWpElKb9OrdsWopu34nACQraLz3LA8wynSm426zpg
+	dYCYarnXwt1cjqbXutdp+gH692sfnGcuI6NAyuNnlEjPzV9KEFTrfxSB/wgiCw8co7NIpVZosG4
+	crQc7lmRmXn11V9KQVKABRTVEBHbFtDVGj5BgYUMaKOtnWurpgk9nZeRm1UixgF1oqlKJVL74fn
+	3GGaO95tm/OUuOTqiywy2mHQAFDALQ+Sn3xlzWNyJ2w==
+X-Received: by 2002:a05:7300:430f:b0:30c:9f31:b631 with SMTP id 5a478bee46e88-30ee13a1086mr2218015eec.33.1782810174660;
+        Tue, 30 Jun 2026 02:02:54 -0700 (PDT)
+X-Received: by 2002:a05:7300:430f:b0:30c:9f31:b631 with SMTP id 5a478bee46e88-30ee13a1086mr2217975eec.33.1782810173961;
+        Tue, 30 Jun 2026 02:02:53 -0700 (PDT)
+Received: from hu-guptap-hyd.qualcomm.com ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-30ee3264f52sm6022612eec.28.2026.06.30.02.02.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 30 Jun 2026 02:02:53 -0700 (PDT)
+From: Prakash Gupta <prakash.gupta@oss.qualcomm.com>
+Date: Tue, 30 Jun 2026 14:32:46 +0530
+Subject: [PATCH v3] iommu/arm-smmu: Use pm_runtime in fault handlers
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/5] clk: implement sync_state support
-To: Xuyang Dong <dongxuyang@eswincomputing.com>,
- Brian Masney <bmasney@redhat.com>, Saravana Kannan <saravanak@kernel.org>,
- Abel Vesa <abelvesa@kernel.org>, Maxime Ripard <mripard@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Russell King <linux@armlinux.org.uk>,
- Bjorn Andersson <andersson@kernel.org>,
- Hans de Goede <johannes.goede@oss.qualcomm.com>,
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org,
- Jens Glathe <jens.glathe@oldschoolsolutions.biz>,
- Min Lin <linmin@eswincomputing.com>
-References: <20260616-clk-sync-state-v2-5-15f82c64d95c@redhat.com>
- <20260617092538.1098-1-dongxuyang@eswincomputing.com>
- <a2b90b4b-bcc1-49d1-b44f-1932d3f79dbe@kernel.org>
- <30842bde.7d7f.19f17bf5819.Coremail.dongxuyang@eswincomputing.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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
-In-Reply-To: <30842bde.7d7f.19f17bf5819.Coremail.dongxuyang@eswincomputing.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260630-smmu-rpm-v3-1-f69874a580fa@oss.qualcomm.com>
+X-B4-Tracking: v=1; b=H4sIADaGQ2oC/22Myw7CIBBFf6VhLQ0MfaAr/8O4KI9aEpHKWKJp+
+ u/SburCzSRncs+ZCdroLJJTMZNok0MXHhnEoSB66B43S53JTIBBzYFJit5PNI6eSmWa1qijMLo
+ jeT5G27v3lrpcMw8OXyF+tnLi63eNNIxDu0cSp5yC7aGvtKwFq88BsXxO3V0H78t8yNpKsPuCi
+ x8fsi81gGhUxUCxP/6yLF+i5uQI5wAAAA==
+X-Change-ID: 20251208-smmu-rpm-8bd67db93dca
+To: Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Rob Clark <robin.clark@oss.qualcomm.com>,
+        Connor Abbott <cwabbott0@gmail.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        iommu@lists.linux.dev, linux-kernel@vger.kernel.org,
+        Akhil P Oommen <akhilpo@oss.qualcomm.com>,
+        Pranjal Shrivastava <praan@google.com>,
+        Pratyush Brahma <pratyush.brahma@oss.qualcomm.com>,
+        Prakash Gupta <prakash.gupta@oss.qualcomm.com>
+X-Mailer: b4 0.15-dev-47773
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjMwMDA3OSBTYWx0ZWRfX4BAHQs27pIj1
+ xM1AAldLk+g7Uxe+/sEpxVHqZL0KkvX4sEw4jEc13w6ERU5PyFB8O+GzU2Hesm6AIQz6BC75uWk
+ CsnjvXu8wfpzmKHBElMEDTsIWhjxbefFAik5+3wsmp3uJXv4yG+VGnEG3AduMAqXtfXX6eCZdPn
+ 4qTKRRfa7qMd0swSGOYf/Z/hnxVPG/qXtCnRf007j+S8nAkd9tB2fQFss48ogDw7la8NK1Fd+ge
+ WLqqy4607ZdXm1yHugepXewnJCkgcirJl0a4FbDjGwam6p8EPy63XP/rmeLqUrPzsR0fk1HG8HP
+ fZAJtA4EbmpYqrApbSnbL/dq+H5uWCyX/eOlWxsCAL/sZVvC9uivWioUhRB8DcQ8+c5KlXCaRSL
+ qRe5VWnkb93pbh4TP0RHKOLakMfyC0TnQiSMSh2+j3XUnpJHxao6PV9hZPBcvhVagH7aPyJv0B1
+ lQItaWrVlwV76155p1Q==
+X-Proofpoint-ORIG-GUID: k0Do3BGH5yM9kKrU2hyIck6c_oEqYiEk
+X-Authority-Analysis: v=2.4 cv=JqbBas4C c=1 sm=1 tr=0 ts=6a43863f cx=c_pps
+ a=Uww141gWH0fZj/3QKPojxA==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=bC-a23v3AAAA:8 a=EUspDBNiAAAA:8 a=44HM8yHCulYeUOODjvgA:9 a=QEXdDO2ut3YA:10
+ a=PxkB5W3o20Ba91AHUih5:22 a=FO4_E8m0qiDe52t0p3_H:22
+X-Proofpoint-GUID: k0Do3BGH5yM9kKrU2hyIck6c_oEqYiEk
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjMwMDA3OSBTYWx0ZWRfX7O2LR1O0mkLD
+ M6it7PQveNTzqid3DUnPIGEg4qmRhID8IpdUTS+nwyajp5oAfKhzYEsUoJXtUMAgUN57MgckFca
+ 2a1smdhnIqFIjrbon7sCsdIScvvvKDY=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-30_02,2026-06-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1011 priorityscore=1501 bulkscore=0 adultscore=0 impostorscore=0
+ suspectscore=0 phishscore=0 malwarescore=0 spamscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606300079
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-5.16 / 15.00];
-	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_COUNT_THREE(0.00)[4];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:dongxuyang@eswincomputing.com,m:bmasney@redhat.com,m:saravanak@kernel.org,m:abelvesa@kernel.org,m:mripard@kernel.org,m:mturquette@baylibre.com,m:sboyd@kernel.org,m:linux@armlinux.org.uk,m:andersson@kernel.org,m:johannes.goede@oss.qualcomm.com,m:konrad.dybcio@oss.qualcomm.com,m:dmitry.baryshkov@oss.qualcomm.com,m:linux-clk@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:jens.glathe@oldschoolsolutions.biz,m:linmin@eswincomputing.com,s:lists@lfdr.de];
-	FORGED_SENDER(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[17];
-	TAGGED_FROM(0.00)[bounces-115330-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-115331-lists,linux-arm-msm=lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:will@kernel.org,m:robin.murphy@arm.com,m:joro@8bytes.org,m:robin.clark@oss.qualcomm.com,m:cwabbott0@gmail.com,m:linux-arm-msm@vger.kernel.org,m:linux-arm-kernel@lists.infradead.org,m:iommu@lists.linux.dev,m:linux-kernel@vger.kernel.org,m:akhilpo@oss.qualcomm.com,m:praan@google.com,m:pratyush.brahma@oss.qualcomm.com,m:prakash.gupta@oss.qualcomm.com,s:lists@lfdr.de];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,qualcomm.com:dkim,qualcomm.com:email];
+	FORGED_SENDER(0.00)[prakash.gupta@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[13];
+	FREEMAIL_TO(0.00)[kernel.org,arm.com,8bytes.org,oss.qualcomm.com,gmail.com];
 	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	FORWARDED(0.00)[lists@lfdr.de];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[prakash.gupta@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	PRECEDENCE_BULK(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[oldschoolsolutions.biz:email,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,eswincomputing.com:email,vger.kernel.org:from_smtp]
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 61DB06E1E04
+X-Rspamd-Queue-Id: DEC2A6E1E00
 
-On 30/06/2026 10:57, Xuyang Dong wrote:
->>>>
->>>> The existing support for disabling unused clks runs in the late initcall
->>>> stage, and it has been known for a long time that this is broken since
->>>> it runs too early in the boot up process. It doesn't work for kernel
->>>> modules, and it also doesn't work if all of the consumers haven't fully
->>>> probed yet. Folks have long recommended to boot certain platforms with
->>>> clk_ignore_unused to work around issues with disabling unused clks.
->>>>
->>>>
->>>> Let's go ahead and add a framework-level sync_state callback for the clk
->>>> subsystem. If a driver doesn't have a sync_state callback configured,
->>>> which is the 99+% use case today, then let's set it up to use the
->>>> clk_sync_state() introduced in this commit so that no driver changes
->>>> are needed.
->>>>
->>>>
->>>> At the time of this writing, there are currently only 7 clk drivers that
->>>> implement sync_state, and all are Qualcomm SoCs where they interact with
->>>> the interconnect framework via icc_sync_state(). A shared helper has
->>>> been created for this platform that calls clk_sync_state(). It is
->>>> expected that any new clk drivers that want to implement their own
->>>> sync_state will also need to call clk_sync_state() at the end of their
->>>> custom sync_state callback.
->>>>
->>>>
->>>> There will be several stages of disabling unused clks:
->>>>
->>>>
->>>> - The first phase will be executed at late_initcall and it will only
->>>>   disable unused clks that do not have a struct dev.
->>>> - The sync_state callback will be invoked for each clk driver once all
->>>>   consumers have probed.
->>>>
->>>>
->>>> This is based on previous attempts by Saravana Kannan and Abel Vesa
->>>> that are linked below.
->>>>
->>>>
->>>> This change was tested on a Thinkpad x13s laptop.
->>>>
->>>>
->>>>     [    0.308051] clk: Disabling unused clocks not associated with a device
->>>>     [    6.541069] qcom_aoss_qmp c300000.power-management: clk: Disabling unused clocks
->>>>     [    6.843310] qcom-qmp-pcie-phy 1c24000.phy: clk: Disabling unused clocks
->>>>     [    7.604556] qcom-qmp-pcie-phy 1c14000.phy: clk: Disabling unused clocks
->>>>     [    8.446161] qcom-qmp-usb-phy 88f1000.phy: clk: Disabling unused clocks
->>>>     [    8.446293] qcom-qmp-usb-phy 88ef000.phy: clk: Disabling unused clocks
->>>>     [    8.546067] qcom-qmp-combo-phy 88eb000.phy: clk: Disabling unused clocks
->>>>     [    8.546203] qcom-qmp-combo-phy 8903000.phy: clk: Disabling unused clocks
->>>>     [    8.546254] qcom-edp-phy aec5a00.phy: clk: Disabling unused clocks
->>>>     [   15.436834] qcom-cpufreq-hw 18591000.cpufreq: clk: Disabling unused clocks
->>>>     [   15.436953] clk-rpmh 18200000.rsc:clock-controller: clk: Disabling unused clocks
->>>>     [   15.723348] qcom-qmp-pcie-phy 1c06000.phy: clk: Disabling unused clocks
->>>>     [   21.063241] q6prm-lpass-clock 3000000.remoteproc:glink-edge:gpr:service@2:clock-controller: clk: Disabling unused clocks
->>>>     [   21.081996] va_macro 3370000.codec: clk: Disabling unused clocks
->>>>     [   21.092740] rx_macro 3200000.rxmacro: clk: Disabling unused clocks
->>>>     [   21.118261] wsa_macro 3240000.codec: clk: Disabling unused clocks
->>>>     [   21.128758] tx_macro 3220000.txmacro: clk: Disabling unused clocks
->>>>
->>>>
->>>> Tested-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
->>>> Signed-off-by: Brian Masney <bmasney@redhat.com>
->>>> Link: https://www.youtube.com/watch?v=tXYzM8yLIQA
->>>> Link: https://lore.kernel.org/all/20210407034456.516204-1-saravanak@google.com/
->>>> Link: https://lore.kernel.org/all/20221227204528.1899863-1-abel.vesa@linaro.org/
->>>> ---
->>>>  drivers/clk/clk.c | 72 ++++++++++++++++++++++++++++++++++++++---------
->>>>  1 file changed, 59 insertions(+), 13 deletions(-)
->>>>
->>>>
->>>> diff --git a/drivers/clk/clk.c b/drivers/clk/clk.c
->>>> index 9cb2b42d1be4..7a15cceec620 100644
->>>> --- a/drivers/clk/clk.c
->>>> +++ b/drivers/clk/clk.c
->>>> @@ -1442,14 +1442,39 @@ static void clk_core_disable_unprepare(struct clk_core *core)
->>>>  	clk_core_unprepare_lock(core);
->>>>  }
->>>>  
->>>> -static void __init clk_unprepare_unused_subtree(struct clk_core *core)
->>>> +/*
->>>> + * Returns true if @core should be skipped during an unused-clock sweep for
->>>> + * @dev.  When @dev is NULL the sweep is the global late_initcall pass; when
->>>> + * @dev is non-NULL the sweep is a per-device sync_state pass.
->>>> + */
->>>> +static bool clk_core_skip_unused(struct clk_core *core, struct device *dev)
->>>> +{
->>>> +	/*
->>>> +	 * At late_initcall, skip clocks that belong to a device — they will be
->>>> +	 * handled at sync_state time.
->>>> +	 */
->>>> +	if (!dev && core->dev)
->>>> +		return true;
->>>> +
->>>> +	/* When called from sync_state, only process clocks for this device. */
->>>> +	if (dev && core->dev != dev)
->>>> +		return true;
->>>> +
->>>> +	return false;
->>>> +}
->>>> +
->>>> +static void clk_unprepare_unused_subtree(struct clk_core *core,
->>>> +					 struct device *dev)
->>>>  {
->>>>  	struct clk_core *child;
->>>>  
->>>>  	lockdep_assert_held(&prepare_lock);
->>>>  
->>>>  	hlist_for_each_entry(child, &core->children, child_node)
->>>> -		clk_unprepare_unused_subtree(child);
->>>> +		clk_unprepare_unused_subtree(child, dev);
->>>> +
->>>> +	if (clk_core_skip_unused(core, dev))
->>>> +		return;
->>>>  
->>>>  	if (core->prepare_count)
->>>>  		return;
->>>> @@ -1467,7 +1492,8 @@ static void __init clk_unprepare_unused_subtree(struct clk_core *core)
->>>>  	}
->>>>  }
->>>>  
->>>> -static void __init clk_disable_unused_subtree(struct clk_core *core)
->>>> +static void clk_disable_unused_subtree(struct clk_core *core,
->>>> +				       struct device *dev)
->>>>  {
->>>>  	struct clk_core *child;
->>>>  	unsigned long flags;
->>>> @@ -1475,7 +1501,10 @@ static void __init clk_disable_unused_subtree(struct clk_core *core)
->>>>  	lockdep_assert_held(&prepare_lock);
->>>>  
->>>>  	hlist_for_each_entry(child, &core->children, child_node)
->>>> -		clk_disable_unused_subtree(child);
->>>> +		clk_disable_unused_subtree(child, dev);
->>>> +
->>>> +	if (clk_core_skip_unused(core, dev))
->>>> +		return;
->>>>  
->>>>  	if (core->flags & CLK_OPS_PARENT_ENABLE)
->>>>  		clk_core_prepare_enable(core->parent);
->>>> @@ -1508,7 +1537,7 @@ static void __init clk_disable_unused_subtree(struct clk_core *core)
->>>>  		clk_core_disable_unprepare(core->parent);
->>>>  }
->>>>  
->>>> -static bool clk_ignore_unused __initdata;
->>>> +static bool clk_ignore_unused;
->>>>  static int __init clk_ignore_unused_setup(char *__unused)
->>>>  {
->>>>  	clk_ignore_unused = true;
->>>> @@ -1516,7 +1545,7 @@ static int __init clk_ignore_unused_setup(char *__unused)
->>>>  }
->>>>  __setup("clk_ignore_unused", clk_ignore_unused_setup);
->>>>  
->>>> -static int __init clk_disable_unused(void)
->>>> +static int __clk_disable_unused(struct device *dev)
->>>>  {
->>>>  	struct clk_core *core;
->>>>  	int ret;
->>>> @@ -1526,7 +1555,10 @@ static int __init clk_disable_unused(void)
->>>>  		return 0;
->>>>  	}
->>>>  
->>>> -	pr_info("clk: Disabling unused clocks\n");
->>>> +	if (dev)
->>>> +		dev_info(dev, "clk: Disabling unused clocks\n");
->>>> +	else
->>>> +		pr_info("clk: Disabling unused clocks not associated with a device\n");
->>>>  
->>>>  	ret = clk_pm_runtime_get_all();
->>>>  	if (ret)
->>>> @@ -1538,16 +1570,16 @@ static int __init clk_disable_unused(void)
->>>>  	clk_prepare_lock();
->>>>  
->>>>  	hlist_for_each_entry(core, &clk_root_list, child_node)
->>>> -		clk_disable_unused_subtree(core);
->>>> +		clk_disable_unused_subtree(core, dev);
->>>>  
->>>>  	hlist_for_each_entry(core, &clk_orphan_list, child_node)
->>>> -		clk_disable_unused_subtree(core);
->>>> +		clk_disable_unused_subtree(core, dev);
->>>>  
->>>>  	hlist_for_each_entry(core, &clk_root_list, child_node)
->>>> -		clk_unprepare_unused_subtree(core);
->>>> +		clk_unprepare_unused_subtree(core, dev);
->>>>  
->>>>  	hlist_for_each_entry(core, &clk_orphan_list, child_node)
->>>> -		clk_unprepare_unused_subtree(core);
->>>> +		clk_unprepare_unused_subtree(core, dev);
->>>>  
->>>>  	clk_prepare_unlock();
->>>>  
->>>> @@ -1555,11 +1587,16 @@ static int __init clk_disable_unused(void)
->>>>  
->>>>  	return 0;
->>>>  }
->>>> +
->>>> +static int __init clk_disable_unused(void)
->>>> +{
->>>> +	return __clk_disable_unused(NULL);
->>>> +}
->>>>  late_initcall_sync(clk_disable_unused);
->>>>  
->>>>  void clk_sync_state(struct device *dev)
->>>>  {
->>>> -	/* Will fill in */
->>>> +	__clk_disable_unused(dev);
->>>>  }
->>>>  EXPORT_SYMBOL_GPL(clk_sync_state);
->>>>  
->>>> @@ -4345,8 +4382,17 @@ __clk_register(struct device *dev, struct device_node *np, struct clk_hw *hw)
->>>>  	core->dev = dev;
->>>>  	clk_pm_runtime_init(core);
->>>>  	core->of_node = np;
->>>> -	if (dev && dev->driver)
->>>> +	if (dev && dev->driver) {
->>>>  		core->owner = dev->driver->owner;
->>>> +
->>>> +		/*
->>>> +		 * If a clk provider sets their own sync_state, then it needs to
->>>> +		 * also call clk_sync_state(). dev_set_drv_sync_state() won't
->>>> +		 * overwrite the sync_state callback, and this call will fail
->>>> +		 * with -EBUSY.
->>>> +		 */
->>>> +		dev_set_drv_sync_state(dev, clk_sync_state);
->>>> +	}
->>>>  	core->hw = hw;
->>>>  	core->flags = init->flags;
->>>>  	core->num_parents = init->num_parents;
->>>
->>> Hi Brian,
->>>
->>> Thank you for the patch set. I tested this in my tree on Sifive HiFive 
->>> Premier P550, and it behaved correctly.
->>>
->>> Tested-by: Xuyang Dong <dongxuyang@eswincomputing.com> # hfp550
->>
->> If I understand correctly your platform, you tested nothing. You
->> executed no code from common part and no code from the drivers listed
->> here. This is not a real test in such case.
->>
->> When you test code, please actually be sure you execute the tested code.
->>
->> I am afraid the tag is not applicable.
->>
-> 
-> Hi Krzysztof and Brian,
-> 
-> I applied this series via b4 shazam 
-> https://lore.kernel.org/all/20260616-clk-sync-state-v2-0-15f82c64d95c@redhat.com/.
-> 
-> I dropped 'clk_ignore_unused' at compile time. After booting the system, 
-> I ran dmesg | grep "unused clock" and observed the following output:
-> 
-> [root@eswin-os:~]$ dmesg | grep "unused clock"
-> [    6.388986] clk: Disabling unused clocks not associated with a device
-> [    6.395585] eic7700-clock 51828000.clock-controller: clk: Disabling unused clocks
-> [    6.758786] eic7700-hsp-clock 50440000.clock-controller: clk: Disabling unused clocks
-> [root@eswin-os:~]$ 
-> 
-> Does this testing approach look correct to you?
+Commit d4a44f0750bb ("iommu/arm-smmu: Invoke pm_runtime across the driver")
+enabled pm_runtime for the arm-smmu device. On systems where the SMMU
+sits in a power domain, all register accesses must be done while the
+device is runtime active to avoid unclocked register reads and
+potential NoC errors.
 
-Hm, I guess you are right, last patch indeed has common clock code. I
-missed that.
+So far, this has not been an issue for most SMMU clients because
+stall-on-fault is enabled by default. While a translation fault is
+being handled, the SMMU stalls further translations for that context
+bank, so the fault handler would not race with a powered-down SMMU.
+
+Adreno SMMU now disables stall-on-fault in the presence of fault
+storms to avoid saturating SMMU resources and hanging the GMU. With
+stall-on-fault disabled, the SMMU can generate faults while its power
+domain may no longer be enabled, which makes unclocked accesses to
+fault-status registers in the SMMU fault handlers possible.
+
+Guard the context and global fault handlers with
+arm_smmu_rpm_get_if_active() and arm_smmu_rpm_put() so that all SMMU
+fault register accesses are done with the SMMU powered. If the SMMU is
+not runtime active, the fault can be safely ignored as
+arm_smmu_device_reset() clears fault registers on resume.
+
+Additionally, disable fault reporting in arm_smmu_runtime_suspend()
+before powering down. pm_runtime_get_if_active() returns 0 during
+RPM_SUSPENDING, so without this, level-triggered fault interrupts would
+cause an interrupt storm while the device is being suspended.
+arm_smmu_device_reset() re-enables fault reporting on resume.
+
+Fixes: b13044092c1e ("drm/msm: Temporarily disable stall-on-fault after a page fault")
+Co-developed-by: Pratyush Brahma <pratyush.brahma@oss.qualcomm.com>
+Signed-off-by: Pratyush Brahma <pratyush.brahma@oss.qualcomm.com>
+Signed-off-by: Prakash Gupta <prakash.gupta@oss.qualcomm.com>
+---
+Changes in v3:
+- Add arm_smmu_rpm_get_if_active() wrapper that returns 1 when pm_runtime
+  is disabled, ensuring fault handlers work on non-pm_runtime systems
+- Disable fault reporting in arm_smmu_runtime_suspend() before powering
+  down to prevent interrupt storms during RPM_SUSPENDING state
+- Use pm_runtime_put_autosuspend() in arm_smmu_rpm_put() instead of
+  private __pm_runtime_put_autosuspend()
+- Link to v2: https://patch.msgid.link/20260313-smmu-rpm-v2-1-8c2236b402b0@oss.qualcomm.com
+
+Changes in v2:
+- Switched from arm_smmu_rpm_get()/arm_smmu_rpm_put() wrappers to
+  pm_runtime_get_if_active()/pm_runtime_put_autosuspend() APIs
+- Added support for smmu->impl->global_fault callback in global fault handler
+- Remove threaded irq context fault restriction to allow modifying stall
+  mode for adreno smmu
+- Link to v1: https://patch.msgid.link/20260127-smmu-rpm-v1-1-2ef2f4c85305@oss.qualcomm.com
+---
+ drivers/iommu/arm/arm-smmu/arm-smmu.c | 92 +++++++++++++++++++++++++----------
+ 1 file changed, 67 insertions(+), 25 deletions(-)
+
+diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+index 0bd21d206eb3..045389e89484 100644
+--- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
++++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+@@ -79,11 +79,16 @@ static inline int arm_smmu_rpm_get(struct arm_smmu_device *smmu)
+ 
+ static inline void arm_smmu_rpm_put(struct arm_smmu_device *smmu)
+ {
+-	if (pm_runtime_enabled(smmu->dev)) {
+-		pm_runtime_mark_last_busy(smmu->dev);
+-		__pm_runtime_put_autosuspend(smmu->dev);
++	if (pm_runtime_enabled(smmu->dev))
++		pm_runtime_put_autosuspend(smmu->dev);
++}
+ 
+-	}
++static inline int arm_smmu_rpm_get_if_active(struct arm_smmu_device *smmu)
++{
++	if (!pm_runtime_enabled(smmu->dev))
++		return 1;
++
++	return pm_runtime_get_if_active(smmu->dev);
+ }
+ 
+ static void arm_smmu_rpm_use_autosuspend(struct arm_smmu_device *smmu)
+@@ -462,10 +467,20 @@ static irqreturn_t arm_smmu_context_fault(int irq, void *dev)
+ 	int idx = smmu_domain->cfg.cbndx;
+ 	int ret;
+ 
++	if (!arm_smmu_rpm_get_if_active(smmu))
++		return IRQ_NONE;
++
++	if (smmu->impl && smmu->impl->context_fault) {
++		ret = smmu->impl->context_fault(irq, dev);
++		goto out_power_off;
++	}
++
+ 	arm_smmu_read_context_fault_info(smmu, idx, &cfi);
+ 
+-	if (!(cfi.fsr & ARM_SMMU_CB_FSR_FAULT))
+-		return IRQ_NONE;
++	if (!(cfi.fsr & ARM_SMMU_CB_FSR_FAULT)) {
++		ret = IRQ_NONE;
++		goto out_power_off;
++	}
+ 
+ 	ret = report_iommu_fault(&smmu_domain->domain, NULL, cfi.iova,
+ 		cfi.fsynr & ARM_SMMU_CB_FSYNR0_WNR ? IOMMU_FAULT_WRITE : IOMMU_FAULT_READ);
+@@ -480,7 +495,12 @@ static irqreturn_t arm_smmu_context_fault(int irq, void *dev)
+ 				  ret == -EAGAIN ? 0 : ARM_SMMU_RESUME_TERMINATE);
+ 	}
+ 
+-	return IRQ_HANDLED;
++	ret = IRQ_HANDLED;
++
++out_power_off:
++	arm_smmu_rpm_put(smmu);
++
++	return ret;
+ }
+ 
+ static irqreturn_t arm_smmu_global_fault(int irq, void *dev)
+@@ -489,14 +509,25 @@ static irqreturn_t arm_smmu_global_fault(int irq, void *dev)
+ 	struct arm_smmu_device *smmu = dev;
+ 	static DEFINE_RATELIMIT_STATE(rs, DEFAULT_RATELIMIT_INTERVAL,
+ 				      DEFAULT_RATELIMIT_BURST);
++	int ret;
++
++	if (!arm_smmu_rpm_get_if_active(smmu))
++		return IRQ_NONE;
++
++	if (smmu->impl && smmu->impl->global_fault) {
++		ret = smmu->impl->global_fault(irq, dev);
++		goto out_power_off;
++	}
+ 
+ 	gfsr = arm_smmu_gr0_read(smmu, ARM_SMMU_GR0_sGFSR);
+ 	gfsynr0 = arm_smmu_gr0_read(smmu, ARM_SMMU_GR0_sGFSYNR0);
+ 	gfsynr1 = arm_smmu_gr0_read(smmu, ARM_SMMU_GR0_sGFSYNR1);
+ 	gfsynr2 = arm_smmu_gr0_read(smmu, ARM_SMMU_GR0_sGFSYNR2);
+ 
+-	if (!gfsr)
+-		return IRQ_NONE;
++	if (!gfsr) {
++		ret = IRQ_NONE;
++		goto out_power_off;
++	}
+ 
+ 	if (__ratelimit(&rs)) {
+ 		if (IS_ENABLED(CONFIG_ARM_SMMU_DISABLE_BYPASS_BY_DEFAULT) &&
+@@ -513,7 +544,11 @@ static irqreturn_t arm_smmu_global_fault(int irq, void *dev)
+ 	}
+ 
+ 	arm_smmu_gr0_write(smmu, ARM_SMMU_GR0_sGFSR, gfsr);
+-	return IRQ_HANDLED;
++	ret = IRQ_HANDLED;
++
++out_power_off:
++	arm_smmu_rpm_put(smmu);
++	return ret;
+ }
+ 
+ static void arm_smmu_init_context_bank(struct arm_smmu_domain *smmu_domain,
+@@ -683,7 +718,6 @@ static int arm_smmu_init_domain_context(struct arm_smmu_domain *smmu_domain,
+ 	enum io_pgtable_fmt fmt;
+ 	struct iommu_domain *domain = &smmu_domain->domain;
+ 	struct arm_smmu_cfg *cfg = &smmu_domain->cfg;
+-	irqreturn_t (*context_fault)(int irq, void *dev);
+ 
+ 	mutex_lock(&smmu_domain->init_mutex);
+ 	if (smmu_domain->smmu)
+@@ -850,19 +884,14 @@ static int arm_smmu_init_domain_context(struct arm_smmu_domain *smmu_domain,
+ 	 */
+ 	irq = smmu->irqs[cfg->irptndx];
+ 
+-	if (smmu->impl && smmu->impl->context_fault)
+-		context_fault = smmu->impl->context_fault;
+-	else
+-		context_fault = arm_smmu_context_fault;
+-
+ 	if (smmu->impl && smmu->impl->context_fault_needs_threaded_irq)
+ 		ret = devm_request_threaded_irq(smmu->dev, irq, NULL,
+-						context_fault,
++						arm_smmu_context_fault,
+ 						IRQF_ONESHOT | IRQF_SHARED,
+ 						"arm-smmu-context-fault",
+ 						smmu_domain);
+ 	else
+-		ret = devm_request_irq(smmu->dev, irq, context_fault, IRQF_SHARED,
++		ret = devm_request_irq(smmu->dev, irq, arm_smmu_context_fault, IRQF_SHARED,
+ 				       "arm-smmu-context-fault", smmu_domain);
+ 
+ 	if (ret < 0) {
+@@ -2125,7 +2154,6 @@ static int arm_smmu_device_probe(struct platform_device *pdev)
+ 	struct device *dev = &pdev->dev;
+ 	int num_irqs, i, err;
+ 	u32 global_irqs, pmu_irqs;
+-	irqreturn_t (*global_fault)(int irq, void *dev);
+ 
+ 	smmu = devm_kzalloc(dev, sizeof(*smmu), GFP_KERNEL);
+ 	if (!smmu) {
+@@ -2205,18 +2233,13 @@ static int arm_smmu_device_probe(struct platform_device *pdev)
+ 		smmu->num_context_irqs = smmu->num_context_banks;
+ 	}
+ 
+-	if (smmu->impl && smmu->impl->global_fault)
+-		global_fault = smmu->impl->global_fault;
+-	else
+-		global_fault = arm_smmu_global_fault;
+-
+ 	for (i = 0; i < global_irqs; i++) {
+ 		int irq = platform_get_irq(pdev, i);
+ 
+ 		if (irq < 0)
+ 			return irq;
+ 
+-		err = devm_request_irq(dev, irq, global_fault, IRQF_SHARED,
++		err = devm_request_irq(dev, irq, arm_smmu_global_fault, IRQF_SHARED,
+ 				       "arm-smmu global fault", smmu);
+ 		if (err)
+ 			return dev_err_probe(dev, err,
+@@ -2306,6 +2329,25 @@ static int __maybe_unused arm_smmu_runtime_resume(struct device *dev)
+ static int __maybe_unused arm_smmu_runtime_suspend(struct device *dev)
+ {
+ 	struct arm_smmu_device *smmu = dev_get_drvdata(dev);
++	int i;
++	u32 reg;
++
++	/*
++	 * Disable fault reporting before powering down to prevent unclocked
++	 * register accesses in the fault handlers if an interrupt races with
++	 * the suspend callback (e.g. device in RPM_SUSPENDING state).
++	 * arm_smmu_device_reset() re-enables fault reporting on resume.
++	 */
++	reg = arm_smmu_gr0_read(smmu, ARM_SMMU_GR0_sCR0);
++	reg &= ~(ARM_SMMU_sCR0_GFRE | ARM_SMMU_sCR0_GFIE |
++		 ARM_SMMU_sCR0_GCFGFRE | ARM_SMMU_sCR0_GCFGFIE);
++	arm_smmu_gr0_write(smmu, ARM_SMMU_GR0_sCR0, reg);
++
++	for (i = 0; i < smmu->num_context_banks; i++) {
++		reg = arm_smmu_cb_read(smmu, i, ARM_SMMU_CB_SCTLR);
++		reg &= ~(ARM_SMMU_SCTLR_CFIE | ARM_SMMU_SCTLR_CFRE);
++		arm_smmu_cb_write(smmu, i, ARM_SMMU_CB_SCTLR, reg);
++	}
+ 
+ 	clk_bulk_disable(smmu->num_clks, smmu->clks);
+ 
+
+---
+base-commit: ba3e43a9e601636f5edb54e259a74f96ca3b8fd8
+change-id: 20251208-smmu-rpm-8bd67db93dca
 
 Best regards,
-Krzysztof
+--  
+Prakash Gupta <prakash.gupta@oss.qualcomm.com>
+
 
