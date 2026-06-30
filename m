@@ -1,137 +1,173 @@
-Return-Path: <linux-arm-msm+bounces-115485-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-115486-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id YHoaH9ncQ2pJkgoAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-115485-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 17:12:25 +0200
+	id 5v2vDj/cQ2rKkQoAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-115486-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 17:09:51 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 721E96E5C9D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 17:12:24 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id E5C056E5C0D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 17:09:50 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=mailbox.org header.s=mail20150812 header.b=KGw0nMd2;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115485-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 104.64.211.4 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115485-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=reject) header.from=mailbox.org;
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b="VWo5d/zm";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115486-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c09:e001:a7::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115486-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 3628B30102DE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 15:07:00 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 21DEB3086832
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 15:07:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 421C82F8E98;
-	Tue, 30 Jun 2026 15:06:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 000A82F5A12;
+	Tue, 30 Jun 2026 15:07:22 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mout-p-101.mailbox.org (mout-p-101.mailbox.org [80.241.56.151])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A18F2C235E;
-	Tue, 30 Jun 2026 15:06:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDCE233260D;
+	Tue, 30 Jun 2026 15:07:21 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782832018; cv=none; b=hOQCnad+g/9MeBUzP3XMjTZ+tqZcv61T5UabBvyOAci5dtKM6gfh8JuACn/BJyItwr6qPwY5igspG7fgtl1H3/NC99H6RQRbn5U1sfXtk/vWcsAGBrihNvpdN00vrEA7Kuh4HS6bDWSswUt3bZhGeV4ZTa1Lbx9SiO9McRUXEBM=
+	t=1782832042; cv=none; b=pqW3Ig3JqqER0b2GHJmaeIFvOmJ6OOOLnNpfXsAFceEuApZGiTA+QV7HrqSS+9j8rJ4u6JmytINnUqSxFJDJCarbQ3RPD80VgswKRgsoGGFWNMkuwrBJnxwt3mezoAzFtDctuqazNxdJv80DQ2FoSCKeZ9eAritjK8yGsXTh6kw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782832018; c=relaxed/simple;
-	bh=ddd5nFk6HZnzFzbw6Jc4Os3J5GUa2PDKNyyiZAs+zaI=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=kEzH/9majMv6w1fdqLTvDQ6nIp7YUIXdTyEjXQ5QUl31hugbOFsQqliKQ/qBvF4X84yJiGfcFjXI1EgQJxBQWQ20O6NClxPPrzOeIgHBSttp8c2Z+d9zxtK5aeSK9mf8s4W8ld23SXEneF4CbIH2JJaUanxbofHdmAxHxfGbKVU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org; spf=pass smtp.mailfrom=mailbox.org; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=KGw0nMd2; arc=none smtp.client-ip=80.241.56.151
-Received: from smtp102.mailbox.org (smtp102.mailbox.org [10.196.197.102])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA512)
-	(No client certificate requested)
-	by mout-p-101.mailbox.org (Postfix) with ESMTPS id 4gqRM072GBz8swT;
-	Tue, 30 Jun 2026 17:06:52 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
-	t=1782832013;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=nvcasnePEEpk54Kk2gu0D4PLMNe04Pkcm0wLQLpZBNU=;
-	b=KGw0nMd26zlxfbKAnryt/6ZFiJBPJ6JNXHuoZqPscq1eJto32yAf2gpWSXkSOGF1NqFeRA
-	s3E98dJS3RKyp4nsb3oRf6eFyBF5zz5wNVwejNSJpWay6z1gW+BUswwrEEWltrk+EAQXm/
-	/asRYYFQ6MnKdZE1KsyesUZTspldiKix4gDYljCsc0KNnavRXRfjU8+76el14xqhhOcJs9
-	tc+08vKpOWe8N125GyqtJKaX5t1xxe+2zolf6F2eGYyJlP3WTl8YdtWzcYuw5nB0ktEAVs
-	gs49sRgPN5DqolmqK76Isfb1e+13tExjBOdPv93LH64mvngnh8Po9grh0URq/g==
-Message-ID: <5a4bb6aba4616d1a73ef9b5629f22ed61882eafa.camel@mailbox.org>
-Subject: Re: [PATCH 0/3] Enable icc-clk support for Qualcomm IPQ9650
-From: Manuel Ebner <manuelebner@mailbox.org>
-To: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>, 
- Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>, Krzysztof
- Kozlowski <krzk+dt@kernel.org>,  Conor Dooley <conor+dt@kernel.org>, Bjorn
- Andersson <andersson@kernel.org>, Michael Turquette	
- <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, Brian Masney	
- <bmasney@redhat.com>, Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-clk@vger.kernel.org,  Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Date: Tue, 30 Jun 2026 17:06:45 +0200
-In-Reply-To: <20260519-ipq9650_icc-v1-0-4d3554c94257@oss.qualcomm.com>
-References: <20260519-ipq9650_icc-v1-0-4d3554c94257@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+	s=arc-20240116; t=1782832042; c=relaxed/simple;
+	bh=cKm2TQWYYDVT3YFdxldD0hjiBGzE9D9hlUxi+G5hJR4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Q3uGyzqSSFY8BAIqbGZmpH9wh8OAYEncg/6BSQWfBxV1D9/q7sZfebjxqRU73rwLAGggf8iuXNPgWg8SKQDlTz9LRPZ4eckAU1ve50hbs/xwdUOZy3uEp6pWfzCr5qbKCDhucs8DCf6FUP8PRnSHTXNi8B7bXo6nMlA1Du3P3OY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VWo5d/zm; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8B281F000E9;
+	Tue, 30 Jun 2026 15:07:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1782832041;
+	bh=wTHt9bkGo2z8+HbJjndW5De4w7Z8ltkhBocl59q8cBI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date;
+	b=VWo5d/zmJmON1qOV9AYJDW/ctJYJXLJQkVA1HC4UdF7pdDRpnvQH41EoBBVa7ws/k
+	 5iPO1Xt7AhEZ5Paecu0wP52kd7P1UPDArD6vb6Tja32/Ffk2pFmy98SJ58ulYCg1Nm
+	 x3w+Qxgc7EsqTsEnuIV67CnFbp814Bs0pK2peHLvY48cyjpybiedpnHhCwezM7+kZH
+	 psRtDQAjpWKXDIaHh8X8vQuEagwfFsQs1aZZf8ROI/lBfmjYrfiJEZW/T6ckihnoRC
+	 NVlw9NuBNUdg6u8Wg0O7KsRYe81hcMQtSTHdoPr8A5R4J6i49vg8R2hYbxpqQXw139
+	 a8FRPWQ3krRPQ==
+From: Thomas Gleixner <tglx@kernel.org>
+To: Maulik Shah <maulik.shah@oss.qualcomm.com>, Bjorn Andersson
+ <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, Rob
+ Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor
+ Dooley <conor+dt@kernel.org>, Linus Walleij <linusw@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-gpio@vger.kernel.org, Sneh Mankad
+ <sneh.mankad@oss.qualcomm.com>, Maulik Shah <maulik.shah@oss.qualcomm.com>
+Subject: Re: [PATCH v3 5/8] irqchip/qcom-pdc: Configure PDC to pass through
+ mode
+In-Reply-To: <20260616-hamoa_pdc_v3-v3-5-4d8e1504ea75@oss.qualcomm.com>
+References: <20260616-hamoa_pdc_v3-v3-0-4d8e1504ea75@oss.qualcomm.com>
+ <20260616-hamoa_pdc_v3-v3-5-4d8e1504ea75@oss.qualcomm.com>
+Date: Tue, 30 Jun 2026 17:07:18 +0200
+Message-ID: <87echoqd7d.ffs@fw13>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MBO-RS-ID: d6b2c0e86fd9608152c
-X-MBO-RS-META: n95qsm97o7q6rsztba4bquoonb4pgiar
+Content-Type: text/plain
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-4.16 / 15.00];
+	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[mailbox.org,reject];
-	R_DKIM_ALLOW(-0.20)[mailbox.org:s=mail20150812];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
+	MID_RHS_NOT_FQDN(0.50)[];
+	R_MISSING_CHARSET(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	FORGED_SENDER(0.00)[tglx@kernel.org,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[13];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-115485-lists,linux-arm-msm=lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:kathiravan.thirumoorthy@oss.qualcomm.com,m:djakov@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:andersson@kernel.org,m:mturquette@baylibre.com,m:sboyd@kernel.org,m:bmasney@redhat.com,m:konradybcio@kernel.org,m:linux-kernel@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-pm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-clk@vger.kernel.org,m:konrad.dybcio@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
-	FORGED_SENDER(0.00)[manuelebner@mailbox.org,linux-arm-msm@vger.kernel.org];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[16];
-	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
+	RCVD_COUNT_THREE(0.00)[4];
+	FORGED_RECIPIENTS(0.00)[m:maulik.shah@oss.qualcomm.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linusw@kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-gpio@vger.kernel.org,m:sneh.mankad@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	FORWARDED(0.00)[lists@lfdr.de];
-	FROM_HAS_DN(0.00)[];
+	TAGGED_FROM(0.00)[bounces-115486-lists,linux-arm-msm=lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	ALIAS_RESOLVED(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[manuelebner@mailbox.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[mailbox.org:+];
-	MID_RHS_MATCH_FROM(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[tglx@kernel.org,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	ALIAS_RESOLVED(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	MISSING_XM_UA(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo,vger.kernel.org:from_smtp,mailbox.org:dkim,mailbox.org:mid,mailbox.org:from_mime]
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,fw13:mid]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 721E96E5C9D
+X-Rspamd-Queue-Id: E5C056E5C0D
 
-On Tue, 2026-05-19 at 14:17 +0530, Kathiravan Thirumoorthy wrote:
-> Add the master and slave=20
+On Tue, Jun 16 2026 at 14:55, Maulik Shah wrote:
+> All PDC irqchip supports pass through mode in which both Direct SPIs and
 
-coding-style.rst line 340 suggest:
-> For symbol names and documentation, avoid introducing new usage of
-> 'master / slave' (or 'slave' independent of 'master') and 'blacklist /
-> whitelist'.
->=20
-> Recommended replacements for 'master / slave' are:
->     '{primary,main} / {secondary,replica,subordinate}'
->     '{initiator,requester} / {target,responder}'
->     '{controller,host} / {device,worker,proxy}'
->     'leader / follower'
->     'director / performer'
+All PDC variants support pass .. ??
 
-Please consider changing terms.=20
+> GPIO IRQs (as SPIs) are sent to GIC without latching at PDC.
+>
+> Newer PDCs (v3.0 onwards) also support additional secondary controller mode
+> where PDC latches GPIO IRQs and sends to GIC as level type IRQ. Direct SPIs
 
-Thanks
- Manuel
+latches the GPIO interrupts and sends them to GIC as level type interrupts.
 
+> still works same as pass through mode without latching at PDC even in
+
+SPIs .. work the same as pass-through mode ....
+
+> secondary controller mode.
+>
+> All the SoCs so far default uses pass through mode with the exception of
+
+SoCs ... use pass-through 
+
+> x1e. x1e PDC may be set to secondary controller mode for builds on CRD
+> boards whereas it may be set to pass through mode for IoT-EVK boards.
+> The mode configuration is done in firmware and initially shipped windows
+> firmware did not have SCM interface to read or modify the PDC mode.
+> Later only write access is opened up for non secure world.
+
+.. for the non-secure ..
+
+> +/**
+> + * qcom_pdc_gic_set_type: Configure PDC for the interrupt
+> + *
+> + * @d: the interrupt data
+> + * @type: the interrupt type
+
+https://docs.kernel.org/process/maintainer-tip.html#struct-declarations-and-initializers
+
+I'm sure I pointed you to that document before.
+
+> + *
+> + * All @type are forwarded as Level type to parent GIC
+> + */
+> +static int qcom_pdc_gic_secondary_set_type(struct irq_data *d, unsigned int type)
+> +{
+> +	enum pdc_irq_config_bits pdc_type;
+> +	enum pdc_irq_config_bits old_pdc_type;
+
+Chapter before the above ...
+
+> @@ -449,8 +628,13 @@ static int pdc_setup_pin_mapping(struct device *dev, struct device_node *np)
+>  		if (ret)
+>  			return ret;
+>  
+> -		for (int i = 0; i < pdc->region[n].cnt; i++)
+> -			pdc->enable_intr(i + pdc->region[n].pin_base, 0);
+> +		for (int i = 0; i < pdc->region[n].cnt; i++) {
+> +			if (pdc_pin_is_gpio(i + pdc->region[n].pin_base) &&
+> +			    pdc->mode == PDC_SECONDARY_MODE)
+> +				pdc->clear_gpio(i + pdc->region[n].pin_base);
+> +
+
+Requires guard(irqsave)(...)
 
 
