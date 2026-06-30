@@ -1,91 +1,91 @@
-Return-Path: <linux-arm-msm+bounces-115514-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-115515-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id 4f+wJMrvQ2pClwoAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-115514-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 18:33:14 +0200
+	id 2v0NLAnxQ2qflwoAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-115515-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 18:38:33 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id BD2D26E67B4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 18:33:13 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2220D6E687B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 18:38:33 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=G0jqsM3U;
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=jbwOLCaT;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=G0jqsM3U;
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=jbwOLCaT;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115514-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115514-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=DDehMC0y;
+	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=5nuM8j4g;
+	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=DDehMC0y;
+	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=5nuM8j4g;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115515-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115515-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=none) header.from=suse.de;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id BF5F430143FE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 16:33:12 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 0E98A3063617
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 16:35:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 934393B6C15;
-	Tue, 30 Jun 2026 16:33:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6A4CB3C378D;
+	Tue, 30 Jun 2026 16:35:11 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03DCA3B4E8A
-	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jun 2026 16:33:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99EBE3B6C15
+	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jun 2026 16:35:09 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782837191; cv=none; b=qOwNcULEjWp3U7VxeKw36qQjiuRokmO8zJ57TMFb36m34nkvF1eZnSjCVlgXizhfoTTl7fAkKYgTL6wz2cNClhihFkB2RpDp/bxYgzfjbvXwM9peVKCaWV+SJf61r/M/RQjFtJHQ4SwYmz5O3rqo4STX7xMbuwCD5XZrN1JAFtI=
+	t=1782837311; cv=none; b=MEOECpDObiXrE4QkJFNajBeCc+VgYMB+uWnFWWxDsiK94xB8yTQzbCEW3pan1tjj/BtvS7BO1850XieRSgg2byPfnGoKk9X8GVPkBc0DGj910AkZfGsW4bIji5mwMTCjt8xRYx1KcgdzxDRglweTgc07GyJHJ4mu3NyBhF3nI98=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782837191; c=relaxed/simple;
-	bh=kmi8GZVz9zYTl2KKf98vPif93JfgqaRPAtGykOlGntc=;
+	s=arc-20240116; t=1782837311; c=relaxed/simple;
+	bh=12EYi0dlGNFxSGoPyMwXwK9usabIcMzzYc7pKra6iK8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iaAIh2zdWUZ8wERwMiDHhH6gvKOHUmqO2T14MuzA1Wh8QGLy9d97iCzWZbSe+aozAxorRkEV1CwQ/UJkoAZm1Yf7VmXMTimKqMlyQWEBhI8e5/k6jtLcpqwwI7qO9j2nHqdOmlXVF/SvxPCD6ZsbC4IxY6zbAaqaEefDtOQALlE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=G0jqsM3U; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=jbwOLCaT; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=G0jqsM3U; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=jbwOLCaT; arc=none smtp.client-ip=195.135.223.131
+	 Content-Type:Content-Disposition:In-Reply-To; b=PHUqOS4PAd+6zG5BgH5UuyrLR6JBCPAE9esoJdO32bB1gRvdY3WzyuE/kMYvoY9Y+AEsiZZsm0vPmr8YKR+RIN4toLq1J6JAPBj9UdKSOKxQBetewn9jVUvFuSY57bnzE1OgyQGBIggisCDMtsJWzWJ8/yzGHk8z6LLbE/fVaU8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=DDehMC0y; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=5nuM8j4g; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=DDehMC0y; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=5nuM8j4g; arc=none smtp.client-ip=195.135.223.131
 Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 6B71375E44;
-	Tue, 30 Jun 2026 16:33:08 +0000 (UTC)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 0C91C75F51;
+	Tue, 30 Jun 2026 16:35:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1782837188; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	t=1782837308; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:content-type:content-type:
 	 in-reply-to:in-reply-to:references:references;
-	bh=lDyW4G4KkvnJFpm6kj2YxbwswbWtSr2YVelIEZ0RQoM=;
-	b=G0jqsM3Uw2U5dFyI7kb6trETpxzY/vWY7kXvixJZsX7PXzXQnLelS/Vp5ENAdV93UwSbQM
-	199SvPFl2WaWcPH2PDOdASpJk3YYKhE5hGvFp/BlquzLMCtsYMftLkQfF1/eUqfca5EOaa
-	VcAipHUHAZkRKUb/6RSVcpWDErjavJA=
+	bh=vL7z05Z2Yz25EK5Nk+C2zAQnWxd+0KF9x6pG+as9VEc=;
+	b=DDehMC0yFbKo8KmShmLbqXXCwtYXcRKOPXxAJVSlKEBs4Td0N3G5Z5W6bY3uZLpH84ERD/
+	S0mfc82DUBmZdopdshc3KCA6FwWcHVTjvLeQWe229oIuQ5akdpEcCReOMMSbWbBFHYHdmr
+	4AsfIhtWjE0Wvm+/AQXwJAnAz3AnjLQ=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1782837188;
+	s=susede2_ed25519; t=1782837308;
 	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:content-type:content-type:
 	 in-reply-to:in-reply-to:references:references;
-	bh=lDyW4G4KkvnJFpm6kj2YxbwswbWtSr2YVelIEZ0RQoM=;
-	b=jbwOLCaT4C6AQNLnPnFokwOIq6AFMXfhKY/DiHavJEMe6z6FAeEYqGwfr6V6n0m/0e7Bz3
-	wQ4as9XxXhjCnIAQ==
+	bh=vL7z05Z2Yz25EK5Nk+C2zAQnWxd+0KF9x6pG+as9VEc=;
+	b=5nuM8j4g9z+4mG1ka4DMjT/WLRKrQIvs/FsA1pcl9NznsCo9eOelHyxK4lbKxBfZnVsyzD
+	aqMQFd4+Di63MjBQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1782837188; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	t=1782837308; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:content-type:content-type:
 	 in-reply-to:in-reply-to:references:references;
-	bh=lDyW4G4KkvnJFpm6kj2YxbwswbWtSr2YVelIEZ0RQoM=;
-	b=G0jqsM3Uw2U5dFyI7kb6trETpxzY/vWY7kXvixJZsX7PXzXQnLelS/Vp5ENAdV93UwSbQM
-	199SvPFl2WaWcPH2PDOdASpJk3YYKhE5hGvFp/BlquzLMCtsYMftLkQfF1/eUqfca5EOaa
-	VcAipHUHAZkRKUb/6RSVcpWDErjavJA=
+	bh=vL7z05Z2Yz25EK5Nk+C2zAQnWxd+0KF9x6pG+as9VEc=;
+	b=DDehMC0yFbKo8KmShmLbqXXCwtYXcRKOPXxAJVSlKEBs4Td0N3G5Z5W6bY3uZLpH84ERD/
+	S0mfc82DUBmZdopdshc3KCA6FwWcHVTjvLeQWe229oIuQ5akdpEcCReOMMSbWbBFHYHdmr
+	4AsfIhtWjE0Wvm+/AQXwJAnAz3AnjLQ=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1782837188;
+	s=susede2_ed25519; t=1782837308;
 	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:content-type:content-type:
 	 in-reply-to:in-reply-to:references:references;
-	bh=lDyW4G4KkvnJFpm6kj2YxbwswbWtSr2YVelIEZ0RQoM=;
-	b=jbwOLCaT4C6AQNLnPnFokwOIq6AFMXfhKY/DiHavJEMe6z6FAeEYqGwfr6V6n0m/0e7Bz3
-	wQ4as9XxXhjCnIAQ==
+	bh=vL7z05Z2Yz25EK5Nk+C2zAQnWxd+0KF9x6pG+as9VEc=;
+	b=5nuM8j4g9z+4mG1ka4DMjT/WLRKrQIvs/FsA1pcl9NznsCo9eOelHyxK4lbKxBfZnVsyzD
+	aqMQFd4+Di63MjBQ==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 378E2779A8;
-	Tue, 30 Jun 2026 16:33:03 +0000 (UTC)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 2D297779A8;
+	Tue, 30 Jun 2026 16:35:03 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
 	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id IOBJCr/vQ2q/ewAAD6G6ig
-	(envelope-from <pfalcato@suse.de>); Tue, 30 Jun 2026 16:33:03 +0000
-Date: Tue, 30 Jun 2026 17:33:01 +0100
+	id dXYkBzfwQ2rFfQAAD6G6ig
+	(envelope-from <pfalcato@suse.de>); Tue, 30 Jun 2026 16:35:03 +0000
+Date: Tue, 30 Jun 2026 17:35:01 +0100
 From: Pedro Falcato <pfalcato@suse.de>
 To: Lorenzo Stoakes <ljs@kernel.org>
 Cc: Andrew Morton <akpm@linux-foundation.org>, 
@@ -121,11 +121,11 @@ Cc: Andrew Morton <akpm@linux-foundation.org>,
 	iommu@lists.linux.dev, linux-perf-users@vger.kernel.org, 
 	linux-trace-kernel@vger.kernel.org, kasan-dev@googlegroups.com, damon@lists.linux.dev, 
 	Rik van Riel <riel@surriel.com>, Harry Yoo <harry@kernel.org>, Jann Horn <jannh@google.com>
-Subject: Re: [PATCH 10/30] MAINTAINERS: Move mm/interval_tree.c to rmap
- section
-Message-ID: <akPvrXtEOZS8LWxX@pedro-suse.lan>
+Subject: Re: [PATCH 11/30] mm/vma: introduce and use vmg_pages(), vmg_[start,
+ end]_pgoff()
+Message-ID: <akPwGnOXgrx77hxj@pedro-suse.lan>
 References: <cover.1782735110.git.ljs@kernel.org>
- <91dde21e9084bd04b626a1f073c3b9b3a23cb663.1782735110.git.ljs@kernel.org>
+ <f7b4f8a611ab4d36eb3cf2e394610a3744a93895.1782735110.git.ljs@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -134,7 +134,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <91dde21e9084bd04b626a1f073c3b9b3a23cb663.1782735110.git.ljs@kernel.org>
+In-Reply-To: <f7b4f8a611ab4d36eb3cf2e394610a3744a93895.1782735110.git.ljs@kernel.org>
 X-Spam-Flag: NO
 X-Spam-Level: 
 X-Spam-Score: -2.80
@@ -143,13 +143,13 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[suse.de,none];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	FREEMAIL_CC(0.00)[linux-foundation.org,armlinux.org.uk,kernel.org,siemens-energy.com,hansenpartnership.com,gmx.de,redhat.com,alien8.de,linux.intel.com,mev.co.uk,visionengravers.com,pengutronix.de,gmail.com,ffwll.ch,suse.de,oss.qualcomm.com,ideasonboard.com,nvidia.com,amd.com,shazbot.org,zeniv.linux.org.uk,linux.dev,google.com,infradead.org,samsung.com,goodmis.org,huawei.com,vger.kernel.org,lists.infradead.org,lists.freedesktop.org,lists.linux.dev,kvack.org,googlegroups.com,surriel.com];
-	TAGGED_FROM(0.00)[bounces-115514-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-115515-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER(0.00)[pfalcato@suse.de,linux-arm-msm@vger.kernel.org];
@@ -159,7 +159,7 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	FORWARDED(0.00)[lists@lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	DKIM_TRACE(0.00)[suse.de:+];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	MISSING_XM_UA(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[6];
@@ -172,17 +172,22 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	ALIAS_RESOLVED(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,suse.de:dkim,suse.de:email,suse.de:from_mime,vger.kernel.org:from_smtp,pedro-suse.lan:mid]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,vger.kernel.org:from_smtp,suse.de:dkim,suse.de:email,suse.de:from_mime,pedro-suse.lan:mid]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: BD2D26E67B4
+X-Rspamd-Queue-Id: 2220D6E687B
 
-On Mon, Jun 29, 2026 at 01:23:21PM +0100, Lorenzo Stoakes wrote:
-> This file implements code for the interval trees used by the file and anon
-> rmap implementation, so belongs in the rmap section.
+On Mon, Jun 29, 2026 at 01:23:22PM +0100, Lorenzo Stoakes wrote:
+> In the VMA logic we often need to determine the number of pages in the
+> specified merge range, as well as the start and end page offsets of that
+> range.
+> 
+> Introduce and use helpers for these purposes.
+> 
+> No functional change intended.
 > 
 > Signed-off-by: Lorenzo Stoakes <ljs@kernel.org>
 
-Acked-by: Pedro Falcato <pfalcato@suse.de>
+Reviewed-by: Pedro Falcato <pfalcato@suse.de> 
 
 -- 
 Pedro
