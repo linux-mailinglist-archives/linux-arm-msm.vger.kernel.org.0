@@ -1,299 +1,425 @@
-Return-Path: <linux-arm-msm+bounces-115329-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-115330-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id SrAxEl2FQ2r4ZwoAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-115329-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 10:59:09 +0200
+	id zs5uJUmGQ2qAaAoAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-115330-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 11:03:05 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6862D6E1DAA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 10:59:08 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 61DB06E1E04
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 11:03:04 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=none;
-	dmarc=none;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115329-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115329-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=C6ARIhKH;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115330-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115330-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id A790830557C3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 08:57:49 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 7DFF1303A50F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 09:01:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 339F13644A6;
-	Tue, 30 Jun 2026 08:57:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F364231E825;
+	Tue, 30 Jun 2026 09:01:54 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from azure-sdnproxy.icoremail.net (azure-sdnproxy.icoremail.net [4.193.249.245])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6825535F162;
-	Tue, 30 Jun 2026 08:57:43 +0000 (UTC)
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B78440D580;
+	Tue, 30 Jun 2026 09:01:53 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782809869; cv=none; b=nBU65+yEyZh9c4eJ2jM0yG6xGN0nJ/I4qAQz8t+ORRd54uzPZx+OBpD7XjkWX7MWDzKLJND4VLszY7o7DwbW4unk+/j5RPARFLkRxRfMUt05oyM6tH/+MQ9lcqPpsIkFhAdbdHUbM1CA4fJFjuNXQkzztrIPgSZ/TNgcKejtULE=
+	t=1782810114; cv=none; b=Fqwx+yaABkFJr1qJHgRLmwJnPF2Gcm/N2/lwIAZQw9s6enIRMmZYUAYlurwE2zH5tfWvhHQe21IGIiHtk42kvim28LSSQ+Tc+1gxfCCD4Ebh9gZ0tnJvP7cWzKEDYGtNIGFd+Swzki19Xqxs+9DzPT75QxL9ZQxf6rZmwxd+rSg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782809869; c=relaxed/simple;
-	bh=sLuEpUb2FArmC/UbenytqCP1Uy3diDraneL65YvlkQg=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
-	 MIME-Version:Message-ID; b=lw0Hdnv2pdR7xOY01uY5ZXIXIfTxniRf43rQ+oQz5UmFu5WTWt1ZMAq0IiCVH0qUkic2Nt8JVXZMWOYthq+9bG2PjkHvxI8B58YJ2VdbSH3qlwLF/Tft2MX1RG1cp6fIry82HOebDweHLAm7i+V13EhCeF9Hn1KEoQuvDw+OLvk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=eswincomputing.com; spf=pass smtp.mailfrom=eswincomputing.com; arc=none smtp.client-ip=4.193.249.245
-Received: from dongxuyang$eswincomputing.com ( [10.12.96.41] ) by
- ajax-webmail-app2 (Coremail) ; Tue, 30 Jun 2026 16:57:23 +0800 (GMT+08:00)
-Date: Tue, 30 Jun 2026 16:57:23 +0800 (GMT+08:00)
-X-CM-HeaderCharset: UTF-8
-From: "Xuyang Dong" <dongxuyang@eswincomputing.com>
-To: "Krzysztof Kozlowski" <krzk@kernel.org>,
-	"Brian Masney" <bmasney@redhat.com>,
-	"Saravana Kannan" <saravanak@kernel.org>,
-	"Abel Vesa" <abelvesa@kernel.org>,
-	"Maxime Ripard" <mripard@kernel.org>,
-	"Michael Turquette" <mturquette@baylibre.com>,
-	"Stephen Boyd" <sboyd@kernel.org>,
-	"Russell King" <linux@armlinux.org.uk>,
-	"Bjorn Andersson" <andersson@kernel.org>,
-	"Hans de Goede" <johannes.goede@oss.qualcomm.com>,
-	"Konrad Dybcio" <konrad.dybcio@oss.qualcomm.com>,
-	"Dmitry Baryshkov" <dmitry.baryshkov@oss.qualcomm.com>
-Cc: linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	"Jens Glathe" <jens.glathe@oldschoolsolutions.biz>,
-	"Min Lin" <linmin@eswincomputing.com>
-Subject: Re: Re: [PATCH 5/5] clk: implement sync_state support
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version 2024.2-cmXT6 build
- 20241203(6b039d88) Copyright (c) 2002-2026 www.mailtech.cn
- mispb-72143050-eaf5-4703-89e0-86624513b4ce-eswincomputing.com
-In-Reply-To: <a2b90b4b-bcc1-49d1-b44f-1932d3f79dbe@kernel.org>
-References: <20260616-clk-sync-state-v2-5-15f82c64d95c@redhat.com>
- <20260617092538.1098-1-dongxuyang@eswincomputing.com>
- <a2b90b4b-bcc1-49d1-b44f-1932d3f79dbe@kernel.org>
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=UTF-8
+	s=arc-20240116; t=1782810114; c=relaxed/simple;
+	bh=0ubUFLWoUO2d8LLAVfZZDA5eWj53YXqM96r8YT5Z5w8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ZNmnhmJSmGumbnGD5kOY8nZvAfBjBPuKe/tl+bO7MbC/oHay9h6j7l5tcLIls7C2vdGwOgniOTINA1VlIwY1SWAl9haA8FgDgWQ7fVBA2jLPmh5RteSJR4jBpFbi0p/WECchgP/xcgEdkocVyaf20gQtvBrniK72FPPEmFfQQvE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=C6ARIhKH; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3307B1F00A3A;
+	Tue, 30 Jun 2026 09:01:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1782810113;
+	bh=Aj0Y8e+jfIEJdQHEXGpdBlV6xnmdMpeoP0iP3JkIPXk=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=C6ARIhKH4dXu0XG5o/v4EwsYbHVmPYcEESZecetdjP/WZ78M11idkPc/PPiBF65E0
+	 IrZ6+6fGUJfu4GXNKBb2nrnqaY7UolG4l/QsJmxIZGzRbfpneelYv5rmCvjsOPPxD7
+	 OaxZ3b84OQT/EbayW46E38zzS00vaULRo1VN+aYaCLpuHf1BItltqfZkyC0jjvfmD7
+	 +U9jMMs+g9ClSjcxNtuU95Dy/dJqRSm/lK73aAp0w80y2lJeYTv5JnCV8ubNaOaODT
+	 KeUJzo4mABcx7GMsAahOsnUHLDTgHsNoSMx1vLuOXNvxnjEQoLNawycGkfbIN7msgR
+	 MfDw446AevffQ==
+Message-ID: <ce8696b2-4598-44c6-9739-c2820da11995@kernel.org>
+Date: Tue, 30 Jun 2026 11:01:44 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-ID: <30842bde.7d7f.19f17bf5819.Coremail.dongxuyang@eswincomputing.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID:TQJkCgAHHaDzhENqtCQwAA--.7865W
-X-CM-SenderInfo: pgrqw5xx1d0w46hv4xpqfrz1xxwl0woofrz/1tbiAQEOAmpCniQky
-	QACsx
-X-Coremail-Antispam: 1Ur529EdanIXcx71UUUUU7IcSsGvfJ3iIAIbVAYjsxI4VWkKw
-	CS07vEb4IE77IF4wCS07vE1I0E4x80FVAKz4kxMIAIbVAFxVCaYxvI4VCIwcAKzIAtYxBI
-	daVFxhVjvjDU=
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5/5] clk: implement sync_state support
+To: Xuyang Dong <dongxuyang@eswincomputing.com>,
+ Brian Masney <bmasney@redhat.com>, Saravana Kannan <saravanak@kernel.org>,
+ Abel Vesa <abelvesa@kernel.org>, Maxime Ripard <mripard@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Russell King <linux@armlinux.org.uk>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Hans de Goede <johannes.goede@oss.qualcomm.com>,
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org,
+ Jens Glathe <jens.glathe@oldschoolsolutions.biz>,
+ Min Lin <linmin@eswincomputing.com>
+References: <20260616-clk-sync-state-v2-5-15f82c64d95c@redhat.com>
+ <20260617092538.1098-1-dongxuyang@eswincomputing.com>
+ <a2b90b4b-bcc1-49d1-b44f-1932d3f79dbe@kernel.org>
+ <30842bde.7d7f.19f17bf5819.Coremail.dongxuyang@eswincomputing.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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
+In-Reply-To: <30842bde.7d7f.19f17bf5819.Coremail.dongxuyang@eswincomputing.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-0.36 / 15.00];
+X-Spamd-Result: default: False [-5.16 / 15.00];
+	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_CONTAINS_FROM(1.00)[];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
-	MIME_BASE64_TEXT(0.10)[];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	DMARC_NA(0.00)[eswincomputing.com];
-	FORGED_RECIPIENTS(0.00)[m:krzk@kernel.org,m:bmasney@redhat.com,m:saravanak@kernel.org,m:abelvesa@kernel.org,m:mripard@kernel.org,m:mturquette@baylibre.com,m:sboyd@kernel.org,m:linux@armlinux.org.uk,m:andersson@kernel.org,m:johannes.goede@oss.qualcomm.com,m:konrad.dybcio@oss.qualcomm.com,m:dmitry.baryshkov@oss.qualcomm.com,m:linux-clk@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:jens.glathe@oldschoolsolutions.biz,m:linmin@eswincomputing.com,s:lists@lfdr.de];
 	RCVD_COUNT_THREE(0.00)[4];
-	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER(0.00)[dongxuyang@eswincomputing.com,linux-arm-msm@vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[17];
 	RCVD_TLS_LAST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
+	FORGED_RECIPIENTS(0.00)[m:dongxuyang@eswincomputing.com,m:bmasney@redhat.com,m:saravanak@kernel.org,m:abelvesa@kernel.org,m:mripard@kernel.org,m:mturquette@baylibre.com,m:sboyd@kernel.org,m:linux@armlinux.org.uk,m:andersson@kernel.org,m:johannes.goede@oss.qualcomm.com,m:konrad.dybcio@oss.qualcomm.com,m:dmitry.baryshkov@oss.qualcomm.com,m:linux-clk@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:jens.glathe@oldschoolsolutions.biz,m:linmin@eswincomputing.com,s:lists@lfdr.de];
+	FORGED_SENDER(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
 	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[17];
+	TAGGED_FROM(0.00)[bounces-115330-lists,linux-arm-msm=lfdr.de];
+	MIME_TRACE(0.00)[0:+];
 	FORWARDED(0.00)[lists@lfdr.de];
-	TAGGED_FROM(0.00)[bounces-115329-lists,linux-arm-msm=lfdr.de];
+	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[dongxuyang@eswincomputing.com,linux-arm-msm@vger.kernel.org];
-	HAS_X_PRIO_THREE(0.00)[3];
 	ALIAS_RESOLVED(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	PRECEDENCE_BULK(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	MID_RHS_MATCH_FROM(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	R_DKIM_NA(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,vger.kernel.org:from_smtp,eswincomputing.com:email,eswincomputing.com:mid,eswincomputing.com:from_mime]
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[oldschoolsolutions.biz:email,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,eswincomputing.com:email,vger.kernel.org:from_smtp]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 6862D6E1DAA
+X-Rspamd-Queue-Id: 61DB06E1E04
 
-PiA+Pgo+ID4+IFRoZSBleGlzdGluZyBzdXBwb3J0IGZvciBkaXNhYmxpbmcgdW51c2VkIGNsa3Mg
-cnVucyBpbiB0aGUgbGF0ZSBpbml0Y2FsbAo+ID4+IHN0YWdlLCBhbmQgaXQgaGFzIGJlZW4ga25v
-d24gZm9yIGEgbG9uZyB0aW1lIHRoYXQgdGhpcyBpcyBicm9rZW4gc2luY2UKPiA+PiBpdCBydW5z
-IHRvbyBlYXJseSBpbiB0aGUgYm9vdCB1cCBwcm9jZXNzLiBJdCBkb2Vzbid0IHdvcmsgZm9yIGtl
-cm5lbAo+ID4+IG1vZHVsZXMsIGFuZCBpdCBhbHNvIGRvZXNuJ3Qgd29yayBpZiBhbGwgb2YgdGhl
-IGNvbnN1bWVycyBoYXZlbid0IGZ1bGx5Cj4gPj4gcHJvYmVkIHlldC4gRm9sa3MgaGF2ZSBsb25n
-IHJlY29tbWVuZGVkIHRvIGJvb3QgY2VydGFpbiBwbGF0Zm9ybXMgd2l0aAo+ID4+IGNsa19pZ25v
-cmVfdW51c2VkIHRvIHdvcmsgYXJvdW5kIGlzc3VlcyB3aXRoIGRpc2FibGluZyB1bnVzZWQgY2xr
-cy4KPiA+Pgo+ID4+Cj4gPj4gTGV0J3MgZ28gYWhlYWQgYW5kIGFkZCBhIGZyYW1ld29yay1sZXZl
-bCBzeW5jX3N0YXRlIGNhbGxiYWNrIGZvciB0aGUgY2xrCj4gPj4gc3Vic3lzdGVtLiBJZiBhIGRy
-aXZlciBkb2Vzbid0IGhhdmUgYSBzeW5jX3N0YXRlIGNhbGxiYWNrIGNvbmZpZ3VyZWQsCj4gPj4g
-d2hpY2ggaXMgdGhlIDk5KyUgdXNlIGNhc2UgdG9kYXksIHRoZW4gbGV0J3Mgc2V0IGl0IHVwIHRv
-IHVzZSB0aGUKPiA+PiBjbGtfc3luY19zdGF0ZSgpIGludHJvZHVjZWQgaW4gdGhpcyBjb21taXQg
-c28gdGhhdCBubyBkcml2ZXIgY2hhbmdlcwo+ID4+IGFyZSBuZWVkZWQuCj4gPj4KPiA+Pgo+ID4+
-IEF0IHRoZSB0aW1lIG9mIHRoaXMgd3JpdGluZywgdGhlcmUgYXJlIGN1cnJlbnRseSBvbmx5IDcg
-Y2xrIGRyaXZlcnMgdGhhdAo+ID4+IGltcGxlbWVudCBzeW5jX3N0YXRlLCBhbmQgYWxsIGFyZSBR
-dWFsY29tbSBTb0NzIHdoZXJlIHRoZXkgaW50ZXJhY3Qgd2l0aAo+ID4+IHRoZSBpbnRlcmNvbm5l
-Y3QgZnJhbWV3b3JrIHZpYSBpY2Nfc3luY19zdGF0ZSgpLiBBIHNoYXJlZCBoZWxwZXIgaGFzCj4g
-Pj4gYmVlbiBjcmVhdGVkIGZvciB0aGlzIHBsYXRmb3JtIHRoYXQgY2FsbHMgY2xrX3N5bmNfc3Rh
-dGUoKS4gSXQgaXMKPiA+PiBleHBlY3RlZCB0aGF0IGFueSBuZXcgY2xrIGRyaXZlcnMgdGhhdCB3
-YW50IHRvIGltcGxlbWVudCB0aGVpciBvd24KPiA+PiBzeW5jX3N0YXRlIHdpbGwgYWxzbyBuZWVk
-IHRvIGNhbGwgY2xrX3N5bmNfc3RhdGUoKSBhdCB0aGUgZW5kIG9mIHRoZWlyCj4gPj4gY3VzdG9t
-IHN5bmNfc3RhdGUgY2FsbGJhY2suCj4gPj4KPiA+Pgo+ID4+IFRoZXJlIHdpbGwgYmUgc2V2ZXJh
-bCBzdGFnZXMgb2YgZGlzYWJsaW5nIHVudXNlZCBjbGtzOgo+ID4+Cj4gPj4KPiA+PiAtIFRoZSBm
-aXJzdCBwaGFzZSB3aWxsIGJlIGV4ZWN1dGVkIGF0IGxhdGVfaW5pdGNhbGwgYW5kIGl0IHdpbGwg
-b25seQo+ID4+ICAgZGlzYWJsZSB1bnVzZWQgY2xrcyB0aGF0IGRvIG5vdCBoYXZlIGEgc3RydWN0
-IGRldi4KPiA+PiAtIFRoZSBzeW5jX3N0YXRlIGNhbGxiYWNrIHdpbGwgYmUgaW52b2tlZCBmb3Ig
-ZWFjaCBjbGsgZHJpdmVyIG9uY2UgYWxsCj4gPj4gICBjb25zdW1lcnMgaGF2ZSBwcm9iZWQuCj4g
-Pj4KPiA+Pgo+ID4+IFRoaXMgaXMgYmFzZWQgb24gcHJldmlvdXMgYXR0ZW1wdHMgYnkgU2FyYXZh
-bmEgS2FubmFuIGFuZCBBYmVsIFZlc2EKPiA+PiB0aGF0IGFyZSBsaW5rZWQgYmVsb3cuCj4gPj4K
-PiA+Pgo+ID4+IFRoaXMgY2hhbmdlIHdhcyB0ZXN0ZWQgb24gYSBUaGlua3BhZCB4MTNzIGxhcHRv
-cC4KPiA+Pgo+ID4+Cj4gPj4gICAgIFsgICAgMC4zMDgwNTFdIGNsazogRGlzYWJsaW5nIHVudXNl
-ZCBjbG9ja3Mgbm90IGFzc29jaWF0ZWQgd2l0aCBhIGRldmljZQo+ID4+ICAgICBbICAgIDYuNTQx
-MDY5XSBxY29tX2Fvc3NfcW1wIGMzMDAwMDAucG93ZXItbWFuYWdlbWVudDogY2xrOiBEaXNhYmxp
-bmcgdW51c2VkIGNsb2Nrcwo+ID4+ICAgICBbICAgIDYuODQzMzEwXSBxY29tLXFtcC1wY2llLXBo
-eSAxYzI0MDAwLnBoeTogY2xrOiBEaXNhYmxpbmcgdW51c2VkIGNsb2Nrcwo+ID4+ICAgICBbICAg
-IDcuNjA0NTU2XSBxY29tLXFtcC1wY2llLXBoeSAxYzE0MDAwLnBoeTogY2xrOiBEaXNhYmxpbmcg
-dW51c2VkIGNsb2Nrcwo+ID4+ICAgICBbICAgIDguNDQ2MTYxXSBxY29tLXFtcC11c2ItcGh5IDg4
-ZjEwMDAucGh5OiBjbGs6IERpc2FibGluZyB1bnVzZWQgY2xvY2tzCj4gPj4gICAgIFsgICAgOC40
-NDYyOTNdIHFjb20tcW1wLXVzYi1waHkgODhlZjAwMC5waHk6IGNsazogRGlzYWJsaW5nIHVudXNl
-ZCBjbG9ja3MKPiA+PiAgICAgWyAgICA4LjU0NjA2N10gcWNvbS1xbXAtY29tYm8tcGh5IDg4ZWIw
-MDAucGh5OiBjbGs6IERpc2FibGluZyB1bnVzZWQgY2xvY2tzCj4gPj4gICAgIFsgICAgOC41NDYy
-MDNdIHFjb20tcW1wLWNvbWJvLXBoeSA4OTAzMDAwLnBoeTogY2xrOiBEaXNhYmxpbmcgdW51c2Vk
-IGNsb2Nrcwo+ID4+ICAgICBbICAgIDguNTQ2MjU0XSBxY29tLWVkcC1waHkgYWVjNWEwMC5waHk6
-IGNsazogRGlzYWJsaW5nIHVudXNlZCBjbG9ja3MKPiA+PiAgICAgWyAgIDE1LjQzNjgzNF0gcWNv
-bS1jcHVmcmVxLWh3IDE4NTkxMDAwLmNwdWZyZXE6IGNsazogRGlzYWJsaW5nIHVudXNlZCBjbG9j
-a3MKPiA+PiAgICAgWyAgIDE1LjQzNjk1M10gY2xrLXJwbWggMTgyMDAwMDAucnNjOmNsb2NrLWNv
-bnRyb2xsZXI6IGNsazogRGlzYWJsaW5nIHVudXNlZCBjbG9ja3MKPiA+PiAgICAgWyAgIDE1Ljcy
-MzM0OF0gcWNvbS1xbXAtcGNpZS1waHkgMWMwNjAwMC5waHk6IGNsazogRGlzYWJsaW5nIHVudXNl
-ZCBjbG9ja3MKPiA+PiAgICAgWyAgIDIxLjA2MzI0MV0gcTZwcm0tbHBhc3MtY2xvY2sgMzAwMDAw
-MC5yZW1vdGVwcm9jOmdsaW5rLWVkZ2U6Z3ByOnNlcnZpY2VAMjpjbG9jay1jb250cm9sbGVyOiBj
-bGs6IERpc2FibGluZyB1bnVzZWQgY2xvY2tzCj4gPj4gICAgIFsgICAyMS4wODE5OTZdIHZhX21h
-Y3JvIDMzNzAwMDAuY29kZWM6IGNsazogRGlzYWJsaW5nIHVudXNlZCBjbG9ja3MKPiA+PiAgICAg
-WyAgIDIxLjA5Mjc0MF0gcnhfbWFjcm8gMzIwMDAwMC5yeG1hY3JvOiBjbGs6IERpc2FibGluZyB1
-bnVzZWQgY2xvY2tzCj4gPj4gICAgIFsgICAyMS4xMTgyNjFdIHdzYV9tYWNybyAzMjQwMDAwLmNv
-ZGVjOiBjbGs6IERpc2FibGluZyB1bnVzZWQgY2xvY2tzCj4gPj4gICAgIFsgICAyMS4xMjg3NThd
-IHR4X21hY3JvIDMyMjAwMDAudHhtYWNybzogY2xrOiBEaXNhYmxpbmcgdW51c2VkIGNsb2Nrcwo+
-ID4+Cj4gPj4KPiA+PiBUZXN0ZWQtYnk6IEplbnMgR2xhdGhlIDxqZW5zLmdsYXRoZUBvbGRzY2hv
-b2xzb2x1dGlvbnMuYml6Pgo+ID4+IFNpZ25lZC1vZmYtYnk6IEJyaWFuIE1hc25leSA8Ym1hc25l
-eUByZWRoYXQuY29tPgo+ID4+IExpbms6IGh0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3dhdGNoP3Y9
-dFhZek04eUxJUUEKPiA+PiBMaW5rOiBodHRwczovL2xvcmUua2VybmVsLm9yZy9hbGwvMjAyMTA0
-MDcwMzQ0NTYuNTE2MjA0LTEtc2FyYXZhbmFrQGdvb2dsZS5jb20vCj4gPj4gTGluazogaHR0cHM6
-Ly9sb3JlLmtlcm5lbC5vcmcvYWxsLzIwMjIxMjI3MjA0NTI4LjE4OTk4NjMtMS1hYmVsLnZlc2FA
-bGluYXJvLm9yZy8KPiA+PiAtLS0KPiA+PiAgZHJpdmVycy9jbGsvY2xrLmMgfCA3MiArKysrKysr
-KysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKy0tLS0tLS0tLQo+ID4+ICAxIGZpbGUgY2hh
-bmdlZCwgNTkgaW5zZXJ0aW9ucygrKSwgMTMgZGVsZXRpb25zKC0pCj4gPj4KPiA+Pgo+ID4+IGRp
-ZmYgLS1naXQgYS9kcml2ZXJzL2Nsay9jbGsuYyBiL2RyaXZlcnMvY2xrL2Nsay5jCj4gPj4gaW5k
-ZXggOWNiMmI0MmQxYmU0Li43YTE1Y2NlZWM2MjAgMTAwNjQ0Cj4gPj4gLS0tIGEvZHJpdmVycy9j
-bGsvY2xrLmMKPiA+PiArKysgYi9kcml2ZXJzL2Nsay9jbGsuYwo+ID4+IEBAIC0xNDQyLDE0ICsx
-NDQyLDM5IEBAIHN0YXRpYyB2b2lkIGNsa19jb3JlX2Rpc2FibGVfdW5wcmVwYXJlKHN0cnVjdCBj
-bGtfY29yZSAqY29yZSkKPiA+PiAgCWNsa19jb3JlX3VucHJlcGFyZV9sb2NrKGNvcmUpOwo+ID4+
-ICB9Cj4gPj4gIAo+ID4+IC1zdGF0aWMgdm9pZCBfX2luaXQgY2xrX3VucHJlcGFyZV91bnVzZWRf
-c3VidHJlZShzdHJ1Y3QgY2xrX2NvcmUgKmNvcmUpCj4gPj4gKy8qCj4gPj4gKyAqIFJldHVybnMg
-dHJ1ZSBpZiBAY29yZSBzaG91bGQgYmUgc2tpcHBlZCBkdXJpbmcgYW4gdW51c2VkLWNsb2NrIHN3
-ZWVwIGZvcgo+ID4+ICsgKiBAZGV2LiAgV2hlbiBAZGV2IGlzIE5VTEwgdGhlIHN3ZWVwIGlzIHRo
-ZSBnbG9iYWwgbGF0ZV9pbml0Y2FsbCBwYXNzOyB3aGVuCj4gPj4gKyAqIEBkZXYgaXMgbm9uLU5V
-TEwgdGhlIHN3ZWVwIGlzIGEgcGVyLWRldmljZSBzeW5jX3N0YXRlIHBhc3MuCj4gPj4gKyAqLwo+
-ID4+ICtzdGF0aWMgYm9vbCBjbGtfY29yZV9za2lwX3VudXNlZChzdHJ1Y3QgY2xrX2NvcmUgKmNv
-cmUsIHN0cnVjdCBkZXZpY2UgKmRldikKPiA+PiArewo+ID4+ICsJLyoKPiA+PiArCSAqIEF0IGxh
-dGVfaW5pdGNhbGwsIHNraXAgY2xvY2tzIHRoYXQgYmVsb25nIHRvIGEgZGV2aWNlIOKAlCB0aGV5
-IHdpbGwgYmUKPiA+PiArCSAqIGhhbmRsZWQgYXQgc3luY19zdGF0ZSB0aW1lLgo+ID4+ICsJICov
-Cj4gPj4gKwlpZiAoIWRldiAmJiBjb3JlLT5kZXYpCj4gPj4gKwkJcmV0dXJuIHRydWU7Cj4gPj4g
-Kwo+ID4+ICsJLyogV2hlbiBjYWxsZWQgZnJvbSBzeW5jX3N0YXRlLCBvbmx5IHByb2Nlc3MgY2xv
-Y2tzIGZvciB0aGlzIGRldmljZS4gKi8KPiA+PiArCWlmIChkZXYgJiYgY29yZS0+ZGV2ICE9IGRl
-dikKPiA+PiArCQlyZXR1cm4gdHJ1ZTsKPiA+PiArCj4gPj4gKwlyZXR1cm4gZmFsc2U7Cj4gPj4g
-K30KPiA+PiArCj4gPj4gK3N0YXRpYyB2b2lkIGNsa191bnByZXBhcmVfdW51c2VkX3N1YnRyZWUo
-c3RydWN0IGNsa19jb3JlICpjb3JlLAo+ID4+ICsJCQkJCSBzdHJ1Y3QgZGV2aWNlICpkZXYpCj4g
-Pj4gIHsKPiA+PiAgCXN0cnVjdCBjbGtfY29yZSAqY2hpbGQ7Cj4gPj4gIAo+ID4+ICAJbG9ja2Rl
-cF9hc3NlcnRfaGVsZCgmcHJlcGFyZV9sb2NrKTsKPiA+PiAgCj4gPj4gIAlobGlzdF9mb3JfZWFj
-aF9lbnRyeShjaGlsZCwgJmNvcmUtPmNoaWxkcmVuLCBjaGlsZF9ub2RlKQo+ID4+IC0JCWNsa191
-bnByZXBhcmVfdW51c2VkX3N1YnRyZWUoY2hpbGQpOwo+ID4+ICsJCWNsa191bnByZXBhcmVfdW51
-c2VkX3N1YnRyZWUoY2hpbGQsIGRldik7Cj4gPj4gKwo+ID4+ICsJaWYgKGNsa19jb3JlX3NraXBf
-dW51c2VkKGNvcmUsIGRldikpCj4gPj4gKwkJcmV0dXJuOwo+ID4+ICAKPiA+PiAgCWlmIChjb3Jl
-LT5wcmVwYXJlX2NvdW50KQo+ID4+ICAJCXJldHVybjsKPiA+PiBAQCAtMTQ2Nyw3ICsxNDkyLDgg
-QEAgc3RhdGljIHZvaWQgX19pbml0IGNsa191bnByZXBhcmVfdW51c2VkX3N1YnRyZWUoc3RydWN0
-IGNsa19jb3JlICpjb3JlKQo+ID4+ICAJfQo+ID4+ICB9Cj4gPj4gIAo+ID4+IC1zdGF0aWMgdm9p
-ZCBfX2luaXQgY2xrX2Rpc2FibGVfdW51c2VkX3N1YnRyZWUoc3RydWN0IGNsa19jb3JlICpjb3Jl
-KQo+ID4+ICtzdGF0aWMgdm9pZCBjbGtfZGlzYWJsZV91bnVzZWRfc3VidHJlZShzdHJ1Y3QgY2xr
-X2NvcmUgKmNvcmUsCj4gPj4gKwkJCQkgICAgICAgc3RydWN0IGRldmljZSAqZGV2KQo+ID4+ICB7
-Cj4gPj4gIAlzdHJ1Y3QgY2xrX2NvcmUgKmNoaWxkOwo+ID4+ICAJdW5zaWduZWQgbG9uZyBmbGFn
-czsKPiA+PiBAQCAtMTQ3NSw3ICsxNTAxLDEwIEBAIHN0YXRpYyB2b2lkIF9faW5pdCBjbGtfZGlz
-YWJsZV91bnVzZWRfc3VidHJlZShzdHJ1Y3QgY2xrX2NvcmUgKmNvcmUpCj4gPj4gIAlsb2NrZGVw
-X2Fzc2VydF9oZWxkKCZwcmVwYXJlX2xvY2spOwo+ID4+ICAKPiA+PiAgCWhsaXN0X2Zvcl9lYWNo
-X2VudHJ5KGNoaWxkLCAmY29yZS0+Y2hpbGRyZW4sIGNoaWxkX25vZGUpCj4gPj4gLQkJY2xrX2Rp
-c2FibGVfdW51c2VkX3N1YnRyZWUoY2hpbGQpOwo+ID4+ICsJCWNsa19kaXNhYmxlX3VudXNlZF9z
-dWJ0cmVlKGNoaWxkLCBkZXYpOwo+ID4+ICsKPiA+PiArCWlmIChjbGtfY29yZV9za2lwX3VudXNl
-ZChjb3JlLCBkZXYpKQo+ID4+ICsJCXJldHVybjsKPiA+PiAgCj4gPj4gIAlpZiAoY29yZS0+Zmxh
-Z3MgJiBDTEtfT1BTX1BBUkVOVF9FTkFCTEUpCj4gPj4gIAkJY2xrX2NvcmVfcHJlcGFyZV9lbmFi
-bGUoY29yZS0+cGFyZW50KTsKPiA+PiBAQCAtMTUwOCw3ICsxNTM3LDcgQEAgc3RhdGljIHZvaWQg
-X19pbml0IGNsa19kaXNhYmxlX3VudXNlZF9zdWJ0cmVlKHN0cnVjdCBjbGtfY29yZSAqY29yZSkK
-PiA+PiAgCQljbGtfY29yZV9kaXNhYmxlX3VucHJlcGFyZShjb3JlLT5wYXJlbnQpOwo+ID4+ICB9
-Cj4gPj4gIAo+ID4+IC1zdGF0aWMgYm9vbCBjbGtfaWdub3JlX3VudXNlZCBfX2luaXRkYXRhOwo+
-ID4+ICtzdGF0aWMgYm9vbCBjbGtfaWdub3JlX3VudXNlZDsKPiA+PiAgc3RhdGljIGludCBfX2lu
-aXQgY2xrX2lnbm9yZV91bnVzZWRfc2V0dXAoY2hhciAqX191bnVzZWQpCj4gPj4gIHsKPiA+PiAg
-CWNsa19pZ25vcmVfdW51c2VkID0gdHJ1ZTsKPiA+PiBAQCAtMTUxNiw3ICsxNTQ1LDcgQEAgc3Rh
-dGljIGludCBfX2luaXQgY2xrX2lnbm9yZV91bnVzZWRfc2V0dXAoY2hhciAqX191bnVzZWQpCj4g
-Pj4gIH0KPiA+PiAgX19zZXR1cCgiY2xrX2lnbm9yZV91bnVzZWQiLCBjbGtfaWdub3JlX3VudXNl
-ZF9zZXR1cCk7Cj4gPj4gIAo+ID4+IC1zdGF0aWMgaW50IF9faW5pdCBjbGtfZGlzYWJsZV91bnVz
-ZWQodm9pZCkKPiA+PiArc3RhdGljIGludCBfX2Nsa19kaXNhYmxlX3VudXNlZChzdHJ1Y3QgZGV2
-aWNlICpkZXYpCj4gPj4gIHsKPiA+PiAgCXN0cnVjdCBjbGtfY29yZSAqY29yZTsKPiA+PiAgCWlu
-dCByZXQ7Cj4gPj4gQEAgLTE1MjYsNyArMTU1NSwxMCBAQCBzdGF0aWMgaW50IF9faW5pdCBjbGtf
-ZGlzYWJsZV91bnVzZWQodm9pZCkKPiA+PiAgCQlyZXR1cm4gMDsKPiA+PiAgCX0KPiA+PiAgCj4g
-Pj4gLQlwcl9pbmZvKCJjbGs6IERpc2FibGluZyB1bnVzZWQgY2xvY2tzXG4iKTsKPiA+PiArCWlm
-IChkZXYpCj4gPj4gKwkJZGV2X2luZm8oZGV2LCAiY2xrOiBEaXNhYmxpbmcgdW51c2VkIGNsb2Nr
-c1xuIik7Cj4gPj4gKwllbHNlCj4gPj4gKwkJcHJfaW5mbygiY2xrOiBEaXNhYmxpbmcgdW51c2Vk
-IGNsb2NrcyBub3QgYXNzb2NpYXRlZCB3aXRoIGEgZGV2aWNlXG4iKTsKPiA+PiAgCj4gPj4gIAly
-ZXQgPSBjbGtfcG1fcnVudGltZV9nZXRfYWxsKCk7Cj4gPj4gIAlpZiAocmV0KQo+ID4+IEBAIC0x
-NTM4LDE2ICsxNTcwLDE2IEBAIHN0YXRpYyBpbnQgX19pbml0IGNsa19kaXNhYmxlX3VudXNlZCh2
-b2lkKQo+ID4+ICAJY2xrX3ByZXBhcmVfbG9jaygpOwo+ID4+ICAKPiA+PiAgCWhsaXN0X2Zvcl9l
-YWNoX2VudHJ5KGNvcmUsICZjbGtfcm9vdF9saXN0LCBjaGlsZF9ub2RlKQo+ID4+IC0JCWNsa19k
-aXNhYmxlX3VudXNlZF9zdWJ0cmVlKGNvcmUpOwo+ID4+ICsJCWNsa19kaXNhYmxlX3VudXNlZF9z
-dWJ0cmVlKGNvcmUsIGRldik7Cj4gPj4gIAo+ID4+ICAJaGxpc3RfZm9yX2VhY2hfZW50cnkoY29y
-ZSwgJmNsa19vcnBoYW5fbGlzdCwgY2hpbGRfbm9kZSkKPiA+PiAtCQljbGtfZGlzYWJsZV91bnVz
-ZWRfc3VidHJlZShjb3JlKTsKPiA+PiArCQljbGtfZGlzYWJsZV91bnVzZWRfc3VidHJlZShjb3Jl
-LCBkZXYpOwo+ID4+ICAKPiA+PiAgCWhsaXN0X2Zvcl9lYWNoX2VudHJ5KGNvcmUsICZjbGtfcm9v
-dF9saXN0LCBjaGlsZF9ub2RlKQo+ID4+IC0JCWNsa191bnByZXBhcmVfdW51c2VkX3N1YnRyZWUo
-Y29yZSk7Cj4gPj4gKwkJY2xrX3VucHJlcGFyZV91bnVzZWRfc3VidHJlZShjb3JlLCBkZXYpOwo+
-ID4+ICAKPiA+PiAgCWhsaXN0X2Zvcl9lYWNoX2VudHJ5KGNvcmUsICZjbGtfb3JwaGFuX2xpc3Qs
-IGNoaWxkX25vZGUpCj4gPj4gLQkJY2xrX3VucHJlcGFyZV91bnVzZWRfc3VidHJlZShjb3JlKTsK
-PiA+PiArCQljbGtfdW5wcmVwYXJlX3VudXNlZF9zdWJ0cmVlKGNvcmUsIGRldik7Cj4gPj4gIAo+
-ID4+ICAJY2xrX3ByZXBhcmVfdW5sb2NrKCk7Cj4gPj4gIAo+ID4+IEBAIC0xNTU1LDExICsxNTg3
-LDE2IEBAIHN0YXRpYyBpbnQgX19pbml0IGNsa19kaXNhYmxlX3VudXNlZCh2b2lkKQo+ID4+ICAK
-PiA+PiAgCXJldHVybiAwOwo+ID4+ICB9Cj4gPj4gKwo+ID4+ICtzdGF0aWMgaW50IF9faW5pdCBj
-bGtfZGlzYWJsZV91bnVzZWQodm9pZCkKPiA+PiArewo+ID4+ICsJcmV0dXJuIF9fY2xrX2Rpc2Fi
-bGVfdW51c2VkKE5VTEwpOwo+ID4+ICt9Cj4gPj4gIGxhdGVfaW5pdGNhbGxfc3luYyhjbGtfZGlz
-YWJsZV91bnVzZWQpOwo+ID4+ICAKPiA+PiAgdm9pZCBjbGtfc3luY19zdGF0ZShzdHJ1Y3QgZGV2
-aWNlICpkZXYpCj4gPj4gIHsKPiA+PiAtCS8qIFdpbGwgZmlsbCBpbiAqLwo+ID4+ICsJX19jbGtf
-ZGlzYWJsZV91bnVzZWQoZGV2KTsKPiA+PiAgfQo+ID4+ICBFWFBPUlRfU1lNQk9MX0dQTChjbGtf
-c3luY19zdGF0ZSk7Cj4gPj4gIAo+ID4+IEBAIC00MzQ1LDggKzQzODIsMTcgQEAgX19jbGtfcmVn
-aXN0ZXIoc3RydWN0IGRldmljZSAqZGV2LCBzdHJ1Y3QgZGV2aWNlX25vZGUgKm5wLCBzdHJ1Y3Qg
-Y2xrX2h3ICpodykKPiA+PiAgCWNvcmUtPmRldiA9IGRldjsKPiA+PiAgCWNsa19wbV9ydW50aW1l
-X2luaXQoY29yZSk7Cj4gPj4gIAljb3JlLT5vZl9ub2RlID0gbnA7Cj4gPj4gLQlpZiAoZGV2ICYm
-IGRldi0+ZHJpdmVyKQo+ID4+ICsJaWYgKGRldiAmJiBkZXYtPmRyaXZlcikgewo+ID4+ICAJCWNv
-cmUtPm93bmVyID0gZGV2LT5kcml2ZXItPm93bmVyOwo+ID4+ICsKPiA+PiArCQkvKgo+ID4+ICsJ
-CSAqIElmIGEgY2xrIHByb3ZpZGVyIHNldHMgdGhlaXIgb3duIHN5bmNfc3RhdGUsIHRoZW4gaXQg
-bmVlZHMgdG8KPiA+PiArCQkgKiBhbHNvIGNhbGwgY2xrX3N5bmNfc3RhdGUoKS4gZGV2X3NldF9k
-cnZfc3luY19zdGF0ZSgpIHdvbid0Cj4gPj4gKwkJICogb3ZlcndyaXRlIHRoZSBzeW5jX3N0YXRl
-IGNhbGxiYWNrLCBhbmQgdGhpcyBjYWxsIHdpbGwgZmFpbAo+ID4+ICsJCSAqIHdpdGggLUVCVVNZ
-Lgo+ID4+ICsJCSAqLwo+ID4+ICsJCWRldl9zZXRfZHJ2X3N5bmNfc3RhdGUoZGV2LCBjbGtfc3lu
-Y19zdGF0ZSk7Cj4gPj4gKwl9Cj4gPj4gIAljb3JlLT5odyA9IGh3Owo+ID4+ICAJY29yZS0+Zmxh
-Z3MgPSBpbml0LT5mbGFnczsKPiA+PiAgCWNvcmUtPm51bV9wYXJlbnRzID0gaW5pdC0+bnVtX3Bh
-cmVudHM7Cj4gPiAKPiA+IEhpIEJyaWFuLAo+ID4gCj4gPiBUaGFuayB5b3UgZm9yIHRoZSBwYXRj
-aCBzZXQuIEkgdGVzdGVkIHRoaXMgaW4gbXkgdHJlZSBvbiBTaWZpdmUgSGlGaXZlIAo+ID4gUHJl
-bWllciBQNTUwLCBhbmQgaXQgYmVoYXZlZCBjb3JyZWN0bHkuCj4gPiAKPiA+IFRlc3RlZC1ieTog
-WHV5YW5nIERvbmcgPGRvbmd4dXlhbmdAZXN3aW5jb21wdXRpbmcuY29tPiAjIGhmcDU1MAo+IAo+
-IElmIEkgdW5kZXJzdGFuZCBjb3JyZWN0bHkgeW91ciBwbGF0Zm9ybSwgeW91IHRlc3RlZCBub3Ro
-aW5nLiBZb3UKPiBleGVjdXRlZCBubyBjb2RlIGZyb20gY29tbW9uIHBhcnQgYW5kIG5vIGNvZGUg
-ZnJvbSB0aGUgZHJpdmVycyBsaXN0ZWQKPiBoZXJlLiBUaGlzIGlzIG5vdCBhIHJlYWwgdGVzdCBp
-biBzdWNoIGNhc2UuCj4gCj4gV2hlbiB5b3UgdGVzdCBjb2RlLCBwbGVhc2UgYWN0dWFsbHkgYmUg
-c3VyZSB5b3UgZXhlY3V0ZSB0aGUgdGVzdGVkIGNvZGUuCj4gCj4gSSBhbSBhZnJhaWQgdGhlIHRh
-ZyBpcyBub3QgYXBwbGljYWJsZS4KPiAKCkhpIEtyenlzenRvZiBhbmQgQnJpYW4sCgpJIGFwcGxp
-ZWQgdGhpcyBzZXJpZXMgdmlhIGI0IHNoYXphbcKgCmh0dHBzOi8vbG9yZS5rZXJuZWwub3JnL2Fs
-bC8yMDI2MDYxNi1jbGstc3luYy1zdGF0ZS12Mi0wLTE1ZjgyYzY0ZDk1Y0ByZWRoYXQuY29tLy4K
-CkkgZHJvcHBlZCAnY2xrX2lnbm9yZV91bnVzZWQnIGF0IGNvbXBpbGUgdGltZS4gQWZ0ZXIgYm9v
-dGluZyB0aGUgc3lzdGVtLMKgCkkgcmFuIGRtZXNnIHwgZ3JlcCAidW51c2VkIGNsb2NrIiBhbmQg
-b2JzZXJ2ZWQgdGhlIGZvbGxvd2luZyBvdXRwdXQ6Cgpbcm9vdEBlc3dpbi1vczp+XSQgZG1lc2cg
-fCBncmVwICJ1bnVzZWQgY2xvY2siClvCoCDCoCA2LjM4ODk4Nl0gY2xrOiBEaXNhYmxpbmcgdW51
-c2VkIGNsb2NrcyBub3QgYXNzb2NpYXRlZCB3aXRoIGEgZGV2aWNlClvCoCDCoCA2LjM5NTU4NV0g
-ZWljNzcwMC1jbG9jayA1MTgyODAwMC5jbG9jay1jb250cm9sbGVyOiBjbGs6IERpc2FibGluZyB1
-bnVzZWQgY2xvY2tzClvCoCDCoCA2Ljc1ODc4Nl0gZWljNzcwMC1oc3AtY2xvY2sgNTA0NDAwMDAu
-Y2xvY2stY29udHJvbGxlcjogY2xrOiBEaXNhYmxpbmcgdW51c2VkIGNsb2Nrcwpbcm9vdEBlc3dp
-bi1vczp+XSTCoAoKRG9lcyB0aGlzIHRlc3RpbmcgYXBwcm9hY2ggbG9vayBjb3JyZWN0IHRvIHlv
-dT8KCkJlc3QgcmVnYXJkcywKWHV5YW5nIERvbmcK
+On 30/06/2026 10:57, Xuyang Dong wrote:
+>>>>
+>>>> The existing support for disabling unused clks runs in the late initcall
+>>>> stage, and it has been known for a long time that this is broken since
+>>>> it runs too early in the boot up process. It doesn't work for kernel
+>>>> modules, and it also doesn't work if all of the consumers haven't fully
+>>>> probed yet. Folks have long recommended to boot certain platforms with
+>>>> clk_ignore_unused to work around issues with disabling unused clks.
+>>>>
+>>>>
+>>>> Let's go ahead and add a framework-level sync_state callback for the clk
+>>>> subsystem. If a driver doesn't have a sync_state callback configured,
+>>>> which is the 99+% use case today, then let's set it up to use the
+>>>> clk_sync_state() introduced in this commit so that no driver changes
+>>>> are needed.
+>>>>
+>>>>
+>>>> At the time of this writing, there are currently only 7 clk drivers that
+>>>> implement sync_state, and all are Qualcomm SoCs where they interact with
+>>>> the interconnect framework via icc_sync_state(). A shared helper has
+>>>> been created for this platform that calls clk_sync_state(). It is
+>>>> expected that any new clk drivers that want to implement their own
+>>>> sync_state will also need to call clk_sync_state() at the end of their
+>>>> custom sync_state callback.
+>>>>
+>>>>
+>>>> There will be several stages of disabling unused clks:
+>>>>
+>>>>
+>>>> - The first phase will be executed at late_initcall and it will only
+>>>>   disable unused clks that do not have a struct dev.
+>>>> - The sync_state callback will be invoked for each clk driver once all
+>>>>   consumers have probed.
+>>>>
+>>>>
+>>>> This is based on previous attempts by Saravana Kannan and Abel Vesa
+>>>> that are linked below.
+>>>>
+>>>>
+>>>> This change was tested on a Thinkpad x13s laptop.
+>>>>
+>>>>
+>>>>     [    0.308051] clk: Disabling unused clocks not associated with a device
+>>>>     [    6.541069] qcom_aoss_qmp c300000.power-management: clk: Disabling unused clocks
+>>>>     [    6.843310] qcom-qmp-pcie-phy 1c24000.phy: clk: Disabling unused clocks
+>>>>     [    7.604556] qcom-qmp-pcie-phy 1c14000.phy: clk: Disabling unused clocks
+>>>>     [    8.446161] qcom-qmp-usb-phy 88f1000.phy: clk: Disabling unused clocks
+>>>>     [    8.446293] qcom-qmp-usb-phy 88ef000.phy: clk: Disabling unused clocks
+>>>>     [    8.546067] qcom-qmp-combo-phy 88eb000.phy: clk: Disabling unused clocks
+>>>>     [    8.546203] qcom-qmp-combo-phy 8903000.phy: clk: Disabling unused clocks
+>>>>     [    8.546254] qcom-edp-phy aec5a00.phy: clk: Disabling unused clocks
+>>>>     [   15.436834] qcom-cpufreq-hw 18591000.cpufreq: clk: Disabling unused clocks
+>>>>     [   15.436953] clk-rpmh 18200000.rsc:clock-controller: clk: Disabling unused clocks
+>>>>     [   15.723348] qcom-qmp-pcie-phy 1c06000.phy: clk: Disabling unused clocks
+>>>>     [   21.063241] q6prm-lpass-clock 3000000.remoteproc:glink-edge:gpr:service@2:clock-controller: clk: Disabling unused clocks
+>>>>     [   21.081996] va_macro 3370000.codec: clk: Disabling unused clocks
+>>>>     [   21.092740] rx_macro 3200000.rxmacro: clk: Disabling unused clocks
+>>>>     [   21.118261] wsa_macro 3240000.codec: clk: Disabling unused clocks
+>>>>     [   21.128758] tx_macro 3220000.txmacro: clk: Disabling unused clocks
+>>>>
+>>>>
+>>>> Tested-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+>>>> Signed-off-by: Brian Masney <bmasney@redhat.com>
+>>>> Link: https://www.youtube.com/watch?v=tXYzM8yLIQA
+>>>> Link: https://lore.kernel.org/all/20210407034456.516204-1-saravanak@google.com/
+>>>> Link: https://lore.kernel.org/all/20221227204528.1899863-1-abel.vesa@linaro.org/
+>>>> ---
+>>>>  drivers/clk/clk.c | 72 ++++++++++++++++++++++++++++++++++++++---------
+>>>>  1 file changed, 59 insertions(+), 13 deletions(-)
+>>>>
+>>>>
+>>>> diff --git a/drivers/clk/clk.c b/drivers/clk/clk.c
+>>>> index 9cb2b42d1be4..7a15cceec620 100644
+>>>> --- a/drivers/clk/clk.c
+>>>> +++ b/drivers/clk/clk.c
+>>>> @@ -1442,14 +1442,39 @@ static void clk_core_disable_unprepare(struct clk_core *core)
+>>>>  	clk_core_unprepare_lock(core);
+>>>>  }
+>>>>  
+>>>> -static void __init clk_unprepare_unused_subtree(struct clk_core *core)
+>>>> +/*
+>>>> + * Returns true if @core should be skipped during an unused-clock sweep for
+>>>> + * @dev.  When @dev is NULL the sweep is the global late_initcall pass; when
+>>>> + * @dev is non-NULL the sweep is a per-device sync_state pass.
+>>>> + */
+>>>> +static bool clk_core_skip_unused(struct clk_core *core, struct device *dev)
+>>>> +{
+>>>> +	/*
+>>>> +	 * At late_initcall, skip clocks that belong to a device — they will be
+>>>> +	 * handled at sync_state time.
+>>>> +	 */
+>>>> +	if (!dev && core->dev)
+>>>> +		return true;
+>>>> +
+>>>> +	/* When called from sync_state, only process clocks for this device. */
+>>>> +	if (dev && core->dev != dev)
+>>>> +		return true;
+>>>> +
+>>>> +	return false;
+>>>> +}
+>>>> +
+>>>> +static void clk_unprepare_unused_subtree(struct clk_core *core,
+>>>> +					 struct device *dev)
+>>>>  {
+>>>>  	struct clk_core *child;
+>>>>  
+>>>>  	lockdep_assert_held(&prepare_lock);
+>>>>  
+>>>>  	hlist_for_each_entry(child, &core->children, child_node)
+>>>> -		clk_unprepare_unused_subtree(child);
+>>>> +		clk_unprepare_unused_subtree(child, dev);
+>>>> +
+>>>> +	if (clk_core_skip_unused(core, dev))
+>>>> +		return;
+>>>>  
+>>>>  	if (core->prepare_count)
+>>>>  		return;
+>>>> @@ -1467,7 +1492,8 @@ static void __init clk_unprepare_unused_subtree(struct clk_core *core)
+>>>>  	}
+>>>>  }
+>>>>  
+>>>> -static void __init clk_disable_unused_subtree(struct clk_core *core)
+>>>> +static void clk_disable_unused_subtree(struct clk_core *core,
+>>>> +				       struct device *dev)
+>>>>  {
+>>>>  	struct clk_core *child;
+>>>>  	unsigned long flags;
+>>>> @@ -1475,7 +1501,10 @@ static void __init clk_disable_unused_subtree(struct clk_core *core)
+>>>>  	lockdep_assert_held(&prepare_lock);
+>>>>  
+>>>>  	hlist_for_each_entry(child, &core->children, child_node)
+>>>> -		clk_disable_unused_subtree(child);
+>>>> +		clk_disable_unused_subtree(child, dev);
+>>>> +
+>>>> +	if (clk_core_skip_unused(core, dev))
+>>>> +		return;
+>>>>  
+>>>>  	if (core->flags & CLK_OPS_PARENT_ENABLE)
+>>>>  		clk_core_prepare_enable(core->parent);
+>>>> @@ -1508,7 +1537,7 @@ static void __init clk_disable_unused_subtree(struct clk_core *core)
+>>>>  		clk_core_disable_unprepare(core->parent);
+>>>>  }
+>>>>  
+>>>> -static bool clk_ignore_unused __initdata;
+>>>> +static bool clk_ignore_unused;
+>>>>  static int __init clk_ignore_unused_setup(char *__unused)
+>>>>  {
+>>>>  	clk_ignore_unused = true;
+>>>> @@ -1516,7 +1545,7 @@ static int __init clk_ignore_unused_setup(char *__unused)
+>>>>  }
+>>>>  __setup("clk_ignore_unused", clk_ignore_unused_setup);
+>>>>  
+>>>> -static int __init clk_disable_unused(void)
+>>>> +static int __clk_disable_unused(struct device *dev)
+>>>>  {
+>>>>  	struct clk_core *core;
+>>>>  	int ret;
+>>>> @@ -1526,7 +1555,10 @@ static int __init clk_disable_unused(void)
+>>>>  		return 0;
+>>>>  	}
+>>>>  
+>>>> -	pr_info("clk: Disabling unused clocks\n");
+>>>> +	if (dev)
+>>>> +		dev_info(dev, "clk: Disabling unused clocks\n");
+>>>> +	else
+>>>> +		pr_info("clk: Disabling unused clocks not associated with a device\n");
+>>>>  
+>>>>  	ret = clk_pm_runtime_get_all();
+>>>>  	if (ret)
+>>>> @@ -1538,16 +1570,16 @@ static int __init clk_disable_unused(void)
+>>>>  	clk_prepare_lock();
+>>>>  
+>>>>  	hlist_for_each_entry(core, &clk_root_list, child_node)
+>>>> -		clk_disable_unused_subtree(core);
+>>>> +		clk_disable_unused_subtree(core, dev);
+>>>>  
+>>>>  	hlist_for_each_entry(core, &clk_orphan_list, child_node)
+>>>> -		clk_disable_unused_subtree(core);
+>>>> +		clk_disable_unused_subtree(core, dev);
+>>>>  
+>>>>  	hlist_for_each_entry(core, &clk_root_list, child_node)
+>>>> -		clk_unprepare_unused_subtree(core);
+>>>> +		clk_unprepare_unused_subtree(core, dev);
+>>>>  
+>>>>  	hlist_for_each_entry(core, &clk_orphan_list, child_node)
+>>>> -		clk_unprepare_unused_subtree(core);
+>>>> +		clk_unprepare_unused_subtree(core, dev);
+>>>>  
+>>>>  	clk_prepare_unlock();
+>>>>  
+>>>> @@ -1555,11 +1587,16 @@ static int __init clk_disable_unused(void)
+>>>>  
+>>>>  	return 0;
+>>>>  }
+>>>> +
+>>>> +static int __init clk_disable_unused(void)
+>>>> +{
+>>>> +	return __clk_disable_unused(NULL);
+>>>> +}
+>>>>  late_initcall_sync(clk_disable_unused);
+>>>>  
+>>>>  void clk_sync_state(struct device *dev)
+>>>>  {
+>>>> -	/* Will fill in */
+>>>> +	__clk_disable_unused(dev);
+>>>>  }
+>>>>  EXPORT_SYMBOL_GPL(clk_sync_state);
+>>>>  
+>>>> @@ -4345,8 +4382,17 @@ __clk_register(struct device *dev, struct device_node *np, struct clk_hw *hw)
+>>>>  	core->dev = dev;
+>>>>  	clk_pm_runtime_init(core);
+>>>>  	core->of_node = np;
+>>>> -	if (dev && dev->driver)
+>>>> +	if (dev && dev->driver) {
+>>>>  		core->owner = dev->driver->owner;
+>>>> +
+>>>> +		/*
+>>>> +		 * If a clk provider sets their own sync_state, then it needs to
+>>>> +		 * also call clk_sync_state(). dev_set_drv_sync_state() won't
+>>>> +		 * overwrite the sync_state callback, and this call will fail
+>>>> +		 * with -EBUSY.
+>>>> +		 */
+>>>> +		dev_set_drv_sync_state(dev, clk_sync_state);
+>>>> +	}
+>>>>  	core->hw = hw;
+>>>>  	core->flags = init->flags;
+>>>>  	core->num_parents = init->num_parents;
+>>>
+>>> Hi Brian,
+>>>
+>>> Thank you for the patch set. I tested this in my tree on Sifive HiFive 
+>>> Premier P550, and it behaved correctly.
+>>>
+>>> Tested-by: Xuyang Dong <dongxuyang@eswincomputing.com> # hfp550
+>>
+>> If I understand correctly your platform, you tested nothing. You
+>> executed no code from common part and no code from the drivers listed
+>> here. This is not a real test in such case.
+>>
+>> When you test code, please actually be sure you execute the tested code.
+>>
+>> I am afraid the tag is not applicable.
+>>
+> 
+> Hi Krzysztof and Brian,
+> 
+> I applied this series via b4 shazam 
+> https://lore.kernel.org/all/20260616-clk-sync-state-v2-0-15f82c64d95c@redhat.com/.
+> 
+> I dropped 'clk_ignore_unused' at compile time. After booting the system, 
+> I ran dmesg | grep "unused clock" and observed the following output:
+> 
+> [root@eswin-os:~]$ dmesg | grep "unused clock"
+> [    6.388986] clk: Disabling unused clocks not associated with a device
+> [    6.395585] eic7700-clock 51828000.clock-controller: clk: Disabling unused clocks
+> [    6.758786] eic7700-hsp-clock 50440000.clock-controller: clk: Disabling unused clocks
+> [root@eswin-os:~]$ 
+> 
+> Does this testing approach look correct to you?
+
+Hm, I guess you are right, last patch indeed has common clock code. I
+missed that.
+
+Best regards,
+Krzysztof
 
