@@ -1,113 +1,117 @@
-Return-Path: <linux-arm-msm+bounces-115269-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-115270-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id o2M4K4ZjQ2r2XgoAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-115269-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 08:34:46 +0200
+	id AS2iJd1jQ2oOXwoAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-115270-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 08:36:13 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0C1F46E0C71
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 08:34:46 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 11CF56E0CAA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 08:36:13 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=PmKdbvoY;
-	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=LJVCOSpD;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115269-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115269-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=reject) header.from=qualcomm.com;
+	dkim=pass header.d=gmail.com header.s=20251104 header.b=dVckGCh0;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115270-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115270-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=none) header.from=gmail.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id A24B7300F5EA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 06:34:20 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 8AB9B3021673
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jun 2026 06:35:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 35FC023A99F;
-	Tue, 30 Jun 2026 06:34:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CB10C3E51F6;
+	Tue, 30 Jun 2026 06:35:10 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f180.google.com (mail-pg1-f180.google.com [209.85.215.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC95A3F9FB
-	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jun 2026 06:34:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DDBA3E63B8
+	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jun 2026 06:35:07 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782801260; cv=none; b=AbpJY5/kCreNuGfrt3ZuEJHNPQke+Iz8hsFnRxyLdGAThtZo/7tbZBhbDn3hz4grfH4aOh7YnMxdroQdAihadycXngpnrSbrXolsxjtAvRl+moigw1cIua2ml132zkzoUQ6nCpzcKUij2TyFJuNX2lbmJXHzvQ1GDysKDHxgO84=
+	t=1782801310; cv=none; b=SC+Q0/nPhbcrzYSxSUhtFVJropXLQB1HL8JfpazG4iA1g/QI0HmQJXxPpKfNjiTGRQ35BJ6CxbSl1QYwsOmCulfT7K1qnQkOdXwn/FmEutXmb3bbdlMObci+UYbJK/Xmm9AdhE5WSw0m7dHE8gUznkVHXDKTJfK6YVb+qlU38ZY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782801260; c=relaxed/simple;
-	bh=0EL6ZU1jr7FjV/0QKknVsKrIBbWfjMwe1MCkyMpTnRM=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=fOKA9JZetGn3EdVqAOBHJ6pw21HLa+gyvyTYkt1UkyIzLyXR+d2pit3c7n0IIi7iLzsL3p+zsq1FMagILXfNMcInlPQop0A46IXuYXalRCwm3azgfmB/oVTGe2DKxTAtMNICNPFfY0Gr4HpSNKFdpgWIurOYLbS+jHViE1V3MLU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=PmKdbvoY; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=LJVCOSpD; arc=none smtp.client-ip=205.220.180.131
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65U6Cg2w1074128
-	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jun 2026 06:34:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:message-id:mime-version
-	:subject:to; s=qcppdkim1; bh=Lkk1aid6VSjCiAh0RBtC69AWGsaj2zmcu8D
-	ZktAdjhA=; b=PmKdbvoYoQGt6wie3aKrjDVrvI47ima6lzT04Aznd9GbfdlaeF4
-	wbLUBZVHd3yuMJbkZ2XdOvgeTkpbMCoZJ3lo6xkj30XLC9CvHNOaWm5Qhfwmd90D
-	S9oztBzB4PT15/qpxqn7NFoiQuolBcy+sUBCk/GxxbMhVLCwwDHRi5XSCeeZdMUE
-	mU66hWnt77zqT6n58ZgUIEQAqrC0bOkr+4LW0jamt2QeTcztvhU5y7AGsoV+7CpT
-	c5gjKIZ+Z5Wr7zAWJrT6SYYd3JykFRXRWA+gNelZiu3YbydjZUzK2sOTMybEzFY8
-	GrMGwQLKDtC9xxnTHMnjwKfYRoi8OT0oHSQ==
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f3y9k1vye-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jun 2026 06:34:17 +0000 (GMT)
-Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-2c7f385887bso69279765ad.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jun 2026 23:34:17 -0700 (PDT)
+	s=arc-20240116; t=1782801310; c=relaxed/simple;
+	bh=jq36afZkFRxy4toa7BFIIUku4sKPif97JtHBPvHPWg4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ERYphkpukAuhYxMYQbDgbw/cye1OvqEZxxnpuV4OM4MxuxKw0EbTu7Y1zh7iZF9Pu3rZUltHeTo+GHB7HEP2BBU0nXTVeh8S8vnxzmUNHoKBBlMXgdobi4XvITcc8/gVYjtMGUyrgPnotwM/vPOdAmPV5zcSRPbCn5uFE/bZTQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dVckGCh0; arc=none smtp.client-ip=209.85.215.180
+Received: by mail-pg1-f180.google.com with SMTP id 41be03b00d2f7-c9b373d5af0so761620a12.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jun 2026 23:35:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1782801257; x=1783406057; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1782801306; x=1783406106; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Lkk1aid6VSjCiAh0RBtC69AWGsaj2zmcu8DZktAdjhA=;
-        b=LJVCOSpDAjgZGX4+VV0nub/3zoBH0ac1gbKESQkrnKAjuncNmBWFqPrzcMwI6nFFnK
-         4YjqYDa91fIJZZnSmczPS/cbt4FMXkGCUekjecJu4x0RVvIH+SlGNufe1r4OMH0aJcp7
-         NDFYu5Bvvaf1aT1miQbiTu6F0QalhS9vTiVZH6sg1iaIaN0j8elR8gR1/ra8uk8IP7U/
-         Bv5EciVIu2TMqDjWPIHmYvIQU31NsFDKrTKtHrB9hsWLg66xGJ16yilCTkoiiv6zaTOq
-         s/7i1NoyGPa7OHGW2j0cIrltuK4Idljj9w2AoWVi8Gq+ZsFsxdVEW9McnzUOXI5Ke75B
-         8YzA==
+        bh=syBpKBFGjGejGwg1BjAhn4n5QdMB5B8yOZv838BwUKA=;
+        b=dVckGCh03U0GckHpCByvkP0J8p9lJ1pLYawntPT7vic6dUzRWIHu6/1Xq+ciTsJlI7
+         s2NFIMR6u8xpFLKnCjakUgO1h+TuSzg07BvYgiHX2VNId19rBFi9ri/43Hn8HjBEeGO2
+         Bslz/PnDxPw1jqJjSGBciGowDqAat1jJWsjxfxJ9QeqHcf4Q33g2J9bPCXfI2oix+jw5
+         9Mo0owedhyuvPh/rD/x3HPuAChMrwHNLWYa7YbmVlFCk855xPG1pU7I5T8x9o+Fj0NCp
+         7SDiCJQ3Vv1BTqlDYLv116PiwBCbuqj94lo5WOEVYzfWkV1sMhM8iPIc9Is/P32bNN/5
+         Lvbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782801257; x=1783406057;
+        d=1e100.net; s=20251104; t=1782801306; x=1783406106;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Lkk1aid6VSjCiAh0RBtC69AWGsaj2zmcu8DZktAdjhA=;
-        b=byEDABow1yd6E805rWBB7n9W3kUvx2ysceD9Iew9aSLTS+JX35HxuhL+/69f8o5Kja
-         K+daPaYtG1ndywJhS5pAKuwIvseRAAkZnPKrkG0sVdqY4qwE4OFQZhdRKnCmmSMe1h3t
-         dZVzQSbIZMDUI8ExpwrLaEYMo6ngHgWQC01Q8qcUgXutg7SQXqnCHU7+M8UgvIxKbrlE
-         QYxtqm8I5N+i/ZrWXGOwwr0pcLLz4Dobhvn+ULb2Y8WKOVQvxgh9M+Ca86ut4f9g02SO
-         qRFUyfJGLiHuwO8e+2K8SuyIVJxMcsdnMSD+IK7MxUKgALAIzX6p/j8GgD1bl+0le+my
-         WyhQ==
-X-Forwarded-Encrypted: i=1; AHgh+RrI5ovRP6I4AVw5OYCJt/TeXySUSYJfwlc8Sg7JoTB+x54vGqemRtRfHUl6cf6juM5Di1WtK/tr7Cfm16fn@vger.kernel.org
-X-Gm-Message-State: AOJu0YzE49gQZ9U1cngjDTLM4TCkNsSnYO/yqt9MOvJutdqTwdN0z2Jf
-	33vOD8FDS5X8Oa0MVa+UB95xxAu04i+zqyrsG0nIyQvqaG0Mzvsbfw55hk36wxtmkbqC4ZgGPXD
-	a0y22rgXsviIf2vgMsZWZNh+CIdeUkjfJPPxWlTk7vRaZoUJ2Rn3VMaLw9TOjFPwSeMxX
-X-Gm-Gg: AfdE7cn/3Nd73Nk1paU2ndPL04Y8Ws4PTO3Q5GcAYc1QTIghxAcWKLZ77Vngipzz3MY
-	cCbRr1fF0tQ7GXWGZOVgyFLabY0RYs81JMXsTCbaJt/QuM6sdbPd7OSC3gt3jNopbQebBAN6GJP
-	C/KqENruXQ/fMO+TeJ3DvEFGElVO/IFvxTa8TYMHYpuYYd18nuQrUFvUbrDCh+9CO/7y+H5OqTr
-	7ScTp9vsmc3pukmosGeymQlNBqFjuH0RVbquCVOhBX/SEYcYXuqa/4S0mALi8/jcp7Gs6so0Bs2
-	ru8s9x3HCPUFX+U90G1kjhU7gIYM4x3mJXImjLQENBFpS19H38k3xIL9DhlFYjXUtJpbAYeJtC+
-	EvDJuF/kljya+56yCNxVmRcrsP9SBmlmnquVtwyTP3jIsKFYpY1Yd2KPgzIk0WtT8ZBphyZ+gY9
-	sjsznI50k=
-X-Received: by 2002:a17:903:4b2f:b0:2ca:11fd:659d with SMTP id d9443c01a7336-2ca2ea238ccmr19680545ad.34.1782801256820;
-        Mon, 29 Jun 2026 23:34:16 -0700 (PDT)
-X-Received: by 2002:a17:903:4b2f:b0:2ca:11fd:659d with SMTP id d9443c01a7336-2ca2ea238ccmr19680235ad.34.1782801256193;
-        Mon, 29 Jun 2026 23:34:16 -0700 (PDT)
-Received: from QCOM-SocCW5bzXR.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ca382d0d22sm6646345ad.80.2026.06.29.23.34.12
+        bh=syBpKBFGjGejGwg1BjAhn4n5QdMB5B8yOZv838BwUKA=;
+        b=gYchGM/c37bMFqRw50lvKKVDM92/y0S3ZbqJF2FcFMPNjkam8ojvTkscnbsT9JthCN
+         h+w1A9gWCDtMAmd41t8pZE9Fp6kFXVn6moLFmuiWoeNt7tnsBWOJMPmYsrofYDoV/ops
+         f1dCzYVpbxCMiI+a+LN462tlL4PHSnm32cAib/zslb0cVkEAY3MiganhAqDcb2QccO4K
+         7RCNRcv6NxhXTHLR4hewhb6dg4WLptQSzOrCTYXJF7JzM5GmtLAwnW2tNN4H6pKQbURT
+         4hVNvxhAAJqCCYo6jCbaFQkEonKVxdiK9AmLIJytkU2qTbmcAOHMI8I95sOLlGlm9rx8
+         Expw==
+X-Forwarded-Encrypted: i=1; AHgh+RovyJNCY/dOBEzafsbQaP9Lh9645afu9tLKIro/+vxpSXuUGe+J1sC+xUmYi1AlpODlqdUiKFHLxxQblKm6@vger.kernel.org
+X-Gm-Message-State: AOJu0YxXTS5CzzjrzEK8okGYJJWKjj9cVo/lfqbAu1LxfZf+IZgWQgvu
+	FFEzcU3VoXb/vii37ePUlESVdbeUQX4cGUaaKOAw+VtUiXfMS0bVFuGs
+X-Gm-Gg: AfdE7ckK38MA2ul4rhjqGRzxzRjdF7iN2ksHJ0gt5GbD4T6tkFRw8u/Kz7mw2BbOXyZ
+	qdgWmwCs37xh0JLjdXOeg3GcW5LO5U6jN02we4nCjAvG6nxD+XjW6vTJ1XpVFaa0H2zVFLjE5sf
+	/xfxscht/aIpi5HQcbyRw3xehBmlbaNr7STQyiuoB0cCiMJ7wOLds5390gJET7+mbBomBQDkztP
+	6TUPHTfJCeiffdDegJsv9kijeFfaBol6ETPk55Crn1WhVzJ2hmQrUe6lKvBmi3O7BqGXYSie56X
+	G/Se9UDNB3oqc4nNwZn1bkUvKiRKQePtqTlhW8vYivEj6KBW/W/VmWJGWdqALv3X3mj1JVXbxvA
+	dB7sgJclhmZ0Chv7N51K8MrqqdLs02MFQubDQLeDdFe/9+uOWdyScRIuLLYDORzRVnle3tfmDCS
+	UeCzcsrZICC7WhX8W6mxkU60qtHxeGEjAx7jqcO7RkT8mBFgIHGdb2FehjrA==
+X-Received: by 2002:a05:6a00:b481:b0:845:e44c:2e5 with SMTP id d2e1a72fcca58-8479f109b70mr1989863b3a.22.1782801306377;
+        Mon, 29 Jun 2026 23:35:06 -0700 (PDT)
+Received: from phuc-desktop.. ([183.91.15.56])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-847a02cd237sm1165061b3a.32.2026.06.29.23.34.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Jun 2026 23:34:15 -0700 (PDT)
-From: Jianping Li <jianping.li@oss.qualcomm.com>
-To: Srinivas Kandagatla <srini@kernel.org>,
-        Amol Maheshwari <amahesh@qti.qualcomm.com>
-Cc: Jianping Li <jianping.li@oss.qualcomm.com>, Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Thierry Escande <thierry.escande@linaro.org>,
-        Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, quic_chennak@quicinc.com,
-        stable@kernel.org
-Subject: [PATCH v2] misc: fastrpc: fix UAF and kernel panic during cleanup on process abort
-Date: Tue, 30 Jun 2026 14:34:09 +0800
-Message-Id: <20260630063409.475-1-jianping.li@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
+        Mon, 29 Jun 2026 23:35:06 -0700 (PDT)
+From: phucduc.bui@gmail.com
+To: Mark Brown <broonie@kernel.org>,
+	Takashi Iwai <tiwai@suse.com>,
+	Nick Li <nick.li@foursemi.com>,
+	Herve Codina <herve.codina@bootlin.com>
+Cc: Support Opensource <support.opensource@diasemi.com>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Jaroslav Kysela <perex@perex.cz>,
+	Srinivas Kandagatla <srini@kernel.org>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Shenghao Ding <shenghao-ding@ti.com>,
+	Kevin Lu <kevin-lu@ti.com>,
+	Baojun Xu <baojun.xu@ti.com>,
+	Sen Wang <sen@ti.com>,
+	Oder Chiou <oder_chiou@realtek.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+	u.kleine-koenig@baylibre.com,
+	Zhang Yi <zhangyi@everest-semi.com>,
+	Marco Crivellari <marco.crivellari@suse.com>,
+	Kees Cook <kees@kernel.org>,
+	HyeongJun An <sammiee5311@gmail.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Qianfeng Rong <rongqianfeng@vivo.com>,
+	linux-sound@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	patches@opensource.cirrus.com,
+	linux-mediatek@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	bui duc phuc <phucduc.bui@gmail.com>
+Subject: [PATCH 00/27] ASoC: codecs: Use guard() for mutex & spin locks
+Date: Tue, 30 Jun 2026 13:34:22 +0700
+Message-ID: <20260630063449.503996-1-phucduc.bui@gmail.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -115,250 +119,132 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjMwMDA1NCBTYWx0ZWRfX95X1Y6XK0sZU
- f3/kt2YG33jfE7GEIfrknBqogsPut5h9iu2aGf1fHyeHTyDm0IOVt6MM3bRn9mCeFz83jiQCCRz
- RHmKsHviH/HujAd8UbO0sSmIIKLSyRw=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjMwMDA1NCBTYWx0ZWRfX9roq1RLUAJUv
- lHf7vRXawz/C6NZ6jjpIM0iSi29ud9R9eKxC+k7iOGcij3zSrlw3/R7kIsTRmJ0vRpGEXLKuxuG
- 2lmomOPLPRklF/WCHJbpak5djg/WMq+eFlKmo+DAD4j5+f2Wbjxc9shVP+eXXw0viv/Jb8qWzHQ
- GellJm+MyZu0jsltVbT2gg+TpSCUdj/yH5bm0Un3Wv7Z1UdZB8Pap1CqWec+MePyeVSO9k5JdCT
- yNaWsrO+sGH0/kv0/fEadTxTT75IlBoHDQSLf1RveJYMulqDTXEXPEDoUpIeysCRnyuS6e6lVv2
- wQtVU9bBh/HiD5nZGdjWxKaj87lFJdJLc7M8Fwly+ziSJqCeHwTEBOO2fnQUe+yPqlRharO2qpW
- Tc7qTllKI0386FpISllEOJsoIlC6iAIFKovaQVBauDo4FlL5ENMpXL02wDp2u8tg3r2uUPyaLLC
- rPwL2q2wGUKNf+CeLdg==
-X-Proofpoint-ORIG-GUID: R0_EoMhDEGYyrZPLo0_HbHWb4wjKX5nR
-X-Authority-Analysis: v=2.4 cv=TeqmcxQh c=1 sm=1 tr=0 ts=6a436369 cx=c_pps
- a=cmESyDAEBpBGqyK7t0alAg==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22 a=VwQbUJbxAAAA:8
- a=EUspDBNiAAAA:8 a=7UBpWWJXUKeOLZOJV8wA:9 a=1OuFwYUASf3TG4hYMiVC:22
-X-Proofpoint-GUID: R0_EoMhDEGYyrZPLo0_HbHWb4wjKX5nR
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-30_02,2026-06-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 impostorscore=0 phishscore=0 priorityscore=1501 malwarescore=0
- spamscore=0 adultscore=0 suspectscore=0 bulkscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606300054
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-0.66 / 15.00];
+X-Spamd-Result: default: False [-0.16 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_CONTAINS_FROM(1.00)[];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
 	R_MISSING_CHARSET(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-115269-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:srini@kernel.org,m:amahesh@qti.qualcomm.com,m:jianping.li@oss.qualcomm.com,m:arnd@arndb.de,m:gregkh@linuxfoundation.org,m:thierry.escande@linaro.org,m:ekansh.gupta@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:dri-devel@lists.freedesktop.org,m:linux-kernel@vger.kernel.org,m:quic_chennak@quicinc.com,m:stable@kernel.org,s:lists@lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[12];
-	FORGED_SENDER(0.00)[jianping.li@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	MIME_TRACE(0.00)[0:+];
-	FORWARDED(0.00)[lists@lfdr.de];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	FREEMAIL_FROM(0.00)[gmail.com];
 	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[jianping.li@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
+	TAGGED_FROM(0.00)[bounces-115270-lists,linux-arm-msm=lfdr.de];
+	FORWARDED(0.00)[lists@lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:broonie@kernel.org,m:tiwai@suse.com,m:nick.li@foursemi.com,m:herve.codina@bootlin.com,m:support.opensource@diasemi.com,m:lgirdwood@gmail.com,m:perex@perex.cz,m:srini@kernel.org,m:ckeepax@opensource.cirrus.com,m:rf@opensource.cirrus.com,m:matthias.bgg@gmail.com,m:angelogioacchino.delregno@collabora.com,m:shenghao-ding@ti.com,m:kevin-lu@ti.com,m:baojun.xu@ti.com,m:sen@ti.com,m:oder_chiou@realtek.com,m:linusw@kernel.org,m:kuninori.morimoto.gx@renesas.com,m:u.kleine-koenig@baylibre.com,m:zhangyi@everest-semi.com,m:marco.crivellari@suse.com,m:kees@kernel.org,m:sammiee5311@gmail.com,m:arnd@arndb.de,m:rongqianfeng@vivo.com,m:linux-sound@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:patches@opensource.cirrus.com,m:linux-mediatek@lists.infradead.org,m:linux-arm-msm@vger.kernel.org,m:linux-arm-kernel@lists.infradead.org,m:phucduc.bui@gmail.com,m:matthiasbgg@gmail.com,m:phucducbui@gmail.com,s:lists@lfdr.de];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FREEMAIL_CC(0.00)[diasemi.com,gmail.com,perex.cz,kernel.org,opensource.cirrus.com,collabora.com,ti.com,realtek.com,renesas.com,baylibre.com,everest-semi.com,suse.com,arndb.de,vivo.com,vger.kernel.org,lists.infradead.org];
+	FORGED_SENDER(0.00)[phucducbui@gmail.com,linux-arm-msm@vger.kernel.org];
+	FROM_NO_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:from_mime,qualcomm.com:dkim,qualcomm.com:email,vger.kernel.org:from_smtp,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
 	ALIAS_RESOLVED(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[phucducbui@gmail.com,linux-arm-msm@vger.kernel.org];
+	PRECEDENCE_BULK(0.00)[];
+	DKIM_TRACE(0.00)[gmail.com:+];
+	MID_RHS_MATCH_FROM(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCVD_COUNT_SEVEN(0.00)[7]
+	RCPT_COUNT_TWELVE(0.00)[33];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 0C1F46E0C71
+X-Rspamd-Queue-Id: 11CF56E0CAA
 
-When a userspace FastRPC client is abruptly terminated, FastRPC
-cleanup paths can race with device and session teardown.
+From: bui duc phuc <phucduc.bui@gmail.com>
 
-This results in kernel panics in different release paths:
-- fastrpc_release() when using remote heap, originating from
-  fastrpc_buf_free()
-- fastrpc_device_release() when using system heap, originating from
-  fastrpc_free_map()
+Hi all,
 
-In addition, fastrpc_map_put() may trigger refcount use-after-free
-due to concurrent cleanup without proper synchronization.
+This series converts mutex and spinlock handling in ASoC codec drivers
+to use the guard() and scoped_guard() helpers.
 
-The root cause is that buffer and map cleanup paths may access map
-and buf resources after the associated device or session has
-already been released.
+This is part 2 of a larger 78-patch conversion series. Part 1 (24
+patches) has already been posted, while this series contains the next
+27 patches to keep the review manageable.
 
-Fix this by:
-- Introducing mutex protection for map and buf lifetime
-- Serializing buffer and map cleanup against device teardown
-- Skipping buffer and map operations when the device is already gone
+https://lore.kernel.org/all/20260617103235.449609-1-phucduc.bui@gmail.com/
 
-These changes ensure cleanup paths are safe against unexpected
-process aborts and prevent use-after-free and kernel panic scenarios.
+The changes are purely refactoring and have no functional impact.
 
-Fixes: c68cfb718c8f9 ("misc: fastrpc: Add support for context Invoke method")
-Cc: stable@kernel.org
-Signed-off-by: Jianping Li <jianping.li@oss.qualcomm.com>
----
- drivers/misc/fastrpc.c | 57 ++++++++++++++++++++++++++++++++++++++----
- 1 file changed, 52 insertions(+), 5 deletions(-)
+Compile-tested only.
 
-diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-index a9b2ae44c06f..3521518f9fe5 100644
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -255,6 +255,8 @@ struct fastrpc_session_ctx {
- 	int sid;
- 	bool used;
- 	bool valid;
-+	bool allocated;
-+	struct mutex mutex;
- };
- 
- struct fastrpc_soc_data {
-@@ -335,9 +337,14 @@ static inline u64 fastrpc_sid_offset(struct fastrpc_channel_ctx *cctx,
- static void fastrpc_free_map(struct kref *ref)
- {
- 	struct fastrpc_map *map;
-+	struct fastrpc_user *fl;
- 
- 	map = container_of(ref, struct fastrpc_map, refcount);
- 
-+	fl = map->fl;
-+	if (!fl)
-+		return;
-+
- 	if (map->table) {
- 		if (map->attr & FASTRPC_ATTR_SECUREMAP) {
- 			struct qcom_scm_vmperm perm;
-@@ -356,10 +363,16 @@ static void fastrpc_free_map(struct kref *ref)
- 				return;
- 			}
- 		}
-+		mutex_lock(&fl->sctx->mutex);
-+		if (!fl->sctx->dev) {
-+			mutex_unlock(&fl->sctx->mutex);
-+			return;
-+		}
- 		dma_buf_unmap_attachment_unlocked(map->attach, map->table,
- 						  DMA_BIDIRECTIONAL);
- 		dma_buf_detach(map->buf, map->attach);
- 		dma_buf_put(map->buf);
-+		mutex_unlock(&fl->sctx->mutex);
- 	}
- 
- 	if (map->fl) {
-@@ -422,9 +435,18 @@ static int fastrpc_map_lookup(struct fastrpc_user *fl, int fd,
- 
- static void fastrpc_buf_free(struct fastrpc_buf *buf)
- {
--	dma_free_coherent(buf->dev, buf->size, buf->virt,
--			  fastrpc_ipa_to_dma_addr(buf->fl->cctx, buf->dma_addr));
--	kfree(buf);
-+	struct fastrpc_user *fl = buf->fl;
-+
-+	if (!fl)
-+		return;
-+	mutex_lock(&fl->sctx->mutex);
-+	if (fl->sctx->dev) {
-+		dma_free_coherent(buf->dev, buf->size, buf->virt,
-+				  fastrpc_ipa_to_dma_addr(buf->fl->cctx,
-+							  buf->dma_addr));
-+		kfree(buf);
-+	}
-+	mutex_unlock(&fl->sctx->mutex);
- }
- 
- static int __fastrpc_buf_alloc(struct fastrpc_user *fl, struct device *dev,
-@@ -447,8 +469,11 @@ static int __fastrpc_buf_alloc(struct fastrpc_user *fl, struct device *dev,
- 	buf->dev = dev;
- 	buf->raddr = 0;
- 
--	buf->virt = dma_alloc_coherent(dev, buf->size, &buf->dma_addr,
--				       GFP_KERNEL);
-+	mutex_lock(&fl->sctx->mutex);
-+	if (fl->sctx->dev)
-+		buf->virt = dma_alloc_coherent(dev, buf->size, &buf->dma_addr,
-+					       GFP_KERNEL);
-+	mutex_unlock(&fl->sctx->mutex);
- 	if (!buf->virt) {
- 		mutex_destroy(&buf->lock);
- 		kfree(buf);
-@@ -491,6 +516,10 @@ static void fastrpc_channel_ctx_free(struct kref *ref)
- 	struct fastrpc_channel_ctx *cctx;
- 
- 	cctx = container_of(ref, struct fastrpc_channel_ctx, refcount);
-+	for (int i = 0; i < FASTRPC_MAX_SESSIONS; i++) {
-+		if (cctx->session[i].allocated)
-+			mutex_destroy(&cctx->session[i].mutex);
-+	}
- 
- 	kfree(cctx);
- }
-@@ -855,19 +884,28 @@ static int fastrpc_map_attach(struct fastrpc_user *fl, int fd,
- 		goto get_err;
- 	}
- 
-+	mutex_lock(&fl->sctx->mutex);
-+	if (!fl->sctx->dev) {
-+		err = -ENODEV;
-+		mutex_unlock(&fl->sctx->mutex);
-+		goto attach_err;
-+	}
- 	map->attach = dma_buf_attach(map->buf, sess->dev);
- 	if (IS_ERR(map->attach)) {
- 		dev_err(sess->dev, "Failed to attach dmabuf\n");
- 		err = PTR_ERR(map->attach);
-+		mutex_unlock(&fl->sctx->mutex);
- 		goto attach_err;
- 	}
- 
- 	table = dma_buf_map_attachment_unlocked(map->attach, DMA_BIDIRECTIONAL);
- 	if (IS_ERR(table)) {
- 		err = PTR_ERR(table);
-+		mutex_unlock(&fl->sctx->mutex);
- 		goto map_err;
- 	}
- 	map->table = table;
-+	mutex_unlock(&fl->sctx->mutex);
- 
- 	if (attr & FASTRPC_ATTR_SECUREMAP)
- 		map->dma_addr = sg_phys(map->table->sgl);
-@@ -2246,6 +2284,8 @@ static int fastrpc_cb_probe(struct platform_device *pdev)
- 	sess->used = false;
- 	sess->valid = true;
- 	sess->dev = dev;
-+	mutex_init(&sess->mutex);
-+	sess->allocated = true;
- 	dev_set_drvdata(dev, sess);
- 	sess->sid = sid;
- 
-@@ -2260,6 +2300,8 @@ static int fastrpc_cb_probe(struct platform_device *pdev)
- 				break;
- 			dup_sess = &cctx->session[cctx->sesscount++];
- 			memcpy(dup_sess, sess, sizeof(*dup_sess));
-+			mutex_init(&dup_sess->mutex);
-+			dup_sess->allocated = true;
- 		}
- 	}
- 	spin_unlock_irqrestore(&cctx->lock, flags);
-@@ -2282,6 +2324,11 @@ static void fastrpc_cb_remove(struct platform_device *pdev)
- 	spin_lock_irqsave(&cctx->lock, flags);
- 	for (i = 0; i < FASTRPC_MAX_SESSIONS; i++) {
- 		if (cctx->session[i].sid == sess->sid) {
-+			spin_unlock_irqrestore(&cctx->lock, flags);
-+			mutex_lock(&cctx->session[i].mutex);
-+			cctx->session[i].dev = NULL;
-+			mutex_unlock(&cctx->session[i].mutex);
-+			spin_lock_irqsave(&cctx->lock, flags);
- 			cctx->session[i].valid = false;
- 			cctx->sesscount--;
- 		}
+Best regards,
+Phuc
+
+bui duc phuc (27):
+  ASoC: codecs: da7213: Use guard() for mutex locks
+  ASoC: codecs: da7219: Use guard() for mutex locks
+  ASoC: codecs: es8316: Use guard() for mutex locks
+  ASoC: codecs: es8326: Use guard() for mutex locks
+  ASoC: codecs: es9356: Use guard() for mutex locks
+  ASoC: codecs: fs210x: Use guard() for mutex locks
+  ASoC: codecs: hdac_hdmi: Use guard() for mutex locks
+  ASoC: codecs: hdmi-codec: Use guard() for mutex locks
+  ASoC: codecs: idt821034: Use guard() for mutex locks
+  ASoC: codecs: lpass-macro: Use guard() for mutex locks
+  ASoC: codecs: madera: Use guard() for mutex locks
+  ASoC: codecs: max98095: Use guard() for mutex locks
+  ASoC: codecs: mt6359-accdet: Use guard() for mutex locks
+  ASoC: codecs: pcm512x: Use guard() for mutex locks
+  ASoC: codecs: pcm6240: Use guard() for mutex locks
+  ASoC: codecs: peb2466: Use guard() for mutex locks
+  ASoC: codecs: rt5514-spi: Use guard() for mutex locks
+  ASoC: codecs: rt5645: Use guard() for mutex locks
+  ASoC: codecs: rt5665: Use guard() for mutex locks
+  ASoC: codecs: rt5668: Use guard() for mutex locks
+  ASoC: codecs: rt5677: Use guard() for mutex locks
+  ASoC: codecs: rt5682: Use guard() for mutex locks
+  ASoC: codecs: rt700: Use guard() for mutex locks
+  ASoC: codecs: rt711: Use guard() for mutex locks
+  ASoC: codecs: rt712: Use guard() for mutex locks
+  ASoC: codecs: rt721: Use guard() for mutex locks
+  ASoC: codecs: rt722: Use guard() for mutex locks
+
+ sound/soc/codecs/da7213.c             |  37 ++----
+ sound/soc/codecs/da7219.c             |  55 +++------
+ sound/soc/codecs/es8316.c             |  31 +++--
+ sound/soc/codecs/es8326.c             |  30 +++--
+ sound/soc/codecs/es9356.c             |  29 ++---
+ sound/soc/codecs/fs210x.c             |  87 +++++---------
+ sound/soc/codecs/hdac_hdmi.c          | 117 +++++++++----------
+ sound/soc/codecs/hdmi-codec.c         |  15 +--
+ sound/soc/codecs/idt821034.c          | 121 ++++++++-----------
+ sound/soc/codecs/lpass-macro-common.c |  12 +-
+ sound/soc/codecs/madera.c             |  32 ++----
+ sound/soc/codecs/max98095.c           |  35 +++---
+ sound/soc/codecs/mt6359-accdet.c      |  13 +--
+ sound/soc/codecs/pcm512x.c            |  19 +--
+ sound/soc/codecs/pcm6240.c            |  25 ++--
+ sound/soc/codecs/peb2466.c            |  16 +--
+ sound/soc/codecs/rt5514-spi.c         |  21 ++--
+ sound/soc/codecs/rt5645.c             | 160 +++++++++++++-------------
+ sound/soc/codecs/rt5665.c             |  15 ++-
+ sound/soc/codecs/rt5668.c             |  10 +-
+ sound/soc/codecs/rt5677-spi.c         |  36 +++---
+ sound/soc/codecs/rt5677.c             |  75 ++++++------
+ sound/soc/codecs/rt5682-sdw.c         |  24 ++--
+ sound/soc/codecs/rt5682.c             |   5 +-
+ sound/soc/codecs/rt5682s.c            |  17 +--
+ sound/soc/codecs/rt700-sdw.c          |  14 +--
+ sound/soc/codecs/rt711-sdca-sdw.c     |  30 ++---
+ sound/soc/codecs/rt711-sdca.c         |   8 +-
+ sound/soc/codecs/rt711-sdw.c          |  24 ++--
+ sound/soc/codecs/rt711.c              |  46 ++++----
+ sound/soc/codecs/rt712-sdca-sdw.c     |  30 ++---
+ sound/soc/codecs/rt712-sdca.c         |   8 +-
+ sound/soc/codecs/rt721-sdca-sdw.c     |  29 ++---
+ sound/soc/codecs/rt721-sdca.c         |   5 +-
+ sound/soc/codecs/rt722-sdca-sdw.c     |  29 ++---
+ sound/soc/codecs/rt722-sdca.c         |   4 +-
+ 36 files changed, 557 insertions(+), 707 deletions(-)
+
 -- 
 2.43.0
 
