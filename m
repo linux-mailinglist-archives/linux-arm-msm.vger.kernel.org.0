@@ -1,52 +1,52 @@
-Return-Path: <linux-arm-msm+bounces-115583-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-115584-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id pwx2OWa6RGqhzgoAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-115583-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Jul 2026 08:57:42 +0200
+	id 9xT5I8S6RGrJzgoAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-115584-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Jul 2026 08:59:16 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 580276EA5F8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Jul 2026 08:57:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 192DF6EA642
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Jul 2026 08:59:16 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=eardjtRk;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115583-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115583-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=AE55aGPF;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115584-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115584-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 4E3CA301727E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jul 2026 06:57:40 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id C6545304A694
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jul 2026 06:58:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 50F023B2FDD;
-	Wed,  1 Jul 2026 06:57:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 499473B42EA;
+	Wed,  1 Jul 2026 06:58:37 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AF24299927;
-	Wed,  1 Jul 2026 06:57:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D3E23B3C05;
+	Wed,  1 Jul 2026 06:58:36 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782889057; cv=none; b=RvQ/XYlg3oHa0reDG9ol6uNEaxa1v8vxn2rSyitWsJSHJCg6tz2xa1hpi0l0387kZjcQUG0I+3LNiH77s3nFEH6eNacp+MuOvNwUmKWT+u3vHOtf78fL+V54I+y2osxO1+2DUEzKIXDuAgcppgkdBt9lQP04ixjxW1JwOKbtzaM=
+	t=1782889117; cv=none; b=tsXfjGfi/I2d90tX3qdLlr5riiNwrLbWlBhXvbPG9PRtAwAlHwK+Jtos9BkIqL/KnKIdHhwMIa9pzz1BS1oyBcad0YYYWNT/eXNzwvCwJWqIt027trkTJkNmnLTKeRiKyOwR9X7823yBOAgjJdty8SfUOGIeBr9wzP8LfOKIC+c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782889057; c=relaxed/simple;
-	bh=rnV5HhhWP2HaifQNL1vvC8C3/Zy1ziB3PLME9igrVzw=;
+	s=arc-20240116; t=1782889117; c=relaxed/simple;
+	bh=p96fgqRAxyLtnD2Wkwo5sRb26fDuAJmmu7Z2bDJ02Ao=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=A/IoG9n8rB31qAcTC4djHB1Tu3PbPTPgXvPNOF5fCqYCgttsjPmh4bhop/ImUJM/xIAsau8L+GJZwO0gPauUXdGWdPJ2F70TKDGdEk4DfGosFLyhcCLbC5voA1FsCYALLi/7qZBtUT363fQ/e95XmDxwkmGw0URz99GsS4f7/nI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eardjtRk; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0597A1F000E9;
-	Wed,  1 Jul 2026 06:57:34 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=QS/v1iDYQ8xt9IyqssTxZi750dBRNfAv1i8JUJ4saiXkpXy3OxZ/o4wl73B8j8IKUxVX0ozqFHcD5NSveno7erR6iFxuXLaRo9nsYRPWuQ7+Yf3sknPSFMrbevDcP0bOQYEVIXwgAGNXc3PKiLEuLlgSOt9jKOqqgLXY21D3fKE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AE55aGPF; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 087A51F000E9;
+	Wed,  1 Jul 2026 06:58:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782889056;
-	bh=S/Br7n8skDAshjgKN/WmFTTuKkr1LxKAT3b5k1fkpvo=;
+	s=k20260515; t=1782889116;
+	bh=p96fgqRAxyLtnD2Wkwo5sRb26fDuAJmmu7Z2bDJ02Ao=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=eardjtRk0tVHOFgzGFet5eWB/jfl1S/rTNInUeK5BXbYMBX/2j8MFCLN4w3XLb3sW
-	 MMTnLPihVbBVf2aGqidO2l1HxExbbjNprWS471p9MQpxyEddgh7EHPIhpwMkC1slxn
-	 jyRZGPZJJ21xbvh1qHqnYJ+r9aeP/KOpk7EK4CrKuTHiKMU+MF5o9lNsr6dFjKeLEi
-	 Hb54fqmJ16O4fQgeZKcm6Rz3A5OtXFRrGhov6KiBQgB79GN5r+djfskdHUz/lnTvum
-	 RlVyBYrTLHA/Vo/qHApjH1RHRXcteS5FW5EwfQTUQ8S18FHW1NnY5CsSJdXfyqfXhq
-	 sPM0Hio/kaN7w==
-Date: Wed, 1 Jul 2026 08:57:31 +0200
+	b=AE55aGPF7Lc8LHUeDYaoFlOLYtJQaCReY63VcdLuGdeUwzZZ7LfBABDb0WsQglAGN
+	 wo2cK5eCAR1OhocVNbQEMOdE1MCCR1MA17rWpNLS1fs9OgzIpFD2TLpQiXf48W3LrT
+	 jN5HDxGbH5AYwrIFGvqFRwPmP8C6KgZVSjrnzeru1Fj+64HfC5hcYm80eb/Uyu6pP1
+	 7dUxAk+ThGQoU3jZlcfLQ7bs9ab7mOSytgsG7BBmFNYAUYRnSxIS2ka+drJO6lz19O
+	 VPUiCfAl2U8DLo8YHCXw4DDPEkLVvgio+aQb4lkAZkyVihlxc9Ie55r1giiLW/pmsk
+	 4+T1kk1Kb2Reg==
+Date: Wed, 1 Jul 2026 08:58:32 +0200
 From: Krzysztof Kozlowski <krzk@kernel.org>
 To: Jie Gan <jie.gan@oss.qualcomm.com>
 Cc: Bjorn Andersson <andersson@kernel.org>, 
@@ -59,11 +59,11 @@ Cc: Bjorn Andersson <andersson@kernel.org>,
 	Alexander Shishkin <alexander.shishkin@linux.intel.com>, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
 	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
 	coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH v4 1/5] dt-bindings: arm: coresight-tnoc: Add standalone
- qcom,coresight-agtnoc compatible
-Message-ID: <20260701-stirring-piculet-of-vastness-a361e5@quoll>
+Subject: Re: [PATCH v4 2/5] coresight: tnoc: add AG tnoc standalone
+ compatible to the platform driver
+Message-ID: <20260701-divergent-noisy-hedgehog-af719a@quoll>
 References: <20260701-fix-tracenoc-probe-issue-v4-0-aefab449a470@oss.qualcomm.com>
- <20260701-fix-tracenoc-probe-issue-v4-1-aefab449a470@oss.qualcomm.com>
+ <20260701-fix-tracenoc-probe-issue-v4-2-aefab449a470@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -72,7 +72,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260701-fix-tracenoc-probe-issue-v4-1-aefab449a470@oss.qualcomm.com>
+In-Reply-To: <20260701-fix-tracenoc-probe-issue-v4-2-aefab449a470@oss.qualcomm.com>
 X-Rspamd-Action: no action
 X-Spamd-Result: default: False [-3.16 / 15.00];
 	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
@@ -94,7 +94,7 @@ X-Spamd-Result: default: False [-3.16 / 15.00];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	FORWARDED(0.00)[lists@lfdr.de];
-	TAGGED_FROM(0.00)[bounces-115583-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-115584-lists,linux-arm-msm=lfdr.de];
 	DKIM_TRACE(0.00)[kernel.org:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
@@ -107,25 +107,21 @@ X-Spamd-Result: default: False [-3.16 / 15.00];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MISSING_XM_UA(0.00)[];
 	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[quoll:mid,vger.kernel.org:from_smtp,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,quoll:mid,vger.kernel.org:from_smtp]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 580276EA5F8
+X-Rspamd-Queue-Id: 192DF6EA642
 
-On Wed, Jul 01, 2026 at 09:53:41AM +0800, Jie Gan wrote:
-> The TNOC compatible previously only allowed the two-string AMBA form
-> "qcom,coresight-tnoc", "arm,primecell", which forces the device onto the
-> AMBA bus.
-> 
-> Convert the compatible to a oneOf and add a standalone
-> "qcom,coresight-agtnoc" compatible alongside the existing AMBA form. The
-> standalone string carries no "arm,primecell" entry, so the device is
-> created on the platform bus instead of the AMBA bus.
+On Wed, Jul 01, 2026 at 09:53:42AM +0800, Jie Gan wrote:
+> The Aggregator TNOC can be described either as an AMBA device using the
+> "qcom,coresight-tnoc", "arm,primecell" compatible or as a standalone
+> platform device using the new "qcom,coresight-agtnoc" compatible. The
+> latter avoids the AMBA bus and the associated peripheral-ID probing.
 
-That's a Linux driver specific reason, so not a valid one.
+So here it is: you added a fake hardware description so the driver can
+avoid some action.
 
-Describe the hardware instead.
-
-Also, you do not get other compatible for the same device.
+No, instead fix the drivers. Hardware did not change, thus you should
+not change the bindings.
 
 Best regards,
 Krzysztof
