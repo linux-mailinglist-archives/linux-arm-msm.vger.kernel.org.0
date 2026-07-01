@@ -1,129 +1,132 @@
-Return-Path: <linux-arm-msm+bounces-115584-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-115585-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id 9xT5I8S6RGrJzgoAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-115584-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Jul 2026 08:59:16 +0200
+	id VeXYNxi8RGpJzwoAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-115585-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Jul 2026 09:04:56 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 192DF6EA642
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Jul 2026 08:59:16 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 303166EA764
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Jul 2026 09:04:56 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=AE55aGPF;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115584-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115584-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=YuO2ARNh;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115585-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115585-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id C6545304A694
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jul 2026 06:58:44 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 35D95300CE6F
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jul 2026 07:00:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 499473B42EA;
-	Wed,  1 Jul 2026 06:58:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2ACE73B3C10;
+	Wed,  1 Jul 2026 07:00:48 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D3E23B3C05;
-	Wed,  1 Jul 2026 06:58:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B6293B1EFC
+	for <linux-arm-msm@vger.kernel.org>; Wed,  1 Jul 2026 07:00:47 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782889117; cv=none; b=tsXfjGfi/I2d90tX3qdLlr5riiNwrLbWlBhXvbPG9PRtAwAlHwK+Jtos9BkIqL/KnKIdHhwMIa9pzz1BS1oyBcad0YYYWNT/eXNzwvCwJWqIt027trkTJkNmnLTKeRiKyOwR9X7823yBOAgjJdty8SfUOGIeBr9wzP8LfOKIC+c=
+	t=1782889248; cv=none; b=nt1pnaugDg/HeyDpov81SY27B5ppVSl9EOzFatQOK0R2p1loZKxcfJ7vwOrwyLp4J1eT5PlOBSsztJDfeh49vRZcI9oMOvCaBP6YV7ehRy9oOwP+h0DSFy15H8WpGpsQwGJxUbyj0WiLnOsCYs4sahO7o0/1KJH5r+CQ0OEq2LQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782889117; c=relaxed/simple;
-	bh=p96fgqRAxyLtnD2Wkwo5sRb26fDuAJmmu7Z2bDJ02Ao=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QS/v1iDYQ8xt9IyqssTxZi750dBRNfAv1i8JUJ4saiXkpXy3OxZ/o4wl73B8j8IKUxVX0ozqFHcD5NSveno7erR6iFxuXLaRo9nsYRPWuQ7+Yf3sknPSFMrbevDcP0bOQYEVIXwgAGNXc3PKiLEuLlgSOt9jKOqqgLXY21D3fKE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AE55aGPF; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 087A51F000E9;
-	Wed,  1 Jul 2026 06:58:34 +0000 (UTC)
+	s=arc-20240116; t=1782889248; c=relaxed/simple;
+	bh=FNaghAsFbQcBu1hL0A0nxJoR5EC3advss/SPSVEWuxk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ao2t/OFdcXtne0nPuRRwFQlKBO8sqVRJdc/Gwk9tpJwW6HI+0NsJWA0qCtAYUWbFKuPg7RG87wq2amiksD6lncjXyJZLjNA1FOikb18bWXi3qNw77yOqL7WNPfhVE8hEt7zg3GSN5QUW2htwvc799Tdvm1VWzTHqqgmOXxGscIo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YuO2ARNh; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E11BF1F00A3E
+	for <linux-arm-msm@vger.kernel.org>; Wed,  1 Jul 2026 07:00:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782889116;
-	bh=p96fgqRAxyLtnD2Wkwo5sRb26fDuAJmmu7Z2bDJ02Ao=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=AE55aGPF7Lc8LHUeDYaoFlOLYtJQaCReY63VcdLuGdeUwzZZ7LfBABDb0WsQglAGN
-	 wo2cK5eCAR1OhocVNbQEMOdE1MCCR1MA17rWpNLS1fs9OgzIpFD2TLpQiXf48W3LrT
-	 jN5HDxGbH5AYwrIFGvqFRwPmP8C6KgZVSjrnzeru1Fj+64HfC5hcYm80eb/Uyu6pP1
-	 7dUxAk+ThGQoU3jZlcfLQ7bs9ab7mOSytgsG7BBmFNYAUYRnSxIS2ka+drJO6lz19O
-	 VPUiCfAl2U8DLo8YHCXw4DDPEkLVvgio+aQb4lkAZkyVihlxc9Ie55r1giiLW/pmsk
-	 4+T1kk1Kb2Reg==
-Date: Wed, 1 Jul 2026 08:58:32 +0200
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Jie Gan <jie.gan@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Tingwei Zhang <tingwei.zhang@oss.qualcomm.com>, Jingyi Wang <jingyi.wang@oss.qualcomm.com>, 
-	Abel Vesa <abel.vesa@oss.qualcomm.com>, Suzuki K Poulose <suzuki.poulose@arm.com>, 
-	Mike Leach <mike.leach@arm.com>, James Clark <james.clark@linaro.org>, Leo Yan <leo.yan@arm.com>, 
-	Yuanfang Zhang <yuanfang.zhang@oss.qualcomm.com>, Abel Vesa <abelvesa@kernel.org>, 
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH v4 2/5] coresight: tnoc: add AG tnoc standalone
- compatible to the platform driver
-Message-ID: <20260701-divergent-noisy-hedgehog-af719a@quoll>
-References: <20260701-fix-tracenoc-probe-issue-v4-0-aefab449a470@oss.qualcomm.com>
- <20260701-fix-tracenoc-probe-issue-v4-2-aefab449a470@oss.qualcomm.com>
+	s=k20260515; t=1782889246;
+	bh=FNaghAsFbQcBu1hL0A0nxJoR5EC3advss/SPSVEWuxk=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc;
+	b=YuO2ARNhkifLEqRBI7j7NdZnXq40CaeOqFNMpGQiwI0SP/bQnrXf52DXc5Nq817z8
+	 loMIPu62bmCDSUITiZuz7ZX5DPLydilJ9nP7w5KB7x/W/KR+j9xbsAJbdiYKQf/c/6
+	 b/XuB8c2saxfUkywb+JEdhfYWg/rKBNtRX7PTE0RtvBsvsInauBaRnlQ8P8ZXQ0FmB
+	 bQwBYtlv9qdmCKr/LjEwp7Bnx3G+3rfvhMQNcd6ZzPeOS4SQ/e2VwOxGI/2AUis+y0
+	 s7osJG01LdBfzmVxPBQXQNyE6evNdYx9yfvmtPRQgDfeC7gj2w8R3Cu4RTWZ7jImVU
+	 BWFM3H8gCvIJQ==
+Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-39adb9a103aso3066251fa.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Jul 2026 00:00:46 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AHgh+RqouwdhLua/HLv/lqbwrliB0QHOp2OO0IK1NMXn8S0+RUOUrtXYMl8NnTQ8pZZFaILWlV//UwOj9Ff/L/FA@vger.kernel.org
+X-Gm-Message-State: AOJu0YwDKoBCYRKfuD/dO+cxeJzJlaAhRD/FHrPsp21VMk+fRPsuVu6u
+	Vhr2DxgSNqafp9MijaOHyKI6g35cHep/XilLJIg6XSFeS8t5ZODxfVK5AnllOxd7jOoNc6MOJ0W
+	H017DeLO+9IgagXx1jQowOlO0HHEOydM=
+X-Received: by 2002:a05:6512:6391:b0:5a8:88f8:9ed4 with SMTP id
+ 2adb3069b0e04-5aec67b670cmr65217e87.30.1782889245754; Wed, 01 Jul 2026
+ 00:00:45 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260701-fix-tracenoc-probe-issue-v4-2-aefab449a470@oss.qualcomm.com>
+References: <20260626-topic-8280_pinctrl_wakeup-v1-1-2ccb267148f5@oss.qualcomm.com>
+In-Reply-To: <20260626-topic-8280_pinctrl_wakeup-v1-1-2ccb267148f5@oss.qualcomm.com>
+From: Linus Walleij <linusw@kernel.org>
+Date: Wed, 1 Jul 2026 09:00:33 +0200
+X-Gmail-Original-Message-ID: <CAD++jLneg_hxaBbcH915K8h1aec3L2gHKMhCmmj_eZ3iOs=VJA@mail.gmail.com>
+X-Gm-Features: AVVi8CdI-_vItMKJXwnRjSM6nQ88A-oDIf8o0u40FgC6OwPwBKcTIUz_nMMJrOY
+Message-ID: <CAD++jLneg_hxaBbcH915K8h1aec3L2gHKMhCmmj_eZ3iOs=VJA@mail.gmail.com>
+Subject: Re: [PATCH] pinctrl: qcom: sc8280xp: Add missing wakeup entries for GPIO143/151
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, Bartosz Golaszewski <brgl@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>, linux-arm-msm@vger.kernel.org, 
+	linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-3.16 / 15.00];
+X-Spamd-Result: default: False [-5.16 / 15.00];
 	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
-	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
+	TAGGED_FROM(0.00)[bounces-115585-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[22];
-	FORGED_RECIPIENTS(0.00)[m:jie.gan@oss.qualcomm.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:tingwei.zhang@oss.qualcomm.com,m:jingyi.wang@oss.qualcomm.com,m:abel.vesa@oss.qualcomm.com,m:suzuki.poulose@arm.com,m:mike.leach@arm.com,m:james.clark@linaro.org,m:leo.yan@arm.com,m:yuanfang.zhang@oss.qualcomm.com,m:abelvesa@kernel.org,m:alexander.shishkin@linux.intel.com,m:konrad.dybcio@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:coresight@lists.linaro.org,m:linux-arm-kernel@lists.infradead.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FORWARDED(0.00)[lists@lfdr.de];
-	TAGGED_FROM(0.00)[bounces-115584-lists,linux-arm-msm=lfdr.de];
 	DKIM_TRACE(0.00)[kernel.org:+];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_RECIPIENTS(0.00)[m:konrad.dybcio@oss.qualcomm.com,m:brgl@kernel.org,m:andersson@kernel.org,m:bartosz.golaszewski@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:linux-gpio@vger.kernel.org,m:linux-kernel@vger.kernel.org,s:lists@lfdr.de];
+	FORWARDED(0.00)[lists@lfdr.de];
+	FORGED_SENDER(0.00)[linusw@kernel.org,linux-arm-msm@vger.kernel.org];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	ALIAS_RESOLVED(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	TO_DN_SOME(0.00)[];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[linusw@kernel.org,linux-arm-msm@vger.kernel.org];
 	MISSING_XM_UA(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,quoll:mid,vger.kernel.org:from_smtp]
+	ALIAS_RESOLVED(0.00)[];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[7];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,mail.gmail.com:mid,qualcomm.com:email]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 192DF6EA642
+X-Rspamd-Queue-Id: 303166EA764
 
-On Wed, Jul 01, 2026 at 09:53:42AM +0800, Jie Gan wrote:
-> The Aggregator TNOC can be described either as an AMBA device using the
-> "qcom,coresight-tnoc", "arm,primecell" compatible or as a standalone
-> platform device using the new "qcom,coresight-agtnoc" compatible. The
-> latter avoids the AMBA bus and the associated peripheral-ID probing.
+On Fri, Jun 26, 2026 at 3:08=E2=80=AFPM Konrad Dybcio
+<konrad.dybcio@oss.qualcomm.com> wrote:
 
-So here it is: you added a fake hardware description so the driver can
-avoid some action.
+> Pins 143 and 151 were not included in the PDC wakeup map. They are
+> normally used for PCIe2A and PCIe3a PERST# respectively, so they're
+> unlikely to be excercised in practice, but still add them for the sake
+> of completeness.
+>
+> Fixes: c0e4c71a9e7c ("pinctrl: qcom: Introduce sc8280xp TLMM driver")
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-No, instead fix the drivers. Hardware did not change, thus you should
-not change the bindings.
+LGTM Bartosz will queue Qualcomm patches, but I see he's
+already on CC albeit in the qcom address.
 
-Best regards,
-Krzysztof
+Is this an urgent or a nonurgent fix?
 
+Yours,
+Linus Walleij
 
