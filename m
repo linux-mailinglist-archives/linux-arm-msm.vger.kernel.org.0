@@ -1,178 +1,151 @@
-Return-Path: <linux-arm-msm+bounces-115627-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-115628-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id uBktDm7kRGrI2goAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-115627-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Jul 2026 11:57:02 +0200
+	id 3AeON+XlRGod2woAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-115628-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Jul 2026 12:03:17 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4651D6EBCB4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Jul 2026 11:57:01 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3A5086EBD8F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Jul 2026 12:03:17 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=DZVMXwNQ;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115627-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 104.64.211.4 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115627-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b="MaL/yjKM";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115628-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115628-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 64446300F0FA
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jul 2026 09:56:58 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 4EDFB313AFB8
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jul 2026 09:58:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3D3F63FAE09;
-	Wed,  1 Jul 2026 09:56:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B20193FAE1A;
+	Wed,  1 Jul 2026 09:58:41 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B1083A48F4;
-	Wed,  1 Jul 2026 09:56:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D3DC3F822C
+	for <linux-arm-msm@vger.kernel.org>; Wed,  1 Jul 2026 09:58:40 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782899817; cv=none; b=eUZWCR/gcdY8xLVdmKFV9DL3OcNHAIz0pMH41Uf/ARUS3pk9a0ym5BqXmtaPY68j7Gq+TWImnaRG4DkZQ6vFm6c5OIEzjppeKm4HxzGD6Os6vjYePpe3i7ulovmzCjtig4Hu4OM1DvXkITcTzjtML53cq26QDwks+Pt6To+8YXg=
+	t=1782899921; cv=none; b=jpi5UTqovo+FhbArQFCUxbDFe1r159sDH9aw6u67+c1b4rwYVW4R0otnd4EreEU5avie1rdsUZFCE+i9ULBIzVzNyXCP99YeUMHQ8i00Kh2WGnCeGqW4X22xEIi8EXwMnoYRHjT9XpZW5qY0H8QQRnaWnlTKKaV9rDBqJj0xIgw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782899817; c=relaxed/simple;
-	bh=ce5x8VsOSihGimDX+E2xZ9QKUoBE10Bad77hJiyAQ1E=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OOUusOOVqGWGud1hYAOGawQE0KXThOb3pfE20d4gzEppPqRhUvAi1hTwMsw0lOcLX0t+L18ksT6EBGRV0TqZ6fTT8BCTfdodZc/vtdIzXUv0Z5mXPTVdHL6ERsrH1Zcs/8dZ65+T0MNxa7ZnItCsWAzb3668d5VQN0SBrGlPEeA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DZVMXwNQ; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3460C1F000E9;
-	Wed,  1 Jul 2026 09:56:41 +0000 (UTC)
+	s=arc-20240116; t=1782899921; c=relaxed/simple;
+	bh=ydO8Ft5Urm5M09KG8cScRhJ3iye6Vu29eRTcwv+lefo=;
+	h=From:In-Reply-To:MIME-Version:References:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=cyzxA57NHz0mCdvdwskqnNspxvG+LFkTHcKpiOnovcphSF2N5neJnuTESMtqm0Kdk5Vz5O74jIYrPloVHXg5QdEaUNuizLh+2+ODr8TuIc9AjZKtob3kfxzxOd/S/oqfY/wNsPw8pno8D2PxsUtKxO/+Y2xpgiJNjVY71Ocvf84=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MaL/yjKM; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 184E11F01569
+	for <linux-arm-msm@vger.kernel.org>; Wed,  1 Jul 2026 09:58:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782899816;
-	bh=ce5x8VsOSihGimDX+E2xZ9QKUoBE10Bad77hJiyAQ1E=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=DZVMXwNQ7Qas5su8LVUpZ9nJZzyP2uBxeA7y69zzPN45RtVQlQlUbn6BqoVClF8OQ
-	 cdNO1iGygY8gO12qIOso81h2/ovQrZtecs/m5aFsflX56hjaVdJn1UW1oDVl1Yio6K
-	 KRPnQX2cEF4iykCZPLFviJvZsj0dccJ/OtNrkWrmrDfd+Zc2DCw82CITQK1lp0tyWe
-	 FVO7hLYRhosCJheK7GEd0ZzB4RBxZA6em2G+SdpL6ItiqRo5WAo8LiBboh0bVEWu86
-	 sAwvz0MgMFy71FvJ0/B44EaogV7h2VMnc/A+pYGBJOKud9YpmG/8lNeNdIQphF8zxv
-	 fOupSSuKidQxA==
-Date: Wed, 1 Jul 2026 10:56:34 +0100
-From: Lorenzo Stoakes <ljs@kernel.org>
-To: Pedro Falcato <pfalcato@suse.de>
-Cc: Andrew Morton <akpm@linux-foundation.org>, 
-	Russell King <linux@armlinux.org.uk>, Dinh Nguyen <dinguyen@kernel.org>, 
-	Simon Schuster <schuster.simon@siemens-energy.com>, 
-	"James E . J . Bottomley" <James.Bottomley@hansenpartnership.com>, Helge Deller <deller@gmx.de>, 
-	Jarkko Sakkinen <jarkko@kernel.org>, Thomas Gleixner <tglx@kernel.org>, 
-	Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>, 
-	Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org, Ian Abbott <abbotti@mev.co.uk>, 
-	H Hartley Sweeten <hsweeten@visionengravers.com>, Lucas Stach <l.stach@pengutronix.de>, 
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
-	Patrik Jakobsson <patrik.r.jakobsson@gmail.com>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
-	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
-	Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>, 
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>, Thierry Reding <thierry.reding@kernel.org>, 
-	Mikko Perttunen <mperttunen@nvidia.com>, Jonathan Hunter <jonathanh@nvidia.com>, 
-	Christian Koenig <christian.koenig@amd.com>, Huang Rui <ray.huang@amd.com>, Ankit Agrawal <ankita@nvidia.com>, 
-	Alex Williamson <alex@shazbot.org>, Alexander Viro <viro@zeniv.linux.org.uk>, 
-	Christian Brauner <brauner@kernel.org>, Dan Williams <djbw@kernel.org>, 
-	Muchun Song <muchun.song@linux.dev>, Oscar Salvador <osalvador@suse.de>, 
-	David Hildenbrand <david@kernel.org>, Suren Baghdasaryan <surenb@google.com>, 
-	"Liam R . Howlett" <liam@infradead.org>, Matthew Wilcox <willy@infradead.org>, 
-	Marek Szyprowski <m.szyprowski@samsung.com>, Peter Zijlstra <peterz@infradead.org>, 
-	Arnaldo Carvalho de Melo <acme@kernel.org>, Namhyung Kim <namhyung@kernel.org>, 
-	Masami Hiramatsu <mhiramat@kernel.org>, Oleg Nesterov <oleg@redhat.com>, 
-	Steven Rostedt <rostedt@goodmis.org>, SeongJae Park <sj@kernel.org>, Miaohe Lin <linmiaohe@huawei.com>, 
-	Hugh Dickins <hughd@google.com>, Mike Rapoport <rppt@kernel.org>, Kees Cook <kees@kernel.org>, 
-	Paolo Bonzini <pbonzini@redhat.com>, linux-kernel@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-parisc@vger.kernel.org, linux-sgx@vger.kernel.org, 
-	etnaviv@lists.freedesktop.org, dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
-	freedreno@lists.freedesktop.org, linux-tegra@vger.kernel.org, kvm@vger.kernel.org, 
-	linux-fsdevel@vger.kernel.org, nvdimm@lists.linux.dev, linux-mm@kvack.org, 
-	iommu@lists.linux.dev, linux-perf-users@vger.kernel.org, 
-	linux-trace-kernel@vger.kernel.org, kasan-dev@googlegroups.com, damon@lists.linux.dev, 
-	Rik van Riel <riel@surriel.com>, Harry Yoo <harry@kernel.org>, Jann Horn <jannh@google.com>
-Subject: Re: [PATCH 06/30] mm/rmap: parameterise vma_interval_tree_*() by
- address_space
-Message-ID: <akTkRC7gPzdibXhU@lucifer>
-References: <cover.1782735110.git.ljs@kernel.org>
- <43050b10b53cdfc3627440e6b14ae2a9730b2a5c.1782735110.git.ljs@kernel.org>
- <akPsGrmaOd3JMlC2@pedro-suse.lan>
+	s=k20260515; t=1782899919;
+	bh=ydO8Ft5Urm5M09KG8cScRhJ3iye6Vu29eRTcwv+lefo=;
+	h=From:In-Reply-To:References:Date:Subject:To:Cc;
+	b=MaL/yjKM23uRludhdmmZ/pKii3StVcH78bbsWWybDYwbISt2i7e25j9KBm/ltPtyN
+	 XGTqeiB7Ui1fTWOKe6cmbDOaCa0Gh2ukI1Blgh4/JscEquN0V7NidxbWcCsMFv+Jd5
+	 zQ0wlXT1RcXbBR8YbeJ4zQJVuoPwzoSktWAr5ZLETC3SShkGudys8nIebgKuotKHkP
+	 IX/H5FlnXGYAgS4ozo7QnUmxjTPjq8d3Ak552DqwKFVad8dtMolWhL9gdsliRc1QHb
+	 BhmUGZrXTuZoVIIBCLI8L+AAXP/DLxfCSDDCslKePeVul25emIdooLYApll/O+VzH1
+	 yilRymzKctFNQ==
+Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-5aebbeba529so414374e87.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Jul 2026 02:58:38 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AHgh+RoiNhh+XXBpH4dIvwy3X0gHx0rM+q1pEqslB8tGz6h7h6xWVOkUcWphLr7AFnK+Ix4XBTHGLh6L5fHRtwxy@vger.kernel.org
+X-Gm-Message-State: AOJu0YyfUe3jUnSXeQ+KElvpJR/hwrdp2SWgmCG3yHvARb165Vls6txK
+	k9N/nSNey/hfQFB+mW/mEouZJNEfVGhhgUJS6RvTdykEl/H23EzM1tr+Hq0HLl3WrAh0Fe3yVqI
+	xEMJIlFyXvMvWQrZfN42gPJBQPNxzaUFHunloZfWB1Q==
+X-Received: by 2002:a05:6512:a34d:b0:5ae:b952:6c with SMTP id
+ 2adb3069b0e04-5aec6797747mr213198e87.13.1782899917728; Wed, 01 Jul 2026
+ 02:58:37 -0700 (PDT)
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 1 Jul 2026 05:58:36 -0400
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 1 Jul 2026 05:58:36 -0400
+From: Bartosz Golaszewski <brgl@kernel.org>
+In-Reply-To: <20260629-ipq5018-bluetooth-v2-3-02770f03b6bb@outlook.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <akPsGrmaOd3JMlC2@pedro-suse.lan>
+References: <20260629-ipq5018-bluetooth-v2-0-02770f03b6bb@outlook.com> <20260629-ipq5018-bluetooth-v2-3-02770f03b6bb@outlook.com>
+Date: Wed, 1 Jul 2026 05:58:36 -0400
+X-Gmail-Original-Message-ID: <CAMRc=MfTh4-RM7R-Ku=MFjo2EQLoe9dt5-AFBtrMx+zZJRHKLQ@mail.gmail.com>
+X-Gm-Features: AVVi8CcMVsM_VtMs4RD3avK1gS-7SxkMAq-P9mHbEgm5Sdw31SbqOo7iHTS4Zj8
+Message-ID: <CAMRc=MfTh4-RM7R-Ku=MFjo2EQLoe9dt5-AFBtrMx+zZJRHKLQ@mail.gmail.com>
+Subject: Re: [PATCH v2 3/6] firmware: qcom: scm: Add support for setting
+ Bluetooth power modes
+To: george.moussalem@outlook.com
+Cc: George Moussalem via B4 Relay <devnull+george.moussalem.outlook.com@kernel.org>, 
+	linux-block@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-mmc@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-wireless@vger.kernel.org, ath10k@lists.infradead.org, 
+	linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org, 
+	netdev@vger.kernel.org, linux-remoteproc@vger.kernel.org, 
+	Jens Axboe <axboe@kernel.dk>, Ulf Hansson <ulfh@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Johannes Berg <johannes@sipsolutions.net>, Jeff Johnson <jjohnson@kernel.org>, 
+	Bartosz Golaszewski <brgl@kernel.org>, Marcel Holtmann <marcel@holtmann.org>, 
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>, Balakrishna Godavarthi <quic_bgodavar@quicinc.com>, 
+	Rocky Liao <quic_rjliao@quicinc.com>, Saravana Kannan <saravanak@kernel.org>, 
+	Andrew Lunn <andrew@lunn.ch>, Heiner Kallweit <hkallweit1@gmail.com>, 
+	Russell King <linux@armlinux.org.uk>, "David S. Miller" <davem@davemloft.net>, 
+	Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
+	Simon Horman <horms@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Mathieu Poirier <mathieu.poirier@linaro.org>, 
+	Philipp Zabel <p.zabel@pengutronix.de>
+Content-Type: text/plain; charset="UTF-8"
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-3.16 / 15.00];
+X-Spamd-Result: default: False [-3.66 / 15.00];
 	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-115627-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:pfalcato@suse.de,m:akpm@linux-foundation.org,m:linux@armlinux.org.uk,m:dinguyen@kernel.org,m:schuster.simon@siemens-energy.com,m:James.Bottomley@hansenpartnership.com,m:deller@gmx.de,m:jarkko@kernel.org,m:tglx@kernel.org,m:mingo@redhat.com,m:bp@alien8.de,m:dave.hansen@linux.intel.com,m:x86@kernel.org,m:abbotti@mev.co.uk,m:hsweeten@visionengravers.com,m:l.stach@pengutronix.de,m:airlied@gmail.com,m:simona@ffwll.ch,m:patrik.r.jakobsson@gmail.com,m:maarten.lankhorst@linux.intel.com,m:mripard@kernel.org,m:tzimmermann@suse.de,m:robin.clark@oss.qualcomm.com,m:lumag@kernel.org,m:tomi.valkeinen@ideasonboard.com,m:thierry.reding@kernel.org,m:mperttunen@nvidia.com,m:jonathanh@nvidia.com,m:christian.koenig@amd.com,m:ray.huang@amd.com,m:ankita@nvidia.com,m:alex@shazbot.org,m:viro@zeniv.linux.org.uk,m:brauner@kernel.org,m:djbw@kernel.org,m:muchun.song@linux.dev,m:osalvador@suse.de,m:david@kernel.org,m:surenb@google.com,m:liam@infradead.org,m:willy@infradead.org,m:m.szypr
- owski@samsung.com,m:peterz@infradead.org,m:acme@kernel.org,m:namhyung@kernel.org,m:mhiramat@kernel.org,m:oleg@redhat.com,m:rostedt@goodmis.org,m:sj@kernel.org,m:linmiaohe@huawei.com,m:hughd@google.com,m:rppt@kernel.org,m:kees@kernel.org,m:pbonzini@redhat.com,m:linux-kernel@vger.kernel.org,m:linux-arm-kernel@lists.infradead.org,m:linux-parisc@vger.kernel.org,m:linux-sgx@vger.kernel.org,m:etnaviv@lists.freedesktop.org,m:dri-devel@lists.freedesktop.org,m:linux-arm-msm@vger.kernel.org,m:freedreno@lists.freedesktop.org,m:linux-tegra@vger.kernel.org,m:kvm@vger.kernel.org,m:linux-fsdevel@vger.kernel.org,m:nvdimm@lists.linux.dev,m:linux-mm@kvack.org,m:iommu@lists.linux.dev,m:linux-perf-users@vger.kernel.org,m:linux-trace-kernel@vger.kernel.org,m:kasan-dev@googlegroups.com,m:damon@lists.linux.dev,m:riel@surriel.com,m:harry@kernel.org,m:jannh@google.com,m:patrikrjakobsson@gmail.com,s:lists@lfdr.de];
-	FORGED_SENDER(0.00)[ljs@kernel.org,linux-arm-msm@vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-115628-lists,linux-arm-msm=lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:george.moussalem@outlook.com,m:devnull+george.moussalem.outlook.com@kernel.org,m:linux-block@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-mmc@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-wireless@vger.kernel.org,m:ath10k@lists.infradead.org,m:linux-arm-msm@vger.kernel.org,m:linux-bluetooth@vger.kernel.org,m:netdev@vger.kernel.org,m:linux-remoteproc@vger.kernel.org,m:axboe@kernel.dk,m:ulfh@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:johannes@sipsolutions.net,m:jjohnson@kernel.org,m:brgl@kernel.org,m:marcel@holtmann.org,m:luiz.dentz@gmail.com,m:quic_bgodavar@quicinc.com,m:quic_rjliao@quicinc.com,m:saravanak@kernel.org,m:andrew@lunn.ch,m:hkallweit1@gmail.com,m:linux@armlinux.org.uk,m:davem@davemloft.net,m:edumazet@google.com,m:kuba@kernel.org,m:pabeni@redhat.com,m:horms@kernel.org,m:andersson@kernel.org,m:konradybcio@kernel.org,m:mathieu.poirier@linaro.org,m:p.zabel@pengutronix.de,m:devnull@kernel.org,m:krzk@kern
+ el.org,m:conor@kernel.org,m:luizdentz@gmail.com,s:lists@lfdr.de];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,outlook.com:email,mail.gmail.com:mid,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,qualcomm.com:email];
+	FORGED_SENDER(0.00)[brgl@kernel.org,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[37];
+	FREEMAIL_TO(0.00)[outlook.com];
 	MIME_TRACE(0.00)[0:+];
-	RCVD_COUNT_THREE(0.00)[4];
-	FORWARDED(0.00)[lists@lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_CC(0.00)[linux-foundation.org,armlinux.org.uk,kernel.org,siemens-energy.com,hansenpartnership.com,gmx.de,redhat.com,alien8.de,linux.intel.com,mev.co.uk,visionengravers.com,pengutronix.de,gmail.com,ffwll.ch,suse.de,oss.qualcomm.com,ideasonboard.com,nvidia.com,amd.com,shazbot.org,zeniv.linux.org.uk,linux.dev,google.com,infradead.org,samsung.com,goodmis.org,huawei.com,vger.kernel.org,lists.infradead.org,lists.freedesktop.org,lists.linux.dev,kvack.org,googlegroups.com,surriel.com];
+	FORWARDED(0.00)[lists@lfdr.de];
+	FREEMAIL_CC(0.00)[kernel.org,vger.kernel.org,lists.infradead.org,kernel.dk,sipsolutions.net,holtmann.org,gmail.com,quicinc.com,lunn.ch,armlinux.org.uk,davemloft.net,google.com,redhat.com,linaro.org,pengutronix.de];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	RCPT_COUNT_GT_50(0.00)[75];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[ljs@kernel.org,linux-arm-msm@vger.kernel.org];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[brgl@kernel.org,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
 	DKIM_TRACE(0.00)[kernel.org:+];
 	ALIAS_RESOLVED(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
+	TAGGED_RCPT(0.00)[linux-arm-msm,george.moussalem.outlook.com,dt];
 	MISSING_XM_UA(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,suse.de:email,sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo,lucifer:mid]
+	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 4651D6EBCB4
+X-Rspamd-Queue-Id: 3A5086EBD8F
 
-On Tue, Jun 30, 2026 at 05:19:16PM +0100, Pedro Falcato wrote:
-> On Mon, Jun 29, 2026 at 01:23:17PM +0100, Lorenzo Stoakes wrote:
-> > The file-backed mapping interval tree functions vma_interval_tree_*()
-> > accept a raw rb_root_cached pointer to determine the tree in which they are
-> > operating.
-> >
-> > However, in each case, this is always associated with an address_space data
-> > type.
-> >
-> > So simply pass a pointer to that instead to simplify the code, and more
-> > clearly differentiate between these operations and those concerning
-> > anonymous mappings.
-> >
-> > While we're here, make the generated interval tree functions static as they
-> > do not need to be used externally (any previously existing external users
-> > have now been removed).
-> >
-> > We also rename VMA parameters from 'node' to 'vma' as calling this a node
-> > is simply confusing, update the input index types to pgoff_t since they
-> > reference page offsets and rename the parameters to pgoff_start and
-> > pgoff_last.
-> >
-> > No functional change intended.
-> >
-> > Signed-off-by: Lorenzo Stoakes <ljs@kernel.org>
+On Mon, 29 Jun 2026 15:01:46 +0200, George Moussalem via B4 Relay
+<devnull+george.moussalem.outlook.com@kernel.org> said:
+> From: George Moussalem <george.moussalem@outlook.com>
 >
-> 1) This is fantastic
-> 2) I need to rebase my local work :)
+> The Bluetooth subsystem (BTSS) on the IPQ5018 SoC supports setting power
+> modes which are required to be configured through a Secure Channel
+> Manager (SCM) call to TrustZone. However, not all Trusted Execution
+> Environment (QSEE) images support this call, so first check if the call
+> is available.
 >
-> Reviewed-by: Pedro Falcato <pfalcato@suse.de>
->
-> --
-> Pedro
+> Signed-off-by: George Moussalem <george.moussalem@outlook.com>
+> ---
 
-1) thanks :)
-2) sorry :P
-
-Cheers, Lorenzo
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 
