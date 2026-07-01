@@ -1,248 +1,204 @@
-Return-Path: <linux-arm-msm+bounces-115631-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-115632-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id +UAcN9boRGrb2woAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-115631-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Jul 2026 12:15:50 +0200
+	id KtphMu7rRGrj3AoAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-115632-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Jul 2026 12:29:02 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id D88686EBFFB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Jul 2026 12:15:49 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id 006E46EC259
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Jul 2026 12:29:01 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=n5OF7EwC;
-	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=EceMmhdD;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115631-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c15:e001:75::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115631-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=reject) header.from=qualcomm.com;
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=SsMSUbAA;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115632-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 104.64.211.4 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115632-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id BF84D306D881
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jul 2026 10:06:02 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 032F430273BC
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jul 2026 10:14:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C07513F44FC;
-	Wed,  1 Jul 2026 10:05:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3E47B403135;
+	Wed,  1 Jul 2026 10:14:35 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AABB42AA9
-	for <linux-arm-msm@vger.kernel.org>; Wed,  1 Jul 2026 10:05:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1420E3EEAF5;
+	Wed,  1 Jul 2026 10:14:33 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782900344; cv=none; b=nQ+ENxMLWRNsaDwK6qwU2BgkXT7qJYbgBvqoE9PFbq1LawIpEGw/fBfw9LFf/1MlVSrTjhP+FLKFVtAtrE7s/hQKCNv2U9t1JsjbfFkZ0R2zMAW6jsiXgTaOqXn8oMJ4+MtRzV+DcWn2iscRvaru0mAXlAck0Ia5MpQ/v3OyraM=
+	t=1782900875; cv=none; b=lWl1DLnTNQqRcbgC5hSJfA5tEKi5sn3X/D3Vyj0jz1jbiRzDQmsjNDCzL8rM710X3+cpCn483FOR0QAzuK0UGs5M41ftZcyExUm8PrvwfQkrDW3emgtBd6QMnWCV7l2WU49LZeMbRswBCtJwev2C1b+EpTu1rLI8gf9hWQRCYNM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782900344; c=relaxed/simple;
-	bh=bEv4c+NCVeDI5hZyy74vI/X5n2oJ5cUMsCpcfYOUcp8=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=IS0t+ZZ2DhZv3CWCRRLtcfY3NCKkbR7jkq67eF50NDlbzVFUewZrFPR10TrzFeeilVpDNsrORJdJx7IwhhGEIkx9ZtFD/CLFZTELhlQybFAtn3B50P/awrgQ0D4PBc5ralbwVg5rneUfGJ2yY9PyzEEOSM+Jp5Gt55eoDpvCnE8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=n5OF7EwC; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=EceMmhdD; arc=none smtp.client-ip=205.220.180.131
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 661A3BRO659351
-	for <linux-arm-msm@vger.kernel.org>; Wed, 1 Jul 2026 10:05:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=AwDwOpiFPSF0ZI1/vfPczW
-	kGaSZksvs43+rkmg5AbT0=; b=n5OF7EwCgC0ipxSnjDFLlHBhJQU2nahpC+0Pmu
-	SEinjDARNJsCsM8ii8h6ADUv7ex/lRNHgXSDi7z8rOvHko66NL94bIgraL37CBSP
-	GxK4Y2dtM70p9KOBBOUeJ0nqLztALGmq+L7KGhhuY3NKX3YvEjKu5Dqr2xToFqtu
-	0qSNdZEhSIGyxwpO9RQ5ilxDIwyOA/6Vym2EDOwh4aSWIJjMufaMFwa3hl5ikABz
-	z6SZYO5QMkQ5nG+T8X5qgY2/JVnzdcgDOVt4s7FT0ihgPDsXMEJ320kzfyNeE4Io
-	6B4fEU0cwDMg8w+57EZdiLFZFec+Vpdo0pKBguP/Urxazevg==
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com [209.85.216.69])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f502ur6r1-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 01 Jul 2026 10:05:42 +0000 (GMT)
-Received: by mail-pj1-f69.google.com with SMTP id 98e67ed59e1d1-37fca5f21b1so1197881a91.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Jul 2026 03:05:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1782900341; x=1783505141; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=AwDwOpiFPSF0ZI1/vfPczWkGaSZksvs43+rkmg5AbT0=;
-        b=EceMmhdDQbTMWQwFViX7T4C8aDq2fXbzloHwtPoSFPqYvd+ALu6zBwmcP2OOuMrHKX
-         kN5kIrZVwF3wIdpzATAJk/iidbgUHVIo4jNN6qSywLpgI0iMZiBs6Sgp4s81zJf/3VcV
-         JWRdaoU6Rs2KexPT/DrHN5DO1u67Kt+F0riUahYHHyPX3o6r7qB4Bdrc7vgmemMI8pue
-         3hf4RJE/FfjB3E7ne2o6geKkNhZj6ldM4xxZZFVph79qDAuxqkX95JM9oco1uXRWjdTt
-         bijFUee9zqIIK7Ji5WkdX00zxiULOSa1qzpUM3YJXPngWvbSnhem+a3Nkb7FPvRxYR7J
-         9uYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782900341; x=1783505141;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=AwDwOpiFPSF0ZI1/vfPczWkGaSZksvs43+rkmg5AbT0=;
-        b=pZnQ2xwEEAj9k1wKXkpD42YTozUNBMFMyUYQRJj4CzG7V4UtSKTmppv8Cj01U7Yimb
-         U+oBEMHoTun9wPDVBpEWR1piPUqDvXeVMpCxp6U5ZXi3ev42wHv9433Y9goIjhXFTNE8
-         wAfPpBPGmGBv6ce9wp7cq4NxA3wSB1/ztcrdx6H9vDrVC4r6HhYlFwG0pNj2U0kKsPyD
-         QyBMuNuIEQLXduIcLsCvajOuvak8cmpRN5SNWlCREjMH6mZbVZjgdfwm14WMouOpzkKS
-         t7iMpyDkW2ffxT8xSbYx131iSuRE594UBUEZvAP7eFT58emBHiCK4KyLMvUa3LZVwL4N
-         TTGQ==
-X-Forwarded-Encrypted: i=1; AHgh+Rp1HjezV97SDZa7mSzwESeXPlRVInVZ2bzYZnZhqOI0LNg/4v3/IQ2ydwAOEzVoKvBR19QvDcy68cN/ka41@vger.kernel.org
-X-Gm-Message-State: AOJu0YxGwH2Ioid5R1XuFVVtmtlmkygzirg8H6KRqR0hbTaOuB6y5Sob
-	ZlHtmZpS8NLltz131CWbUzmjxXeEa8UazxJGKriZF2AOOeheBbC2S2k0tu66iB9xpTSHeWKDEL7
-	kGCnqxV2KX7M3gY3x3RdFC3i7bzfSoWhq4XJ+/fTHfO3lA9nKlyiL1EX+mue1eCwrsWWSIeXFqe
-	vHIYA=
-X-Gm-Gg: AfdE7cmB+Dh95sdxnBgcHmsQZ5P3equVlUXzWxpCDQLih8ELazg8XrX8OfBYzEXxrUI
-	H/tqN9rnFhH/da+E8UpJ4IcZu3KdolNWnb82IKlzUx5gKQjPTcnOKrQUMD7fmGMibfSMVNXw7tN
-	HDLm/QmCmQalGfXu5QNUA3+Ism/wARhNxmoJXiqC71frKuskCoBjVentJ1++GOM0ZphFM5khQjo
-	pD+XchPjl6YTpi+w6vjAocz5jSOM/69k0Q1Pa7ZC+xjrHYWc7HOt+VuHp8ocsRVGcNuXVJ+X0ef
-	k0o7b1GeoZUlT4CTvIpmV2+8ouJr3i+ruaUIdlmhDZXzc0Q6K/D3UfsbWHAxehC5kfwtEVPLAar
-	cu8ducuoo4de8qGp3O0W0kPtbyYF4hAvbvzIWz4iKH8Az
-X-Received: by 2002:a17:90b:1dcc:b0:37f:c232:f075 with SMTP id 98e67ed59e1d1-380aa1d454cmr815969a91.12.1782900341331;
-        Wed, 01 Jul 2026 03:05:41 -0700 (PDT)
-X-Received: by 2002:a17:90b:1dcc:b0:37f:c232:f075 with SMTP id 98e67ed59e1d1-380aa1d454cmr815947a91.12.1782900340852;
-        Wed, 01 Jul 2026 03:05:40 -0700 (PDT)
-Received: from hu-vkatoch-hyd.qualcomm.com ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-38095d6d45asm1618994a91.9.2026.07.01.03.05.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Jul 2026 03:05:40 -0700 (PDT)
-From: Vinayak Katoch <vinayak.katoch@oss.qualcomm.com>
-Date: Wed, 01 Jul 2026 15:35:31 +0530
-Subject: [PATCH] arm64: dts: qcom: glymur: Add memory-region for audio PD
+	s=arc-20240116; t=1782900875; c=relaxed/simple;
+	bh=MxQbnGsZoYEeUUWCNxHFMLWCbhf6XkMB4J/kyZCw7aQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=E594ttcBJ422EpsAOYTK16HLKBEsyb6YNgoAaxvfIqNXHT2drm5Gd2NWzzpMrsDWifnRu5+hgx+fShRGB7SQU8IUetewhqCcXO0gTplNa5bFqb0utzvNU1SX6uuR3Y5k/WRt8mBnQ34uwLo8w2csU9WzXZFIAGnhi8IMgGKnobI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SsMSUbAA; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9816A1F000E9;
+	Wed,  1 Jul 2026 10:14:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1782900873;
+	bh=MxQbnGsZoYEeUUWCNxHFMLWCbhf6XkMB4J/kyZCw7aQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=SsMSUbAAV6xvXQAFUx89uz5IFhN7+Zl1QTMWjM1sfBzD12H9w9GlLytFDAvlfqEtu
+	 zxM1nx/Rw+0etgyNI/MUT6BoXukwf38U1evQ9uAuYcVhPAZon9ACkm+QDkxCLUZGOV
+	 jfEfE5rqcIppLW/a+fFzg/lxdqwkSprEQ5wQzNhAM4QTPk/LKJXoFlzAwqp6zt4Pdo
+	 MZsZG+fVKjkTgAWqt2sNhKdd0V9vHe1rSxqL7N2gbyIy7k6rBJg99uje117D1fIMTs
+	 Ofv+7N0ZI9pM30elRxaNZLThhLB/mgA/4FFYjnJTIBx8Ssa/NQrq/aaGT1eQD2mIsM
+	 MrCyKM8zicfjg==
+Date: Wed, 1 Jul 2026 11:14:11 +0100
+From: Lorenzo Stoakes <ljs@kernel.org>
+To: Pedro Falcato <pfalcato@suse.de>
+Cc: Andrew Morton <akpm@linux-foundation.org>, 
+	Russell King <linux@armlinux.org.uk>, Dinh Nguyen <dinguyen@kernel.org>, 
+	Simon Schuster <schuster.simon@siemens-energy.com>, 
+	"James E . J . Bottomley" <James.Bottomley@hansenpartnership.com>, Helge Deller <deller@gmx.de>, 
+	Jarkko Sakkinen <jarkko@kernel.org>, Thomas Gleixner <tglx@kernel.org>, 
+	Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>, 
+	Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org, Ian Abbott <abbotti@mev.co.uk>, 
+	H Hartley Sweeten <hsweeten@visionengravers.com>, Lucas Stach <l.stach@pengutronix.de>, 
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+	Patrik Jakobsson <patrik.r.jakobsson@gmail.com>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+	Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>, 
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>, Thierry Reding <thierry.reding@kernel.org>, 
+	Mikko Perttunen <mperttunen@nvidia.com>, Jonathan Hunter <jonathanh@nvidia.com>, 
+	Christian Koenig <christian.koenig@amd.com>, Huang Rui <ray.huang@amd.com>, Ankit Agrawal <ankita@nvidia.com>, 
+	Alex Williamson <alex@shazbot.org>, Alexander Viro <viro@zeniv.linux.org.uk>, 
+	Christian Brauner <brauner@kernel.org>, Dan Williams <djbw@kernel.org>, 
+	Muchun Song <muchun.song@linux.dev>, Oscar Salvador <osalvador@suse.de>, 
+	David Hildenbrand <david@kernel.org>, Suren Baghdasaryan <surenb@google.com>, 
+	"Liam R . Howlett" <liam@infradead.org>, Matthew Wilcox <willy@infradead.org>, 
+	Marek Szyprowski <m.szyprowski@samsung.com>, Peter Zijlstra <peterz@infradead.org>, 
+	Arnaldo Carvalho de Melo <acme@kernel.org>, Namhyung Kim <namhyung@kernel.org>, 
+	Masami Hiramatsu <mhiramat@kernel.org>, Oleg Nesterov <oleg@redhat.com>, 
+	Steven Rostedt <rostedt@goodmis.org>, SeongJae Park <sj@kernel.org>, Miaohe Lin <linmiaohe@huawei.com>, 
+	Hugh Dickins <hughd@google.com>, Mike Rapoport <rppt@kernel.org>, Kees Cook <kees@kernel.org>, 
+	Paolo Bonzini <pbonzini@redhat.com>, linux-kernel@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-parisc@vger.kernel.org, linux-sgx@vger.kernel.org, 
+	etnaviv@lists.freedesktop.org, dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
+	freedreno@lists.freedesktop.org, linux-tegra@vger.kernel.org, kvm@vger.kernel.org, 
+	linux-fsdevel@vger.kernel.org, nvdimm@lists.linux.dev, linux-mm@kvack.org, 
+	iommu@lists.linux.dev, linux-perf-users@vger.kernel.org, 
+	linux-trace-kernel@vger.kernel.org, kasan-dev@googlegroups.com, damon@lists.linux.dev, 
+	Rik van Riel <riel@surriel.com>, Harry Yoo <harry@kernel.org>, Jann Horn <jannh@google.com>
+Subject: Re: [PATCH 08/30] mm/rmap: rename vma_interval_tree_*() to
+ mapping_interval_tree_*()
+Message-ID: <akTketJmWBOSThSf@lucifer>
+References: <cover.1782735110.git.ljs@kernel.org>
+ <f95462457025370efd047b9dfb039e76bbddf58b.1782735110.git.ljs@kernel.org>
+ <akPtjuele4I7iqTQ@pedro-suse.lan>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260701-glymur-audio-v1-1-2c3862d95a09@oss.qualcomm.com>
-X-B4-Tracking: v=1; b=H4sIAGrmRGoC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIzMDcwND3fScytzSIt3E0pTMfF0LYzMjQwMT4xRDE2MloJaCotS0zAqwcdG
- xtbUAIrau9F4AAAA=
-X-Change-ID: 20260701-glymur-audio-83621043d143
-To: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc: Bharath Kumar <bkumar@qti.qualcomm.com>,
-        Chenna Kesava Raju <chennak@qti.qualcomm.com>,
-        Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Vinayak Katoch <vinayak.katoch@oss.qualcomm.com>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1782900336; l=1780;
- i=vinayak.katoch@oss.qualcomm.com; s=20260609; h=from:subject:message-id;
- bh=bEv4c+NCVeDI5hZyy74vI/X5n2oJ5cUMsCpcfYOUcp8=;
- b=2P/+Er6x2LZiw24Ws7UEotRge0G9Z1NJKmN2F0EPWyZkU0z8vYkU+OJRL896p0H0qRbG1EHrf
- +ipYp7DAQ45Dekyh+sLpNiXppKVb90dFXHBVUW2Xub64SZNAZ7YsK62
-X-Developer-Key: i=vinayak.katoch@oss.qualcomm.com; a=ed25519;
- pk=UrGeKKxjIjpHZIjsbQKS/8rrVaP9KVGki69pFclCH08=
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAxMDEwNCBTYWx0ZWRfX1Pw+y0XErovJ
- QJvXthw3i14J5LtlYhzAFueZHHlx1zq5qUtYwIHuHUa89A//E7b9qLCR/+YxrW6WsfykGlEDlTK
- 7LHReTAXZ44yBDXkJyRH7kWLMUuXBJM=
-X-Proofpoint-GUID: kqmWwi3WREtO6yypNgFzBs8wd4GkIVLZ
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAxMDEwNCBTYWx0ZWRfX6zbYX7vEIauT
- 9omlWAVHGDoQVWg8IX08n/NMpmXsXvoLdz+3EOzYdnn+70q1Q7LVxAtZknjFOVYd/5xUgoxj5e3
- syrvuJ6HvjakGQY7+78pv1DzBfofRccJ8rYQooJ/SaXGxR/7QykFWY56FKupE9gv21vQOkiBa88
- V5jEdrBg0Czhq0Oc1AiJ3kC9RZzEO61v0XbmTw9pYTuTk7xnLpIsbw+6zFIaCXTjBOUdWvSe/88
- 3hQQUMdxIuFUuRfFU93U+RKWUcj4h4ixEOxhXlYhP4arADFDBH8XtbtXoI+9MWj6C0XZ/QTMJCK
- vJuq9f5+nOcPgW1Zj07iIm1MvkW3l5XLm+DJOICfre18kPeoUq0gpqa+bQSn5gjrPQjr9AuCg8P
- 1ANg8+WDEYEgGpAQXE1owfUj+mDDTNbirIlqmXu3xoucPAlaw7vuvUlcMrZYc7L6tPMfRCEWBP8
- sz9vDWBNOFcTdplpJKQ==
-X-Proofpoint-ORIG-GUID: kqmWwi3WREtO6yypNgFzBs8wd4GkIVLZ
-X-Authority-Analysis: v=2.4 cv=PbLPQChd c=1 sm=1 tr=0 ts=6a44e676 cx=c_pps
- a=vVfyC5vLCtgYJKYeQD43oA==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
- a=EUspDBNiAAAA:8 a=xTAV2kzwEx0x-571GnoA:9 a=QEXdDO2ut3YA:10
- a=rl5im9kqc5Lf4LNbBjHf:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-07-01_02,2026-06-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 clxscore=1015 impostorscore=0 spamscore=0 lowpriorityscore=0
- suspectscore=0 phishscore=0 malwarescore=0 adultscore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607010104
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <akPtjuele4I7iqTQ@pedro-suse.lan>
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-3.16 / 15.00];
+	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-115631-lists,linux-arm-msm=lfdr.de];
-	RCPT_COUNT_TWELVE(0.00)[12];
-	MIME_TRACE(0.00)[0:+];
 	RCVD_TLS_LAST(0.00)[];
-	FORWARDED(0.00)[lists@lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:bkumar@qti.qualcomm.com,m:chennak@qti.qualcomm.com,m:ekansh.gupta@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:vinayak.katoch@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_SENDER(0.00)[vinayak.katoch@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:from_mime,qualcomm.com:dkim,qualcomm.com:email,vger.kernel.org:from_smtp,sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[vinayak.katoch@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-115632-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	FORGED_RECIPIENTS(0.00)[m:pfalcato@suse.de,m:akpm@linux-foundation.org,m:linux@armlinux.org.uk,m:dinguyen@kernel.org,m:schuster.simon@siemens-energy.com,m:James.Bottomley@hansenpartnership.com,m:deller@gmx.de,m:jarkko@kernel.org,m:tglx@kernel.org,m:mingo@redhat.com,m:bp@alien8.de,m:dave.hansen@linux.intel.com,m:x86@kernel.org,m:abbotti@mev.co.uk,m:hsweeten@visionengravers.com,m:l.stach@pengutronix.de,m:airlied@gmail.com,m:simona@ffwll.ch,m:patrik.r.jakobsson@gmail.com,m:maarten.lankhorst@linux.intel.com,m:mripard@kernel.org,m:tzimmermann@suse.de,m:robin.clark@oss.qualcomm.com,m:lumag@kernel.org,m:tomi.valkeinen@ideasonboard.com,m:thierry.reding@kernel.org,m:mperttunen@nvidia.com,m:jonathanh@nvidia.com,m:christian.koenig@amd.com,m:ray.huang@amd.com,m:ankita@nvidia.com,m:alex@shazbot.org,m:viro@zeniv.linux.org.uk,m:brauner@kernel.org,m:djbw@kernel.org,m:muchun.song@linux.dev,m:osalvador@suse.de,m:david@kernel.org,m:surenb@google.com,m:liam@infradead.org,m:willy@infradead.org,m:m.szypr
+ owski@samsung.com,m:peterz@infradead.org,m:acme@kernel.org,m:namhyung@kernel.org,m:mhiramat@kernel.org,m:oleg@redhat.com,m:rostedt@goodmis.org,m:sj@kernel.org,m:linmiaohe@huawei.com,m:hughd@google.com,m:rppt@kernel.org,m:kees@kernel.org,m:pbonzini@redhat.com,m:linux-kernel@vger.kernel.org,m:linux-arm-kernel@lists.infradead.org,m:linux-parisc@vger.kernel.org,m:linux-sgx@vger.kernel.org,m:etnaviv@lists.freedesktop.org,m:dri-devel@lists.freedesktop.org,m:linux-arm-msm@vger.kernel.org,m:freedreno@lists.freedesktop.org,m:linux-tegra@vger.kernel.org,m:kvm@vger.kernel.org,m:linux-fsdevel@vger.kernel.org,m:nvdimm@lists.linux.dev,m:linux-mm@kvack.org,m:iommu@lists.linux.dev,m:linux-perf-users@vger.kernel.org,m:linux-trace-kernel@vger.kernel.org,m:kasan-dev@googlegroups.com,m:damon@lists.linux.dev,m:riel@surriel.com,m:harry@kernel.org,m:jannh@google.com,m:patrikrjakobsson@gmail.com,s:lists@lfdr.de];
+	FORGED_SENDER(0.00)[ljs@kernel.org,linux-arm-msm@vger.kernel.org];
+	MIME_TRACE(0.00)[0:+];
+	RCVD_COUNT_THREE(0.00)[4];
+	FORWARDED(0.00)[lists@lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FREEMAIL_CC(0.00)[linux-foundation.org,armlinux.org.uk,kernel.org,siemens-energy.com,hansenpartnership.com,gmx.de,redhat.com,alien8.de,linux.intel.com,mev.co.uk,visionengravers.com,pengutronix.de,gmail.com,ffwll.ch,suse.de,oss.qualcomm.com,ideasonboard.com,nvidia.com,amd.com,shazbot.org,zeniv.linux.org.uk,linux.dev,google.com,infradead.org,samsung.com,goodmis.org,huawei.com,vger.kernel.org,lists.infradead.org,lists.freedesktop.org,lists.linux.dev,kvack.org,googlegroups.com,surriel.com];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	RCPT_COUNT_GT_50(0.00)[75];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[ljs@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	ALIAS_RESOLVED(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	MISSING_XM_UA(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCVD_COUNT_SEVEN(0.00)[7]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[lucifer:mid,vger.kernel.org:from_smtp,sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: D88686EBFFB
+X-Rspamd-Queue-Id: 006E46EC259
 
-Reserve memory region for audio PD dynamic loading and remote heap
-requirements. Add the required VMID list for memory ownership
-transfers.
+On Tue, Jun 30, 2026 at 05:28:20PM +0100, Pedro Falcato wrote:
+> On Mon, Jun 29, 2026 at 01:23:19PM +0100, Lorenzo Stoakes wrote:
+> > The family of vma_interval_tree_() functions manipulate the
+> > address_space (which, of course, is generally referred to as 'mapping')
+> > reverse mapping, but are named the 'VMA' interval tree.
+> >
+> > VMAs may be mapped by an anon_vma, an address_space, or both. Therefore
+> > calling the mapping interval tree a 'VMA' interval tree is rather
+> > confusing.
+> >
+> > This is also inconsistent with the anon_vma_interval_tree_*() functions
+> > which explicitly reference the rmap object to which they pertain.
+> >
+> > Rename the vma_interval_tree_*() functions to mapping_interval_tree_*() to
+> > correct this.
+> >
+> > No functional change intended.
+> >
+> > Signed-off-by: Lorenzo Stoakes <ljs@kernel.org>
+>
+> I'll have to nitpick this and say that I prefer [1] file_rmap_tree_, or
+> mapping_rmap_tree. Or possibly even better - mapping_ (so
+> mapping_for_each_vma, mapping_insert_vma, etc).
 
-Signed-off-by: Vinayak Katoch <vinayak.katoch@oss.qualcomm.com>
----
- arch/arm64/boot/dts/qcom/glymur.dtsi | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+Haha of course.
 
-diff --git a/arch/arm64/boot/dts/qcom/glymur.dtsi b/arch/arm64/boot/dts/qcom/glymur.dtsi
-index 20b49af7298e..f403f542aa00 100644
---- a/arch/arm64/boot/dts/qcom/glymur.dtsi
-+++ b/arch/arm64/boot/dts/qcom/glymur.dtsi
-@@ -11,6 +11,7 @@
- #include <dt-bindings/clock/qcom,kaanapali-gxclkctl.h>
- #include <dt-bindings/clock/qcom,rpmh.h>
- #include <dt-bindings/dma/qcom-gpi.h>
-+#include <dt-bindings/firmware/qcom,scm.h>
- #include <dt-bindings/gpio/gpio.h>
- #include <dt-bindings/interconnect/qcom,icc.h>
- #include <dt-bindings/interconnect/qcom,glymur-rpmh.h>
-@@ -663,6 +664,14 @@ smem_mem: smem@ffe00000 {
- 			hwlocks = <&tcsr_mutex 3>;
- 			no-map;
- 		};
-+
-+		adsp_rpc_remote_heap_mem: adsp-rpc-remote-heap {
-+			compatible = "shared-dma-pool";
-+			alloc-ranges = <0x0 0x80000000 0x0 0x80000000>;
-+			reusable;
-+			alignment = <0x0 0x400000>;
-+			size = <0x0 0x800000>;
-+		};
- 	};
- 
- 	smp2p-adsp {
-@@ -3845,6 +3854,9 @@ fastrpc {
- 					compatible = "qcom,glymur-fastrpc", "qcom,kaanapali-fastrpc";
- 					qcom,glink-channels = "fastrpcglink-apps-dsp";
- 					label = "adsp";
-+					memory-region = <&adsp_rpc_remote_heap_mem>;
-+					qcom,vmids = <QCOM_SCM_VMID_LPASS
-+						      QCOM_SCM_VMID_ADSP_HEAP>;
- 					#address-cells = <1>;
- 					#size-cells = <0>;
- 
+I don't like mapping_ because that is such an overloaded term and it's confusing
+really.
 
----
-base-commit: be5c93fa674f0fc3c8f359c2143abce6bbb422e6
-change-id: 20260701-glymur-audio-83621043d143
+I'm iffy on mapping_rmap_tree as it feels like that implies 'this is the whole
+of how the rmap lookup works', and it also makes it less obvious what _kind_ of
+tree it is, though I suppose you could look up the types, but the crap macro
+generation makes that more of a pain.
 
-Best regards,
--- 
-Vinayak Katoch <vinayak.katoch@oss.qualcomm.com>
+Also, for file 'rmap' you are potentially not actually doing an rmap at all in
+the classical sense of folio -> rmap object -> related VMAs, but rather are
+going from file/inode -> <page cache abstraction> -> related VMAs...
 
+But then again a quick spot check suggests it's usually from a folio... I guess
+only the rmap really needs to find the VMAs.
+
+Also if I renamed it to mapping_rmap_tree I'd have to respin and churn all the
+anon_vma code but I guess that's not impossible... :)
+
+I guess I'm a bit stubborn about doing much with the anon_vma stuff until I get
+rid of it.
+
+But I couldn't live with the stupidity of calling it vma_interval_tree_*()
+anymore here...
+
+OK I'm a bit torn, mapping_rmap_tree*() and anon_rmap_tree*() are the workable
+contenders from your suggestions.
+
+Let me think about that on respin... :)
+
+>
+> A bit of bikeshedding never hurts ;)
+>
+> [1] locally I was naming things file_rmap, but I never actually got to
+> churn these names away
+> --
+> Pedro
+
+Cheers, Lorenzo
 
