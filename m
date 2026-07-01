@@ -1,58 +1,58 @@
-Return-Path: <linux-arm-msm+bounces-115797-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-115798-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id o5VkCi5+RWpvBAsAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-115797-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	id AGCHGS5+RWpxBAsAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-115798-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
 	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Jul 2026 22:53:02 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id B29076F1A1E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Jul 2026 22:53:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 470846F1A24
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Jul 2026 22:53:02 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20201202 header.b="X9/ps9WM";
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115797-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c09:e001:a7::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115797-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=kernel.org header.s=k20201202 header.b="tv/ybqiT";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115798-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c09:e001:a7::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115798-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 29C463047909
+	by sto.lore.kernel.org (Postfix) with ESMTP id A299B30492C4
 	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jul 2026 20:53:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 94ED13A5433;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 999003A6B68;
 	Wed,  1 Jul 2026 20:52:56 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D5D438F258;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D670397E64;
 	Wed,  1 Jul 2026 20:52:56 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782939176; cv=none; b=J1pQqmUa0dl2A5H8bSDuQobdQ6lSsBb/K1MgrO+oq/LfcDZT6GqsOgvTY6NzN1mQzLnf1fbsdntoTYoZWAwBO2mDw+EnKFaOO5OPR91dLv3Wgt9bXks+/89k32ItxILbw2Fs+ym+9AinSsGhQPDWTMs2kPbFju7oigfs92xw3LY=
+	t=1782939176; cv=none; b=ntJ4tLWoXZCjBJYZBviDFm2BxK80EMKAFySE/l1weg9LqqfDUX59pYg2FMZZYiqnAFvLMWRkltuOqWNdZFr0JXYjECzJmEWUBeXECK8fhiQrDSr6qU4KcDjm/DbFGkWDOySh78D4CSY35RdO4/QgO4ncwj9zHm0LFNDhW8hQJ98=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1782939176; c=relaxed/simple;
-	bh=9BTqj89bZxMO325WD7xX7lCh2duf1b3+w/twlN+ydgw=;
+	bh=YBZNjPDvs2NTDBthBppb7kT2kiuflIpBTYfsr7x0HMU=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=oBdPELogoamuVJAhn3Fo7DakV2aTnGC0Kz0H8BxnSk6dXWSjxYT8QSlL08R/Cw1lff2inLG6Vn2RORsnS+QoDbqo84XJjPCreScoX45VQ60k75c2uPArU7KdqHf9hHCN5xQna/i8qoNgRjSAWEoLPX5WkUSazMO0L92UKaBnYfw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X9/ps9WM; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 2AE55C2BCC6;
+	 In-Reply-To:To:Cc; b=JqnxkVXUUyafjs788+FsidvWpuUezxZ2O60H+FG0YnHi3dwTGMv1UrKsqG1P/baqrLa5abMWoH3kiwuqVSDmVr+KBse4fJaKJIwEp+n+fobvo6zS6fm+/044rBqmQnWKou11VCKyNFUPSe7+HnolDZBEV0d2HRUTgDkBd8XXt/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tv/ybqiT; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 3460BC2BCF5;
 	Wed,  1 Jul 2026 20:52:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1782939176;
-	bh=9BTqj89bZxMO325WD7xX7lCh2duf1b3+w/twlN+ydgw=;
+	bh=YBZNjPDvs2NTDBthBppb7kT2kiuflIpBTYfsr7x0HMU=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=X9/ps9WMXdLiUn6n5QWIzWvPWTQgYYA6dw6dQ/pvZ9qYRdDsm/HOApzoLK8qaniyb
-	 jWaSZ4g9LgojvVxboylQPihgi5Q7Hqd9N3yIRqEZ1omGC1oOP9Zlauh9949srZlLau
-	 p2fFqhFw/4dFbmhPMG2HNZJjdZR/sNhd+ytFZCFWTcwkftBWZOUuVz0HsEZ3bC4QYn
-	 TSCz3cqZMOQh1AUR3ne8nkuw8jdBnd9BR4OQ4sCkhMIvBLgwQ4XuD9ydlTgiMtcFbv
-	 FjCD/VcHtRu29xFfvkcs2XdiC9RWTSjo1aCJfW/CIFk97OeddaHOo+Kc5aeA6qOpt9
-	 EZqH5/e/jUwVw==
+	b=tv/ybqiTmdPMBlkaUHiSH868lSEWgUGp/MxLfR3OTA3D7b2p+XgtN+ntRMlf9TEvM
+	 +5/C4TnL7a3OPJGF8gqLd5OHJ7IlNYq88sZAVKj0z7VbuA+sihc2VyDNlZbFJl1mqh
+	 rOiLN1f9LNmwwMhMC2mEl8CJqZIWUFuZdWg410D2r3l5S1gsfvmc9XdRItqqVprNwt
+	 TkiftZWAA7W1WQxRK/Uc8c8Nyw3m0mYzjTnFnguC59E2gplRNchlnCO6/Yx4/E8Ngn
+	 1MMi5nVlk2wcoOGaV5MCfI4lyRQxxPDEls50D36l+gahhr9frL78G6bnUOkHraob9Q
+	 p+7327ILN0CwQ==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1206CC44500;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 22AB7C44501;
 	Wed,  1 Jul 2026 20:52:56 +0000 (UTC)
 From: Cristian Cozzolino via B4 Relay <devnull+cristian_ci.protonmail.com@kernel.org>
-Date: Wed, 01 Jul 2026 23:55:55 +0200
-Subject: [PATCH v6 2/4] arm64: dts: qcom: msm8953-flipkart-rimob: Enable
- WiFi/Bluetooth
+Date: Wed, 01 Jul 2026 23:55:56 +0200
+Subject: [PATCH v6 3/4] arm64: dts: qcom: msm8953-flipkart-rimob: Enable
+ touchscreen
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -61,7 +61,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260701-rimob-new-features-v6-2-be7d5d1e007f@protonmail.com>
+Message-Id: <20260701-rimob-new-features-v6-3-be7d5d1e007f@protonmail.com>
 References: <20260701-rimob-new-features-v6-0-be7d5d1e007f@protonmail.com>
 In-Reply-To: <20260701-rimob-new-features-v6-0-be7d5d1e007f@protonmail.com>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -80,11 +80,11 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
  Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1782942968; l=1054;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1782942968; l=1707;
  i=cristian_ci@protonmail.com; s=20250620; h=from:subject:message-id;
- bh=fh/EPBf6DDi6xO2cT/WF/4Df/j3opWByAPpvZnndrW8=;
- b=R4zM1P/Hr6IXKz9AHkz0y0Eo0nHecrIsFCkGZ7dFzrxzBXjCWZfUDPPNcCvZd7kHX+IosP25n
- NfcMNMONfOqB20U02MdXYZgffCcvoSEiWAJTV/c8QV95wuojpdQMjom
+ bh=zVtEsQzoBqgEOAQbabFGZoqatrDCkszo3+cx4iEIygQ=;
+ b=TQf0vxH5qAyInLM0uxQmnoIC7mP+xqgE0U1W42U9CihamT8LyUu/UlDYXID012Mi0UyzmLdgl
+ psYbututSlXDN+pCC87aXisFERd+wIDqnJav122DmlVg6T90yg99kBa
 X-Developer-Key: i=cristian_ci@protonmail.com; a=ed25519;
  pk=xH5IvIPUNHV1Q8R0/pq2CfuVFR/wTiAyuyi6IwedjZY=
 X-Endpoint-Received: by B4 Relay for cristian_ci@protonmail.com/20250620
@@ -104,7 +104,7 @@ X-Spamd-Result: default: False [-1.66 / 15.00];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	FORGED_RECIPIENTS(0.00)[m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:neil.armstrong@linaro.org,m:jesszhan0024@gmail.com,m:airlied@gmail.com,m:simona@ffwll.ch,m:maarten.lankhorst@linux.intel.com,m:mripard@kernel.org,m:tzimmermann@suse.de,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:dri-devel@lists.freedesktop.org,m:~postmarketos/upstreaming@lists.sr.ht,m:phone-devel@vger.kernel.org,m:cristian_ci@protonmail.com,m:konrad.dybcio@oss.qualcomm.com,m:dmitry.baryshkov@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
-	TAGGED_FROM(0.00)[bounces-115797-lists,linux-arm-msm=lfdr.de,cristian_ci.protonmail.com];
+	TAGGED_FROM(0.00)[bounces-115798-lists,linux-arm-msm=lfdr.de,cristian_ci.protonmail.com];
 	RCVD_TLS_LAST(0.00)[];
 	FREEMAIL_REPLYTO(0.00)[protonmail.com];
 	MIME_TRACE(0.00)[0:+];
@@ -130,43 +130,70 @@ X-Spamd-Result: default: False [-1.66 / 15.00];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: B29076F1A1E
+X-Rspamd-Queue-Id: 470846F1A24
 
 From: Cristian Cozzolino <cristian_ci@protonmail.com>
 
-Configure and enable the WCNSS which provides WiFi and Bluetooth on this
-device using the WCN3660B chip.
+This device uses a Goodix GT5688 touch controller, connected to i2c_3.
+Add it to the device tree.
 
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Cristian Cozzolino <cristian_ci@protonmail.com>
 ---
- arch/arm64/boot/dts/qcom/msm8953-flipkart-rimob.dts | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ .../arm64/boot/dts/qcom/msm8953-flipkart-rimob.dts | 32 ++++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/qcom/msm8953-flipkart-rimob.dts b/arch/arm64/boot/dts/qcom/msm8953-flipkart-rimob.dts
-index 5a9d71d1e466..db5c9f04bf1a 100644
+index db5c9f04bf1a..060129c72264 100644
 --- a/arch/arm64/boot/dts/qcom/msm8953-flipkart-rimob.dts
 +++ b/arch/arm64/boot/dts/qcom/msm8953-flipkart-rimob.dts
-@@ -326,3 +326,18 @@ &usb3 {
- &usb3_dwc3 {
- 	dr_mode = "peripheral";
+@@ -94,6 +94,31 @@ &hsusb_phy {
+ 	status = "okay";
  };
-+
-+&wcnss {
-+	vddpx-supply = <&pm8953_l5>;
-+
+ 
++&i2c_3 {
 +	status = "okay";
++
++	touchscreen@5d {
++		compatible = "goodix,gt5688";
++		reg = <0x5d>;
++
++		interrupts-extended = <&tlmm 65 IRQ_TYPE_LEVEL_LOW>;
++
++		pinctrl-0 = <&tsp_int_rst_default>;
++		pinctrl-names = "default";
++
++		irq-gpios = <&tlmm 65 GPIO_ACTIVE_HIGH>;
++		reset-gpios = <&tlmm 64 GPIO_ACTIVE_HIGH>;
++
++		VDDIO-supply = <&pm8953_l6>;
++		AVDD28-supply = <&pm8953_l10>;
++
++		touchscreen-size-x = <1080>;
++		touchscreen-size-y = <1920>;
++		touchscreen-inverted-x;
++		touchscreen-inverted-y;
++	};
 +};
 +
-+&wcnss_iris {
-+	compatible = "qcom,wcn3660b";
+ &ibb {
+ 	qcom,discharge-resistor-kohms = <32>;
+ };
+@@ -311,6 +336,13 @@ panel_default: panel-default-state {
+ 		bias-disable;
+ 	};
+ 
++	tsp_int_rst_default: tsp-int-rst-default-state {
++		pins = "gpio64", "gpio65";
++		function = "gpio";
++		drive-strength = <8>;
++		bias-pull-up;
++	};
 +
-+	vddxo-supply = <&pm8953_l7>;
-+	vddrfa-supply = <&pm8953_l19>;
-+	vddpa-supply = <&pm8953_l9>;
-+	vdddig-supply = <&pm8953_l5>;
-+};
+ 	gpio_key_default: gpio-key-default-state {
+ 		pins = "gpio85";
+ 		function = "gpio";
 
 -- 
 2.53.0
