@@ -1,177 +1,245 @@
-Return-Path: <linux-arm-msm+bounces-115579-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-115580-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id fs98JYaxRGpjzAoAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-115579-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Jul 2026 08:19:50 +0200
+	id HuIpAT2zRGqmzAoAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-115580-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Jul 2026 08:27:09 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0E1096EA284
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Jul 2026 08:19:50 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5317B6EA344
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Jul 2026 08:27:08 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=fairphone.com header.s=fair header.b=xUq1NEcx;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115579-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c09:e001:a7::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115579-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=quarantine) header.from=fairphone.com;
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b="T/lXHqVa";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115580-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115580-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 854DA3037832
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jul 2026 06:19:44 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 168183015E1F
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jul 2026 06:27:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E3C043AE71F;
-	Wed,  1 Jul 2026 06:19:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 309E73A3809;
+	Wed,  1 Jul 2026 06:27:02 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA27A3AD51F
-	for <linux-arm-msm@vger.kernel.org>; Wed,  1 Jul 2026 06:19:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19C033612F3;
+	Wed,  1 Jul 2026 06:27:00 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782886777; cv=none; b=LJr+tr5NNJxguUKTBIl+rNKCvk+2tsubkD4cBAOQTL2YXm4m11QJYSKQqc3Cynq9hdxPTqeV6xF+ZT/lJpph1el/bEBHVn+Rbsz9/UHpDsxNLzH2P9wm4bXS5xQ5uzJlq7dLE5RcyhQIwHBlic0TKYTXwWKFKy6SwsZ5thvG3JM=
+	t=1782887222; cv=none; b=hSt/vQG9BjqgZNwczfzC8+l71QjHmspVdMXOMRs8nPP3+boLj6+8SAgEwB+rKNRro3Dtsmk26mJbTg03oje7Z6jdDaVFxdqa26/nqb/I5vr87Ieo1JjkrVC5d2IqDKFIFfuKgSvtcFYdVmKZ47Qt5LSk/0UNh9ROv9n399PDDPU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782886777; c=relaxed/simple;
-	bh=y35146R1hLQHr0cXVvffTxW+/OTdywP5qn459ftUbR0=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=TzJbPQAAQTbGmUSyEu0j0FGFC7+3y9Tx0MCTiwXZcy4ZARF/MLmz/VNZR/8PAepLR3gltkCFY+NJJAqxVyr48YBp2NV6W9D7ePoe3Ac4N313qWIywf6Fg+SSySYnUO7SVPuZPIxHN2/4I/l+aj6OH2GdnDfyZhxyy9urhz0Ieo0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=xUq1NEcx; arc=none smtp.client-ip=209.85.221.49
-Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-473ba028d46so216451f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jun 2026 23:19:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1782886773; x=1783491573; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Z+PbsLJCR1LGXeK1bTzaX+dlzYS17E09lgiH/dHDN2c=;
-        b=xUq1NEcxIq0ESL4lfVzuX73zd+FCW6ZoU08QsS1bk8p0eewqXjlrHh/BV9bjWIRJsO
-         YVSNhNje4IpOtEUNHDI58wNU+6T7BUZtkNK8aZdpzFp+DH/L/0OXp2HnKNux9pXg1Bvr
-         GLHxfCVr0PJD2a7KIeHgDRlFrX+c20UHLfhopyfkKchefnNxYs4k5sPRIeu3XEKBQ0Nn
-         6SMmq8XxtAyDyzrU5oJ5t+9zAeaem5vwyBZ+MVRNJESuksfshgBpt831epMBBOkyMKKP
-         /xtrpOo38R8NvISqS9+r9mT6UA4dfbSjlnaRNM4D0hxK8N2br1szu+CemwTQZbND4f49
-         hXjQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782886773; x=1783491573;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Z+PbsLJCR1LGXeK1bTzaX+dlzYS17E09lgiH/dHDN2c=;
-        b=S966THZnmkA0Jdy59pa1mQNNx9J0iit7dWZDUHhzh52SK+VEqR01/9ToZRh2iVdyPL
-         b3v/D+sYvoBncH5EAZbv5bGXTxAwZheEiS/gCiM5dAODea7zWrJtCF1UZsungNoLGxA0
-         9CbzEM6FZM9rpUuFFHbj7nm9MeZKv4VhuPllMJV0FDZVRYFXGBWqRgtn79OjSVPECYSQ
-         GbBEZFwo8neqiNsNszdPoLAnZana9YqYPJpuMHtXiI2k76Co39i/gjcHYPTR7u5IWSVX
-         CvSPsZEoBwBH3IrZ+m3hP0GsIXwncdNZFKcY5TLdb01G5Q024ARqMreWBMH6LP0VNV7R
-         dpYA==
-X-Forwarded-Encrypted: i=1; AFNElJ+fya63fOsJY1vCHnduj7L1qb8ZmmkgZyrl0zVLvZSTcpYNBgDgUcLU01erJQiO7d9FsQ2w/LdM0eU6v+mp@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw0w8/HJ+OS57fb60+T1QHWSNqnVMDVTby+qGiiL4gSd2siRkHu
-	tJVSMDaaCEI5UhOERm5A80AoQhfd+4Qw23uUP9aKIQSdPGombahDtzCSDDKMia8FjOM=
-X-Gm-Gg: AfdE7cmpadFAU14MrPo4z/3gA+MNl3ofdsufrRP+9VzAd/uVIwVkwkHToGZ0/xeWdfw
-	LuKFFSPCaH9aDU12a/vyClRj86O2jpse6YVRA3JfJEVAv4eJNFOqwEEQn/Agvj2gqhYZfTA9ttK
-	mIOg3AiJiXOKP/NlUxo6ocg3JKr0cNTy0/cCnolv1LSlbzbRWwCVWyrGicSGHAvwCO5TRHfE6f5
-	2CC/jne+E8USIRF42BlpkpubO5uv8oCADRwZersJe+DMvzpQ/P/qL/OjsSwAF03yhSnVEEquotl
-	dtm8sRSt6mtHrIPq1L1S7efE75IA5qxLr1r+Z8DlJgImwtYAJsiTkRsNrR+qwC2r4SuDYreFVIk
-	r5u0XzsbfgW4EOfIEbLdQQ/WC6fmWzfXi+NoHPxnEdtbLGeU+RsXnEXnPjZv6kdMmvY+5k/zlO/
-	1cnTQ5XZGYOkwv5Au0Np0=
-X-Received: by 2002:a05:600c:c046:b0:492:4668:27b5 with SMTP id 5b1f17b1804b1-493c2b3d3ffmr2644035e9.6.1782886773243;
-        Tue, 30 Jun 2026 23:19:33 -0700 (PDT)
-Received: from [10.33.0.72] ([212.133.41.85])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47563d194b0sm14748608f8f.1.2026.06.30.23.19.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Jun 2026 23:19:32 -0700 (PDT)
-From: Luca Weiss <luca.weiss@fairphone.com>
-Date: Wed, 01 Jul 2026 08:19:30 +0200
-Subject: [PATCH] clk: qcom: Don't use all caps for Glymur GPUCC
+	s=arc-20240116; t=1782887222; c=relaxed/simple;
+	bh=aarZcADJJ7Hr+9MuEump46W8UOcSy9k6klmumUlJNV0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=bAQ6wKRWXdJbTZqdemWukweeaj7ubzxm4B1JEllnS8qvQCXIAHM40kiqsPD8opb3zuGpZYRLoRyeUMYzKxfjoKZmX5WzmzT9Pf8dINhQRQ3RYG5QiU5wglAumjOEaRQmYk+A6p/8jW7/+wQUq1VAmLZK+DWdsZXYjU5Xe0LN0iY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=T/lXHqVa; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C0071F000E9;
+	Wed,  1 Jul 2026 06:26:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1782887220;
+	bh=jc33EUwde6uA7KX9JoZ4Zl2Cj0IijWhtJWXs7c9GWBk=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=T/lXHqVa0kRXptZQ3pThkodbRBOJcVl5f0Qh3y02FPLMmJb47TAnA9/FHeqzmTHI+
+	 63BZsBCMt2RWHWycaxwVgfsoVkXhJKLVS/t4LXpdacP9Uxu6OzH7Xoz/tsxphb8Sny
+	 cEWjv3/kn2KuZBJVNx257bPjGGzwGWWNvibTWkCNvATHQGC9NVX6uA92Hy9wmg7foo
+	 EC1A+y/gm2Zm5VZfc6pkwbeaU1fBppfytq5QfyrGKcjk8I9xAkRVOsOA14jMMtgUjU
+	 Y8CEIS9hYBX5We8AUMOpxQh0Qq5MMiRnJvUsdiOYSPSyALdy2GpZeR0XqGWqn0GLdv
+	 PmdcDgIAyxabg==
+Message-ID: <dd9e68f3-c33d-47d1-871f-f085550b88b1@kernel.org>
+Date: Wed, 1 Jul 2026 08:26:52 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/9] dt-bindings: PCI: qcom: Document the Shikra PCIe
+ Controller
+To: Sushrut Shree Trivedi <sushrut.trivedi@oss.qualcomm.com>,
+ Vinod Koul <vkoul@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+ Lorenzo Pieralisi <lpieralisi@kernel.org>,
+ =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+ Manivannan Sadhasivam <mani@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
+ Bartosz Golaszewski <brgl@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-pci@vger.kernel.org
+References: <20260701-shikra-upstream-v1-0-e1a721eb8943@oss.qualcomm.com>
+ <20260701-shikra-upstream-v1-2-e1a721eb8943@oss.qualcomm.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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
+In-Reply-To: <20260701-shikra-upstream-v1-2-e1a721eb8943@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260701-glymur-uncaps-v1-1-5f7065348eb2@fairphone.com>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIzMDcwND3fScytzSIt3SvOTEgmJdyyRTYwszE9M0gyQLJaCegqLUtMwKsHn
- RsRB+cWlSVmpyCcgQpdpaAHjbmdRxAAAA
-X-Change-ID: 20260701-glymur-uncaps-9b538645f0b8
-To: Bjorn Andersson <andersson@kernel.org>, 
- Michael Turquette <mturquette@baylibre.com>, 
- Stephen Boyd <sboyd@kernel.org>, Brian Masney <bmasney@redhat.com>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1782886771; l=1097;
- i=luca.weiss@fairphone.com; s=20250611; h=from:subject:message-id;
- bh=y35146R1hLQHr0cXVvffTxW+/OTdywP5qn459ftUbR0=;
- b=mQrz1gNPzurdTuK+gXJ6oSM7mBxuhXNjzjZoHt5+V/7V1w1jwV2UE9wRxS5ime2wHKmUg+QDK
- BN1QGSiW8PrAbsH6RKrNTWZV4Mlh56gWTl0qGGPjVJaqfciqq3Vsqc+
-X-Developer-Key: i=luca.weiss@fairphone.com; a=ed25519;
- pk=O1aw+AAust5lEmgrNJ1Bs7PTY0fEsJm+mdkjExA69q8=
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-3.66 / 15.00];
+	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[fairphone.com,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
-	R_DKIM_ALLOW(-0.20)[fairphone.com:s=fair];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[fairphone.com:+];
-	FORWARDED(0.00)[lists@lfdr.de];
-	TAGGED_FROM(0.00)[bounces-115579-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-115580-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
+	FORGED_RECIPIENTS(0.00)[m:sushrut.trivedi@oss.qualcomm.com,m:vkoul@kernel.org,m:neil.armstrong@linaro.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:bhelgaas@google.com,m:lpieralisi@kernel.org,m:kwilczynski@kernel.org,m:mani@kernel.org,m:andersson@kernel.org,m:krishna.chundru@oss.qualcomm.com,m:brgl@kernel.org,m:konradybcio@kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-phy@lists.infradead.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-pci@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	RCVD_COUNT_THREE(0.00)[4];
+	FORGED_SENDER(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[19];
+	FORWARDED(0.00)[lists@lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_SENDER(0.00)[luca.weiss@fairphone.com,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS(0.00)[m:andersson@kernel.org,m:mturquette@baylibre.com,m:sboyd@kernel.org,m:bmasney@redhat.com,m:~postmarketos/upstreaming@lists.sr.ht,m:phone-devel@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-clk@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:luca.weiss@fairphone.com,s:lists@lfdr.de];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[luca.weiss@fairphone.com,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
 	ALIAS_RESOLVED(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	MID_RHS_MATCH_FROM(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[10];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[fairphone.com:dkim,fairphone.com:email,fairphone.com:mid,fairphone.com:from_mime,vger.kernel.org:from_smtp,sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:email,qualcomm.com:email,vger.kernel.org:from_smtp,devicetree.org:url,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 0E1096EA284
+X-Rspamd-Queue-Id: 5317B6EA344
 
-All other Glymur driver use "Glymur" and not all caps "GLYMUR". Align
-the prompt and help text.
+On 30/06/2026 21:02, Sushrut Shree Trivedi wrote:
+> Add a dedicated schema for the PCIe controller found on the Shikra
+> platform.
+> 
+> Signed-off-by: Sushrut Shree Trivedi <sushrut.trivedi@oss.qualcomm.com>
+> ---
+>  .../devicetree/bindings/pci/qcom,shikra-pcie.yaml  | 211 +++++++++++++++++++++
+>  1 file changed, 211 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/pci/qcom,shikra-pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,shikra-pcie.yaml
+> new file mode 100644
+> index 000000000000..f9d1dba9dd2e
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/pci/qcom,shikra-pcie.yaml
+> @@ -0,0 +1,211 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/pci/qcom,shikra-pcie.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Shikra PCI Express Root Complex
+> +
+> +maintainers:
+> +  - Bjorn Andersson <andersson@kernel.org>
+> +  - Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> +
+> +description:
+> +  Qualcomm Shikra SoC (and compatible) PCIe root complex controller is based on
+> +  the Synopsys DesignWare PCIe IP.
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,shikra-pcie
+> +
+> +  reg:
+> +    minItems: 5
+> +    maxItems: 6
 
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
----
- drivers/clk/qcom/Kconfig | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Same comments as other recent Qualcomm bindings. Don't invent stuff,
+take what was reviewed from the list so we won't have to repeat.
 
-diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
-index 7d84c2f1d911..4169ecd95ef3 100644
---- a/drivers/clk/qcom/Kconfig
-+++ b/drivers/clk/qcom/Kconfig
-@@ -65,11 +65,11 @@ config CLK_GLYMUR_GCC
- 	  I2C, USB, UFS, SDCC, etc.
- 
- config CLK_GLYMUR_GPUCC
--	tristate "GLYMUR Graphics Clock Controller"
-+	tristate "Glymur Graphics Clock Controller"
- 	depends on ARM64 || COMPILE_TEST
- 	select CLK_GLYMUR_GCC
- 	help
--	  Support for the graphics clock controller on GLYMUR devices.
-+	  Support for the graphics clock controller on Glymur devices.
- 	  Say Y if you want to support graphics controller devices and
- 	  functionality such as 3D graphics.
- 
+...
 
----
-base-commit: 7de6ae9e12207ec146f2f3f1e58d1a99317e88bc
-change-id: 20260701-glymur-uncaps-9b538645f0b8
+
+> +          power-domains = <&gcc GCC_PCIE_GDSC>;
+> +
+> +          max-link-speed = <2>;
+> +
+> +          operating-points-v2 = <&pcie_opp_table>;
+> +
+> +          status = "disabled";
+
+Drop, you never tested the binding in such case.
+
+> +
+> +          pcie_opp_table: opp-table {
+> +                  compatible = "operating-points-v2";
+
+Broken indent.
+
+> +
+> +                  /* GEN 1 x1 */
+> +                  opp-2500000 {
+> +                          opp-hz = /bits/ 64 <2500000>;
+> +                          required-opps = <&rpmpd_opp_nom>;
+> +                          opp-peak-kBps = <250000 1>;
+> +                          opp-level = <1>;
+> +                  };
+> +
+> +                  /* GEN 2 x1 */
+> +                  opp-5000000 {
+> +                          opp-hz = /bits/ 64 <5000000>;
+> +                          required-opps = <&rpmpd_opp_nom>;
+> +                          opp-peak-kBps = <500000 1>;
+> +                          opp-level = <2>;
+> +                  };
+> +          };
+> +        };
+> +    };
+> 
+
 
 Best regards,
---  
-Luca Weiss <luca.weiss@fairphone.com>
-
+Krzysztof
 
