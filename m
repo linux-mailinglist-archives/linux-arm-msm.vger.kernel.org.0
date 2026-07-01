@@ -1,101 +1,101 @@
-Return-Path: <linux-arm-msm+bounces-115565-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-115566-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id v64IL+yVRGpKxQoAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-115565-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Jul 2026 06:22:04 +0200
+	id kWdjME2WRGpixQoAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-115566-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Jul 2026 06:23:41 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5392A6E9ABB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Jul 2026 06:22:04 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2D9436E9AE1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Jul 2026 06:23:41 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=hDHPWblK;
-	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=UeYtEVPG;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115565-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.232.135.74 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115565-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=i9bxJXz7;
+	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=M7caRheI;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115566-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115566-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=reject) header.from=qualcomm.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id BEE063030F04
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jul 2026 04:22:03 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 5383B301EC66
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jul 2026 04:23:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 00E6240D564;
-	Wed,  1 Jul 2026 04:21:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2D09238F94C;
+	Wed,  1 Jul 2026 04:23:26 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA0813921D6
-	for <linux-arm-msm@vger.kernel.org>; Wed,  1 Jul 2026 04:21:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8AA740D564
+	for <linux-arm-msm@vger.kernel.org>; Wed,  1 Jul 2026 04:23:22 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782879704; cv=none; b=Pb7INEkeVkKTbmnuRg0gDphZegDu5F951h4oczpF1NiCqrQJ0kpNK7OF7vqSMBwryyXT75LdMmEX2syLTLIpVl/VEAlx/9XYNKI8fvhWdh9Wj1Hua8wUm4CoyIhJjy1Md2jtt0gnS/qrl7QdZfz9C8C0PiYv82ICW/DAwwF3dJE=
+	t=1782879805; cv=none; b=JCJtx230ra6+9Yr06vQgPasFSx2Exq9ncibFgftgdox//9wfEA5S7m19r0f7XM3BBuF0NSIta14j1grwpJGSWNyRQ4V7lo4Ru6B3begLRgf8en33+rbxTwzlmVJtzQMmmntch6Wwi9ldeCLLB8h8ERg9M6Uhu+lSjwPzz04vm6Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782879704; c=relaxed/simple;
-	bh=ZUy7KFF5N05/gVxfiJeZnuspuVmxoUm4o80HqIfijFY=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=Z9vmHzwtj3WTOI2x64ZHO5p0tr2/ZsyqA7etGxPx4SRT1WNNGN8r8vSA6akJk8KGrDZEnnPfI2bXVCSrxYFO3bEXJio5t2bUYxNM5ezKM52RLzkNQZuRqxJ/+0qlx/rrTLtB/cI3g3nyO4/l154KX8X/FZ5vfNnMGwX4eY8veQk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=hDHPWblK; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=UeYtEVPG; arc=none smtp.client-ip=205.220.180.131
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6612tcpQ3944865
-	for <linux-arm-msm@vger.kernel.org>; Wed, 1 Jul 2026 04:21:36 GMT
+	s=arc-20240116; t=1782879805; c=relaxed/simple;
+	bh=h1A3GvXZLmpU+7XtveY+WUnq/NtQJw+MBtI4CdDkxiY=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=Mmaps3VX3ohBhiYalAZbGY/d0n4qPTyXkh/eyWe3MbgWtguSIeqqClGlr8xwUbPigNi9LhbnIK4w/ty+yfEki2gXPsE41HcKE2E2/ZmgV8LsxyaL6eEaSv2ANmZhTEyVAkR/5Dzsn1xCUMMtN6N0P6RJUEgZN6NQiPVCyJbjTmM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=i9bxJXz7; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=M7caRheI; arc=none smtp.client-ip=205.220.180.131
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6612tVJv3953039
+	for <linux-arm-msm@vger.kernel.org>; Wed, 1 Jul 2026 04:23:21 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=4Zb97i0OtIaJ4qy3+GR60n
-	BQ+dBCqeYmIUzW59vvjaU=; b=hDHPWblKUYoKCbXEl3mQjFR83kW3oALrFL+bkQ
-	DZg4t7OwpJd0uFGEBdoD9eN55Hzio5W64ICBDYGINgM0swavDa3zc7rm1vRluzDO
-	+u4+MegFOw5ijhfnt2Id6UusRRWbfsRMdVrVRHGvUuXiPENn/ueEZK3+G6Cl5XlX
-	sL2jbKGVMNntBMEwQvM8I9hHMi/ZzthGIOxAJOK06UEqHvy8AmbtcZLo9bxWZKec
-	ZhaFv22f3SQz29VaoXMIpW9RHsjtLGWxkuqm0MZxK4Fi0QnV68UoVFjNpKJAY9dD
-	A5+iLv1Lhbs3jyv/UFpDCJfR8gtDtQ4zfzQREKrixwu/xgyQ==
-Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com [74.125.82.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f4h0atp5t-1
+	:mime-version:subject:to; s=qcppdkim1; bh=6Ts0whoWYnO66ZOrPIzcFD
+	yriQ+6rFG+W5+Pb9VPGn8=; b=i9bxJXz7xsYtxlN5DuZiYpRg8dxBU+4Xpo7UIh
+	yY95DfEs/Cn9/EAArBAJBRE9zUVXldcs801ul3Gw8cniI80+z9KX/WpM8m492DuQ
+	t+QmzLD+QO7xJi/UBEKtO6c0EFBTD+HfulCXgcksbWtvjxOvyFE+QuOFK8g8TKMV
+	3QaHaPIXt5O663BMKaiGQg052NBalPM7BMm+ZQlKfvfBepziPLa4OiDyiedM+KLn
+	Uiyff40paLPUairxobZRL3zzwDJSrT2WTJm4scyG2yt19oz77diJ4fCDrEUsEQng
+	dQxuLoqaDR7rq7F9JAT2N3MfdiF1omGeZcC+YR3BOYukUc4A==
+Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com [74.125.82.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f4jkta2un-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 01 Jul 2026 04:21:36 +0000 (GMT)
-Received: by mail-dy1-f200.google.com with SMTP id 5a478bee46e88-30c42d96713so246454eec.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jun 2026 21:21:36 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 01 Jul 2026 04:23:21 +0000 (GMT)
+Received: by mail-dy1-f198.google.com with SMTP id 5a478bee46e88-30c62861b3bso820575eec.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jun 2026 21:23:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1782879695; x=1783484495; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1782879800; x=1783484600; darn=vger.kernel.org;
         h=cc:to:message-id:content-transfer-encoding:mime-version:subject
          :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=4Zb97i0OtIaJ4qy3+GR60nBQ+dBCqeYmIUzW59vvjaU=;
-        b=UeYtEVPGYYQpGNGCbTJfeerijHrbTqC+U2RvEVqQKZmJvHQTf4gPOw2eUSbmWLph3c
-         fohg8rlt7b2AE9zvYCfhgUjNUCsvDzx61FRV7VbcgQFQaZ9aMJxpfmNEl/dH5ddJ1DqV
-         Eh+rxNVLoIOfZay0b1D1+2qRM/LQQ02u3OUghwN2C3dTzEealqJx6tfdQvDC12U3SGy1
-         fUM4OFwCQunusMd8jaxHiATAi8SnfQYjFQcTX1Ov3o9egjPPgqYtB6L4fPPwgKMVPuof
-         MTWI7bUdVkb6nHBKcFb3WGOyLKuorPPRBKk1h4YjLTHsi3lm7M9ndW54GH+1UU/fyXvz
-         hsWQ==
+        bh=6Ts0whoWYnO66ZOrPIzcFDyriQ+6rFG+W5+Pb9VPGn8=;
+        b=M7caRheIbTk3AtBKEw7raY5Hqg1WoJ13R7Hy9pXPWnzEROyyti1eLu3y9IkXtvm2Mq
+         Z8l3tDeqtmL1PVEM7IfMSZDD/dAIX4Xhrw2jvP6+IMsEvJSQ1XVzlxdRzbA95LK0793M
+         M+JWSDol0HrqIEhtMoFhdcNOjAU83Y/B14ZBux27bF9dKxJo9dZU8somLIds4M2/6CR8
+         cY0ARDXytngCbk5BCNs7e1y+Kxhh079g1IqU3A39LbvwQ9vqZ3fdNu3CCBEYWa6/UiHt
+         MZ/QQf/wLNAR5YEMc4jVY5uyjOTs9HWIR5MutpmR4o2SGvvbZUtzTEL0VcyndYB66g5q
+         kx2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782879695; x=1783484495;
+        d=1e100.net; s=20251104; t=1782879800; x=1783484600;
         h=cc:to:message-id:content-transfer-encoding:mime-version:subject
          :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=4Zb97i0OtIaJ4qy3+GR60nBQ+dBCqeYmIUzW59vvjaU=;
-        b=FNAUbENsnCHX+3omgRZIdKHWFp8Cmrek9/pIPxS+vQX5MVkr8x5k6cs+sRodmE/uq/
-         NXvPy1uwA5T06wQ0DJsJTqv6NR6TSd+yS/eZigu+JbXhuxafA+vDh/rJquabn6rpmGP9
-         ORNjN5vanIK8A+qT5TcWvyx8zIXggt5Mq4wI9K5pu1M3AgbMhLOmbpu9hhjKLDioNaOc
-         laYd1DhGxyYVjpbs3PuegO0ZLWYpYiBheQNMD7iu2SA+XY9vgHaAWrS6xg5RfEhJ/hH2
-         3J19mOUUdSCV2wwFBekZdf7FTyop+UCX4fYdN5VEOUHlbBGdyVzJWTEah2DcDRgM+BGv
-         sR3A==
-X-Gm-Message-State: AOJu0Yw+M44/T9Uy4/y9tcx2KJM8Mch+u62wPLYwptYqVy1kQlouF7TM
-	b8b1c/j5pDVXcH6nDik4jAc5HMeOyg0YYXQLYWcgA4ZNfW1PgrmFAQF9XyhZ6u5SVoHzdsbhRhL
-	Hq4hyowBCsqnVY+usffVQY3COYyN/F44BXHsO96VVb/Um6oT91Y+oN2a94V/YcuJSxGjn
-X-Gm-Gg: AfdE7cm29o6ZgH3LZencCyvJDKfCL6KPUlEbjgP8weOzb1p2NrSv9wGjutLNVhTCB0p
-	nLgF7x0CzNZv3C8F+wcQ3nY3m8hjEdtDhjxBi110ocTaf5uQCBaGjiMagjSN1uUop7F0xdwqm3N
-	lor84mX2C2/TGBQFOPclTnu+8rOX84w2y4trakchlypEp5FLnj0IZSG8g4TIS10/Wp2w5TypGGr
-	tt5lLaulWLfaPOoNhIeQCkgi1RUxpWXNDymfeK/46q8lztYVLRGIpk4H+0vgKDkd/Fx3uetArnB
-	UmSD6JF1IG2P/BYL+bLpSDn1CMXTICWGENUh5D5AldJPLTfkeCVNmDopoCegTy7EozzPDzVnMss
-	uCEalVCRwtyvoiW5Ke40WpsZt7cIJPpwmqHhfpdKtcThVQ1Y=
-X-Received: by 2002:a05:7300:6c9e:b0:30e:ccdc:4df6 with SMTP id 5a478bee46e88-30eff273b72mr59775eec.25.1782879695365;
-        Tue, 30 Jun 2026 21:21:35 -0700 (PDT)
-X-Received: by 2002:a05:7300:6c9e:b0:30e:ccdc:4df6 with SMTP id 5a478bee46e88-30eff273b72mr59745eec.25.1782879694705;
-        Tue, 30 Jun 2026 21:21:34 -0700 (PDT)
-Received: from hu-vdadhani-hyd.qualcomm.com ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-30ee317095dsm20562850eec.15.2026.06.30.21.21.31
+        bh=6Ts0whoWYnO66ZOrPIzcFDyriQ+6rFG+W5+Pb9VPGn8=;
+        b=DKlDu6qC/Xh7d7FcmpAXKqkFTfN9yRwyYGJ3A6LYWi9CMoJdrtU0NJzYVesTprInj/
+         lrPefkwmEpewqtB58k+3iqdiH6pwXvtCxvGCuuto51ha4SXOqUgJWK+xFsAowcsUcjG/
+         To/sfwf7Ck5yzYnNqV/QoM6srY6jry+/YJm6smWXI069qFOh/P0m1suWKdQrMeLMpl6V
+         7DteEE6/IGvmQB8gP17BmTfI8DnRC+pB83RKjF8XTEU8wxc6lineSc0dqZ7bAkqJDQ+r
+         LC3dFpIjgaBpQ2rE/vhlpIJmAVDhMVdpPmqv5AT7g0Fs7MwD1BRhKdQnyJ8zXHP1vQnp
+         4uNw==
+X-Gm-Message-State: AOJu0Ywfbd4PnKMuSR02xnLosM9f3geZ6FvnCixBTbmUCej+8ySFCIMH
+	yTfWZmyMNrf8jkDTN4sA4tUMV/3dPCLMFlYO722qxsTSayXkSu5dD+qO0vXIVk378KjzIlwoqcP
+	c6XV6mpTcJno6ZqRe0xmVnhIvB1gAcwCJ/hCXgl/CvvsKyTdDRmo3PTKuO/aUNzduVhQT
+X-Gm-Gg: AfdE7cnELKB+/Cp8vLC4PnZF3z3sKb4MgJlSTHKZlAQEMCjw/hqSX8PsE/LxXDR/7Ai
+	z4wQ+RyTnbFtsTngWuvwmKwgbtk0guEGkbI2644Da0HGApojDPdvMmp/35voXHjYuld7VY9IcP2
+	MIFL6s6pi84hXOZ6phLACsNJvIBBMvkauW4LLxXN3eKfDOWn42UC8EHO6s5eHQoAD0NxmHwfzel
+	e4bL1cqV0VKHu3aReIRwXeGvnJrboB9igETrcQqGEYXybEqmf2Rak4Zuav7DX6zeoWp5axgZMnj
+	G8THGACinyWL90OqDK1kCOrx/RRASHgtttNYQFRiPYfm2l9P4FJWe5Yd3OVsVDdhzks9ZxGLo8c
+	B++tZEM2TCuScw30/eLh/yUD9jvKQBTVoNRZbFgWmxtgR
+X-Received: by 2002:a05:7300:691c:b0:30c:ab97:d7b3 with SMTP id 5a478bee46e88-30eff391662mr42653eec.45.1782879799911;
+        Tue, 30 Jun 2026 21:23:19 -0700 (PDT)
+X-Received: by 2002:a05:7300:691c:b0:30c:ab97:d7b3 with SMTP id 5a478bee46e88-30eff391662mr42605eec.45.1782879799302;
+        Tue, 30 Jun 2026 21:23:19 -0700 (PDT)
+Received: from hu-ptalari-hyd.qualcomm.com ([202.46.22.19])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-30ee3205796sm17815755eec.23.2026.06.30.21.23.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Jun 2026 21:21:34 -0700 (PDT)
-From: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
-Date: Wed, 01 Jul 2026 09:51:28 +0530
-Subject: [PATCH v2] soc: qcom: geni-se: Use HW PROG_RAM_DEPTH to validate
- firmware size
+        Tue, 30 Jun 2026 21:23:18 -0700 (PDT)
+From: Praveen Talari <praveen.talari@oss.qualcomm.com>
+Date: Wed, 01 Jul 2026 09:53:10 +0530
+Subject: [PATCH] serial: qcom-geni: Pre-map RX DMA buffer at probe to avoid
+ sleep-in-atomic
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -104,209 +104,249 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260701-qup-se-increase-ram-cnt-v2-1-0618a19f26c3@oss.qualcomm.com>
-X-B4-Tracking: v=1; b=H4sIAMeVRGoC/4WNTQ6CMBCFr2Jm7ZC2UDWuvIdhUcogNdJCB4iGc
- HcLHsDNy3yT97MAU3TEcD0sEGl27IJPoI4HsK3xD0JXJwYl1ElopXCYeuT09TaSSUc0HVo/oix
- 0LhqR60prSOk+UuPee/O9/DFP1ZPsuNVtjtbxGOJnn57l5vu/MkuUeJYXXdSiUtSIW2DOhsm8b
- Oi6LAmU67p+ATtghJLXAAAA
-X-Change-ID: 20260522-qup-se-increase-ram-cnt-14530f035b55
-To: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>
+Message-Id: <20260701-fix-sleep-in-atomic-context-during-rx-dma-setup-v1-1-95c208380c65@oss.qualcomm.com>
+X-B4-Tracking: v=1; b=H4sIAC2WRGoC/yXNTQrCMBBA4auUWTuQFoziVcRFfqZ1xCYhk5RA6
+ d2Nuvw27+0glJkEbsMOmTYWjqFjPA3gniYshOy7YVKTVnq84MwN5U2UkAOaEld26GIo1Ar6mjk
+ smBv61aBQqQmdOmvrZ3U13kKvpkw98TveH39LtS9y5buB4/gAOCoTdpMAAAA=
+X-Change-ID: 20260617-fix-sleep-in-atomic-context-during-rx-dma-setup-c056bdf08adb
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Jiri Slaby <jirislaby@kernel.org>, bjorn.andersson@oss.qualcomm.com,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        stable@vger.kernel.org,
-        Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
-X-Mailer: b4 0.16-dev
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1782879691; l=4656;
- i=viken.dadhaniya@oss.qualcomm.com; s=20260324; h=from:subject:message-id;
- bh=ZUy7KFF5N05/gVxfiJeZnuspuVmxoUm4o80HqIfijFY=;
- b=rZ03gOXzLxls7v6W/U5pzv5KdSDyMXPnEhm2TK/tyKkMdYCIuhg8SAYoWxvA/W5j9zJJKsDsB
- qqwISOshZMtCTgU76SX1qq/BNmvBtcFHNURqtt2N9gdtphiR3UEqa6E
-X-Developer-Key: i=viken.dadhaniya@oss.qualcomm.com; a=ed25519;
- pk=C39f+LOIGhh/02LQpT46TsUSXRvBn9qXC8Xb26KJ44Y=
-X-Authority-Analysis: v=2.4 cv=OuF/DS/t c=1 sm=1 tr=0 ts=6a4495d0 cx=c_pps
- a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+        linux-serial@vger.kernel.org,
+        Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>,
+        aniket.randive@oss.qualcomm.com, chandana.chiluveru@oss.qualcomm.com,
+        chiluka.harish@oss.qualcomm.com,
+        Praveen Talari <praveen.talari@oss.qualcomm.com>
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1782879794; l=5502;
+ i=praveen.talari@oss.qualcomm.com; s=20251114; h=from:subject:message-id;
+ bh=h1A3GvXZLmpU+7XtveY+WUnq/NtQJw+MBtI4CdDkxiY=;
+ b=kdD8dcSXZqQ7NHyLrx1sbeV+GNrH2FJw75X8kKH3ghy1LnC4ay2ffFuLHzBqHu2LhZhPBK9bt
+ JFXGOR4qaTFDcKtMtE9hZg+0+mTBOqBjugQ6teoOVFv0WAVenOdYemA
+X-Developer-Key: i=praveen.talari@oss.qualcomm.com; a=ed25519;
+ pk=NGK/88fjyHXgfhIKwag7+uIytOmyOypvZ/hDFaYPEss=
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAxMDA0MiBTYWx0ZWRfX0LXmwqeKcAJA
+ fggfXqqBX6VnJuvnfm/oGObGcA80CLnOB0vdVsVXJW73uMAewTIBm510BS3Xg4Cj3ZWg3sbWmJx
+ KsHJ4kulld3Eg+fQIXaIyI9M8gnvKBI=
+X-Proofpoint-GUID: b7-JPaNvywgf3ah-zBYQsofMV5x9RHFt
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAxMDA0MiBTYWx0ZWRfX/2Z+5h7PW76w
+ eHXwBQTqpaNjt14dzkbAqh7wjW+j6gWrqRnEopQaxkDkLGBgIUutJNkvQN1NiYRDuO+4kAYVW7X
+ xeswbJFxhiXaupHiva5xZXR20is3FkxCa4vbITijwG8x3xLVrfRQZHD/kEeHaJ3+9gnE1mlCMua
+ jKqZV6+VxvCT7ZCWVK5CZomTaLBbbxe93vwp1wno2MXQS2b63OZrJ5c8mAStBEhdPCPmra7tjGO
+ Y/UjkX4VxgBIRksbt9iPfROdoPogSc2+mjX/voUlKy+n1fccZjTxN6om8RE1lSTLFblS9kfbFrl
+ Rz/qh3H47hEI0uc8lpS/eKpMEFNtoAF3/LYdbkRHcXoMy6UOynqIsb3fWEph4BtAvSK6cdFNpRr
+ vVv1aHd1Tw8gCh39wpcWoNor9V0WeF92k432xH/a2tQhiXVMEjbErV9Zc5RSnfv1vFyLoooUYAH
+ ynUZbYFV3IWCFFUIIzA==
+X-Authority-Analysis: v=2.4 cv=R+wz39RX c=1 sm=1 tr=0 ts=6a449639 cx=c_pps
+ a=wEP8DlPgTf/vqF+yE6f9lg==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=bC-a23v3AAAA:8 a=EUspDBNiAAAA:8 a=VwQbUJbxAAAA:8 a=FX7-I7kC4UuLIknBy2IA:9
- a=QEXdDO2ut3YA:10 a=6Ab_bkdmUrQuMsNx7PHu:22 a=FO4_E8m0qiDe52t0p3_H:22
-X-Proofpoint-ORIG-GUID: daheP_R2sUXHluXmByKQfkkn8QY5PsqM
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAxMDA0MSBTYWx0ZWRfX8x4YHwmMbB+E
- hIoRoh5ExVAJAOu1pCHbpMtwMAohN7HcS532h3cW3ijK/ZBAJvERd1Kw0xRItIprycLvlb85uWT
- PUNZiABUSV+onJL/+D6cdASRxfp9elc=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAxMDA0MSBTYWx0ZWRfX6Hhd/4C8q6g+
- Of4C//dh9GI2tBNaHCqRO4XWdqNKGV5CsN28eDaNouA1ZMTvhrydCP3BQYZlSoNR4i86x8FHRh7
- i/TwqhW28Ag5YuQLkdkU3jKqwXQL7W82P38IrL1pkkI6ywZOvOE8Z4DHiRPvQjqqX/wlOnK10PQ
- M5reLb9fABQ+jhFqVseHLHQN90fRAksSdfajIB3yGqekd1uWLCFcLbj6ybYDUclOvIHgoLXgE8H
- xJ+Eun+1BD3Os8deG51OpqxcUWCANvXUS9mAEWMBOhk5R2kNEpxRxjlaRAZr6nUJu2EfK1JW2Hl
- 2Xmceh/vKYNSmTU6KRDL5L9fBi8ayAQXXXVVvk33zUh00nLo3UG+bUbgLHKUX3djPFOKCcDrnzJ
- +EvCxttRvzcxPl0LlDAIpo0+bnRwdDOptB2+44vxxu9RoznwcXCWvUS5OgPh7Z8XnB1mxD1DtZ4
- 1esSmU1DFEi464Zc9xg==
-X-Proofpoint-GUID: daheP_R2sUXHluXmByKQfkkn8QY5PsqM
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=EUspDBNiAAAA:8 a=iI12EKIy37xJd30OuqwA:9 a=QEXdDO2ut3YA:10
+ a=bBxd6f-gb0O0v-kibOvt:22
+X-Proofpoint-ORIG-GUID: b7-JPaNvywgf3ah-zBYQsofMV5x9RHFt
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-07-01_01,2026-06-26_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 suspectscore=0 spamscore=0 lowpriorityscore=0 bulkscore=0
- impostorscore=0 clxscore=1015 adultscore=0 priorityscore=1501 malwarescore=0
+ suspectscore=0 spamscore=0 phishscore=0 priorityscore=1501 impostorscore=0
+ adultscore=0 lowpriorityscore=0 bulkscore=0 clxscore=1015 malwarescore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607010041
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607010042
 X-Rspamd-Action: no action
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-115566-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[12];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	FORWARDED(0.00)[lists@lfdr.de];
-	TAGGED_FROM(0.00)[bounces-115565-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
+	FORWARDED(0.00)[lists@lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:gregkh@linuxfoundation.org,m:jirislaby@kernel.org,m:bjorn.andersson@oss.qualcomm.com,m:konrad.dybcio@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-serial@vger.kernel.org,m:mukesh.savaliya@oss.qualcomm.com,m:aniket.randive@oss.qualcomm.com,m:chandana.chiluveru@oss.qualcomm.com,m:chiluka.harish@oss.qualcomm.com,m:praveen.talari@oss.qualcomm.com,s:lists@lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_SENDER(0.00)[viken.dadhaniya@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS(0.00)[m:andersson@kernel.org,m:konradybcio@kernel.org,m:mukesh.savaliya@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:stable@vger.kernel.org,m:viken.dadhaniya@oss.qualcomm.com,s:lists@lfdr.de];
+	FORGED_SENDER(0.00)[praveen.talari@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:from_mime,qualcomm.com:dkim,qualcomm.com:email];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:from_mime,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,qualcomm.com:dkim,qualcomm.com:email,vger.kernel.org:from_smtp];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[viken.dadhaniya@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[praveen.talari@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	ALIAS_RESOLVED(0.00)[];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	MID_RHS_MATCH_FROM(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[7];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
 	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 5392A6E9ABB
+X-Rspamd-Queue-Id: 2D9436E9AE1
 
-The hardcoded MAX_GENI_CFG_RAMn_CNT limit is not accurate for all SoCs:
-some targets have less CFG RAM than the constant implies, while others
-like QCS615 need more entries than the old limit of 455 allowed, causing
-valid firmware to be rejected at load time.
+geni_se_rx_dma_prep() calls dma_map_single() which can trigger IOMMU
+page table allocations under GFP_KERNEL. This is unsafe when called
+from qcom_geni_serial_start_rx_dma(), which runs in atomic context
+producing a "sleeping function called from invalid context" splat:
 
-Rather than hardcoding a constant, read PROG_RAM_DEPTH from SE_HW_PARAM_2
-at runtime to get the actual CFG RAM depth of the hardware instance and
-use that as the upper bound for firmware size validation.
+    __might_resched+0x15c/0x17c
+    __alloc_pages_noprof+0xe4/0x4c8
+    qcom_io_pgtable_alloc_page+0x100/0x250
+    __arm_lpae_map+0x2d0/0x870
+    geni_se_rx_dma_prep+0xd8/0x158
+    qcom_geni_serial_start_rx_dma+0x84/0x16c
+    qcom_geni_serial_startup+0x70/0x104
 
-Fixes: d4bf06592ad6 ("soc: qcom: geni-se: Add support to load QUP SE Firmware via Linux subsystem")
-Cc: stable@vger.kernel.org
-Signed-off-by: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
+Fix this by mapping the RX DMA buffer once during probe, where sleeping
+is allowed, and keeping it mapped for the lifetime of the device.
+
+Replace the geni_se_rx_dma_prep() / geni_se_rx_dma_unprep() calls in
+the runtime paths with dma_sync_single_for_device() before initiating a
+transfer and dma_sync_single_for_cpu() on completion, using the persistent
+mapping. The buffer is unmapped in probe's error path and in remove().
+
+Signed-off-by: Praveen Talari <praveen.talari@oss.qualcomm.com>
 ---
-Changes in v2:
-- Replace hardcoded MAX_GENI_CFG_RAMn_CNT with runtime read of
-  PROG_RAM_DEPTH from SE_HW_PARAM_2 for per-SoC accuracy
-- Link to v1: https://patch.msgid.link/20260522-qup-se-increase-ram-cnt-v1-1-71854d0b2ef0@oss.qualcomm.com
----
- drivers/soc/qcom/qcom-geni-se.c  | 23 +++++++++++++----------
- include/linux/soc/qcom/geni-se.h |  4 ++++
- 2 files changed, 17 insertions(+), 10 deletions(-)
+ drivers/tty/serial/qcom_geni_serial.c | 55 +++++++++++++++++++++--------------
+ 1 file changed, 33 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/soc/qcom/qcom-geni-se.c b/drivers/soc/qcom/qcom-geni-se.c
-index cd1779b6a91a..87907f559bd4 100644
---- a/drivers/soc/qcom/qcom-geni-se.c
-+++ b/drivers/soc/qcom/qcom-geni-se.c
-@@ -152,8 +152,6 @@ struct se_fw_hdr {
- /*Magic numbers*/
- #define SE_MAGIC_NUM			0x57464553
+diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
+index 7ead87b4eb65..3e460b0358eb 100644
+--- a/drivers/tty/serial/qcom_geni_serial.c
++++ b/drivers/tty/serial/qcom_geni_serial.c
+@@ -9,6 +9,7 @@
  
--#define MAX_GENI_CFG_RAMn_CNT		455
--
- #define MI_PBT_NON_PAGED_SEGMENT	0x0
- #define MI_PBT_HASH_SEGMENT		0x2
- #define MI_PBT_NOTUSED_SEGMENT		0x3
-@@ -990,24 +988,27 @@ EXPORT_SYMBOL_GPL(geni_icc_disable);
+ #include <linux/clk.h>
+ #include <linux/console.h>
++#include <linux/dma-mapping.h>
+ #include <linux/io.h>
+ #include <linux/iopoll.h>
+ #include <linux/irq.h>
+@@ -863,37 +864,31 @@ static void qcom_geni_serial_stop_rx_dma(struct uart_port *uport)
+ 				uport->membase + SE_DMA_RX_IRQ_CLR);
+ 	}
  
- /**
-  * geni_find_protocol_fw() - Locate and validate SE firmware for a protocol.
-- * @dev: Pointer to the device structure.
-+ * @se: Pointer to the serial engine structure.
-  * @fw: Pointer to the firmware image.
-  * @protocol: Expected serial engine protocol type.
-  *
-  * Identifies the appropriate firmware image or configuration required for a
-- * specific communication protocol instance running on a  Qualcomm GENI
-- * controller.
-+ * specific communication protocol instance running on a Qualcomm GENI
-+ * controller. Validates the firmware size against the hardware PROG_RAM_DEPTH
-+ * read from SE_HW_PARAM_2.
-  *
-  * Return: pointer to a valid 'struct se_fw_hdr' if found, or NULL otherwise.
-  */
--static struct se_fw_hdr *geni_find_protocol_fw(struct device *dev, const struct firmware *fw,
-+static struct se_fw_hdr *geni_find_protocol_fw(struct geni_se *se, const struct firmware *fw,
- 					       enum geni_se_protocol_type protocol)
+-	if (port->rx_dma_addr) {
+-		geni_se_rx_dma_unprep(&port->se, port->rx_dma_addr,
+-				      DMA_RX_BUF_SIZE);
+-		port->rx_dma_addr = 0;
+-	}
+ }
+ 
+ static void qcom_geni_serial_start_rx_dma(struct uart_port *uport)
  {
-+	struct device *dev = se->dev;
- 	const struct elf32_hdr *ehdr;
- 	const struct elf32_phdr *phdrs;
- 	const struct elf32_phdr	*phdr;
- 	struct se_fw_hdr *sefw;
- 	u32 fw_end, cfg_idx_end, cfg_val_end;
-+	u32 prog_ram_depth;
- 	u16 fw_size;
- 	int i;
+ 	struct qcom_geni_serial_port *port = to_dev_port(uport);
+-	int ret;
  
-@@ -1066,10 +1067,12 @@ static struct se_fw_hdr *geni_find_protocol_fw(struct device *dev, const struct
- 			sefw->fw_size_in_items = cpu_to_le16(fw_size);
- 		}
+ 	if (qcom_geni_serial_secondary_active(uport))
+ 		qcom_geni_serial_stop_rx_dma(uport);
  
--		if (fw_size >= MAX_GENI_CFG_RAMn_CNT) {
-+		prog_ram_depth = FIELD_GET(PROG_RAM_DEPTH_MSK,
-+					   readl_relaxed(se->base + SE_HW_PARAM_2));
-+		if (fw_size >= prog_ram_depth) {
- 			dev_err(dev,
--				"Firmware size (%u) exceeds max allowed RAMn count (%u)\n",
--				fw_size, MAX_GENI_CFG_RAMn_CNT);
-+				"Firmware size (%u) exceeds HW PROG_RAM_DEPTH (%u)\n",
-+				fw_size, prog_ram_depth);
- 			continue;
- 		}
+ 	geni_se_setup_s_cmd(&port->se, UART_START_READ, UART_PARAM_RFR_OPEN);
  
-@@ -1193,7 +1196,7 @@ static int geni_load_se_fw(struct geni_se *se, const struct firmware *fw,
- 	int ret;
- 	struct se_fw_hdr *hdr;
- 
--	hdr = geni_find_protocol_fw(se->dev, fw, protocol);
-+	hdr = geni_find_protocol_fw(se, fw, protocol);
- 	if (!hdr)
- 		return -EINVAL;
- 
-diff --git a/include/linux/soc/qcom/geni-se.h b/include/linux/soc/qcom/geni-se.h
-index 0a984e2579fe..16d68622954a 100644
---- a/include/linux/soc/qcom/geni-se.h
-+++ b/include/linux/soc/qcom/geni-se.h
-@@ -118,6 +118,7 @@ struct geni_se {
- #define SE_DMA_RX_FSM_RST		0xd58
- #define SE_HW_PARAM_0			0xe24
- #define SE_HW_PARAM_1			0xe28
-+#define SE_HW_PARAM_2			0xe2c
- 
- /* GENI_FORCE_DEFAULT_REG fields */
- #define FORCE_DEFAULT	BIT(0)
-@@ -285,6 +286,9 @@ struct geni_se {
- #define RX_FIFO_DEPTH_MSK		GENMASK(21, 16)
- #define RX_FIFO_DEPTH_SHFT		16
- 
-+/* SE_HW_PARAM_2 fields */
-+#define PROG_RAM_DEPTH_MSK		GENMASK(10, 0)
+-	ret = geni_se_rx_dma_prep(&port->se, port->rx_buf,
+-				  DMA_RX_BUF_SIZE,
+-				  &port->rx_dma_addr);
+-	if (ret) {
+-		dev_err(uport->dev, "unable to start RX SE DMA: %d\n", ret);
+-		qcom_geni_serial_stop_rx_dma(uport);
++	if (!port->rx_dma_addr) {
++		dev_err(uport->dev, "RX DMA buffer not mapped\n");
++		return;
+ 	}
 +
- #define HW_VER_MAJOR_MASK		GENMASK(31, 28)
- #define HW_VER_MAJOR_SHFT		28
- #define HW_VER_MINOR_MASK		GENMASK(27, 16)
++	dma_sync_single_for_device(uport->dev->parent, port->rx_dma_addr,
++				   DMA_RX_BUF_SIZE, DMA_FROM_DEVICE);
++	geni_se_rx_init_dma(&port->se, port->rx_dma_addr, DMA_RX_BUF_SIZE);
+ }
+ 
+ static void qcom_geni_serial_handle_rx_dma(struct uart_port *uport, bool drop)
+ {
+ 	struct qcom_geni_serial_port *port = to_dev_port(uport);
+ 	u32 rx_in;
+-	int ret;
+ 
+ 	if (!qcom_geni_serial_secondary_active(uport))
+ 		return;
+@@ -901,8 +896,8 @@ static void qcom_geni_serial_handle_rx_dma(struct uart_port *uport, bool drop)
+ 	if (!port->rx_dma_addr)
+ 		return;
+ 
+-	geni_se_rx_dma_unprep(&port->se, port->rx_dma_addr, DMA_RX_BUF_SIZE);
+-	port->rx_dma_addr = 0;
++	dma_sync_single_for_cpu(uport->dev->parent, port->rx_dma_addr,
++				DMA_RX_BUF_SIZE, DMA_FROM_DEVICE);
+ 
+ 	rx_in = readl(uport->membase + SE_DMA_RX_LEN_IN);
+ 	if (!rx_in)
+@@ -910,13 +905,9 @@ static void qcom_geni_serial_handle_rx_dma(struct uart_port *uport, bool drop)
+ 	else if (!drop)
+ 		handle_rx_uart(uport, rx_in);
+ 
+-	ret = geni_se_rx_dma_prep(&port->se, port->rx_buf,
+-				  DMA_RX_BUF_SIZE,
+-				  &port->rx_dma_addr);
+-	if (ret) {
+-		dev_err(uport->dev, "unable to start RX SE DMA: %d\n", ret);
+-		qcom_geni_serial_stop_rx_dma(uport);
+-	}
++	dma_sync_single_for_device(uport->dev->parent, port->rx_dma_addr,
++				   DMA_RX_BUF_SIZE, DMA_FROM_DEVICE);
++	geni_se_rx_init_dma(&port->se, port->rx_dma_addr, DMA_RX_BUF_SIZE);
+ }
+ 
+ static void qcom_geni_serial_start_rx(struct uart_port *uport)
+@@ -1864,6 +1855,14 @@ static int qcom_geni_serial_probe(struct platform_device *pdev)
+ 			ret = -ENOMEM;
+ 			goto error;
+ 		}
++
++		port->rx_dma_addr = dma_map_single(pdev->dev.parent, port->rx_buf,
++						   DMA_RX_BUF_SIZE, DMA_FROM_DEVICE);
++		if (dma_mapping_error(pdev->dev.parent, port->rx_dma_addr)) {
++			ret = -EIO;
++			dev_err(&pdev->dev, "Failed to map RX DMA buffer: %d\n", ret);
++			goto error;
++		}
+ 	}
+ 
+ 	port->name = devm_kasprintf(uport->dev, GFP_KERNEL,
+@@ -1928,6 +1927,11 @@ static int qcom_geni_serial_probe(struct platform_device *pdev)
+ 	return 0;
+ 
+ error:
++	if (port->rx_dma_addr) {
++		dma_unmap_single(pdev->dev.parent, port->rx_dma_addr,
++				 DMA_RX_BUF_SIZE, DMA_FROM_DEVICE);
++		port->rx_dma_addr = 0;
++	}
+ 	dev_pm_domain_detach_list(port->pd_list);
+ 	return ret;
+ }
+@@ -1942,6 +1946,13 @@ static void qcom_geni_serial_remove(struct platform_device *pdev)
+ 	device_init_wakeup(&pdev->dev, false);
+ 	ida_free(&port_ida, uport->line);
+ 	uart_remove_one_port(drv, &port->uport);
++
++	if (port->rx_dma_addr) {
++		dma_unmap_single(pdev->dev.parent, port->rx_dma_addr,
++				 DMA_RX_BUF_SIZE, DMA_FROM_DEVICE);
++		port->rx_dma_addr = 0;
++	}
++
+ 	dev_pm_domain_detach_list(port->pd_list);
+ }
+ 
 
 ---
-base-commit: 550604d6c9b9efc8d068aff94dc301694a7afdee
-change-id: 20260522-qup-se-increase-ram-cnt-14530f035b55
+base-commit: 4fa3f5fabb30bf00d7475d5a33459ea83d639bf9
+change-id: 20260617-fix-sleep-in-atomic-context-during-rx-dma-setup-c056bdf08adb
 
 Best regards,
 --  
-Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
+Praveen Talari <praveen.talari@oss.qualcomm.com>
 
 
