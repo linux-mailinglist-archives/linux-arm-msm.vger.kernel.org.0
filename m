@@ -1,275 +1,523 @@
-Return-Path: <linux-arm-msm+bounces-115707-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-115708-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id vbq4B80YRWq46woAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-115707-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Jul 2026 15:40:29 +0200
+	id TyGDIZYZRWr06woAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-115708-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Jul 2026 15:43:50 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 62F9D6EE3AA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Jul 2026 15:40:28 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 59DE16EE45E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Jul 2026 15:43:49 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=outlook.com header.s=selector1 header.b=fOaD5SGv;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115707-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115707-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=none) header.from=outlook.com;
-	arc=reject ("cv is fail on i=2")
+	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=ae8E8GKB;
+	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=fd8PI9wM;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115708-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c15:e001:75::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115708-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=reject) header.from=qualcomm.com;
+	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id ACEFE333823B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jul 2026 13:17:31 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 431F830B7B72
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jul 2026 13:18:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6B475481679;
-	Wed,  1 Jul 2026 13:16:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BA52F48A2B6;
+	Wed,  1 Jul 2026 13:17:54 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from BYAPR05CU005.outbound.protection.outlook.com (mail-westusazolkn19010020.outbound.protection.outlook.com [52.103.2.20])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE776481643;
-	Wed,  1 Jul 2026 13:15:58 +0000 (UTC)
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782911762; cv=fail; b=ohQjBX5N3uMxRbqQgrJHW6LT4FRDmKvKEPRyhRnpyF8S9A0jqT1OodbdI3lmnk6/fxgWUj0XSAAno+RtLzCx0YGIQJ9B9BX07BppVS+w6qKv48XlUqvPzDUpUiAyYONltjWKOw83cCAMyAO7t++FxE9N3wn3uEbutTmpMvyMIig=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782911762; c=relaxed/simple;
-	bh=9xXPADXa63XTx4EqXxvqlbAdtRGbhtFyYhEy0sVg++I=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=PDIxkEvtsNUr03AmeBFCFIvlGQtRoHZj6mZNNSuWa9iMeV+8mfnDB14/rx3TsBe7JidixeWLOSXPdwUmWbrtKfmhlwWhblWA197bAfd17yoRnC4oQBKfAhDTSiz8r0KBZVwpPCPwoNeHXM31Au+xDR3+SaGrz3K3ExNGVKPeyew=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=fOaD5SGv; arc=fail smtp.client-ip=52.103.2.20
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=EZxlhEahlEt545XExQ91MXh2bG7p7wLOMlD75N6KmPkAjYEvygDF02NlSdFbru56MWPGpP81MTO+AMp/GQfICInKySPRhFToPlSDWphUjFgsSz+gC1JrlQGsnxdVB9qL6BcmTf9hIRHLX7+hc7tny1hrxITxnrul9kZvB7ipQOcHSXOIRtmo+51P8LDjxBdVbm405/ds9BNQUHRHfmjB83ntI6SH70w4JcKZXbAvbH5tsFgFM4WaEiowT18n1vryecHSy+EVXE757rBOhPR5OUsBnFcWN+QlaWeWoHfEenT2yGQuK1RRwZtn0y3mlJA6f4rHcj7CqTur5kA4iiohlQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=/xm0FI05XJFZDL+RZtaxrDFvSt9ANySRA+OH3mdIz34=;
- b=IwCqK0U6XKKYF1IBsMd95FYwopZrMp+pBLMsUclpyfjfh0SIZYmBuurRACu8gFoEXjnTV7XC6+140irIuvrJYPmne0Usl3by0525ghk5Qd1/aJOLov4w/Xot1CTSo3XtCpvoCKeZCviEqf00p0DdBM+t53N4RDvR2VWfV+Aq9wUDy9AyFwfRR0irgz/E7rrF6ggA2MmWh8FpolIG3UT2rCaQpA0yvwI6CDIzXYmJ2GHJ54CtvlZyueaGzLxFipkMpLVnK/xsewTht8zu1uyF2RirpBByAQDStcnrH/8+mTzMBN1VkorG8g1JtHbS06hCLcFJH2jm+EUo1UEz7isWNA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=/xm0FI05XJFZDL+RZtaxrDFvSt9ANySRA+OH3mdIz34=;
- b=fOaD5SGvGJZLhXCc1iPuTzx/kS0IsbEvFkuhXhqWC7qqVdcnAG7h4VyPNmtolCZ+W2JJVYRv6OpG0+7gL163k5kty+eKG/EjRskihMn0/4q0Yv1teOjGAELZ/pE1lPA5HXRoRAaEaComwsLBEdrVx8uR2BDvy6uZRIMDRyTJ6zwUlUGttnXU0T0/16mkSrjmqMZbolXTYjN1mcIatnAEH4MlRW4t8GBpIAL6AipxvelRehSJG2nljAlf3paCaw4ka98ATE+vTFsZyzGOjKkeaajQJreplALvEdkgwWvJwUabuhqsho1+M0q5rqvWpMjmNt4VzigbPreNBkGulr5XDQ==
-Received: from SN7PR19MB6736.namprd19.prod.outlook.com (2603:10b6:806:263::12)
- by SN7PR19MB6969.namprd19.prod.outlook.com (2603:10b6:806:2a4::19) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.159.18; Wed, 1 Jul
- 2026 13:15:53 +0000
-Received: from SN7PR19MB6736.namprd19.prod.outlook.com
- ([fe80::4b6c:b84f:b71c:d0a]) by SN7PR19MB6736.namprd19.prod.outlook.com
- ([fe80::4b6c:b84f:b71c:d0a%3]) with mapi id 15.21.0181.008; Wed, 1 Jul 2026
- 13:15:53 +0000
-Message-ID:
- <SN7PR19MB6736B784D6A16CBA531DBD5C9DF62@SN7PR19MB6736.namprd19.prod.outlook.com>
-Date: Wed, 1 Jul 2026 17:15:36 +0400
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/6] firmware: qcom: scm: Add support for setting
- Bluetooth power modes
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Jens Axboe <axboe@kernel.dk>, Ulf Hansson <ulfh@kernel.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Johannes Berg
- <johannes@sipsolutions.net>, Jeff Johnson <jjohnson@kernel.org>,
- Bartosz Golaszewski <brgl@kernel.org>, Marcel Holtmann
- <marcel@holtmann.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
- Balakrishna Godavarthi <quic_bgodavar@quicinc.com>,
- Rocky Liao <quic_rjliao@quicinc.com>, Saravana Kannan
- <saravanak@kernel.org>, Andrew Lunn <andrew@lunn.ch>,
- Heiner Kallweit <hkallweit1@gmail.com>, Russell King
- <linux@armlinux.org.uk>, "David S. Miller" <davem@davemloft.net>,
- Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
- Paolo Abeni <pabeni@redhat.com>, Simon Horman <horms@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Mathieu Poirier <mathieu.poirier@linaro.org>,
- Philipp Zabel <p.zabel@pengutronix.de>
-Cc: linux-block@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
- linux-wireless@vger.kernel.org, ath10k@lists.infradead.org,
- linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
- netdev@vger.kernel.org, linux-remoteproc@vger.kernel.org
-References: <20260629-ipq5018-bluetooth-v2-0-02770f03b6bb@outlook.com>
- <20260629-ipq5018-bluetooth-v2-3-02770f03b6bb@outlook.com>
- <175f7835-df18-4bc6-8267-ceef35696af8@oss.qualcomm.com>
-Content-Language: en-US
-From: George Moussalem <george.moussalem@outlook.com>
-In-Reply-To: <175f7835-df18-4bc6-8267-ceef35696af8@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: DX0P273CA0002.AREP273.PROD.OUTLOOK.COM
- (2603:1086:300:26::7) To SN7PR19MB6736.namprd19.prod.outlook.com
- (2603:10b6:806:263::12)
-X-Microsoft-Original-Message-ID:
- <375f0807-17a1-4561-bade-1f6d2deb472c@outlook.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40352481679
+	for <linux-arm-msm@vger.kernel.org>; Wed,  1 Jul 2026 13:17:52 +0000 (UTC)
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782911874; cv=none; b=fjl1ICcI6MBxu56QPELiqCjCnfmOOp9EEN1/rCaxsAku1U3805iTdwHgMa9qqliZzwP0QN8oaasDYfMl7hc84PjDGDPOX+l5uozMro1LkdsFAkUhmqZeTpU3cZeFONch2qRX86IWzltOvKCgwUohLA209b6l7Lh0YOIi0+wotKk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782911874; c=relaxed/simple;
+	bh=oS3CBo1q1lmJJDf+N/At33hQ2EF0fdx9bJ33RnNU7EM=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type; b=BvU3S+4ABU5dfEpNmuot/B5k6EgU5Xv90MpPly7H+QuRUSfYLIhkAKHxIisTnNlyELuLr64UBSGAJNVwhqxITK6UJqPSJInh9KoQSy/tFIKJJ+ZSMMrvO9TFNpmnzxh4Ce2Q2bgJHVU5p5wYPM6xW6Sz48iEdPXE8G7KveAz5Zg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ae8E8GKB; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=fd8PI9wM; arc=none smtp.client-ip=205.220.168.131
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 661A8iKj762021
+	for <linux-arm-msm@vger.kernel.org>; Wed, 1 Jul 2026 13:17:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=6zWJR/XvOS2g99/3fxQtqx
+	gY2PDjdlFCf+hyY8K1DZo=; b=ae8E8GKBKOHu0YsoB733x/HRCNGsG3gOA99e/w
+	p57n38MqKVrpD2uXpG9+ZJfknRcah1kDnCxAlw5SavYXeMBuQve6iTuSiDe3nTZd
+	6wPgvOKuqQ0fPo1EOKTxwIcPXa2UEELml09ZGnd+LNswXehixKunBD8QfDvo2pGM
+	+NRlsDbuoX7dxNdetnqKrgAAEFLpNyPfaHjdiP2GT2C3xAdqeQ8H60Jv39jzMJPr
+	PeoH94V/7fT74VGb0ho5JHPPQLWsen1wr5PE1ju6oW9mshhG0V6LrGWdGS9uzid0
+	2OV07B3eMYu59tnjiRnBajPM0ehTccUKGqjwLp1RMrGH/uUg==
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f4kgw487u-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 01 Jul 2026 13:17:51 +0000 (GMT)
+Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-2c987913b08so8643225ad.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Jul 2026 06:17:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1782911871; x=1783516671; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=6zWJR/XvOS2g99/3fxQtqxgY2PDjdlFCf+hyY8K1DZo=;
+        b=fd8PI9wMtaCiTKftZhyGtDg3jQKc55S04eX5rMzbAEJauHvzr+7SA5e7/XpD5pEYxe
+         i/7lo310aoJImJXsKOwlWErKL5FWo+nJaAJnhAmi/LEuljft2DGi+PlrZFiaAqCG/Pg6
+         hw+Sskm70FN/halpxjctiKpXq0dzIeYab0Myrwz8ry7f3eCT3ZO6CsMlov8esWc+TH5V
+         hRSlZt09W8/6rBpPbzYVErzP586ch31d6ghsCkaTT4zI1AtaGlElHhB+SAh/bK02SiXu
+         Y6B8vFiBpKphVPfMyfozb4D2t9CbsUk+bUwvz3aTGNBUYOvpfzSp2GIeake94+Miw5uG
+         LZsA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782911871; x=1783516671;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=6zWJR/XvOS2g99/3fxQtqxgY2PDjdlFCf+hyY8K1DZo=;
+        b=BJiOQ0beXUSgFz9wepW9+RcqJmC5TwT3eIuqgv5H9YQPXrkbVK3aC8YBhNO+8+AHbN
+         ikffO7ZHodBehqjshGVnDRUAyxxx6KXpVNtAKNbZL3HgwxtxB7oWRkkFsVStXGVBAgpC
+         gR5UV48iCTY7o4dAOQKJSffl2EflwfLDUmQszc38+6DHgkQJJfdW2iQ4skhpY25L2Y7W
+         FbkCY9Ln86etueBuVPIzFyaroWEKSAKG+Yyd1/nhR8EV8PC+ifqsZcCxMOdGZ/Z8PmB5
+         +PL+wOK4Tw/y2iD+g5fZlcILUhMAFR3qySor1/oB6OPs8a1b3GODqHQqgeXav9Ix3mya
+         IRqA==
+X-Forwarded-Encrypted: i=1; AHgh+Ro0CjK+fzsHXORFZQqqR7SpVlqMlHRz+EUB8Wh3CvoKTSNXpgZD6E26YxkRQqpmPgnvk641/lmgRl3bkm1J@vger.kernel.org
+X-Gm-Message-State: AOJu0YzvkK5ybq5ux9FMLSZ1wcidv8+qYnj447Pg8l3RMcanp/psT4ZN
+	HYfif3DY9pnGQdh5LFTPVVKphqnt2RpK0IVZ5X3KiHd6dqXGmBr9/ZeHr+yPK/15aNLgaRfqFLG
+	1FNuZToLelTES5Bx2nCCTRgpGn1OmCjPSZrIL49//eRtFPXSmZSEcqQX49kc78cTrbCGkx7RXwV
+	sr
+X-Gm-Gg: AfdE7ckG3FDosqR0gGogFdtszWTBYKKkw/3x7yW8W/4k7E9ADa7FZg0DGJtnaGoVms3
+	X45lpAEkFdkD320GNwHYXifBTopzVoXwxhY5L0LKfD1G2F+jI6lDrNNa8eCPQ4Bpy1XDNl/ybZn
+	2cvexOpqhRd0HzbtfvNH2IO1Hdmjb37IabazO4OG95jh3CyP+rO/w9JDnPO9WebK7QvBoZwEWXc
+	/ER6lGVnU0C+sL36LEDo4VqEeIEmIVSdc0n5n7/2w/no3hFKUC428Uij3jHkhpXvJJhPdXrh5Jl
+	K2uHLoKSBpUznS8gy3ctygFel0axKZYbOyfFZMQ2O4XAEGXsJTJfuyKh9xNxHkfKk6BvQrqT2Kn
+	pEgpQO0KH/Ci+sCgyOYEuLoQA+m8RVg4BKD96AbM=
+X-Received: by 2002:a17:903:26c8:b0:2c0:b932:866e with SMTP id d9443c01a7336-2ca7e8c38b5mr17166455ad.27.1782911870301;
+        Wed, 01 Jul 2026 06:17:50 -0700 (PDT)
+X-Received: by 2002:a17:903:26c8:b0:2c0:b932:866e with SMTP id d9443c01a7336-2ca7e8c38b5mr17166075ad.27.1782911869694;
+        Wed, 01 Jul 2026 06:17:49 -0700 (PDT)
+Received: from hu-nandam-hyd.qualcomm.com ([202.46.22.19])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ca382bb30dsm31928075ad.68.2026.07.01.06.17.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 01 Jul 2026 06:17:48 -0700 (PDT)
+From: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
+To: linux-kernel@vger.kernel.org, Saravana Kannan <saravanak@google.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Bartosz Golaszewski <brgl@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+        spatakok@qti.qualcomm.com, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, ravi.hothi@oss.qualcomm.com,
+        ajay.nandam@oss.qualcomm.com
+Subject: [DISCUSSION] fw_devlink: incorrect ancestor fallback for intermediate bus topologies breaks audio dependency resolution
+Date: Wed,  1 Jul 2026 18:47:33 +0530
+Message-Id: <20260701131733.870079-1-ajay.nandam@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SN7PR19MB6736:EE_|SN7PR19MB6969:EE_
-X-MS-Office365-Filtering-Correlation-Id: 7846a314-40a3-4a84-2140-08ded772dfbf
-X-Microsoft-Antispam:
-	BCL:0;ARA:14566002|5072599009|25010399006|23021999003|37011999003|12121999013|15080799012|51005399006|41001999006|19110799012|8060799015|24021099003|6090799003|3412199025|440099028|40105399003;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?aHlLRThGSkx5bGllZ3dRNVZ3QkJWUzBXV1NDVXNybzhsLzRRazhBTTV3Qkxh?=
- =?utf-8?B?T2RBemlVYkNUV0NZZFEzVDI2UjVqSFh5MHVCeWpJQW9mKzlnb21OUEErT3VF?=
- =?utf-8?B?NnRqVVkxNkZMditweWZ5bjI0TjMydllXVzN2K0lQcjJEWHJZL24yTVFjTVV3?=
- =?utf-8?B?WDNhQ1N5emJBZTBqekxzd1A4RXYvdUxzMDh4aDRiYlFhMlZIbUxhK2RGekVN?=
- =?utf-8?B?ekJDS3UxeXZZeUZ3Ujg2d3RCRnJOeFFWeGZmSUxZdDRyakZKakMvVTROMEVR?=
- =?utf-8?B?ZTA0a1ZKbzFRM2NYYkcvUnBtR1V3WEFTQ2FnWlVXNXY2YVErYXptZVpGMVd3?=
- =?utf-8?B?RFQrQS9KTEdiR1FNakd0SFJ1V3BxSDdaeFI2T0VhL0NDaE9yQjVSdFZuSDZL?=
- =?utf-8?B?TEo0dUVjMTZRTUxSMlJ1UE5rOWx0dEpQMzl6eUczdjVidm4vSWNycnpRa29q?=
- =?utf-8?B?V0UybTlXZklvSnBTSmNUVjdRTStUOHJQOWZ3Mkh0ZzljV0hlRFd2NlFUbDJl?=
- =?utf-8?B?UDdiNHZJTXYzN1lHUTBpajVwOEJtbzQ0TFNaTk91QmNKZkE4OEorbEJXWnF2?=
- =?utf-8?B?cXREUDhCa1Njd21iNVJ1Z2I0MHdMZUViclZGVmlKVnpWSjMyUTh5K3lkTFB4?=
- =?utf-8?B?QVlqS3IyS2VnYy9xRUZmdmwxMUwvRWwvNUdzU2RxRnYvS0s4RU1YaUk0RHNV?=
- =?utf-8?B?djcycktlYWhMVjlMR1ltSlpkVWorbC8wYmtOOTFNZnQwUm1LNnJIZGFnNlUz?=
- =?utf-8?B?S1dQbXl4WlM0OEJSYzd3WVFyeFljTGF3NDAzeitIdFZQSlYyYWNsbzA2azZH?=
- =?utf-8?B?dkUxLzNzQXZUWFIwZTRlT3c0dDRQTVo4dktuWmFESy9CbndZR1pDV1Jhc2lP?=
- =?utf-8?B?VlRkeXVaN2FNUnRwVk85M0J3dC8rd2wzcWM3bWo1RzdEUmxWRk1oVFMwVDZ1?=
- =?utf-8?B?SW50VG5NOEVwZFNidm9tc1Jmei84N2tXREtPWmE0WmpaeFhlYUVJaUR5MHZn?=
- =?utf-8?B?cjNwK21NS2wwS3dwVkJ1NVhkc1NNTDkrbUcyeDUzODFINGVqeE8zeW5FUWhO?=
- =?utf-8?B?ajBwM0xJQXk3V2J0L0VtM1BEWGJyQy95eGNQUk9neHU4ZDZ3WXRzcWt3Y2Jx?=
- =?utf-8?B?bVRLMmIySEQzdEFac29uZ09yVmJjV3g0Q3hmL2FqcVVwYkMrNXY2Y0gvUWVw?=
- =?utf-8?B?S0V1cTNuUnlqYm82R0RhN25ybEdjaE03cHNNZm9sQ3MvYWl0Zlhpd1htamNh?=
- =?utf-8?B?M3orb1g4MjJhSWZma012KzVxTm56aEVwSXhKTDVEMUNkblJrVUlSc1gvREdB?=
- =?utf-8?B?YkJ5YWEyNkhLeXpaRnI3NFFwc0h6OFFsQnJ1QlVjVEpOdlFTRWZWTGZUZ3oy?=
- =?utf-8?B?Rm90YmNlVEowY0hmbm94bmJHOG9ObkdQV0ZyekFCazU2R3Fhd1RMRWhvLzRp?=
- =?utf-8?Q?mXxS02UF?=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?YURpQmJibTdRWmZiRVFjZVdNWDdubFdnN1ZwZUc2WG5tZkpQaE1tRmE5Ylh0?=
- =?utf-8?B?N3pyVUN4MldlUW42dXN3c2gzK2wyM09iRWdnY2g5Slg3V2RqT1NPT1VxUFJh?=
- =?utf-8?B?ZE1sMnNmNGlZSkFZOFpYNk9QTTRZbzJQYjAzRFZIcjJPUUNaQ3ErbGxuN3d0?=
- =?utf-8?B?VFArSWoycFZHOHF4RCtUQkxDZEtSa2VFZklqSFNPYkxJSTRLc3B1ZkI2S2tP?=
- =?utf-8?B?WHVzVm5ZN2hJTTllaXZ1YlAvOHZ6cloxMWwyeTBuZ1N2TVdrQXJSSmpSQm9y?=
- =?utf-8?B?ZGliaVFOK3pUaXR4bE1XM3N2d2pVYmI0bllpdHM1RGFWcW5kZGo2K2RzVFlM?=
- =?utf-8?B?SXpYUGs4TXBLZWVWL2RLWkRUMjYvL3FhRWt0TTV3VzRGNWZaMnFZcnB4QjVn?=
- =?utf-8?B?cjIwRDlBOVlPcUo2WlZ2NGQrTkVFZVBlbFozaTY5dVNIQVc4OXYwajg5SHJQ?=
- =?utf-8?B?My9tMWZsdmxjakdNcHFoT0ZZMWVicU1nMnMxVjZQVjFYaHhkU2JlSWh5eTVX?=
- =?utf-8?B?VkM0UUI4U1oxaXZmOWlkQ1U2SGI1MG01RWxsNkRsNDZ5OUVoaVJRNnViTWp4?=
- =?utf-8?B?Y1JzNEFtRWlyeDZzSnRxMXp4bGJCK0tncjZLQzF6dHowbHJhNzBkY2g0bDJs?=
- =?utf-8?B?eVFMVjJzYlJtNXhuM3Z2Z2Z3b0ZjdXFMK2NyVlNvdmt5WTZVN2JTRytSWVpX?=
- =?utf-8?B?b1NYc01leGxOSWxRM1BVbTYwSCtFYkNUR0pNZHVFMVBmR3RtSnp0eDNTZ0lM?=
- =?utf-8?B?MnFFd1ovcHRLVk1jeDdtREFVNDZocVhheDQzdXFrazA5ekZDeVBJYnhvdDY0?=
- =?utf-8?B?Rm5aN1VXR010L2pJRGJmUDdqcnp4Qmt5Q0V6ZXdZVFYvOHYyTlEzdHl6M0NJ?=
- =?utf-8?B?TGozdnhhT0JWSm9Kb3h2UWJRcVVkaHkzSk1IR2U4VFFCQXloTnhETU00bmZv?=
- =?utf-8?B?V201VVROOEJUTlRhMFpPYUJ4QVNjaUhwR081RlBzTVZ2cDlUdXdXWi9kUkxL?=
- =?utf-8?B?TTRQSHJNQkhrL3l1MnNRVjh1TzBob1QzakptdnFoTStqYloxUnp3dXRtcXlZ?=
- =?utf-8?B?ak1vUE0yRnUzcHd5cmlxNXZZRmhOb2kvN3JjSWJGb3pScXl6eXRTRFZmb3Jk?=
- =?utf-8?B?MkZJQlh5QUM0UkZ4OGJHZEdnSC9QYzRkeVVFZExONEFBQTZTNGFMcDF3ems0?=
- =?utf-8?B?NnlnamRKelNBRHNFRXpRSlpOdG9obDB4V3drdk5Vdm5PU3RtUk92ZnZZejVV?=
- =?utf-8?B?OEZ1OXl0T2NnQTd3ZEM0c1lDMENTaFp3ZFZzL0tGOFprZFlQRG1RaUxaR1V6?=
- =?utf-8?B?ZVphbzFIdFhBT01nUUFrTXYrRzBTMDBRYzhPZFk5UDdNQkpXTUpBUTU0dDBv?=
- =?utf-8?B?b1dWOU45ZVRRVFZGMkpJNU5mcDkvSnRxNlh3ZFVybVhPeGM5ZU8rNHdWRDJn?=
- =?utf-8?B?ZVlUUUVXREpVNTVCL0tSU05CZ2hWMllsUnJUa1Y1dU9PdkYyeDhSakFlOS9U?=
- =?utf-8?B?MHQzcHdNVVNCRHlBa1h3R1dTK1g5RUk2WFMrV2xseGFNKzBKanFNdzJCVkxR?=
- =?utf-8?B?U2k4SHgweFh5dlg3L05CMWV6bHJLL0tHY1dLMHU4Z2w5Z2ZWck1tRUtMTlpU?=
- =?utf-8?B?RWNmUDFwWFUyTm4rRzhnUm9IRS9xOGZQU2hJdkE5UG5zK2dkb1ViV1RsSE5Y?=
- =?utf-8?B?TDI2dVR0S0Y4ZFF1bmJpUWh4ZjdwbFpRS0NuQnBOK2YvMmZLR2VVNTlobVdh?=
- =?utf-8?B?Yis3bVEySUVEMURqNnQwaHNIdWNFTHlWNUVlRXd0UnNnVTFPUnh3TEt5VThJ?=
- =?utf-8?B?NVp4YWNuU2IraVVxY0RRUnhoaGFjZjc3YWo2WEFhdkExcXVUbkh4MTFoQXdw?=
- =?utf-8?B?TzlpUGp4Z2M5ZHdhKzBsWWE5eUxnWGNYUjFXMzRQWDBwRlE9PQ==?=
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7846a314-40a3-4a84-2140-08ded772dfbf
-X-MS-Exchange-CrossTenant-AuthSource: SN7PR19MB6736.namprd19.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Jul 2026 13:15:53.1097
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
-	00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR19MB6969
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=Co2PtH4D c=1 sm=1 tr=0 ts=6a45137f cx=c_pps
+ a=cmESyDAEBpBGqyK7t0alAg==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=P-IC7800AAAA:8 a=HdUZe8yIVH1zskT_ylQA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=1OuFwYUASf3TG4hYMiVC:22 a=d3PnA9EDa4IxuAV0gXij:22
+X-Proofpoint-ORIG-GUID: kcigvP3pOhPbeI5L0FWH9CSxgN4Ge8fE
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAxMDEzOCBTYWx0ZWRfX4XXttJtckD/L
+ uCvAiaxvEBA/FQllvMphwD/1ZG7ZPkcxtd5FZWyO88Vu8PQ7GAtguRy3ckhVmqp5HoStngvwbp8
+ 5MyBcr0EL6Sue0jjFXULh11y9PNFfJo=
+X-Proofpoint-GUID: kcigvP3pOhPbeI5L0FWH9CSxgN4Ge8fE
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAxMDEzOCBTYWx0ZWRfXwhXFimSIZJuy
+ F4C5rqhE7sT7AkfAOz7h4XXcqJ1eB356ZhJ998DAyg2IJZHf06Y++uza+fHCCzj8U30/6MXcgHT
+ w8inw+7te/HTi8kgpwqDB2mdkaBuwrFm6IEgnwgK3x8vh/ESr6rrn/PmXIGiCWPMLDeVfOWSGA5
+ +hSaMlSH2TVgcUcc5mtcrxHwOjbS++w3Gbup1en5AzJUNi6vhuXCtGP9st4acYOIifyNIAghZbQ
+ w+dric29bCFF5qM4NyMOlhjUxGd6RC6UhFBYspjrEOSdrFIcdQeBzSFkEZC93fqlDKL1OYNJAoG
+ HDdXbyoiQiJ9eYpbo6HhVjtZX2nfRn3TP7U+n7jbjJ0APkXGxPior7nibq0YosfIA7Yn0FjqYsM
+ B5e0mHxPJzGOAibSoeC6s43XCEx8HEM+6SAoPutFFA4JbvO+Qyuk5CW8mQ6LKOzNi//6LTOziFv
+ gsg41u7Di74wzPWAMEA==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-07-01_03,2026-06-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 clxscore=1015 bulkscore=0 suspectscore=0 phishscore=0
+ spamscore=0 lowpriorityscore=0 adultscore=0 impostorscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607010138
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [1.34 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
-	ARC_REJECT(1.00)[cv is fail on i=2];
-	DMARC_POLICY_ALLOW(-0.50)[outlook.com,none];
-	R_DKIM_ALLOW(-0.20)[outlook.com:s=selector1];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+X-Spamd-Result: default: False [-1.16 / 15.00];
+	MID_CONTAINS_FROM(1.00)[];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_MUA_MAILLIST(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:konrad.dybcio@oss.qualcomm.com,m:axboe@kernel.dk,m:ulfh@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:johannes@sipsolutions.net,m:jjohnson@kernel.org,m:brgl@kernel.org,m:marcel@holtmann.org,m:luiz.dentz@gmail.com,m:quic_bgodavar@quicinc.com,m:quic_rjliao@quicinc.com,m:saravanak@kernel.org,m:andrew@lunn.ch,m:hkallweit1@gmail.com,m:linux@armlinux.org.uk,m:davem@davemloft.net,m:edumazet@google.com,m:kuba@kernel.org,m:pabeni@redhat.com,m:horms@kernel.org,m:andersson@kernel.org,m:konradybcio@kernel.org,m:mathieu.poirier@linaro.org,m:p.zabel@pengutronix.de,m:linux-block@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-mmc@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-wireless@vger.kernel.org,m:ath10k@lists.infradead.org,m:linux-arm-msm@vger.kernel.org,m:linux-bluetooth@vger.kernel.org,m:netdev@vger.kernel.org,m:linux-remoteproc@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,m:luizdentz@gmail.com,s:lists@lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER(0.00)[george.moussalem@outlook.com,linux-arm-msm@vger.kernel.org];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_FROM(0.00)[outlook.com];
-	FREEMAIL_TO(0.00)[oss.qualcomm.com,kernel.dk,kernel.org,sipsolutions.net,holtmann.org,gmail.com,quicinc.com,lunn.ch,armlinux.org.uk,davemloft.net,google.com,redhat.com,linaro.org,pengutronix.de];
-	RCPT_COUNT_TWELVE(0.00)[36];
-	FORWARDED(0.00)[lists@lfdr.de];
+	FREEMAIL_CC(0.00)[linuxfoundation.org,kernel.org,linaro.org,gmail.com,qti.qualcomm.com,vger.kernel.org,alsa-project.org,oss.qualcomm.com];
+	RCPT_COUNT_TWELVE(0.00)[14];
+	TAGGED_FROM(0.00)[bounces-115708-lists,linux-arm-msm=lfdr.de];
 	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-115707-lists,linux-arm-msm=lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:linux-kernel@vger.kernel.org,m:saravanak@google.com,m:gregkh@linuxfoundation.org,m:rafael@kernel.org,m:andersson@kernel.org,m:srinivas.kandagatla@linaro.org,m:brgl@kernel.org,m:lgirdwood@gmail.com,m:broonie@kernel.org,m:spatakok@qti.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:alsa-devel@alsa-project.org,m:ravi.hothi@oss.qualcomm.com,m:ajay.nandam@oss.qualcomm.com,s:lists@lfdr.de];
+	FORWARDED(0.00)[lists@lfdr.de];
+	FORGED_SENDER(0.00)[ajay.nandam@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[bootlin.com:url,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:from_mime,vger.kernel.org:from_smtp,sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo,qualcomm.com:dkim];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[outlook.com:+];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[george.moussalem@outlook.com,linux-arm-msm@vger.kernel.org];
 	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[ajay.nandam@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	ALIAS_RESOLVED(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MID_RHS_MATCH_FROMTLD(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,outlook.com:dkim,outlook.com:email,outlook.com:from_mime,SN7PR19MB6736.namprd19.prod.outlook.com:mid]
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 62F9D6EE3AA
+X-Rspamd-Queue-Id: 59DE16EE45E
 
-On 7/1/26 14:40, Konrad Dybcio wrote:
-> On 6/29/26 3:01 PM, George Moussalem via B4 Relay wrote:
->> From: George Moussalem <george.moussalem@outlook.com>
->>
->> The Bluetooth subsystem (BTSS) on the IPQ5018 SoC supports setting power
->> modes which are required to be configured through a Secure Channel
->> Manager (SCM) call to TrustZone. However, not all Trusted Execution
->> Environment (QSEE) images support this call, so first check if the call
->> is available.
->>
->> Signed-off-by: George Moussalem <george.moussalem@outlook.com>
->> ---
-> 
-> I'm amazed changing this setting is a secure operation
-> 
-> [...]
-> 
->> +/**
->> + * qcom_scm_pas_set_bluetooth_power_mode() - Configure power optimization mode
->> + *					     for the Bluetooth subsystem (BTSS)
->> + * @pas_id:	peripheral authentication service id
->> + * @val:	0x0 for normal operation, 0x4 for ECO mode
-> 
-> If there's just two values, maybe we should make this take a `bool eco_mode`?
+Hi Saravana Kannan,
 
-that was the direction I was going in initially but then thought that
-there may be more (undocumented) power modes I'm unaware off so changed
-it to u32. I'll change it back to bool.
+I am Ajay from Qualcomm, and I am working together with Ravi on ADSP
+Subsystem Restart (SSR) support for Qualcomm LPASS audio. During our
+SSR work Ravi observed that restart does not behave as expected — when
+the ADSP restarts, all child nodes of the remoteproc should detach and
+re-attach cleanly once the remoteproc is up. While investigating
+this, Ravi identified an incorrect assumption in fw_devlink's dependency
+resolution logic that causes wrong device links to be created when a
+supplier device lives behind intermediate bus nodes that are populated
+asynchronously. We observed this on a Qualcomm qcs6490-rb3gen2 board
+with LPASS audio drivers, but the assumption is generic and can affect
+any similar topology.
 
-> 
->> + *
->> + * Return: 0 on success, negative errno on failure.
->> + * Returns -EOPNOTSUPP if the firmware configuration call is unavailable.
->> + */
->> +int qcom_scm_pas_set_bluetooth_power_mode(u32 pas_id, u32 val)
->> +{
->> +	if (!__qcom_scm_is_call_available(__scm->dev, QCOM_SCM_SVC_PIL,
->> +					  QCOM_SCM_PIL_PAS_BT_PWR_MODE))
->> +		return -EOPNOTSUPP;
->> +
->> +	return __qcom_scm_pas_set_bluetooth_power_mode(pas_id, val);
-> 
-> Let's just inline the whole definition here - it's single-use anyway
+Problem Summary:
 
-will update, thanks.
+fw_devlink appears to incorrectly collapse pending dependencies to
+an ancestor device when supplier devices exist behind asynchronously
+created intermediate bus nodes.
 
-> 
-> Konrad
+In our topology, q6prmcc is instantiated as a descendant of the ADSP
+remoteproc through asynchronously created glink/gpr bus devices.
+When the remoteproc device binds earlier, fw_devlink appears to assume
+that these intermediate nodes will never become devices, collapses the
+dependency to the remoteproc ancestor, and deletes the pending links.
+As a result, the intended dependency:
+    lpass_va_macro -> q6prmcc
+is replaced by:
+    lpass_va_macro -> remoteproc
 
-Cheers,
-George
+This results in incorrect teardown ordering during ADSP SSR because
+codec drivers are no longer linked to their actual clock supplier.
 
+Could you please suggest how we can resolve this issue? Is there
+a specific reason for this assumption, as it looks incorrect in our case?
+
+
+-------------------------------------------
+1. AUDIO SYSTEM TOPOLOGY ON qcs6490-rb3gen2
+
+On qcs6490-rb3gen2 the LPASS audio clock supply chain spans a
+four-level device hierarchy rooted at the ADSP remoteproc. The
+intermediate nodes (glink-edge, gpr) only get their struct devices
+after the ADSP firmware has booted, which happens well after the
+remoteproc driver's own probe() returns.
+
+The Device Tree hierarchy (from qcs6490-audioreach.dtsi / kodiak.dtsi):
+https://elixir.bootlin.com/linux/v7.1/source/arch/arm64/boot/dts/qcom/qcs6490-audioreach.dtsi#L113
+
+  remoteproc_adsp                         (ADSP remoteproc)
+      └── remoteproc_adsp_glink           (GLink transport edge)
+              └── gpr                     (GPR bus, compatible="qcom,gpr")
+                      └── service@2       (PRM service, compatible="qcom,q6prm")
+                              └── clock-controller  (q6prmcc)
+                                      compatible = "qcom,q6prm-lpass-clocks"
+
+The LPASS codec drivers (VA macro, WSA macro, RX macro, TX macro) are
+platform devices under soc@0 that reference q6prmcc as their clock
+supplier via DT phandles:
+
+  From qcs6490-audioreach.dtsi:
+  ------------------------------
+  &lpass_va_macro {
+      clocks = <&q6prmcc LPASS_CLK_ID_VA_CORE_MCLK ...>,
+               <&q6prmcc LPASS_HW_MACRO_VOTE ...>,
+               <&q6prmcc LPASS_HW_DCODEC_VOTE ...>;
+      clock-names = "mclk", "macro", "dcodec";
+  };
+
+  &lpass_wsa_macro {
+      clocks = <&q6prmcc LPASS_CLK_ID_TX_CORE_MCLK ...>,
+               ...;
+  };
+
+  (similarly for lpass_rx_macro and lpass_tx_macro)
+
+The intended fw_devlink dependency is therefore:
+
+  lpass_va_macro  (consumer)  ──►  q6prmcc / clock-controller (supplier)
+  lpass_wsa_macro (consumer)  ──►  q6prmcc / clock-controller (supplier)
+
+This dependency is critical for correct ADSP SSR (Subsystem Restart)
+teardown: all codec drivers must be torn down BEFORE q6prmcc is
+removed, so that no driver calls into a clock controller that no longer
+exists.
+
+-----------------------------------------
+2. THE INCORRECT ASSUMPTION IN fw_devlink
+
+fw_devlink correctly identifies the intended supplier at boot time via
+fwnode links. However, the links are never converted to device links.
+Instead, fallback device links to the remoteproc device are created.
+
+The sequence of events:
+
+  1. At boot (~t=0.085s), fw_devlink resolves the DT clock phandles
+     and creates fwnode links:
+       lpass_va_macro  ──fwnode──►  gpr/service@2/clock-controller
+       lpass_wsa_macro ──fwnode──►  gpr/service@2/clock-controller
+     q6prmcc does not exist yet → EAGAIN → fwnode links kept pending.
+     This is correct.
+
+  2. At ~t=7.597s, remoteproc_adsp probe() completes. This triggers
+     device_links_driver_bound() which calls
+     fw_devlink_pickup_dangling_consumers(remoteproc_dev).
+
+  3. fw_devlink_pickup_dangling_consumers() walks remoteproc's child
+     fwnodes. It finds the gpr fwnode with no struct device attached.
+
+  4. Here is the incorrect assumption:
+     __fw_devlink_pickup_dangling_consumers() concludes that because
+     gpr has no struct device at this moment, it will never get one.
+     It marks gpr as FWNODE_FLAG_NOT_DEVICE and moves all of gpr's
+     consumers (including the codec → q6prmcc fwnode links) up to
+     remoteproc.
+
+  5. The correct fwnode links (codec → q6prmcc) are permanently
+     deleted. Wrong device links (codec → remoteproc) are created.
+
+  6. At ~t=8.364s, the GPR bus probes and q6prmcc eventually appears.
+     But there are no pending fwnode links left for it — the correct
+     dependency is lost forever.
+
+The assumption that is wrong:
+
+  "If a child fwnode has no struct device when its ancestor device
+   binds, it will never get one."
+
+This assumption does not hold when intermediate bus nodes (glink-edge,
+gpr) are populated asynchronously after their parent device boots remote
+firmware. At the time remoteproc binds, glink-edge and gpr have no
+struct device not because they will never exist, but because they are
+waiting for the ADSP firmware to load — which only happens after
+remoteproc's own probe() returns.
+
+https://elixir.bootlin.com/linux/v7.1/source/drivers/base/core.c#L1300
+
+------------------------
+3. EVIDENCE — DEBUG LOGS
+
+We added debug instrumentation to fw_devlink's key decision points
+(filtered to audio devices only) to capture the exact sequence.
+
+--- t=0.085s: Correct fwnode links identified, q6prmcc absent ---
+
+  [0.085060] debug: fw_devlink_create_devlink:2356 audio supplier
+    /soc@0/remoteproc@3700000/glink-edge/gpr/service@2/clock-controller
+    not yet a device, deferring link from consumer=3240000.codec (EAGAIN)
+
+  [0.086178] debug: fw_devlink_create_devlink:2356 audio supplier
+    /soc@0/remoteproc@3700000/glink-edge/gpr/service@2/clock-controller
+    not yet a device, deferring link from consumer=3370000.codec (EAGAIN)
+
+  Both codecs correctly identify q6prmcc as their supplier. q6prmcc
+  does not exist yet → EAGAIN → fwnode links kept pending. Correct.
+
+--- t=7.597s: remoteproc probe completes ---
+
+  [7.555169] qcom_q6v5_pas 3700000.remoteproc: debug: qcom_pas_probe:745
+    qcom_pas: probe start, parent=soc@0
+  [7.597126] qcom_q6v5_pas 3700000.remoteproc: debug: qcom_pas_probe:865
+    qcom_pas: probe complete, parent=soc@0
+
+--- t=7.597s: POINT OF NO RETURN ---
+
+  device_links_driver_bound() fires for remoteproc. It calls
+  fw_devlink_pickup_dangling_consumers() which finds gpr with no
+  struct device and moves ALL of gpr's consumers to remoteproc:
+
+  [7.597160] debug: __fw_devlink_pickup_dangling_consumers:276
+    audio dangling consumers: moving consumers of
+    /soc@0/remoteproc@3700000/glink-edge/gpr
+    to ancestor /soc@0/remoteproc@3700000 (no device yet)
+
+--- t=7.597s: Correct fwnode links permanently deleted ---
+
+  [7.597205] debug: __fwnode_link_del:155 audio fwnode link deleted:
+    consumer=/soc@0/codec@3370000
+    supplier=/soc@0/remoteproc@3700000/glink-edge/gpr/service@2/clock-controller
+
+  [7.609265] debug: __fwnode_link_del:155 audio fwnode link deleted:
+    consumer=/soc@0/codec@3240000
+    supplier=/soc@0/remoteproc@3700000/glink-edge/gpr/service@2/clock-controller
+
+--- t=7.637s: Wrong device links created ---
+
+  [7.637952] debug: fw_devlink_create_devlink:2331 audio device link created:
+    consumer=3240000.codec supplier=3700000.remoteproc flags=0x124
+    (consumer_fwnode=/soc@0/codec@3240000)
+
+  [7.674145] debug: fw_devlink_create_devlink:2331 audio device link created:
+    consumer=3370000.codec supplier=3700000.remoteproc flags=0x124
+    (consumer_fwnode=/soc@0/codec@3370000)
+
+--- t=8.364s: GPR bus probes — 770ms too late ---
+
+  [8.364221] qcom,apr ...: debug: apr_probe:597
+    apr/gpr: probe start, parent=3700000.remoteproc:glink-edge
+  [8.364446] qcom,apr ...: debug: apr_probe:648
+    apr/gpr: probe complete, parent=3700000.remoteproc:glink-edge
+
+  GPR bus probes 770ms after the fwnode links were deleted. q6prmcc's
+  consumers have already been stolen. No pending links remain.
+
+--- t=15.409s: VA macro binds — wrong supplier confirmed ---
+
+  [15.389975] va_macro 3370000.codec: debug: va_macro_probe:1538
+    va_macro: probe start, parent=soc@0
+  [15.399678] va_macro 3370000.codec: debug: va_macro_probe:1683
+    va_macro: probe complete, parent=soc@0
+
+  [15.409155] debug: device_links_driver_bound:1420
+    ENTRY dev=3370000.codec (struct parent=soc@0)
+  [15.418101] debug: device_links_driver_bound:1426
+    ENTRY supplier link: dev=3370000.codec
+    supplier=3700000.remoteproc (fwnode=/soc@0/remoteproc@3700000)
+    flags=0x164 status=2
+  [15.434076] debug: device_links_driver_bound:1426
+    ENTRY supplier link: dev=3370000.codec
+    supplier=33c0000.pinctrl (fwnode=/soc@0/pinctrl@33c0000)
+    flags=0x164 status=2
+
+  q6prmcc is completely absent from the supplier list. The device link
+  to remoteproc is wrong. The correct dependency is permanently lost.
+
+------------------------------------
+4. IMPACT — ADSP SSR TEARDOWN BROKEN
+
+With the wrong device link in place (codec → remoteproc instead of
+codec → q6prmcc), the teardown order during ADSP stop is incorrect.
+q6prmcc is removed while codec drivers still depend on it, causing
+them to call into a clock controller that no longer exists. Audio
+drivers are left in an invalid state and proper cleanup does not happen.
+
+----------------------------------------------------------
+5. WORKAROUND — MANUAL DEVICE LINK IN q6dsp-lpass-clocks.c
+
+To confirm the hypothesis and restore correct teardown ordering, we
+manually created the device link from q6prmcc to lpass_va_macro inside
+q6dsp_clock_dev_probe() in sound/soc/qcom/qdsp6/q6dsp-lpass-clocks.c.
+
+With this workaround in place:
+  - The correct device link (lpass_va_macro → q6prmcc) is established
+    when q6prmcc probes.
+  - On ADSP stop, lpass_va_macro is torn down before q6prmcc.
+  - Audio driver cleanup happens correctly and completely.
+  - No dangling state is observed after ADSP SSR.
+
+This confirms that the dependency model itself is correct — the problem
+is purely that fw_devlink fails to establish it automatically due to
+the incorrect assumption described above.
+
+The workaround patch is included below for reference.
+
+--- Workaround patch (reference only, not proposed for merge) ---
+
+diff --git a/sound/soc/qcom/qdsp6/q6dsp-lpass-clocks.c b/sound/soc/qcom/qdsp6/q6dsp-lpass-clocks.c
+index 03838582aead..3884d3e96e33 100644
+--- a/sound/soc/qcom/qdsp6/q6dsp-lpass-clocks.c
++++ b/sound/soc/qcom/qdsp6/q6dsp-lpass-clocks.c
+@@ -8,6 +8,7 @@
+#include <linux/device.h>
+#include <linux/platform_device.h>
+#include <linux/of.h>
++#include <linux/of_platform.h>
+#include <linux/slab.h>
+#include <dt-bindings/sound/qcom,q6dsp-lpass-ports.h>
+#include "q6dsp-lpass-clocks.h"
+@@ -126,6 +127,52 @@ static struct clk_hw *q6dsp_of_clk_hw_get(struct of_phandle_args *clkspec,
+  return ERR_PTR(-ENOENT);
+}
+
++/*
++ * va_macro_compat - compatible string for the va macro codec device.
++ *
++ * Used to locate the consumer device for the manual device link.
++ */
++#define LPASS_VA_MACRO_COMPAT  "qcom,sc7280-lpass-va-macro"
++
++/**
++ * q6dsp_clock_link_va_macro - create a manual device link from va_macro
++ *                              to this clock-controller (q6prmcc).
++ *
++ * fw_devlink cannot establish this link automatically because q6prmcc is
++ * a dynamically created device (child of remoteproc/glink/gpr) and its
++ * fwnode link is purged by __fw_devlink_pickup_dangling_consumers() when
++ * the remoteproc parent binds. This manual link ensures va_macro is torn
++ * down before q6prmcc on ADSP SSR.
++ */
++static int q6dsp_clock_link_va_macro(struct device *clk_dev)
++{
++  struct device_node *va_np;
++  struct platform_device *va_pdev;
++  struct device_link *link;
++
++  va_np = of_find_compatible_node(NULL, NULL, LPASS_VA_MACRO_COMPAT);
++  if (!va_np) {
++    dev_dbg(clk_dev, "va_macro node not found, skip devlink\n");
++    return 0;
++  }
++
++  va_pdev = of_find_device_by_node(va_np);
++  of_node_put(va_np);
++  if (!va_pdev) {
++    dev_dbg(clk_dev, "va_macro device not yet registered\n");
++    return 0;
++  }
++
++  link = device_link_add(&va_pdev->dev, clk_dev,
++             DL_FLAG_PM_RUNTIME | DL_FLAG_AUTOPROBE_CONSUMER);
++  put_device(&va_pdev->dev);
++  if (!link) {
++    dev_err(clk_dev, "failed to add device link to va_macro\n");
++    return -EINVAL;
++  }
++
++  return 0;
++}
++
+int q6dsp_clock_dev_probe(struct platform_device *pdev)
+{
+  struct q6dsp_cc *cc;
+@@ -180,6 +227,10 @@ int q6dsp_clock_dev_probe(struct platform_device *pdev)
+
+  dev_set_drvdata(dev, cc);
+
++  ret = q6dsp_clock_link_va_macro(dev);
++  if (ret)
++    dev_err(dev, "Failed to create devlink between prmcc and va macro\n");
++
+  return 0;
+}
+EXPORT_SYMBOL_GPL(q6dsp_clock_dev_probe);
+
+--- End of workaround patch ---
+
+Tested on: Qualcomm qcs6490-rb3gen2, Qualcomm sm8750-mtp
+
+Thanks,
+Ajay Kumar Nandam
 
