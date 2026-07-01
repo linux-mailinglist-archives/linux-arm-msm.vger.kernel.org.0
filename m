@@ -1,483 +1,217 @@
-Return-Path: <linux-arm-msm+bounces-115603-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-115604-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id cIVDFTHMRGpU1AoAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-115603-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Jul 2026 10:13:37 +0200
+	id 8LFqF43NRGqP1AoAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-115604-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Jul 2026 10:19:25 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id B4C966EAFD9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Jul 2026 10:13:36 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id E712F6EB05D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Jul 2026 10:19:24 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=JSRSIxnv;
-	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=TykgCEWT;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115603-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115603-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b="HphP/bdq";
+	dkim=pass header.d=oss.qualcomm.com header.s=google header.b="Tde/JqNd";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115604-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c09:e001:a7::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115604-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=reject) header.from=qualcomm.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 1D01E3056C31
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jul 2026 08:12:15 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 440EB3033AD2
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jul 2026 08:19:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AEC8A3E075C;
-	Wed,  1 Jul 2026 08:11:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D84CD38E5D4;
+	Wed,  1 Jul 2026 08:19:22 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4F493DC4D9
-	for <linux-arm-msm@vger.kernel.org>; Wed,  1 Jul 2026 08:11:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9C9E39EF39
+	for <linux-arm-msm@vger.kernel.org>; Wed,  1 Jul 2026 08:19:21 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782893505; cv=none; b=lNNgx7+4mlejDPdtfX4zBcO+KZkzOhre9kr7RAKXQrM3plZ7jeIXgMiK/0PsPU4rP3AKxB26tt6jseLBDkPL7f+tyBiItjp2B3VXdIL3cAyN9UD/bmfZHizt8+5x4sRI7d1ux7789lP7bGuR4L9NY/lg2y+0/EktOku3mp1SGjk=
+	t=1782893962; cv=none; b=FsgEPiSXcymkclh+RZix7JHMz6dUHL2lGfLjFEt78jRJEH+VtcmuRAgqPNUVJd7fYoT545sw4z0ojaledKBTT1cpVW3XJl5SPJAZ7x0X9JsMsrLnrq0D1b1QdBFHLBPpNz2sF4THCmarw9ApG3rA3n7CsO9T6R7rfPEaheZppm8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782893505; c=relaxed/simple;
-	bh=s07d/KeS2ZtNoeIFJbl1rn4HC6wB79S5CwrU02vQ9/A=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=CeXB89GJMEEGRj1yf7hVFw18E0uMdGQjhp9TwyrE2ju9aBs4ZPY2Z86fwOZQ2C6uC5cAc7Kj4FwLhhPQAAf2Zry66YZspL/5ThT4n06kh894dres8batYDn1OXbvb2Tvu5Gs+waqMPjWcPhTVJ64L0NrnwIyxIYOvTyYHuV8nE0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=JSRSIxnv; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=TykgCEWT; arc=none smtp.client-ip=205.220.168.131
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6615lWSp059158
-	for <linux-arm-msm@vger.kernel.org>; Wed, 1 Jul 2026 08:11:35 GMT
+	s=arc-20240116; t=1782893962; c=relaxed/simple;
+	bh=dtjhuvoCnXLccqWVZj6HsPRujQcujkj8TP4ZOO+PYU0=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=hF/m6nvQqnqKrEmPyUfB6NrOscR5IUdqVq5Z7Zyxo3kvy8GjakpPAemHc6iwmmH0DjhNGO4C2tofeaWwK3oG/WI7p8dM7lzehaSgt5GsGmcCk0kxs4qiDgyySRNvEDbDjVgoZ9K9y2bBw4JV/DQU8a4hioChtzUQvtbfY1RfLyE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=HphP/bdq; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Tde/JqNd; arc=none smtp.client-ip=205.220.168.131
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6618G3Di492841
+	for <linux-arm-msm@vger.kernel.org>; Wed, 1 Jul 2026 08:19:21 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=umzU2CpFSZMS7JmI/ccMyh
-	FV6ZNUMd1wMHgHsjP3Bz0=; b=JSRSIxnvAPZStuiv5aSdvVApUoCsYF6no3RKJR
-	FrzCcO2IK6A0nr9g8E8iVtX+FPpY6GXiikqV5LtTcH1T/TO+iyv+LRpEKeiL/xDO
-	d5QY4X1Kl1ywM2hrDig/bpSGvy/Xacj+pmBoEW2UG/nfwpr7psN5ylLtm6A023F1
-	aWb7h6WuLHVv7TD6Ri854nOGaoXgTPyt/O0BRmA6qFhQ3gqdjbT1gxDuTm/YZKZr
-	nRHQAUcBej8VLYoRmXCVX3enDAAr2W7ZimEZtYvBNteWhEQrbdGXN41RE4NhSUJJ
-	cF0QK9lcRGw0u4O6iEv0Iz385vxG8dP7LPwEaqcBM+ESmtbg==
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f4k3sk1j5-1
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=fekyR3ymPZerEgvyKr3Mkf0B8N1UanGpiHz
+	+MqEQZIw=; b=HphP/bdqydqVDsiIGi+X5GSqAFAurPkyr27vfZ4QCQQCE8a2lOs
+	JsmK3aEZkJZWd4XY+0mFh75b7R0syFW/XDUi8ClYsQsSgrlI/1jqwSDK4jGeRuis
+	I9avpBPGe1P2cNHJVtG7pqyJsfpGTjzm16biY7/shJYRVs6zsMHbphnJz+tUxMYH
+	9jrwYIKpWF4ExLJ8rI+ZNElp7er9FGNrkUtIODdtjqRkY4r5iB/7stjlGu4FK6wq
+	NATGzfoxWw49CdWh80R8+2+YhcG6By0sv0zGrGeYz3fbOSMVZtfKDiL9vWspFzQf
+	fm9pVk/3QbyK3sPfm4jgTUewTz/2L+K7K1g==
+Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com [209.85.210.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f4kgw2x5a-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 01 Jul 2026 08:11:35 +0000 (GMT)
-Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-2c9f452d260so6629495ad.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Jul 2026 01:11:35 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 01 Jul 2026 08:19:20 +0000 (GMT)
+Received: by mail-pf1-f198.google.com with SMTP id d2e1a72fcca58-847950bb95cso314062b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Jul 2026 01:19:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1782893495; x=1783498295; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=umzU2CpFSZMS7JmI/ccMyhFV6ZNUMd1wMHgHsjP3Bz0=;
-        b=TykgCEWTctDAIaeydWoJKTH0B5OBn8mLN7evOs/SNhKMwE3ek57Rlh4O1ZiLlUBuLk
-         yTATpHAr33m3dvyQ5FoxAZnEQ/0PUMDcmcLQHwMtSSbRCMzSZbQ6TDbzKs9jsYi2xxYS
-         kxY/UYy8qPMvyqdMXPVhRly96Hn3XGJb4KNw73UHMLD4Djy8ZFxWpnF2oh0obvYOPKQR
-         JsYeinYrQ5ZYSDYD6Cm1UjFaU0HQ5R6VnJMYFhyawZ5sb8AxaR2SHaN9zXKV/FpK8Gg7
-         V01R7fFmO1An61E33F7Ad3Og2hnew3Nn2QyM9FOn+QsjmNQM1Fw74hN/tf8tgVcw1vd2
-         seFw==
+        d=oss.qualcomm.com; s=google; t=1782893960; x=1783498760; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=fekyR3ymPZerEgvyKr3Mkf0B8N1UanGpiHz+MqEQZIw=;
+        b=Tde/JqNd98JnhDOmKx7GtOOM/KnGUzB62mlXTBkggYWYWgDg76gyS4sKN+Vr5YxF/S
+         D+PlcHmZyDN6tuObKOM5UC0x7mhjZNJXfAnHEBapUdWcy0t5ZvJ+s4a6Fp0wxbi4RxAv
+         x21Rh9G0t4s8W1w1lAo3G0YX+jnoTpelLaBq7YMFVhfbuo+sBNlzQlVDfG8oD5GCOiR6
+         Xi8Y5qEziEB70oJWAstsejN28UASV8hFUdd6A2BnEYYYL3Lzs8+BAcTY6+RM2F3EPXrK
+         cLbIksM+8pybqSOzDtkif3Iyye5h9tiqTP9wBf2Vey3r8euJ1LdOT/zrLTJLq2WSPV55
+         n98A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782893495; x=1783498295;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20251104; t=1782893960; x=1783498760;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=umzU2CpFSZMS7JmI/ccMyhFV6ZNUMd1wMHgHsjP3Bz0=;
-        b=VD+5bEGBFGDg46xlR1Gt+5K5r3fYMhLSeBnYyA5hbk6hu5pt4070V5VcEIhSkeHXEa
-         rw3Hg0u9DduDmDBXYpIOY7z7m/PU7wpbxPf2+YjVBCSPgoVc3O4rKsunDbSsbRhUM7YA
-         DWBy/A2BbwuFkI6JcFbimkS5ps0EFuInF7ePikGj1+bV5lZrhvtPkF8fhHwuQSvF9OSr
-         BVF/Qf12F1dmSNj1cqEgpuRp6wboOMyq1Qb3SZYeHGRTLWQIaCy2329FB5OYK91hagJe
-         m7Ih2wYS/3VZbV3pJzvbPiTVQ8PnrRYu8gE9jd1vXF97nyMrQP9W0BjjglowNnFo4tSc
-         9tew==
-X-Gm-Message-State: AOJu0YwiYN+kSmZ5ca6n2Vq7NJpvk24gVI/P9OIQs4U8HZwJtVSbyUwj
-	gEDJyHTImVYVxui0VPQ2XOVMLLjxYMr5NGdtXjMtuCWiNN8erAHTTtJvZn6UhfvbGg1Ox42ZfW/
-	qy8ywoDTppm/+tbLSFAhdD7miw/DNtEMpZClq7R82iHwjwAXq840paE0qbniMQ9SlXh5vOnYcjZ
-	oL
-X-Gm-Gg: AfdE7cmgHu1s52NDc7Wf9ctTOVIAb63kyhmTFX+SosxiDlR/qzb9EzplZBDSsATy6Qd
-	zoQy21Nrqq3MB6l4g44w1BBpKbL2MZNzGxmuH5XddcoHfc/ERX2Rou8UFMZsNk8dpyZRxH9D3rU
-	/Ufij06suRuTNB4dORWzh66smKw8ICsixYE0p9L1gbBQJnwhTwPa34X0vssRadAWsgJY2AcUWdN
-	ObhdB9oSHiH76G5Cr65ZRjUgAxsjH/C0fQxIVj3KPXqQJ4mtbasxZFhdOTpgkSlDlAn/4RDVD3W
-	RU5usIq5cU4Vyj7/yXvEnenWjrjV4WIBWegPTfJNLzaI8rC9Nu1N6QtGaMzsw0eiUhhsusJE/bp
-	AM5LHc47UfrKszUZvZuon
-X-Received: by 2002:a17:902:e889:b0:2c9:abe1:c352 with SMTP id d9443c01a7336-2ca7e739c10mr9068105ad.13.1782893494725;
-        Wed, 01 Jul 2026 01:11:34 -0700 (PDT)
-X-Received: by 2002:a17:902:e889:b0:2c9:abe1:c352 with SMTP id d9443c01a7336-2ca7e739c10mr9067745ad.13.1782893494147;
-        Wed, 01 Jul 2026 01:11:34 -0700 (PDT)
-Received: from [10.213.99.236] ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ca37c82810sm27808675ad.28.2026.07.01.01.11.30
+        bh=fekyR3ymPZerEgvyKr3Mkf0B8N1UanGpiHz+MqEQZIw=;
+        b=lrdFZh5C5k82+JlRW8odFTl3Ys/LUGvqvP8azW19d4uBazoP8TLuto7LzhNvMOgz86
+         nc8bP+MS8fcQA3vN9z8y1RlQ2vBBkD+W5vSkeR7QB7dKJBJiTO2Kfy+TqeEoo2P8OLej
+         JydPJAZUTX68X50dX4Z9uU2V04W/zDHcI50eShCk6pdWH09e56MmVu9PnASNlQ2j3PXZ
+         w46b15sm5JLKBIfK4vFC8FHku+mwyPbgSvl7Q5IXlY987Eh+6p8WaOFxLhKtGVOLwWPz
+         v7AHiWyhY67VRlMiN6mFS0XE3zR4IijBlzKfu0L+BNnzob/jx4xpTT7qVLe0Mpyfkwod
+         WHxA==
+X-Gm-Message-State: AOJu0YxP/RJ06LT6Tr2a4bwHFH4AcG+LKUediSqpEkW29N2o7dCl9+eA
+	/OWUHY1q7qoos3TcnUvqNMunIup7Qy7fu09+pIjJT4bRzaBDKr3RSczu3PnkktmnBKEtPCzpNIy
+	acob7xfyUBNJOPlmEY0C+b5M7tncOwWbNGSYelRtpclJWpPDf0WoioCjf7uB/5pA4aqHs
+X-Gm-Gg: AfdE7cmVODVpMNXDqMPrnyw1zAKDw987yN9QUf+n0n9KjU+VSdCYY/MotBGKROP/Sbx
+	sBMx7eLTiQrykd1E04iveC7ZO452r4+i7h3fCQoITIgH7lTJCWHKAzdiScRFDCa6hP6aFj0CipU
+	TCI0nFrsLVy3QBGfBYUQThC2hGvMNEpbjuz52CxSPejawuqalDdiJyOocj2j0EAkLH0cb408VK4
+	4c24tYgn3tN4Nu47VQCZJkmiupCrt8ZTbVALUh1vD3VrubxmKb6ObxR8lUgBYTe5LJZxXkqAJw7
+	A3e7i5dVQV07MqdkRwfBVYGzm4EGPxa8CuVuHBlvDJO5dZBvbt/ox2ooB+dY0oly4QDJ4M+sjru
+	LpmOoC6+iJPf4p5dnSs6OM9o+Ui+5EoHez0XX1GMxfr8zjA==
+X-Received: by 2002:a05:6a00:301a:b0:845:d286:1fbe with SMTP id d2e1a72fcca58-847c0a064b1mr520125b3a.60.1782893960369;
+        Wed, 01 Jul 2026 01:19:20 -0700 (PDT)
+X-Received: by 2002:a05:6a00:301a:b0:845:d286:1fbe with SMTP id d2e1a72fcca58-847c0a064b1mr520088b3a.60.1782893959851;
+        Wed, 01 Jul 2026 01:19:19 -0700 (PDT)
+Received: from hu-mchunara-hyd.qualcomm.com ([202.46.22.19])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8479fffa65bsm3611542b3a.21.2026.07.01.01.19.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Jul 2026 01:11:33 -0700 (PDT)
-From: Anandu Krishnan E <anandu.e@oss.qualcomm.com>
-Date: Wed, 01 Jul 2026 13:41:25 +0530
-Subject: [PATCH v2] misc: fastrpc: fix context leak and hang on
- signal-interrupted invoke
+        Wed, 01 Jul 2026 01:19:19 -0700 (PDT)
+From: Monish Chunara <monish.chunara@oss.qualcomm.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        Manivannan Sadhasivam <mani@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Sarthak Garg <sarthak.garg@oss.qualcomm.com>,
+        Pradeep Pragallapati <pradeep.pragallapati@oss.qualcomm.com>,
+        Nitin Rawat <nitin.rawat@oss.qualcomm.com>,
+        Shiraz Hashim <shiraz.hashim@oss.qualcomm.com>,
+        Monish Chunara <monish.chunara@oss.qualcomm.com>
+Subject: [PATCH V3 0/3] arm64: dts: qcom: Monaco: Enable SDHCI storage support
+Date: Wed,  1 Jul 2026 13:47:12 +0530
+Message-Id: <20260701081715.2580329-1-monish.chunara@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260701-master-v2-1-566bf8b7bd16@oss.qualcomm.com>
-X-B4-Tracking: v=1; b=H4sIAKzLRGoC/yXM0QpAQBCF4VfRXNtak1a8ilwsBqMs7SClfXeLy
- 6/+c24Q8kwCVXKDp5OFVxeBaQLdZN1IivtoQI1GFzpTi5WdvMLWGszNgGWfQYw3TwNf31Hd/Ja
- jnanb3zWE8ABAr8BsagAAAA==
-X-Change-ID: 20260701-master-2ba6246f29d1
-To: Srinivas Kandagatla <srini@kernel.org>,
-        Amol Maheshwari <amahesh@qti.qualcomm.com>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, stable@kernel.org,
-        Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
-        Anandu Krishnan E <anandu.e@oss.qualcomm.com>
-X-Mailer: b4 0.15.2
-X-Proofpoint-GUID: wNc2FA9WZFouIsN7gRETDUNGpHfYV_6D
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAxMDA4MSBTYWx0ZWRfXzrhm/E5Eoz6y
- leIe9w6L+Fyn9NN39PHlCj1itM7aCrE88LWgDiVejEIQtimDi17izQUuurnGD81UTyjjZTvewAc
- LAKO9Qv8XdDZQxoe99SGGib3c5XiFid1KDc7H2hgVtElv8jNd7jQjhZc4XNbBTVGA8qRn1DzbWR
- NSW7ZOzU7EepRwf2qGCTURUyQ7PRUcvmnIjAWywCa7xw1NiYo3AOj+Sg7wiT/txf86VEwStAjAa
- zKXMNmS9dgFJ5n9xhQtlDYTuDGXt0DSU67+Je7yzC5wz3xb3ZysXTuHNDMs+SQCMmvwKsOGehuy
- L30zylXlAdR1JcG/MP9XNYXu+Otk9OOBDL9C69ZMCdlvzKu86aE2h1fBwSjs4CdnGVdK0dSCajO
- 8scJtS/zvDKzuwB/MbnNsMSnTMqCtFmTACyai9guTChHD+OMpzJaP0pS08j05Zh+4z+UyycWK4B
- ZA/06PDZVJ8JeYetdhw==
-X-Proofpoint-ORIG-GUID: wNc2FA9WZFouIsN7gRETDUNGpHfYV_6D
-X-Authority-Analysis: v=2.4 cv=Ff4HAp+6 c=1 sm=1 tr=0 ts=6a44cbb7 cx=c_pps
- a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=I77tMjNYA1nZ5Wqn6hEA:9 a=QEXdDO2ut3YA:10
- a=GvdueXVYPmCkWapjIL-Q:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAxMDA4MSBTYWx0ZWRfXy9cYDYHsalNg
- QD1F5sz8VfLYqQ6y4tK7/KVM0/n14KW+DWVEkhy5ZqoTDOk5ZAVuuQMW5EpVympfyQlRtCMP2FB
- kKcMYSZqiVfg69AqTyc+IicMk4rk3BM=
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=Co2PtH4D c=1 sm=1 tr=0 ts=6a44cd88 cx=c_pps
+ a=m5Vt/hrsBiPMCU0y4gIsQw==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+ a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22 a=VwQbUJbxAAAA:8
+ a=EUspDBNiAAAA:8 a=972t8ukbrjnbrM4mtFgA:9 a=IoOABgeZipijB_acs4fv:22
+X-Proofpoint-ORIG-GUID: QNOqNcMVbdLPf-uR1MZwrE3UepC2Jxtb
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAxMDA4MyBTYWx0ZWRfX3H4YaAYX0kOf
+ oUp+2EKYOtnvx1FGIXgvZ/04AxDlJ56QjgY/PNBHUErr2zpiG5VImhnTC/7EFtnlMskDMa1ZEOp
+ 1Og7b0XEyFqofIMVjIybKeX4r1UnYJY=
+X-Proofpoint-GUID: QNOqNcMVbdLPf-uR1MZwrE3UepC2Jxtb
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAxMDA4MyBTYWx0ZWRfXyBThBvNyfjIJ
+ w5B8SMI3rgeX8BKkqTRP6ZFNXV6GBPNrfTEIB9mSDNB6AJsR6uYqYQ2ynMO3yaunSfBtNnJoLHy
+ XQuoNEFKn0MppdI/uHYd38VOmqPUiV+8FKAX2j5erHJKxsVAlz87o53M1KXEYytkWURwt2ItPK5
+ jB9ldGQjVFpHhtqNdvFGlbDW0dJEMffQEaAPs4/2806rBBwYRfSi/v/sf8Kv2dE7N8hwoAxRmbW
+ /hApr0MgnzoxKj1IwjoVdKsfBOEfrCldn57EHy6bW78eTAvcZERYvW3hyDZHnzABpmFhf1zXFDN
+ LbD/vNtkbk09WS2XQ3Od4gN8udi8k64KnWwzYNfJH72femvrIPQmuDHfCZ2ME4vL+JWeeVXt2tM
+ xTebiV6MDr9rN6LjeBnaIHwAaYlYtdN+e9y5Os8zZzq1YTqJ/8x6uKdnRIBWYnwkK7756zdXmyG
+ 5NQxQ5NbTPYeu8F18oA==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-07-01_01,2026-06-26_01,2025-10-01_01
+ definitions=2026-07-01_02,2026-06-26_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 priorityscore=1501 impostorscore=0 phishscore=0 clxscore=1015
- lowpriorityscore=0 malwarescore=0 spamscore=0 adultscore=0 suspectscore=0
+ priorityscore=1501 clxscore=1015 bulkscore=0 suspectscore=0 phishscore=0
+ spamscore=0 lowpriorityscore=0 adultscore=0 impostorscore=0 malwarescore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607010081
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607010083
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	MID_CONTAINS_FROM(1.00)[];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_MISSING_CHARSET(0.50)[];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	FORWARDED(0.00)[lists@lfdr.de];
-	TAGGED_FROM(0.00)[bounces-115603-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-115604-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
+	FORGED_RECIPIENTS(0.00)[m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:dmitry.baryshkov@oss.qualcomm.com,m:mani@kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:sarthak.garg@oss.qualcomm.com,m:pradeep.pragallapati@oss.qualcomm.com,m:nitin.rawat@oss.qualcomm.com,m:shiraz.hashim@oss.qualcomm.com,m:monish.chunara@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_SENDER(0.00)[anandu.e@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS(0.00)[m:srini@kernel.org,m:amahesh@qti.qualcomm.com,m:arnd@arndb.de,m:gregkh@linuxfoundation.org,m:jorge.ramirez@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:dri-devel@lists.freedesktop.org,m:linux-kernel@vger.kernel.org,m:stable@kernel.org,m:srinivas.kandagatla@oss.qualcomm.com,m:anandu.e@oss.qualcomm.com,s:lists@lfdr.de];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,qualcomm.com:email,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:from_mime,vger.kernel.org:from_smtp];
+	RCPT_COUNT_TWELVE(0.00)[15];
+	FORGED_SENDER(0.00)[monish.chunara@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	MIME_TRACE(0.00)[0:+];
+	FORWARDED(0.00)[lists@lfdr.de];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[anandu.e@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[monish.chunara@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,vger.kernel.org:from_smtp,sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[11];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: B4C966EAFD9
+X-Rspamd-Queue-Id: E712F6EB05D
 
-fastrpc invokes work by sending an RPC message to the DSP and blocking
-in wait_for_completion_interruptible() until the DSP responds. If a
-signal arrives during this wait, the syscall returns -ERESTARTSYS and
-the invoke context which holds the in-flight DMA buffers and
-completion state is left stranded in fl->pending.
+Respected Maintainers,
 
-On the next syscall attempt (either auto-restarted by the kernel via
-SA_RESTART or manually retried by user-space after EINTR), a fresh
-context is allocated and the RPC message is re-sent to the DSP. This
-has two consequences:
+This is v3 of the Monaco SDHCI storage support series.
 
-  - The original context leaks in fl->pending until the file is closed.
-  - The DSP receives a duplicate invocation. If the DSP was mid-way
-    through processing the first request and had issued a reverse RPC
-    call back to the host, the retry sends a new forward request
-    instead of the expected reverse-RPC response. The DSP thread
-    waiting for that response is never woken, causing a hang.
-
-Fix this by saving the interrupted context to a new fl->interrupted
-list on -ERESTARTSYS. When the same thread retries the invoke with a
-matching sc, restore the context and jump directly to the wait,
-skipping context allocation and message re-send.
-
-Three additional bugs are also fixed:
-
-1. fastrpc_context_save_interrupted() did not drop the extra kref that
-   fastrpc_invoke_send() took, so the worker's put only reached 1 and
-   the context was never freed.  Drop the reference in save_interrupted()
-   so the worker's put reaches 0 and triggers context_free.
-
-2. The bail path skipped context cleanup on -ETIMEDOUT, leaking the
-   context.  Remove the -ETIMEDOUT exception so timed-out contexts are
-   freed like any other error path.
-
-3. fastrpc_context_free() did not remove the context from fl->interrupted
-   before freeing it.  A context freed via a racing channel removal left
-   a dangling node in the list.  Add list_del_init() guarded by fl->lock
-   before releasing resources.
-
-Also drain fl->interrupted on process exit, complete any sleeping
-contexts with -EPIPE and schedule put_wq to drop the worker ref when
-the rpmsg channel is removed, and add dev_warn() on TIMEOUT and
-ERESTARTSYS to aid post-mortem debugging.
-
-Remove the obsolete invoke_interrupted_mmaps mechanism from
-fastrpc_channel_ctx; context resources are now kept alive through the
-context refcount rather than by migrating mmaps to a channel-level list.
-
-Fixes: 387f625585d1 ("misc: fastrpc: handle interrupted contexts")
-Cc: stable@kernel.org
-Co-developed-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Signed-off-by: Anandu Krishnan E <anandu.e@oss.qualcomm.com>
----
-This patch fixes a context leak and DSP hang that occur when a
-fastrpc invoke syscall is interrupted by a signal, along with three
-follow-on bugs found during review.
+Changes in v3:
+- Update the patch to handle the supports-cqe property for monaco-monza-som platform which also extends the monaco SoC DT
+- Link to v2: https://lore.kernel.org/all/20260616130347.3096034-1-monish.chunara@oss.qualcomm.com/
 
 Changes in v2:
-- Fix kref imbalance: fastrpc_context_save_interrupted() now drops the
-  extra reference taken by fastrpc_invoke_send(), so the worker's put
-  correctly reaches 0 and triggers context_free.
-- Fix -ETIMEDOUT context leak: remove the ETIMEDOUT exception from the
-  bail path so timed-out kernel invocations go through the same
-  list_del_init + context_put cleanup as all other error paths.
-- Fix dangling node: fastrpc_context_free() now calls list_del_init()
-  under fl->lock before releasing resources, preventing a dangling node
-  in fl->interrupted if a racing channel removal fires put_wq.
-- fastrpc_notify_users() now calls schedule_work(&ctx->put_work) for
-  interrupted contexts to drop the worker ref on channel removal.
-- Add dev_warn() on TIMEOUT and ERESTARTSYS for post-mortem debugging.
-- Use list_del_init() instead of list_del() in the bail path.
+- Avoids using the reference to direct supplies as dummy
+- Updates the eMMC overlay to remove the static UFS host disablement and
+  vreg_l8a voltage override, allowing DT-fixup to manage the UFS-eMMC mutual
+  exclusion dynamically for flexible UFS/eMMC configurations.
+- Link to v1: https://lore.kernel.org/all/20260227105055.2364348-1-monish.chunara@oss.qualcomm.com/
 
-Link to v1: https://lore.kernel.org/all/20260525124222.3082420-1-anandu.e@oss.qualcomm.com/
----
- drivers/misc/fastrpc.c | 101 +++++++++++++++++++++++++++++++++++++++----------
- 1 file changed, 82 insertions(+), 19 deletions(-)
+Validated on Qualcomm Monaco EVK with both SD card and eMMC modules.
 
-diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-index f3a49384586d..c0859a501617 100644
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -280,7 +280,6 @@ struct fastrpc_channel_ctx {
- 	struct fastrpc_device *secure_fdevice;
- 	struct fastrpc_device *fdevice;
- 	struct fastrpc_buf *remote_heap;
--	struct list_head invoke_interrupted_mmaps;
- 	bool secure;
- 	bool unsigned_support;
- 	u64 dma_mask;
-@@ -297,6 +296,7 @@ struct fastrpc_user {
- 	struct list_head user;
- 	struct list_head maps;
- 	struct list_head pending;
-+	struct list_head interrupted;
- 	struct list_head mmaps;
- 
- 	struct fastrpc_channel_ctx *cctx;
-@@ -522,6 +522,11 @@ static void fastrpc_user_free(struct kref *ref)
- 		fastrpc_context_put(ctx);
- 	}
- 
-+	list_for_each_entry_safe(ctx, n, &fl->interrupted, node) {
-+		list_del(&ctx->node);
-+		fastrpc_context_put(ctx);
-+	}
-+
- 	list_for_each_entry_safe(map, m, &fl->maps, node)
- 		fastrpc_map_put(map);
- 
-@@ -557,6 +562,12 @@ static void fastrpc_context_free(struct kref *ref)
- 	cctx = ctx->cctx;
- 	fl = ctx->fl;
- 
-+	/* Remove from fl->interrupted if present; no-op for normal paths. */
-+	spin_lock(&fl->lock);
-+	if (!list_empty(&ctx->node))
-+		list_del_init(&ctx->node);
-+	spin_unlock(&fl->lock);
-+
- 	for (i = 0; i < ctx->nbufs; i++)
- 		fastrpc_map_put(ctx->maps[i]);
- 
-@@ -594,6 +605,42 @@ static void fastrpc_context_put_wq(struct work_struct *work)
- 	fastrpc_context_put(ctx);
- }
- 
-+static void fastrpc_context_save_interrupted(struct fastrpc_invoke_ctx *ctx)
-+{
-+	spin_lock(&ctx->fl->lock);
-+	list_del(&ctx->node);
-+	list_add_tail(&ctx->node, &ctx->fl->interrupted);
-+	spin_unlock(&ctx->fl->lock);
-+	/*
-+	 * invoke_send bumped the kref to 2; the bail path skips the put
-+	 * for ERESTARTSYS.  Drop it here so the worker's put reaches 0
-+	 * and triggers context_free.
-+	 */
-+	fastrpc_context_put(ctx);
-+}
-+
-+static struct fastrpc_invoke_ctx *fastrpc_context_restore_interrupted(
-+			struct fastrpc_user *fl, u32 sc)
-+{
-+	struct fastrpc_invoke_ctx *ctx = NULL, *ictx, *n;
-+
-+	spin_lock(&fl->lock);
-+	list_for_each_entry_safe(ictx, n, &fl->interrupted, node) {
-+		if (ictx->pid != current->pid)
-+			continue;
-+		if (ictx->sc != sc || ictx->fl != fl) {
-+			spin_unlock(&fl->lock);
-+			return ERR_PTR(-EINVAL);
-+		}
-+		ctx = ictx;
-+		list_del(&ctx->node);
-+		list_add_tail(&ctx->node, &fl->pending);
-+		break;
-+	}
-+	spin_unlock(&fl->lock);
-+	return ctx;
-+}
-+
- #define CMP(aa, bb) ((aa) == (bb) ? 0 : (aa) < (bb) ? -1 : 1)
- static int olaps_cmp(const void *a, const void *b)
- {
-@@ -1243,8 +1290,6 @@ static int fastrpc_internal_invoke(struct fastrpc_user *fl,  u32 kernel,
- 				   struct fastrpc_invoke_args *args)
- {
- 	struct fastrpc_invoke_ctx *ctx = NULL;
--	struct fastrpc_buf *buf, *b;
--
- 	int err = 0;
- 
- 	if (!fl->sctx)
-@@ -1258,6 +1303,14 @@ static int fastrpc_internal_invoke(struct fastrpc_user *fl,  u32 kernel,
- 		return -EPERM;
- 	}
- 
-+	if (!kernel) {
-+		ctx = fastrpc_context_restore_interrupted(fl, sc);
-+		if (IS_ERR(ctx))
-+			return PTR_ERR(ctx);
-+		if (ctx)
-+			goto wait;
-+	}
-+
- 	ctx = fastrpc_context_alloc(fl, kernel, sc, args);
- 	if (IS_ERR(ctx))
- 		return PTR_ERR(ctx);
-@@ -1273,11 +1326,20 @@ static int fastrpc_internal_invoke(struct fastrpc_user *fl,  u32 kernel,
- 	if (err)
- 		goto bail;
- 
-+wait:
- 	if (kernel) {
--		if (!wait_for_completion_timeout(&ctx->work, 10 * HZ))
-+		if (!wait_for_completion_timeout(&ctx->work, 10 * HZ)) {
- 			err = -ETIMEDOUT;
-+			dev_warn(fl->sctx->dev,
-+				"fastrpc_invoke: TIMEOUT ctxid=0x%llx handle=0x%x nscalars=%d\n",
-+				ctx->ctxid, handle, ctx->nscalars);
-+		}
- 	} else {
- 		err = wait_for_completion_interruptible(&ctx->work);
-+		if (err == -ERESTARTSYS)
-+			dev_warn(fl->sctx->dev,
-+				"fastrpc_invoke: INTERRUPTED ctxid=0x%llx handle=0x%x nscalars=%d\n",
-+				ctx->ctxid, handle, ctx->nscalars);
- 	}
- 
- 	if (err)
-@@ -1296,21 +1358,15 @@ static int fastrpc_internal_invoke(struct fastrpc_user *fl,  u32 kernel,
- 		goto bail;
- 
- bail:
--	if (err != -ERESTARTSYS && err != -ETIMEDOUT) {
--		/* We are done with this compute context */
-+	if (ctx && err == -ERESTARTSYS) {
-+		fastrpc_context_save_interrupted(ctx);
-+	} else if (ctx) {
- 		spin_lock(&fl->lock);
--		list_del(&ctx->node);
-+		list_del_init(&ctx->node);
- 		spin_unlock(&fl->lock);
- 		fastrpc_context_put(ctx);
- 	}
- 
--	if (err == -ERESTARTSYS) {
--		list_for_each_entry_safe(buf, b, &fl->mmaps, node) {
--			list_del(&buf->node);
--			list_add_tail(&buf->node, &fl->cctx->invoke_interrupted_mmaps);
--		}
--	}
--
- 	if (err)
- 		dev_dbg(fl->sctx->dev, "Error: Invoke Failed %d\n", err);
- 
-@@ -1662,6 +1718,7 @@ static int fastrpc_device_open(struct inode *inode, struct file *filp)
- 	spin_lock_init(&fl->lock);
- 	mutex_init(&fl->mutex);
- 	INIT_LIST_HEAD(&fl->pending);
-+	INIT_LIST_HEAD(&fl->interrupted);
- 	INIT_LIST_HEAD(&fl->maps);
- 	INIT_LIST_HEAD(&fl->mmaps);
- 	INIT_LIST_HEAD(&fl->user);
-@@ -2460,7 +2517,6 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
- 	rdev->dma_mask = &data->dma_mask;
- 	dma_set_mask_and_coherent(rdev, DMA_BIT_MASK(32));
- 	INIT_LIST_HEAD(&data->users);
--	INIT_LIST_HEAD(&data->invoke_interrupted_mmaps);
- 	spin_lock_init(&data->lock);
- 	idr_init(&data->ctx_idr);
- 	data->domain_id = domain_id;
-@@ -2493,13 +2549,23 @@ static void fastrpc_notify_users(struct fastrpc_user *user)
- 		ctx->retval = -EPIPE;
- 		complete(&ctx->work);
- 	}
-+	/*
-+	 * Interrupted contexts hold two refs: one for the invoker and one
-+	 * for the async worker from fastrpc_invoke_send.  Complete them so
-+	 * any blocked retry wakes, and schedule put_wq to drop the worker
-+	 * ref -- the invoker ref is released by fastrpc_user_free().
-+	 */
-+	list_for_each_entry(ctx, &user->interrupted, node) {
-+		ctx->retval = -EPIPE;
-+		complete(&ctx->work);
-+		schedule_work(&ctx->put_work);
-+	}
- 	spin_unlock(&user->lock);
- }
- 
- static void fastrpc_rpmsg_remove(struct rpmsg_device *rpdev)
- {
- 	struct fastrpc_channel_ctx *cctx = dev_get_drvdata(&rpdev->dev);
--	struct fastrpc_buf *buf, *b;
- 	struct fastrpc_user *user;
- 	unsigned long flags;
- 
-@@ -2516,9 +2582,6 @@ static void fastrpc_rpmsg_remove(struct rpmsg_device *rpdev)
- 	if (cctx->secure_fdevice)
- 		misc_deregister(&cctx->secure_fdevice->miscdev);
- 
--	list_for_each_entry_safe(buf, b, &cctx->invoke_interrupted_mmaps, node)
--		list_del(&buf->node);
--
- 	if (cctx->remote_heap)
- 		fastrpc_buf_free(cctx->remote_heap);
- 
+Monish Chunara (3):
+  arm64: dts: qcom: monaco: Move eMMC CQE support from SoC to board DT
+  arm64: dts: qcom: monaco-evk: Enable SDHCI for SD Card via overlay
+  arm64: dts: qcom: monaco-evk: Add SDHCI support for eMMC via overlay
 
----
-base-commit: dc59e4fea9d83f03bad6bddf3fa2e52491777482
-change-id: 20260701-master-2ba6246f29d1
+ arch/arm64/boot/dts/qcom/Makefile             |  7 ++
+ arch/arm64/boot/dts/qcom/monaco-evk-emmc.dtso | 37 ++++++++++
+ .../boot/dts/qcom/monaco-evk-sd-card.dtso     | 72 +++++++++++++++++++
+ .../arm64/boot/dts/qcom/monaco-monza-som.dtsi |  1 +
+ arch/arm64/boot/dts/qcom/monaco.dtsi          |  1 -
+ arch/arm64/boot/dts/qcom/qcs8300-ride.dts     |  1 +
+ 6 files changed, 118 insertions(+), 1 deletion(-)
+ create mode 100644 arch/arm64/boot/dts/qcom/monaco-evk-emmc.dtso
+ create mode 100644 arch/arm64/boot/dts/qcom/monaco-evk-sd-card.dtso
 
-Best regards,
---  
-Anandu Krishnan E <anandu.e@oss.qualcomm.com>
+-- 
+2.34.1
 
 
