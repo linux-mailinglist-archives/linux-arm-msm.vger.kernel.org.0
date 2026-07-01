@@ -1,257 +1,271 @@
-Return-Path: <linux-arm-msm+bounces-115771-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-115773-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id z21ZAPFIRWpE+AoAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-115771-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Jul 2026 19:05:53 +0200
+	id wixVHFxVRWqN+goAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-115773-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Jul 2026 19:58:52 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3F5886F0265
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Jul 2026 19:05:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id CF7C86F078E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Jul 2026 19:58:51 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=Chidscy3;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115771-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115771-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=quarantine) header.from=kernel.org;
+	dkim=pass header.d=gmail.com header.s=20251104 header.b=nvl4pc0e;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115773-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115773-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=none) header.from=gmail.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 2FDE6315225B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jul 2026 16:58:23 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id B93C7302EEF0
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jul 2026 17:58:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E1E77379973;
-	Wed,  1 Jul 2026 16:58:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9537F4C0436;
+	Wed,  1 Jul 2026 17:58:00 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFB60368294;
-	Wed,  1 Jul 2026 16:58:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCE9A31985C
+	for <linux-arm-msm@vger.kernel.org>; Wed,  1 Jul 2026 17:57:57 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782925100; cv=none; b=rA1xHDbTqSVyAqaKpsXzbKF6wV/mikQ1Rjy7p4/S7+hg2zaEdWiAv5BqbCfVxVfq6txG9M3oEQm5OTS9JnY+OVZCw0K+cbClmt05+RTe+vTUE6isgZZTC0oqAvDxiPWklJrpGq1mX3t7Wo03H77oW3F7lmYG7Y30YYg2DyKHCWQ=
+	t=1782928680; cv=none; b=cu04ggtgVUOxFWwLun+JhfVEL6nflGKf3A32w+6QqsnTzonpnBIbYrEU7kYAvV9Znjv5QMuwKDjHgXuILctz5CuImHTjKzsJgPLTmxgG96iMilj8kghpkVVbSXNdMh2CqNObB+D5dA+AQRC2s86ickg1LlIkmeBLXrxE3+5SS1I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782925100; c=relaxed/simple;
-	bh=AoAfkmpCa83AYF9tpSps33nLvi8T24R1Zg/25DsXJMQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kKpb3EL5ncNjBDXiDYHIkU3my056I6c53MXaBLtyuPUoqT6uTNjsg7xobk06MKM9K0AKvjlmJtMeFdZpVqspYTM5D3qUptOhjhJsLupp7NISc2rws4UDY2T5VOreJTeJEkXFPcQXJCOT9zgkQhaKiFhIeEVM8XVCEOIdQRj4vEM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Chidscy3; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 394831F000E9;
-	Wed,  1 Jul 2026 16:58:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782925099;
-	bh=xpVzsEDIFY7sYQ5kJnyoteoMVjNL0xWvbFaPAsmlDCY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=Chidscy3tigzXOLPce6Siv1WdtepGs9egaDQ6E1A01OO3Y59lIq7WOkwxdbqPWN8n
-	 MzlgccN6aXYDCLNEqqLJXRBC2t/4DIijmOTQyM9LPmvadzZKh1dP9IqpLOdHn/DK9Z
-	 N5xGvNQu18JuUlh57FECrOm7IL0TLpj4sdvkwUsfK2HikEwq9rti4NCa+MFFPCeBtX
-	 uVBAmw0zZsLeYt6iIX7rUfNMsELdUJYevW4E3tzE/iotxoPAcMpUMnOxtOi4BTOl5Q
-	 T+yYxealjKCMaSjcfmMF3OyW8gPhcQ4MnkYGEJ9O5OdCc6Psew2KxoiIcqzQ4fkObg
-	 tbkZ3zsPgYZMw==
-Date: Wed, 1 Jul 2026 17:58:15 +0100
-From: Conor Dooley <conor@kernel.org>
-To: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Cc: Lee Jones <lee@kernel.org>, Pavel Machek <pavel@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>, linux-leds@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 1/3] dt-bindings: leds: nxp,pca963x: add multicolor
- LED support
-Message-ID: <20260701-pulmonary-passably-c9272ba25533@spud>
-References: <20260701-monza-leds-v2-0-c1be0b472926@oss.qualcomm.com>
- <20260701-monza-leds-v2-1-c1be0b472926@oss.qualcomm.com>
+	s=arc-20240116; t=1782928680; c=relaxed/simple;
+	bh=ESOuRtHjZy1hXdzAjoIyMynANTOZhaenHIm2iySL/XA=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=DpVgzk/WPNjsWIHG6agJZav+oHHDb0DIt6paWIHgCV13dkvGfCuNMTBqBzCx7F+IMgFcV+mr7FzwlD6hWR4tDwha3EMKo7mQCk/oGr0/bj610GruCEui4+oWktYefTOnI0Kz/nhxffjFITkAiGo4MjUk4UrgZ5Xymv5XW0pt3vk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nvl4pc0e; arc=none smtp.client-ip=209.85.214.174
+Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-2c6770f12e4so545165ad.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Jul 2026 10:57:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1782928677; x=1783533477; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=xabEEnPMeAsxiMp/uB8gvGoQlGBh1rxYbqUQL864RtQ=;
+        b=nvl4pc0e/cZbbBGrJMUptrhiTDSrZgpHjjTbhcwaSj3FcDStWTEF8pk9RgezFYO3QR
+         xSl1FByqST8J6lPcoCbmdAbsQoRwDa8DGavhZnV74jz96yr20np6W+O0E/tmMjM5M/sB
+         7oAXsBT1SCOkB1iz+ms/PqeLy+pwkocANy7x5oRzLrZAfm62QFEsseW3QEluHjGhr7S+
+         Q/7kepGxsGdItJK/TWQPhP2J4c6QdKPZ3wb1qraN6YicKM4tCXZCIyjyjyffvMuN447/
+         m9Qux2Apjub6tPkZLJrHdeNjefVuZeqfsYtQ8nINKhK26ndts0ojOe/qL/28hhYOf66b
+         LZjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782928677; x=1783533477;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=xabEEnPMeAsxiMp/uB8gvGoQlGBh1rxYbqUQL864RtQ=;
+        b=YPYKUQ5c7j8HmhU33vjo8pTeZFIEY32+cLyaly/b0V0jOFepC0U/nXdXV6d3nCP9Tv
+         ZyhKZmL2VIUhCEwsB5NFGA7d5xSP3DXODuxZdx0ZmcSXf0P7LDOruGYacw4Ke2fbLv79
+         qNq7X9uVlXU7CZob13QZQaO+T+2B6k9P9C5ODcf6Ik1hP1Av+TAaFqzXpRzayUQLDTeT
+         BcFdCcUtX4VFqAMOyeMnOY26QBeWmajSdxGoM7ehjFGXqBYc87aoqsugyrPFTTsaQtXi
+         9qxEU4uoRl4Rx0saApIUN8k9yvzTFv4DYL9RgLNQZ7n61K8CStHt1bjoZwE8yWdlG8Ak
+         1d7A==
+X-Forwarded-Encrypted: i=1; AHgh+RpGMCcYaOoahanDQGoba9jHenWFlJ2mY/c6FGuizhQc844997iwNgQnYksSSRp3ilHGtvm8VhaWBZiCVBba@vger.kernel.org
+X-Gm-Message-State: AOJu0YzAEqAZWAEmunxLfFcMeY5T5Die/1FvXJg0p08XM2MDraCqwquk
+	hSqbBxAGIaDRYGe+jbPJJrHAg1+RWlQWhU9MeyFWgSYOSMW+uAsUP2fm
+X-Gm-Gg: AfdE7cmHXUeultiGQndilUdJ3INPvgfKm4egqciR5m6b/NEJGT11wjllne8NTLAZ1Ta
+	mPDuoU7D6VT9sCiSi0c9L/+6cw6LoZpJ+vNDqgxEDdrKVa0bG5XExmu7i9GfJ/FW3vszeCzlguz
+	jo0XnW5xRdWp+ISTeN3wmuscYtT85o9XRbB4unUIjW+qxHrSCzjpYWHmqbpPkwTA7DOYlQJwCw1
+	Sztv5Rv4+Fqe0D9MnRWgycrkmYLDhsL1/0DPG/uzx9EZcu9zLUxn3I0OGclyaZ1rPqwYntkqXMO
+	YW6PZ/DBhD3Z9tKsGHdZw9wZMwomgFkN1o1J/wJmORJ7fiNHNG7ubuyBmIiGmZP6tUpN9KVA7gd
+	m0JDj18pCNjLZ3Gbp3sngtE2XXdzXQYS3g9jBI6Rdi5VmEZLkgD3aPWuVVrMJUNg/MaWh/uEboQ
+	SAkQMI5QJNCPkiIZoU92hiB2bzI85ukemwpmQP2TI=
+X-Received: by 2002:a17:902:fc43:b0:2c9:f73d:4b48 with SMTP id d9443c01a7336-2ca7e912984mr17893065ad.6.1782928677045;
+        Wed, 01 Jul 2026 10:57:57 -0700 (PDT)
+Received: from localhost.localdomain ([202.164.135.140])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-13b3c85bde6sm145394c88.9.2026.07.01.10.57.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 01 Jul 2026 10:57:56 -0700 (PDT)
+From: Sailesh Nandanavanam <saileshnandanavanam@gmail.com>
+To: andersson@kernel.org
+Cc: mathieu.poirier@linaro.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-remoteproc@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Sailesh Nandanavanam <saileshnandanavanam@gmail.com>
+Subject: [PATCH v3] remoteproc: qcom_q6v5_pas: Fix dtb firmware lifecycle and leak
+Date: Wed,  1 Jul 2026 23:27:24 +0530
+Message-Id: <20260701175724.1972-1-saileshnandanavanam@gmail.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="PvaMzznafJtcc5y5"
-Content-Disposition: inline
-In-Reply-To: <20260701-monza-leds-v2-1-c1be0b472926@oss.qualcomm.com>
+Content-Transfer-Encoding: 8bit
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-5.26 / 15.00];
-	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
-	SIGNED_PGP(-2.00)[];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	MID_CONTAINS_FROM(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	MID_RHS_NOT_FQDN(0.50)[];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64];
-	MIME_GOOD(-0.20)[multipart/signed,text/plain];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	R_MISSING_CHARSET(0.50)[];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
 	MAILLIST(-0.15)[generic];
+	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-115771-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_FROM(0.00)[gmail.com];
+	FREEMAIL_CC(0.00)[linaro.org,vger.kernel.org,gmail.com];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-115773-lists,linux-arm-msm=lfdr.de];
 	FORWARDED(0.00)[lists@lfdr.de];
-	MIME_TRACE(0.00)[0:+,1:+,2:~];
-	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_SENDER(0.00)[conor@kernel.org,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS(0.00)[m:loic.poulain@oss.qualcomm.com,m:lee@kernel.org,m:pavel@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:laurent.pinchart@ideasonboard.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:linux-leds@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
-	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS(0.00)[m:andersson@kernel.org,m:mathieu.poirier@linaro.org,m:linux-arm-msm@vger.kernel.org,m:linux-remoteproc@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:saileshnandanavanam@gmail.com,s:lists@lfdr.de];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
+	FORGED_SENDER(0.00)[saileshnandanavanam@gmail.com,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[13];
+	RCPT_COUNT_FIVE(0.00)[6];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	ALIAS_RESOLVED(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[conor@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
+	FROM_NEQ_ENVFROM(0.00)[saileshnandanavanam@gmail.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[gmail.com:+];
+	ALIAS_RESOLVED(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MISSING_XM_UA(0.00)[];
 	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	TO_DN_SOME(0.00)[]
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FROM_HAS_DN(0.00)[]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 3F5886F0265
+X-Rspamd-Queue-Id: CF7C86F078E
 
---PvaMzznafJtcc5y5
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+DTB co-firmware was previously requested and loaded in
+qcom_pas_load(), but its lifetime did not match the actual
+start/stop lifecycle of the remoteproc. As a result, the firmware
+reference could be retained across restart cycles, leading to a
+leak for each successful boot.
 
-On Wed, Jul 01, 2026 at 06:15:51PM +0200, Loic Poulain wrote:
-> Add support for grouping individual PCA963x channels into a multicolor
-> LED by introducing a multi-led@N node pattern. This follows the
-> convention established by other multicolor LED drivers such as
-> kinetic,ktd202x.
->=20
-> This is necessary to support and model hardware setups where multiple
-> PWM channels drive a single physical RGB LED.
->=20
-> Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-> ---
->  .../devicetree/bindings/leds/nxp,pca963x.yaml      | 79 ++++++++++++++++=
-++++++
->  1 file changed, 79 insertions(+)
->=20
-> diff --git a/Documentation/devicetree/bindings/leds/nxp,pca963x.yaml b/Do=
-cumentation/devicetree/bindings/leds/nxp,pca963x.yaml
-> index 938d0e48fe51bce82779c4457c8e99cb6d80fe70..04b05b8195c18ae9fc1c1cb9d=
-3c694d819ea88e5 100644
-> --- a/Documentation/devicetree/bindings/leds/nxp,pca963x.yaml
-> +++ b/Documentation/devicetree/bindings/leds/nxp,pca963x.yaml
-> @@ -74,6 +74,39 @@ patternProperties:
->      required:
->        - reg
-> =20
-> +  "^multi-led@[0-9a-f]+$":
-> +    type: object
-> +    $ref: leds-class-multicolor.yaml#
-> +    unevaluatedProperties: false
-> +
-> +    properties:
-> +      reg:
-> +        minimum: 0
+Additionally, if qcom_pas_start() failed after loading the DTB
+firmware, the remoteproc core would not invoke .stop(), leaving
+no opportunity to release the associated firmware reference.
 
-Some valid looking stuff from Sashiko here.
-On this, was this meant to be minItems?
+Fix this by moving DTB firmware request and loading into
+qcom_pas_start(), so that its lifetime is strictly tied to the
+remoteproc start sequence.
 
-pw-bot: changes-requested
+Update qcom_pas_start() to ensure proper cleanup on all paths:
+- release PAS metadata on failure
+- release DTB firmware on both success and failure paths
+- unmap DTB carveout where applicable
 
-Thanks,
-Conor.
+Remove DTB firmware handling from qcom_pas_load(), as it does not
+match the correct ownership and lifecycle model.
 
-> +
-> +      "#address-cells":
-> +        const: 1
-> +
-> +      "#size-cells":
-> +        const: 0
-> +
-> +    patternProperties:
-> +      "^led@[0-9a-f]+$":
-> +        type: object
-> +        $ref: common.yaml#
-> +        unevaluatedProperties: false
-> +
-> +        properties:
-> +          reg:
-> +            minimum: 0
-> +
-> +        required:
-> +          - reg
-> +
-> +    required:
-> +      - reg
-> +      - "#address-cells"
-> +      - "#size-cells"
-> +
->  allOf:
->    - if:
->        properties:
-> @@ -137,4 +170,50 @@ examples:
->          };
->      };
-> =20
-> +  - |
-> +    #include <dt-bindings/leds/common.h>
-> +
-> +    i2c {
-> +        #address-cells =3D <1>;
-> +        #size-cells =3D <0>;
-> +
-> +        led-controller@62 {
-> +            compatible =3D "nxp,pca9633";
-> +            reg =3D <0x62>;
-> +            #address-cells =3D <1>;
-> +            #size-cells =3D <0>;
-> +
-> +            /* Three channels controlling one RGB LED */
-> +            multi-led@0 {
-> +                    reg =3D <0>;
-> +                    color =3D <LED_COLOR_ID_RGB>;
-> +                    function =3D LED_FUNCTION_STATUS;
-> +                    #address-cells =3D <1>;
-> +                    #size-cells =3D <0>;
-> +
-> +                    led@0 {
-> +                            reg =3D <0>;
-> +                            color =3D <LED_COLOR_ID_RED>;
-> +                    };
-> +
-> +                    led@1 {
-> +                            reg =3D <1>;
-> +                            color =3D <LED_COLOR_ID_GREEN>;
-> +                    };
-> +
-> +                    led@2 {
-> +                            reg =3D <2>;
-> +                            color =3D <LED_COLOR_ID_BLUE>;
-> +                    };
-> +            };
-> +
-> +            /* Remaining channel used as a plain white LED */
-> +            led@3 {
-> +                    reg =3D <3>;
-> +                    color =3D <LED_COLOR_ID_WHITE>;
-> +                    function =3D LED_FUNCTION_STATUS;
-> +            };
-> +        };
-> +    };
-> +
->  ...
->=20
-> --=20
-> 2.34.1
->=20
+With this change, request_firmware() and release_firmware() are
+properly paired within the start path, avoiding leaks and ensuring
+consistent behavior across restart and failure scenarios.
 
---PvaMzznafJtcc5y5
-Content-Type: application/pgp-signature; name=signature.asc
+Fixes: 29814986b82e ("remoteproc: qcom_q6v5_pas: add support for dtb co-firmware loading")
+Signed-off-by: Sailesh Nandanavanam <saileshnandanavanam@gmail.com>
+---
+v3:
+- Remove the unused release_dtb_firmware label
+- Release DTB firmware under the existing dtb_pas_id check
 
------BEGIN PGP SIGNATURE-----
+v2:
+- Move DTB firmware request/load from qcom_pas_load() to qcom_pas_start()
+- Fix firmware reference leak across restart cycles
+- Handle start() failure paths where .stop() is not invoked
+- Ensure firmware is released on all success and failure paths
+- Remove DTB handling from load() and drop release from stop()
+---
+ drivers/remoteproc/qcom_q6v5_pas.c | 52 ++++++++++++++++--------------
+ 1 file changed, 27 insertions(+), 25 deletions(-)
 
-iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCakVHJwAKCRB4tDGHoIJi
-0s1mAQDqox5Ow4/RT0Vy/4ZAZkraI5VibF8pZooYyuWMCI8piAEAiTdOpmHGFG4C
-xBX1Hl95digAHCC1eq4ZNLJFr/cB6gc=
-=OgnZ
------END PGP SIGNATURE-----
+diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
+index da27d1d3c9da..d0a12e5b2ff7 100644
+--- a/drivers/remoteproc/qcom_q6v5_pas.c
++++ b/drivers/remoteproc/qcom_q6v5_pas.c
+@@ -232,28 +232,7 @@ static int qcom_pas_load(struct rproc *rproc, const struct firmware *fw)
+ 	if (pas->lite_dtb_pas_id)
+ 		qcom_scm_pas_shutdown(pas->lite_dtb_pas_id);
+ 
+-	if (pas->dtb_pas_id) {
+-		ret = request_firmware(&pas->dtb_firmware, pas->dtb_firmware_name, pas->dev);
+-		if (ret) {
+-			dev_err(pas->dev, "request_firmware failed for %s: %d\n",
+-				pas->dtb_firmware_name, ret);
+-			return ret;
+-		}
+-
+-		ret = qcom_mdt_pas_load(pas->dtb_pas_ctx, pas->dtb_firmware,
+-					pas->dtb_firmware_name, pas->dtb_mem_region,
+-					&pas->dtb_mem_reloc);
+-		if (ret)
+-			goto release_dtb_metadata;
+-	}
+-
+ 	return 0;
+-
+-release_dtb_metadata:
+-	qcom_scm_pas_metadata_release(pas->dtb_pas_ctx);
+-	release_firmware(pas->dtb_firmware);
+-
+-	return ret;
+ }
+ 
+ static void qcom_pas_unmap_carveout(struct rproc *rproc, phys_addr_t mem_phys, size_t size)
+@@ -277,9 +256,24 @@ static int qcom_pas_start(struct rproc *rproc)
+ 	struct qcom_pas *pas = rproc->priv;
+ 	int ret;
+ 
++	if (pas->dtb_pas_id) {
++		ret = request_firmware(&pas->dtb_firmware, pas->dtb_firmware_name, pas->dev);
++		if (ret) {
++			dev_err(pas->dev, "request_firmware failed for %s: %d\n",
++				pas->dtb_firmware_name, ret);
++			return ret;
++		}
++
++		ret = qcom_mdt_pas_load(pas->dtb_pas_ctx, pas->dtb_firmware,
++					pas->dtb_firmware_name, pas->dtb_mem_region,
++					&pas->dtb_mem_reloc);
++		if (ret)
++			goto release_dtb_metadata;
++	}
++
+ 	ret = qcom_q6v5_prepare(&pas->q6v5);
+ 	if (ret)
+-		return ret;
++		goto release_dtb_metadata;
+ 
+ 	ret = qcom_pas_pds_enable(pas, pas->proxy_pds, pas->proxy_pd_count);
+ 	if (ret < 0)
+@@ -350,15 +344,17 @@ static int qcom_pas_start(struct rproc *rproc)
+ 	/* firmware is used to pass reference from qcom_pas_start(), drop it now */
+ 	pas->firmware = NULL;
+ 
++	if (pas->dtb_pas_id) {
++		release_firmware(pas->dtb_firmware);
++		pas->dtb_firmware = NULL;
++	}
++
+ 	return 0;
+ 
+ unmap_carveout:
+ 	qcom_pas_unmap_carveout(rproc, pas->mem_phys, pas->mem_size);
+ release_pas_metadata:
+ 	qcom_scm_pas_metadata_release(pas->pas_ctx);
+-	if (pas->dtb_pas_id)
+-		qcom_scm_pas_metadata_release(pas->dtb_pas_ctx);
+-
+ unmap_dtb_carveout:
+ 	if (pas->dtb_pas_id)
+ 		qcom_pas_unmap_carveout(rproc, pas->dtb_mem_phys, pas->dtb_mem_size);
+@@ -376,6 +372,12 @@ static int qcom_pas_start(struct rproc *rproc)
+ 	qcom_pas_pds_disable(pas, pas->proxy_pds, pas->proxy_pd_count);
+ disable_irqs:
+ 	qcom_q6v5_unprepare(&pas->q6v5);
++release_dtb_metadata:
++	if (pas->dtb_pas_id) {
++		qcom_scm_pas_metadata_release(pas->dtb_pas_ctx);
++		release_firmware(pas->dtb_firmware);
++		pas->dtb_firmware = NULL;
++	}
+ 
+ 	/* firmware is used to pass reference from qcom_pas_start(), drop it now */
+ 	pas->firmware = NULL;
+-- 
+2.34.1
 
---PvaMzznafJtcc5y5--
 
