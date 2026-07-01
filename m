@@ -1,151 +1,172 @@
-Return-Path: <linux-arm-msm+bounces-115629-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-115630-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id mQ+8BrzmRGpH2woAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-115629-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Jul 2026 12:06:52 +0200
+	id gVxtBiXmRGoq2woAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-115630-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Jul 2026 12:04:21 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 78EEB6EBE2D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Jul 2026 12:06:51 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id AD1BE6EBDBD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Jul 2026 12:04:19 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=bcxMOZy9;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115629-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115629-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=quarantine) header.from=kernel.org;
+	dkim=pass header.d=gmail.com header.s=20251104 header.b=Z7znZD+Y;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115630-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 104.64.211.4 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115630-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=none) header.from=gmail.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 6234930A2FC4
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jul 2026 09:59:45 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 1A9A0300E913
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jul 2026 10:01:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B65C40BCDB;
-	Wed,  1 Jul 2026 09:59:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0D0E03F7A95;
+	Wed,  1 Jul 2026 10:01:37 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f50.google.com (mail-ot1-f50.google.com [209.85.210.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A14A408009
-	for <linux-arm-msm@vger.kernel.org>; Wed,  1 Jul 2026 09:59:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1EB93BB9F4
+	for <linux-arm-msm@vger.kernel.org>; Wed,  1 Jul 2026 10:01:35 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782899960; cv=none; b=G0lVsU+gs65TzsvztzZqRRxsTK/AaSBwT4sI+Tb3UN/WoxL5xOl89n3GEl3w9tbmDgpVrsXOv7qlX9lITDS5BFa7c4I6+2/XQ08RNnwN/6ZA37h7VAm0NjGXXV7fr/LSuviH9xGCwH9aploI1zL0nW138QdVV94e4FZeGbdq+W8=
+	t=1782900096; cv=none; b=LxC4Q0JXUdpuoxtMaWEoNcaYD05p/MmxpQOMn6nbh7XVSiRM04UFR5WDwEcNhPjYYGXtHooJrXLn7J4ilR+WOsAvQoYFl47a/hAoD5z7CU1kUWyKmSVM6IIWZH/kAasfSa7wP/CCr0FTyH0zYUX9P9jZptab/99h/65I8PX7Nx8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782899960; c=relaxed/simple;
-	bh=KW9lh2K1hAahuirGr9kTW9/S1N/x4cAospR02gArHJ0=;
-	h=From:In-Reply-To:MIME-Version:References:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=oAegyI0RHESrmNVsMll7d6566vG2KnPAsYUwamuRMnJHp5+TWnr/y9uQhg6bYw+rNzqjnDPEXldJDMiTPUUBTXVM1HmIBZz1Vu8VpqsrBAIcp3xbjMOle0/G8aMzwc/4BubEebD0cfBAXh22NtiY3vQ5hvMLJkygFlxZVid48Vo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bcxMOZy9; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0E611F01571
-	for <linux-arm-msm@vger.kernel.org>; Wed,  1 Jul 2026 09:59:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782899957;
-	bh=KW9lh2K1hAahuirGr9kTW9/S1N/x4cAospR02gArHJ0=;
-	h=From:In-Reply-To:References:Date:Subject:To:Cc;
-	b=bcxMOZy9+wUR0cIUa+U1DVQq23msK1GibupFls02SsSVec7WdoW+TaetCQmXuipta
-	 75k/2KwNSJr7otVAL4jymBh8anWy6sHRyFNjlIDfZmbmDfCTNsStAcOhv31x0ivjQf
-	 ooL1jlEQVfHJR53vjnmqNJ9OthmUgRGXccG1cosaT90q7Jh7xUooxf99keLu2hIfL8
-	 f81yxjgpJIHT0GXG1uSI+WmPQIl4G0Kieunbvsnd2Yy6HVPRSLyxlMOrRUjvg+fVAl
-	 DUAWcbtn/H6ycrJNXoKzsP8lYflD/0GOP+hByBLl57HhPfnuqXzEXLvtq/Y6fM2GAv
-	 eqFtVbdgNSa4w==
-Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-5aeb8c19017so560232e87.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Jul 2026 02:59:17 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AHgh+Rp6LJd9km3nQHgOee9ZkH5yr9vEOx3FX9sKe+nuohMj8QSU5by4Ncr+gCucGCaD3bHyEDMDsOjUkxG8U0lt@vger.kernel.org
-X-Gm-Message-State: AOJu0YyT6XrxtSqx+t3MTCf+u1AH2COS7COJlRBfqrmb5aTqYIh3UY4o
-	OSF2N3Fr8rDxHVnSkrA4Ped8DZjM3nHd0LA/HkueQQ2zpFANcFaYa+lT24DU0JwhOi9BVB6/O5R
-	ModFlXAj1t9S8bBLnBpzQt+czgcjLVsrAP/X7SPgnOg==
-X-Received: by 2002:a05:6512:2585:b0:5ae:bcf7:a741 with SMTP id
- 2adb3069b0e04-5aec67a5104mr254124e87.18.1782899956542; Wed, 01 Jul 2026
- 02:59:16 -0700 (PDT)
-Received: from 969154062570 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 1 Jul 2026 04:59:14 -0500
-Received: from 969154062570 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 1 Jul 2026 04:59:14 -0500
-From: Bartosz Golaszewski <brgl@kernel.org>
-In-Reply-To: <20260629-ipq5018-bluetooth-v2-2-02770f03b6bb@outlook.com>
+	s=arc-20240116; t=1782900096; c=relaxed/simple;
+	bh=Wr7k6ms8w5cf7YX6QyMsz1ACCB5ddoRBekCXGDNdT8I=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=PmERkpAuKO6APU5u1tqX/r5WK3Nwrqj3Vpvyjl7++hPv4LfOv/jbo0nFzqT3tutmHzmMYlrO04lR0Y73n56Ma8BuXo91LCkjZPytMawWjQxdojES9ut1DRc2pLEGSswoDTktt1lvnCVzgSvVsBExFzEyoGriYB/abB9kJIPUYVQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Z7znZD+Y; arc=none smtp.client-ip=209.85.210.50
+Received: by mail-ot1-f50.google.com with SMTP id 46e09a7af769-7e9bc8dd61fso442406a34.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Jul 2026 03:01:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1782900095; x=1783504895; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=0mNQ3A3467geVX/IW6n7aAdW3fUUPOZsOtAnCuwuGrQ=;
+        b=Z7znZD+YWTbZ6L9t5lYpv+TGZirrgWRV46H8GSVHr9rBT2cw5E2sccANpfb28kUPSt
+         kLKIzrM1Qv5jWveSyLfloEW/r2qnjYxk85Rr2FavkLSrKIT4dYybv0gwZURRaOyRVi0Q
+         3dM5BNeXAit2VLKE/G1w9UAuBj7R0cTh/MbtU/DJZsr/a6Wd1zwWRZyI3EnLRoTxsD6P
+         Bq36zGp8xMv6JZjtI4BZ1fYcKot8Li26nXqbIUAwpw8pBQUCPyvQaeFDk1lVe6fUgnPf
+         DMUmH5CUhUIRAGPmF8fgtJLovjkN/WC6mscQzOySm6OHbDG7CeIaVqatSixgF4P64BXc
+         NIjA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782900095; x=1783504895;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=0mNQ3A3467geVX/IW6n7aAdW3fUUPOZsOtAnCuwuGrQ=;
+        b=ZOhBGivm5H0M6qNtRjFqD45npDzcZk3N44JAh3TG3M2oc9WVTPYV9cJEIP/2k/+grH
+         RKAGg6JmvqQIrXCKKOO5TJmX/kmMUZ02+bB2GBy2pAR1BWNCAUl4Ok28PpCB6Iy8rtey
+         DUka/F+JfBTgdUupuM454CWYAmgxh9lE1P9EGeext/PtYsd78/ckBii6/Dq5BVsD0L0H
+         SaPHRIe3VnDA5Busz2al0HMcd7J73mEmdkSTX0z3YeGhw/FtNtAqNF7MA1pImZQbDnfi
+         2FgLAH4+A/lZyiVmXFiqZ7U0ztjg4IHGetJmTKqR1CjaMR63iY0Ey/GmkbeYRYFc+hJ/
+         Romw==
+X-Forwarded-Encrypted: i=1; AFNElJ+l8ZMrsu1TLUC0cT9Y8wfvfGhCY5x/8pXqmwXuN42jY3rb0esIGtc4DwVbmpsQaaB0FXTO6ozJGg2aYGc8@vger.kernel.org
+X-Gm-Message-State: AOJu0YwYnIwofxoYLErskw6ZeY9iLQtJnp1LuVuMwyJK8qNryU/Q4kWQ
+	tObWZ8zNSTjZsOjGZ9e5vbkaawDm7QzJ8ZTM0tCrl/zk5320xEzztftn
+X-Gm-Gg: AfdE7ckXFwyL+/gX6z4NeJ9Vijy6us3qVvTxhfTTpTgbl0cmxvYp0TIHWAzAcbgGpVN
+	rQwUUHiK2ApSYg8XRjxfXRnkQpmLsgx0n6ucJJijNWwv8E7qkEpsKAjopV0JKVK627ohdMw+fUr
+	0DFuqaFBHC0mQtsB7OODZjei+D1SHEsX92Z+wZGJFfq+bQuvsGzvLix+BXhjmDgxXdVSlJmU50S
+	hQyz+ymKfCVO5C2AmooOrgjVE1s5a7Hud4pjHpu9re7rxqAVIxeBscXK2X+J2JLVEdHLH4lnrpF
+	9rWylqlHBqgvdLS8X6al24oZHp5TydMmk6RUW7Jhh9Xd5ntjQjNcEzLIpWfmVEZwNc9s8vSJDfR
+	9BwVXyPtb8UvilN4ZvDieWvMPxDOWM0Srb7+Hndq5afhysrbV7/r5nKM2/BEDkp2KMJYT+s7M2T
+	PSOFGn
+X-Received: by 2002:a05:6830:8291:b0:7e9:ebfe:a0a7 with SMTP id 46e09a7af769-7eb5056d2c0mr91138a34.29.1782900094634;
+        Wed, 01 Jul 2026 03:01:34 -0700 (PDT)
+Received: from localhost ([74.80.182.83])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7e9ebfec7easm4541881a34.12.2026.07.01.03.01.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 01 Jul 2026 03:01:33 -0700 (PDT)
+Date: Wed, 1 Jul 2026 13:01:24 +0300
+From: Dan Carpenter <error27@gmail.com>
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: Vladimir Zapolskiy <vz@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>, Brian Masney <bmasney@redhat.com>,
+	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
+Subject: Re: [PATCH] clk: qcom: Return expected ENOMEM error on dynamic
+ allocation failure
+Message-ID: <akTldJur7GEgSkDD@stanley.mountain>
+References: <20260629162127.3910603-1-vz@kernel.org>
+ <39032914-3a66-43d9-885f-55f5d60da047@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260629-ipq5018-bluetooth-v2-0-02770f03b6bb@outlook.com> <20260629-ipq5018-bluetooth-v2-2-02770f03b6bb@outlook.com>
-Date: Wed, 1 Jul 2026 04:59:14 -0500
-X-Gmail-Original-Message-ID: <CAMRc=MejBiWKB74bz9ZD8HWgm+ZGG1ed7rRJsoaPFZcRWzC-kA@mail.gmail.com>
-X-Gm-Features: AVVi8CeyT1GrSjfr-2uV0qlk0nwk3b4g-mFQbPvHBLEEqLDXk1SdAU72dFgl0qQ
-Message-ID: <CAMRc=MejBiWKB74bz9ZD8HWgm+ZGG1ed7rRJsoaPFZcRWzC-kA@mail.gmail.com>
-Subject: Re: [PATCH v2 2/6] Bluetooth: btqca: Add IPQ5018 support
-To: george.moussalem@outlook.com
-Cc: Jens Axboe <axboe@kernel.dk>, Ulf Hansson <ulfh@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Johannes Berg <johannes@sipsolutions.net>, Jeff Johnson <jjohnson@kernel.org>, 
-	Bartosz Golaszewski <brgl@kernel.org>, Marcel Holtmann <marcel@holtmann.org>, 
-	Luiz Augusto von Dentz <luiz.dentz@gmail.com>, Balakrishna Godavarthi <quic_bgodavar@quicinc.com>, 
-	Rocky Liao <quic_rjliao@quicinc.com>, Saravana Kannan <saravanak@kernel.org>, 
-	Andrew Lunn <andrew@lunn.ch>, Heiner Kallweit <hkallweit1@gmail.com>, 
-	Russell King <linux@armlinux.org.uk>, "David S. Miller" <davem@davemloft.net>, 
-	Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
-	Simon Horman <horms@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Mathieu Poirier <mathieu.poirier@linaro.org>, 
-	Philipp Zabel <p.zabel@pengutronix.de>, 
-	George Moussalem via B4 Relay <devnull+george.moussalem.outlook.com@kernel.org>, 
-	linux-block@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-mmc@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-wireless@vger.kernel.org, ath10k@lists.infradead.org, 
-	linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org, 
-	netdev@vger.kernel.org, linux-remoteproc@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <39032914-3a66-43d9-885f-55f5d60da047@oss.qualcomm.com>
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-3.66 / 15.00];
-	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-115629-lists,linux-arm-msm=lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:george.moussalem@outlook.com,m:axboe@kernel.dk,m:ulfh@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:johannes@sipsolutions.net,m:jjohnson@kernel.org,m:brgl@kernel.org,m:marcel@holtmann.org,m:luiz.dentz@gmail.com,m:quic_bgodavar@quicinc.com,m:quic_rjliao@quicinc.com,m:saravanak@kernel.org,m:andrew@lunn.ch,m:hkallweit1@gmail.com,m:linux@armlinux.org.uk,m:davem@davemloft.net,m:edumazet@google.com,m:kuba@kernel.org,m:pabeni@redhat.com,m:horms@kernel.org,m:andersson@kernel.org,m:konradybcio@kernel.org,m:mathieu.poirier@linaro.org,m:p.zabel@pengutronix.de,m:devnull+george.moussalem.outlook.com@kernel.org,m:linux-block@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-mmc@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-wireless@vger.kernel.org,m:ath10k@lists.infradead.org,m:linux-arm-msm@vger.kernel.org,m:linux-bluetooth@vger.kernel.org,m:netdev@vger.kernel.org,m:linux-remoteproc@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel
- .org,m:luizdentz@gmail.com,m:devnull@kernel.org,s:lists@lfdr.de];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,qualcomm.com:email,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,mail.gmail.com:mid,outlook.com:email];
-	FORGED_SENDER(0.00)[brgl@kernel.org,linux-arm-msm@vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[37];
-	FREEMAIL_TO(0.00)[outlook.com];
+	TAGGED_FROM(0.00)[bounces-115630-lists,linux-arm-msm=lfdr.de];
+	RECEIVED_HELO_LOCALHOST(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	FORGED_SENDER(0.00)[error27@gmail.com,linux-arm-msm@vger.kernel.org];
+	TO_DN_SOME(0.00)[];
+	FORGED_RECIPIENTS(0.00)[m:konrad.dybcio@oss.qualcomm.com,m:vz@kernel.org,m:andersson@kernel.org,m:mturquette@baylibre.com,m:sboyd@kernel.org,m:bmasney@redhat.com,m:linux-arm-msm@vger.kernel.org,m:linux-clk@vger.kernel.org,s:lists@lfdr.de];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	FORWARDED(0.00)[lists@lfdr.de];
-	FREEMAIL_CC(0.00)[kernel.dk,kernel.org,sipsolutions.net,holtmann.org,gmail.com,quicinc.com,lunn.ch,armlinux.org.uk,davemloft.net,google.com,redhat.com,linaro.org,pengutronix.de,vger.kernel.org,lists.infradead.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[brgl@kernel.org,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	ALIAS_RESOLVED(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt,george.moussalem.outlook.com];
+	DKIM_TRACE(0.00)[gmail.com:+];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
 	MISSING_XM_UA(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[error27@gmail.com,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	ALIAS_RESOLVED(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	FREEMAIL_FROM(0.00)[gmail.com];
+	RCPT_COUNT_SEVEN(0.00)[8];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[7]
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo,qualcomm.com:email,stanley.mountain:mid]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 78EEB6EBE2D
+X-Rspamd-Queue-Id: AD1BE6EBDBD
 
-On Mon, 29 Jun 2026 15:01:45 +0200, George Moussalem via B4 Relay
-<devnull+george.moussalem.outlook.com@kernel.org> said:
-> From: George Moussalem <george.moussalem@outlook.com>
->
-> Add the IPQ5018 SoC type and support for loading its firmware.
->
-> The firmware tested has been taken from GPL sources of various router
-> boards. Firmware files needed are:
-> - qca/bt_fw_patch.mbn
-> - qca/mpnv10.bin
->
-> Signed-off-by: George Moussalem <george.moussalem@outlook.com>
-> ---
+On Tue, Jun 30, 2026 at 10:50:13AM +0200, Konrad Dybcio wrote:
+> On 6/29/26 6:21 PM, Vladimir Zapolskiy wrote:
+> > If a dynamic memory allocation fails, the returned error code in clock
+> > controller driver probe functions on a few legacy platforms should be
+> > set to -ENOMEM instead of -EINVAL.
+> > 
+> > Fixes: ee15faffef11 ("clk: qcom: common: Add API to register board clocks backwards compatibly")
+> > Signed-off-by: Vladimir Zapolskiy <vz@kernel.org>
+> > ---
+> 
+> Hm, I'dve assumed that static checkers would be able to find this pattern
+> 
+> +Dan do you still work on smatch nowadays? It doesn't seem to
+> catch this one, but I think it'd be valuable to look for this pattern
+> - AFAICS it only flags returning -1 instead of -ENOMEM but I can't
+> seem to trigger it with a manual edit to this file and the following
+> args:
+> 
+> -p=kernel --pedantic --two-passes --assume-loops
+> 
+> 
+> For the patch
+> 
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-Acked-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+I'm re-working a bunch of Smatch internals right now.  I've
+fixed the -1 vs -ENOMEM warning, but it's affected by the re-work
+so it's going to be a while before it hits mainline.
+
+I can create a warning for returning -EINVAL or other error
+codes instead of -ENOMEM.
+
+regards,
+dan carpenter
+
 
