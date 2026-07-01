@@ -1,105 +1,106 @@
-Return-Path: <linux-arm-msm+bounces-115756-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-115757-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id YVpsN6w+RWoZ9QoAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-115756-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Jul 2026 18:22:04 +0200
+	id 2cH3Bbc+RWog9QoAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-115757-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Jul 2026 18:22:15 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 384646EFB5A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Jul 2026 18:22:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 81C916EFB66
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Jul 2026 18:22:14 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=pCWIxKkP;
-	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=WTXzWTcS;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115756-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115756-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=DoMrJ3IL;
+	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=W1a4J6pE;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115757-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115757-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=reject) header.from=qualcomm.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id AD5B5301D335
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jul 2026 16:15:58 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id A88CB3055812
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Jul 2026 16:16:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BB006343888;
-	Wed,  1 Jul 2026 16:15:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 92F22365A14;
+	Wed,  1 Jul 2026 16:15:59 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 870E1320CCC
-	for <linux-arm-msm@vger.kernel.org>; Wed,  1 Jul 2026 16:15:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 304603612F5
+	for <linux-arm-msm@vger.kernel.org>; Wed,  1 Jul 2026 16:15:58 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782922556; cv=none; b=L0sTNeY97FMS5thKXlLwyFPUMyUEJ0TzIgXWCRRyVyQDWyHu/4/Lh45BohQRGLxJ04LpVHQwI18qZzGiJlCjG/ZFVz2eS1weD0AkAMtj3vpHoC8ra32zI9x88h9Ts9EjwJMSKVprdEYMiy8NaG5gwy/8eC43doFGMmb6XOfJS0g=
+	t=1782922559; cv=none; b=JymchviwMIWF35vUIdar3RGZNf2dAcpXCdolKsUhXdrG6ahR76uHpgXYguspvOI/3wuL9dLjNy7dKcPjY3uVbFhzmRW8NgRMFl2Ri43fYWc92puY26lhYhVluQe7/mmhHEiJp1Uu5bLtoIBuamshPu8qD7mH5HwYIGaaXaYXGbw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782922556; c=relaxed/simple;
-	bh=fffIHIq+K2Xt5vA/CwQMB8tzEP5cr2Jy2YbmMNydBjI=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=UA/HsE1wu+iLJWR58b6PQ17Apj2ST9PPiJfPXynSsaljRoOOMHOlzPnNYG6XuYyIAFyvAdGM+WsDALpjZmaEfK15q4r650e60FNc3TT1tglQqZhMB6MrV0QDtjSDJrFkNNWAPNTNhBzdNoEou+qSNNspFz9SkmluPvDuT+iVhAQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=pCWIxKkP; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=WTXzWTcS; arc=none smtp.client-ip=205.220.168.131
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 661FoIr61553151
-	for <linux-arm-msm@vger.kernel.org>; Wed, 1 Jul 2026 16:15:55 GMT
+	s=arc-20240116; t=1782922559; c=relaxed/simple;
+	bh=pFSbTRCJzU6q36Dh8FaRMCEnLAZ/U8kQDE+7od1r148=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=lo7T/FveLXG+/e0Pm8k0bELwVnMAVFlB3Or156Uv44/IuX6imFl1W1KFRG+4GFfOpzDPb8KOj1PAn6zWimyWvk2enT5dIr0RkT2do3G78CWawDesqht1vl/Wlalj+9Fy44BGMSDZHhmGpfm70/Q6ELrGD4/yGYMgwgWHsuDlmaY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=DoMrJ3IL; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=W1a4J6pE; arc=none smtp.client-ip=205.220.180.131
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 661Fo9J41457669
+	for <linux-arm-msm@vger.kernel.org>; Wed, 1 Jul 2026 16:15:57 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=kf+pwVBk5mAbEcKiU3KEkL
-	A1zCtomGQqKVOFrEXk2TE=; b=pCWIxKkPE1J7j2MUqm8bIguckB3q4en2Y6TK68
-	6a26I7gMeYxeJXJT47MCx+/MIAWRHIPPbzipzT/Skd62EymUx1iFG0BO9RxQRT9X
-	AOiUuLLPvB9g/RX8bRarrxfttgQkKl3ukmjuYahVpZwWfZdZo+xzhqLF4EpN1hZx
-	fszP8Y3zqRnYMHtZ1EcAi1UUTPULbH7HWrFcxe1V5uQJQbkuDuLska9oSupFDTZJ
-	FhV7Kdj4cqmBweK17aPk5HRmL7dgXThz2FEygbiPm8f+g8AnRC7Ov+elsNwCfItt
-	1Wd0mRZJhud1YW2uGtCKELqTk3r/Lln4lHCERE/UQ4+1depg==
-Received: from mail-oo1-f69.google.com (mail-oo1-f69.google.com [209.85.161.69])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f50sd1jbv-1
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	B/+4MD3mpODzSWY/mOJb34WlGF9b+ZYiU+CvAZt4d58=; b=DoMrJ3ILkQpfurPb
+	68aSgMsXwWYr6UrjiFHU8PhniBKLnq2Q/sOaTHcQ6Ad9mDguSAcetcP4vN03SWbT
+	JnTP3u89Vw9mm0nhtI0iE+ggNLpxU0ho5G9802bEEsFUnD12oXelVaeq3+a7WNxs
+	34gH6FdhJUNpJYs249HO60fchMWUUTHy/8bPABpSDR4Dr3J99SRLRL9G6Y+VgJCk
+	cUkxNLOpz9+IYgko9HqcE692xrISEyUSlPbiqDkZwtnsqkpTvqRYjIgpS+ldR1+1
+	+//4Th3OuW2P9AkF0ui/MiaTrc0x4aEF3Aaiu1Bpz3Alfk0hhVA53Gl31EBQrNSu
+	xF9wLw==
+Received: from mail-vs1-f71.google.com (mail-vs1-f71.google.com [209.85.217.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f502ustn6-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 01 Jul 2026 16:15:54 +0000 (GMT)
-Received: by mail-oo1-f69.google.com with SMTP id 006d021491bc7-6a0ea6e29d6so569831eaf.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Jul 2026 09:15:54 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 01 Jul 2026 16:15:57 +0000 (GMT)
+Received: by mail-vs1-f71.google.com with SMTP id ada2fe7eead31-737435677d8so972666137.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Jul 2026 09:15:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1782922554; x=1783527354; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=kf+pwVBk5mAbEcKiU3KEkLA1zCtomGQqKVOFrEXk2TE=;
-        b=WTXzWTcSfWv1enyYQ1kV8ijtiVngb+t3zFOkD+0C6BopKM+2KYQl41zQ60CWu93nJ2
-         uEn2EitwoBeKMD9nLySMA254aJw4ffoJA10lHJVIvJx8DdJcjgUkwBI96abuPbtKvjzO
-         1G2J+Li3KK8ynmWqrHcvwO9HgGTy2/aGcKJbdYI9Kwx0S10gjpS1qZ0hL/EsC7kW2E0a
-         yzZty1ZZdr61ryav+v/H1h0mLPNljdgWuG2baFZjAFCR7Mm5MQp5xhDwCQdc27hTgyGC
-         qrJyxL4ys6WtQcfTARscYNBE2YQ5oLcSHsq/40ijSc9xVoHZaM51j7EHoYMaPtCAmRq9
-         UgFw==
+        d=oss.qualcomm.com; s=google; t=1782922556; x=1783527356; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=B/+4MD3mpODzSWY/mOJb34WlGF9b+ZYiU+CvAZt4d58=;
+        b=W1a4J6pEYuLqT60wjLJLBBXHlQySK6mXVzRMtRiKkuPGUC9hsjI5zBQOiASjeSWO+B
+         DsSPaKr/ccsiGqJs9Uo4+FcxxYorz4wx0RSSTLgfXK1Q3IkqyRWUuPk/kFEyKaRlOuQf
+         9Kz5TzETzY9LCOKN8JmnsSMiNEHiCDhS+19MqBgM3wY6js43YGme1B6ea6g8mTfQDNL3
+         A7/E3dAPT8FnpsR7xH33xfnELNaHsFMZHjGI0gBE5klX6HqJqnn5MR7NJ9U0J+b1x+GS
+         O6o/GIpg0SVGTHD4G+ZGONZKY0689n84Zk5PWOy6Rq4QE1HR6Q4mn5DGd6YksP9ze05y
+         y6lg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782922554; x=1783527354;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=kf+pwVBk5mAbEcKiU3KEkLA1zCtomGQqKVOFrEXk2TE=;
-        b=r6//+SnKIAwhiE63Bi1MB1QJaPyiFFVIa9k1zSQ0ObExFLCTKvND+8XOTXhqECyzJH
-         tLkQjXy0sV6IsqT2y19zEfVKV9YdZC/J1H1egA53svgUMOZ1yRm/4ZaGS/UdRg42HVx6
-         +clUhDUyXl4BG13VZx7HEc9iK+Kap2yOr/V9hp7Vj4BdpkctcTCGHzbgueUuRWytioEN
-         PWFlLLO9ucjqPksY68fnYLFGaoj2OG2tTDeqYSDDjDHNfWgrpXEJjPaizkORoYdFtLR7
-         R5sXPVYw350/sEXzs63seuFzAOyS0HgHMe7+gQkiN7aDupSzsgKMaPAk9TVHnXECZztw
-         gNWQ==
-X-Forwarded-Encrypted: i=1; AFNElJ/EbD9PrbQeZx7i57wXFSC1zQL2d6Ck4XeEElUnzO+xz0yUR3IjaWUIEFlxVxsi0Zvuak1GB5Yq4JHrkcC/@vger.kernel.org
-X-Gm-Message-State: AOJu0YxrmSFCC6l6ADUVpHX9zCkOA1ngqfjs7kwKF7j6RZ696r2927NS
-	0GmvibUWR1vlr2VYdAOrntQdvT5GCQtwV6s3yiwV/z+iHTcxyyi7zWfLQmW/qxFGCvXYm+zbyJH
-	hQ2z+RXXVRQjYIPaE95XK92PlJoYOOo+uCo1xHxgw4qZjaZZsvmXIaPDchWkOeUN2I2qHcBQswg
-	bqHZPCVQ==
-X-Gm-Gg: AfdE7cntGN1CHOHaSwiPxgfhKBDtuh0woEX2TasFRlO4OOp91sUc4Em4y+2+n+5+nc8
-	exO5g18bZXH5Foz68k2c773HVH4rroAGPItd+WGWwiGvn5FNLHurTRZC3YqIVCwS2ooDS8QBf90
-	gtUsR2yJQk3h9ypqNSFFFWgUXgM9Qc1w9vYQo4f2sUuBKQA9pwQ0dWXkdQCr25T/O1d+3wDyrns
-	0JZTXLGg0yn+R5fOW6m640qmVvNeA5y40yrgrOU2xexbiXosUz5Hoa0XJykSVModij1KbmnCkFl
-	T5AY3j67UcnZzro07fHZ4eOuqBjrRxKu26qm6vG4TDG/vQl+dQB61lbNJhWTalJJOYWMwboHypQ
-	Kk7Y2BIiEJ0QV/+qiH3HplZYPLx2nFC7k06Y5rx4RG4ECQNv12dbCoBcMAZslPkCv5QzNdWWYxw
-	VYpb9qWGBRCUcgJOp3JhFKmgAzs4fIWGxbPsIqnWYLGUTfqCmw+WmhEaxS7JFdQmI=
-X-Received: by 2002:a05:6820:829:b0:6a1:9a9f:7be8 with SMTP id 006d021491bc7-6a309b37233mr1197983eaf.48.1782922553809;
-        Wed, 01 Jul 2026 09:15:53 -0700 (PDT)
-X-Received: by 2002:a05:6820:829:b0:6a1:9a9f:7be8 with SMTP id 006d021491bc7-6a309b37233mr1197959eaf.48.1782922553393;
-        Wed, 01 Jul 2026 09:15:53 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1782922556; x=1783527356;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=B/+4MD3mpODzSWY/mOJb34WlGF9b+ZYiU+CvAZt4d58=;
+        b=ERAsmgY0q6bB4ZRgpq6fsFh3waLY4ERASKDevc89/qntNUVTmkLwszEJT4OXwuDxTT
+         0X3tFd8wc/dmHYyrQ4RjZNDw/CD5JhOuZjgbNBcDJPVz0th8njaQa2nvb0ku61WcnJAg
+         DRHdJigTZMNbcRBo4kfh1cbPH3Q3xBrdO/wbQBAltTo7Sempt9CJCK7t7/N+NGRi/zi7
+         +LgmTrmuqexEPs3wXwI0eP88slRZLtYmjsaI6TyLy/+FwmIrv3gz1NSrhhXgkvXp6mtg
+         DWGhLOpeYEA0T1oGDw/vJ5tF5KTlRyfzUmXTrBU+Y0ImO6oMaImi9isGlp7wwsQnEXEW
+         TABQ==
+X-Forwarded-Encrypted: i=1; AHgh+RpY2S2CghQ77SvjQDnPALQhzRvCkKPLY072cm2wGGh4dnTsxl4e+sRfws7X8bFSxPdwqCo6+8wgAY2mBs8H@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz9eug2ORgeUOGIs+zV0kAn1p2iyZuPqglhMZV70hbKC1oEOBF9
+	ZPRQ29JIsCzxVmerVMxAtnmBswP7QhyKBEjWxJlQeqOxhqQu7IwKptDOOns4TlA4Lx57KMr8Dk7
+	m6/2csyloiVJZNN83eRFENXRISxWadyhIxKQYilm4jfC6PRPryjKhthWMtUmmU81/BPk4
+X-Gm-Gg: AfdE7clyRN6r3TgIdfDN2AtFDOPPNiGSbnfUCsrBjHvav0b5myjExBJI6oTLp5SQUTz
+	OMfYHdOvNmwxysqp0kM8H7Ep4NMcRSJ1eSd+24Vq32LsF2mW6w/pSzkJZV3ET+3eBZmzB4fiv8f
+	/zfgGoqOsliy1Wp6pKdNqybOG3q32GrdTV3cI96FJFmel3ugXD68S/D48dv7nHDQJ5V+blq+bRn
+	eg5Man8yaWjQJwQjHDFpQ1EnSglTEI0abINiATHdHUfhChEV3DmB/l/ckZOmxjGxcujHxPjAIZO
+	5Gsbsm9Hq4NNeI1w1koBboLKt4XmDnZjp27dOkC2n8PCb5pTUKGLa43/JANOEk+E5/S9JTrJNXv
+	hNEokkI7/c5BbJe5WOGGnTyDrSuO5wTPQE2Wbpknbp+kyjqanvzOa9cw+D1IdENKss450gj9YjD
+	E7I5aUW4897hY0wcXWMhF6QgVcBB6Z6lPmJqdZ4ZTxTqjjUebw0bgOIdFYt4oF71Q=
+X-Received: by 2002:a05:6102:2c0d:b0:737:5c42:858b with SMTP id ada2fe7eead31-73dbe25087cmr915933137.11.1782922556244;
+        Wed, 01 Jul 2026 09:15:56 -0700 (PDT)
+X-Received: by 2002:a05:6102:2c0d:b0:737:5c42:858b with SMTP id ada2fe7eead31-73dbe25087cmr915878137.11.1782922555676;
+        Wed, 01 Jul 2026 09:15:55 -0700 (PDT)
 Received: from QCOM-eG0v1AUPpu.na.qualcomm.com ([2a01:e0a:830:450:809d:5d56:19d9:ff8b])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c1288d1ea70sm299570266b.3.2026.07.01.09.15.51
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c1288d1ea70sm299570266b.3.2026.07.01.09.15.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Jul 2026 09:15:52 -0700 (PDT)
+        Wed, 01 Jul 2026 09:15:54 -0700 (PDT)
 From: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Subject: [PATCH v2 0/3] leds: pca963x: Add multicolor support and enable
- Monza RGB LEDs
-Date: Wed, 01 Jul 2026 18:15:50 +0200
-Message-Id: <20260701-monza-leds-v2-0-c1be0b472926@oss.qualcomm.com>
+Date: Wed, 01 Jul 2026 18:15:51 +0200
+Subject: [PATCH v2 1/3] dt-bindings: leds: nxp,pca963x: add multicolor LED
+ support
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -107,11 +108,10 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-B4-Tracking: v=1; b=H4sIADY9RWoC/22MQQ6CMBBFr0Jm7ZC2IWBdeQ/DopkO0gRa7ShRC
- Xe3snbzk/eT91YQzoEFTtUKmZcgIcUC5lABjS5eGYMvDEaZVrXG4pzix+HEXpCMNdweybrGQhF
- umYfw2mOXvvAY5JHye28v+vf+zSwaFSoaOlKu86SbcxKp7083UZrnugz027Z9AVn3Q9+rAAAA
-X-Change-ID: 20260629-monza-leds-c292e68c9a49
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260701-monza-leds-v2-1-c1be0b472926@oss.qualcomm.com>
+References: <20260701-monza-leds-v2-0-c1be0b472926@oss.qualcomm.com>
+In-Reply-To: <20260701-monza-leds-v2-0-c1be0b472926@oss.qualcomm.com>
 To: Lee Jones <lee@kernel.org>, Pavel Machek <pavel@kernel.org>,
         Rob Herring <robh@kernel.org>,
         Krzysztof Kozlowski <krzk+dt@kernel.org>,
@@ -121,62 +121,61 @@ To: Lee Jones <lee@kernel.org>, Pavel Machek <pavel@kernel.org>,
         Konrad Dybcio <konradybcio@kernel.org>
 Cc: linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Loic Poulain <loic.poulain@oss.qualcomm.com>,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+        Loic Poulain <loic.poulain@oss.qualcomm.com>
 X-Mailer: b4 0.14.2
-X-Authority-Analysis: v=2.4 cv=Z+3c2nRA c=1 sm=1 tr=0 ts=6a453d3a cx=c_pps
- a=lVi5GcDxkcJcfCmEjVJoaw==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAxMDE3MiBTYWx0ZWRfX1cK4GrLCazTc
+ KPUql8amoIzJY1kpn0+6tmnUhfQy4Q0M6P8NcTS7o+D8Vbc2muRhUWoNjngipJJ9UPqqwC3GSbX
+ 0ldcfZsFfidflrXsiinusDA+p66qVew=
+X-Proofpoint-GUID: WqqnXY6ZI1yRwqLP5eQ6XclUxq2H5fKu
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAxMDE3MiBTYWx0ZWRfX834/5M8Hl0js
+ fSLg+GebFDkpmunBUrBZbxEN1TKRyhHra1rJjczoJF8UTYPrsNoPyOsj7qvsve7hW/LGL0V55kx
+ V1Eq4TN1V9C32uqeREKJMgjN70TENKQlc7CPbzP7qPHEtmgMYbQ7WcG0VfLjwy9V5VKuzq6zBCs
+ QldlKUa+bPrycwufH2kkVK5iKPCY8sd4ro7QK1tL66eqCLNQfqyzFo4CauPDIkH3m9AS8fQXnDS
+ jBOJPVH6icAh/6A7n72frC5kykrmG34U/+Np1MjZ6ZujZnzIBoBjR4R+bIvkOyNDe2AHyWUSbYO
+ jiC283RsvKagqu3+CbKF4VOj602gODlt4nlU4BWZVnQXAWmU1IuPb/ilffRtUtmAeCUVgkRnbbI
+ V9IHyY9bwBC39g2e8wVskFaUVW2jZE7aTFHBT7/D7Jy3M443b27y4wkzcY2u5/lxN57yBkRvDzA
+ kB8UUGqZnyFXeEKrQRA==
+X-Proofpoint-ORIG-GUID: WqqnXY6ZI1yRwqLP5eQ6XclUxq2H5fKu
+X-Authority-Analysis: v=2.4 cv=PbLPQChd c=1 sm=1 tr=0 ts=6a453d3d cx=c_pps
+ a=P2rfLEam3zuxRRdjJWA2cw==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
  a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22 a=VwQbUJbxAAAA:8
- a=EUspDBNiAAAA:8 a=yzvYhh2-rlWI4r5pe9MA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=rBiNkAWo9uy_4UTK5NWh:22
-X-Proofpoint-ORIG-GUID: 63m7_ST5EZGyHJsjBfwkAsB1zmgVNipA
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAxMDE3MiBTYWx0ZWRfXz0OSAE6rF1Ww
- gqnYuIFrAE0XteYxxH50XlQk/FIK+ORlvtuJrgNBf8HG2ob8MI6XiArTvaKjr9a9PcSuoPMD1Od
- Z8lR4IEyxKrKwyDHXwo8ai+3+8ScVuY=
-X-Proofpoint-GUID: 63m7_ST5EZGyHJsjBfwkAsB1zmgVNipA
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAxMDE3MiBTYWx0ZWRfX2HBmVUO1jSro
- ua1eEFcUmnL4iuGZ2n8hsyYhEIxmyAO8knlV51tCt9vh7NF4cbvmTKKGLgN7hE1/XrRKJ+rp5qP
- JYCLwvuAB/1d8oxoSIoCuqIFbLBCFlbnrH3LZ1txFBeGTUaIs4pSNOvfC74ibhQmLcFGYO797e1
- 0INkfz92CM5KRLYG9FRJfLOr71Bdt9U0ePumih7Xv/K1xZ3xkfFc9YnlVBZ7lHWXXzw48xVZvDF
- KS/cpYP/8KNm3lsnrcf11ofzBEDhl9FR22qV4+wMx3dmGmZ/5te8mjIvT39z8z8ZSYAOU1LV/7R
- RaSI0N4q3SeI+WQhbvPK9aYL91/LwzJzKn03UJ0f3RjB5YLrHDXUo6ZQRSjLtxikOiVXX1cM47S
- Tbu56tzlfjdlxAHT/Xl4DC3+00Z37rlE8l+8Ihxc25pSo1e1txX0B/+/TSUzQodYGG2exzMNs9s
- jwas2+h98Gubkx/4lHg==
+ a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22 a=EUspDBNiAAAA:8
+ a=bawOQVNTVwYUprhOnAsA:9 a=QEXdDO2ut3YA:10 a=ODZdjJIeia2B_SHc_B0f:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-07-01_03,2026-06-26_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 suspectscore=0 adultscore=0 priorityscore=1501 spamscore=0
- phishscore=0 impostorscore=0 malwarescore=0 lowpriorityscore=0 clxscore=1015
+ bulkscore=0 clxscore=1015 impostorscore=0 spamscore=0 lowpriorityscore=0
+ suspectscore=0 phishscore=0 malwarescore=0 adultscore=0 priorityscore=1501
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607010172
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-115756-lists,linux-arm-msm=lfdr.de];
-	RCPT_COUNT_TWELVE(0.00)[14];
-	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-115757-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FORWARDED(0.00)[lists@lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:lee@kernel.org,m:pavel@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:laurent.pinchart@ideasonboard.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:linux-leds@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:loic.poulain@oss.qualcomm.com,m:konrad.dybcio@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,qualcomm.com:dkim,qualcomm.com:email,vger.kernel.org:from_smtp,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:from_mime];
 	FORGED_SENDER(0.00)[loic.poulain@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[13];
+	FORGED_RECIPIENTS(0.00)[m:lee@kernel.org,m:pavel@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:laurent.pinchart@ideasonboard.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:linux-leds@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:loic.poulain@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FORWARDED(0.00)[lists@lfdr.de];
 	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,qualcomm.com:email,vger.kernel.org:from_smtp,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:from_mime,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[loic.poulain@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	MID_RHS_MATCH_FROM(0.00)[];
@@ -184,58 +183,118 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 384646EFB5A
+X-Rspamd-Queue-Id: 81C916EFB66
 
-Some devices use PCA963x controllers to drive RGB LEDs, where
-multiple PWM channels correspond to a single logical LED. Add
-support for grouping such channels into a multicolor LED device,
-using the LED multicolor class framework.
+Add support for grouping individual PCA963x channels into a multicolor
+LED by introducing a multi-led@N node pattern. This follows the
+convention established by other multicolor LED drivers such as
+kinetic,ktd202x.
 
-The DT bindings are extended to describe these groupings via a
-multi-led@N node with sub-nodes representing individual color
-channels. This follows conventions used by other multicolor LED
-drivers, while maintaining full backward compatibility with
-existing single-color LED definitions.
-
-The PCA963x driver is updated accordingly to detect these grouped
-definitions and register multicolor LEDs.
-
-Finally, the Monaco Arduino Monza device tree is updated to expose
-the onboard MCU-controlled LEDs (compatible with PCA9635). The MCU
-manages four RGB LEDs mapped to channels 0–11, which are described
-using the new multicolor bindings.
+This is necessary to support and model hardware setups where multiple
+PWM channels drive a single physical RGB LED.
 
 Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
 ---
-Changes in v2:
-Changes in v2:
-- bindings: Reworded commit message to explain the motivation (Krzysztof)
-- bindings: Kept the "^led@..." pattern and modeled multicolor groups
-  via a dedicated "^multi-led@..." subtree.
-- dts: Renamed node from "leds-controller@22" to "led-controller@22"
-  and dropped the unused label. (Konrad).
-- dts: Moved "reg" to directly follow "compatible" (Konrad).
-- dts: Fixed unit addresses to lowercase hex (sashiko).
-- Fixed checkpatch issues
-- Link to v1: https://lore.kernel.org/r/20260629-monza-leds-v1-0-0cf7c0a7dc14@oss.qualcomm.com
+ .../devicetree/bindings/leds/nxp,pca963x.yaml      | 79 ++++++++++++++++++++++
+ 1 file changed, 79 insertions(+)
 
----
-Loic Poulain (3):
-      dt-bindings: leds: nxp,pca963x: add multicolor LED support
-      leds: pca963x: add multicolor LED class support
-      arm64: dts: monaco-arduino-monza: microcontroller LEDs
+diff --git a/Documentation/devicetree/bindings/leds/nxp,pca963x.yaml b/Documentation/devicetree/bindings/leds/nxp,pca963x.yaml
+index 938d0e48fe51bce82779c4457c8e99cb6d80fe70..04b05b8195c18ae9fc1c1cb9d3c694d819ea88e5 100644
+--- a/Documentation/devicetree/bindings/leds/nxp,pca963x.yaml
++++ b/Documentation/devicetree/bindings/leds/nxp,pca963x.yaml
+@@ -74,6 +74,39 @@ patternProperties:
+     required:
+       - reg
+ 
++  "^multi-led@[0-9a-f]+$":
++    type: object
++    $ref: leds-class-multicolor.yaml#
++    unevaluatedProperties: false
++
++    properties:
++      reg:
++        minimum: 0
++
++      "#address-cells":
++        const: 1
++
++      "#size-cells":
++        const: 0
++
++    patternProperties:
++      "^led@[0-9a-f]+$":
++        type: object
++        $ref: common.yaml#
++        unevaluatedProperties: false
++
++        properties:
++          reg:
++            minimum: 0
++
++        required:
++          - reg
++
++    required:
++      - reg
++      - "#address-cells"
++      - "#size-cells"
++
+ allOf:
+   - if:
+       properties:
+@@ -137,4 +170,50 @@ examples:
+         };
+     };
+ 
++  - |
++    #include <dt-bindings/leds/common.h>
++
++    i2c {
++        #address-cells = <1>;
++        #size-cells = <0>;
++
++        led-controller@62 {
++            compatible = "nxp,pca9633";
++            reg = <0x62>;
++            #address-cells = <1>;
++            #size-cells = <0>;
++
++            /* Three channels controlling one RGB LED */
++            multi-led@0 {
++                    reg = <0>;
++                    color = <LED_COLOR_ID_RGB>;
++                    function = LED_FUNCTION_STATUS;
++                    #address-cells = <1>;
++                    #size-cells = <0>;
++
++                    led@0 {
++                            reg = <0>;
++                            color = <LED_COLOR_ID_RED>;
++                    };
++
++                    led@1 {
++                            reg = <1>;
++                            color = <LED_COLOR_ID_GREEN>;
++                    };
++
++                    led@2 {
++                            reg = <2>;
++                            color = <LED_COLOR_ID_BLUE>;
++                    };
++            };
++
++            /* Remaining channel used as a plain white LED */
++            led@3 {
++                    reg = <3>;
++                    color = <LED_COLOR_ID_WHITE>;
++                    function = LED_FUNCTION_STATUS;
++            };
++        };
++    };
++
+ ...
 
- .../devicetree/bindings/leds/nxp,pca963x.yaml      |  79 +++++++++++++
- arch/arm64/boot/dts/qcom/monaco-arduino-monza.dts  | 110 ++++++++++++++++++
- drivers/leds/Kconfig                               |   1 +
- drivers/leds/leds-pca963x.c                        | 126 ++++++++++++++++++---
- 4 files changed, 299 insertions(+), 17 deletions(-)
----
-base-commit: dc59e4fea9d83f03bad6bddf3fa2e52491777482
-change-id: 20260629-monza-leds-c292e68c9a49
-
-Best regards,
 -- 
-Loic Poulain <loic.poulain@oss.qualcomm.com>
+2.34.1
 
 
