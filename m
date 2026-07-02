@@ -1,198 +1,270 @@
-Return-Path: <linux-arm-msm+bounces-115870-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-115871-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id LbHSLjo4RmozMAsAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-115870-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Jul 2026 12:06:50 +0200
+	id YFlvJsswRmrMLQsAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-115871-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Jul 2026 11:35:07 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id E92986F5953
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Jul 2026 11:59:15 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id F1FC86F5508
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Jul 2026 11:35:06 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=none;
-	dmarc=none;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115870-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 104.64.211.4 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115870-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=P6mErtn9;
+	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=UNKTyjhH;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115871-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115871-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=reject) header.from=qualcomm.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id C289830AD96A
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jul 2026 09:16:42 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id D078B3012D3E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jul 2026 09:17:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D119D478E42;
-	Thu,  2 Jul 2026 09:16:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 107EE478E42;
+	Thu,  2 Jul 2026 09:17:44 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ua1-f43.google.com (mail-ua1-f43.google.com [209.85.222.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D6193CD8A9
-	for <linux-arm-msm@vger.kernel.org>; Thu,  2 Jul 2026 09:16:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B54FB478E52
+	for <linux-arm-msm@vger.kernel.org>; Thu,  2 Jul 2026 09:17:39 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782983797; cv=none; b=dOfbjPGnqRWlJ5K1/8yYWg+0UJAEtsFjBNQvL7wfQyrqVlTGzg5duriavioYQrLrlWuX1TDN1olrt/pmeQtk5teMBhusYjPxnJes6fvxtt7ZzEg6JUpLa+M9xLtHDHvr2563ObeaQVq7Gjc+3pU3thQWh6sEXNbt05nn11JB11E=
+	t=1782983863; cv=none; b=W9fGLXS7LFQnfPLG8ZDC+MEIUc4svB6bohdG1yD8AkzOpswDXgCgdsiLLXY9mGElhwGtw2izr3SRh+qeQT2ZC7TkZl4gMSqt1GRkymWac6JbZnxYsNPBlWjH3ENwTw1XOaUvhiBKQE/2CuFafmPerU13z27epnkLWlLQben9fnI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782983797; c=relaxed/simple;
-	bh=n9yLVv4ONKzRdpCf8VFwTS/MdDc1G1FjImPOjJ/IqKk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=RQcjvDKxI3KSX07clkmvqeurZsr2KL3WflR4emrUMcy4FTGnlh/k+INAmNApf4zNi5UZU+FpJSbgzPNAcSjhPPt0LogV9AlcSdmYfa5s5n2ONvKce0OoLBQmJxvyKs87deZ8vCCfh9zIAPVvvHfKW7Rglxa16z3dpJeARractFA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.222.43
-Received: by mail-ua1-f43.google.com with SMTP id a1e0cc1a2514c-96730906293so898288241.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Jul 2026 02:16:35 -0700 (PDT)
+	s=arc-20240116; t=1782983863; c=relaxed/simple;
+	bh=oVUVN33KyAA+G7ySmu0T5BL6MDa6QNPyaXVhOB1tb9Y=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=jONnhrtQ3oR23laBaqj6IOP7ZS35ZHnPVZy4r/5JHsSnGl3bDfw5J8+JhAH+Yq9qiaTZL1moG1wF23z61DzIzOR0wM0tQQITZxZ8pXIv1xuS/WOBdJsETonkdsK948d7Z6W9SbRGP9SVZdcmcEBwrhrM2ay3wu3Q6xtCW+0iXAw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=P6mErtn9; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=UNKTyjhH; arc=none smtp.client-ip=205.220.180.131
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6627TsQ13964226
+	for <linux-arm-msm@vger.kernel.org>; Thu, 2 Jul 2026 09:17:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	HGwAednzqeRxCB22QWUBlMswoWJYl0ScI1kF4jRrqA0=; b=P6mErtn9yGlDXT0w
+	FViNbJJbGHV8lHYlsMLHX18MF8KBThtrzNY8FWomtV/dSMN6EfyAodarTlQGlwCh
+	xXPskHUq1FYORoAHUMlwKtFi+h896VcN4rFptqsj6iG7s+3m4cMIus47x9+nGEMX
+	OY2YELNxhPxq4GB3Hte3Lq+/iT1Jc70cw37nuVA3dzPsHhjjMslo6qIml8UxCKud
+	1o8aKL22WaTiVnnmXuu7tr1sjno+Ih/8sLXq71dlBQY8FvDcjl/PVZ6OWhuchT/D
+	+SjfBCodvvwT5wS42b000jpO1xj1H/O9zc6Y21gUen3L20sbUD3DSVCKZZr7xezX
+	ssgrkQ==
+Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com [209.85.210.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f5knc0e4x-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 02 Jul 2026 09:17:38 +0000 (GMT)
+Received: by mail-pf1-f200.google.com with SMTP id d2e1a72fcca58-845bc2e658aso1791819b3a.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Jul 2026 02:17:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1782983857; x=1783588657; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=HGwAednzqeRxCB22QWUBlMswoWJYl0ScI1kF4jRrqA0=;
+        b=UNKTyjhHY8GEa2YcOfRqIuxigrO2c54+MiuGqYL2KVEd3O8yzipIlFpmzsKnGgO+6o
+         RCE9PY0CaY3UrIpUDXUJCTbaTvs1xu8zjsmUV3M8sXQwwZXhmoIWvyl3Mz+tpG7PDwMv
+         8OradjHLbxPidOUYLhga+XrKfftUeUAQiEiY5WZoEXAgnwlVMpq7gDIiWNmfVXzGMVBq
+         dM/vf2IFBbZ+BAEPK4de6ziwx4wIIRsHExcOuSzx1GwHy4UZVvPNm/i9QqtlmyAEx5Vx
+         qEgiqX42lsA/klo+yPSR0UtnIO1IlMvWDz1veJ0yUCN/Mb4YezWjthudQzAlYDjYdRoG
+         CElQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782983795; x=1783588595;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=w3iqz34neGUxAgVEYrpwzzcpe57aRQt9k5cgKzpkuWc=;
-        b=ivY2/Di6QrFxGRPpx4VP3SKTbtYZJJ0B6iRYTeN0Odw8Ng9SCTxxMq5dN42bhCtHC8
-         NL6nPlKDTSZa0VCgWRmGoQ3ntpa4mh+eBxgl7jMjLBrWpqdl2VYn/wMO3tveRsrnLMV/
-         eLXH1ARtZlNt3AQe1xgK17SVjNP4pKuLDxiZxhF3U85FgySS30guw1V7AnbK303f51lS
-         mdASHwdd8jRof0nkwsE9YiDhROs2MUoTUxzM1ITESyg355qfQLTE/Qwcmw1yEA4ld+ie
-         bMpV8h20F+9YDYn7vma/SKnjvI9LXZXSNj+b58L59r0HsJvnKrPbRodPeIwlDdoBuBA5
-         SBWg==
-X-Forwarded-Encrypted: i=1; AHgh+Rqs2S/j6ajI4OGjo5iI2Tjc7LteQ/Kivs5d1yvuJWB831lDfyRPv1R5pRgSyTcGRGqCi5LQdiDJFBkqFoMs@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx1VobEmCGntkPRBZOpppvw45bn1daW/Y02ijuAoIPwrB79tqAm
-	bYKzjMpaiDjckNTg4cpduMtSJOgt+tf9OukLoqvKQmN3IDlcQWrSVZHIlYvCvlrE04A=
-X-Gm-Gg: AfdE7ckUokUjVu88tipjI6Tje5AlugfIrZXWOdQotpx7QgXEqEcvXDj7h9eLnRxM39i
-	GxrvSru5qQiwnrW4h7x1dL4VFCI9wXRpsu5H+8RNELaMaNamPvxuMmwLlyZeOumu7m60/wT5O8z
-	NABdXa6gLdLr7kEiixLmyoFxah5647yq5RYvA6pAdL08XNTczmqCdBYekkLZZqtd9LrP9k1pzxB
-	y21TkeSSBf0UM+/o4nAOmQJGwW8/Blp2k+MhjSWzSqysTo/fOWBCKdQqE5+32Z9EBahk4m3fi9i
-	Vkw3s0ENfKbO0IJv8gbnV06zOfbI6qLuhf6/iwIeYrb6v3utYwh++FGSswR3Kqkauaz1/qJId1n
-	pXq1ldG2RDlBHi9FCzUkrF+UX2bn62PeU8SW7mLPnWFiusvuUNe5EIT595YqKCheMZSGwQwtjBB
-	Wr5i04obKeMBvwL/RbwUjsbXH6DIp9sQwgZ4tBaqOmG0LYoONRnQ==
-X-Received: by 2002:a05:6102:d8a:b0:726:8813:2085 with SMTP id ada2fe7eead31-73da95b0c16mr2313018137.13.1782983795017;
-        Thu, 02 Jul 2026 02:16:35 -0700 (PDT)
-Received: from mail-vs1-f43.google.com (mail-vs1-f43.google.com. [209.85.217.43])
-        by smtp.gmail.com with ESMTPSA id a1e0cc1a2514c-9698375705dsm778937241.0.2026.07.02.02.16.33
-        for <linux-arm-msm@vger.kernel.org>
+        d=1e100.net; s=20251104; t=1782983857; x=1783588657;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=HGwAednzqeRxCB22QWUBlMswoWJYl0ScI1kF4jRrqA0=;
+        b=biAUgD15xAJVdxSpXnvXolRtfktB0TIuoXBh3mYZRGAr5BUlwLe4DPvVyhPXxp3SC/
+         it72t8Q+cOfXiOl2ACJp56NNPzw8dp/S8Z2+1s4LX3pWJ5hFkHQRIXJRQB0pSiUA/Fkj
+         B7EPMK5myYkgbxZM55Xt7dNcqrShqJo1xeBsWL+8xGvQijFDWl4KrAJrd1nROQIhvhnz
+         FG0EQc/iJShuNa9nmMWZRLYx0F3T0jiypoI2MBizessaXxkDgDQDeVQnXK7zhccoqqvR
+         CQxVOCq2lo1xkPZU8wE93ZAUZY1lHw51Wg/7K7ZhfD+v8fPwe3+eSH4qaWhy3pqhscH1
+         bfhQ==
+X-Forwarded-Encrypted: i=1; AHgh+RoR5kqAidTsZLh5Yk7ihJcEu47qP6AgFK/ScgjJfYoP2Yu7Tx62b6E8GDPsnf/Su31rbd6D4hHgJxL4RScw@vger.kernel.org
+X-Gm-Message-State: AOJu0YyqzXPzAnhMaSUXrNPypRDEM2KiCSAWEevX3gA5mJwxxifd1cHf
+	KCgx6zhPQruf0j/czeMYWXGNjKGpqORn113leSNdtuzXv3eyqOdt/ADMxWP8f/WzRkp0W88WQtp
+	iaVOqAclgWW/eVj7VXLTAaCm/vq68P9QT9DNAoh8YVGB4x133rz5Yw0Zx3wnu5+inawho
+X-Gm-Gg: AfdE7cmsECIslOV6+2fdHiOuGiyNwOyGPYWrnEJ9PaEKwD51TWWIlQPEP7t9c262xjt
+	NyRqRjlG8WLnKrbB0cW/3a5QYP7UaW8FhLta7URhpgiU8aE9dsmp3mPndBWZ2PbfNIre/TLs6//
+	QQq2vNhlIC/hELFekhuYjDgbQ6AAe1Sjj29xVged8UuV2QLjMP8j8yhgOpXfN7I1Jhk1VdiWDwP
+	oh0CZl7ax3zoELjZbl1OWQGR7HaNaK5BDH4199W8tnaOTj1VmD1jTFIhPdW+mSZ4G3ZtBNispT+
+	mmaUZQ5HWiQ6etthqJROgu98f4bFHLoan+/ptnsuNHp6glqdvEKeVbk9SqLQKPcNNJYQES0ZD33
+	MpjhHBP/bVIumjqQ6bb2QWit0k2mJBJXbiPEznwXFEQnR
+X-Received: by 2002:a05:6a00:2e9b:b0:845:d274:c021 with SMTP id d2e1a72fcca58-847c51dad17mr4176468b3a.58.1782983856822;
+        Thu, 02 Jul 2026 02:17:36 -0700 (PDT)
+X-Received: by 2002:a05:6a00:2e9b:b0:845:d274:c021 with SMTP id d2e1a72fcca58-847c51dad17mr4176424b3a.58.1782983856203;
+        Thu, 02 Jul 2026 02:17:36 -0700 (PDT)
+Received: from [10.217.219.87] ([202.46.22.19])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-847cb985420sm1046311b3a.43.2026.07.02.02.17.32
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 02 Jul 2026 02:16:34 -0700 (PDT)
-Received: by mail-vs1-f43.google.com with SMTP id ada2fe7eead31-737f6e70678so985549137.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Jul 2026 02:16:33 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AHgh+RobZokD2uH5tcnGyCyAG0poIZw6Q1uE/nZO2Y4pis8OIlcYP/xiHWqXj/q/QwQ6XpkruPs+C1bVjLuno9hh@vger.kernel.org
-X-Received: by 2002:a05:6102:1620:b0:62f:46be:8318 with SMTP id
- ada2fe7eead31-73da7681403mr2525301137.6.1782983793184; Thu, 02 Jul 2026
- 02:16:33 -0700 (PDT)
+        Thu, 02 Jul 2026 02:17:35 -0700 (PDT)
+Message-ID: <a107b5ee-1140-4651-b5bf-90e2b793cebe@oss.qualcomm.com>
+Date: Thu, 2 Jul 2026 14:47:31 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260629-qcom-sa8255p-emac-v11-0-1b7fb95b51f9@oss.qualcomm.com>
- <20260629-qcom-sa8255p-emac-v11-1-1b7fb95b51f9@oss.qualcomm.com>
- <CAMuHMdXen+E-Ai51aWBa_KV9W8Fz2cQPpT-FG_kQ7akhrrYa_A@mail.gmail.com>
- <CAMRc=Me3jaZXiXa1sFXr=8Do4sCd+XN1pKTcWC8-0j78SjCkKA@mail.gmail.com>
- <CAMuHMdVUBgG0EFB16OxHisbxx-sBvDKvBPNZdpyDnmBrnX4ptQ@mail.gmail.com>
- <akOZFIowVvprnAMf@vaman> <CAMRc=MfBcOhbj=ETxy2Xz9o_nyzykrEhKAc3jYi6V5_jMZEE3Q@mail.gmail.com>
-In-Reply-To: <CAMRc=MfBcOhbj=ETxy2Xz9o_nyzykrEhKAc3jYi6V5_jMZEE3Q@mail.gmail.com>
-From: Geert Uytterhoeven <geert@linux-m68k.org>
-Date: Thu, 2 Jul 2026 11:16:22 +0200
-X-Gmail-Original-Message-ID: <CAMuHMdXNG=C=XcioQUEN1M7cQgKhO0AxUyg5X+TWb2rQ3-H3fw@mail.gmail.com>
-X-Gm-Features: AVVi8Cef5-UyxrfN1fWvFDcXcIwIbwhU7f5lsircbKpxY8MZwCT2oXalNKmt_xQ
-Message-ID: <CAMuHMdXNG=C=XcioQUEN1M7cQgKhO0AxUyg5X+TWb2rQ3-H3fw@mail.gmail.com>
-Subject: Re: [PATCH net-next v11 1/7] dt-bindings: phy: document the serdes
- PHY on sa8255p
-To: Bartosz Golaszewski <brgl@kernel.org>
-Cc: Vinod Koul <vkoul@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Andrew Lunn <andrew+netdev@lunn.ch>, "David S. Miller" <davem@davemloft.net>, 
-	Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
-	Giuseppe Cavallaro <peppe.cavallaro@st.com>, Chen-Yu Tsai <wens@kernel.org>, 
-	Jernej Skrabec <jernej.skrabec@gmail.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	Kevin Hilman <khilman@baylibre.com>, Jerome Brunet <jbrunet@baylibre.com>, 
-	Shawn Guo <shawnguo@kernel.org>, Fabio Estevam <festevam@gmail.com>, 
-	Jan Petrous <jan.petrous@oss.nxp.com>, s32@nxp.com, 
-	Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>, Romain Gantois <romain.gantois@bootlin.com>, 
-	Magnus Damm <magnus.damm@gmail.com>, Maxime Ripard <mripard@kernel.org>, 
-	Christophe Roullier <christophe.roullier@foss.st.com>, Radu Rendec <rrendec@redhat.com>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, netdev@vger.kernel.org, 
-	linux-stm32@st-md-mailman.stormreply.com, 
-	linux-arm-kernel@lists.infradead.org, Drew Fustini <dfustini@tenstorrent.com>, 
-	linux-sunxi@lists.linux.dev, linux-amlogic@lists.infradead.org, 
-	linux-mips@vger.kernel.org, imx@lists.linux.dev, 
-	linux-renesas-soc@vger.kernel.org, linux-rockchip@lists.infradead.org, 
-	sophgo@lists.linux.dev, linux-riscv@lists.infradead.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] serial: qcom-geni: add force suspend/resume to system
+ sleep callbacks
+To: Praveen Talari <praveen.talari@oss.qualcomm.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Jiri Slaby <jirislaby@kernel.org>, bjorn.andersson@oss.qualcomm.com,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: aniket.randive@oss.qualcomm.com, chandana.chiluveru@oss.qualcomm.com,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-serial@vger.kernel.org
+References: <20260701-add_force_suspend_resume_to_system_sleep_callbacks-v1-1-38c9a721a462@oss.qualcomm.com>
+ <73243e36-175c-4fe3-a448-b30eef9c44ee@oss.qualcomm.com>
+ <4fa2a2ef-90ec-4f06-8611-c508ce0bbec8@oss.qualcomm.com>
+Content-Language: en-US
+From: Mukesh Savaliya <mukesh.savaliya@oss.qualcomm.com>
+In-Reply-To: <4fa2a2ef-90ec-4f06-8611-c508ce0bbec8@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: UwHuAhri4638BkNXVAqif14TZEs61NqR
+X-Authority-Analysis: v=2.4 cv=a4kAM0SF c=1 sm=1 tr=0 ts=6a462cb2 cx=c_pps
+ a=mDZGXZTwRPZaeRUbqKGCBw==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
+ a=ve0Vv3Uji7OJGmRhxeIA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=zc0IvFSfCIW2DFIPzwfm:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAyMDA5NSBTYWx0ZWRfX6s/rN23y6IyE
+ FgWNSahAf/OI8r+9dKB5WddzGRuK7qpFYTbwNaahgwFXesyQAcx6seMAT4CSc0jc1OiybNdpGBt
+ aw2w3spFtrdyhhar2IYQjeg5xDQlchElKsbuOQYiJ65556cgH2hVkIadPapQeawS4o61nGbSCyk
+ S+f0lTEi9mSBCVV88FNTtslvPs1njYQE2Wu6Y6MtHrK/0GWHTl+5BiijulXgPvmR0qFTrJEiHiZ
+ QeDLmNmuX7nPdAnVMV5gwUdzTBT5cJk/UcCxgOpZojLVM0n6pAzYHP+DBQuJ+pvE0kBhLUp+SYf
+ DpHMP93f+94Ltf2zMdVObSQkSFCUxT4hDx6uJPeZrDFtmQvlQs8shWMwt1GMDGpHmDt+iMBMpGp
+ N/MpfJPukA+qdSWxl/OjD0J7XwlkuNcK8I+QvF4+zUz/n7+DmUa4ICfsYJeL3soCNiNg+jFX9a2
+ 90fULscyyTbA8HLezhA==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAyMDA5NSBTYWx0ZWRfXyqtG54R0rvhY
+ MzcBSqJV1dWEXZxmeHb5zoxNqaJTAJr+34UxX823a06sgOroTl4GszihE/FGCBLw5yDa73FtiPf
+ oxF2dXit1QUyOsAqDqrBuUNERNn78xA=
+X-Proofpoint-GUID: UwHuAhri4638BkNXVAqif14TZEs61NqR
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-07-02_01,2026-06-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 clxscore=1015 impostorscore=0 malwarescore=0 adultscore=0
+ suspectscore=0 priorityscore=1501 bulkscore=0 spamscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607020095
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [0.04 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	DMARC_NA(0.00)[linux-m68k.org];
-	TAGGED_FROM(0.00)[bounces-115870-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:brgl@kernel.org,m:vkoul@kernel.org,m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:andrew+netdev@lunn.ch,m:davem@davemloft.net,m:edumazet@google.com,m:kuba@kernel.org,m:pabeni@redhat.com,m:mcoquelin.stm32@gmail.com,m:alexandre.torgue@foss.st.com,m:peppe.cavallaro@st.com,m:wens@kernel.org,m:jernej.skrabec@gmail.com,m:neil.armstrong@linaro.org,m:khilman@baylibre.com,m:jbrunet@baylibre.com,m:shawnguo@kernel.org,m:festevam@gmail.com,m:jan.petrous@oss.nxp.com,m:s32@nxp.com,m:mohd.anwar@oss.qualcomm.com,m:romain.gantois@bootlin.com,m:magnus.damm@gmail.com,m:mripard@kernel.org,m:christophe.roullier@foss.st.com,m:rrendec@redhat.com,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:netdev@vger.kernel.org,m:linux-stm32@st-md-mailman.stormreply.com,m:linux-arm-kernel@lists.infradead.org,m:dfustini@tenstorrent.com,m:linux-sunxi@lists.linux.dev,m:linux-amlogic@list
- s.infradead.org,m:linux-mips@vger.kernel.org,m:imx@lists.linux.dev,m:linux-renesas-soc@vger.kernel.org,m:linux-rockchip@lists.infradead.org,m:sophgo@lists.linux.dev,m:linux-riscv@lists.infradead.org,m:bartosz.golaszewski@linaro.org,m:bartosz.golaszewski@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,m:andrew@lunn.ch,m:mcoquelinstm32@gmail.com,m:jernejskrabec@gmail.com,m:magnusdamm@gmail.com,s:lists@lfdr.de];
-	FORGED_SENDER(0.00)[geert@linux-m68k.org,linux-arm-msm@vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[47];
-	FREEMAIL_CC(0.00)[kernel.org,lunn.ch,davemloft.net,google.com,redhat.com,gmail.com,foss.st.com,st.com,linaro.org,baylibre.com,oss.nxp.com,nxp.com,oss.qualcomm.com,bootlin.com,vger.kernel.org,st-md-mailman.stormreply.com,lists.infradead.org,tenstorrent.com,lists.linux.dev];
 	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	FORWARDED(0.00)[lists@lfdr.de];
+	TAGGED_FROM(0.00)[bounces-115871-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FORGED_SENDER(0.00)[mukesh.savaliya@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS(0.00)[m:praveen.talari@oss.qualcomm.com,m:gregkh@linuxfoundation.org,m:jirislaby@kernel.org,m:bjorn.andersson@oss.qualcomm.com,m:konrad.dybcio@oss.qualcomm.com,m:aniket.randive@oss.qualcomm.com,m:chandana.chiluveru@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-serial@vger.kernel.org,s:lists@lfdr.de];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
-	MISSING_XM_UA(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[6];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[geert@linux-m68k.org,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ALIAS_RESOLVED(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt,netdev];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,vger.kernel.org:from_smtp,qualcomm.com:dkim];
 	TO_DN_SOME(0.00)[];
-	R_DKIM_NA(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[mukesh.savaliya@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	ALIAS_RESOLVED(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[10];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RWL_MAILSPIKE_POSSIBLE(0.00)[104.64.211.4:from];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo,mail.gmail.com:mid,vger.kernel.org:from_smtp,linux-m68k.org:from_mime,linux-m68k.org:email]
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: E92986F5953
+X-Rspamd-Queue-Id: F1FC86F5508
 
-Hi Bartosz,
+Hi Praveen,
 
-On Thu, 2 Jul 2026 at 11:12, Bartosz Golaszewski <brgl@kernel.org> wrote:
-> On Tue, 30 Jun 2026 12:23:16 +0200, Vinod Koul <vkoul@kernel.org> said:
-> > On 29-06-26, 16:51, Geert Uytterhoeven wrote:
-> >> > Russell King asked me to put the PHY logic for SCMI pm domains into the PHY
-> >> > driver instead of the MAC driver where it was previously. Instead of cramming
-> >> > both HLOS and firmware handling into the same driver, I figured it makes more
-> >> > sense to have a dedicated, cleaner driver as the two share very little code (if
-> >> > any).
-> >>
-> >> I think you are mixing up DT bindings and driver implementation?
-> >
-> > Should the bindings change if we have different driver and firmware
-> > implementations? Isn't binding supposed to be agnostic of
-> > implementations..?
->
-> I've thought about it some more and I believe this question is philosophical in
-> nature.
->
-> sa8775p and sa8255p are *the same* hardware. I can flash different firmware on
-> the same Lemans Ride board and it becomes one or the other. Yet they are not
-> described by the same DTS and the bindings differ as well. I don't see why we
-> wouldn't allow the same approach for the this PHY.
->
-> We treat it as different HW variant when it's managed by firmware - just like
-> we do with the rest of the SoC.
+On 7/2/2026 8:18 AM, Praveen Talari wrote:
+[...]
+>>> +     * When no_console_suspend is set the console must remain active
+>>> +     * across system sleep, so skip the force suspend path.
+>>> +     */
+>>> +    if (uart_console(uport) && !uport->suspended)
+>>> +        return 0;
+>> Rather use console_suspend_enabled and take action to go force suspend.
+> In uart_suspend_port(), uport->suspended is updated only after the 
+> console_suspend_enabled check. Therefore, its value directly reflects 
+> whether the console suspend path was taken:
+> 
+> uport->suspended == 0 → the console was not suspended.
+> uport->suspended == 1 → the console was suspended.
+> 
+> Looking at the code below, when console_suspend_enabled is disabled for 
+> a console port, the function returns before setting uport->suspended = 
+> 1. As a result, uport->suspended remains 0, which accurately indicates 
+> that the console was not suspended.
+> Therefore, I believe using uport->suspended is the more appropriate 
+> check here. Please let me know your thoughts.
+> 
 
-DT describes hardware, not software policy.
+I think it would be good to use console_suspend_enabled and take action. 
+Not to depend on after effect of the primary decision maker variable.
 
-Gr{oetje,eeting}s,
+> Code snippet from core layer
+> 
+> int uart_suspend_port(struct uart_driver *drv, struct uart_port *uport)
+> {
+> [...]
+> 
+>      /*
+>       * Nothing to do if the console is not suspending
+>       * except stop_rx to prevent any asynchronous data
+>       * over RX line. However ensure that we will be
+>       * able to Re-start_rx later.
+>       */
+>      if (!console_suspend_enabled && uart_console(uport)) {
+>          if (uport->ops->start_rx) {
+>              guard(uart_port_lock_irq)(uport);
+>              uport->ops->stop_rx(uport);
+>          }
+>          device_set_awake_path(uport->dev);
+>          return 0;
+>      }
+> 
+>      uport->suspended = 1;
+> 
+>      if (tty_port_initialized(port)) {
+> [...]
+> }
+> 
+>> Here, it sounds opposite, if port is resumed, you don't go to suspend 
+>> within suspend function.
+> It is straightforward: uport->suspended remains 0 even after 
+> uart_suspend_port() is called, which indicates that the console has not 
+> been suspended.
+>>> +
+>>> +    return pm_runtime_force_suspend(dev);
+>> Is this really required ? if  uart_suspend_port() successful, what 
+>> will happen with this ?
+> 
+> Yes, this is covered in the commit message. The key point is that 
+> uart_suspend_port() may not trigger the runtime suspend callback if the 
+> runtime-PM usage count remains non-zero. In such cases, 
+> pm_runtime_force_suspend() is needed to ensure that the hardware 
+> resources are properly suspended during system sleep like our i2c/spi 
+> supported.
+> 
+I hardly see any other uart serial driver using 
+pm_runtime_force_suspend(), any do not see serial driver using runtime 
+PM ops directly. That being said, let's covered all use cases/testing 
+with this change.
 
-                        Geert
+>> [...]
+>>
+>>
 
--- 
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
-
-In personal conversations with technical people, I call myself a hacker. But
-when I'm talking to journalists I just say "programmer" or something like that.
-                                -- Linus Torvalds
 
