@@ -1,66 +1,72 @@
-Return-Path: <linux-arm-msm+bounces-116136-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-116137-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id sqwcBK73RmocgAsAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-116136-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Jul 2026 01:43:42 +0200
+	id C06/KJv4RmpZgAsAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-116137-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Jul 2026 01:47:39 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id C26E96FD721
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Jul 2026 01:43:41 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 091506FD7C3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Jul 2026 01:47:39 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=mt60bdGp;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116136-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.232.135.74 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116136-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=UszP4oso;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116137-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116137-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 9A04C304C6CF
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jul 2026 23:42:25 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 784343065A50
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jul 2026 23:42:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 432EB40488C;
-	Thu,  2 Jul 2026 23:41:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2984140D596;
+	Thu,  2 Jul 2026 23:41:09 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B43C3F86EE;
-	Thu,  2 Jul 2026 23:41:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A062403135;
+	Thu,  2 Jul 2026 23:41:08 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783035668; cv=none; b=n03WvUdD3nfzQ39W1uDClD+Lw5OCsxeKH0Sx3288Tvcw8CJX2O7tTrtAS2z8P9uZThaj6bwDqcXWHtb5CnXoJfdoxshXxCvSfq5CO7wcqFZLNN9J3tZK0+Uk8F4GMvTQjwysAF6mOcPgh28qQw6giwqDRTq0utZKpQrYD0+jLo8=
+	t=1783035669; cv=none; b=c6F1uOUhhepCpDMb5m+r+wMSP+kHcI+f+gS4Q+c33Yp4IekgLop2FkhjO0FzS5J2u2UJTBl43rhrG50ND0BCLlZjlEOdk4wAjGV1UKyxu5bR1o14QIle9Nh57D7HIy5niwC1YYsXPqfB9UFUJUo6VlMYYLxPRATSLbY9I1c3WkU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783035668; c=relaxed/simple;
-	bh=oDAuran5rWAUK2aXIW8B4THXnsk2HdpP5XpjNqgeTWM=;
+	s=arc-20240116; t=1783035669; c=relaxed/simple;
+	bh=fjFPVgj7tY8aYPEN1te/sRgssMdYINBeiJkFcM7dq5w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XMwOEugupxraSJ2eBkJ2gK/sgYVi7w/qk6NIDkiUymmmwA7PuAeHjNjD0SrC0oh9DvaED9tHB0GGfnhh977AF6qVUWXJoQQYqtdtukdnElN8TzE0LDIFwLtdfMmDNIxy+crduF0tvmXABkDzblNeUY9UlWsqy0p/KTUTceDRWqE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mt60bdGp; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29B741F00A3F;
+	 MIME-Version:Content-Type; b=mQvUnuatAafd51GvjfIlQaWO5R45yvKzWf+EHjxPmw3Y0mVGAS1qA1vrxooiSxP1Xum2GVAh+OyJk+5asguCe61mVbOJ9MdkJv5Q1whk2QoslHVqFaBuGQxyItQFo03Yt5XfRRXEfhmFY/FsY5fpGblEaynnBrITzH7AMAbdtM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UszP4oso; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F37DA1F000E9;
 	Thu,  2 Jul 2026 23:41:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783035666;
-	bh=bGnmPvJowl+CEcasEwog1BUjCkQ7CQc76zasHkD3eCU=;
+	s=k20260515; t=1783035668;
+	bh=kpoHi09OttcFHOh3Ypl+Vw5oCskxjxxKclcv6CQt0u8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mt60bdGpuRMsyPsTHGLwA9cdBE7H/BKKg/0eGcmI0esZXhS9Rs7qKS5417c6DYB3J
-	 KLIpsNA9iJy9iE2NaM5QUqaJuJEbuczoRR/xbEoYJRuRIlaqtHsKXpsikLOD9YGXEL
-	 MUfDixp603dBJeY8MyEVmBc11AJjMC51AUkG6DvujjqEWe89NPaoS3WRD0YYA8dBGJ
-	 XqxUzjhnULbRmt+/1sSKxR3eOCjLKAXnzfQ1MqNpdTx2Buk5m9p2U9yx/y8oaAAdCg
-	 vCX+bi3yrBf5OFKbGPk5gaOiPGC3SZGogEiWBGWVtvVVt9zlIRcVMkgnnE7RfoQYq4
-	 5HciabU/o1Hog==
+	b=UszP4osoLr+icGnp5fvoeRjktaSW8Emoiyzq0AHRFUz4jmHjTmt82boJGVlIGv2GS
+	 FP/qZS08G/wKYAishCrwfhto7+yB0gR1l4zZ0qp4bCXm8vx1SltKgqWyJZIGdE4ooH
+	 /BALLSQW1FmtXnZjm9jBkK/QFXUsK8shVhqpqFiLif7RJIyUjxAXag3Q3FHbFJyAza
+	 b/gQU6ZPUd922AyFvMfsx0rJ9GrhTpQ3LHlOXtPAsD4dJF0utOMmQzUzpEUe/fimMv
+	 7CrzyCNQ8BBdnM1rzOR+tvoXtT8Yo26hokg1QqqSd8BXoNtqWX6Ecl6kCIN9Fyn7w4
+	 USrwaMfzC4iIQ==
 From: Bjorn Andersson <andersson@kernel.org>
 To: Konrad Dybcio <konradybcio@kernel.org>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Pengyu Luo <mitltlatltl@gmail.com>
+	Andy Gross <agross@kernel.org>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	Stephan Gerhold <stephan@gerhold.net>,
+	Jassi Brar <jassisinghbrar@gmail.com>,
+	Sneh Mankad <sneh.mankad@oss.qualcomm.com>
 Cc: linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: (subset) [PATCH 1/2] arm64: dts: qcom: sc8280xp: add several missing pdc map entries
-Date: Thu,  2 Jul 2026 18:40:41 -0500
-Message-ID: <178303563656.359079.2329248138300631847.b4-ty@kernel.org>
+	linux-kernel@vger.kernel.org,
+	linux-remoteproc@vger.kernel.org,
+	Komal Bajaj <komal.bajaj@oss.qualcomm.com>
+Subject: Re: (subset) [PATCH v3 0/3] Add compatible strings for RPM and mailbox devices for Shikra
+Date: Thu,  2 Jul 2026 18:40:42 -0500
+Message-ID: <178303563642.359079.4771352066753905128.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260419173251.1180026-1-mitltlatltl@gmail.com>
-References: <20260419173251.1180026-1-mitltlatltl@gmail.com>
+In-Reply-To: <20260508-shikra_mailbox_and_rpm_changes-v3-0-698f8e5fb339@oss.qualcomm.com>
+References: <20260508-shikra_mailbox_and_rpm_changes-v3-0-698f8e5fb339@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -70,56 +76,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-5.16 / 15.00];
+X-Spamd-Result: default: False [-3.66 / 15.00];
 	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
+	FORGED_RECIPIENTS(0.00)[m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:agross@kernel.org,m:mathieu.poirier@linaro.org,m:stephan@gerhold.net,m:jassisinghbrar@gmail.com,m:sneh.mankad@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-remoteproc@vger.kernel.org,m:komal.bajaj@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:mitltlatltl@gmail.com,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
-	FREEMAIL_TO(0.00)[kernel.org,gmail.com];
-	FORWARDED(0.00)[lists@lfdr.de];
-	FORGED_SENDER(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
-	TAGGED_FROM(0.00)[bounces-116136-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	FORGED_SENDER(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[14];
+	FREEMAIL_TO(0.00)[kernel.org,linaro.org,gerhold.net,gmail.com,oss.qualcomm.com];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FORWARDED(0.00)[lists@lfdr.de];
+	TAGGED_FROM(0.00)[bounces-116137-lists,linux-arm-msm=lfdr.de];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	RCPT_COUNT_SEVEN(0.00)[8];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	TO_DN_SOME(0.00)[];
 	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,vger.kernel.org:from_smtp]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,vger.kernel.org:from_smtp]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: C26E96FD721
+X-Rspamd-Queue-Id: 091506FD7C3
 
 
-On Mon, 20 Apr 2026 01:32:49 +0800, Pengyu Luo wrote:
-> pdc 215, 256, 257 are missing, but we can find tlmm pin 103, 84, 90
-> are mapped to them respectively, so add the map entries from pdc to
-> gic. These entries are reversed from .data section of qcgpio.sys
+On Fri, 08 May 2026 16:10:45 +0530, Sneh Mankad wrote:
+> Add support for RPM processor, rpm-smd device and APCS IPC device
+> for Shikra by adding appropriate compatibles.
 > 
 > 
 
 Applied, thanks!
 
-[1/2] arm64: dts: qcom: sc8280xp: add several missing pdc map entries
-      commit: 96f65d01f3132a163a8c0e84aca00f2acdc75e9b
-[2/2] arm64: dts: qcom: sc8280xp: gaokun3: correct EC interrupt pin
-      commit: 6267f93eac9aa6963797c5bc1a18de9571ccac26
+[1/3] dt-bindings: soc: qcom: smd-rpm: Add Shikra rpm-smd compatible
+      commit: beb6c1bac2b6e3cc53b1bca918547c8a58be4d3d
 
 Best regards,
 -- 
