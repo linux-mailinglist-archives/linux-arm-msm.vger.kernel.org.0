@@ -1,332 +1,339 @@
-Return-Path: <linux-arm-msm+bounces-115972-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-115973-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id 6TZbNIlORmq3QQsAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-115972-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Jul 2026 13:42:01 +0200
+	id 9ridAKNORmrAQQsAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-115973-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Jul 2026 13:42:27 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7DB6D6F6DC0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Jul 2026 13:42:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 834D46F6DF5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Jul 2026 13:42:26 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=hVSYYrnc;
-	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=Sy0d2lt0;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115972-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c09:e001:a7::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115972-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=reject) header.from=qualcomm.com;
+	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=Zh8gMbcs;
+	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=vtJW1UBj;
+	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=Zh8gMbcs;
+	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=vtJW1UBj;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115973-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c09:e001:a7::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115973-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=none) header.from=suse.de;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 34D7F302067B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jul 2026 11:40:44 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id F0D993030137
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jul 2026 11:40:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C8802451052;
-	Thu,  2 Jul 2026 11:40:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9CCA444D015;
+	Thu,  2 Jul 2026 11:40:40 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46FBF44BCAE
-	for <linux-arm-msm@vger.kernel.org>; Thu,  2 Jul 2026 11:40:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23DB546AF3B
+	for <linux-arm-msm@vger.kernel.org>; Thu,  2 Jul 2026 11:40:38 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782992434; cv=none; b=STlt18++WHV+CYZMOqc16f/yl9g/rZZVDX2TTHspVLkQP4xCZ9HANwstv+d5KovcwGRaF8hAm5dmoSYaYdGeF7xXLuvh2cEh9gjmUosHpuF8Gm8uToi9qFF86mvnAHOhX2eQQb3NSEB0ixKk0xb7d/F8wmObvN2DFm4G0SR4qqY=
+	t=1782992440; cv=none; b=KMDx09WQQ+NBOijKyjrSjr5uXdEfI4NEp4g8XJNaUK5j1PT2R7D41tHqbuaQOH3IWQom7FdZ8Lo5t6RVEvMAl3aCkuASofqoqTFC6x0E5rVO/FBxQM+zMolGj1Iw0bvnsfDs67wWTTbsUkIw2ueIM7Sq5Escxh2pz+1gMGfUzfg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782992434; c=relaxed/simple;
-	bh=mZMDOZsidMvP4Sf7A/yARzoaVsw7RzwuGmMvlmFgEYU=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=cuiP4/MtUgbC/itVXYYzK1uxPJNIinKUwhWmeO28sFqu0V+YZWbV7DILZUizfH1WhChAhT870B92qQxYd8fBIZtLp79DYP/puEL9c28PtE3KPHWrvd9W6RnQlMVzHGimA9hCQb9Prnjw7CV9msD9nq+wC0aNLFvWqvnyHnKG1jI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=hVSYYrnc; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Sy0d2lt0; arc=none smtp.client-ip=205.220.168.131
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6629KsQ04117155
-	for <linux-arm-msm@vger.kernel.org>; Thu, 2 Jul 2026 11:40:32 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	yvIM1HHrlFL0l6iWI8La6WBY7QVoOM4JM/A6nRrd9as=; b=hVSYYrncySxKFDTN
-	+hzAslwBpCCahQW05D7UgP0bmZ5MWcmElkxAfKrXLxyyIYR/gHzl9RkDTxHy+E/s
-	bv9aU0Z6fL5qwHDBMXzkGmRgHwrN2G1pyebXEpT8E5JN0lHRld0K2T01V7mhQ2sy
-	toOJWAiMjGEq5uJaOvblo3FByAXWqfZ/02MlCp2d/ex/UZZPSePU1H/R/1RfhWHx
-	jwIPi+cIhdPdVt8syzSx0Dk3sdePz2qy9cjy9y2vrgIi2JwyY97UIyAmFOVyj+q4
-	lEL7jBG9leeYPHCgkzMHL/0DB3Ok0fIcLzuZ8fpjcuzTH3WM9fvdKAUi4yQa/OL5
-	TUXunA==
-Received: from mail-vk1-f197.google.com (mail-vk1-f197.google.com [209.85.221.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f5n9bggtg-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 02 Jul 2026 11:40:32 +0000 (GMT)
-Received: by mail-vk1-f197.google.com with SMTP id 71dfb90a1353d-5a787be4ee9so2001948e0c.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Jul 2026 04:40:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1782992431; x=1783597231; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=yvIM1HHrlFL0l6iWI8La6WBY7QVoOM4JM/A6nRrd9as=;
-        b=Sy0d2lt09Sjkfh1vDvSUmY67km4SECpmOE2pVWTF/5aGHx2b2RJE4VTGBGoQn/kolJ
-         Gw7GIe66HSVBlBQB5z2Bc2crE2vDAOXINjWDC01m2/Yl7AdlHnUbF/to/z0QsSlu+1Nc
-         yz9XGSpWWoh2Eyrp2X9uq5lo5x8zj1J0x/WcY5Dh5C+ecBqoquj4BM3YgesCDby8gCDq
-         OjOwLH5ztO8fxyGDxYHvZbyVoa0saWknA/Uq27GHqHjdl73ldC28TrC5K4Xt6db6lIm6
-         vzYhRl07uvz15yvBXdNMY/Y4FXK9E12jrrH+UOwjOjmetSZnMM9ILPYIhIkG5jcWhWX/
-         06yQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782992431; x=1783597231;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=yvIM1HHrlFL0l6iWI8La6WBY7QVoOM4JM/A6nRrd9as=;
-        b=WRkBRkJPeRaGuwDv1sr7KHk+xgL4c2gUyQTh77Ora12eQu0Utsa5BCMC5z8x5PjgXO
-         dyLHwbCBMbyXE93RwXEBxMWssXjrFKs0PVk5695cfpmh1uemzUBpxibO1+Dt4YdWf0vU
-         S/YQfE/OaATP1+WDsI3/dHN+56mDTYjKSGKD/QOzSlVOFJ3iuXXAI9a8vDuBGhztHSs7
-         XwglUOr8bWfiYZ2Mkn2Fy87xmWgAtajd7T973myVxi6hL/x92pLMHvV27/1cBJJVvG/n
-         9ES7Zdyv1UmotEB8lxqZtx+E5cfgRkfhyDkNPmZEsT26aQe9HkcV/N1FN3ULZWLsxLrt
-         +SGw==
-X-Gm-Message-State: AOJu0YxuRJ02UgNmtUV47nFY76gQvXvE+7oYPQqlDNLSl+TM3Ui8W9HU
-	T7c4B3VZfXwhmaQKbASIrIAzuQye/KhEUveT8DgPLnjjflzq+3tl5rc9HRo7nLUu2Rs4xSudNWm
-	272U64Wt0vJ6qvUvYRkGpeBmy2QzYfxDjUPONVPpE0SiOfV2ievOh1TEMsS75nPCFXxVl
-X-Gm-Gg: AfdE7cleHbep2XwgT4ExglSNK6oIgRoiMpSj0CTCphyPnDcnCs6m903f6jfNGnTjDyA
-	CqdX9oHUb7t1I/C3Sohtq4iFOJqI1r75ttlriEt2hqRXK1Eh4AZ5xNAUXVm9W6w40ihq+ckbkSV
-	viN8xVmOc+H4aDxXi5GspuzgFmX/TOoh+RzlLf6FAv9+5gww2HBwqar3p+S35u1oeCu+R1icLMC
-	zg4EolLa9yftWZfSRIJcGO7sJPpUItTi6mVOZFDrA1VhDpXldSPVimjA6MXQQ89H4Yn3ZpVHG51
-	xc+x0BPmUut00TWHHabcsyursHGE7i2wOqUVMr/Qa0iuS3TMl/BzZN5VwClggjGTD+BbBGZXqZP
-	fIkXMk56suEgPpXFfRuTYyIMRu+DvcPJTYZRfwxPi0lmE/h6ASStde/BUT1GdxC892BwywWJlTC
-	a7T1LvJ/FFi6jfKujuEQgwaEqf
-X-Received: by 2002:a05:6122:2218:b0:5bd:89bd:3559 with SMTP id 71dfb90a1353d-5bddf69e4aamr2427568e0c.9.1782992431482;
-        Thu, 02 Jul 2026 04:40:31 -0700 (PDT)
-X-Received: by 2002:a05:6122:2218:b0:5bd:89bd:3559 with SMTP id 71dfb90a1353d-5bddf69e4aamr2427553e0c.9.1782992430858;
-        Thu, 02 Jul 2026 04:40:30 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5aec8991affsm626240e87.13.2026.07.02.04.40.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Jul 2026 04:40:29 -0700 (PDT)
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Date: Thu, 02 Jul 2026 14:40:26 +0300
-Subject: [PATCH 2/2] phy: qcom-qusb2: fix autoresume handling
+	s=arc-20240116; t=1782992440; c=relaxed/simple;
+	bh=/KU+qwds20JhaSAHS/0qK/0mpH1n/3CgmSllPI3f0zw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qdu4n0w+XhA4f5Detb6JtdqqXXMm96FCPRLxaa7QJQFqK9VpyC5BpxV1L2z/IK6gSbEUCFzRsRRGsA9dryMu4fd4Qxlm7ZrdaoO1M1vUmvpXrFuk2+fgtbDMZyKqicVdkyZA7FoExj95XuVwlxMnvZk7j0LZ01X5MKHSabAF4yY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=Zh8gMbcs; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=vtJW1UBj; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=Zh8gMbcs; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=vtJW1UBj; arc=none smtp.client-ip=195.135.223.131
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 9145C75B6A;
+	Thu,  2 Jul 2026 11:40:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1782992436; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=cYFKxI5JULp8gb+ekuRNTWlzvX21cjaKiqCcXlOBcMI=;
+	b=Zh8gMbcsGVZsWYcj7s6NxFpfr5kyL+dCesoL+NYZ+EODYF9IH6Hd/X0L9JWcLlDuAVVzRD
+	lkFU6fooAwjkvyipCSd6pYrI7ul5JbqcH2WSEGXi2kMhtzt1GEarB+i/bLdIQKj10vBGbz
+	EhZtRvw0lzIZvhvJ2rPwW99GAu7sGKs=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1782992436;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=cYFKxI5JULp8gb+ekuRNTWlzvX21cjaKiqCcXlOBcMI=;
+	b=vtJW1UBjyxnbfNoeO2SWUq2seB26JDH9poeuyJMl+C0R4u0Xqidess1m7AhGShw5crqNPY
+	FyMzXeg34AXEWFBA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1782992436; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=cYFKxI5JULp8gb+ekuRNTWlzvX21cjaKiqCcXlOBcMI=;
+	b=Zh8gMbcsGVZsWYcj7s6NxFpfr5kyL+dCesoL+NYZ+EODYF9IH6Hd/X0L9JWcLlDuAVVzRD
+	lkFU6fooAwjkvyipCSd6pYrI7ul5JbqcH2WSEGXi2kMhtzt1GEarB+i/bLdIQKj10vBGbz
+	EhZtRvw0lzIZvhvJ2rPwW99GAu7sGKs=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1782992436;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=cYFKxI5JULp8gb+ekuRNTWlzvX21cjaKiqCcXlOBcMI=;
+	b=vtJW1UBjyxnbfNoeO2SWUq2seB26JDH9poeuyJMl+C0R4u0Xqidess1m7AhGShw5crqNPY
+	FyMzXeg34AXEWFBA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 16BA4779AA;
+	Thu,  2 Jul 2026 11:40:32 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id 1gA3AjBORmrpAgAAD6G6ig
+	(envelope-from <pfalcato@suse.de>); Thu, 02 Jul 2026 11:40:32 +0000
+Date: Thu, 2 Jul 2026 12:40:30 +0100
+From: Pedro Falcato <pfalcato@suse.de>
+To: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>, 
+	Russell King <linux@armlinux.org.uk>, Dinh Nguyen <dinguyen@kernel.org>, 
+	Simon Schuster <schuster.simon@siemens-energy.com>, 
+	"James E . J . Bottomley" <James.Bottomley@hansenpartnership.com>, Helge Deller <deller@gmx.de>, 
+	Jarkko Sakkinen <jarkko@kernel.org>, Thomas Gleixner <tglx@kernel.org>, 
+	Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>, 
+	Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org, Ian Abbott <abbotti@mev.co.uk>, 
+	H Hartley Sweeten <hsweeten@visionengravers.com>, Lucas Stach <l.stach@pengutronix.de>, 
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+	Patrik Jakobsson <patrik.r.jakobsson@gmail.com>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+	Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>, 
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>, Thierry Reding <thierry.reding@kernel.org>, 
+	Mikko Perttunen <mperttunen@nvidia.com>, Jonathan Hunter <jonathanh@nvidia.com>, 
+	Christian Koenig <christian.koenig@amd.com>, Huang Rui <ray.huang@amd.com>, Ankit Agrawal <ankita@nvidia.com>, 
+	Alex Williamson <alex@shazbot.org>, Alexander Viro <viro@zeniv.linux.org.uk>, 
+	Christian Brauner <brauner@kernel.org>, Dan Williams <djbw@kernel.org>, 
+	Muchun Song <muchun.song@linux.dev>, Oscar Salvador <osalvador@suse.de>, 
+	David Hildenbrand <david@kernel.org>, Suren Baghdasaryan <surenb@google.com>, 
+	"Liam R . Howlett" <liam@infradead.org>, Matthew Wilcox <willy@infradead.org>, 
+	Marek Szyprowski <m.szyprowski@samsung.com>, Peter Zijlstra <peterz@infradead.org>, 
+	Arnaldo Carvalho de Melo <acme@kernel.org>, Namhyung Kim <namhyung@kernel.org>, 
+	Masami Hiramatsu <mhiramat@kernel.org>, Oleg Nesterov <oleg@redhat.com>, 
+	Steven Rostedt <rostedt@goodmis.org>, SeongJae Park <sj@kernel.org>, Miaohe Lin <linmiaohe@huawei.com>, 
+	Hugh Dickins <hughd@google.com>, Mike Rapoport <rppt@kernel.org>, Kees Cook <kees@kernel.org>, 
+	Paolo Bonzini <pbonzini@redhat.com>, linux-kernel@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-parisc@vger.kernel.org, linux-sgx@vger.kernel.org, 
+	etnaviv@lists.freedesktop.org, dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
+	freedreno@lists.freedesktop.org, linux-tegra@vger.kernel.org, kvm@vger.kernel.org, 
+	linux-fsdevel@vger.kernel.org, nvdimm@lists.linux.dev, linux-mm@kvack.org, 
+	iommu@lists.linux.dev, linux-perf-users@vger.kernel.org, 
+	linux-trace-kernel@vger.kernel.org, kasan-dev@googlegroups.com, damon@lists.linux.dev, 
+	Rik van Riel <riel@surriel.com>, Harry Yoo <harry@kernel.org>, Jann Horn <jannh@google.com>
+Subject: Re: [PATCH 27/30] mm/vma: correct incorrect vma.h inclusion
+Message-ID: <akZNiN5Y9fPk8bZH@pedro-suse.lan>
+References: <cover.1782735110.git.ljs@kernel.org>
+ <22d0f4e3fe11f6fd1312734e242d008267ad142c.1782735110.git.ljs@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260702-fix-qusb2-v1-2-b5cf55621524@oss.qualcomm.com>
-References: <20260702-fix-qusb2-v1-0-b5cf55621524@oss.qualcomm.com>
-In-Reply-To: <20260702-fix-qusb2-v1-0-b5cf55621524@oss.qualcomm.com>
-To: Vinod Koul <vkoul@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>,
-        Kathiravan T <quic_kathirav@quicinc.com>,
-        Baruch Siach <baruch@tkos.co.il>, Dmitry Baryshkov <lumag@kernel.org>,
-        Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-kernel@vger.kernel.org
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5398;
- i=dmitry.baryshkov@oss.qualcomm.com; h=from:subject:message-id;
- bh=mZMDOZsidMvP4Sf7A/yARzoaVsw7RzwuGmMvlmFgEYU=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBqRk4phLT9hZHptz2O7KfLs3K9OZFhzyFpChdtF
- KYg0OYYms2JATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCakZOKQAKCRCLPIo+Aiko
- 1Q6/CACPuzxmqJ8UhIx9wTczhBRB6KVAqPOWFo1rWA5GjmYW7pDcCDuZhNC38MIJODmpfv6JQwc
- PkfFi2f4NX73BeWYfoDu9wMHqHtKaNmA9M2VDYeA14HIqY4spEk/tdL6z6M6FE+1fPtIT0HlmY2
- Bir8p3rB22cZWKyxa661hl0tXO+v5/29ObXngPsxr2AgGCGg3Dj4z8eUzZReDwiMafJI+tFbX1O
- ElwbXFn8rjH34xKOYYAUbOgEGs+OU4eqP4DaGennA9J8fJgSqhAdhad1DBVKfnDnEBZCwvdy8FY
- DrvVMYecwApMUzVoSL7F33fJtMo9bKSvNx6LbwYx+7I5h0Ao
-X-Developer-Key: i=dmitry.baryshkov@oss.qualcomm.com; a=openpgp;
- fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
-X-Proofpoint-ORIG-GUID: Lo0PgOvWWc1YFpw2qfdlwrl7v3-_5LG_
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAyMDEyMSBTYWx0ZWRfX34W9Oniuc52F
- 0kmO7YNjGAZrv8XnQA7w4R27fr79vOe3NKw0UvkBhdtmIS50M3qid271OP2S2E5mgBPrGUS5rZQ
- Wg6QlqhX+wAoRBO+encXrt4Z5xQB9zU=
-X-Proofpoint-GUID: Lo0PgOvWWc1YFpw2qfdlwrl7v3-_5LG_
-X-Authority-Analysis: v=2.4 cv=bOom5v+Z c=1 sm=1 tr=0 ts=6a464e30 cx=c_pps
- a=JIY1xp/sjQ9K5JH4t62bdg==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22 a=EUspDBNiAAAA:8
- a=6YfJv8JmAF87wY5fNyEA:9 a=QEXdDO2ut3YA:10 a=tNoRWFLymzeba-QzToBc:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAyMDEyMSBTYWx0ZWRfXyXXRnWH3ygo4
- LC/p6jC8SSqXiM22a07FU8/I+XHQrkDTCI+4aUWXpunmc6OhAxM18Aq5I2NigOBzG1pRGmxuqV8
- cuOdhf0mkmvs/vaY5g7l69VYlm87woXJEHiSStpBfk0Y6313EIl+vmNCifBUV1O1AAL+4UcBiOz
- naMjEN7+gK5FQK/0jaMSouNyRky/+bshnWgmHpVRVq1Md30j7e70kwG/uIWUQODwppIiA7H/3aA
- npyhqGCNjjRDeUgUHvUL/UEbS90tWbJwDJTCU2nAfujGiSLHJxh3KrnvG+F/F8hrM9txRsyzqNl
- hA22nTMa6hbBAkBoouOx65qfyciJc0QfKqOnNMg4RB5nzokiuTZaMAIWTEJlN6xZntKSSWAgF07
- MT3okqDHijqbhwjEI7Teb860rVbsOReUzv+DDwcEX58xgOGfR+P/3M9qAnZ7gm7iBs+iacxcZON
- 5WjOVTVIwaRuxH6vqyA==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-07-02_01,2026-06-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 bulkscore=0 adultscore=0 clxscore=1015 suspectscore=0
- phishscore=0 priorityscore=1501 impostorscore=0 malwarescore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607020121
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <22d0f4e3fe11f6fd1312734e242d008267ad142c.1782735110.git.ljs@kernel.org>
+X-Spam-Flag: NO
+X-Spam-Score: -2.80
+X-Spam-Level: 
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	DMARC_POLICY_ALLOW(-0.50)[suse.de,none];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	FORWARDED(0.00)[lists@lfdr.de];
-	TAGGED_FROM(0.00)[bounces-115972-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_CC(0.00)[linux-foundation.org,armlinux.org.uk,kernel.org,siemens-energy.com,hansenpartnership.com,gmx.de,redhat.com,alien8.de,linux.intel.com,mev.co.uk,visionengravers.com,pengutronix.de,gmail.com,ffwll.ch,suse.de,oss.qualcomm.com,ideasonboard.com,nvidia.com,amd.com,shazbot.org,zeniv.linux.org.uk,linux.dev,google.com,infradead.org,samsung.com,goodmis.org,huawei.com,vger.kernel.org,lists.infradead.org,lists.freedesktop.org,lists.linux.dev,kvack.org,googlegroups.com,surriel.com];
+	TAGGED_FROM(0.00)[bounces-115973-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_SENDER(0.00)[dmitry.baryshkov@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS(0.00)[m:vkoul@kernel.org,m:neil.armstrong@linaro.org,m:quic_kathirav@quicinc.com,m:baruch@tkos.co.il,m:lumag@kernel.org,m:krishna.kurapati@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:linux-phy@lists.infradead.org,m:linux-kernel@vger.kernel.org,s:lists@lfdr.de];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,vger.kernel.org:from_smtp,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:from_mime,qualcomm.com:dkim,qualcomm.com:email];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[dmitry.baryshkov@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
+	FORGED_SENDER(0.00)[pfalcato@suse.de,linux-arm-msm@vger.kernel.org];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_RECIPIENTS(0.00)[m:ljs@kernel.org,m:akpm@linux-foundation.org,m:linux@armlinux.org.uk,m:dinguyen@kernel.org,m:schuster.simon@siemens-energy.com,m:James.Bottomley@hansenpartnership.com,m:deller@gmx.de,m:jarkko@kernel.org,m:tglx@kernel.org,m:mingo@redhat.com,m:bp@alien8.de,m:dave.hansen@linux.intel.com,m:x86@kernel.org,m:abbotti@mev.co.uk,m:hsweeten@visionengravers.com,m:l.stach@pengutronix.de,m:airlied@gmail.com,m:simona@ffwll.ch,m:patrik.r.jakobsson@gmail.com,m:maarten.lankhorst@linux.intel.com,m:mripard@kernel.org,m:tzimmermann@suse.de,m:robin.clark@oss.qualcomm.com,m:lumag@kernel.org,m:tomi.valkeinen@ideasonboard.com,m:thierry.reding@kernel.org,m:mperttunen@nvidia.com,m:jonathanh@nvidia.com,m:christian.koenig@amd.com,m:ray.huang@amd.com,m:ankita@nvidia.com,m:alex@shazbot.org,m:viro@zeniv.linux.org.uk,m:brauner@kernel.org,m:djbw@kernel.org,m:muchun.song@linux.dev,m:osalvador@suse.de,m:david@kernel.org,m:surenb@google.com,m:liam@infradead.org,m:willy@infradead.org,m:m.szyprow
+ ski@samsung.com,m:peterz@infradead.org,m:acme@kernel.org,m:namhyung@kernel.org,m:mhiramat@kernel.org,m:oleg@redhat.com,m:rostedt@goodmis.org,m:sj@kernel.org,m:linmiaohe@huawei.com,m:hughd@google.com,m:rppt@kernel.org,m:kees@kernel.org,m:pbonzini@redhat.com,m:linux-kernel@vger.kernel.org,m:linux-arm-kernel@lists.infradead.org,m:linux-parisc@vger.kernel.org,m:linux-sgx@vger.kernel.org,m:etnaviv@lists.freedesktop.org,m:dri-devel@lists.freedesktop.org,m:linux-arm-msm@vger.kernel.org,m:freedreno@lists.freedesktop.org,m:linux-tegra@vger.kernel.org,m:kvm@vger.kernel.org,m:linux-fsdevel@vger.kernel.org,m:nvdimm@lists.linux.dev,m:linux-mm@kvack.org,m:iommu@lists.linux.dev,m:linux-perf-users@vger.kernel.org,m:linux-trace-kernel@vger.kernel.org,m:kasan-dev@googlegroups.com,m:damon@lists.linux.dev,m:riel@surriel.com,m:harry@kernel.org,m:jannh@google.com,m:patrikrjakobsson@gmail.com,s:lists@lfdr.de];
+	FORWARDED(0.00)[lists@lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[suse.de:+];
 	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	MISSING_XM_UA(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[6];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[pfalcato@suse.de,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCPT_COUNT_GT_50(0.00)[75];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	TO_DN_SOME(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[9];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCVD_COUNT_SEVEN(0.00)[7]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,pedro-suse.lan:mid,suse.de:dkim,suse.de:email,suse.de:from_mime,sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 7DB6D6F6DC0
+X-Rspamd-Queue-Id: 834D46F6DF5
 
-There is a confusion regarding the autoresume bit. Some verions of the
-QUSB2 PHY have it in the TEST1 register, while on the others it is a
-part of the TEST_CTRL register. When adding support for autoresume bit,
-the code attempted to simplify the handling of those registers, putting
-both registers to the TEST1 layout entry. In the end,
-ipq6018_regs_layout ended up correctly definig TEST1 register at 0x98
-(because platforms using that layout didn't use autoresume), while
-msm8996_regs_layout used TEST_CTRL offset (0xb8) for the TEST1
-layout entry.
+On Mon, Jun 29, 2026 at 01:23:38PM +0100, Lorenzo Stoakes wrote:
+> The only files which should be including vma.h are the implementation files
+> for the core VMA logic - vma.c, vma_init.c, and vma_exec.c.
+> 
+> This is in order to allow for userland testing of core VMA logic. In this
+> cases, vma_internal.h and vma.h are included, providing both the
+> dependencies upon which the core VMA logic requires and its declarations.
+> 
+> Userland testable VMA logic is achieved by having separate vma_internal.h
+> implementations for userland and kernel.
+> 
+> Callers other than the core VMA implementation should include internal.h
+> instead. This header does not need to include vma_internal.h as it only
+> contains the vma.h declarations, for which the includes already present
+> suffice.
+> 
+> Update code to reflect this, update comments to reflect the fact there are
+> 3 VMA implementation files and document things more clearly.
+> 
+> While we're here, slightly improve the language of the comment describing
+> vma_exec.c.
 
-Update the platform data to specify the register to be used for
-autoresume handling, define both TEST1 and TEST_CTRL registers and merge
-ipq6018_regs_layout and msm8996_regs_layout which become identical
-afterwards.
+Two random thoughts:
+1) perhaps vma.h -> vma_private.h
+2) https://lore.kernel.org/all/CAHk-=wghMm2c+AYEcwYY7drSVXB27DYqc-ZXpFiq=XFs-w59wA@mail.gmail.com/
+   mm/vma/whatever.c :) would PROBABLY solve the issue of people snooping vma.h
 
-Fixes: 891a96f65ac3 ("phy: qcom-qusb2: Add support for runtime PM")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
----
- drivers/phy/qualcomm/phy-qcom-qusb2.c | 38 +++++++++++++++++------------------
- 1 file changed, 18 insertions(+), 20 deletions(-)
+> 
+> No functional change intended.
+> 
+> Signed-off-by: Lorenzo Stoakes <ljs@kernel.org>
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qusb2.c b/drivers/phy/qualcomm/phy-qcom-qusb2.c
-index 1109c480843e..ff3bc8fc2f18 100644
---- a/drivers/phy/qualcomm/phy-qcom-qusb2.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qusb2.c
-@@ -131,6 +131,7 @@ enum qusb2phy_reg_layout {
- 	QUSB2PHY_PORT_TUNE5,
- 	QUSB2PHY_PORT_TEST1,
- 	QUSB2PHY_PORT_TEST2,
-+	QUSB2PHY_PORT_TEST_CTRL,
- 	QUSB2PHY_PORT_POWERDOWN,
- 	QUSB2PHY_INTR_CTRL,
- };
-@@ -164,19 +165,6 @@ static const struct qusb2_phy_init_tbl qcs615_init_tbl[] = {
- 	QUSB2_PHY_INIT_CFG(QUSB2PHY_PLL_PWR_CTRL, 0x00),
- };
- 
--static const unsigned int ipq6018_regs_layout[] = {
--	[QUSB2PHY_PLL_STATUS]              = 0x38,
--	[QUSB2PHY_PORT_TUNE1]              = 0x80,
--	[QUSB2PHY_PORT_TUNE2]              = 0x84,
--	[QUSB2PHY_PORT_TUNE3]              = 0x88,
--	[QUSB2PHY_PORT_TUNE4]              = 0x8C,
--	[QUSB2PHY_PORT_TUNE5]              = 0x90,
--	[QUSB2PHY_PORT_TEST1]              = 0x98,
--	[QUSB2PHY_PORT_TEST2]              = 0x9C,
--	[QUSB2PHY_PORT_POWERDOWN]          = 0xB4,
--	[QUSB2PHY_INTR_CTRL]               = 0xBC,
--};
--
- static const unsigned int msm8996_regs_layout[] = {
- 	[QUSB2PHY_PLL_STATUS]		= 0x38,
- 	[QUSB2PHY_PORT_TUNE1]		= 0x80,
-@@ -184,8 +172,9 @@ static const unsigned int msm8996_regs_layout[] = {
- 	[QUSB2PHY_PORT_TUNE3]		= 0x88,
- 	[QUSB2PHY_PORT_TUNE4]		= 0x8c,
- 	[QUSB2PHY_PORT_TUNE5]		= 0x90,
--	[QUSB2PHY_PORT_TEST1]		= 0xb8,
-+	[QUSB2PHY_PORT_TEST1]		= 0x98,
- 	[QUSB2PHY_PORT_TEST2]		= 0x9c,
-+	[QUSB2PHY_PORT_TEST_CTRL]	= 0xb8,
- 	[QUSB2PHY_PORT_POWERDOWN]	= 0xb4,
- 	[QUSB2PHY_INTR_CTRL]		= 0xbc,
- };
-@@ -294,6 +283,7 @@ struct qusb2_phy_cfg {
- 	unsigned int mask_core_ready;
- 	unsigned int disable_ctrl;
- 	unsigned int autoresume_en;
-+	bool autoresume_in_test_ctrl;
- 
- 	/* true if PHY has PLL_TEST register to select clk_scheme */
- 	bool has_pll_test;
-@@ -318,6 +308,7 @@ static const struct qusb2_phy_cfg msm8996_phy_cfg = {
- 	.disable_ctrl	= (CLAMP_N_EN | FREEZIO_N | POWER_DOWN),
- 	.mask_core_ready = PLL_LOCKED,
- 	.autoresume_en	 = BIT(3),
-+	.autoresume_in_test_ctrl = true,
- };
- 
- static const struct qusb2_phy_cfg msm8998_phy_cfg = {
-@@ -336,7 +327,7 @@ static const struct qusb2_phy_cfg msm8998_phy_cfg = {
- static const struct qusb2_phy_cfg ipq6018_phy_cfg = {
- 	.tbl            = ipq6018_init_tbl,
- 	.tbl_num        = ARRAY_SIZE(ipq6018_init_tbl),
--	.regs           = ipq6018_regs_layout,
-+	.regs           = msm8996_regs_layout,
- 
- 	.disable_ctrl   = POWER_DOWN,
- 	.mask_core_ready = PLL_LOCKED,
-@@ -347,7 +338,7 @@ static const struct qusb2_phy_cfg ipq6018_phy_cfg = {
- static const struct qusb2_phy_cfg qcs615_phy_cfg = {
- 	.tbl            = qcs615_init_tbl,
- 	.tbl_num        = ARRAY_SIZE(qcs615_init_tbl),
--	.regs           = ipq6018_regs_layout,
-+	.regs           = msm8996_regs_layout,
- 
- 	.disable_ctrl   = (CLAMP_N_EN | FREEZIO_N | POWER_DOWN),
- 	.mask_core_ready = PLL_LOCKED,
-@@ -379,6 +370,7 @@ static const struct qusb2_phy_cfg sdm660_phy_cfg = {
- 	.disable_ctrl	= (CLAMP_N_EN | FREEZIO_N | POWER_DOWN),
- 	.mask_core_ready = PLL_LOCKED,
- 	.autoresume_en	 = BIT(3),
-+	.autoresume_in_test_ctrl = true,
- };
- 
- static const struct qusb2_phy_cfg sm6115_phy_cfg = {
-@@ -391,6 +383,7 @@ static const struct qusb2_phy_cfg sm6115_phy_cfg = {
- 	.disable_ctrl	= (CLAMP_N_EN | FREEZIO_N | POWER_DOWN),
- 	.mask_core_ready = PLL_LOCKED,
- 	.autoresume_en	 = BIT(3),
-+	.autoresume_in_test_ctrl = true,
- };
- 
- static const char * const qusb2_phy_vreg_names[] = {
-@@ -678,11 +671,16 @@ static int __maybe_unused qusb2_phy_runtime_suspend(struct device *dev)
- 
- 	/* enable phy auto-resume only if device is connected on bus */
- 	if (qphy->mode != PHY_MODE_INVALID && cfg->autoresume_en) {
--		qusb2_setbits(qphy->base, cfg->regs[QUSB2PHY_PORT_TEST1],
--			      cfg->autoresume_en);
-+		unsigned int reg;
-+
-+		if (cfg->autoresume_in_test_ctrl)
-+			reg = cfg->regs[QUSB2PHY_PORT_TEST_CTRL];
-+		else
-+			reg = cfg->regs[QUSB2PHY_PORT_TEST1];
-+
-+		qusb2_setbits(qphy->base, reg, cfg->autoresume_en);
- 		/* Autoresume bit has to be toggled in order to enable it */
--		qusb2_clrbits(qphy->base, cfg->regs[QUSB2PHY_PORT_TEST1],
--			      cfg->autoresume_en);
-+		qusb2_clrbits(qphy->base, reg, cfg->autoresume_en);
- 	}
- 
- 	if (!qphy->has_se_clk_scheme)
+Reviewed-by: Pedro Falcato <pfalcato@suse.de>
+
+> ---
+>  mm/mmu_notifier.c | 2 +-
+>  mm/nommu.c        | 1 -
+>  mm/vma.c          | 4 ++++
+>  mm/vma.h          | 9 ++++++++-
+>  mm/vma_exec.c     | 8 ++++++--
+>  mm/vma_init.c     | 4 ++++
+>  mm/vma_internal.h | 4 ++--
+>  7 files changed, 25 insertions(+), 7 deletions(-)
+> 
+> diff --git a/mm/mmu_notifier.c b/mm/mmu_notifier.c
+> index 245b74f39f91..df69ba6e797f 100644
+> --- a/mm/mmu_notifier.c
+> +++ b/mm/mmu_notifier.c
+> @@ -19,7 +19,7 @@
+>  #include <linux/sched/mm.h>
+>  #include <linux/slab.h>
+>  
+> -#include "vma.h"
+> +#include "internal.h"
+>  
+>  /* global SRCU for all MMs */
+>  DEFINE_STATIC_SRCU(srcu);
+> diff --git a/mm/nommu.c b/mm/nommu.c
+> index ba1c923c0942..4fef6fbbd6e9 100644
+> --- a/mm/nommu.c
+> +++ b/mm/nommu.c
+> @@ -41,7 +41,6 @@
+>  #include <asm/tlbflush.h>
+>  #include <asm/mmu_context.h>
+>  #include "internal.h"
+> -#include "vma.h"
+>  
+>  unsigned long highest_memmap_pfn;
+>  int heap_stack_gap = 0;
+> diff --git a/mm/vma.c b/mm/vma.c
+> index d727150e377a..5c3062e0e706 100644
+> --- a/mm/vma.c
+> +++ b/mm/vma.c
+> @@ -4,6 +4,10 @@
+>   * VMA-specific functions.
+>   */
+>  
+> +/*
+> + * To allow for userland testing we place internal dependencies in
+> + * vma_internal.h and external VMA API declarations in vma.h.
+> + */
+>  #include "vma_internal.h"
+>  #include "vma.h"
+>  
+> diff --git a/mm/vma.h b/mm/vma.h
+> index 155eadda47aa..f4f885615a92 100644
+> --- a/mm/vma.h
+> +++ b/mm/vma.h
+> @@ -2,7 +2,14 @@
+>  /*
+>   * vma.h
+>   *
+> - * Core VMA manipulation API implemented in vma.c.
+> + * Core VMA manipulation API implemented in vma.c, vma_init.c and vma_exec.c.
+> + *
+> + * Note that, in order for VMA logic to be userland testable, this header
+> + * intentionally includes no dependencies.
+> + *
+> + * This is specifically scoped to mm-only. Users of this functionality (other
+> + * than the core VMA implementation itself) should not include this header
+> + * directly, but rather include internal.h.
+>   */
+>  #ifndef __MM_VMA_H
+>  #define __MM_VMA_H
+> diff --git a/mm/vma_exec.c b/mm/vma_exec.c
+> index 0107a6e3918c..c0f7ba2cfb27 100644
+> --- a/mm/vma_exec.c
+> +++ b/mm/vma_exec.c
+> @@ -1,10 +1,14 @@
+>  // SPDX-License-Identifier: GPL-2.0-only
+>  
+>  /*
+> - * Functions explicitly implemented for exec functionality which however are
+> - * explicitly VMA-only logic.
+> + * Functions provided for exec functionality which however are
+> + * specifically VMA-only logic.
+>   */
+>  
+> +/*
+> + * To allow for userland testing we place internal dependencies in
+> + * vma_internal.h and external VMA API declarations in vma.h.
+> + */
+>  #include "vma_internal.h"
+>  #include "vma.h"
+>  
+> diff --git a/mm/vma_init.c b/mm/vma_init.c
+> index a459669a1654..715feee283f0 100644
+> --- a/mm/vma_init.c
+> +++ b/mm/vma_init.c
+> @@ -5,6 +5,10 @@
+>   * between CONFIG_MMU and non-CONFIG_MMU kernel configurations.
+>   */
+>  
+> +/*
+> + * To allow for userland testing we place internal dependencies in
+> + * vma_internal.h and external VMA API declarations in vma.h.
+> + */
+>  #include "vma_internal.h"
+>  #include "vma.h"
+>  
+> diff --git a/mm/vma_internal.h b/mm/vma_internal.h
+> index 2da6d224c1a8..4d300e7bbaf4 100644
+> --- a/mm/vma_internal.h
+> +++ b/mm/vma_internal.h
+> @@ -2,8 +2,8 @@
+>  /*
+>   * vma_internal.h
+>   *
+> - * Headers required by vma.c, which can be substituted accordingly when testing
+> - * VMA functionality.
+> + * Headers required by vma.c, vma_init.c and vma_exec.c, which can be
+> + * substituted accordingly when testing VMA functionality.
+>   */
+>  
+>  #ifndef __MM_VMA_INTERNAL_H
+> -- 
+> 2.54.0
+> 
 
 -- 
-2.47.3
-
+Pedro
 
