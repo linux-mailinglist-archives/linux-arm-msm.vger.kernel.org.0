@@ -1,121 +1,92 @@
-Return-Path: <linux-arm-msm+bounces-116010-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-116011-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id S6i5B4hWRmphRAsAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-116010-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Jul 2026 14:16:08 +0200
+	id gRNJJc1bRmpzRgsAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-116011-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Jul 2026 14:38:37 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0F3316F76D3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Jul 2026 14:16:07 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3150D6F7B71
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Jul 2026 14:38:37 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=UlTzxC5j;
-	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=ZmY3dknn;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116010-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116010-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=reject) header.from=qualcomm.com;
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=YfjRFUXE;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116011-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116011-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id E25AC305E48E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jul 2026 12:15:22 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 4F315301D044
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jul 2026 12:17:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2AC7C47DD65;
-	Thu,  2 Jul 2026 12:15:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BB8DF47CC69;
+	Thu,  2 Jul 2026 12:17:01 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCFAE47CC70
-	for <linux-arm-msm@vger.kernel.org>; Thu,  2 Jul 2026 12:15:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 754183563F0;
+	Thu,  2 Jul 2026 12:17:00 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782994519; cv=none; b=gQLjmgkgtNdsw9uaIyr7pxG9Ff879jVXjK1A5Vie1QMtGaT/uAXMC/yIhm9cvOJFGpOxf/ERPLZ3K7186Xfn+qXnawrimeer/d3nVL3ktWNToG9ZblLPTu0WF8ap/FVIRtKjfyOkAmfVFSza+PRI5F4wTeqjRqfswp4Ud7kVA5I=
+	t=1782994621; cv=none; b=g4d5Szp9beIcBwuLfCCrsLMt1eqsKNgy6Og5esqhT4CGJoGgzb5yF03AzAkMjoLF+Qq/jBlaYHZ+dGebXaUpbKZUb/DAwAC61nxn2USpDxcOEDeuZ5YIhLdSSTsrXkEHw1zczwM7rhtUFLdEro8baufWUOlWBHa0gUL+vQmir4Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782994519; c=relaxed/simple;
-	bh=3MllCn5BW2jrVs3X10aZDREK9qNt2/q4oENR3SMY8Qk=;
+	s=arc-20240116; t=1782994621; c=relaxed/simple;
+	bh=4h/zoa0EO0oEjCowB1soFdJQhwwlc7WmH55lSMsp9ng=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BjmFUCIswqhCucZMQ2Qb42H6d1Z2a7629KsLWwkEBi0Cwwokz8vYpsfKxzFO2HXRqXfDp4rQ/JdXA1JEOX4reRUD1mihqz1SAskyI3KulwH2+v4KHeX9EAPiiYITuvAIMiXg/esXv6f2Hmmfl243mMgbW4VGOXAI0V62dhgzMjk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=UlTzxC5j; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=ZmY3dknn; arc=none smtp.client-ip=205.220.180.131
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 662AWWx93460384
-	for <linux-arm-msm@vger.kernel.org>; Thu, 2 Jul 2026 12:15:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=VDGgtPcQYtpiwnqPVv2kEVYa
-	FPC5xtBpVIXV+o0dHpE=; b=UlTzxC5jRcDHV4OgshrD3hyQkpLBL93a6jgb/d3q
-	Bf97kKBx8jxKZ30pm6uEUUoN0Boi+eE93hmGy2deef58KLPO96uHzJvw/FGnil89
-	71F5yijgnZxZtd5nUxwGGekWPdYUaj9CHaFbXUHCpxLSKsDnZQ8WgxNyRt+71omd
-	nEIoUPteLadDEFUXCurmxDWW+hmho1icFKly5EBePvmFiaIUxVZ0FWht7TlgWczt
-	uO8TBRuShIneYDrf37slY5a0AMiSDuh7Kyu8E2x41YphnNSYLbIHj96xoKpWYfUt
-	3/gOHAykmG94PWkZvBn0bgTzIxYDQ1NDr7mujtHnnV9oBw==
-Received: from mail-vk1-f199.google.com (mail-vk1-f199.google.com [209.85.221.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f5gmb1snp-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 02 Jul 2026 12:15:15 +0000 (GMT)
-Received: by mail-vk1-f199.google.com with SMTP id 71dfb90a1353d-5af6d1a2c32so2177574e0c.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Jul 2026 05:15:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1782994515; x=1783599315; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=VDGgtPcQYtpiwnqPVv2kEVYaFPC5xtBpVIXV+o0dHpE=;
-        b=ZmY3dknnwbqNJBBk8KChpKRnJm10tst7ygGIWIrRSbWIAtyy8zMeNiPO+C5PvBGs8r
-         es2s2tfU7K/9wtz2lKvVBso3CavxPl5LvMdb1u1dgJRxF2HU0Eq7jTRE38fG5TMmlyza
-         TwlgeTF/m1gQyBg/p6yaV+A32qq5IvxTKUFRc2AWmrmcByPrpnMrjK/3+yyUDFO0sROl
-         /h/dEDI58Xl9iZqoztBal/lY3zAbLOP3m7tMwsdu5fJG/6E6IMm2NqILv9LbQHwrKguE
-         CgRY/+8AszPuOy/xWpYPULtnsbW1Jvzgt8UdraPJzVRUogH8J0mjqWMzKtd5ZblA4rHR
-         xIgw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782994515; x=1783599315;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=VDGgtPcQYtpiwnqPVv2kEVYaFPC5xtBpVIXV+o0dHpE=;
-        b=iIZrPOuBhPEOQjNv/y/nMWk2BX/cEfo5eam55GMt6ULGKOZmHmQrcMApAEtjiH99zj
-         jUsFnYeZcfUhlON3yB4ya3uIcxblzUSMP1H1AE1dy7lpzixppZb6gjgt/IjjbUB6EuBH
-         /L6C/y00Y1SnDojUqlp/54gA85AaezJ4Qtq++Jds7M4DnS4/vGYQc51wcP0iDSj2rsjI
-         +KhbHuo4cxL/5lThvhDLvaUokpLhCsSnX7XpHPhrOBPukn7OfZNRBy3dXuL+n1R6OrJQ
-         ELnaFwNevIcEOntBYMlLXFPUsJIsVH5Xd0nG9ka+EL0/tkHPybt1G02/tM/+WZ8mgGtQ
-         cJcQ==
-X-Forwarded-Encrypted: i=1; AHgh+RoPKiBOePfWxNXUncEP9GNoYP9zXGxPHZ11RHPXO2uTKWwpA3/BpxPkl16qnQ78CSuc5pDzECug938Fl2Di@vger.kernel.org
-X-Gm-Message-State: AOJu0YzzC2NKI+Njq0fHDN5X899vYzr3t+89bI8ehDwF5aTvw5jBlNwk
-	Zcxa1TmafTFQWBkYq4AeCKalMnzZE9jAX2YO6znFUJsgkllJG7GyKtA29UifxeL23l6OazMvyJD
-	/Uab5be9VBCMeGhaneDBN2SLEeYK747MSDGyKdIlCYjnt5TsV5HqzrTyJJCUxbnEgyR3e
-X-Gm-Gg: AfdE7cnUPcDh/OtSiYekjVzXP1vor8XJyAil9tf5yIjItpQGlYy55DnDmtmJrvFAYK6
-	mZ/Y+d+PpEH5KM5cSO65L5BrJ5QyC6iX3W+2yh/rLSB5O/4WCFgg3/4mqbH96DEoKl8AWnKXar5
-	JOPyMcbZZ7wAUTIZA8y3GUOvLCNlEY+/uN8bz0/+k3w7aOxz1WP4DzMBO2Hk9aaVOnz6yikxgrr
-	LABcO9HI+NofqQW5Gh+MpCTQ4e9HpuMM9MMclq4R0+B5Ly/BRYLppFwPAzflk0FFsDBSRFkOS/n
-	4gakXwKyr9+mOJysFDaN0zV36WAjMcX2QSmMdp+SphGZ3K3vTY2VSx8/t9e6A7X/OK8PrpemayB
-	5cqC6XK0gGsVYtWSv4U6HwFTI++G32InKCIMqBWntmSM+qqs9EzZuV16i2avjQgxYWipZMLg/Co
-	Dr5NZBxK8B5B4eOk8q7d9s2Hs1
-X-Received: by 2002:a05:6123:2c5:b0:5bd:89bd:354c with SMTP id 71dfb90a1353d-5bddf6a3077mr2355569e0c.11.1782994515143;
-        Thu, 02 Jul 2026 05:15:15 -0700 (PDT)
-X-Received: by 2002:a05:6123:2c5:b0:5bd:89bd:354c with SMTP id 71dfb90a1353d-5bddf6a3077mr2355549e0c.11.1782994514536;
-        Thu, 02 Jul 2026 05:15:14 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5aec89e25e8sm647776e87.72.2026.07.02.05.15.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Jul 2026 05:15:13 -0700 (PDT)
-Date: Thu, 2 Jul 2026 15:15:11 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Cc: Manivannan Sadhasivam <mani@kernel.org>,
-        Bartosz Golaszewski <brgl@kernel.org>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, linux-pci@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: [PATCH v2 4/4] arm64: dts: qcom: monaco-arduino-monza: Add
- QCA2066 M.2 WiFi/BT support
-Message-ID: <kojnsrskuifjqsrq4xsm4inz7xr6hhfvugy3vz5ogddcu5y2ia@olrsxmnevu6c>
-References: <20260702-monza-wireless-v2-0-7b56e2a6a6d4@oss.qualcomm.com>
- <20260702-monza-wireless-v2-4-7b56e2a6a6d4@oss.qualcomm.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=SbRPk3fVgANmq8O61HVYKQoMM0+OX1sMfYbyl+f5ebfHx9tx5HrXyEQhkmZpfNDWRtMovdrN2KOAD9fLdlkaKneL+Gs0KlTvlCD9Pa5CCeHptV+kQxZOpdr9iI62R7sgsBaUxR6HTfTsH7zBdD9omNCweJRRJVi2ghYaIEhXMOI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YfjRFUXE; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DE691F000E9;
+	Thu,  2 Jul 2026 12:16:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1782994620;
+	bh=SmrhXKb/tICfou2fB2Dbzvn0JaPripZ9jvu2bmh8Jik=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=YfjRFUXEBU2dRmuBpB4h+tQRBLbIKpZBr7Vf/wGNH8GIbYIoOZ2+iJacKSoCbpVtS
+	 nLyO5ja5AytCvhqwDq0QenPxKrMKslV49oH6XBSjalGtxG47SJjiMV7MT+tzXio6ce
+	 JdlM4siO5IwFaYVLcm4KaNHxCA6hmUqsbOTyo9nlQqZd4lEWBGt33GCh9LZqRUfBBn
+	 mcQd1A7BvVsZSb2TQuY2xdCzCh+UDajG+SL5GXiJNr7mmSLrWTVjj9rBrdT9z87G/T
+	 Vy7FJvYKgcFqj/cL9xNXF6QvQ5MobsDT2Zofpc5Qxh41lYF1oSGL+QhpzzXdyRSPWv
+	 bIXuhAyMKtIcQ==
+Date: Thu, 2 Jul 2026 13:16:38 +0100
+From: Lorenzo Stoakes <ljs@kernel.org>
+To: Pedro Falcato <pfalcato@suse.de>
+Cc: Andrew Morton <akpm@linux-foundation.org>, 
+	Russell King <linux@armlinux.org.uk>, Dinh Nguyen <dinguyen@kernel.org>, 
+	Simon Schuster <schuster.simon@siemens-energy.com>, 
+	"James E . J . Bottomley" <James.Bottomley@hansenpartnership.com>, Helge Deller <deller@gmx.de>, 
+	Jarkko Sakkinen <jarkko@kernel.org>, Thomas Gleixner <tglx@kernel.org>, 
+	Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>, 
+	Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org, Ian Abbott <abbotti@mev.co.uk>, 
+	H Hartley Sweeten <hsweeten@visionengravers.com>, Lucas Stach <l.stach@pengutronix.de>, 
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+	Patrik Jakobsson <patrik.r.jakobsson@gmail.com>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+	Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>, 
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>, Thierry Reding <thierry.reding@kernel.org>, 
+	Mikko Perttunen <mperttunen@nvidia.com>, Jonathan Hunter <jonathanh@nvidia.com>, 
+	Christian Koenig <christian.koenig@amd.com>, Huang Rui <ray.huang@amd.com>, Ankit Agrawal <ankita@nvidia.com>, 
+	Alex Williamson <alex@shazbot.org>, Alexander Viro <viro@zeniv.linux.org.uk>, 
+	Christian Brauner <brauner@kernel.org>, Dan Williams <djbw@kernel.org>, 
+	Muchun Song <muchun.song@linux.dev>, Oscar Salvador <osalvador@suse.de>, 
+	David Hildenbrand <david@kernel.org>, Suren Baghdasaryan <surenb@google.com>, 
+	"Liam R . Howlett" <liam@infradead.org>, Matthew Wilcox <willy@infradead.org>, 
+	Marek Szyprowski <m.szyprowski@samsung.com>, Peter Zijlstra <peterz@infradead.org>, 
+	Arnaldo Carvalho de Melo <acme@kernel.org>, Namhyung Kim <namhyung@kernel.org>, 
+	Masami Hiramatsu <mhiramat@kernel.org>, Oleg Nesterov <oleg@redhat.com>, 
+	Steven Rostedt <rostedt@goodmis.org>, SeongJae Park <sj@kernel.org>, Miaohe Lin <linmiaohe@huawei.com>, 
+	Hugh Dickins <hughd@google.com>, Mike Rapoport <rppt@kernel.org>, Kees Cook <kees@kernel.org>, 
+	Paolo Bonzini <pbonzini@redhat.com>, linux-kernel@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-parisc@vger.kernel.org, linux-sgx@vger.kernel.org, 
+	etnaviv@lists.freedesktop.org, dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
+	freedreno@lists.freedesktop.org, linux-tegra@vger.kernel.org, kvm@vger.kernel.org, 
+	linux-fsdevel@vger.kernel.org, nvdimm@lists.linux.dev, linux-mm@kvack.org, 
+	iommu@lists.linux.dev, linux-perf-users@vger.kernel.org, 
+	linux-trace-kernel@vger.kernel.org, kasan-dev@googlegroups.com, damon@lists.linux.dev, 
+	Rik van Riel <riel@surriel.com>, Harry Yoo <harry@kernel.org>, Jann Horn <jannh@google.com>
+Subject: Re: [PATCH 20/30] mm/vma: introduce vma_assert_can_modify()
+Message-ID: <akZNWNuyBU4xDDyf@lucifer>
+References: <cover.1782735110.git.ljs@kernel.org>
+ <23c7602c58cacc23ef22618a27af9a2d54addf58.1782735110.git.ljs@kernel.org>
+ <akZHWwVgJfqCwA2W@pedro-suse.lan>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -124,97 +95,175 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260702-monza-wireless-v2-4-7b56e2a6a6d4@oss.qualcomm.com>
-X-Proofpoint-GUID: OLdrx5Wpq1-_5d2zJ1QOeT4ZErgo-kiY
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAyMDEyOCBTYWx0ZWRfX9rAsrrj0qofg
- fyzut2+/vSLbqbjUK2o9hognwiuRJk8qSFut3A3XR7rEK5FNr02Ca195LuoSo0XGLScMJPzGEdc
- ACPQXwU/24o5OxDTknvIQ06xPo52J/0=
-X-Authority-Analysis: v=2.4 cv=aJ7Ab79m c=1 sm=1 tr=0 ts=6a465653 cx=c_pps
- a=+D9SDfe9YZWTjADjLiQY5g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22 a=EUspDBNiAAAA:8
- a=STQ2a8oQ04ts6E9hehUA:9 a=CjuIK1q_8ugA:10 a=vmgOmaN-Xu0dpDh8OwbV:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAyMDEyOCBTYWx0ZWRfX1k8fJNf/5o3f
- MpU95mZwFJyizaVGV2JRC9F/1DHdkwMlvnXqnteybTRHeqXdnC7Q2Vv5GOXcC4XSeCBouqRSyYH
- t33VAxOZ7KfhTx7yhL8M+9XEz5vBav5+aLx87elBQ6tMU5s6LLhts+rlU4x1IoYG9kudGJ8zmrf
- YRH09t2AyZljWUkOjT3Ijr+Jy99prTBKU4Y5bxN0aH2Bf2Ufksn+GM6GvKsyGe67IQqAGMANOmK
- mXCJOnqXt342znIyFfAARbXSeIvKdEQhmMRQGKC7OdegEEiQhOjhUQHJtueGoE/z4xtBYEn433j
- nvv9YNhkiiNZi2LX1kfkoeX+CUUAaUfOoDZp1LxfCPddPeT0LJKmDe2JEiwsJQbhlMNcbEYVPW0
- yDoZxoN+1U9Si9oLQtWvizfV1MUOJ5rClkz/Jo8bNp8rjhYnPsXbP49nLotgbpZ25RsxW+Yhpr7
- U0+JKujteQDEFqnz9Rw==
-X-Proofpoint-ORIG-GUID: OLdrx5Wpq1-_5d2zJ1QOeT4ZErgo-kiY
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-07-02_01,2026-06-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 lowpriorityscore=0 adultscore=0 malwarescore=0 clxscore=1015
- spamscore=0 priorityscore=1501 impostorscore=0 phishscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607020128
+In-Reply-To: <akZHWwVgJfqCwA2W@pedro-suse.lan>
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-1.66 / 15.00];
+X-Spamd-Result: default: False [-3.16 / 15.00];
+	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
 	MID_RHS_NOT_FQDN(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-116010-lists,linux-arm-msm=lfdr.de];
-	RCPT_COUNT_TWELVE(0.00)[18];
+	TAGGED_FROM(0.00)[bounces-116011-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	FORGED_RECIPIENTS(0.00)[m:pfalcato@suse.de,m:akpm@linux-foundation.org,m:linux@armlinux.org.uk,m:dinguyen@kernel.org,m:schuster.simon@siemens-energy.com,m:James.Bottomley@hansenpartnership.com,m:deller@gmx.de,m:jarkko@kernel.org,m:tglx@kernel.org,m:mingo@redhat.com,m:bp@alien8.de,m:dave.hansen@linux.intel.com,m:x86@kernel.org,m:abbotti@mev.co.uk,m:hsweeten@visionengravers.com,m:l.stach@pengutronix.de,m:airlied@gmail.com,m:simona@ffwll.ch,m:patrik.r.jakobsson@gmail.com,m:maarten.lankhorst@linux.intel.com,m:mripard@kernel.org,m:tzimmermann@suse.de,m:robin.clark@oss.qualcomm.com,m:lumag@kernel.org,m:tomi.valkeinen@ideasonboard.com,m:thierry.reding@kernel.org,m:mperttunen@nvidia.com,m:jonathanh@nvidia.com,m:christian.koenig@amd.com,m:ray.huang@amd.com,m:ankita@nvidia.com,m:alex@shazbot.org,m:viro@zeniv.linux.org.uk,m:brauner@kernel.org,m:djbw@kernel.org,m:muchun.song@linux.dev,m:osalvador@suse.de,m:david@kernel.org,m:surenb@google.com,m:liam@infradead.org,m:willy@infradead.org,m:m.szypr
+ owski@samsung.com,m:peterz@infradead.org,m:acme@kernel.org,m:namhyung@kernel.org,m:mhiramat@kernel.org,m:oleg@redhat.com,m:rostedt@goodmis.org,m:sj@kernel.org,m:linmiaohe@huawei.com,m:hughd@google.com,m:rppt@kernel.org,m:kees@kernel.org,m:pbonzini@redhat.com,m:linux-kernel@vger.kernel.org,m:linux-arm-kernel@lists.infradead.org,m:linux-parisc@vger.kernel.org,m:linux-sgx@vger.kernel.org,m:etnaviv@lists.freedesktop.org,m:dri-devel@lists.freedesktop.org,m:linux-arm-msm@vger.kernel.org,m:freedreno@lists.freedesktop.org,m:linux-tegra@vger.kernel.org,m:kvm@vger.kernel.org,m:linux-fsdevel@vger.kernel.org,m:nvdimm@lists.linux.dev,m:linux-mm@kvack.org,m:iommu@lists.linux.dev,m:linux-perf-users@vger.kernel.org,m:linux-trace-kernel@vger.kernel.org,m:kasan-dev@googlegroups.com,m:damon@lists.linux.dev,m:riel@surriel.com,m:harry@kernel.org,m:jannh@google.com,m:patrikrjakobsson@gmail.com,s:lists@lfdr.de];
 	FORWARDED(0.00)[lists@lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:loic.poulain@oss.qualcomm.com,m:mani@kernel.org,m:brgl@kernel.org,m:marcel@holtmann.org,m:luiz.dentz@gmail.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linux-pci@vger.kernel.org,m:linux-pm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-bluetooth@vger.kernel.org,m:devicetree@vger.kernel.org,m:manivannan.sadhasivam@oss.qualcomm.com,m:konrad.dybcio@oss.qualcomm.com,m:luizdentz@gmail.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	FREEMAIL_CC(0.00)[linux-foundation.org,armlinux.org.uk,kernel.org,siemens-energy.com,hansenpartnership.com,gmx.de,redhat.com,alien8.de,linux.intel.com,mev.co.uk,visionengravers.com,pengutronix.de,gmail.com,ffwll.ch,suse.de,oss.qualcomm.com,ideasonboard.com,nvidia.com,amd.com,shazbot.org,zeniv.linux.org.uk,linux.dev,google.com,infradead.org,samsung.com,goodmis.org,huawei.com,vger.kernel.org,lists.infradead.org,lists.freedesktop.org,lists.linux.dev,kvack.org,googlegroups.com,surriel.com];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_SENDER(0.00)[dmitry.baryshkov@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FREEMAIL_CC(0.00)[kernel.org,holtmann.org,gmail.com,vger.kernel.org,oss.qualcomm.com];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:dkim,oss.qualcomm.com:from_mime,qualcomm.com:dkim,qualcomm.com:email,olrsxmnevu6c:mid,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,vger.kernel.org:from_smtp];
-	MISSING_XM_UA(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[dmitry.baryshkov@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FORGED_SENDER(0.00)[ljs@kernel.org,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	RCPT_COUNT_GT_50(0.00)[75];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[ljs@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	ALIAS_RESOLVED(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	TO_DN_SOME(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	MISSING_XM_UA(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[7]
+	TO_DN_SOME(0.00)[]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 0F3316F76D3
+X-Rspamd-Queue-Id: 3150D6F7B71
 
-On Thu, Jul 02, 2026 at 12:46:16PM +0200, Loic Poulain wrote:
-> Add support for the QCA2066 (QCNFA765) WiFi/Bluetooth module on the
-> Arduino VENTUNO Q board. The module is interfaced via LGA and is
-> compatible with the M.2 Key E.
-> 
-> Add wireless-lga-connector node using pcie-m2-e-connector binding,
-> connecting PCIe port 0 to the WiFi interface and UART10 port 3 to
-> the Bluetooth interface.
-> 
-> Add pcie@1,0 downstream port node with pciclass,0604 compatible so
-> the pci-pwrctrl driver can acquire the power sequencer and enable
-> the M.2 slot before PCIe enumeration.
-> 
-> Add nfa725b_default_state pinctrl for the W_DISABLE1/2 GPIOs
-> (gpio56/gpio55) used by the power sequencer.
-> 
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-> ---
->  arch/arm64/boot/dts/qcom/monaco-arduino-monza.dts | 64 +++++++++++++++++++++--
->  1 file changed, 60 insertions(+), 4 deletions(-)
-> 
+On Thu, Jul 02, 2026 at 12:16:32PM +0100, Pedro Falcato wrote:
+> On Mon, Jun 29, 2026 at 01:23:31PM +0100, Lorenzo Stoakes wrote:
+> > vma_assert_write_locked() and vma_assert_attached() are useful for their
+> > own purposes, however VMA code absolutely does allow the modification of
+> > non-write locked VMAs if they are at that point detached (i.e. unreachable
+> > from anywhere).
+> >
+> > It's therefore useful to be able to assert that a VMA is either
+> > detached (modification doesn't matter) or write locked (you're explicitly
+> > locked for modification).
+>
+> Hmm, I was wondering why detached does not imply write_locked, and then
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+For one obviously when detaching they are also write locked (see
+vma_mark_detached()) but yeah the point of this is when you have a VMA allocated
+which doesn't hold the appropriate lock.
 
+> realized that new VMAs aren't write-locked. Could we do it by default?
+> Like a simple:
+>
+> 	vma->vm_lock_seq = __vma_raw_mm_seqnum(vma);
+>
+> might do the trick. I don't see why it wouldn't work? Is there some other
+> case I am not considering?
 
--- 
-With best wishes
-Dmitry
+Firstly, I'd rather not rework the VMA lock logic as part of this series. It's
+subtle and such changes are tricky.
+
+I'm trying to achieve the minimum changes while adding extra validation as I can
+in preparation for the scalable CoW work.
+
+And I'm not sure wanting to alter the fundamentals of VMA locks is a good reason
+not to ack a patch :)
+
+But since you bring it up...
+
+There's subtleties here too.
+
+- At what point do you do this assignment? If it's the VMA allocation logic,
+  it's not obvious then that you even have the mmap write lock necessarily. Now
+  you're making assumptions that might be broken, or broken in future.
+
+  Now everybody who allocates a VMA has to 'just know' that they need to assign
+  an mm and mark it write-locked (but in a special new VMA way) before setting
+  the pgoff.
+
+- Detached means it is not currently in any tree, nor belongs necessarily to any
+  mm. So the concept of it being write locked is meaningless.
+
+- It's broken to perform actions on a new VMA that is not yet linked into any
+  tree that would require the VMA write lock. Currently the code _explicitly_
+  asserts that a detached VMA is not attempted to be write locked.
+
+- So we have a good way of catching people doing stupid or broken stuff to VMAs
+  that are not in the correct state (we currently _don't_ do that for detached
+  VMAs that _were_ in the tree, probably we should change that...!)
+
+- You'd have to create a new function to do this since we explicitly disallow
+  doing this right now, and that's more complexity and then you're then
+  creating a whole new meaning as to what VMA write lock acquisition is,
+  which is even more added complexity.
+
+- create_init_stack_vma() would break, so would hugetlb (lol) and static gate
+  VMAs explicitly do not belong to an mm, so there's simply no concept of them
+  being VMA write locked anyway.
+
+- I'm not sure violating the invariant of seqnum = 0 = no write locked VMAs is
+  safe.
+
+- Things get quite horrendous on fork (prior to us taking tmp's VMA write lock)
+  - you'd have to assign this field after duplicating the VMA midway through
+  attaching it to the new mm, where that mm has a new seqnum. But the new mm has
+  a seqnum of 0... so now you're having to duplicate it but alter what
+  vma_lock_init() does to reset the seqnum to 0 but then what if the
+  'duplication' logic asserts VMA write locked?
+
+It's very chicken and egg - on VMA duplication you want to be able to write the
+very fields that you need to do anything with the VMA prior to it being linked
+in anywhere.
+
+And we probably don't want to bake in the assumption that to change fundamental
+fields requires that you always hold the write lock as a consequence.
+
+>
+> >
+> > Therefore introduce vma_assert_can_modify() for this purpose.
+> >
+> > While we're here, make vma_is_attached() available generally - if
+> > !CONFIG_PER_VMA_LOCKS, then there's no sense in which a VMA is
+> > detached (vma_mark_detached() is a noop), so have this default to true in
+> > this case.
+> >
+> > Signed-off-by: Lorenzo Stoakes <ljs@kernel.org>
+> > ---
+> >  include/linux/mmap_lock.h | 8 ++++++++
+> >  1 file changed, 8 insertions(+)
+> >
+> > diff --git a/include/linux/mmap_lock.h b/include/linux/mmap_lock.h
+> > index 04b8f61ece5d..d513286d8160 100644
+> > --- a/include/linux/mmap_lock.h
+> > +++ b/include/linux/mmap_lock.h
+> > @@ -506,6 +506,8 @@ static inline __must_check
+> >  int vma_start_write_killable(struct vm_area_struct *vma) { return 0; }
+> >  static inline void vma_assert_write_locked(struct vm_area_struct *vma)
+> >  		{ mmap_assert_write_locked(vma->vm_mm); }
+> > +static inline bool vma_is_attached(struct vm_area_struct *vma)
+> > +		{ return true; }
+> >  static inline void vma_assert_attached(struct vm_area_struct *vma) {}
+> >  static inline void vma_assert_detached(struct vm_area_struct *vma) {}
+> >  static inline void vma_mark_attached(struct vm_area_struct *vma) {}
+> > @@ -530,6 +532,12 @@ static inline void vma_assert_stabilised(struct vm_area_struct *vma)
+> >
+> >  #endif /* CONFIG_PER_VMA_LOCK */
+> >
+> > +static inline void vma_assert_can_modify(struct vm_area_struct *vma)
+> > +{
+> > +	if (vma_is_attached(vma))
+> > +		vma_assert_write_locked(vma);
+> > +}
+> > +
+> >  static inline void mmap_write_lock(struct mm_struct *mm)
+> >  {
+> >  	__mmap_lock_trace_start_locking(mm, true);
+> > --
+> > 2.54.0
+> >
+>
+> --
+> Pedro
+
+Thanks, Lorenzo
 
