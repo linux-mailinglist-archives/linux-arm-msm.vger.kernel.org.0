@@ -1,78 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-115830-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-115831-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id as6tL2gDRmpsHwsAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-115830-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Jul 2026 08:21:28 +0200
+	id NhEjCKEDRmp3HwsAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-115831-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Jul 2026 08:22:25 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 15B496F3C19
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Jul 2026 08:21:28 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id B5BAF6F3C2A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Jul 2026 08:22:24 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=gmail.com header.s=20251104 header.b="CFrYv/wF";
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115830-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115830-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=gmail.com header.s=20251104 header.b=COvCyahG;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115831-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115831-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=none) header.from=gmail.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 3F01F3002289
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jul 2026 06:15:58 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id DC46830C553A
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jul 2026 06:16:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D8C19384CDA;
-	Thu,  2 Jul 2026 06:15:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6127E384CE5;
+	Thu,  2 Jul 2026 06:16:09 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B947382292
-	for <linux-arm-msm@vger.kernel.org>; Thu,  2 Jul 2026 06:15:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 248AD37E2EC
+	for <linux-arm-msm@vger.kernel.org>; Thu,  2 Jul 2026 06:16:07 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782972957; cv=none; b=ok+6AMf+q2D+SSfyz0hdLPxWwpVQA+8uKNQ+JSlXqwT02y4LuVji/y8JzNfeBv4/4yms8jOMmffR7VN9hEwH29kGWwWs/ZpTjcAZr4HyZMkLviShUtH4fWL9rWOGNFGCg3u+yziT1Io55rhStYSGLLSn6FX7sO105rd+ypoikLw=
+	t=1782972969; cv=none; b=HwasIr3IYBqdmiorlTZjt9NaILI6+MLGRQScz+Z9ezxb4zxbO7y4ahocQC2GhyJ0AsuQqg3EnPCMfhhDunmlx3RWBt4rx/hSYnOIrXeilkLIYmy/Ry0dfKiRi3UKdQN6YmRGxKzZu5aIoBEcp0f5/b5x3JkfChUnkojn46QUV4A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782972957; c=relaxed/simple;
-	bh=eUMZ87NV33PuB9LUaUM/naiOBmn+tD9ZFBu2hpBLxYc=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=nF4vHdDrU0FowAhu6ebtEaVhpEXMkeOlCzbAI8PQMyNaegtK7c8rg77EWvZZTubKQgsu9Ik43SrqomPgUXVqhs/dhqRxQCKXLpV2JHSMx17BbtaPJDddTRfm1aNNjslC4TMdcEG3peE0cPKUFSUTEGUwRYwAK+fDzKLO+aZG8m8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CFrYv/wF; arc=none smtp.client-ip=209.85.214.176
-Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-2ca64989e64so12808645ad.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Jul 2026 23:15:56 -0700 (PDT)
+	s=arc-20240116; t=1782972969; c=relaxed/simple;
+	bh=tPzODcf1BwslfWndQavFqn5oqaGNxoe9hMu4eVzOQ2U=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=NmbvQTI2yF5FXeKICq3esY5ykSnEAs5ymD7Ls58B4PY6gwn43Cwj4kTYDltm4LFXQrGkRXhAAnyqJyL5c0B84daD+++t0vQBxB83DEXMaLYATui6HQScQVMEO4H7K7g8c7SOXXsDMvZ2M1u1NUSGyIj/7e4TEzW+4umEiUhJJGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=COvCyahG; arc=none smtp.client-ip=209.85.214.178
+Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-2c821a50615so10239805ad.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Jul 2026 23:16:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782972956; x=1783577756; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=pqx48+kqpZ0s/hT5sa4Ozdd9lXIMEabBEF53/1LSHnc=;
-        b=CFrYv/wFHlthB3DGI5x9q6lN2XR23hDbhj2eDqngbUofdyxuWv8pPi/F/S8tDDbXIa
-         tTcefJ/1GF+uJLPAFAiANRC7vy8pYXR77kB0Qb7sH1Wn3S9GedxVokRqrzoK2og3nYs9
-         66PfPK4l5vnYM4Q4f1beCwAMkRle09xIm3d+nMzYLX+Sa8cf7v8M18lYAz2u5HeBBBG9
-         1iAWAxv+arXkRkhEdDkm2CLhnOScUOwRLE2aIRWcv6dOlRS893NzH/jewXnglBAxnDko
-         +c3sk5VjILiARgGVw7Ky5RCA3uzlgRMS2i1tkpGTHwv2XOB9mfzeM1Gttwh8KYMmIwLL
-         rS4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782972956; x=1783577756;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1782972967; x=1783577767; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=pqx48+kqpZ0s/hT5sa4Ozdd9lXIMEabBEF53/1LSHnc=;
-        b=Nxs44mMQQi1W/1C1EJEjU+9pkIsnRjEWEHJ/xlGCg4/nfzLOThXO5zU1b3D8DaT+SX
-         +gM6dS9W52NZ0r7QhAM2QnftUqmUIa7bVFM244TcrIk7BGoRe3IQFK8so+BSE0lkejma
-         YdOH+s11hZ11tl1E0Jvzrr9jTKQZvhx2/+AqM9FMpgaNMUSPStA+lhBaICD7aDTY9CIZ
-         HJRXt21oes3yEE6llTPa7FutLS/V0MgjAerwya58sfPnrcp7SNcif3C2rmnzH7gjAhMe
-         I2uIrYfKz9IKT/+O/NzCJqMgykeruNgQ+mJR6epBCP40i9kq+flNY/84qYIqZHDpZVt2
-         uEWA==
-X-Gm-Message-State: AOJu0Yz1JtTW4GkFyO7UgD4mtqX8IFxfghaNqhiCeWHgQJ+xSPyJdfEw
-	H1F5nltZWJNPg2lUhylzBHdInDqjyOXjPC+Ni3p7wktVxRPDF/qBH1sEDQaMwgudQ54=
-X-Gm-Gg: AfdE7cnOb+CY+/jv81gYlfj7eTDryqga9P3JeDmnLM8hxVsyUNyWSMAqeJfdM+0XkJX
-	ktqGQyzfFQ1TJ2dh5i4JcxXFNTu1205yLM9wnVlGVzbBh1rhL+bKCnijd5fqUdNid65Y03NxTXX
-	HPSeY5MuZy5Mx0Hdtoz8aNR10aDpOGZc9Lz8ezq579FQzcAgAy+Rk44PRnfh6nYeIz8rTZvwiu3
-	ajBNqRbdIRrANWZyj08l1hi/Vni/yofjDOEynZ9/c+k1TO1FVDn7G6YYOlKhIrRDSnoM9BzlGAD
-	DKbbeVDgve4qin2dk2ZINQYmazvPR5LN6GibIp2B1lY6E1KFZyb1z7ZGaNb2y1XkRYjg8CRcJF6
-	lpD78NlzxS8OC6gIfFU9+NkW70bO7d3m1RETJRw/aseCCjxRgnAv7FkEcExwobKbGMpflEKnYvl
-	ZsSg==
-X-Received: by 2002:a17:902:d4cd:b0:2c9:bd64:8c81 with SMTP id d9443c01a7336-2ca7e6d9f27mr47085905ad.18.1782972955650;
-        Wed, 01 Jul 2026 23:15:55 -0700 (PDT)
+        bh=yqD7w5zDiKR2ICjS7cVkhir7NR6XfZKcMKDb3tO2AjI=;
+        b=COvCyahGrIBA+KDCRB7RZbgaTinSoWBYrtGYwDh7OxjL2u9LJhMLUuyI7n1fp6EWeZ
+         4bkSJAO+R1FTJ6jcD/d5duPOrjJVK8+tdXbc1g9nYJ/8LYv7O/B3NBrRlLayUSw5Y6vq
+         5tBJ+dMSzGkKLggeEXxapXGDBPk/x2iuNzJQ3BLDPLUMBdM0r7s/p4+IqbbTZYzH1Ajx
+         2aIZgac51T7q6lLJiamgOm4dz1bCxNEuaT50Izj4KetKUGpH3s4gVdgNNT8VZqscbvaQ
+         GHmDXi2+s/T+z+LMUyrkUwK7ldEcW2kahp3g0WUZ+yONMhvWIomEsXwQpJ73hRwuSrnt
+         iaDQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782972967; x=1783577767;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=yqD7w5zDiKR2ICjS7cVkhir7NR6XfZKcMKDb3tO2AjI=;
+        b=WPKtp5Ka+ycLTnCcm/xsniHK5KkAGtTxswHNwkTbO9rKpQ+kz8ePqyKC1VbONyHPE/
+         /z1v8d/0kIjq3WAtZWVPwXIlMxHURf84K246WeDMOcBoHfHBZ5qZBmroys5kZHj8GdLR
+         DYdUpGE3IfW+QiZO32ZDJwjux1ldfy7t+6iKY73KWBhovHvsrK3VCJA0siz9iFf/r/XZ
+         dZvUi5N/nqGK6Gg2uvpz3GTHLQeczbcM/Tf1h5qCBESnLR7B6QBJh3KIj+39BeFPH7fy
+         s+GQXrrUbZj2f+yf6rG5x2T2fWh0gjHk/2QBinDg87vd0KPzVcmY6E8SZZ1IUkxDvsRJ
+         5Esw==
+X-Gm-Message-State: AOJu0YwBqDtOWUfR82UNVrZQfaXLOH66hKO1PmUUfgDkO/VoJjPfxDoU
+	I4tyjc8eixHjsUgotWq0aVp480larOOW/+jOT3OeRCZkafZX+ERCR0V3
+X-Gm-Gg: AfdE7clp4d0AZjk0BEL6z49o/3cfwSSRYS5TTqGkeo1nCl1/C6DwRrYEcIakkf9nQfO
+	vdkImMjtXC05PoAiCeKwrZk//DpZTIWBD4/z/gLxDwpVHDrEaNjmbb7GfAYUGGa+zhxVtW8EDPR
+	2bSPsf54WfZyY18+qigO9+zVBFbw0WqaJXJLUHgBpeCZN/zmkL5Yl6pzUlAQw/DuJH7qdC9IwFc
+	KJAE2IMWVqVAP0MbZf/T/F+5e7MEpNOuFGXe6B8J9PnerjjzNzGQQK6YVwx0DWtArpY8VdDUrO7
+	PPNQHAA71NzJB1vqn7lp1RlRO1jsnZ9fIls/X+Tdy+BGVO2EC7TgtMSo2bUpxUjOjhf0n1iewOG
+	z2PR/+oKrEoaNEuhfEWjFPz2aHrCukAZeqJcYnlDdx2tyw5uXFQh0hQibk0p2RZsWCc3z0tgIbB
+	uZBQ==
+X-Received: by 2002:a17:902:d4c8:b0:2c9:bd3b:34f with SMTP id d9443c01a7336-2ca911f344fmr40112295ad.35.1782972967138;
+        Wed, 01 Jul 2026 23:16:07 -0700 (PDT)
 Received: from ada ([223.119.20.224])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ca9aa052d5sm8316025ad.78.2026.07.01.23.15.51
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ca9aa052d5sm8316025ad.78.2026.07.01.23.16.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Jul 2026 23:15:55 -0700 (PDT)
+        Wed, 01 Jul 2026 23:16:06 -0700 (PDT)
 From: Kaipeng Zeng <kaipeng94@gmail.com>
 To: devicetree@vger.kernel.org
 Cc: linux-arm-msm@vger.kernel.org,
@@ -82,10 +84,12 @@ Cc: linux-arm-msm@vger.kernel.org,
 	konradybcio@kernel.org,
 	andersson@kernel.org,
 	Kaipeng Zeng <kaipeng94@gmail.com>
-Subject: [PATCH 0/2] Add device tree for Acer Swift Go Pro AI (SFA14-11)
-Date: Thu,  2 Jul 2026 14:31:54 +0800
-Message-ID: <20260702063156.35169-1-kaipeng94@gmail.com>
+Subject: [PATCH 1/2] dt-bindings: arm: qcom: Add Acer Swift Go Pro AI (SFA14-11)
+Date: Thu,  2 Jul 2026 14:31:55 +0800
+Message-ID: <20260702063156.35169-2-kaipeng94@gmail.com>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260702063156.35169-1-kaipeng94@gmail.com>
+References: <20260702063156.35169-1-kaipeng94@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -100,7 +104,7 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	R_MISSING_CHARSET(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
 	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
@@ -108,13 +112,13 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	TO_DN_SOME(0.00)[];
 	FREEMAIL_CC(0.00)[vger.kernel.org,kernel.org,gmail.com];
 	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-115830-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-115831-lists,linux-arm-msm=lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
 	FORGED_RECIPIENTS(0.00)[m:devicetree@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:conor+dt@kernel.org,m:krzk+dt@kernel.org,m:robh@kernel.org,m:konradybcio@kernel.org,m:andersson@kernel.org,m:kaipeng94@gmail.com,m:conor@kernel.org,m:krzk@kernel.org,s:lists@lfdr.de];
 	FORGED_SENDER(0.00)[kaipeng94@gmail.com,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[gmail.com:+];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	FREEMAIL_FROM(0.00)[gmail.com];
 	PRECEDENCE_BULK(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
@@ -129,92 +133,30 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 15B496F3C19
+X-Rspamd-Queue-Id: B5BAF6F3C2A
 
-Introduce device tree for the Acer Swift Go Pro AI (SFA14-11).
-It is a laptop based on the Qualcomm Snapdragon X Elite (X1E78100) SoC.
+Add compatible values for the Acer Swift Go Pro AI (SFA14-11),
+using "acer,sfa14-11".
 
-The work started with x1-crd.dtsi as initial template.
-HDMI refers to ThinkPad T14s.
-Bluetooth refers to x1-crd.dtsi from the ubuntu-concept kernel [1].
-PWM brightness control refers to Ratizux's GitHub repository [2].
+The laptop is based on the Snapdragon X Elite (X1E78100) SoC.
 
-Tested on linux-next / Ubuntu 26.04 LTS
-       
-Tested and working devices:
+Signed-off-by: Kaipeng Zeng <kaipeng94@gmail.com>
+---
+ Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
- - NVMe
- - Keyboard & Touchpad
- - USB Type-A, Type-C
- - Battery & charging status
- - Internal display & Backlight brightness control
- - HDMI & Type-C display
- - Bluetooth & Wi-Fi
- - Webcam (usb_2)
- - GPU
-
-The following are some known issues:
-
-Battery:
-Battery status works only when the following kernel configs are enabled:
-CONFIG_BATTERY_QCOM_BATTMGR=y
-CONFIG_QCOM_CPUCP_MBOX=y
-Or the battery percentage and charging status disappear randomly.
-
-Audio:
-Neither the internal speakers nor headphone jack are detected by GNOME,
-and both fail to output sound.
-The sound card seems functional since audio playback via Bluetooth works
-correctly.
-Also, when manually enabling speakers via alsamixer and then running
-speaker-test, speakers can only emit some electrical noise.
-
-Fingerprint:
-The fingerprint reader can be probed. Running lsusb shows:
-Bus 002 Device 003: ID 3274:9003 Generic Realtek USB2.0 Finger Print Bridge.
-However, currently, the libfprint in Ubuntu 26.04 desktop does not support
-this device, so I cannot verify if the device actually works.
-
-Corrupted Display after suspend:
-Internal monitor, Type-C and HDMI displays would break when the laptop
-resumes from suspend or after logging out, displaying corrupted graphics.
-
-The following are some reference details:
-
-Bluetooth (uart14):
-I referred to x1-crd.dtsi from the ubuntu-concept kernel [1].
-
-HDMI (hdmi-bridge, hdmi-connector):
-I referred to x1e78100-lenovo-thinkpad-t14s.dtsi.
-
-Backlight brightness control (pm8550_pwm, pm8550_gpios):
-The configuration of pm8550_gpios refers to Ratizux's GitHub repository [2].
-Although I could not find any hardware information to confirm this, the
-backlight brightness control works, but it is inverted.
-Since the pm8550_pwm does not support "PWM_POLARITY_INVERTED", I used a
-descending order array for the brightness-level.
-With this workaround, the backlight brightness control works as expected.
-
-This is my first time trying to upstream something,
-not sure if I am doing everything correctly.
-Any reviews, comments or suggestions would be greatly appreciated!
-Thanks a lot!
-
-[1] https://git.launchpad.net/~ubuntu-concept/ubuntu/+source/linux/+git/resolute/log/?h=qcom-x1e-7.0
-[2] https://github.com/Ratizux/linux-device-acer-sfa14-11.git
-
-Kaipeng Zeng (2):
-  dt-bindings: arm: qcom: Add Acer Swift Go Pro AI (SFA14-11)
-  arm64: dts: qcom: Add support for Acer Swift Go Pro AI (SFA14-11)
-
- .../devicetree/bindings/arm/qcom.yaml         |    1 +
- arch/arm64/boot/dts/qcom/Makefile             |    1 +
- .../boot/dts/qcom/x1e78100-acer-sfa14-11.dts  | 1711 +++++++++++++++++
- 3 files changed, 1713 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/x1e78100-acer-sfa14-11.dts
-
-
-base-commit: 3ce97bd3c4f18608335e709c24d6a40e7036cab8
+diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+index 50cc18a6ec5e..6b997d615bad 100644
+--- a/Documentation/devicetree/bindings/arm/qcom.yaml
++++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+@@ -1142,6 +1142,7 @@ properties:
+ 
+       - items:
+           - enum:
++              - acer,sfa14-11
+               - medion,sprchrgd14s1
+               - tuxedo,elite14gen1
+           - const: qcom,x1e78100
 -- 
 2.53.0
 
