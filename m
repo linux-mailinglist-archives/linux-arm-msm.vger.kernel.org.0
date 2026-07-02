@@ -1,247 +1,218 @@
-Return-Path: <linux-arm-msm+bounces-115964-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-115965-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id 2MqFO6ZPRmoOQgsAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-115964-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Jul 2026 13:46:47 +0200
+	id Ra74OZpQRmpTQgsAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-115965-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Jul 2026 13:50:50 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5ED746F6F75
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Jul 2026 13:46:46 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id E92206F7068
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Jul 2026 13:50:49 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=b1V0EUVs;
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=VpW3Ejyl;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=b1V0EUVs;
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=VpW3Ejyl;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115964-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115964-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=none) header.from=suse.de;
+	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=ZolEsJ49;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115965-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 104.64.211.4 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115965-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=reject) header.from=qualcomm.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id E3A0931B36BC
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jul 2026 11:30:08 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id A496630F7253
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jul 2026 11:30:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D20904189D4;
-	Thu,  2 Jul 2026 11:30:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CF35741229D;
+	Thu,  2 Jul 2026 11:30:21 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE82B3909A2
-	for <linux-arm-msm@vger.kernel.org>; Thu,  2 Jul 2026 11:30:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04EDD4189D9;
+	Thu,  2 Jul 2026 11:30:17 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782991805; cv=none; b=MLclvfXFQV6Jo9YSMTirTGmfUG3xDeY/jCZNEBLDQOmp8mZ9HwgNsApLLSgF3WYbvlApnZQUfGqhMDXHDJvigyKP7mw7h3jo3cZhWxh/ilnYcUbTZ6GtzBP3Jk4GJxvUw7v3TsUxDi3yrR5R4g4/SXJ77anAsEgM8iPSAcLxANU=
+	t=1782991821; cv=none; b=jLlAcTdDSUCyRuO//xI/S5iFqGMu/Tb+m+0AT/kM6+K1nQHpLPPLP+xKG1+gjNATRw3jo4g7JqNuwwH99x1bCm1f3DkK/VXUF5kbEib8yxWN+rBWXOO+lE7aNaaBJfkH+IPRl0MVpi54tKoQMZ2Kqm+MnTW25wrNzNg81E6CZFs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782991805; c=relaxed/simple;
-	bh=8jjfSPYg5U66L8zK7oshft2R9Q5n1QusWIFSP0r0Zy8=;
+	s=arc-20240116; t=1782991821; c=relaxed/simple;
+	bh=l0w+n8I3EpX5DnM9hbiDuz6Ka4fy/n+CmFn4TLF8cJQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=s+sw6H4eaPC/RnnNtqSnzt69Bjrqh9skFzRyNYDg1dYw7R5Wb43HJy/QCjcIxK09UdBswKHixURExLrh/H+YXp9wvm4OQG4KzeMN+VpmvYR7loBIkWLQHS6AzzdaCUGacZzoUQlqZaGEMTgqBxAwOxmNOd5fALmGX//cahKMy0s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=b1V0EUVs; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=VpW3Ejyl; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=b1V0EUVs; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=VpW3Ejyl; arc=none smtp.client-ip=195.135.223.130
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 2B0B874188;
-	Thu,  2 Jul 2026 11:30:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1782991801; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=GQ5WNGbzin/8vtFDbM8MbJVMoDULad2+FK2cbMLRvxc=;
-	b=b1V0EUVs7Ryzq47sXHyoMJr4JZZKjRZAq5PgvmgMFnAklikv2OYEmEeg7B9svz/QHBrX66
-	mB5yghfOAlHB0fX34t3q3IyNpEXuiXPxIfmxCvscO3OL7qd/yQ7G0KmD4Jd8J5jXHJYIVS
-	NCERshvGZ/f1dJtc20DF60zU/Yynep8=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1782991801;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=GQ5WNGbzin/8vtFDbM8MbJVMoDULad2+FK2cbMLRvxc=;
-	b=VpW3EjylCJF5yoxNrG2csldpuwjxwS7DCjeAVumRCzdwPhw4Sr5LNXAnK/UsjhF5SleOX3
-	PJir6mDWAi97z3AA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1782991801; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=GQ5WNGbzin/8vtFDbM8MbJVMoDULad2+FK2cbMLRvxc=;
-	b=b1V0EUVs7Ryzq47sXHyoMJr4JZZKjRZAq5PgvmgMFnAklikv2OYEmEeg7B9svz/QHBrX66
-	mB5yghfOAlHB0fX34t3q3IyNpEXuiXPxIfmxCvscO3OL7qd/yQ7G0KmD4Jd8J5jXHJYIVS
-	NCERshvGZ/f1dJtc20DF60zU/Yynep8=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1782991801;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=GQ5WNGbzin/8vtFDbM8MbJVMoDULad2+FK2cbMLRvxc=;
-	b=VpW3EjylCJF5yoxNrG2csldpuwjxwS7DCjeAVumRCzdwPhw4Sr5LNXAnK/UsjhF5SleOX3
-	PJir6mDWAi97z3AA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 9F893779AA;
-	Thu,  2 Jul 2026 11:29:56 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id 4DAfI7RLRmr5dgAAD6G6ig
-	(envelope-from <pfalcato@suse.de>); Thu, 02 Jul 2026 11:29:56 +0000
-Date: Thu, 2 Jul 2026 12:29:54 +0100
-From: Pedro Falcato <pfalcato@suse.de>
-To: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>, 
-	Russell King <linux@armlinux.org.uk>, Dinh Nguyen <dinguyen@kernel.org>, 
-	Simon Schuster <schuster.simon@siemens-energy.com>, 
-	"James E . J . Bottomley" <James.Bottomley@hansenpartnership.com>, Helge Deller <deller@gmx.de>, 
-	Jarkko Sakkinen <jarkko@kernel.org>, Thomas Gleixner <tglx@kernel.org>, 
-	Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>, 
-	Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org, Ian Abbott <abbotti@mev.co.uk>, 
-	H Hartley Sweeten <hsweeten@visionengravers.com>, Lucas Stach <l.stach@pengutronix.de>, 
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
-	Patrik Jakobsson <patrik.r.jakobsson@gmail.com>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
-	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
-	Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>, 
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>, Thierry Reding <thierry.reding@kernel.org>, 
-	Mikko Perttunen <mperttunen@nvidia.com>, Jonathan Hunter <jonathanh@nvidia.com>, 
-	Christian Koenig <christian.koenig@amd.com>, Huang Rui <ray.huang@amd.com>, Ankit Agrawal <ankita@nvidia.com>, 
-	Alex Williamson <alex@shazbot.org>, Alexander Viro <viro@zeniv.linux.org.uk>, 
-	Christian Brauner <brauner@kernel.org>, Dan Williams <djbw@kernel.org>, 
-	Muchun Song <muchun.song@linux.dev>, Oscar Salvador <osalvador@suse.de>, 
-	David Hildenbrand <david@kernel.org>, Suren Baghdasaryan <surenb@google.com>, 
-	"Liam R . Howlett" <liam@infradead.org>, Matthew Wilcox <willy@infradead.org>, 
-	Marek Szyprowski <m.szyprowski@samsung.com>, Peter Zijlstra <peterz@infradead.org>, 
-	Arnaldo Carvalho de Melo <acme@kernel.org>, Namhyung Kim <namhyung@kernel.org>, 
-	Masami Hiramatsu <mhiramat@kernel.org>, Oleg Nesterov <oleg@redhat.com>, 
-	Steven Rostedt <rostedt@goodmis.org>, SeongJae Park <sj@kernel.org>, Miaohe Lin <linmiaohe@huawei.com>, 
-	Hugh Dickins <hughd@google.com>, Mike Rapoport <rppt@kernel.org>, Kees Cook <kees@kernel.org>, 
-	Paolo Bonzini <pbonzini@redhat.com>, linux-kernel@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-parisc@vger.kernel.org, linux-sgx@vger.kernel.org, 
-	etnaviv@lists.freedesktop.org, dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
-	freedreno@lists.freedesktop.org, linux-tegra@vger.kernel.org, kvm@vger.kernel.org, 
-	linux-fsdevel@vger.kernel.org, nvdimm@lists.linux.dev, linux-mm@kvack.org, 
-	iommu@lists.linux.dev, linux-perf-users@vger.kernel.org, 
-	linux-trace-kernel@vger.kernel.org, kasan-dev@googlegroups.com, damon@lists.linux.dev, 
-	Rik van Riel <riel@surriel.com>, Harry Yoo <harry@kernel.org>, Jann Horn <jannh@google.com>
-Subject: Re: [PATCH 25/30] mm/vma: update vmg_adjust_set_range() to offset
- pgoff instead
-Message-ID: <akZLhkjsJ_3sGdox@pedro-suse.lan>
-References: <cover.1782735110.git.ljs@kernel.org>
- <910f7b5be78232304dc7ca01cd57c6f5ca8f3d13.1782735110.git.ljs@kernel.org>
+	 Content-Type:Content-Disposition:In-Reply-To; b=kQFQCH1xo0xIhvD/Ux/Mbux/IrSnvu6qtTrFqwukecBG29K/sLh2XfgswkAAVFYGkWysfConzDP+PqfRhr4xHte3DKfZxSk2NhxSYY64kgUxMs68IO8aszPDswERujInLIIuPJZaR7jNmKiMpJr7rEbapwbXgnrYeyfsYgjrnYk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ZolEsJ49; arc=none smtp.client-ip=205.220.168.131
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 662AaK8E3591072;
+	Thu, 2 Jul 2026 11:30:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	0n6T3VUvqrwQFYo+kQxR/wRZf/y5fYIkYNo6YhrKNpY=; b=ZolEsJ49ukzOSasW
+	T894XcZxOqQOTpMm31kZ2YTt6S0fT480TnKEiUin8l35m0GKa0swO0wHgIB4XiCb
+	Q/2ap1LAtPPKBaphVqH0nWxea16QmoFiYOXkUtWegyjmOmJqXAxX+fZEZJF3RY8T
+	Zo1Pr4dUr4ZsGG2O4nT9TilqReARzKDCEuvFsKtWnCYfnk+Fgokb/bloinQkK9zP
+	P5JP7ihpB+xln4bbF78YZV5Tu8mnfyd7ESd7L+p0ur19g+lK8M14cQ+9DGKh12S5
+	aIRMEKjvFwiOISFi26KOjgGo1fbQO6rPoWQ3RbzZGMjdkvt3kQYp/tq4yWw5RvQc
+	+rwHXQ==
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f5h7n9fdf-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 02 Jul 2026 11:30:15 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (8.18.1.7/8.18.1.7) with ESMTP id 662BUB4J021139;
+	Thu, 2 Jul 2026 11:30:11 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 4f27kkryx4-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 02 Jul 2026 11:30:11 +0000 (GMT)
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.18.1.12/8.18.1.12) with ESMTP id 662BUBKR021132;
+	Thu, 2 Jul 2026 11:30:11 GMT
+Received: from hu-devc-hyd-u22-c.qualcomm.com (hu-kotarake-hyd.qualcomm.com [10.213.97.140])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 662BUAwb021127
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 02 Jul 2026 11:30:11 +0000 (GMT)
+Received: by hu-devc-hyd-u22-c.qualcomm.com (Postfix, from userid 2389607)
+	id 4E76FB2B; Thu,  2 Jul 2026 17:00:10 +0530 (+0530)
+Date: Thu, 2 Jul 2026 17:00:10 +0530
+From: Rakesh Kota <rakesh.kota@oss.qualcomm.com>
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>,
+        Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>,
+        jishnu.prakash@oss.qualcomm.com,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, Sebastian Reichel <sre@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org
+Subject: Re: [PATCH 1/2] dt-bindings: soc: qcom: pmic-glink: Document
+ batteryless property
+Message-ID: <20260702113010.zjrk4kr7fpjp6asj@hu-kotarake-hyd.qualcomm.com>
+References: <20260518-add_dc_in_support-v1-1-31fbaa329879@oss.qualcomm.com>
+ <fd58d6d7-26cf-4b11-82ad-05b4863b6dd1@kernel.org>
+ <20260519082526.odmn5dqi2jftwnln@hu-kotarake-hyd.qualcomm.com>
+ <20260519-first-wine-bulldog-a6a4c7@quoll>
+ <20260521071341.q4efqssppvettaey@hu-kamalw-hyd.qualcomm.com>
+ <86f76a81-832d-4ba5-81d5-38b46b7dc0a7@kernel.org>
+ <6c595a5f-b979-4e8b-ae77-d28d24700588@oss.qualcomm.com>
+ <e07085c5-0fe8-4ea7-8e51-ebe104e7aa2d@kernel.org>
+ <82019c2e-6b6e-4edd-91b3-a28ef6eb09eb@oss.qualcomm.com>
+ <20260525120139.dyfnm6nwfzuoxd7p@hu-kotarake-hyd.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <910f7b5be78232304dc7ca01cd57c6f5ca8f3d13.1782735110.git.ljs@kernel.org>
-X-Spam-Flag: NO
-X-Spam-Score: -3.01
-X-Spam-Level: 
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260525120139.dyfnm6nwfzuoxd7p@hu-kotarake-hyd.qualcomm.com>
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAyMDEyMCBTYWx0ZWRfX6eM9A/hXnY2Z
+ hO13vnuPXA1g5JvYJzqX0JkicqcED1tJYXE7YnlPYUFgPKWvtXJ5K9lRQ30X/+vPwtUNP8d+/Yp
+ zccrrFkXHwZ8RXRx4hFGZuG5XKFN6GYzA2V12KBjHdQVlr/TGPzhE0J/okhhbd26VzP0ge1JOIc
+ W1DKkurZRwuod5B24+0AnNdZeFaydRBq1nJKq848kE0AQfUpq/SKued/7Q5jL0afddn8IGidcqh
+ V2BbkCqrQAOOwH6bFBJ6nUNkC3W7Jc7Ui1UqtB6g3qWHLh93JgZg+KzH8UmOL1rZg3nCtb+BUTL
+ dXEv/JPD5tnmfizu31RX+jk68diBDD0A4MnLNLtTBO63sgih+qIiA0gciLSndcJWKLFdMVvzFOO
+ aF+a3s5ixk+0jr2FUE6X28sbzkrwUvQ/4qYIr8+SovCW7q5t6+PcBv95OUtdF108f9BkrCDG5yE
+ 9aujSVaBk/AeGHetBtg==
+X-Proofpoint-ORIG-GUID: 0eCh5IeNmFv2zlTB2dxGDAB3_trdEPJi
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAyMDEyMCBTYWx0ZWRfX3fqQtvjvGAd7
+ JqPgrcj3ExiYxgKHz4FyRyvIxAJMan95/ZB5hkh1WqTU9Zgz+fWghtkywVp4TKVEZrU8dzD2W8K
+ CcPc2EUWDUn5hgddO3l2IJKtltA/Jqo=
+X-Proofpoint-GUID: 0eCh5IeNmFv2zlTB2dxGDAB3_trdEPJi
+X-Authority-Analysis: v=2.4 cv=WMBPmHsR c=1 sm=1 tr=0 ts=6a464bc7 cx=c_pps
+ a=Ou0eQOY4+eZoSc0qltEV5Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22 a=vq6V-Kc8it9GCgzh-0QA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-07-02_01,2026-06-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 phishscore=0 suspectscore=0 lowpriorityscore=0 bulkscore=0
+ spamscore=0 priorityscore=1501 adultscore=0 impostorscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607020120
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[suse.de,none];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
-	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[linux-foundation.org,armlinux.org.uk,kernel.org,siemens-energy.com,hansenpartnership.com,gmx.de,redhat.com,alien8.de,linux.intel.com,mev.co.uk,visionengravers.com,pengutronix.de,gmail.com,ffwll.ch,suse.de,oss.qualcomm.com,ideasonboard.com,nvidia.com,amd.com,shazbot.org,zeniv.linux.org.uk,linux.dev,google.com,infradead.org,samsung.com,goodmis.org,huawei.com,vger.kernel.org,lists.infradead.org,lists.freedesktop.org,lists.linux.dev,kvack.org,googlegroups.com,surriel.com];
-	TAGGED_FROM(0.00)[bounces-115964-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-115965-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER(0.00)[pfalcato@suse.de,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS(0.00)[m:konrad.dybcio@oss.qualcomm.com,m:krzk@kernel.org,m:kamal.wadhwa@oss.qualcomm.com,m:jishnu.prakash@oss.qualcomm.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:sre@kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-pm@vger.kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo,vger.kernel.org:from_smtp,oss.qualcomm.com:from_mime,hu-kotarake-hyd.qualcomm.com:mid];
+	FORGED_SENDER(0.00)[rakesh.kota@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[14];
+	DKIM_TRACE(0.00)[qualcomm.com:+];
 	MIME_TRACE(0.00)[0:+];
-	FORGED_RECIPIENTS(0.00)[m:ljs@kernel.org,m:akpm@linux-foundation.org,m:linux@armlinux.org.uk,m:dinguyen@kernel.org,m:schuster.simon@siemens-energy.com,m:James.Bottomley@hansenpartnership.com,m:deller@gmx.de,m:jarkko@kernel.org,m:tglx@kernel.org,m:mingo@redhat.com,m:bp@alien8.de,m:dave.hansen@linux.intel.com,m:x86@kernel.org,m:abbotti@mev.co.uk,m:hsweeten@visionengravers.com,m:l.stach@pengutronix.de,m:airlied@gmail.com,m:simona@ffwll.ch,m:patrik.r.jakobsson@gmail.com,m:maarten.lankhorst@linux.intel.com,m:mripard@kernel.org,m:tzimmermann@suse.de,m:robin.clark@oss.qualcomm.com,m:lumag@kernel.org,m:tomi.valkeinen@ideasonboard.com,m:thierry.reding@kernel.org,m:mperttunen@nvidia.com,m:jonathanh@nvidia.com,m:christian.koenig@amd.com,m:ray.huang@amd.com,m:ankita@nvidia.com,m:alex@shazbot.org,m:viro@zeniv.linux.org.uk,m:brauner@kernel.org,m:djbw@kernel.org,m:muchun.song@linux.dev,m:osalvador@suse.de,m:david@kernel.org,m:surenb@google.com,m:liam@infradead.org,m:willy@infradead.org,m:m.szyprow
- ski@samsung.com,m:peterz@infradead.org,m:acme@kernel.org,m:namhyung@kernel.org,m:mhiramat@kernel.org,m:oleg@redhat.com,m:rostedt@goodmis.org,m:sj@kernel.org,m:linmiaohe@huawei.com,m:hughd@google.com,m:rppt@kernel.org,m:kees@kernel.org,m:pbonzini@redhat.com,m:linux-kernel@vger.kernel.org,m:linux-arm-kernel@lists.infradead.org,m:linux-parisc@vger.kernel.org,m:linux-sgx@vger.kernel.org,m:etnaviv@lists.freedesktop.org,m:dri-devel@lists.freedesktop.org,m:linux-arm-msm@vger.kernel.org,m:freedreno@lists.freedesktop.org,m:linux-tegra@vger.kernel.org,m:kvm@vger.kernel.org,m:linux-fsdevel@vger.kernel.org,m:nvdimm@lists.linux.dev,m:linux-mm@kvack.org,m:iommu@lists.linux.dev,m:linux-perf-users@vger.kernel.org,m:linux-trace-kernel@vger.kernel.org,m:kasan-dev@googlegroups.com,m:damon@lists.linux.dev,m:riel@surriel.com,m:harry@kernel.org,m:jannh@google.com,m:patrikrjakobsson@gmail.com,s:lists@lfdr.de];
-	FORWARDED(0.00)[lists@lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[suse.de:+];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	MISSING_XM_UA(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[6];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[pfalcato@suse.de,linux-arm-msm@vger.kernel.org];
+	FORWARDED(0.00)[lists@lfdr.de];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_GT_50(0.00)[75];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	MISSING_XM_UA(0.00)[];
 	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[rakesh.kota@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,pedro-suse.lan:mid,suse.de:dkim,suse.de:email,suse.de:from_mime]
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MID_RHS_MATCH_FROMTLD(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
+	RWL_MAILSPIKE_POSSIBLE(0.00)[104.64.211.4:from];
+	RCVD_COUNT_SEVEN(0.00)[10]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 5ED746F6F75
+X-Rspamd-Queue-Id: E92206F7068
 
-On Mon, Jun 29, 2026 at 01:23:36PM +0100, Lorenzo Stoakes wrote:
-> We are calculating the pgoff as an offset, since we have vma_add_pgoff()
-> and vma_sub_pgoff() available, just offset this value directly and use
-> __vma_set_range() for vma->vm_[start, end] values.
+On Mon, May 25, 2026 at 05:31:39PM +0530, Rakesh Kota wrote:
+> On Fri, May 22, 2026 at 11:24:19AM +0200, Konrad Dybcio wrote:
+> > On 5/21/26 11:58 AM, Krzysztof Kozlowski wrote:
+> > > On 21/05/2026 10:46, Konrad Dybcio wrote:
+> > >> On 5/21/26 9:20 AM, Krzysztof Kozlowski wrote:
+> > >>>> Since firmware does not have a way to dynamically tell if it on a
+> > >>>> debug-board powered device or a DCIN powered device, We are required to
+> > >>>> add this new DT property.
+> > >>>
+> > >>> Neither debug-board powered device nor battery-less will have
+> > >>> monitored-battery, thus again, why lack of that property cannot tell you
+> > >>> what you need?
+> > >>
+> > >> A device with a battery will not have a monitored-battery either
+> > > But why? If for such device property "no battery" is suitable, then for
+> > > me "monitored-battery" is suitable as well. IOW, if you say that having
+> > > a property describing batter is not a accurate hardware property here,
+> > > then neither saying "no battery" is, because no batter is basically some
+> > > sort of battery (just like empty set is still a set, empty array is
+> > > still an array).
+> > 
+> > The battmgr service running on one of the remoteprocs already has all
+> > the information about the battery and it also handles all the type-c,
+> > PD and charger configuration, only letting the OS know about the
+> > results.
+> > 
+> > Hence, unless there's some other hardware at play (e.g. for custom
+> > 200 W charging), which wasn't fully implemented in the QC firmware,
+> > there is no reason to describe a battery separately, since the OS
+> > can't do anything useful with that information
+> > 
+> > In some abstract way, perhaps monitored_battery = <&pmic_glink> could
+> > be thought of as valid (since that's the data source the OS gets to
+> > see)
 > 
-> We take care to update the range before offsetting the page offset, so the
-> adjusted VMA's vm_start and vm_pgoff are mutually consistent at the point
-> the page offset helpers operate - this matters once vma_set_pgoff() comes
-> to assert invariants which relate the two.
-> 
-> Doing so lays the foundation for future work which allows for use of
-> virtual page offsets for MAP_PRIVATE-file backed mappings.
-> 
-> No functional change intended.
-> 
-> Signed-off-by: Lorenzo Stoakes <ljs@kernel.org>
-> ---
->  mm/vma.c | 15 ++++-----------
->  1 file changed, 4 insertions(+), 11 deletions(-)
-> 
-> diff --git a/mm/vma.c b/mm/vma.c
-> index e3355eab11f2..0579fc8c9bd5 100644
-> --- a/mm/vma.c
-> +++ b/mm/vma.c
-> @@ -714,9 +714,6 @@ void validate_mm(struct mm_struct *mm)
->   */
->  static void vmg_adjust_set_range(struct vma_merge_struct *vmg)
->  {
-> -	struct vm_area_struct *adjust;
-> -	pgoff_t pgoff;
-> -
->  	if (vmg->__adjust_middle_start) {
->  		/*
->  		 * vmg->start    vmg->end
-> @@ -735,8 +732,8 @@ static void vmg_adjust_set_range(struct vma_merge_struct *vmg)
->  		struct vm_area_struct *middle = vmg->middle;
->  		const unsigned long delta = vmg->end - middle->vm_start;
->  
-> -		pgoff = vma_start_pgoff(middle) + (delta >> PAGE_SHIFT);
-> -		adjust = middle;
-> +		__vma_set_range(middle, vmg->end, middle->vm_end);
-> +		vma_add_pgoff(middle, delta >> PAGE_SHIFT);
->  	} else if (vmg->__adjust_next_start) {
->  		/*
->  		 *                Originally:
-> @@ -764,13 +761,9 @@ static void vmg_adjust_set_range(struct vma_merge_struct *vmg)
->  		struct vm_area_struct *next = vmg->next;
->  		const unsigned long delta = next->vm_start - vmg->end;
->  
-> -		pgoff = vma_start_pgoff(next) - (delta >> PAGE_SHIFT);
-> -		adjust = next;
-> -	} else {
-> -		return;
-> +		__vma_set_range(next, vmg->end, next->vm_end);
-> +		vma_sub_pgoff(next, delta >> PAGE_SHIFT);
->  	}
-> -
-> -	vma_set_range(adjust, vmg->end, adjust->vm_end, pgoff);
->  }
+> Should we use monitored-battery = <&pmic_glink>; If so, would it be
+> incorrect to mark pmic_glink as simple-battery, as that may cause the
+> schema validation to fail?
 
-Maybe this should be squashed with That Other Patch that touches this.
+Hi @Konrad Dybcio, @Krzysztof Kozlowski , 
 
-Anyway,
+Following up on the earlier discussion — is monitored-battery =
+<&pmic_glink>; a valid pattern? And if so, would marking pmic_glink as
+simple-battery cause DT schema validation failures?
 
-Reviewed-by: Pedro Falcato <pfalcato@suse.de> 
+Any guidance would be appreciated!
 
--- 
-Pedro
+regards
+Rakesh 
 
