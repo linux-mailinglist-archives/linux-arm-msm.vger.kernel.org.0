@@ -1,338 +1,189 @@
-Return-Path: <linux-arm-msm+bounces-116061-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-116059-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id luDlCbmIRmomYAsAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-116061-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Jul 2026 17:50:17 +0200
+	id ijxnEDyLRmoHYQsAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-116059-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Jul 2026 18:01:00 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 828A86F9ACF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Jul 2026 17:50:16 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 79FA76F9D5A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Jul 2026 18:00:58 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=Nvidia.com header.s=selector2 header.b=bpchKJYS;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116061-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116061-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=reject) header.from=nvidia.com;
-	arc=reject ("cv is fail on i=2")
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=TzKC7lqe;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116059-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c15:e001:75::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116059-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=quarantine) header.from=kernel.org;
+	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 8583830AD8F1
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jul 2026 15:48:00 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 0B2883008D1E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jul 2026 15:47:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B65DC33E367;
-	Thu,  2 Jul 2026 15:47:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5831E331EAF;
+	Thu,  2 Jul 2026 15:47:39 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from PH7PR06CU001.outbound.protection.outlook.com (mail-westus3azon11010008.outbound.protection.outlook.com [52.101.201.8])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F90E433E93;
-	Thu,  2 Jul 2026 15:47:47 +0000 (UTC)
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783007268; cv=fail; b=E4C40LC0QViKcPdmSkZd0xmN/aM2GF5eK5Psq91KN3Ul2kXvQ4RIv2FNeWl9RmqUPgBefaHJF0P+5wuy0hVbOtzZUPaIX1tM5t3bPZxqmNZ+mE7rFHs+okCZ21TNpBDgzsRCwOqlhUrJVOgiR5nzjPgTk5EWc+RzRi6pyagJ34s=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783007268; c=relaxed/simple;
-	bh=s062cu5I1ggN/WMPsbg3niiNHwkRAgEY0B1zPXOHuoY=;
-	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=ZbiCREJI2vVKeWa1KniChkliYWQwAI3moXe310s8ZLgR7lmIzzIy0OUMa8wsS7kErQuEnVCUdala/l/jdcNYq/ZE22hVi5Oq14xL8H8YgsBOzM2AQfomkfn3Q6Fm0PtK1a+spAi9tVjEsuEu4K+Up7w2F0kku4eoaLe2vBt10xs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=bpchKJYS; arc=fail smtp.client-ip=52.101.201.8
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=N/PdDBJthdVOGngUd/gT8li0MDKQFakfbUyKcGv5mHELkEFzhS5crr87tERSXlT3A4sfRvYepjxBWcgjM7wRG3nHcbp9rJ7wGB1KMZBxSxTz1AXnpXVkzkqU4kH3pd7G3oahEPJ+vuQK+1Jd445EJX3CnExfgnwlKbzbYXM+albqbODDMfFm0jA5XKghrxSLUDQBIOofFjG4JbcMDDNgOh+X6ZU/a48/TPozSHbse9VdjTa2WXespymDaoehLhs0AmBDhOCVdCoLb4Ae4fMa5wEIV2jXMTOChHdAD8sgULDn2Rmhg5GL4aeCHqsyTOj7YtKRUX8UgFvPNRDfCXXZMg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=AICvNZ/UItG8ZcW9REzqs1ug4FwXmgITMMXg0yyZDtw=;
- b=qixfb7NczB+LuLcMoiHniE1kjfnYD61HCNVaEoOh1upJGKwtkcnXtIiD17dhUVspRcVtMalSRBPKDfxk9jtKpO0ksVadUYJSxp4rFTyTWzYUpNi7mDz7tOKHIq3wh3QxLztCgBYZLB/3x2CpiaeqkKNn0WZywX7juKaDyHR+ExnnBw0PeB7jGs9/Q3l17mugV80TH0Xtqiu3KjCL5RdxTKs+5W+ErWAZc7AwYS7I43zM/vTgm0Tpn3sKT/v6ArnZW8cVvFeFSv/jDg2fSzNSFJMEUGf6vcA+0ZjT9MhwuuuVWK2fwnPOB8Dgx2W+14/9EihptRVHd6BaVX3wc6mJ5g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=AICvNZ/UItG8ZcW9REzqs1ug4FwXmgITMMXg0yyZDtw=;
- b=bpchKJYSRGMSmyYdKLAV/RSCDdDhl5fIIGrylKZGiT6g5aXi1SNIz341KmoYMYfF1eMCskLqH24SecKK5KaXc91ze9c/y99jzLhi/TwVmjaaAwY95TM66HtC7IhgaDpr7w1FwTjp01JfQvQzBEo7WPSC/XeqLOOziZRsVf+LbVL9tteXSPeaKRp+Up7M28voks+bY8UQre9K7M7gk/Lg4Mc8RL+O7tm9n1eBYVnKbdMz6+1lq0rtpTgpLxJM5z/SL9g4Gs9KwbemnqD26+tLiuRCZkO7mJRDX3mcKygMD7+gPC0p9hV3ZQCc4AV+9KiSW/YV5X/GPIwGXhK7t6wsZg==
-Received: from LV3PR12MB9356.namprd12.prod.outlook.com (2603:10b6:408:20c::21)
- by MN0PR12MB5738.namprd12.prod.outlook.com (2603:10b6:208:371::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.10; Thu, 2 Jul
- 2026 15:47:29 +0000
-Received: from LV3PR12MB9356.namprd12.prod.outlook.com
- ([fe80::1c36:31b4:c420:6286]) by LV3PR12MB9356.namprd12.prod.outlook.com
- ([fe80::1c36:31b4:c420:6286%5]) with mapi id 15.21.0181.009; Thu, 2 Jul 2026
- 15:47:29 +0000
-From: Yury Norov <ynorov@nvidia.com>
-To: Andrew Morton <akpm@linux-foundation.org>,
-	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
-	Yury Norov <ynorov@nvidia.com>
-Cc: "Russell King" <linux@armlinux.org.uk>,
-	"Frank Li" <Frank.Li@nxp.com>,
-	"Sascha Hauer" <s.hauer@pengutronix.de>,
-	"Pengutronix Kernel Team" <kernel@pengutronix.de>,
-	"Fabio Estevam" <festevam@gmail.com>,
-	"Madhavan Srinivasan" <maddy@linux.ibm.com>,
-	"Michael Ellerman" <mpe@ellerman.id.au>,
-	"Nicholas Piggin" <npiggin@gmail.com>,
-	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
-	"Peter Zijlstra" <peterz@infradead.org>,
-	"Ingo Molnar" <mingo@redhat.com>,
-	"Arnaldo Carvalho de Melo" <acme@kernel.org>,
-	"Namhyung Kim" <namhyung@kernel.org>,
-	"Mark Rutland" <mark.rutland@arm.com>,
-	"Alexander Shishkin" <alexander.shishkin@linux.intel.com>,
-	"Jiri Olsa" <jolsa@kernel.org>,
-	"Ian Rogers" <irogers@google.com>,
-	"Adrian Hunter" <adrian.hunter@intel.com>,
-	"James Clark" <james.clark@linaro.org>,
-	"Thomas Gleixner" <tglx@kernel.org>,
-	"Borislav Petkov" <bp@alien8.de>,
-	"Dave Hansen" <dave.hansen@linux.intel.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	"Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
-	"Danilo Krummrich" <dakr@kernel.org>,
-	"Chanwoo Choi" <cw00.choi@samsung.com>,
-	"MyungJoo Ham" <myungjoo.ham@samsung.com>,
-	"Kyungmin Park" <kyungmin.park@samsung.com>,
-	"Heiko Stuebner" <heiko@sntech.de>,
-	"Xu Yilun" <yilun.xu@intel.com>,
-	"Tom Rix" <trix@redhat.com>,
-	"Moritz Fischer" <mdf@kernel.org>,
-	"Yicong Yang" <yangyicong@hisilicon.com>,
-	"Jonathan Cameron" <jic23@kernel.org>,
-	"Dennis Dalessandro" <dennis.dalessandro@cornelisnetworks.com>,
-	"Jason Gunthorpe" <jgg@ziepe.ca>,
-	"Leon Romanovsky" <leon@kernel.org>,
-	"Bjorn Helgaas" <bhelgaas@google.com>,
-	"Shuai Xue" <xueshuai@linux.alibaba.com>,
-	"Will Deacon" <will@kernel.org>,
-	"Jiucheng Xu" <jiucheng.xu@amlogic.com>,
-	"Neil Armstrong" <neil.armstrong@linaro.org>,
-	"Kevin Hilman" <khilman@baylibre.com>,
-	"Jerome Brunet" <jbrunet@baylibre.com>,
-	"Martin Blumenstingl" <martin.blumenstingl@googlemail.com>,
-	"Robin Murphy" <robin.murphy@arm.com>,
-	"Jing Zhang" <renyu.zj@linux.alibaba.com>,
-	"Xu Yang" <xu.yang_2@nxp.com>,
-	"Linu Cherian" <lcherian@marvell.com>,
-	"Gowthami Thiagarajan" <gthiagarajan@marvell.com>,
-	"Ji Sheng Teoh" <jisheng.teoh@starfivetech.com>,
-	"Khuong Dinh" <khuong@os.amperecomputing.com>,
-	"Yury Norov" <yury.norov@gmail.com>,
-	"Kees Cook" <kees@kernel.org>,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	"Aboorva Devarajan" <aboorvad@linux.ibm.com>,
-	"Ilkka Koskinen" <ilkka@os.amperecomputing.com>,
-	"Besar Wicaksono" <bwicaksono@nvidia.com>,
-	"Ma Ke" <make24@iscas.ac.cn>,
-	"Chengwen Feng" <fengchengwen@huawei.com>,
-	Ritesh Harjani <ritesh.list@gmail.com>,
-	Yushan Wang <wangyushan12@huawei.com>,
-	linux-arm-kernel@lists.infradead.org,
-	imx@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	linuxppc-dev@lists.ozlabs.org,
-	linux-perf-users@vger.kernel.org,
-	x86@kernel.org,
-	driver-core@lists.linux.dev,
-	linux-pm@vger.kernel.org,
-	linux-rockchip@lists.infradead.org,
-	linux-fpga@vger.kernel.org,
-	linux-rdma@vger.kernel.org,
-	linux-pci@vger.kernel.org,
-	linux-amlogic@lists.infradead.org,
-	linux-cxl@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: [PATCH v2 00/11] lib/cpumask: get rid of cpumap_print_to_pagebuf()
-Date: Thu,  2 Jul 2026 11:47:13 -0400
-Message-ID: <20260702154725.185376-1-ynorov@nvidia.com>
-X-Mailer: git-send-email 2.53.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: SJ0PR03CA0167.namprd03.prod.outlook.com
- (2603:10b6:a03:338::22) To LV3PR12MB9356.namprd12.prod.outlook.com
- (2603:10b6:408:20c::21)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15810330656;
+	Thu,  2 Jul 2026 15:47:37 +0000 (UTC)
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783007259; cv=none; b=F4mUX7x/DQXe2GF5L/VM2cuvPhj00NUxtZRepo4DOH34evaTVBbxuopleArePrGVrCTJl4RQp7QIkhBaFAPZWBEaJyHmQ8+zHoJcnF5Rm41syi73b1aQMqeQfLDBDrovlJIAWhHdMdAPQznwlyYj6n9NZ77zTezO6ieM1wPkhXU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783007259; c=relaxed/simple;
+	bh=TvUAgfWNpLkZ1nlsw2EGCWNSAzGkDsQHdYOGjIT+X48=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=js6/Wxk9YURp1AXb1TdZO5jgSZ2CUcw9+Ntj3cEtVN0qOVvuWsmsDQe0DQr0zk1dY/DtxKrjlv4s2CyQ5un1tAU28LWU/Oyr9vqQ4FXyI3gGH1hZGQX60QVHjeQmGQLYWYz/J/Prm6282sdeCYEPfQzuk5fvz57cIFL3algA8Q8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TzKC7lqe; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 504D91F00A3E;
+	Thu,  2 Jul 2026 15:47:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1783007257;
+	bh=Po4UWa+Txwx6nSBMW1aPQiZMcfNfQH1HH88CC93hgvE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=TzKC7lqe9Irn8JWqPCnRnBZrIjo+wjSEuABLaM62PvcVIf4DaJMLiJvSaLOlIhJOf
+	 znTjZNuNsA3irPkrJRqgdqBSalvaquhCKCvJXbcnp48ft4f4usQWudMjc5HdiilEg8
+	 aXu2StIvmQVSGOVmy/Z45hqYBBWUQ4dmbbAuXk0zKTG9Nk6i9FrPim4oLQSVwaxjeJ
+	 SDNmxdCjFnKqxvBlFG1TSv8opFwMO6hCg3J9TODlwY2GGXnrD8Ppex9n5gZkrvDNyw
+	 HAH74jjJFvvUXueVEU77M3F6be8/OSAHgO1cGcNXrmLyLcrgWJzjocoh6IYJOxKTNs
+	 hiEtCFwm59HOw==
+Date: Thu, 2 Jul 2026 16:47:14 +0100
+From: Lorenzo Stoakes <ljs@kernel.org>
+To: Lance Yang <lance.yang@linux.dev>
+Cc: akpm@linux-foundation.org, tsbogend@alpha.franken.de, 
+	maddy@linux.ibm.com, mpe@ellerman.id.au, maarten.lankhorst@linux.intel.com, 
+	mripard@kernel.org, tzimmermann@suse.de, airlied@gmail.com, simona@ffwll.ch, 
+	l.stach@pengutronix.de, inki.dae@samsung.com, sw0312.kim@samsung.com, 
+	kyungmin.park@samsung.com, krzk@kernel.org, peter.griffin@linaro.org, 
+	jani.nikula@linux.intel.com, joonas.lahtinen@linux.intel.com, rodrigo.vivi@intel.com, 
+	tursulin@ursulin.net, robin.clark@oss.qualcomm.com, lumag@kernel.org, lyude@redhat.com, 
+	dakr@kernel.org, tomi.valkeinen@ideasonboard.com, hjc@rock-chips.com, 
+	heiko@sntech.de, andy.yan@rock-chips.com, thierry.reding@kernel.org, 
+	mperttunen@nvidia.com, jonathanh@nvidia.com, kraxel@redhat.com, 
+	dmitry.osipenko@collabora.com, zack.rusin@broadcom.com, matthew.brost@intel.com, 
+	thomas.hellstrom@linux.intel.com, oleksandr_andrushchenko@epam.com, deller@gmx.de, bcrl@kvack.org, 
+	viro@zeniv.linux.org.uk, brauner@kernel.org, muchun.song@linux.dev, osalvador@suse.de, 
+	david@kernel.org, ziy@nvidia.com, baolin.wang@linux.alibaba.com, 
+	liam@infradead.org, npache@redhat.com, ryan.roberts@arm.com, dev.jain@arm.com, 
+	baohua@kernel.org, hughd@google.com, vbabka@kernel.org, rppt@kernel.org, 
+	surenb@google.com, mhocko@suse.com, jannh@google.com, pfalcato@suse.de, 
+	kees@kernel.org, perex@perex.cz, tiwai@suse.com, linux-mips@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linuxppc-dev@lists.ozlabs.org, dri-devel@lists.freedesktop.org, 
+	etnaviv@lists.freedesktop.org, linux-arm-kernel@lists.infradead.org, 
+	linux-samsung-soc@vger.kernel.org, intel-gfx@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
+	freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org, 
+	linux-rockchip@lists.infradead.org, linux-tegra@vger.kernel.org, virtualization@lists.linux.dev, 
+	intel-xe@lists.freedesktop.org, xen-devel@lists.xenproject.org, linux-fbdev@vger.kernel.org, 
+	linux-aio@kvack.org, linux-fsdevel@vger.kernel.org, linux-mm@kvack.org, 
+	linux-sound@vger.kernel.org
+Subject: Re: [PATCH 11/13] mm/mlock: convert mlock code to use vma_flags_t
+Message-ID: <akaH31jAOuMtthKF@lucifer>
+References: <2db16db81538355ca65f778c246d2381c673cad4.1782760670.git.ljs@kernel.org>
+ <20260702132107.73727-1-lance.yang@linux.dev>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV3PR12MB9356:EE_|MN0PR12MB5738:EE_
-X-MS-Office365-Filtering-Correlation-Id: 81d99e3c-819b-44cc-a1ba-08ded85138b4
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|23010399003|7416014|376014|1800799024|18002099003|6133799003|11063799006|56012099006;
-X-Microsoft-Antispam-Message-Info:
-	UkLVaXFIyWDDxFZqLLpjoohmKtQ+dXPL/UUWMk4YTimY/K3nRUFOoEBpmdsaRuwddKCcNDcV3y0tysCetfxa/CHHJHTaoZXXUUicKrN2V2pEKZgW5QK2GAXhEdzuNAsubDcqEk8ff2/moYbmhAmZixVCYFMPVJ6zBJkdMqBr3wG+RsukCKEr7MNEUGeBZRBHAPxEzE5rtsbR003LZEwx7+CPK0mtPMrsjEXSr421p8oia1qKFH27h8pd4A3l8dB7zev6K14s1ikvk8REte7AqbvbbiKajq5+POOcfUDwfupkJlHoMMgSHcCqMg8NQBMynjGJdG8blQ+/xU2DmNjTqsQhHkqbksW9K8M86RybSzpdGcl/3AZEgMKt9RaXAIC/oXD5MggM0rahBJgeURmqAWJ1QrHvgewn8xubnko4QcoyrGFqIaEAokBnrS8/NP+/tVzya/1+pirm/9MIGXRuJAW0fNn1IyruWF1JqzNSaIaGGm7XQGqQcHe9lt2SCrnLod40p07a6zznYElbq+hcWefOvBCOgRxBVCYTGRPcb44btG4Rs1zE0MEZ5Jvc7WApBX4foAuZjGZowWuztQllNszZQtB6bVJufLCkJOiByZzHxUjSc19LVf7KG6atg1H8lDdvSpwLghiIQIp3YvNkHKbTMyXqxkpf2DlzG+2bq/s=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV3PR12MB9356.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(23010399003)(7416014)(376014)(1800799024)(18002099003)(6133799003)(11063799006)(56012099006);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?GfgfxSqlHa5jrOiaHggTE864sB3n20VIyYet/OaZuROuSkeTCvQWkFt4a/Bp?=
- =?us-ascii?Q?MovKPH2wknzTWnIQhL2ZQVWKy0pN6ETZD8PAAuQltE51ov1s/aH9Io6uKYJg?=
- =?us-ascii?Q?fY9wirVX0IfIlAE4fpVRKqu5AgSkmzRfhguyS6jZJLIa7hAVOsYK2lAZFuI6?=
- =?us-ascii?Q?TZfJGtq9utWs56vH/KI4voEI+LPY7yv2BBuHeZ8x33/SQ/54xiAAvFDyTXBR?=
- =?us-ascii?Q?SdVLB2I85c20gIQxQZsnsy1PTyb7Y0tmuzNwf1bvB86aFtgPIlVKxtB1Ovpc?=
- =?us-ascii?Q?jTgtXN+U3lzl7XOzL5g5f8y01X6By3q5iWqitD49lE7MlQbJiGKKp9y98vcj?=
- =?us-ascii?Q?mMsA1soOZYUO/lRNx2l41/iXR+lH0QWBqrJtwIVodCS6IAkTsnmGIT7PS68x?=
- =?us-ascii?Q?deSAALAwJxZtW3zGo6zWwlWOKfqUqF8A2TsvN3oB9+fszydg71C31rfuFYCg?=
- =?us-ascii?Q?XpNahPnn2m5X1b75VUDbwHy3vuOktzeQTt3FipnLPTY7/HRhF1455LRBNKdM?=
- =?us-ascii?Q?ExSkrTbUyx4u5ymZEAa1z+FEDe6RqtWPdmcqg/w23TF10l162UhyHOsbJ6tV?=
- =?us-ascii?Q?D0/9suvBfx13qTrTsoxGvmyeMyNQ5teDvgsyZaz0GMg2UJmVS8F/Vgmc1k1S?=
- =?us-ascii?Q?twAnKZZBVtIvZ7dZMlN1+2GGuC9IsDSBB8G5nnVQC5bvRRXDY8QF6qij3Mik?=
- =?us-ascii?Q?JSIvgARuoiXY3z/8xO74EqgPNA17w6UcfgFwI9SE/p+0DJfPaHVGW8HzXyU/?=
- =?us-ascii?Q?ZYziUW8Twn++JxPwZ9z0tdFSjFs5nsDyhh+W9h6ZgCA98PDfD1Ca49+VPYYL?=
- =?us-ascii?Q?RMV0g1HqmaKbcc1LQnWMh4cQiWcpE4kBFM+VSi+dzpNP3SrooKPhJFqTpFbg?=
- =?us-ascii?Q?S2b2AS9cWJ9ecNL/6yNoRGBZ2yYqHUuG3f/NgW979DiroN2KtDH7VLD20oST?=
- =?us-ascii?Q?X4l4GpN8sG4OLVR433gpqCsEfIzeVQxNxc8KTb/PAsK+4Ugt+mqEsreyqmUV?=
- =?us-ascii?Q?0fhNS5WEFnBSvx4h8GDEazBCqBrW1HfFE0JgopGPvi+EpCSiPcQTmOIA29ZU?=
- =?us-ascii?Q?1nQWdAJYrlyn4uk9VZSiBgBpq1ToK1F6W6EO8YkYi/ys+BoHgXVigsCsTs0C?=
- =?us-ascii?Q?ap7VEYy4U500blm7hv07e8YSBbIsLbxSq6WTm57f4WlYOHkhOziHja5Cx/dy?=
- =?us-ascii?Q?AMMyXzpYxIkivV1847YPB9i/GCTLNiEukBqajPg7UAgz8hz86nn515n9y+Uf?=
- =?us-ascii?Q?ABbjWTNbPPktfLWKQceRRO9IMGc9rlN6IQBa/FvAfKRgsjKGmyc1h96JsMSq?=
- =?us-ascii?Q?G9nxYjG/iO8PK1f97g8nuZ0TyJAXUJjX/lcMeHVhYMeSoWOEuxDvkLWGs6EX?=
- =?us-ascii?Q?UE6shyabNyHNcYSY05zihVtSbm5epsC3Q48CjxEBF7ojRdsgWTkI4nrihLHR?=
- =?us-ascii?Q?Q7Zf9i+C++TviiYROWkNnVJ587Dmlq3nDzCkfCEE8yVC6pQCq71f7eD/Ydi6?=
- =?us-ascii?Q?Kx8rIH1pZMK8+zx1A4ugxYG+9+QsGPrhTDOUJt+xyBlTI2pZkClBpEWmLO9Z?=
- =?us-ascii?Q?eEd4c1PIEPo8ZD6LLssOilju6Wz2gNSnN3K5b2QOagyPvYmByj2PaUQM4flC?=
- =?us-ascii?Q?ztdsmfsu/5PKb+ZFF0n7zZV1sVjBzFkr9ycPIQZ17BuFWQMXIiNfojEGZ7zX?=
- =?us-ascii?Q?SA3q6Z29bgG1RZLvxN28JrL8mCREWu2JVTC0zd2TITXVjeOEb+Ha8w2xzl1E?=
- =?us-ascii?Q?GnE/gJjeKg=3D=3D?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 81d99e3c-819b-44cc-a1ba-08ded85138b4
-X-MS-Exchange-CrossTenant-AuthSource: LV3PR12MB9356.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Jul 2026 15:47:29.1454
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 4I2kRT6m09Fl/vYzMOlAuaAr103xjjoO034L6S5EcyBCjB+b7WJn0eziXgrTMlyxgHjEdm8fJnvk7L1Ue5WPyQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN0PR12MB5738
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260702132107.73727-1-lance.yang@linux.dev>
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-4.16 / 15.00];
-	WHITELIST_DMARC(-7.00)[nvidia.com:D:+];
-	SUSPICIOUS_RECIPS(1.50)[];
-	ARC_REJECT(1.00)[cv is fail on i=2];
-	MID_CONTAINS_FROM(1.00)[];
-	R_MISSING_CHARSET(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[nvidia.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64];
-	R_DKIM_ALLOW(-0.20)[Nvidia.com:s=selector2];
+X-Spamd-Result: default: False [-4.66 / 15.00];
+	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_CC(0.00)[armlinux.org.uk,nxp.com,pengutronix.de,gmail.com,linux.ibm.com,ellerman.id.au,kernel.org,infradead.org,redhat.com,arm.com,linux.intel.com,google.com,intel.com,linaro.org,alien8.de,zytor.com,linuxfoundation.org,samsung.com,sntech.de,hisilicon.com,cornelisnetworks.com,ziepe.ca,linux.alibaba.com,amlogic.com,baylibre.com,googlemail.com,marvell.com,starfivetech.com,os.amperecomputing.com,linutronix.de,nvidia.com,iscas.ac.cn,huawei.com,lists.infradead.org,lists.linux.dev,vger.kernel.org,lists.ozlabs.org];
-	FORWARDED(0.00)[lists@lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-116061-lists,linux-arm-msm=lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:akpm@linux-foundation.org,m:linux@rasmusvillemoes.dk,m:ynorov@nvidia.com,m:linux@armlinux.org.uk,m:Frank.Li@nxp.com,m:s.hauer@pengutronix.de,m:kernel@pengutronix.de,m:festevam@gmail.com,m:maddy@linux.ibm.com,m:mpe@ellerman.id.au,m:npiggin@gmail.com,m:chleroy@kernel.org,m:peterz@infradead.org,m:mingo@redhat.com,m:acme@kernel.org,m:namhyung@kernel.org,m:mark.rutland@arm.com,m:alexander.shishkin@linux.intel.com,m:jolsa@kernel.org,m:irogers@google.com,m:adrian.hunter@intel.com,m:james.clark@linaro.org,m:tglx@kernel.org,m:bp@alien8.de,m:dave.hansen@linux.intel.com,m:hpa@zytor.com,m:rafael@kernel.org,m:gregkh@linuxfoundation.org,m:dakr@kernel.org,m:cw00.choi@samsung.com,m:myungjoo.ham@samsung.com,m:kyungmin.park@samsung.com,m:heiko@sntech.de,m:yilun.xu@intel.com,m:trix@redhat.com,m:mdf@kernel.org,m:yangyicong@hisilicon.com,m:jic23@kernel.org,m:dennis.dalessandro@cornelisnetworks.com,m:jgg@ziepe.ca,m:leon@kernel.org,m:bhelgaas@google.com,m:xueshuai@linux.alibaba.c
- om,m:will@kernel.org,m:jiucheng.xu@amlogic.com,m:neil.armstrong@linaro.org,m:khilman@baylibre.com,m:jbrunet@baylibre.com,m:martin.blumenstingl@googlemail.com,m:robin.murphy@arm.com,m:renyu.zj@linux.alibaba.com,m:xu.yang_2@nxp.com,m:lcherian@marvell.com,m:gthiagarajan@marvell.com,m:jisheng.teoh@starfivetech.com,m:khuong@os.amperecomputing.com,m:yury.norov@gmail.com,m:kees@kernel.org,m:thomas.weissschuh@linutronix.de,m:aboorvad@linux.ibm.com,m:ilkka@os.amperecomputing.com,m:bwicaksono@nvidia.com,m:make24@iscas.ac.cn,m:fengchengwen@huawei.com,m:ritesh.list@gmail.com,m:wangyushan12@huawei.com,m:linux-arm-kernel@lists.infradead.org,m:imx@lists.linux.dev,m:linux-kernel@vger.kernel.org,m:linuxppc-dev@lists.ozlabs.org,m:linux-perf-users@vger.kernel.org,m:x86@kernel.org,m:driver-core@lists.linux.dev,m:linux-pm@vger.kernel.org,m:linux-rockchip@lists.infradead.org,m:linux-fpga@vger.kernel.org,m:linux-rdma@vger.kernel.org,m:linux-pci@vger.kernel.org,m:linux-amlogic@lists.infradead.org,m:linux-c
- xl@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,s:lists@lfdr.de];
-	FORGED_SENDER(0.00)[ynorov@nvidia.com,linux-arm-msm@vger.kernel.org];
 	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-116059-lists,linux-arm-msm=lfdr.de];
+	RCVD_COUNT_THREE(0.00)[4];
+	FREEMAIL_CC(0.00)[linux-foundation.org,alpha.franken.de,linux.ibm.com,ellerman.id.au,linux.intel.com,kernel.org,suse.de,gmail.com,ffwll.ch,pengutronix.de,samsung.com,linaro.org,intel.com,ursulin.net,oss.qualcomm.com,redhat.com,ideasonboard.com,rock-chips.com,sntech.de,nvidia.com,collabora.com,broadcom.com,epam.com,gmx.de,kvack.org,zeniv.linux.org.uk,linux.dev,linux.alibaba.com,infradead.org,arm.com,google.com,suse.com,perex.cz,vger.kernel.org,lists.ozlabs.org,lists.freedesktop.org,lists.infradead.org,lists.linux.dev,lists.xenproject.org];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_RECIPIENTS(0.00)[m:lance.yang@linux.dev,m:akpm@linux-foundation.org,m:tsbogend@alpha.franken.de,m:maddy@linux.ibm.com,m:mpe@ellerman.id.au,m:maarten.lankhorst@linux.intel.com,m:mripard@kernel.org,m:tzimmermann@suse.de,m:airlied@gmail.com,m:simona@ffwll.ch,m:l.stach@pengutronix.de,m:inki.dae@samsung.com,m:sw0312.kim@samsung.com,m:kyungmin.park@samsung.com,m:krzk@kernel.org,m:peter.griffin@linaro.org,m:jani.nikula@linux.intel.com,m:joonas.lahtinen@linux.intel.com,m:rodrigo.vivi@intel.com,m:tursulin@ursulin.net,m:robin.clark@oss.qualcomm.com,m:lumag@kernel.org,m:lyude@redhat.com,m:dakr@kernel.org,m:tomi.valkeinen@ideasonboard.com,m:hjc@rock-chips.com,m:heiko@sntech.de,m:andy.yan@rock-chips.com,m:thierry.reding@kernel.org,m:mperttunen@nvidia.com,m:jonathanh@nvidia.com,m:kraxel@redhat.com,m:dmitry.osipenko@collabora.com,m:zack.rusin@broadcom.com,m:matthew.brost@intel.com,m:thomas.hellstrom@linux.intel.com,m:oleksandr_andrushchenko@epam.com,m:deller@gmx.de,m:bcrl@kvack.org,m:viro@z
+ eniv.linux.org.uk,m:brauner@kernel.org,m:muchun.song@linux.dev,m:osalvador@suse.de,m:david@kernel.org,m:ziy@nvidia.com,m:baolin.wang@linux.alibaba.com,m:liam@infradead.org,m:npache@redhat.com,m:ryan.roberts@arm.com,m:dev.jain@arm.com,m:baohua@kernel.org,m:hughd@google.com,m:vbabka@kernel.org,m:rppt@kernel.org,m:surenb@google.com,m:mhocko@suse.com,m:jannh@google.com,m:pfalcato@suse.de,m:kees@kernel.org,m:perex@perex.cz,m:tiwai@suse.com,m:linux-mips@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linuxppc-dev@lists.ozlabs.org,m:dri-devel@lists.freedesktop.org,m:etnaviv@lists.freedesktop.org,m:linux-arm-kernel@lists.infradead.org,m:linux-samsung-soc@vger.kernel.org,m:intel-gfx@lists.freedesktop.org,m:linux-arm-msm@vger.kernel.org,m:freedreno@lists.freedesktop.org,m:nouveau@lists.freedesktop.org,m:linux-rockchip@lists.infradead.org,m:linux-tegra@vger.kernel.org,m:virtualization@lists.linux.dev,m:intel-xe@lists.freedesktop.org,m:xen-devel@lists.xenproject.org,m:linux-fbdev@vger.kernel.o
+ rg,m:linux-aio@kvack.org,m:linux-fsdevel@vger.kernel.org,m:linux-mm@kvack.org,m:linux-sound@vger.kernel.org,s:lists@lfdr.de];
+	FORWARDED(0.00)[lists@lfdr.de];
+	FORGED_SENDER(0.00)[ljs@kernel.org,linux-arm-msm@vger.kernel.org];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[ynorov@nvidia.com,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[Nvidia.com:+];
-	RCVD_COUNT_FIVE(0.00)[5];
+	RCPT_COUNT_GT_50(0.00)[82];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[ljs@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	ALIAS_RESOLVED(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	RCPT_COUNT_GT_50(0.00)[81];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
+	MISSING_XM_UA(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[nvidia.com:mid,nvidia.com:from_mime,vger.kernel.org:from_smtp,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,Nvidia.com:dkim]
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,linux.dev:email,sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo,lucifer:mid]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 828A86F9ACF
+X-Rspamd-Queue-Id: 79FA76F9D5A
 
-cpumap_print_to_pagebuf() is the equivalent for the "&*pb[l]" notation
-in printk-like functions. In some cases, it makes people to create
-temporary buffers for the printed cpumasks, where it can be avoided.
+On Thu, Jul 02, 2026 at 09:21:07PM +0800, Lance Yang wrote:
+>
+> On Mon, Jun 29, 2026 at 08:25:34PM +0100, Lorenzo Stoakes wrote:
+> >Replace use of the legacy vm_flags_t flags with vma_flags_t values
+> >throughout the mlock logic.
+> >
+> >Additionally update comments to reflect the changes to be consistent.
+> >
+> >No functional change intended.
+> >
+> >Signed-off-by: Lorenzo Stoakes <ljs@kernel.org>
+> >---
+>
+> Nothing scary jumped out at me. Just one tiny nit below ;)
+>
+> [...]
+> >@@ -466,24 +466,23 @@ static void mlock_vma_pages_range(struct vm_area_struct *vma,
+> >  */
+> > static int mlock_fixup(struct vma_iterator *vmi, struct vm_area_struct *vma,
+> > 	       struct vm_area_struct **prev, unsigned long start,
+> >-	       unsigned long end, vm_flags_t newflags)
+> >+	       unsigned long end, vma_flags_t *new_vma_flags)
+> > {
+> >-	vma_flags_t new_vma_flags = legacy_to_vma_flags(newflags);
+> > 	const vma_flags_t old_vma_flags = vma->flags;
+> > 	struct mm_struct *mm = vma->vm_mm;
+> > 	int nr_pages;
+> > 	int ret = 0;
+> >
+> >-	if (vma_flags_same_pair(&old_vma_flags, &new_vma_flags) ||
+> >+	if (vma_flags_same_pair(&old_vma_flags, new_vma_flags) ||
+> > 	    vma_is_secretmem(vma) || !vma_supports_mlock(vma)) {
+> > 		/*
+> >-		 * Don't set VM_LOCKED or VM_LOCKONFAULT and don't count.
+> >+		 * Don't set VMA_LOCKED_BIT or VM_LOCKONFAULT and don't count.
+>
+> s/VM_LOCKONFAULT/VMA_LOCKONFAULT_BIT/
 
-Get rid of it in a favor of more standard printing API.
+Ah yeah oops, will fix and respin! Good spot [and claude missed it ugh] :)
 
-Each patch, except for the last one, is independent and may be moved with
-the corresponding subsystem. Or I can take it in bitmap-for-next, at
-maintainers' discretion.
+>
+> Otherwise LGTM. Feel free to add:
+>
+> Reviewed-by: Lance Yang <lance.yang@linux.dev>
+>
+> > 		 * For secretmem, don't allow the memory to be unlocked.
+> > 		 */
+> > 		goto out;
+> > 	}
+> >
+> >-	vma = vma_modify_flags(vmi, *prev, vma, start, end, &new_vma_flags);
+> >+	vma = vma_modify_flags(vmi, *prev, vma, start, end, new_vma_flags);
+> > 	if (IS_ERR(vma)) {
+> > 		ret = PTR_ERR(vma);
+> > 		goto out;
+> [...]
 
-On top of -next.
-
-This is the resend of:
-
-https://lore.kernel.org/all/20260528183625.870813-1-ynorov@nvidia.com/
-
-Except the patches merged in 7.1 cycle. I'm going to apply the material
-in 7.2 unless explicit NAKs received.
-
-Yury Norov (11):
-  arm: Use sysfs_emit() for cpumask show callbacks
-  powerpc: Use sysfs_emit() for cpumask show callbacks
-  x86/events: Use sysfs_emit() for cpumask show callbacks
-  cpu: Use sysfs_emit() for cpumask show callback
-  devfreq: Use sysfs_emit() for cpumask show callbacks
-  fpga: dfl-fme-perf: Use sysfs_emit() for cpumask show
-  hwtracing: hisi_ptt: Use sysfs_emit() for cpumask show
-  RDMA/hfi1: Use sysfs_emit() for cpumask show helper
-  PCI/sysfs: Use sysfs_emit() for cpumask show callbacks
-  perf: Use sysfs_emit() for cpumask show callbacks
-  lib/bitmap-str: get rid of cpumap_print_to_pagebuf()
-
- arch/arm/mach-imx/mmdc.c                    |  2 +-
- arch/arm/mm/cache-l2x0-pmu.c                |  2 +-
- arch/powerpc/kernel/cacheinfo.c             |  3 ++-
- arch/powerpc/perf/hv-24x7.c                 |  2 +-
- arch/powerpc/perf/hv-gpci.c                 |  2 +-
- arch/powerpc/perf/imc-pmu.c                 |  2 +-
- arch/x86/events/amd/iommu.c                 |  2 +-
- arch/x86/events/amd/power.c                 |  2 +-
- arch/x86/events/amd/uncore.c                |  2 +-
- arch/x86/events/intel/core.c                |  2 +-
- arch/x86/events/intel/uncore.c              |  2 +-
- drivers/base/cpu.c                          |  2 +-
- drivers/devfreq/event/rockchip-dfi.c        |  2 +-
- drivers/devfreq/hisi_uncore_freq.c          |  2 +-
- drivers/fpga/dfl-fme-perf.c                 |  2 +-
- drivers/hwtracing/ptt/hisi_ptt.c            |  2 +-
- drivers/infiniband/hw/hfi1/sdma.c           |  3 ++-
- drivers/pci/pci-sysfs.c                     |  7 ++++---
- drivers/perf/alibaba_uncore_drw_pmu.c       |  2 +-
- drivers/perf/amlogic/meson_ddr_pmu_core.c   |  2 +-
- drivers/perf/arm-cci.c                      |  2 +-
- drivers/perf/arm-ccn.c                      |  2 +-
- drivers/perf/arm-cmn.c                      |  2 +-
- drivers/perf/arm-ni.c                       |  2 +-
- drivers/perf/arm_cspmu/arm_cspmu.c          |  2 +-
- drivers/perf/arm_dmc620_pmu.c               |  4 ++--
- drivers/perf/arm_dsu_pmu.c                  |  2 +-
- drivers/perf/arm_pmu.c                      |  2 +-
- drivers/perf/arm_smmuv3_pmu.c               |  2 +-
- drivers/perf/arm_spe_pmu.c                  |  2 +-
- drivers/perf/cxl_pmu.c                      |  2 +-
- drivers/perf/dwc_pcie_pmu.c                 |  2 +-
- drivers/perf/fsl_imx8_ddr_perf.c            |  2 +-
- drivers/perf/fsl_imx9_ddr_perf.c            |  2 +-
- drivers/perf/fujitsu_uncore_pmu.c           |  2 +-
- drivers/perf/hisilicon/hisi_pcie_pmu.c      |  2 +-
- drivers/perf/hisilicon/hisi_uncore_pmu.c    |  2 +-
- drivers/perf/marvell_cn10k_ddr_pmu.c        |  2 +-
- drivers/perf/marvell_cn10k_tad_pmu.c        |  2 +-
- drivers/perf/marvell_pem_pmu.c              |  2 +-
- drivers/perf/nvidia_t410_c2c_pmu.c          |  2 +-
- drivers/perf/nvidia_t410_cmem_latency_pmu.c |  2 +-
- drivers/perf/qcom_l2_pmu.c                  |  2 +-
- drivers/perf/qcom_l3_pmu.c                  |  2 +-
- drivers/perf/starfive_starlink_pmu.c        |  2 +-
- drivers/perf/thunderx2_pmu.c                |  2 +-
- drivers/perf/xgene_pmu.c                    |  2 +-
- include/linux/cpumask.h                     | 19 -------------------
- kernel/events/core.c                        |  2 +-
- lib/bitmap-str.c                            |  9 ++++-----
- 50 files changed, 58 insertions(+), 75 deletions(-)
-
--- 
-2.53.0
-
+Thanks, Lorenzo
 
