@@ -1,84 +1,98 @@
-Return-Path: <linux-arm-msm+bounces-116043-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-116044-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id HGO8OWh0RmroVQsAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-116043-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Jul 2026 16:23:36 +0200
+	id QIvpOB50RmrKVQsAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-116044-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Jul 2026 16:22:22 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 461106F8D7B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Jul 2026 16:23:36 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id D948D6F8D45
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Jul 2026 16:22:21 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=nBuFO4OK;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116043-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116043-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=quarantine) header.from=kernel.org;
+	dkim=pass header.d=gmail.com header.s=20251104 header.b=iEfaCn62;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116044-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 104.64.211.4 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116044-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=none;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id CFA3B313FEA8
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jul 2026 14:17:33 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 2137D3040B5D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jul 2026 14:17:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A79194DBD68;
-	Thu,  2 Jul 2026 14:16:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B60CE4DD6D9;
+	Thu,  2 Jul 2026 14:17:07 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52EC24DBD97;
-	Thu,  2 Jul 2026 14:16:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46FD24DD6CB
+	for <linux-arm-msm@vger.kernel.org>; Thu,  2 Jul 2026 14:17:02 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783001810; cv=none; b=ocERjdrKULWaF075KA3mU/X3rA/EduwLm6tSk5mnjt+vXcF9YnTRbumitTtaLnfeAwzm+mjvCnI/0yHFjFPSEvgkJ3OqMCcfuz4cqIbVdc27GFIEcYkC4Uar/QjTio7d/UGOVy7krt8h33CehitiC7LwJpiF/fsdOzp3ljQNdA4=
+	t=1783001826; cv=none; b=m8BRQGSt94/WWEOeygzD805cAe0BYDmxFezsVIHVVY7BN+pEbTM/5j0ZUH0BFxS4VjHq+/F5GQX9W0xrCMRmf6s5xERRklXCgA33dEQg+FcdOh3gzkX9uj/EbviIyLFVdfhi7LYxG5fjiP4lujGtI2NpuOBGGEqMvyWBT1MN4EA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783001810; c=relaxed/simple;
-	bh=BMNaohWnQQE3GUJu1xKZgGxifcOf8Us5+ymgGbhFLCY=;
+	s=arc-20240116; t=1783001826; c=relaxed/simple;
+	bh=z/QCxWHRxRaxp+FLSgd4Mq/o8qVzePyKt3vk51sDvy0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CogNPrqzffeyPM8KO/CUIhMNrQTLgjQwWhFgUE1ybyvvqc5M93jguDIJA9A/Onz+ENzs3gBLkoHgagF+5O/0aPkQZX7p0lHIxIwa4eoSvNCXGAaF4Dv8RRdx9IT7QsiWvfxUznaa5nFKc8XUXh5OF9pRLjfSxDAzZcH9Paw8jBs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nBuFO4OK; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B77881F00A3A;
-	Thu,  2 Jul 2026 14:16:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783001804;
-	bh=vcXV/OFRF3o5nc90hy/rNYztoQp19dfE8boUb7skCPA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=nBuFO4OKuZkx4g9lHIILMu0GcvZdBu9Hnc71+r10+sQ+KcL0n3xj7kUQucOnqcAk3
-	 AkoJXlYf1oNjG50cQd8gf2TOHQhPraHIQjZt480Xg/htWdV6q91LBwFijLRn3TQOuu
-	 DUzRy0MHOPnAYLdnUDmlOOE6s8dMsOCBWennldGjml9Hl6vq1cQQi9Nbr1EERzrjN/
-	 Lkc41jqy6VqEbMgqwe1omDOJT4iOl7aycvqDHrKI8KUC4jXNXsDmIx9h9ZJsJesofT
-	 OviVXSDvnQJkEiSWSZwtp7bcBRhTwnjivbJlK0EsZWjLSEUjELxUeBndnhMBbTL5bE
-	 /U9iv5KrQkB8g==
-Date: Thu, 2 Jul 2026 15:16:20 +0100
-From: Lorenzo Stoakes <ljs@kernel.org>
-To: Lance Yang <lance.yang@linux.dev>
-Cc: akpm@linux-foundation.org, tsbogend@alpha.franken.de, 
-	maddy@linux.ibm.com, mpe@ellerman.id.au, maarten.lankhorst@linux.intel.com, 
-	mripard@kernel.org, tzimmermann@suse.de, airlied@gmail.com, simona@ffwll.ch, 
-	l.stach@pengutronix.de, inki.dae@samsung.com, sw0312.kim@samsung.com, 
-	kyungmin.park@samsung.com, krzk@kernel.org, peter.griffin@linaro.org, 
-	jani.nikula@linux.intel.com, joonas.lahtinen@linux.intel.com, rodrigo.vivi@intel.com, 
-	tursulin@ursulin.net, robin.clark@oss.qualcomm.com, lumag@kernel.org, lyude@redhat.com, 
-	dakr@kernel.org, tomi.valkeinen@ideasonboard.com, hjc@rock-chips.com, 
-	heiko@sntech.de, andy.yan@rock-chips.com, thierry.reding@kernel.org, 
-	mperttunen@nvidia.com, jonathanh@nvidia.com, kraxel@redhat.com, 
-	dmitry.osipenko@collabora.com, zack.rusin@broadcom.com, matthew.brost@intel.com, 
-	thomas.hellstrom@linux.intel.com, oleksandr_andrushchenko@epam.com, deller@gmx.de, bcrl@kvack.org, 
-	viro@zeniv.linux.org.uk, brauner@kernel.org, muchun.song@linux.dev, osalvador@suse.de, 
-	david@kernel.org, ziy@nvidia.com, baolin.wang@linux.alibaba.com, 
-	liam@infradead.org, npache@redhat.com, ryan.roberts@arm.com, dev.jain@arm.com, 
-	baohua@kernel.org, hughd@google.com, vbabka@kernel.org, rppt@kernel.org, 
-	surenb@google.com, mhocko@suse.com, jannh@google.com, pfalcato@suse.de, 
-	kees@kernel.org, perex@perex.cz, tiwai@suse.com, linux-mips@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linuxppc-dev@lists.ozlabs.org, dri-devel@lists.freedesktop.org, 
-	etnaviv@lists.freedesktop.org, linux-arm-kernel@lists.infradead.org, 
-	linux-samsung-soc@vger.kernel.org, intel-gfx@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
-	freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org, 
-	linux-rockchip@lists.infradead.org, linux-tegra@vger.kernel.org, virtualization@lists.linux.dev, 
-	intel-xe@lists.freedesktop.org, xen-devel@lists.xenproject.org, linux-fbdev@vger.kernel.org, 
-	linux-aio@kvack.org, linux-fsdevel@vger.kernel.org, linux-mm@kvack.org, 
-	linux-sound@vger.kernel.org
-Subject: Re: [PATCH 02/13] mm/vma: update do_mmap() to use vma_flags_t
-Message-ID: <akZwsS-_cywsXSjL@lucifer>
-References: <e0ac58ad2b88ff7e2f0024e3286b2e786f79ca32.1782760670.git.ljs@kernel.org>
- <20260702111531.64883-1-lance.yang@linux.dev>
+	 Content-Type:Content-Disposition:In-Reply-To; b=g6X21BIVT1+Ze8TH4sot08SAdbQsd1y5ZBzMgCGSXYIcRx/8XfEA2AMr1jKuXwKqRHBCW2/9RFQQNGZcAJabSjQc27g3QDi4Ami/ZphyW1vz1CCqQgkHAQTgwYkJ8BiAemxjLcPTtplH5M3+SmR2kMgrNyNlNYo9vtIFQcwedzY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iEfaCn62; arc=none smtp.client-ip=209.85.214.178
+Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-2ca265d6ca1so7170045ad.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Jul 2026 07:17:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1783001820; x=1783606620; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=y6e4pqP3mm87wGSrdo1SyRap6WnXTNDpkEgJ6z1bjhI=;
+        b=iEfaCn62TKPq1cAksHpKNReejADMTXqwg+XqKXJxq/GXoK2wkBU6Hlkos5qswagTzG
+         lwpA3pRt4I4Er1GGZvP8GlEAII93G9dG3Cywo9UWQXN3RLLDA4VerYy9gwWT72E/AszT
+         RpFXCN/4SqrruzFIztDY6ViSZqAaliA8CMtkGx/SK5S9UDIOwX63T/UzoRZVLCAw6NoX
+         i83bACQWfR9d4wCkKWzev23so6B/gZMP5IqUuHl+k0q1Rav78fznRrDROlgMvxYNi4XG
+         6SCw4gG4yhz65acqm5odvlj7w75KXyOx9gBpNQFnUGZgh64rzafziM5klswFUVPKn2Dh
+         eN7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783001820; x=1783606620;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=y6e4pqP3mm87wGSrdo1SyRap6WnXTNDpkEgJ6z1bjhI=;
+        b=pVfRC7BJWiAYBH9g9KRodnYQvkQ45DMWPhmFz71bwsW4gIDyKFw6N4bnrV0LONr6lN
+         oqDjpvc5yNzX3Um723R/wXXvTqZnWh46qyDX5LJOBfRfhaIXCNbCk+Yyy9oNUaMatDXb
+         w3287bjya/HJQpASS3675R2+6ZeBex/G9ff2ZDsLV+DfW7CmLeO8QNnSSXK+RreCU2DL
+         y0wB/StzD3CvnPthByYEU3gSq6EIKmXuGgmBYMy/prr2ubEMf4AKDjcDWwcnqnYfd/hU
+         shrfIFP8WBCqYjBKp8LOu6W5niDzeIDf/5B2adu0JmZq34o0gor3YXhVFTZosZ244GQ3
+         dGNw==
+X-Forwarded-Encrypted: i=1; AHgh+RqQwvmcIB3JcbvZr9AI9g4OWr5y9p/vs2TuvbZTjwCKF/kVZw+aUXi1i9xPx6nORSR8vT9v97NXPFwFvq/C@vger.kernel.org
+X-Gm-Message-State: AOJu0YzIIbiLT95VgbnngMB2Yre45F1Q6qi5d8ZxsLgOVIUTAAOE0Mlx
+	AWYgaStlNTwV+nvxsNWq5+Y07bo1j+ex34XbuhAa+VM3X0I5OzKyHHtC
+X-Gm-Gg: AfdE7cnkSHUvIpPmXlHID6eD8A5iOSNUsQpJGMVakU4QdWfMp7+UrOk453sTVV46IJJ
+	qhshChtvUYOqEuj+tfI83YsS8JX/Fv4BSUVrQCM3jgVIn1ApmI8++63K4mNodO6VMGv4rWD1fM0
+	cCfal1fE4swTl6KtVwbuI/4rYsbqvpejhJDtqofas9mr7euJ0xFUwwXi39Ypcx+40ctcz1uSUTC
+	jLZEnrb5rTyQFlsx1cESupLA8nUcUn7TljM7/4s5T71AxAI419tizVf//5LTvOcDZN9GDddptzr
+	65ViAwcQJ2mYdjFeMo1rEQ3lhMwJZolA1kEhq0p0C60o9eZdRBI4K7oMb2shxjmAmnaqdYZfIdM
+	LMTTxy9fH9mvygCeCtGq9yRGsJwa40/I2bOhuBPe1LzC1JAiDON5VS8HiUoBJLtrDLq+cdMmV8O
+	SUKNrUlTqUMb84mak5qZMGHSJYuA==
+X-Received: by 2002:a17:902:ccc2:b0:2ca:12aa:a390 with SMTP id d9443c01a7336-2caca49abbdmr1430485ad.0.1783001819551;
+        Thu, 02 Jul 2026 07:16:59 -0700 (PDT)
+Received: from server.roeck-us.net ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ca9aa009a4sm14177615ad.66.2026.07.02.07.16.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 02 Jul 2026 07:16:57 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Date: Thu, 2 Jul 2026 07:16:56 -0700
+From: Guenter Roeck <linux@roeck-us.net>
+To: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
+Cc: Wim Van Sebroeck <wim@linux-watchdog.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Rajendra Nayak <quic_rjendra@quicinc.com>,
+	aiqun.yu@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com,
+	trilok.soni@oss.qualcomm.com, yijie.yang@oss.qualcomm.com,
+	linux-arm-msm@vger.kernel.org, linux-watchdog@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] dt-bindings: watchdog: Document Qualcomm Maili
+ watchdog
+Message-ID: <04954526-126a-4470-ba9d-501b943dabe1@roeck-us.net>
+References: <20260629-maili-watchdog-v2-1-5cb9c83a581c@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -87,176 +101,53 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260702111531.64883-1-lance.yang@linux.dev>
+In-Reply-To: <20260629-maili-watchdog-v2-1-5cb9c83a581c@oss.qualcomm.com>
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-4.66 / 15.00];
-	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
+X-Spamd-Result: default: False [-0.16 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-116043-lists,linux-arm-msm=lfdr.de];
-	RCVD_COUNT_THREE(0.00)[4];
-	FREEMAIL_CC(0.00)[linux-foundation.org,alpha.franken.de,linux.ibm.com,ellerman.id.au,linux.intel.com,kernel.org,suse.de,gmail.com,ffwll.ch,pengutronix.de,samsung.com,linaro.org,intel.com,ursulin.net,oss.qualcomm.com,redhat.com,ideasonboard.com,rock-chips.com,sntech.de,nvidia.com,collabora.com,broadcom.com,epam.com,gmx.de,kvack.org,zeniv.linux.org.uk,linux.dev,linux.alibaba.com,infradead.org,arm.com,google.com,suse.com,perex.cz,vger.kernel.org,lists.ozlabs.org,lists.freedesktop.org,lists.infradead.org,lists.linux.dev,lists.xenproject.org];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_RECIPIENTS(0.00)[m:lance.yang@linux.dev,m:akpm@linux-foundation.org,m:tsbogend@alpha.franken.de,m:maddy@linux.ibm.com,m:mpe@ellerman.id.au,m:maarten.lankhorst@linux.intel.com,m:mripard@kernel.org,m:tzimmermann@suse.de,m:airlied@gmail.com,m:simona@ffwll.ch,m:l.stach@pengutronix.de,m:inki.dae@samsung.com,m:sw0312.kim@samsung.com,m:kyungmin.park@samsung.com,m:krzk@kernel.org,m:peter.griffin@linaro.org,m:jani.nikula@linux.intel.com,m:joonas.lahtinen@linux.intel.com,m:rodrigo.vivi@intel.com,m:tursulin@ursulin.net,m:robin.clark@oss.qualcomm.com,m:lumag@kernel.org,m:lyude@redhat.com,m:dakr@kernel.org,m:tomi.valkeinen@ideasonboard.com,m:hjc@rock-chips.com,m:heiko@sntech.de,m:andy.yan@rock-chips.com,m:thierry.reding@kernel.org,m:mperttunen@nvidia.com,m:jonathanh@nvidia.com,m:kraxel@redhat.com,m:dmitry.osipenko@collabora.com,m:zack.rusin@broadcom.com,m:matthew.brost@intel.com,m:thomas.hellstrom@linux.intel.com,m:oleksandr_andrushchenko@epam.com,m:deller@gmx.de,m:bcrl@kvack.org,m:viro@z
- eniv.linux.org.uk,m:brauner@kernel.org,m:muchun.song@linux.dev,m:osalvador@suse.de,m:david@kernel.org,m:ziy@nvidia.com,m:baolin.wang@linux.alibaba.com,m:liam@infradead.org,m:npache@redhat.com,m:ryan.roberts@arm.com,m:dev.jain@arm.com,m:baohua@kernel.org,m:hughd@google.com,m:vbabka@kernel.org,m:rppt@kernel.org,m:surenb@google.com,m:mhocko@suse.com,m:jannh@google.com,m:pfalcato@suse.de,m:kees@kernel.org,m:perex@perex.cz,m:tiwai@suse.com,m:linux-mips@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linuxppc-dev@lists.ozlabs.org,m:dri-devel@lists.freedesktop.org,m:etnaviv@lists.freedesktop.org,m:linux-arm-kernel@lists.infradead.org,m:linux-samsung-soc@vger.kernel.org,m:intel-gfx@lists.freedesktop.org,m:linux-arm-msm@vger.kernel.org,m:freedreno@lists.freedesktop.org,m:nouveau@lists.freedesktop.org,m:linux-rockchip@lists.infradead.org,m:linux-tegra@vger.kernel.org,m:virtualization@lists.linux.dev,m:intel-xe@lists.freedesktop.org,m:xen-devel@lists.xenproject.org,m:linux-fbdev@vger.kernel.o
- rg,m:linux-aio@kvack.org,m:linux-fsdevel@vger.kernel.org,m:linux-mm@kvack.org,m:linux-sound@vger.kernel.org,s:lists@lfdr.de];
-	FORWARDED(0.00)[lists@lfdr.de];
-	FORGED_SENDER(0.00)[ljs@kernel.org,linux-arm-msm@vger.kernel.org];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	FROM_HAS_DN(0.00)[];
+	TAGGED_FROM(0.00)[bounces-116044-lists,linux-arm-msm=lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:jingyi.wang@oss.qualcomm.com,m:wim@linux-watchdog.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:quic_rjendra@quicinc.com,m:aiqun.yu@oss.qualcomm.com,m:tingwei.zhang@oss.qualcomm.com,m:trilok.soni@oss.qualcomm.com,m:yijie.yang@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:linux-watchdog@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	DMARC_NA(0.00)[roeck-us.net];
+	FORGED_SENDER(0.00)[linux@roeck-us.net,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[14];
+	DKIM_TRACE(0.00)[gmail.com:+];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FORWARDED(0.00)[lists@lfdr.de];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
 	TO_DN_SOME(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	RCPT_COUNT_GT_50(0.00)[82];
+	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[ljs@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	ALIAS_RESOLVED(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
+	FROM_NEQ_ENVFROM(0.00)[linux@roeck-us.net,linux-arm-msm@vger.kernel.org];
 	MISSING_XM_UA(0.00)[];
+	ALIAS_RESOLVED(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[lucifer:mid,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,vger.kernel.org:from_smtp,linux.dev:email]
+	MID_RHS_MATCH_FROM(0.00)[];
+	RWL_MAILSPIKE_POSSIBLE(0.00)[104.64.211.4:from];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo,roeck-us.net:mid,roeck-us.net:from_mime]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 461106F8D7B
+X-Rspamd-Queue-Id: D948D6F8D45
 
-On Thu, Jul 02, 2026 at 07:15:31PM +0800, Lance Yang wrote:
->
-> On Mon, Jun 29, 2026 at 08:25:25PM +0100, Lorenzo Stoakes wrote:
-> >The core do_mmap() function accepts a vm_flags_t parameter which it then
-> >manipulates before passing to mmap_region() to do the heavy lifting of the
-> >memory mapping.
-> >
-> >Update do_mmap() to instead accept a vma_flags_t parameter, and adjust all
-> >the logic within do_mmap() to manipulate this instead.
-> >
-> >This is as part of the ongoing effort to convert VMA flags from a system
-> >word size to a bitmap type which allows us to unrestrict the number of VMA
-> >flags, as well as gain control over how VMA flag manipulation occurs.
-> >
-> >We do not cascade these changes to all functions which accept vm_flags_t,
-> >but rather use vma_flags_to_legacy() where necessary, specifically
-> >deferring converting calc_vm_prot_bits(), calc_vm_flag_bits() and
-> >__get_unmapped_area() to vma_flags_t.
-> >
-> >Also utilise the new vma_flags_can_grow() predicate which correctly handles
-> >the case of architectures without upward growing stacks.
-> >
-> >As part of this change, introduce VMA_SHADOW_STACK so we can correctly
-> >handle the case of the shadow stack not being defined.
-> >
-> >No functional change intended.
-> >
-> >Signed-off-by: Lorenzo Stoakes <ljs@kernel.org>
-> >---
->
-> Not exactly a small one :) I stared at this patch for a while, hopefully
-> don't miss anythig ...
+On Mon, Jun 29, 2026 at 12:09:05AM -0700, Jingyi Wang wrote:
+> Add devicetree binding for watchdog present on Qualcomm Maili SoC.
+> 
+> Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
+> Acked-by: Rob Herring (Arm) <robh@kernel.org>
 
-Yeah sorry maybe I could have broken this down more!
+Applied.
 
->
-> Just one tiny nit below. Overall, LGTM, feel free to add:
->
-> Reviewed-by: Lance Yang <lance.yang@linux.dev>
-
-Thanks!
-
->
-> [...]
-> >diff --git a/mm/mmap.c b/mm/mmap.c
-> >index 46174e706bbe..547352183214 100644
-> >--- a/mm/mmap.c
-> >+++ b/mm/mmap.c
-> [...]
-> >@@ -488,23 +496,27 @@ unsigned long do_mmap(struct file *file, unsigned long addr,
-> > 		 * Check to see if we are violating any seals and update VMA
-> > 		 * flags if necessary to avoid future seal violations.
-> > 		 */
-> >-		err = memfd_check_seals_mmap(file, &vm_flags);
-> >+		err = memfd_check_seals_mmap(file, &vma_flags);
-> > 		if (err)
-> > 			return (unsigned long)err;
-> > 	} else {
-> > 		switch (flags & MAP_TYPE) {
-> > 		case MAP_SHARED:
-> >-			if (vm_flags & (VM_GROWSDOWN|VM_GROWSUP))
-> >+			if (vma_flags_can_grow(&vma_flags))
-> > 				return -EINVAL;
-> > 			/*
-> > 			 * Ignore pgoff.
-> > 			 */
-> > 			pgoff = 0;
-> >-			vm_flags |= VM_SHARED | VM_MAYSHARE;
-> >+			vma_flags_set(&vma_flags, VMA_SHARED_BIT, VMA_MAYSHARE_BIT);
-> > 			break;
-> >-		case MAP_DROPPABLE:
-> >-			if (VM_DROPPABLE == VM_NONE)
-> >+		case MAP_DROPPABLE: {
-> >+			vma_flags_t droppable = VMA_DROPPABLE;
-> >+
-> >+			if (vma_flags_empty(&droppable))
-> > 				return -EOPNOTSUPP;
-> >+			vma_flags_set_mask(&vma_flags, droppable);
-> >+
-> > 			/*
-> > 			 * A locked or stack area makes no sense to be droppable.
-> > 			 *
-> >@@ -515,23 +527,24 @@ unsigned long do_mmap(struct file *file, unsigned long addr,
-> > 			 */
-> > 			if (flags & (MAP_LOCKED | MAP_HUGETLB))
-> > 			        return -EINVAL;
-> >-			if (vm_flags & (VM_GROWSDOWN | VM_GROWSUP))
-> >+			if (vma_flags_can_grow(&vma_flags))
-> > 			        return -EINVAL;
-> >
-> >-			vm_flags |= VM_DROPPABLE;
->
-> Old code checked VM_GROWSDOWN|VM_GROWSUP before seting VM_DROPPABLE. New
-> code flips that around. Hmm, shouldn't master, just made me look twice ;)
->
-> Maybe keep old order?
-
-I guess I feared that defining droppable above then referencing it below would
-be less clear?
-
-Can move if you feel strongly about it, and sorry for making the move at the
-same time as the general vm_flags_t -> vma_flags_t refactor as it does make that
-less clear...
-
->
-> Cheers, Lance
->
-> >-
-> > 			/*
-> > 			 * If the pages can be dropped, then it doesn't make
-> > 			 * sense to reserve them.
-> > 			 */
-> >-			vm_flags |= VM_NORESERVE;
-> >+			vma_flags_set(&vma_flags, VMA_NORESERVE_BIT);
-> >
-> > 			/*
-> > 			 * Likewise, they're volatile enough that they
-> > 			 * shouldn't survive forks or coredumps.
-> > 			 */
-> >-			vm_flags |= VM_WIPEONFORK | VM_DONTDUMP;
-> >+			vma_flags_set(&vma_flags, VMA_WIPEONFORK_BIT,
-> >+				      VMA_DONTDUMP_BIT);
-> >+
-> > 			fallthrough;
-> >+		}
-> > 		case MAP_PRIVATE:
-> > 			/*
-> > 			 * Set pgoff according to addr for anon_vma.
-> [...]
-
-Thanks, Lorenzo
+Thanks,
+Guenter
 
