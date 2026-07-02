@@ -1,201 +1,322 @@
-Return-Path: <linux-arm-msm+bounces-115958-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-115959-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id KDl0Cn9KRmqCNwsAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-115958-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Jul 2026 13:24:47 +0200
+	id Ez7LK5dLRmrzNwsAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-115959-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Jul 2026 13:29:27 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 755D66F6A51
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Jul 2026 13:24:46 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 33C626F6B5B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Jul 2026 13:29:27 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=eWw6GL+D;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115958-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115958-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=reject) header.from=qualcomm.com;
+	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=PgCpqqxi;
+	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=oeEsfdun;
+	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=PgCpqqxi;
+	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=oeEsfdun;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115959-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115959-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=none) header.from=suse.de;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 4AC32311EFE9
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jul 2026 11:17:50 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id D4B713145EF0
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jul 2026 11:20:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CEE513ED5B3;
-	Thu,  2 Jul 2026 11:17:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 89FF43E3147;
+	Thu,  2 Jul 2026 11:20:19 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C9673EBF0C;
-	Thu,  2 Jul 2026 11:17:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6C523ED5B3
+	for <linux-arm-msm@vger.kernel.org>; Thu,  2 Jul 2026 11:20:17 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782991065; cv=none; b=eC10vu8P4AzbGQolpTztkNzBkeRII3T6eentp4MFoGhfg4B+Cu6U8jmL4yKjEsBf0gg1tGXSl3A18zVlF9Xbpz0ihZ28CZCUVWVOR7zO4OBa60cob2Pi0V+UAnK86OzhfyQ4lsczMsDqDGWsnel7BWmcfnNc1aMmF/b7aNjIM8Y=
+	t=1782991219; cv=none; b=kDrDtn8lDHDk2WT1gWtH8s+G9hFx+i9FeF3ma+10wTXocOuVYj81bsc203o6jHx8H2ynSxhvbkyebmuQ2kuRVQ+5xyHwxUfCnXYc6TqfQtwrixCyjqb0705P6OsmO70ZLEluy+EzsZn8eizcaEtzJwSc/ZZ3XJSOmEHwzRQuiww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782991065; c=relaxed/simple;
-	bh=P3JiAGbDg4lRW35azb1NvvsrWLy/3LSZZpRD/4IX9rc=;
+	s=arc-20240116; t=1782991219; c=relaxed/simple;
+	bh=X239wNR/oEz1o+9Hxr196nhAWJXbeoJAICDwBKUZxi4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OoCBxhAXVzScDsehuW1QyC8M2klaSs+Cz7IoYolDzfliKrNTbky5PfCzGIGAQU6yH9luEl4ixKbetBmA3r1zSc8oqePXXCjuL8sbWDnuJ7q6w4VKnYwUZ1aN7N7x0ks70mf7T5waZwKyWpMPn4lKX5S6WeUmKbn9bRcxQQyASS8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=eWw6GL+D; arc=none smtp.client-ip=205.220.168.131
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 662AK89c3591746;
-	Thu, 2 Jul 2026 11:17:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	kiBxJJmXOECFdmxongIy/JqOSdBSDGfMbux3k8lSCMQ=; b=eWw6GL+D2iBh7Oi0
-	+Vufi25nmSu3jbeOI9pDG/BiQeaHY6X7BNrHTQNRO4nIG1/o9yKr/wMrK/nTU+yP
-	/MlCpF+RUuzKOSzw1mR9otZfKpCm9nCATPsLyCTQuNfTiWrTyu01dSt/TQEnTsO8
-	8xkQPtylv9Rzsa2Qd0hagreKKjuT+PzDcFKw95M8gbupGZ8CDdX8dyLyrgxJJiWq
-	TelSIURA1jB7PJ+8ROToR3KquI+tlRAuwXXy751DnkE5mtoPCxmWQ9Oc4yn/TfPp
-	Prt7QPWxyuIjhqqktQbcvuXdmr+xTlKzZYWKHWBuLiEf3edu1BEf8oQenII3KDzm
-	DqUSYw==
-Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f5h7n9e13-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 02 Jul 2026 11:17:42 +0000 (GMT)
-Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (8.18.1.7/8.18.1.7) with ESMTP id 662BHckS003320;
-	Thu, 2 Jul 2026 11:17:38 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 4f27kkrtnv-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 02 Jul 2026 11:17:38 +0000 (GMT)
-Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.18.1.12/8.18.1.12) with ESMTP id 662BHcnc003312;
-	Thu, 2 Jul 2026 11:17:38 GMT
-Received: from hu-devc-hyd-u22-c.qualcomm.com (hu-kotarake-hyd.qualcomm.com [10.213.97.140])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 662BHc60003310
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 02 Jul 2026 11:17:38 +0000 (GMT)
-Received: by hu-devc-hyd-u22-c.qualcomm.com (Postfix, from userid 2389607)
-	id B6225B2A; Thu,  2 Jul 2026 16:47:37 +0530 (+0530)
-Date: Thu, 2 Jul 2026 16:47:37 +0530
-From: Rakesh Kota <rakesh.kota@oss.qualcomm.com>
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, Sebastian Reichel <sre@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        jishnu.prakash@oss.qualcomm.com, kamal.wadhwa@oss.qualcomm.com
-Subject: Re: [PATCH 0/2] qcom_battmgr: Add batteryless DC-adapter MAINS
- support
-Message-ID: <20260702111737.2qtjcfskulav4usd@hu-kotarake-hyd.qualcomm.com>
-References: <20260518-add_dc_in_support-v1-0-31fbaa329879@oss.qualcomm.com>
- <56a54a34-1040-44ae-92e2-ce65a3d3acb5@oss.qualcomm.com>
- <20260519065938.4i5wot72pfxy4m3d@hu-kotarake-hyd.qualcomm.com>
- <ag-NLvh4ROgTCs_L@baldur>
- <d4001407-cdb0-48ee-a138-87c94b5dab01@oss.qualcomm.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=P8xx8aEpfa+qRmCx6UOH9d3mZrdo8YGpkcEl8Hvwjwa3KI5vsyNVKYmSrSlNqnTuH5J9+6dq7fO4wecLcxb0m4D3g8iwpTrsCG0sm7JzJy0XXLLs3meXijzkBTs9JTytIKqpqZu6eFzQpou6geJysAgEJZmdGbm0jm6NkliuJCo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=PgCpqqxi; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=oeEsfdun; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=PgCpqqxi; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=oeEsfdun; arc=none smtp.client-ip=195.135.223.130
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 4FE9674174;
+	Thu,  2 Jul 2026 11:20:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1782991216; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=j9HqakDIjcCcTQyUF2MV7bxyTIX1upg8T2CXHTGbmPY=;
+	b=PgCpqqxie7t8+CkwpPP13NW6wQohMzurOqQ3M60mxkSvPUID4ZQOKndTpBXqeUuVhdKIfx
+	t+2FJW3O/MNyOgFxUfD/N1cfpHLCK8FHDiqwUFTQFndqACbeCmnNWvqmGlEefRvEf4d7hB
+	IQhWnkSLQ2dpEmnyOFJPaliYHOfjrfE=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1782991216;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=j9HqakDIjcCcTQyUF2MV7bxyTIX1upg8T2CXHTGbmPY=;
+	b=oeEsfdunpBw1BldK/9+YFlfUYsk4g2GKuSeX7pnNOrhZYXAOuDPvAQY6PG7s0cv9YpWemp
+	mWdG22AvAmx0j3Cw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1782991216; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=j9HqakDIjcCcTQyUF2MV7bxyTIX1upg8T2CXHTGbmPY=;
+	b=PgCpqqxie7t8+CkwpPP13NW6wQohMzurOqQ3M60mxkSvPUID4ZQOKndTpBXqeUuVhdKIfx
+	t+2FJW3O/MNyOgFxUfD/N1cfpHLCK8FHDiqwUFTQFndqACbeCmnNWvqmGlEefRvEf4d7hB
+	IQhWnkSLQ2dpEmnyOFJPaliYHOfjrfE=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1782991216;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=j9HqakDIjcCcTQyUF2MV7bxyTIX1upg8T2CXHTGbmPY=;
+	b=oeEsfdunpBw1BldK/9+YFlfUYsk4g2GKuSeX7pnNOrhZYXAOuDPvAQY6PG7s0cv9YpWemp
+	mWdG22AvAmx0j3Cw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C6F00779AA;
+	Thu,  2 Jul 2026 11:20:11 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id RDeaLGtJRmoSbQAAD6G6ig
+	(envelope-from <pfalcato@suse.de>); Thu, 02 Jul 2026 11:20:11 +0000
+Date: Thu, 2 Jul 2026 12:20:10 +0100
+From: Pedro Falcato <pfalcato@suse.de>
+To: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>, 
+	Russell King <linux@armlinux.org.uk>, Dinh Nguyen <dinguyen@kernel.org>, 
+	Simon Schuster <schuster.simon@siemens-energy.com>, 
+	"James E . J . Bottomley" <James.Bottomley@hansenpartnership.com>, Helge Deller <deller@gmx.de>, 
+	Jarkko Sakkinen <jarkko@kernel.org>, Thomas Gleixner <tglx@kernel.org>, 
+	Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>, 
+	Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org, Ian Abbott <abbotti@mev.co.uk>, 
+	H Hartley Sweeten <hsweeten@visionengravers.com>, Lucas Stach <l.stach@pengutronix.de>, 
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+	Patrik Jakobsson <patrik.r.jakobsson@gmail.com>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+	Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>, 
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>, Thierry Reding <thierry.reding@kernel.org>, 
+	Mikko Perttunen <mperttunen@nvidia.com>, Jonathan Hunter <jonathanh@nvidia.com>, 
+	Christian Koenig <christian.koenig@amd.com>, Huang Rui <ray.huang@amd.com>, Ankit Agrawal <ankita@nvidia.com>, 
+	Alex Williamson <alex@shazbot.org>, Alexander Viro <viro@zeniv.linux.org.uk>, 
+	Christian Brauner <brauner@kernel.org>, Dan Williams <djbw@kernel.org>, 
+	Muchun Song <muchun.song@linux.dev>, Oscar Salvador <osalvador@suse.de>, 
+	David Hildenbrand <david@kernel.org>, Suren Baghdasaryan <surenb@google.com>, 
+	"Liam R . Howlett" <liam@infradead.org>, Matthew Wilcox <willy@infradead.org>, 
+	Marek Szyprowski <m.szyprowski@samsung.com>, Peter Zijlstra <peterz@infradead.org>, 
+	Arnaldo Carvalho de Melo <acme@kernel.org>, Namhyung Kim <namhyung@kernel.org>, 
+	Masami Hiramatsu <mhiramat@kernel.org>, Oleg Nesterov <oleg@redhat.com>, 
+	Steven Rostedt <rostedt@goodmis.org>, SeongJae Park <sj@kernel.org>, Miaohe Lin <linmiaohe@huawei.com>, 
+	Hugh Dickins <hughd@google.com>, Mike Rapoport <rppt@kernel.org>, Kees Cook <kees@kernel.org>, 
+	Paolo Bonzini <pbonzini@redhat.com>, linux-kernel@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-parisc@vger.kernel.org, linux-sgx@vger.kernel.org, 
+	etnaviv@lists.freedesktop.org, dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
+	freedreno@lists.freedesktop.org, linux-tegra@vger.kernel.org, kvm@vger.kernel.org, 
+	linux-fsdevel@vger.kernel.org, nvdimm@lists.linux.dev, linux-mm@kvack.org, 
+	iommu@lists.linux.dev, linux-perf-users@vger.kernel.org, 
+	linux-trace-kernel@vger.kernel.org, kasan-dev@googlegroups.com, damon@lists.linux.dev, 
+	Rik van Riel <riel@surriel.com>, Harry Yoo <harry@kernel.org>, Jann Horn <jannh@google.com>
+Subject: Re: [PATCH 21/30] mm/vma: add and use vma_[add/sub]_pgoff()
+Message-ID: <akZI0n1U32Ptd0ye@pedro-suse.lan>
+References: <cover.1782735110.git.ljs@kernel.org>
+ <794044881e454fd8ac13e59d5ff5fc86fca08b03.1782735110.git.ljs@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <d4001407-cdb0-48ee-a138-87c94b5dab01@oss.qualcomm.com>
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAyMDExNyBTYWx0ZWRfXyYByk+sXxYPn
- XT9LQIh7icAdsb8HhZpxyoND/X7iKG0kJdcHbzdRIq9wj7ajawAm9RarCr88Hlq3WZ2SjzZl7dC
- DBTVCtT9A0UYCClokuEG9r9rE5MVzNZU+b81+f1L1H6/bB30TC8D1FXYBtCCMq+vtEGj9QLicRP
- dbmIR4oMG1lN3W4dYKQDLgP0c92NzMz0qfPOGYZgONr6wJaGlzUXbGM8fU+iopOuGlWqj0JEDWI
- 3EvKujCyueZsroHKGeSm1SFwPfgrN2+1xHMXaEoxeQbDCs++tCz+dVpliv7aQX9yWLOcT7Ks4H/
- /9wIgvPw4d7KENLkxklQnyU7q/xagjUqsPlE0Kqr35/IsuktQR5f73vGb1xPRoU1Kz97tDke0nZ
- 1wCs9cqs6VQhDjE75vVGPo8xFIfDPnWaH+Db2eqb/e33uLEIXJvtHTNN8K4PSEcioVlWvmzzwrT
- PlbSGjo/xE6alz8upMg==
-X-Proofpoint-ORIG-GUID: rZErlqHlfuQnaVqnt9nPvJ5yjAf5z3eP
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAyMDExNyBTYWx0ZWRfX1GVxP672Bijo
- tZjQVpOpzgw7XcJoO8A24o9I9LxgkONMiumEYPvy9ZUvpo04WZ2LdKv7M/PrcOOiIyKiOTcHWkN
- OBMB+0pO4sPMC9pM0LiN5hdl4Jp6hho=
-X-Proofpoint-GUID: rZErlqHlfuQnaVqnt9nPvJ5yjAf5z3eP
-X-Authority-Analysis: v=2.4 cv=WMBPmHsR c=1 sm=1 tr=0 ts=6a4648d6 cx=c_pps
- a=Ou0eQOY4+eZoSc0qltEV5Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22 a=ikGL0yQhr-kLhHwnVnYA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-07-02_01,2026-06-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 phishscore=0 suspectscore=0 lowpriorityscore=0 bulkscore=0
- spamscore=0 priorityscore=1501 adultscore=0 impostorscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607020117
+In-Reply-To: <794044881e454fd8ac13e59d5ff5fc86fca08b03.1782735110.git.ljs@kernel.org>
+X-Spam-Flag: NO
+X-Spam-Level: 
+X-Spam-Score: -2.80
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[suse.de,none];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	FREEMAIL_CC(0.00)[linux-foundation.org,armlinux.org.uk,kernel.org,siemens-energy.com,hansenpartnership.com,gmx.de,redhat.com,alien8.de,linux.intel.com,mev.co.uk,visionengravers.com,pengutronix.de,gmail.com,ffwll.ch,suse.de,oss.qualcomm.com,ideasonboard.com,nvidia.com,amd.com,shazbot.org,zeniv.linux.org.uk,linux.dev,google.com,infradead.org,samsung.com,goodmis.org,huawei.com,vger.kernel.org,lists.infradead.org,lists.freedesktop.org,lists.linux.dev,kvack.org,googlegroups.com,surriel.com];
+	TAGGED_FROM(0.00)[bounces-115959-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-115958-lists,linux-arm-msm=lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:konrad.dybcio@oss.qualcomm.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:sre@kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-pm@vger.kernel.org,m:jishnu.prakash@oss.qualcomm.com,m:kamal.wadhwa@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,vger.kernel.org:from_smtp,qualcomm.com:dkim,oss.qualcomm.com:from_mime];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[13];
-	FORGED_SENDER(0.00)[rakesh.kota@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	MIME_TRACE(0.00)[0:+];
-	FORWARDED(0.00)[lists@lfdr.de];
-	DKIM_TRACE(0.00)[qualcomm.com:+];
-	MISSING_XM_UA(0.00)[];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[rakesh.kota@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
+	FORGED_SENDER(0.00)[pfalcato@suse.de,linux-arm-msm@vger.kernel.org];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_RECIPIENTS(0.00)[m:ljs@kernel.org,m:akpm@linux-foundation.org,m:linux@armlinux.org.uk,m:dinguyen@kernel.org,m:schuster.simon@siemens-energy.com,m:James.Bottomley@hansenpartnership.com,m:deller@gmx.de,m:jarkko@kernel.org,m:tglx@kernel.org,m:mingo@redhat.com,m:bp@alien8.de,m:dave.hansen@linux.intel.com,m:x86@kernel.org,m:abbotti@mev.co.uk,m:hsweeten@visionengravers.com,m:l.stach@pengutronix.de,m:airlied@gmail.com,m:simona@ffwll.ch,m:patrik.r.jakobsson@gmail.com,m:maarten.lankhorst@linux.intel.com,m:mripard@kernel.org,m:tzimmermann@suse.de,m:robin.clark@oss.qualcomm.com,m:lumag@kernel.org,m:tomi.valkeinen@ideasonboard.com,m:thierry.reding@kernel.org,m:mperttunen@nvidia.com,m:jonathanh@nvidia.com,m:christian.koenig@amd.com,m:ray.huang@amd.com,m:ankita@nvidia.com,m:alex@shazbot.org,m:viro@zeniv.linux.org.uk,m:brauner@kernel.org,m:djbw@kernel.org,m:muchun.song@linux.dev,m:osalvador@suse.de,m:david@kernel.org,m:surenb@google.com,m:liam@infradead.org,m:willy@infradead.org,m:m.szyprow
+ ski@samsung.com,m:peterz@infradead.org,m:acme@kernel.org,m:namhyung@kernel.org,m:mhiramat@kernel.org,m:oleg@redhat.com,m:rostedt@goodmis.org,m:sj@kernel.org,m:linmiaohe@huawei.com,m:hughd@google.com,m:rppt@kernel.org,m:kees@kernel.org,m:pbonzini@redhat.com,m:linux-kernel@vger.kernel.org,m:linux-arm-kernel@lists.infradead.org,m:linux-parisc@vger.kernel.org,m:linux-sgx@vger.kernel.org,m:etnaviv@lists.freedesktop.org,m:dri-devel@lists.freedesktop.org,m:linux-arm-msm@vger.kernel.org,m:freedreno@lists.freedesktop.org,m:linux-tegra@vger.kernel.org,m:kvm@vger.kernel.org,m:linux-fsdevel@vger.kernel.org,m:nvdimm@lists.linux.dev,m:linux-mm@kvack.org,m:iommu@lists.linux.dev,m:linux-perf-users@vger.kernel.org,m:linux-trace-kernel@vger.kernel.org,m:kasan-dev@googlegroups.com,m:damon@lists.linux.dev,m:riel@surriel.com,m:harry@kernel.org,m:jannh@google.com,m:patrikrjakobsson@gmail.com,s:lists@lfdr.de];
+	FORWARDED(0.00)[lists@lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[suse.de:+];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	MISSING_XM_UA(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[6];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[pfalcato@suse.de,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ALIAS_RESOLVED(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MID_RHS_MATCH_FROMTLD(0.00)[];
+	RCPT_COUNT_GT_50(0.00)[75];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	TO_DN_SOME(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	RCVD_COUNT_SEVEN(0.00)[10]
+	ALIAS_RESOLVED(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,pedro-suse.lan:mid,vger.kernel.org:from_smtp,suse.de:dkim,suse.de:email,suse.de:from_mime]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 755D66F6A51
+X-Rspamd-Queue-Id: 33C626F6B5B
 
-On Tue, Jun 30, 2026 at 04:16:13PM +0200, Konrad Dybcio wrote:
-> On 5/22/26 12:56 AM, Bjorn Andersson wrote:
-> > On Tue, May 19, 2026 at 12:29:38PM +0530, Rakesh Kota wrote:
-> >> On Mon, May 18, 2026 at 04:36:32PM +0200, Konrad Dybcio wrote:
-> >>> On 5/18/26 3:49 PM, Rakesh Kota wrote:
-> >>>> On batteryless boards powered by 12V DC adapters, registering the
-> >>>> power supply as BATTERY causes userspace to incorrectly trigger
-> >>>> battery power-saving sequences.
-> >>>
-> >>> Does battman really offer no way of differentiating whether a battery
-> >>> is *actually* present in such cases?
-> >>>
-> >>> What boards are affected?
-> >>>
-> >> Currently, batteryless support is only implemented for the
-> >> qcs6490-rb3gen2(Kodiak) board.
-> >>
-> > 
-> > What do you mean?
-> > 
-> > Are you saying that the pmic_glink firmware in Kodiak has a one-off hack
-> > that no other implementation of this firmware has?
-> > 
-> > My Lenovo IdeaCentre (hamoa) doesn't have battery, what should I do now?
+On Mon, Jun 29, 2026 at 01:23:32PM +0100, Lorenzo Stoakes wrote:
+> Add helpers for adding or subtracting to a VMA's page offset, exposed
+> internally for VMA users within mm in mm/vma.h.
 > 
-> I was going through my inbox.
-> This remains unanswered, and I don't see the discussion progressing
-> without resolving this.
->
-To clarify — there is no platform-side hack involved. The Kodiak board
-has a batteryless variant, but the pmic_glink firmware provides no way
-to distinguish whether a battery is physically present or not. Since
-this can't be determined from firmware, we introduced a DT-based
-property to describe the hardware configuration explicitly.
+> This is to lay the foundations for tracking anonymous page offset for
+> MAP_PRIVATE file-backed mappings, where adding and subtracting from this
+> value must be reflected in both the file and anonymous offsets.
+> 
+> These are used on VMA split and downward stack expansion.
+> 
+> No functional change intended.
+> 
+> Signed-off-by: Lorenzo Stoakes <ljs@kernel.org>
+> ---
+>  mm/nommu.c                      |  6 ++++--
+>  mm/vma.c                        |  6 +++---
+>  mm/vma.h                        | 12 ++++++++++++
+>  tools/testing/vma/include/dup.h | 13 ++++++++++++-
+>  4 files changed, 31 insertions(+), 6 deletions(-)
+> 
+> diff --git a/mm/nommu.c b/mm/nommu.c
+> index 7333d855e974..c7fafcd87c14 100644
+> --- a/mm/nommu.c
+> +++ b/mm/nommu.c
+> @@ -41,6 +41,7 @@
+>  #include <asm/tlbflush.h>
+>  #include <asm/mmu_context.h>
+>  #include "internal.h"
+> +#include "vma.h"
+>  
+>  unsigned long highest_memmap_pfn;
+>  int heap_stack_gap = 0;
+> @@ -1338,7 +1339,8 @@ static int split_vma(struct vma_iterator *vmi, struct vm_area_struct *vma,
+>  		region->vm_top = region->vm_end = new->vm_end = addr;
+>  	} else {
+>  		region->vm_start = new->vm_start = addr;
+> -		region->vm_pgoff = new->vm_pgoff += npages;
+> +		vma_add_pgoff(new, npages);
+> +		region->vm_pgoff = vma_start_pgoff(new);
+>  	}
+>  
+>  	vma_iter_config(vmi, new->vm_start, new->vm_end);
+> @@ -1355,7 +1357,7 @@ static int split_vma(struct vma_iterator *vmi, struct vm_area_struct *vma,
+>  	delete_nommu_region(vma->vm_region);
+>  	if (new_below) {
+>  		vma->vm_region->vm_start = vma->vm_start = addr;
+> -		vma->vm_pgoff += npages;
+> +		vma_add_pgoff(vma, npages);
+>  		vma->vm_region->vm_pgoff = vma_start_pgoff(vma);
+>  	} else {
+>  		vma->vm_region->vm_end = vma->vm_end = addr;
+> diff --git a/mm/vma.c b/mm/vma.c
+> index 185d07397ca6..cb7222e20c93 100644
+> --- a/mm/vma.c
+> +++ b/mm/vma.c
+> @@ -517,7 +517,7 @@ __split_vma(struct vma_iterator *vmi, struct vm_area_struct *vma,
+>  		new->vm_end = addr;
+>  	} else {
+>  		new->vm_start = addr;
+> -		new->vm_pgoff += linear_page_delta(vma, addr);
+> +		vma_add_pgoff(new, linear_page_delta(vma, addr));
+>  	}
+>  
+>  	err = -ENOMEM;
+> @@ -556,7 +556,7 @@ __split_vma(struct vma_iterator *vmi, struct vm_area_struct *vma,
+>  
+>  	if (new_below) {
+>  		vma->vm_start = addr;
+> -		vma->vm_pgoff += (addr - new->vm_start) >> PAGE_SHIFT;
+> +		vma_add_pgoff(vma, (addr - new->vm_start) >> PAGE_SHIFT);
+>  	} else {
+>  		vma->vm_end = addr;
+>  	}
+> @@ -3305,7 +3305,7 @@ int expand_downwards(struct vm_area_struct *vma, unsigned long address)
+>  				vm_stat_account(mm, vma->vm_flags, grow);
+>  				anon_vma_interval_tree_pre_update_vma(vma);
+>  				vma->vm_start = address;
+> -				vma->vm_pgoff -= grow;
+> +				vma_sub_pgoff(vma, grow);
+>  				/* Overwrite old entry in mtree. */
+>  				vma_iter_store_overwrite(&vmi, vma);
+>  				anon_vma_interval_tree_post_update_vma(vma);
+> diff --git a/mm/vma.h b/mm/vma.h
+> index 2342516ce00e..47fe35e5307e 100644
+> --- a/mm/vma.h
+> +++ b/mm/vma.h
+> @@ -247,6 +247,18 @@ static inline pgoff_t vmg_end_pgoff(const struct vma_merge_struct *vmg)
+>  	return vmg_start_pgoff(vmg) + vmg_pages(vmg);
+>  }
+>  
+> +static inline void vma_add_pgoff(struct vm_area_struct *vma, pgoff_t delta)
+> +{
+> +	vma_assert_can_modify(vma);
+> +	vma->vm_pgoff += delta;
+> +}
+> +
+> +static inline void vma_sub_pgoff(struct vm_area_struct *vma, pgoff_t delta)
+> +{
+> +	vma_assert_can_modify(vma);
+> +	vma->vm_pgoff -= delta;
+> +}
+> +
+>  #define VMG_STATE(name, mm_, vmi_, start_, end_, vma_flags_, pgoff_)	\
+>  	struct vma_merge_struct name = {				\
+>  		.mm = mm_,						\
+> diff --git a/tools/testing/vma/include/dup.h b/tools/testing/vma/include/dup.h
+> index 7ed165c8d9bc..41fea90a344d 100644
+> --- a/tools/testing/vma/include/dup.h
+> +++ b/tools/testing/vma/include/dup.h
+> @@ -1163,6 +1163,11 @@ static inline struct vm_area_struct *vma_next(struct vma_iterator *vmi)
+>  	return mas_find(&vmi->mas, ULONG_MAX);
+>  }
+>  
+> +static inline bool vma_is_attached(struct vm_area_struct *vma)
+> +{
+> +	return refcount_read(&vma->vm_refcnt);
+> +}
+> +
+>  /*
+>   * WARNING: to avoid racing with vma_mark_attached()/vma_mark_detached(), these
+>   * assertions should be made either under mmap_write_lock or when the object
+> @@ -1170,7 +1175,13 @@ static inline struct vm_area_struct *vma_next(struct vma_iterator *vmi)
+>   */
+>  static inline void vma_assert_attached(struct vm_area_struct *vma)
+>  {
+> -	WARN_ON_ONCE(!refcount_read(&vma->vm_refcnt));
+> +	WARN_ON_ONCE(!vma_is_attached(vma));
+> +}
+> +
+> +static inline void vma_assert_can_modify(struct vm_area_struct *vma)
+> +{
+> +	if (vma_is_attached(vma))
+> +		vma_assert_write_locked(vma);
+>  }
 
-This is not Kodiak-specific — any batteryless board, including hamoa,
-can use the same DT property to avoid incorrect BATTERY registration
+These hunks in dup.h look lost. Should perhaps be on the previous patch
+(adding the helpers).
 
-regards
-Rakesh Kota
+Anyway, Obviously Correct(tm).
+
+Reviewed-by: Pedro Falcato <pfalcato@suse.de>
+
+-- 
+Pedro
 
