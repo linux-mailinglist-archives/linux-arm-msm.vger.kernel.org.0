@@ -1,201 +1,223 @@
-Return-Path: <linux-arm-msm+bounces-116031-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-116032-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id 23o7CKxgRmq3SAsAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-116031-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Jul 2026 14:59:24 +0200
+	id 78LHLsZgRmrCSAsAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-116032-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Jul 2026 14:59:50 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 923716F806E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Jul 2026 14:59:23 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 295096F8096
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Jul 2026 14:59:49 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=linux.dev header.s=key1 header.b=F4ZVf9Bv;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116031-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116031-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=none) header.from=linux.dev;
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=CjDbmUPo;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116032-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c09:e001:a7::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116032-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id C9C1630B52AD
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jul 2026 12:51:24 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 68B84301747F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jul 2026 12:59:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9606548B363;
-	Thu,  2 Jul 2026 12:51:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 90BAE48BD37;
+	Thu,  2 Jul 2026 12:59:29 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from out-173.mta1.migadu.com (out-173.mta1.migadu.com [95.215.58.173])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44BF8481FAC
-	for <linux-arm-msm@vger.kernel.org>; Thu,  2 Jul 2026 12:51:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56F3548AE20
+	for <linux-arm-msm@vger.kernel.org>; Thu,  2 Jul 2026 12:59:28 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782996681; cv=none; b=AF8mRAfge0EqajxxCbZUvBDT9TT1uAqRe77wG3q/AW4Et+l35xT0om+dFuSLc/EgVtvh2OVdKJ6eM9BzAZxsegvlhpHBxJQjFujy8zMfGVXcw66HwceXihmm4fUsNSA+zI4RSR1DxKvg5StzeQmz87cpRSc/jVwYKPQlEMAMeU0=
+	t=1782997169; cv=none; b=JLRyS0BZv+jeHN9Q4rE0DxaEk4WoMvI2gZTgb/0yyknuONyLqFH31NKG6dyBbDaTz/ebdoodSRLWfWEBh6mDYRwME0vOmfvBw7jUAkC+AK2cxXS94IEWGhn5tLqWrfy6uAxtUEfLn520Eg1A7SQSEKp64wfVEH1O/6CVs35hspg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782996681; c=relaxed/simple;
-	bh=KCmq1hZLLl7GOyWtL6cRPjjbHfWJ5jvpchLdwXolxL8=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=e621RDoNzpIklmARqW6HOKqJ9yCzY/UiAp84GlgF+gReItDjx+QaxXZwJmDAVyl3bUNAoBQDxhgQ+2yiGwUyxRMDDPiRzaqWDxMNN6g9ymGq8eE6ElF++2if9cSUh+YnkUouaeAcYRm7B2GtQ0bdApvldvaFUgjSMSfOqLsnIDs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=F4ZVf9Bv; arc=none smtp.client-ip=95.215.58.173
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1782996675;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=KCmq1hZLLl7GOyWtL6cRPjjbHfWJ5jvpchLdwXolxL8=;
-	b=F4ZVf9BvB+hLAf9gQChbe4sRNb4sLCrUWRBNFM0pPt8IAzUbVhXxDEH/DvD8axflIDk2vm
-	3zmwuSmbnQ/BvpRKYzyKP8V+Wt7x4/jYspjeo/Nuwy87WFjjbKm5Us6Gqkc64N1S5Bi0bl
-	Qu3WpSOCEMC/DqM+tZU+hrTjGqJDt6Q=
-From: Lance Yang <lance.yang@linux.dev>
-To: ljs@kernel.org
-Cc: akpm@linux-foundation.org,
-	tsbogend@alpha.franken.de,
-	maddy@linux.ibm.com,
-	mpe@ellerman.id.au,
-	maarten.lankhorst@linux.intel.com,
-	mripard@kernel.org,
-	tzimmermann@suse.de,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	l.stach@pengutronix.de,
-	inki.dae@samsung.com,
-	sw0312.kim@samsung.com,
-	kyungmin.park@samsung.com,
-	krzk@kernel.org,
-	peter.griffin@linaro.org,
-	jani.nikula@linux.intel.com,
-	joonas.lahtinen@linux.intel.com,
-	rodrigo.vivi@intel.com,
-	tursulin@ursulin.net,
-	robin.clark@oss.qualcomm.com,
-	lumag@kernel.org,
-	lyude@redhat.com,
-	dakr@kernel.org,
-	tomi.valkeinen@ideasonboard.com,
-	hjc@rock-chips.com,
-	heiko@sntech.de,
-	andy.yan@rock-chips.com,
-	thierry.reding@kernel.org,
-	mperttunen@nvidia.com,
-	jonathanh@nvidia.com,
-	kraxel@redhat.com,
-	dmitry.osipenko@collabora.com,
-	zack.rusin@broadcom.com,
-	matthew.brost@intel.com,
-	thomas.hellstrom@linux.intel.com,
-	oleksandr_andrushchenko@epam.com,
-	deller@gmx.de,
-	bcrl@kvack.org,
-	viro@zeniv.linux.org.uk,
-	brauner@kernel.org,
-	muchun.song@linux.dev,
-	osalvador@suse.de,
-	david@kernel.org,
-	ziy@nvidia.com,
-	baolin.wang@linux.alibaba.com,
-	liam@infradead.org,
-	npache@redhat.com,
-	ryan.roberts@arm.com,
-	dev.jain@arm.com,
-	baohua@kernel.org,
-	lance.yang@linux.dev,
-	hughd@google.com,
-	vbabka@kernel.org,
-	rppt@kernel.org,
-	surenb@google.com,
-	mhocko@suse.com,
-	jannh@google.com,
-	pfalcato@suse.de,
-	kees@kernel.org,
-	perex@perex.cz,
-	tiwai@suse.com,
-	linux-mips@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linuxppc-dev@lists.ozlabs.org,
-	dri-devel@lists.freedesktop.org,
-	etnaviv@lists.freedesktop.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-samsung-soc@vger.kernel.org,
-	intel-gfx@lists.freedesktop.org,
-	linux-arm-msm@vger.kernel.org,
-	freedreno@lists.freedesktop.org,
-	nouveau@lists.freedesktop.org,
-	linux-rockchip@lists.infradead.org,
-	linux-tegra@vger.kernel.org,
-	virtualization@lists.linux.dev,
-	intel-xe@lists.freedesktop.org,
-	xen-devel@lists.xenproject.org,
-	linux-fbdev@vger.kernel.org,
-	linux-aio@kvack.org,
-	linux-fsdevel@vger.kernel.org,
-	linux-mm@kvack.org,
-	linux-sound@vger.kernel.org
-Subject: Re: [PATCH 09/13] mm/vma: update create_init_stack_vma() to use vma_flags_t
-Date: Thu,  2 Jul 2026 20:50:52 +0800
-Message-Id: <20260702125052.19248-1-lance.yang@linux.dev>
-In-Reply-To: <34689784ee6856f100c02ad4eabeaa4db643713a.1782760670.git.ljs@kernel.org>
-References: <34689784ee6856f100c02ad4eabeaa4db643713a.1782760670.git.ljs@kernel.org>
+	s=arc-20240116; t=1782997169; c=relaxed/simple;
+	bh=uUKDkqlNCglYPmuMqaEVfRyX46iCIZHXBkJAj3Zz+ao=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=hOd1AEzbgvh7rIfHiogBjSvrFYINbdiUG/6gPExIS2jXwoXKjc8La9gbB9A/gk/iPsK/UFgTvJCrlGeyx/bVzheufgg93zwhPwnUgxqjwTKTQTmS9n5JchIkvkKfvajBILbBRVoEuFM39nbQyo/S6dZhGNhzdLRzMVsU8gGLxyA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CjDbmUPo; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 391FD1F00A3E
+	for <linux-arm-msm@vger.kernel.org>; Thu,  2 Jul 2026 12:59:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1782997168;
+	bh=fjPgbB2H3M05UY5za1DjwijyWrPVl+qvmy/SwWaWVlQ=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc;
+	b=CjDbmUPosDXkDQ0gaFgP9Td33t/PSi2SD3nxJftGeXxNW8RiJElNKqlcqDz46EVH6
+	 D91vh4elkYdGmayHmXno/bAWFv9D8kusroSMCzAPxpT1bAqPlAhdE0mrCSe3KGXx62
+	 SM5oB96oAD46KuID2u8ctCawRy3OF23yfsJU3++1+n5JkqbaV9QJMIqDrWiCZof3d8
+	 m391bmJ3NI0h0naSydbb7eJ30wOYunjB8B6+DMzJDV66gtUoISpDDg0dcsKGi4exZM
+	 bwWNmjyTWcyHhZLJbhj38P5yCNkbymKttYI8psEb+EKlVD2rajbcmNoS+donyYWaaM
+	 oPzrSk+nWJdmw==
+Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-5aec139da7eso681192e87.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Jul 2026 05:59:28 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AHgh+RqlIVIxC+3uA18EsH3U9tlNyIQKqE0pqc0sAsDSB691qYyEZ6NrcfM3Qe3o9w8QtUYArexX2yG7iBJ5SzsN@vger.kernel.org
+X-Gm-Message-State: AOJu0YzZGSo6zIwjWuG1vRvk7gcbDK/FDzdQcYvZ1kos3dFQN/Tn8CFk
+	QxJbpxHTgyjnKpdJFu0/9tRjzLgUXXZx73bbk8VlT3nT+Gy9uzXQDsfh3L7Sj1BW8yiXBTRCpcf
+	xsqdoC8I9gocSvePlT3AlM2vHnii2cS4=
+X-Received: by 2002:a05:6512:2310:b0:5ae:b686:d9d8 with SMTP id
+ 2adb3069b0e04-5aebf967210mr2544930e87.9.1782997166443; Thu, 02 Jul 2026
+ 05:59:26 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
+References: <20260702-fix_sticky_-einval_after_pm_runtime_api_failure-v1-0-6ddc317011c0@oss.qualcomm.com>
+ <20260702-fix_sticky_-einval_after_pm_runtime_api_failure-v1-1-6ddc317011c0@oss.qualcomm.com>
+ <CAJZ5v0g6iRNUAKtDNKWa-_pshmnSCdStenNBJ91Xt=PSrhx=aQ@mail.gmail.com> <04b67f29-2afe-4c72-8c9b-bbde56f27a83@oss.qualcomm.com>
+In-Reply-To: <04b67f29-2afe-4c72-8c9b-bbde56f27a83@oss.qualcomm.com>
+From: "Rafael J. Wysocki (Intel)" <rafael@kernel.org>
+Date: Thu, 2 Jul 2026 14:59:14 +0200
+X-Gmail-Original-Message-ID: <CAJZ5v0hc5yYphPjtF8kNBTPaTaVDxq4Fdb=DRuQ953EAo-CMqQ@mail.gmail.com>
+X-Gm-Features: AVVi8CcLlsfEYaX75GZe8RjqszCs33_BhtDCHTaBpZCGdeHCkGSnOhwt3W2pLYY
+Message-ID: <CAJZ5v0hc5yYphPjtF8kNBTPaTaVDxq4Fdb=DRuQ953EAo-CMqQ@mail.gmail.com>
+Subject: Re: [PATCH 1/4] PM: runtime: Clear runtime_error on supplier after
+ failed get_sync
+To: Praveen Talari <praveen.talari@oss.qualcomm.com>
+Cc: "Rafael J. Wysocki (Intel)" <rafael@kernel.org>, Mark Brown <broonie@kernel.org>, 
+	Dilip Kota <dkota@codeaurora.org>, Stephen Boyd <swboyd@chromium.org>, 
+	Girish Mahadevan <girishm@codeaurora.org>, Alok Chauhan <alokc@codeaurora.org>, 
+	bjorn.andersson@oss.qualcomm.com, 
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, Len Brown <lenb@kernel.org>, 
+	Pavel Machek <pavel@kernel.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Danilo Krummrich <dakr@kernel.org>, Douglas Anderson <dianders@chromium.org>, linux-spi@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>, aniket.randive@oss.qualcomm.com, 
+	chandana.chiluveru@oss.qualcomm.com, jyothi.seerapu@oss.qualcomm.com, 
+	linux-pm@vger.kernel.org, driver-core@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-1.16 / 15.00];
+X-Spamd-Result: default: False [-5.16 / 15.00];
+	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_CONTAINS_FROM(1.00)[];
-	DMARC_POLICY_ALLOW(-0.50)[linux.dev,none];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
-	R_DKIM_ALLOW(-0.20)[linux.dev:s=key1];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[linux-foundation.org,alpha.franken.de,linux.ibm.com,ellerman.id.au,linux.intel.com,kernel.org,suse.de,gmail.com,ffwll.ch,pengutronix.de,samsung.com,linaro.org,intel.com,ursulin.net,oss.qualcomm.com,redhat.com,ideasonboard.com,rock-chips.com,sntech.de,nvidia.com,collabora.com,broadcom.com,epam.com,gmx.de,kvack.org,zeniv.linux.org.uk,linux.dev,linux.alibaba.com,infradead.org,arm.com,google.com,suse.com,perex.cz,vger.kernel.org,lists.ozlabs.org,lists.freedesktop.org,lists.infradead.org,lists.linux.dev,lists.xenproject.org];
-	TAGGED_FROM(0.00)[bounces-116031-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-116032-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
+	FORGED_RECIPIENTS(0.00)[m:praveen.talari@oss.qualcomm.com,m:rafael@kernel.org,m:broonie@kernel.org,m:dkota@codeaurora.org,m:swboyd@chromium.org,m:girishm@codeaurora.org,m:alokc@codeaurora.org,m:bjorn.andersson@oss.qualcomm.com,m:konrad.dybcio@oss.qualcomm.com,m:lenb@kernel.org,m:pavel@kernel.org,m:gregkh@linuxfoundation.org,m:dakr@kernel.org,m:dianders@chromium.org,m:linux-spi@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:mukesh.savaliya@oss.qualcomm.com,m:aniket.randive@oss.qualcomm.com,m:chandana.chiluveru@oss.qualcomm.com,m:jyothi.seerapu@oss.qualcomm.com,m:linux-pm@vger.kernel.org,m:driver-core@lists.linux.dev,s:lists@lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[3];
-	FORWARDED(0.00)[lists@lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:ljs@kernel.org,m:akpm@linux-foundation.org,m:tsbogend@alpha.franken.de,m:maddy@linux.ibm.com,m:mpe@ellerman.id.au,m:maarten.lankhorst@linux.intel.com,m:mripard@kernel.org,m:tzimmermann@suse.de,m:airlied@gmail.com,m:simona@ffwll.ch,m:l.stach@pengutronix.de,m:inki.dae@samsung.com,m:sw0312.kim@samsung.com,m:kyungmin.park@samsung.com,m:krzk@kernel.org,m:peter.griffin@linaro.org,m:jani.nikula@linux.intel.com,m:joonas.lahtinen@linux.intel.com,m:rodrigo.vivi@intel.com,m:tursulin@ursulin.net,m:robin.clark@oss.qualcomm.com,m:lumag@kernel.org,m:lyude@redhat.com,m:dakr@kernel.org,m:tomi.valkeinen@ideasonboard.com,m:hjc@rock-chips.com,m:heiko@sntech.de,m:andy.yan@rock-chips.com,m:thierry.reding@kernel.org,m:mperttunen@nvidia.com,m:jonathanh@nvidia.com,m:kraxel@redhat.com,m:dmitry.osipenko@collabora.com,m:zack.rusin@broadcom.com,m:matthew.brost@intel.com,m:thomas.hellstrom@linux.intel.com,m:oleksandr_andrushchenko@epam.com,m:deller@gmx.de,m:bcrl@kvack.org,m:viro@zeniv.l
- inux.org.uk,m:brauner@kernel.org,m:muchun.song@linux.dev,m:osalvador@suse.de,m:david@kernel.org,m:ziy@nvidia.com,m:baolin.wang@linux.alibaba.com,m:liam@infradead.org,m:npache@redhat.com,m:ryan.roberts@arm.com,m:dev.jain@arm.com,m:baohua@kernel.org,m:lance.yang@linux.dev,m:hughd@google.com,m:vbabka@kernel.org,m:rppt@kernel.org,m:surenb@google.com,m:mhocko@suse.com,m:jannh@google.com,m:pfalcato@suse.de,m:kees@kernel.org,m:perex@perex.cz,m:tiwai@suse.com,m:linux-mips@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linuxppc-dev@lists.ozlabs.org,m:dri-devel@lists.freedesktop.org,m:etnaviv@lists.freedesktop.org,m:linux-arm-kernel@lists.infradead.org,m:linux-samsung-soc@vger.kernel.org,m:intel-gfx@lists.freedesktop.org,m:linux-arm-msm@vger.kernel.org,m:freedreno@lists.freedesktop.org,m:nouveau@lists.freedesktop.org,m:linux-rockchip@lists.infradead.org,m:linux-tegra@vger.kernel.org,m:virtualization@lists.linux.dev,m:intel-xe@lists.freedesktop.org,m:xen-devel@lists.xenproject.org,m:linux-fb
- dev@vger.kernel.org,m:linux-aio@kvack.org,m:linux-fsdevel@vger.kernel.org,m:linux-mm@kvack.org,m:linux-sound@vger.kernel.org,s:lists@lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_SENDER(0.00)[lance.yang@linux.dev,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[linux.dev:+];
-	MISSING_XM_UA(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[23];
+	FORGED_SENDER(0.00)[rafael@kernel.org,linux-arm-msm@vger.kernel.org];
 	MIME_TRACE(0.00)[0:+];
+	FORWARDED(0.00)[lists@lfdr.de];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	MISSING_XM_UA(0.00)[];
+	TO_DN_SOME(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	TO_DN_NONE(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[lance.yang@linux.dev,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[rafael@kernel.org,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_GT_50(0.00)[83];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,linux.dev:dkim,linux.dev:email,linux.dev:mid,linux.dev:from_mime,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,mail.gmail.com:mid,qualcomm.com:email]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 923716F806E
+X-Rspamd-Queue-Id: 295096F8096
 
-
-On Mon, Jun 29, 2026 at 08:25:32PM +0100, Lorenzo Stoakes wrote:
->Replace use of the legacy vm_flags_t flags with vma_flags_t values in
->create_init_stack_vma().
+On Thu, Jul 2, 2026 at 1:53=E2=80=AFPM Praveen Talari
+<praveen.talari@oss.qualcomm.com> wrote:
 >
->As part of this change we add VMA_STACK_EARLY and VMA_STACK_INCOMPLETE
->vma_flags_t defines, and slightly rework create_init_stack_vma() for
->clarity.
+> Hi Rafael,
 >
->No functional change intended.
+> Thank you for review.
 >
->Signed-off-by: Lorenzo Stoakes <ljs@kernel.org>
->---
+> On 02-07-2026 17:07, Rafael J. Wysocki (Intel) wrote:
+> > On Thu, Jul 2, 2026 at 8:08=E2=80=AFAM Praveen Talari
+> > <praveen.talari@oss.qualcomm.com> wrote:
+> >> When pm_runtime_get_sync() fails for a supplier device in
+> >> rpm_get_suppliers(), the supplier's power.runtime_error field is left
+> >> set. This causes any subsequent rpm_resume() call on that supplier to
+> >> immediately return -EINVAL at the top of the function without
+> >> attempting an actual resume, making the failure permanent until
+> >> runtime PM is explicitly re-enabled.
+> >>
+> >> Fix this by calling pm_runtime_set_suspended() on the supplier after
+> >> pm_runtime_put_noidle() in the error path. This clears runtime_error
+> >> and resets the runtime PM status to RPM_SUSPENDED, allowing the next
+> >> consumer resume attempt to retry the supplier resume normally.
+> >>
+> >> Change-Id: Id5067d09caca464f663fc95fe745d037e9c56664
+> >> Signed-off-by: Praveen Talari <praveen.talari@oss.qualcomm.com>
+> >> ---
+> >>   drivers/base/power/runtime.c | 1 +
+> >>   1 file changed, 1 insertion(+)
+> >>
+> >> diff --git a/drivers/base/power/runtime.c b/drivers/base/power/runtime=
+.c
+> >> index 335288e8b5b3..9811d024d140 100644
+> >> --- a/drivers/base/power/runtime.c
+> >> +++ b/drivers/base/power/runtime.c
+> >> @@ -309,6 +309,7 @@ static int rpm_get_suppliers(struct device *dev)
+> >>                  /* Ignore suppliers with disabled runtime PM. */
+> >>                  if (retval < 0 && retval !=3D -EACCES) {
+> >>                          pm_runtime_put_noidle(link->supplier);
+> >> +                       pm_runtime_set_suspended(link->supplier);
+> >>                          return retval;
+> >>                  }
+> >>                  refcount_inc(&link->rpm_active);
+> >>
+> >> --
+> > I don't think that this is the way to go here.
+> >
+> > Can you please say some more about the specific scenario in which this
+> > happens and explain why it is OK to effectively discard runtime PM
+> > errors occurring when suppliers are handled?
+>
+> This was observed with a consumer device whose supplier's
+> ->runtime_resume callback returns an error (e.g., a transient failure
+> such as a timeout or resource unavailability).
 
-Nothing looks off to me ;) Feel free to add:
+In runtime PM, errors returned by the suspend and resume callbacks,
+except for -EAGAIN and -EBUSY are not regarded as transient, which is
+why they stick.
 
-Reviewed-by: Lance Yang <lance.yang@linux.dev>
+If the driver or bus type wants to signal a transient error, it should
+return one of the above error codes.
+
+That said, I can see that this is problematic on the resume side where
+it may be desirable to repeat resume attempts in the hope that one of
+them will succeed.
+
+I would then consider changing the runtime PM core code so that
+power.runtime_error is only set on failing attempts to suspend, but it
+will not be set on failing attempts to resume.
+
+> When that happens,
+> rpm_resume() sets power.runtime_error on the supplier and returns an
+> error. pm_runtime_get_sync() propagates that error up to
+> rpm_get_suppliers(), which then calls pm_runtime_put_noidle() and
+> returns, aborting the consumer's resume.
+
+Right.
+
+> The problem is that power.runtime_error remains set on the supplier. On
+> the next attempt to resume the consumer, rpm_get_suppliers() calls
+> pm_runtime_get_sync() on the supplier again, but rpm_resume() now
+> returns -EINVAL immediately at the top-of-function runtime_error check =
+=E2=80=94
+> without even attempting the resume callback. The supplier is stuck
+> permanently in the error state until someone explicitly calls
+> pm_runtime_reinit() or re-enables runtime PM on it.
+>
+> when rpm_get_suppliers() fails and we're already propagating the error
+> to the consumer's resume path, we should not leave the supplier in a
+> state that prevents all future retry attempts.
+>
+> Would you suggest a different approach here? I want to understand what
+> the preferred recovery path should be when a supplier's resume fails
+> inside rpm_get_suppliers().
+
+Well, this isn't really different to any other cases when runtime
+resume fails.  If it fails for a given device, it will also fail for
+all devices depending on it.
+
+But fair enough, please see above.
 
