@@ -1,91 +1,91 @@
-Return-Path: <linux-arm-msm+bounces-115959-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-115961-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id Ez7LK5dLRmrzNwsAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-115959-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Jul 2026 13:29:27 +0200
+	id roh6NMNKRmqpNwsAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-115961-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Jul 2026 13:25:55 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 33C626F6B5B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Jul 2026 13:29:27 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6C06F6F6A97
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Jul 2026 13:25:55 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=PgCpqqxi;
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=oeEsfdun;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=PgCpqqxi;
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=oeEsfdun;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115959-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115959-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=lzrOQYF3;
+	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=Roq9Nz6Z;
+	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=lzrOQYF3;
+	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=Roq9Nz6Z;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115961-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c09:e001:a7::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115961-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=none) header.from=suse.de;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id D4B713145EF0
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jul 2026 11:20:19 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 18755300826F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jul 2026 11:25:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 89FF43E3147;
-	Thu,  2 Jul 2026 11:20:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7AC8E40D57F;
+	Thu,  2 Jul 2026 11:25:41 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6C523ED5B3
-	for <linux-arm-msm@vger.kernel.org>; Thu,  2 Jul 2026 11:20:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ED313FBB6D
+	for <linux-arm-msm@vger.kernel.org>; Thu,  2 Jul 2026 11:25:39 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782991219; cv=none; b=kDrDtn8lDHDk2WT1gWtH8s+G9hFx+i9FeF3ma+10wTXocOuVYj81bsc203o6jHx8H2ynSxhvbkyebmuQ2kuRVQ+5xyHwxUfCnXYc6TqfQtwrixCyjqb0705P6OsmO70ZLEluy+EzsZn8eizcaEtzJwSc/ZZ3XJSOmEHwzRQuiww=
+	t=1782991541; cv=none; b=OJAfX6ll39kBR6rCmVINi+tIxx2GtXljDZHXgum5vaDFmPuLwneNrCKnM+UZvF0zk8PzGTQIlF5yF1U4ozZuduRbswNJ9kqCbHZEG2qojQ8lPo8A4LO99p95s5y3OIT9OOpIv4FneeW9dcbeQq8kXCBfkY4dm18UAqOsHNyZZcg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782991219; c=relaxed/simple;
-	bh=X239wNR/oEz1o+9Hxr196nhAWJXbeoJAICDwBKUZxi4=;
+	s=arc-20240116; t=1782991541; c=relaxed/simple;
+	bh=JsUh11tT4hRgAVZStQ0DSS7Nv9Svlqy4cO7Qm6AbMmY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=P8xx8aEpfa+qRmCx6UOH9d3mZrdo8YGpkcEl8Hvwjwa3KI5vsyNVKYmSrSlNqnTuH5J9+6dq7fO4wecLcxb0m4D3g8iwpTrsCG0sm7JzJy0XXLLs3meXijzkBTs9JTytIKqpqZu6eFzQpou6geJysAgEJZmdGbm0jm6NkliuJCo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=PgCpqqxi; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=oeEsfdun; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=PgCpqqxi; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=oeEsfdun; arc=none smtp.client-ip=195.135.223.130
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+	 Content-Type:Content-Disposition:In-Reply-To; b=NfauJg2oipfHmaR/iwL0mZTbWS+aH04K/qO7Ll4dEh8Fh0RHncE/OZU5+apdkUYSUidyXz3V0FdpxZa4Li6kwUgf3vbOo3R90hS5fa8oSqm3b9n061fKSQnr8ozATIRjBTEBP+wLsp2KHmC1/Rof9zQsxT2p3XnSbDYUQuOT7aU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=lzrOQYF3; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=Roq9Nz6Z; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=lzrOQYF3; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=Roq9Nz6Z; arc=none smtp.client-ip=195.135.223.130
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 4FE9674174;
-	Thu,  2 Jul 2026 11:20:16 +0000 (UTC)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 01E137417D;
+	Thu,  2 Jul 2026 11:25:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1782991216; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	t=1782991538; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:content-type:content-type:
 	 in-reply-to:in-reply-to:references:references;
-	bh=j9HqakDIjcCcTQyUF2MV7bxyTIX1upg8T2CXHTGbmPY=;
-	b=PgCpqqxie7t8+CkwpPP13NW6wQohMzurOqQ3M60mxkSvPUID4ZQOKndTpBXqeUuVhdKIfx
-	t+2FJW3O/MNyOgFxUfD/N1cfpHLCK8FHDiqwUFTQFndqACbeCmnNWvqmGlEefRvEf4d7hB
-	IQhWnkSLQ2dpEmnyOFJPaliYHOfjrfE=
+	bh=etB/tNpEjmWnCjCz7JyXJDmZvFiocG2RS0UFhl2QPjI=;
+	b=lzrOQYF3zdtW0y/0pBSaTtuXlgAai69c3jq223Ufoat2oWuT58YhF1ANh3rB356nung5qw
+	s+a4yuvY1qwH81R8ooWnjq3AdjzcvU2X8jQw+57B2iutenI8yhJNfhcS8hgfcMNdXdzhyI
+	NqmiahPoZsIvJwtrHA5scdnq9BYiaFc=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1782991216;
+	s=susede2_ed25519; t=1782991538;
 	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:content-type:content-type:
 	 in-reply-to:in-reply-to:references:references;
-	bh=j9HqakDIjcCcTQyUF2MV7bxyTIX1upg8T2CXHTGbmPY=;
-	b=oeEsfdunpBw1BldK/9+YFlfUYsk4g2GKuSeX7pnNOrhZYXAOuDPvAQY6PG7s0cv9YpWemp
-	mWdG22AvAmx0j3Cw==
+	bh=etB/tNpEjmWnCjCz7JyXJDmZvFiocG2RS0UFhl2QPjI=;
+	b=Roq9Nz6Zddv/nIu4wCgkj+OdOm1hUvTk5O4kZQkMkrFtHOG9dZzG8/MFg//TBooEP56bH8
+	kkYG21WQZ+VO8yDg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1782991216; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	t=1782991538; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:content-type:content-type:
 	 in-reply-to:in-reply-to:references:references;
-	bh=j9HqakDIjcCcTQyUF2MV7bxyTIX1upg8T2CXHTGbmPY=;
-	b=PgCpqqxie7t8+CkwpPP13NW6wQohMzurOqQ3M60mxkSvPUID4ZQOKndTpBXqeUuVhdKIfx
-	t+2FJW3O/MNyOgFxUfD/N1cfpHLCK8FHDiqwUFTQFndqACbeCmnNWvqmGlEefRvEf4d7hB
-	IQhWnkSLQ2dpEmnyOFJPaliYHOfjrfE=
+	bh=etB/tNpEjmWnCjCz7JyXJDmZvFiocG2RS0UFhl2QPjI=;
+	b=lzrOQYF3zdtW0y/0pBSaTtuXlgAai69c3jq223Ufoat2oWuT58YhF1ANh3rB356nung5qw
+	s+a4yuvY1qwH81R8ooWnjq3AdjzcvU2X8jQw+57B2iutenI8yhJNfhcS8hgfcMNdXdzhyI
+	NqmiahPoZsIvJwtrHA5scdnq9BYiaFc=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1782991216;
+	s=susede2_ed25519; t=1782991538;
 	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:content-type:content-type:
 	 in-reply-to:in-reply-to:references:references;
-	bh=j9HqakDIjcCcTQyUF2MV7bxyTIX1upg8T2CXHTGbmPY=;
-	b=oeEsfdunpBw1BldK/9+YFlfUYsk4g2GKuSeX7pnNOrhZYXAOuDPvAQY6PG7s0cv9YpWemp
-	mWdG22AvAmx0j3Cw==
+	bh=etB/tNpEjmWnCjCz7JyXJDmZvFiocG2RS0UFhl2QPjI=;
+	b=Roq9Nz6Zddv/nIu4wCgkj+OdOm1hUvTk5O4kZQkMkrFtHOG9dZzG8/MFg//TBooEP56bH8
+	kkYG21WQZ+VO8yDg==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C6F00779AA;
-	Thu,  2 Jul 2026 11:20:11 +0000 (UTC)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 8DEED779AA;
+	Thu,  2 Jul 2026 11:25:33 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
 	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id RDeaLGtJRmoSbQAAD6G6ig
-	(envelope-from <pfalcato@suse.de>); Thu, 02 Jul 2026 11:20:11 +0000
-Date: Thu, 2 Jul 2026 12:20:10 +0100
+	id 2PRaH61KRmpTcgAAD6G6ig
+	(envelope-from <pfalcato@suse.de>); Thu, 02 Jul 2026 11:25:33 +0000
+Date: Thu, 2 Jul 2026 12:25:31 +0100
 From: Pedro Falcato <pfalcato@suse.de>
 To: Lorenzo Stoakes <ljs@kernel.org>
 Cc: Andrew Morton <akpm@linux-foundation.org>, 
@@ -121,10 +121,11 @@ Cc: Andrew Morton <akpm@linux-foundation.org>,
 	iommu@lists.linux.dev, linux-perf-users@vger.kernel.org, 
 	linux-trace-kernel@vger.kernel.org, kasan-dev@googlegroups.com, damon@lists.linux.dev, 
 	Rik van Riel <riel@surriel.com>, Harry Yoo <harry@kernel.org>, Jann Horn <jannh@google.com>
-Subject: Re: [PATCH 21/30] mm/vma: add and use vma_[add/sub]_pgoff()
-Message-ID: <akZI0n1U32Ptd0ye@pedro-suse.lan>
+Subject: Re: [PATCH 23/30] mm/vma: make vma_set_range() static, drop
+ insert_vm_struct() decl
+Message-ID: <akZKlcEDFzR0V2fV@pedro-suse.lan>
 References: <cover.1782735110.git.ljs@kernel.org>
- <794044881e454fd8ac13e59d5ff5fc86fca08b03.1782735110.git.ljs@kernel.org>
+ <62efd70f9f39570724c9552cc7f2aeb5c322b2ff.1782735110.git.ljs@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -133,22 +134,22 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <794044881e454fd8ac13e59d5ff5fc86fca08b03.1782735110.git.ljs@kernel.org>
+In-Reply-To: <62efd70f9f39570724c9552cc7f2aeb5c322b2ff.1782735110.git.ljs@kernel.org>
 X-Spam-Flag: NO
+X-Spam-Score: -3.01
 X-Spam-Level: 
-X-Spam-Score: -2.80
 X-Rspamd-Action: no action
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[suse.de,none];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	FREEMAIL_CC(0.00)[linux-foundation.org,armlinux.org.uk,kernel.org,siemens-energy.com,hansenpartnership.com,gmx.de,redhat.com,alien8.de,linux.intel.com,mev.co.uk,visionengravers.com,pengutronix.de,gmail.com,ffwll.ch,suse.de,oss.qualcomm.com,ideasonboard.com,nvidia.com,amd.com,shazbot.org,zeniv.linux.org.uk,linux.dev,google.com,infradead.org,samsung.com,goodmis.org,huawei.com,vger.kernel.org,lists.infradead.org,lists.freedesktop.org,lists.linux.dev,kvack.org,googlegroups.com,surriel.com];
-	TAGGED_FROM(0.00)[bounces-115959-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-115961-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER(0.00)[pfalcato@suse.de,linux-arm-msm@vger.kernel.org];
@@ -158,7 +159,7 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	FORWARDED(0.00)[lists@lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	DKIM_TRACE(0.00)[suse.de:+];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
 	MISSING_XM_UA(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[6];
@@ -171,149 +172,24 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	ALIAS_RESOLVED(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,pedro-suse.lan:mid,vger.kernel.org:from_smtp,suse.de:dkim,suse.de:email,suse.de:from_mime]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email,suse.de:from_mime,vger.kernel.org:from_smtp,pedro-suse.lan:mid,sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 33C626F6B5B
+X-Rspamd-Queue-Id: 6C06F6F6A97
 
-On Mon, Jun 29, 2026 at 01:23:32PM +0100, Lorenzo Stoakes wrote:
-> Add helpers for adding or subtracting to a VMA's page offset, exposed
-> internally for VMA users within mm in mm/vma.h.
+On Mon, Jun 29, 2026 at 01:23:34PM +0100, Lorenzo Stoakes wrote:
+> With __install_special_mapping() moved to vma.c, vma_set_range() can be
+> made into a static function there and is now completely isolated from the
+> rest of mm.
 > 
-> This is to lay the foundations for tracking anonymous page offset for
-> MAP_PRIVATE file-backed mappings, where adding and subtracting from this
-> value must be reflected in both the file and anonymous offsets.
+> While we're here, we can also remove the insert_vm_struct() declaration
+> from mm.h - the function is implemented in vma.c and already declared in
+> vma.h, and has no users outside of mm.
 > 
-> These are used on VMA split and downward stack expansion.
+> Also update the VMA userland tests to reflect this change.
 > 
 > No functional change intended.
 > 
 > Signed-off-by: Lorenzo Stoakes <ljs@kernel.org>
-> ---
->  mm/nommu.c                      |  6 ++++--
->  mm/vma.c                        |  6 +++---
->  mm/vma.h                        | 12 ++++++++++++
->  tools/testing/vma/include/dup.h | 13 ++++++++++++-
->  4 files changed, 31 insertions(+), 6 deletions(-)
-> 
-> diff --git a/mm/nommu.c b/mm/nommu.c
-> index 7333d855e974..c7fafcd87c14 100644
-> --- a/mm/nommu.c
-> +++ b/mm/nommu.c
-> @@ -41,6 +41,7 @@
->  #include <asm/tlbflush.h>
->  #include <asm/mmu_context.h>
->  #include "internal.h"
-> +#include "vma.h"
->  
->  unsigned long highest_memmap_pfn;
->  int heap_stack_gap = 0;
-> @@ -1338,7 +1339,8 @@ static int split_vma(struct vma_iterator *vmi, struct vm_area_struct *vma,
->  		region->vm_top = region->vm_end = new->vm_end = addr;
->  	} else {
->  		region->vm_start = new->vm_start = addr;
-> -		region->vm_pgoff = new->vm_pgoff += npages;
-> +		vma_add_pgoff(new, npages);
-> +		region->vm_pgoff = vma_start_pgoff(new);
->  	}
->  
->  	vma_iter_config(vmi, new->vm_start, new->vm_end);
-> @@ -1355,7 +1357,7 @@ static int split_vma(struct vma_iterator *vmi, struct vm_area_struct *vma,
->  	delete_nommu_region(vma->vm_region);
->  	if (new_below) {
->  		vma->vm_region->vm_start = vma->vm_start = addr;
-> -		vma->vm_pgoff += npages;
-> +		vma_add_pgoff(vma, npages);
->  		vma->vm_region->vm_pgoff = vma_start_pgoff(vma);
->  	} else {
->  		vma->vm_region->vm_end = vma->vm_end = addr;
-> diff --git a/mm/vma.c b/mm/vma.c
-> index 185d07397ca6..cb7222e20c93 100644
-> --- a/mm/vma.c
-> +++ b/mm/vma.c
-> @@ -517,7 +517,7 @@ __split_vma(struct vma_iterator *vmi, struct vm_area_struct *vma,
->  		new->vm_end = addr;
->  	} else {
->  		new->vm_start = addr;
-> -		new->vm_pgoff += linear_page_delta(vma, addr);
-> +		vma_add_pgoff(new, linear_page_delta(vma, addr));
->  	}
->  
->  	err = -ENOMEM;
-> @@ -556,7 +556,7 @@ __split_vma(struct vma_iterator *vmi, struct vm_area_struct *vma,
->  
->  	if (new_below) {
->  		vma->vm_start = addr;
-> -		vma->vm_pgoff += (addr - new->vm_start) >> PAGE_SHIFT;
-> +		vma_add_pgoff(vma, (addr - new->vm_start) >> PAGE_SHIFT);
->  	} else {
->  		vma->vm_end = addr;
->  	}
-> @@ -3305,7 +3305,7 @@ int expand_downwards(struct vm_area_struct *vma, unsigned long address)
->  				vm_stat_account(mm, vma->vm_flags, grow);
->  				anon_vma_interval_tree_pre_update_vma(vma);
->  				vma->vm_start = address;
-> -				vma->vm_pgoff -= grow;
-> +				vma_sub_pgoff(vma, grow);
->  				/* Overwrite old entry in mtree. */
->  				vma_iter_store_overwrite(&vmi, vma);
->  				anon_vma_interval_tree_post_update_vma(vma);
-> diff --git a/mm/vma.h b/mm/vma.h
-> index 2342516ce00e..47fe35e5307e 100644
-> --- a/mm/vma.h
-> +++ b/mm/vma.h
-> @@ -247,6 +247,18 @@ static inline pgoff_t vmg_end_pgoff(const struct vma_merge_struct *vmg)
->  	return vmg_start_pgoff(vmg) + vmg_pages(vmg);
->  }
->  
-> +static inline void vma_add_pgoff(struct vm_area_struct *vma, pgoff_t delta)
-> +{
-> +	vma_assert_can_modify(vma);
-> +	vma->vm_pgoff += delta;
-> +}
-> +
-> +static inline void vma_sub_pgoff(struct vm_area_struct *vma, pgoff_t delta)
-> +{
-> +	vma_assert_can_modify(vma);
-> +	vma->vm_pgoff -= delta;
-> +}
-> +
->  #define VMG_STATE(name, mm_, vmi_, start_, end_, vma_flags_, pgoff_)	\
->  	struct vma_merge_struct name = {				\
->  		.mm = mm_,						\
-> diff --git a/tools/testing/vma/include/dup.h b/tools/testing/vma/include/dup.h
-> index 7ed165c8d9bc..41fea90a344d 100644
-> --- a/tools/testing/vma/include/dup.h
-> +++ b/tools/testing/vma/include/dup.h
-> @@ -1163,6 +1163,11 @@ static inline struct vm_area_struct *vma_next(struct vma_iterator *vmi)
->  	return mas_find(&vmi->mas, ULONG_MAX);
->  }
->  
-> +static inline bool vma_is_attached(struct vm_area_struct *vma)
-> +{
-> +	return refcount_read(&vma->vm_refcnt);
-> +}
-> +
->  /*
->   * WARNING: to avoid racing with vma_mark_attached()/vma_mark_detached(), these
->   * assertions should be made either under mmap_write_lock or when the object
-> @@ -1170,7 +1175,13 @@ static inline struct vm_area_struct *vma_next(struct vma_iterator *vmi)
->   */
->  static inline void vma_assert_attached(struct vm_area_struct *vma)
->  {
-> -	WARN_ON_ONCE(!refcount_read(&vma->vm_refcnt));
-> +	WARN_ON_ONCE(!vma_is_attached(vma));
-> +}
-> +
-> +static inline void vma_assert_can_modify(struct vm_area_struct *vma)
-> +{
-> +	if (vma_is_attached(vma))
-> +		vma_assert_write_locked(vma);
->  }
-
-These hunks in dup.h look lost. Should perhaps be on the previous patch
-(adding the helpers).
-
-Anyway, Obviously Correct(tm).
 
 Reviewed-by: Pedro Falcato <pfalcato@suse.de>
 
