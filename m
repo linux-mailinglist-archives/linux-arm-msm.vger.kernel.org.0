@@ -1,313 +1,263 @@
-Return-Path: <linux-arm-msm+bounces-115942-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-115943-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id cQgZHMhERmovNQsAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-115942-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Jul 2026 13:00:24 +0200
+	id N1sqEIhCRmo/NAsAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-115943-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Jul 2026 12:50:48 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id B7E456F6537
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Jul 2026 13:00:23 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 159736F634B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Jul 2026 12:50:48 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=T4ItMzV4;
-	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=UcHrN8bf;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115942-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115942-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=reject) header.from=qualcomm.com;
+	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=GrWovErJ;
+	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=ehHkiWmD;
+	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=GrWovErJ;
+	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=ehHkiWmD;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115943-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c09:e001:a7::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115943-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=none) header.from=suse.de;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 1390731C41E3
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jul 2026 10:47:17 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 4E2F93066FE3
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jul 2026 10:48:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9351B3ED11D;
-	Thu,  2 Jul 2026 10:46:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5098B3CF1F4;
+	Thu,  2 Jul 2026 10:47:20 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEB0A3A5E6F
-	for <linux-arm-msm@vger.kernel.org>; Thu,  2 Jul 2026 10:46:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7DB13C5DB6
+	for <linux-arm-msm@vger.kernel.org>; Thu,  2 Jul 2026 10:47:17 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782989201; cv=none; b=gP7x2ERgBQNasj6qJqE66E2CG+AoW2f6qNQ56p/j+fVV2Ebr4BxiBlGsCjgLtmEgYDJ4OdooZv+uJg8TnouMRUsXdqwkOBORIHGNXhTAJVgV+um0IpUsHThs9gG/j6vOc/1aO380Md98TyzDU5r8z7KRk1SKVlYmO2v8vBu2/Fs=
+	t=1782989240; cv=none; b=n77fgFDBKDpx2X+LDk8qmhm3Es8uviKA9/Al7AFC8ieTvqBkYVVJ6n3oWh7/Cmy+ghoPTVcaopn34FMDYFcyatSEtUdLo5QPGpOKsNoF3Oy84ZqLHitAV521iUkFLg/zJzVQlOuv88zyzHWJOWNxll5AZHc9cCqTCAi4YjP1CfQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782989201; c=relaxed/simple;
-	bh=3DSVzwIlnQfv+D7lfNEK0mAhgs9cSZ6PohGta8ETunw=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Vyv9bQ0KmvQujQoTguBGawtexgcD7zEs9NWcyIWM9T2WkwNpRBjsZ9HfZsuSc3DOSuMsYlKrFAg9lcgZU6zOfEtu1H6ZX9yQes1jJwWF3DaTSKlQ96UDdVcW4VJiEN9AS2cw1VJkeOpl/Ey2v/ExHLA2yK9EHTnqhPQHl7u02fE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=T4ItMzV4; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=UcHrN8bf; arc=none smtp.client-ip=205.220.168.131
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 662AfBij3592225
-	for <linux-arm-msm@vger.kernel.org>; Thu, 2 Jul 2026 10:46:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Wa7zNeg/NowcWs39grlG3DDJYgS0nuGoGJSwyYi+7Oo=; b=T4ItMzV4QpaTtcBx
-	XsVrhIVkfIpAIf5yUx+JRAUEB2piepvOZfe4XDKmVQxNjAPWFesCq4qSmt9KLGw5
-	vqQhsBW1Kc7XW3WE/IP2o9jc8N+svf3miupUWM7ZoOhxdM/YoDFpRrAJ7xRJznhl
-	4rpkL/EgCj5BDT41MBHUADyfLGSZoWJvHiqd7Sao9BIELkkQPpK5CYeSrj9RUTrc
-	MQb8fJXzlvz270zHmi2onpJqZlTKIDB5il+7Ls1cu80idVKSt9SzNnE92QOzfhRY
-	BQ2m9iq7wN5JPksKS4U/DjyqCoX7TjP2vYsv8d3tVHqFaXYi5KQJhKuvbFn5F+Fn
-	y1jTgw==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f5h7n9aep-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 02 Jul 2026 10:46:37 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-92ac0a54110so217307585a.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Jul 2026 03:46:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1782989197; x=1783593997; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Wa7zNeg/NowcWs39grlG3DDJYgS0nuGoGJSwyYi+7Oo=;
-        b=UcHrN8bfSR6RgK9NtvaXhvHVROBc/o13hdfG5xmWpUATvmV5xu8/VcqU779U2Aafgw
-         yd8y+fIxiSE200ohu0SaFY1bC93gwnxLonGvue2NH7yiAjdVKtNxwBi9BCEFkoLHatcC
-         Gic6np0+8IP1RBZLPbEceYlRZL1dT/EpaG+fih2mOYNW9hPuwAVF/NRoNTjE9GIDFhFY
-         W7sv5+c9G1KQUduFfv+Z2iZ4JOTXsFtQOtE3z9Yh/p2f6P6ODNudhRbChsGASYJ2aEhk
-         CstwZuIo5HfSJxUFNKZfpWA3UazwmDabpgDZ80u2H9sQ+l1+uXZEN1mJqhIhPfRAvAYm
-         nhsQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782989197; x=1783593997;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=Wa7zNeg/NowcWs39grlG3DDJYgS0nuGoGJSwyYi+7Oo=;
-        b=SAjdX2qC8p5kU7KoLtZ5ik6x8CIUmdrLzgTylcsIIYUtW8vBzoggnOnp+3J4qMfTtz
-         msviEumQ6yJtj9y/2WgN9Un/BGqQ6xKfhYj7yCslGfNc0VVzyEYr8Hc9u4X2iEzuVwyT
-         cA0xjQ451iFn2UplOBnBq0MyU8Nf4TwYB7kLIwg2S/x5hGK/N5SZsDkVO84FTxRLp5sB
-         Az/zeurt8GTNmX+RG924q57NHP2ttBHLC1sa3NElK2N0/GYzD2ge31lH9xVoRYRh3wyr
-         0/n7Ym6atRe88ApFLLx9E6mCW9WozRzaEDJ3dk3hDZino16CnQU2WST51y+nAkxxGxEx
-         JNCA==
-X-Forwarded-Encrypted: i=1; AFNElJ8KHfHyQmUHnDLoQVkB2oWU+vHrZRZyMgaVxJ/RKCVHnMMI+GYBUC0q3I19q0eGnuiuC1JDd0UxWd9FRkt5@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxozl41ir6PmTrN6tfydf3jq8d589aymHFBLDSiDsNDijtQLNyO
-	I37WdB7R4APUBp3Wa0erZs0Dnsyl+9wFvExn4ZIx9HrQX+Ki9AT2ycqkF+/uiPzvAVWZWI9/ypz
-	ixHND4nFYdEqxZSFHxoxsevUzPCOUhckefXgKAp78Oe+HkgT07Gfslfnt4XJSEDdd8WpA
-X-Gm-Gg: AfdE7cm+p/OLMohe8eqYpBzperXgRaX3V3qRj8vtGY1g//FOYt3XF3qwviI1nNRCtzW
-	uQe/AlfpaHMWhhetz99MQOqxqkBPquArYbGbhuoZTTlZ9YkI5jMbicdNbl85e0fpXMYJjVAabvr
-	jGP3pS0x0evaqDwyGFyHUyaM6cM3enmO/w3hYnT4+YklteF02UblP/lTQwjAvlmbPFknrC7lE6z
-	i2NEl0wisupsJqRD8V+lI2x7BC6BbulvEJMkoXXz+R0A3VLf8nbo3jJd3/rz3+DAeRxV3oWBE6v
-	GByJTTCIvILdrZJLZBIkZx06A1H8r8xnb7XqfpjAICYuvHPJEFFwN8UlwhmCLk7iXYyyvT9cDsD
-	6AwPcM4rHws4xzTvCby3hjv8gHRmhcj4bSZ7kh6ro5EvsCwk9SDehwSaBQw7hRlO5vRrKOewn+f
-	+//XrYY0dh/p15VWe9kntYXkRiXCz0/qat57bVuryptuI2XbV1a9MYiF+RWJW/7cQ=
-X-Received: by 2002:a05:620a:444f:b0:92e:5610:e479 with SMTP id af79cd13be357-92e784db52fmr656335785a.52.1782989196834;
-        Thu, 02 Jul 2026 03:46:36 -0700 (PDT)
-X-Received: by 2002:a05:620a:444f:b0:92e:5610:e479 with SMTP id af79cd13be357-92e784db52fmr656332885a.52.1782989196333;
-        Thu, 02 Jul 2026 03:46:36 -0700 (PDT)
-Received: from QCOM-eG0v1AUPpu.na.qualcomm.com ([2a01:e0a:830:450:809d:5d56:19d9:ff8b])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c12b5ae4959sm109689666b.0.2026.07.02.03.46.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Jul 2026 03:46:35 -0700 (PDT)
-From: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Date: Thu, 02 Jul 2026 12:46:16 +0200
-Subject: [PATCH v2 4/4] arm64: dts: qcom: monaco-arduino-monza: Add QCA2066
- M.2 WiFi/BT support
+	s=arc-20240116; t=1782989240; c=relaxed/simple;
+	bh=d8icz/ixGdlOZANe6SwZw7wtPXBkeATQyRCuJiLYDyw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=N7znW62UuZzd/iYaizVCkFU8ogjf8vG9Xa1fA857DG8eg7YJjeK5G4bDTAFivvsCtuq8fHY7WBaTqb/NW/WzRSRDv98pjrTo5fjUas3UB09Wdgd0vPSz0Vx5o/f13xtmxZzHFT0Lxk52gTv3KS/gm3Mb8FthJe7pa5jux5tRyPc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=GrWovErJ; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=ehHkiWmD; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=GrWovErJ; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=ehHkiWmD; arc=none smtp.client-ip=195.135.223.131
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 566D5760B8;
+	Thu,  2 Jul 2026 10:47:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1782989236; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=9NfWo2weclINUw6MV5FDK701ZBILS+CvN5hySDNslMU=;
+	b=GrWovErJ6rL052dcQVQCMeo/4/pT3HWmf1zMvdaqhHDBMQqV0tWAjESSUHoWWawRQ6evNv
+	tkpd9Z7MdT2r0gEiK+IWZltCy7DbsJUk16Lreal3m3UxFoO4EIC6ff62RmaDINN7BOgmsb
+	eocg6AnTWQBQGSyKtZBLwm2Pi83twWM=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1782989236;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=9NfWo2weclINUw6MV5FDK701ZBILS+CvN5hySDNslMU=;
+	b=ehHkiWmD7EKwIXxqiIsorHMs6eVrAYCvS5eAMtlXCKRjYVubi1uur1JxBJ4PJxW/RCoVhn
+	aHP2Oo1+he86bfAg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1782989236; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=9NfWo2weclINUw6MV5FDK701ZBILS+CvN5hySDNslMU=;
+	b=GrWovErJ6rL052dcQVQCMeo/4/pT3HWmf1zMvdaqhHDBMQqV0tWAjESSUHoWWawRQ6evNv
+	tkpd9Z7MdT2r0gEiK+IWZltCy7DbsJUk16Lreal3m3UxFoO4EIC6ff62RmaDINN7BOgmsb
+	eocg6AnTWQBQGSyKtZBLwm2Pi83twWM=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1782989236;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=9NfWo2weclINUw6MV5FDK701ZBILS+CvN5hySDNslMU=;
+	b=ehHkiWmD7EKwIXxqiIsorHMs6eVrAYCvS5eAMtlXCKRjYVubi1uur1JxBJ4PJxW/RCoVhn
+	aHP2Oo1+he86bfAg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C8A84779AA;
+	Thu,  2 Jul 2026 10:47:11 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id oRJLLa9BRmoRTAAAD6G6ig
+	(envelope-from <pfalcato@suse.de>); Thu, 02 Jul 2026 10:47:11 +0000
+Date: Thu, 2 Jul 2026 11:47:10 +0100
+From: Pedro Falcato <pfalcato@suse.de>
+To: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>, 
+	Russell King <linux@armlinux.org.uk>, Dinh Nguyen <dinguyen@kernel.org>, 
+	Simon Schuster <schuster.simon@siemens-energy.com>, 
+	"James E . J . Bottomley" <James.Bottomley@hansenpartnership.com>, Helge Deller <deller@gmx.de>, 
+	Jarkko Sakkinen <jarkko@kernel.org>, Thomas Gleixner <tglx@kernel.org>, 
+	Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>, 
+	Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org, Ian Abbott <abbotti@mev.co.uk>, 
+	H Hartley Sweeten <hsweeten@visionengravers.com>, Lucas Stach <l.stach@pengutronix.de>, 
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+	Patrik Jakobsson <patrik.r.jakobsson@gmail.com>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+	Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>, 
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>, Thierry Reding <thierry.reding@kernel.org>, 
+	Mikko Perttunen <mperttunen@nvidia.com>, Jonathan Hunter <jonathanh@nvidia.com>, 
+	Christian Koenig <christian.koenig@amd.com>, Huang Rui <ray.huang@amd.com>, Ankit Agrawal <ankita@nvidia.com>, 
+	Alex Williamson <alex@shazbot.org>, Alexander Viro <viro@zeniv.linux.org.uk>, 
+	Christian Brauner <brauner@kernel.org>, Dan Williams <djbw@kernel.org>, 
+	Muchun Song <muchun.song@linux.dev>, Oscar Salvador <osalvador@suse.de>, 
+	David Hildenbrand <david@kernel.org>, Suren Baghdasaryan <surenb@google.com>, 
+	"Liam R . Howlett" <liam@infradead.org>, Matthew Wilcox <willy@infradead.org>, 
+	Marek Szyprowski <m.szyprowski@samsung.com>, Peter Zijlstra <peterz@infradead.org>, 
+	Arnaldo Carvalho de Melo <acme@kernel.org>, Namhyung Kim <namhyung@kernel.org>, 
+	Masami Hiramatsu <mhiramat@kernel.org>, Oleg Nesterov <oleg@redhat.com>, 
+	Steven Rostedt <rostedt@goodmis.org>, SeongJae Park <sj@kernel.org>, Miaohe Lin <linmiaohe@huawei.com>, 
+	Hugh Dickins <hughd@google.com>, Mike Rapoport <rppt@kernel.org>, Kees Cook <kees@kernel.org>, 
+	Paolo Bonzini <pbonzini@redhat.com>, linux-kernel@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-parisc@vger.kernel.org, linux-sgx@vger.kernel.org, 
+	etnaviv@lists.freedesktop.org, dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
+	freedreno@lists.freedesktop.org, linux-tegra@vger.kernel.org, kvm@vger.kernel.org, 
+	linux-fsdevel@vger.kernel.org, nvdimm@lists.linux.dev, linux-mm@kvack.org, 
+	iommu@lists.linux.dev, linux-perf-users@vger.kernel.org, 
+	linux-trace-kernel@vger.kernel.org, kasan-dev@googlegroups.com, damon@lists.linux.dev, 
+	Rik van Riel <riel@surriel.com>, Harry Yoo <harry@kernel.org>, Jann Horn <jannh@google.com>
+Subject: Re: [PATCH 16/30] mm/vma: use vma_start_pgoff(), linear_page_index()
+ in mm code
+Message-ID: <akZAwT-QWhA1wdA9@pedro-suse.lan>
+References: <cover.1782735110.git.ljs@kernel.org>
+ <33d79008948391d30bab38db5ae31072ce12f0a1.1782735110.git.ljs@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260702-monza-wireless-v2-4-7b56e2a6a6d4@oss.qualcomm.com>
-References: <20260702-monza-wireless-v2-0-7b56e2a6a6d4@oss.qualcomm.com>
-In-Reply-To: <20260702-monza-wireless-v2-0-7b56e2a6a6d4@oss.qualcomm.com>
-To: Manivannan Sadhasivam <mani@kernel.org>,
-        Bartosz Golaszewski <brgl@kernel.org>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc: linux-pci@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-bluetooth@vger.kernel.org, devicetree@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-        Loic Poulain <loic.poulain@oss.qualcomm.com>,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-X-Mailer: b4 0.14.2
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAyMDExMSBTYWx0ZWRfXxduppZHprxWG
- UTnTcs5MCffRTPhGUhmvqQ8UhBS/bX0jx1e6599GfB0YAvOYekoOEiqOHCQIZUuAx+feDtu0tcj
- eD4CrzGFdP5+zdfQibxKVWNB3HbszKdNvC+Zu7tddKx1G3L6e37Sepywo8ySYby8n+FSTxeCYog
- tcNa91n2VpXGab3ThXhnKqeuz/z+qx54Zm++l+W26ASdCcSu29iFVPtL9vcBA2KVKrcLV2sIlqj
- 9k0wxeT/ND4GMvDfN+2Ryp7v0J27CxommlOug1XmS+nwF4t/h/ZQGrv4ELvwLnSMPHbfidX7YTL
- OtEW6ccQxbpwjieI30B0t7DVgb/vJEKCzF22RE64+pbUqpMmLoT4Fc8zMOsBNtxNesoYRkWB18/
- 14LsGQh3+2RLdNh2GkH2G3pYJsz5bvpS+ibYo+rZHd7JzU5r8xYIA+YFmZpAHrqmWPF51M2BVu8
- pmH4ICl5Z/R/k2XDr0g==
-X-Proofpoint-ORIG-GUID: -Y8LsxgKpORanJHiVq7cjF9ObkHckCny
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAyMDExMSBTYWx0ZWRfX6xv2Eqac3YOc
- 6SNFyR3PTH3j2KzRyONbAx8cwKNzwpxZdMMLq43TFvokc5ZW5xty16trL559wRnYFZLP6UJy4Qo
- mrK6y2PUSu47jOxnuLbNsm2LkWHxgwg=
-X-Proofpoint-GUID: -Y8LsxgKpORanJHiVq7cjF9ObkHckCny
-X-Authority-Analysis: v=2.4 cv=WMBPmHsR c=1 sm=1 tr=0 ts=6a46418d cx=c_pps
- a=50t2pK5VMbmlHzFWWp8p/g==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22 a=EUspDBNiAAAA:8
- a=EzCDy3pf2FPqfMyO2-oA:9 a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-07-02_01,2026-06-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 phishscore=0 suspectscore=0 lowpriorityscore=0 bulkscore=0
- spamscore=0 priorityscore=1501 adultscore=0 impostorscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607020111
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <33d79008948391d30bab38db5ae31072ce12f0a1.1782735110.git.ljs@kernel.org>
+X-Spam-Flag: NO
+X-Spam-Score: -2.80
+X-Spam-Level: 
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[suse.de,none];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	FREEMAIL_CC(0.00)[linux-foundation.org,armlinux.org.uk,kernel.org,siemens-energy.com,hansenpartnership.com,gmx.de,redhat.com,alien8.de,linux.intel.com,mev.co.uk,visionengravers.com,pengutronix.de,gmail.com,ffwll.ch,suse.de,oss.qualcomm.com,ideasonboard.com,nvidia.com,amd.com,shazbot.org,zeniv.linux.org.uk,linux.dev,google.com,infradead.org,samsung.com,goodmis.org,huawei.com,vger.kernel.org,lists.infradead.org,lists.freedesktop.org,lists.linux.dev,kvack.org,googlegroups.com,surriel.com];
+	TAGGED_FROM(0.00)[bounces-115943-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-115942-lists,linux-arm-msm=lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:mani@kernel.org,m:brgl@kernel.org,m:marcel@holtmann.org,m:luiz.dentz@gmail.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linux-pci@vger.kernel.org,m:linux-pm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-bluetooth@vger.kernel.org,m:devicetree@vger.kernel.org,m:manivannan.sadhasivam@oss.qualcomm.com,m:loic.poulain@oss.qualcomm.com,m:konrad.dybcio@oss.qualcomm.com,m:luizdentz@gmail.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,qualcomm.com:dkim,qualcomm.com:email,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:from_mime,vger.kernel.org:from_smtp];
-	FORGED_SENDER(0.00)[loic.poulain@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[18];
-	FREEMAIL_TO(0.00)[kernel.org,holtmann.org,gmail.com];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FORWARDED(0.00)[lists@lfdr.de];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[loic.poulain@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
+	FORGED_SENDER(0.00)[pfalcato@suse.de,linux-arm-msm@vger.kernel.org];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_RECIPIENTS(0.00)[m:ljs@kernel.org,m:akpm@linux-foundation.org,m:linux@armlinux.org.uk,m:dinguyen@kernel.org,m:schuster.simon@siemens-energy.com,m:James.Bottomley@hansenpartnership.com,m:deller@gmx.de,m:jarkko@kernel.org,m:tglx@kernel.org,m:mingo@redhat.com,m:bp@alien8.de,m:dave.hansen@linux.intel.com,m:x86@kernel.org,m:abbotti@mev.co.uk,m:hsweeten@visionengravers.com,m:l.stach@pengutronix.de,m:airlied@gmail.com,m:simona@ffwll.ch,m:patrik.r.jakobsson@gmail.com,m:maarten.lankhorst@linux.intel.com,m:mripard@kernel.org,m:tzimmermann@suse.de,m:robin.clark@oss.qualcomm.com,m:lumag@kernel.org,m:tomi.valkeinen@ideasonboard.com,m:thierry.reding@kernel.org,m:mperttunen@nvidia.com,m:jonathanh@nvidia.com,m:christian.koenig@amd.com,m:ray.huang@amd.com,m:ankita@nvidia.com,m:alex@shazbot.org,m:viro@zeniv.linux.org.uk,m:brauner@kernel.org,m:djbw@kernel.org,m:muchun.song@linux.dev,m:osalvador@suse.de,m:david@kernel.org,m:surenb@google.com,m:liam@infradead.org,m:willy@infradead.org,m:m.szyprow
+ ski@samsung.com,m:peterz@infradead.org,m:acme@kernel.org,m:namhyung@kernel.org,m:mhiramat@kernel.org,m:oleg@redhat.com,m:rostedt@goodmis.org,m:sj@kernel.org,m:linmiaohe@huawei.com,m:hughd@google.com,m:rppt@kernel.org,m:kees@kernel.org,m:pbonzini@redhat.com,m:linux-kernel@vger.kernel.org,m:linux-arm-kernel@lists.infradead.org,m:linux-parisc@vger.kernel.org,m:linux-sgx@vger.kernel.org,m:etnaviv@lists.freedesktop.org,m:dri-devel@lists.freedesktop.org,m:linux-arm-msm@vger.kernel.org,m:freedreno@lists.freedesktop.org,m:linux-tegra@vger.kernel.org,m:kvm@vger.kernel.org,m:linux-fsdevel@vger.kernel.org,m:nvdimm@lists.linux.dev,m:linux-mm@kvack.org,m:iommu@lists.linux.dev,m:linux-perf-users@vger.kernel.org,m:linux-trace-kernel@vger.kernel.org,m:kasan-dev@googlegroups.com,m:damon@lists.linux.dev,m:riel@surriel.com,m:harry@kernel.org,m:jannh@google.com,m:patrikrjakobsson@gmail.com,s:lists@lfdr.de];
+	FORWARDED(0.00)[lists@lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[suse.de:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	MISSING_XM_UA(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[6];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[pfalcato@suse.de,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ALIAS_RESOLVED(0.00)[];
+	RCPT_COUNT_GT_50(0.00)[75];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
+	TO_DN_SOME(0.00)[];
+	ALIAS_RESOLVED(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCVD_COUNT_SEVEN(0.00)[7]
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email,suse.de:from_mime,vger.kernel.org:from_smtp,pedro-suse.lan:mid,sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: B7E456F6537
+X-Rspamd-Queue-Id: 159736F634B
 
-Add support for the QCA2066 (QCNFA765) WiFi/Bluetooth module on the
-Arduino VENTUNO Q board. The module is interfaced via LGA and is
-compatible with the M.2 Key E.
+small nit: perhaps the subject should simply have mm: as it hits mm in general
 
-Add wireless-lga-connector node using pcie-m2-e-connector binding,
-connecting PCIe port 0 to the WiFi interface and UART10 port 3 to
-the Bluetooth interface.
+On Mon, Jun 29, 2026 at 01:23:27PM +0100, Lorenzo Stoakes wrote:
+> There are many instances in which linear_page_index() (as well as
+> linear_page_delta()) is open-coded, which is confusing and inconsistent.
+> 
+> Additionally, vma->vm_pgoff doesn't necessarily make it clear that this is
+> the page offset of the start of the VMA range.
+> 
+> Doing so also aids greppability.
+> 
+> So use vma_start_pgoff() in favour of directly accessing vma->vm_pgoff, and
+> linear_page_index() where we can.
+> 
+> This also lays the ground for future changes which will add an anonymous
+> page offset in order to be able to index MAP_PRIVATE-file backed anon
+> folios in terms of their virtual page offset.
+> 
+> No functional change intended.
+> 
+> Signed-off-by: Lorenzo Stoakes <ljs@kernel.org>
+> ---
+>  include/linux/huge_mm.h    |  1 +
+>  include/linux/hugetlb.h    |  3 +--
+>  include/linux/pagemap.h    |  2 +-
+>  mm/damon/vaddr.c           |  5 +++--
+>  mm/debug.c                 |  2 +-
+>  mm/filemap.c               |  7 ++++---
+>  mm/huge_memory.c           |  2 +-
+>  mm/hugetlb.c               | 11 ++++-------
+>  mm/internal.h              | 24 ++++++++++++++----------
+>  mm/khugepaged.c            |  3 ++-
+>  mm/madvise.c               |  6 +++---
+>  mm/mapping_dirty_helpers.c |  2 +-
+>  mm/memory.c                | 25 +++++++++++++------------
+>  mm/mempolicy.c             | 13 +++++++------
+>  mm/mremap.c                | 12 ++++--------
+>  mm/msync.c                 |  4 ++--
+>  mm/nommu.c                 |  7 ++++---
+>  mm/pagewalk.c              |  2 +-
+>  mm/shmem.c                 |  9 +++++----
+>  mm/userfaultfd.c           |  4 ++--
+>  mm/util.c                  |  4 ++--
+>  mm/vma.c                   | 15 +++++++--------
+>  mm/vma_exec.c              |  4 ++--
+>  mm/vma_init.c              |  2 +-
+>  24 files changed, 86 insertions(+), 83 deletions(-)
+> 
+> diff --git a/include/linux/huge_mm.h b/include/linux/huge_mm.h
+> index ad20f7f8c179..653b81d08fe7 100644
+> --- a/include/linux/huge_mm.h
+> +++ b/include/linux/huge_mm.h
+> @@ -230,6 +230,7 @@ static inline bool thp_vma_suitable_order(struct vm_area_struct *vma,
+>  
+>  	/* Don't have to check pgoff for anonymous vma */
+>  	if (!vma_is_anonymous(vma)) {
+> +		/* vma_start_pgoff() in mm.h so not available. */
 
-Add pcie@1,0 downstream port node with pciclass,0604 compatible so
-the pci-pwrctrl driver can acquire the power sequencer and enable
-the M.2 slot before PCIe enumeration.
+Yay for gigaheaders...
 
-Add nfa725b_default_state pinctrl for the W_DISABLE1/2 GPIOs
-(gpio56/gpio55) used by the power sequencer.
+>  		if (!IS_ALIGNED((vma->vm_start >> PAGE_SHIFT) - vma->vm_pgoff,
+>  				hpage_size >> PAGE_SHIFT))
+>  			return false;
+> diff --git a/include/linux/hugetlb.h b/include/linux/hugetlb.h
+> index 2abaf99321e9..8390f50604d6 100644
+> --- a/include/linux/hugetlb.h
+> +++ b/include/linux/hugetlb.h
+> @@ -792,8 +792,7 @@ static inline pgoff_t hugetlb_linear_page_index(struct vm_area_struct *vma,
+>  {
+>  	struct hstate *h = hstate_vma(vma);
+>  
+> -	return ((address - vma->vm_start) >> huge_page_shift(h)) +
+> -		(vma->vm_pgoff >> huge_page_order(h));
+> +	return linear_page_index(vma, address) >> huge_page_order(h);
+>  }
+>  
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
----
- arch/arm64/boot/dts/qcom/monaco-arduino-monza.dts | 64 +++++++++++++++++++++--
- 1 file changed, 60 insertions(+), 4 deletions(-)
+Anyway, nothing jumped out at me.
 
-diff --git a/arch/arm64/boot/dts/qcom/monaco-arduino-monza.dts b/arch/arm64/boot/dts/qcom/monaco-arduino-monza.dts
-index f67a554adf956696aeac2348e478dbd0b74f0e62..e3d3d68932efff494f3c7ab96d75869be24c4a94 100644
---- a/arch/arm64/boot/dts/qcom/monaco-arduino-monza.dts
-+++ b/arch/arm64/boot/dts/qcom/monaco-arduino-monza.dts
-@@ -155,6 +155,40 @@ vreg_nvme: regulator-3p3-m2 {
- 		enable-active-high;
- 		startup-delay-us = <20000>;
- 	};
-+
-+	wireless-lga-connector {
-+		compatible = "qcom,pcie-m2-1418-lga-connector",
-+			     "pcie-m2-e-connector";
-+		vpcie3v3-supply = <&vdc_3v3>;
-+		vpcie1v8-supply = <&vdc_1v8>;
-+		w-disable1-gpios = <&tlmm 56 GPIO_ACTIVE_LOW>;
-+		w-disable2-gpios = <&tlmm 55 GPIO_ACTIVE_LOW>;
-+		pinctrl-0 = <&nfa725b_default_state>;
-+		pinctrl-names = "default";
-+
-+		ports {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+
-+			/* WiFi/PCIe */
-+			port@0 {
-+				reg = <0>;
-+
-+				lga_pcie_ep: endpoint {
-+					remote-endpoint = <&pcie_bridge_ep>;
-+				};
-+			};
-+
-+			/* Bluetooth/UART */
-+			port@3 {
-+				reg = <3>;
-+
-+				lga_uart_ep: endpoint {
-+					remote-endpoint = <&uart10_ep>;
-+				};
-+			};
-+		};
-+	};
- };
- 
- &cci1 {
-@@ -409,6 +443,22 @@ pci@0,0 {
- 		ranges;
- 		reg = <0x010000 0x00 0x00 0x00 0x00>;
- 
-+		pcie@1,0 {
-+			#address-cells = <3>;
-+			#size-cells = <2>;
-+			device_type = "pci";
-+			compatible = "pciclass,0604";
-+			bus-range = <0x00 0xff>;
-+			ranges;
-+			reg = <0x020800 0x00 0x00 0x00 0x00>;
-+
-+			port {
-+				pcie_bridge_ep: endpoint {
-+					remote-endpoint = <&lga_pcie_ep>;
-+				};
-+			};
-+		};
-+
- 		pci@2,0 {
- 			#address-cells = <3>;
- 			#size-cells = <2>;
-@@ -501,6 +551,12 @@ max98091_default: max98091-default-state {
- 		bias-pull-up;
- 	};
- 
-+	nfa725b_default_state: nfa725b-default-state {
-+		pins = "gpio55", "gpio56";
-+		function = "gpio";
-+		bias-disable;
-+	};
-+
- 	pcie1_default_state: pcie1-default-state {
- 		wake-pins {
- 			pins = "gpio21";
-@@ -544,10 +600,10 @@ &uart7 {
- &uart10 {
- 	status = "okay";
- 
--	bluetooth: bluetooth {
--		compatible = "qcom,qca2066-bt";
--		enable-gpios = <&tlmm 55 GPIO_ACTIVE_HIGH>;
--		clocks = <&sleep_clk>;
-+	port {
-+		uart10_ep: endpoint {
-+			remote-endpoint = <&lga_uart_ep>;
-+		};
- 	};
- };
- 
+Reviewed-by: Pedro Falcato <pfalcato@suse.de>
+
 
 -- 
-2.34.1
-
+Pedro
 
