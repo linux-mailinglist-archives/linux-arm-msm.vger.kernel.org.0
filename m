@@ -1,104 +1,104 @@
-Return-Path: <linux-arm-msm+bounces-115817-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-115818-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id MtmsIhPjRWpyGQsAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-115817-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Jul 2026 06:03:31 +0200
+	id SNAPH7fpRWpfGgsAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-115818-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Jul 2026 06:31:51 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id E132D6F3588
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Jul 2026 06:03:30 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id CF6686F36B8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Jul 2026 06:31:50 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=YI69gsla;
-	dkim=pass header.d=oss.qualcomm.com header.s=google header.b="fAoDix/a";
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115817-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115817-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=FuH34gzm;
+	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=LeRqJwfm;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115818-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115818-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=reject) header.from=qualcomm.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id B84F03037687
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jul 2026 04:02:55 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 38C4D302F24A
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jul 2026 04:31:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8F7E331195B;
-	Thu,  2 Jul 2026 04:02:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1AD8D363C40;
+	Thu,  2 Jul 2026 04:31:32 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E549034388D
-	for <linux-arm-msm@vger.kernel.org>; Thu,  2 Jul 2026 04:02:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92EE92AD37
+	for <linux-arm-msm@vger.kernel.org>; Thu,  2 Jul 2026 04:31:29 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782964975; cv=none; b=cDzOTrb9CFYOVg+mwI8wlqlOZi0QWrryViPqIaKBDsZwIWfPwo+laICV2JNFyRAgJE1pDdA7RUxaE5Z2G3J60yiShdt7Dybj0Sb+ysE3uDJCDp6hwIkZlSbrzbO4eUobLtzOCVhTndbe6XGq12KhSX9gm1fPAACSRGq6TVLojzM=
+	t=1782966692; cv=none; b=cUE6BP5yYzTIzymmFlml9utKkBI0eSSNnl/nLe0ASpaWdflC964OFlqwQZho2iGpbC+GprJvGNO3EaglAw+51VVVsN/o4uhSCP4DSwXekjKHEKKu7wV+ua0EqufZdyDLetwp4CmwoD1vC7sBWNOFSqbm6hvlf78ryR+OxiUrkqU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782964975; c=relaxed/simple;
-	bh=jEKDy6Q4kJGBzL2hEYleqfwVGMBzwD4g7obTojQDJyM=;
+	s=arc-20240116; t=1782966692; c=relaxed/simple;
+	bh=vE7Hjf+MLc8902/ktwRaxiqP0uFvZ89u+t9/5HuFbB4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=LvpgnL/92grpgT8/mm5fx1JSKeKTgB5+W4iCFJdocggO8s9f/iFYB9lE3CYbjohOC6KRXYH7Ike/oT8JFRkXreLDvu5ttqaklsy7VvMiold4LXO+6D8Q8YqNR258EJM5IL1GaZGIj6Wy/gTkpga9qAjrMLfN87B4EAljvR72j+E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=YI69gsla; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=fAoDix/a; arc=none smtp.client-ip=205.220.180.131
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6621KODJ3049474
-	for <linux-arm-msm@vger.kernel.org>; Thu, 2 Jul 2026 04:02:53 GMT
+	 In-Reply-To:Content-Type; b=OOmEdbz8RJtOWAMmrLm7E1b2tRp3gNiVCTDRqheyrRhDbZ2Y6PQolfo2blWLVY5kRKecdaPqf+X2PhtzXzpv0mDnnDRudHf6cWSqiQFlsVYEwjD+kbiY0+8UQ6T+BNfPg6NzQYOEHwRPC4FcrNyvXT3n61AuS3qkOn8IDL6mYP4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=FuH34gzm; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=LeRqJwfm; arc=none smtp.client-ip=205.220.168.131
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6621KWlx2917542
+	for <linux-arm-msm@vger.kernel.org>; Thu, 2 Jul 2026 04:31:29 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	S9W8w7OdjpJqkYQrVpqOTZBE1FMiUuBplaVPcMbciTs=; b=YI69gslaxtjP7WKe
-	MRIXn+3RItS/zEL0oysywiVNP9S4K9vgFvrL4NejWbis6Vo4xUgOZU4drUxE+l98
-	d+LcunByJk6oK1zUYY+yWVVvA5RYD7w2BbNmHkla/u4f+lOnIxn7tkiOoBnloQPA
-	/+LeSCPLNuv3l6V0vxUpEdjDs8BH6HrWPG7c54QrdLYIP1Va7B760LPzjxjCjn4w
-	+JDdSRITeBfITMaRcwe3hSXAGQYtyc8ygPhrAxqPwDgcLpNihqoP72fTIP+nzEcd
-	Mj4EbMjxQ0SXK/7d7fN48OnA6hYvTWVaVfA7WIbdxG6ynEGWoc6NPDr1lIuPqXSC
-	mUyA3g==
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com [209.85.216.69])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f5541ttux-1
+	9z14DdaScwvuUkS9S1aCzsy5HUZXH5Z2PoiV67T14h4=; b=FuH34gzmOQltaLm8
+	w2azdXwGaNSljN1NZWl5tRrWFe4uA2HTLHGrtEZeDI6F1NSElZalItaY1rlfDQlp
+	mh5DFLLg5Hyn8aWsWD6t12SIIPtapo88esXUFpiTA+s5i0D/JyJJeodFEBtrPM1R
+	BlMIOGSoTA8QdLgw4mL/D5sudvPCrug6FFhasCnx93V01qqK+qAEnGnq6iHfreuT
+	0WsyMdQjStUadCy53dK/6CAqZF//MWsHmkFLjBVGCI25dWSpa1b6Q28VSv0FWPTM
+	IFASBpqdwFQNtPbe8oSp4zMrK3ixrBnWFguc4JNFV2FRS5IzPFpEWcus+1oZQTAA
+	DTbTpg==
+Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com [209.85.215.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f53q0b2np-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 02 Jul 2026 04:02:52 +0000 (GMT)
-Received: by mail-pj1-f69.google.com with SMTP id 98e67ed59e1d1-37d4f23eb37so2415391a91.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Jul 2026 21:02:52 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 02 Jul 2026 04:31:28 +0000 (GMT)
+Received: by mail-pg1-f198.google.com with SMTP id 41be03b00d2f7-c894391f000so2600475a12.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Jul 2026 21:31:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1782964972; x=1783569772; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1782966688; x=1783571488; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=S9W8w7OdjpJqkYQrVpqOTZBE1FMiUuBplaVPcMbciTs=;
-        b=fAoDix/a+A11CFotNVrniiaH9H5MA86uQuXngbzaK9E34uo/Y0VbOxG9bVW/uyZrJ/
-         lDSdND0D9619+4sWESqJtLwpVAgR9IRAJQwJoPQRqkILBaerhNIkoCt/+sY+brg92L4R
-         fh5cHMTiKZm9fU+QecyMvnPiXPnDU8KzK3BTzLpCG7q2x7j417y53ZDcBWt7xrH13FR9
-         aGsJRNdWzkzIBG3IqjEbnUtoWBhYLpUXHGcC47NasDozp7OPJXVTD43MoJQSEauJ3cjz
-         fYCtz6zRy7VqFsBWJwdnpIcVRVAdRJYN8hyfBjlppSiwRKtqJbwpD9D7HGX0BIItCvyj
-         +v6Q==
+        bh=9z14DdaScwvuUkS9S1aCzsy5HUZXH5Z2PoiV67T14h4=;
+        b=LeRqJwfmaFAYcxhH2QOlcCYDqA30P6E0mh63YJNmYTq1i6sHlk0RgdyPmOzJ3khnBG
+         ihBLBWrr+YbPNh8kYGGt4MyXFYSL7LwWbouNiJ8k5Wo1XpnXydOLskIzQMinAbUXXFS/
+         VECkcZB6G+DI+yeO2OY5m/EV9Sjmmy7cUAsg5Vv9AulAEtjxWuG6ihpVJsROc5PAlRFI
+         2cHgp2XXZmbhGeKKnLIiPKA0x+b+tQSwrFq5HHEwQODRCntxU1kYJkPZTxsdC7DRH+3G
+         QrOyLasxLofgP5unOLMZjf50XGaN0QhXGdqNw6l6NwmwffXOn4Sgd41UzwuljpYY5K6w
+         qo6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782964972; x=1783569772;
+        d=1e100.net; s=20251104; t=1782966688; x=1783571488;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=S9W8w7OdjpJqkYQrVpqOTZBE1FMiUuBplaVPcMbciTs=;
-        b=k33aNKl2SJcFDELZpv426uq5mEIDS/qS2Bied9GtYo1BniUvmgZtCWCR2KenRCR7er
-         PBRuALCThEBssJHNcNIl/WRc9Sh3qFIq3d94p+o2dxgo6EeE2edOdAqY9a+59p0CnwzZ
-         xPpUKgFp5fxGwbYoWNeYZxYg6NhCOIas8Zbr8PUunrM4zf1TD+6V0y9+tesEqoNq69AW
-         BupSLRcpXgvuCQt3CuLd+jNGR5jnb0/Wmj+ovXrssOg5aqXsD5SJLGBSjPRLtpLfQi0I
-         zBi6loteQkc8oeE70H6G7oyXDMndqXTYtOXIUhKJOtFPsjGQ+7Jo5Qbo4IIB0AOz2e8D
-         be2Q==
-X-Forwarded-Encrypted: i=1; AFNElJ+B/byPxygLA3Wkfc6cY6JlRFpQINIa+V811IegijE9ni4k79EYS5hYpXpMa/234iX0wFFbTbLDCM7uCFK7@vger.kernel.org
-X-Gm-Message-State: AOJu0YzS7LaQfFVC9PxVN3IwIFjSoSkXUwCo3fQvfLy9xDMj5pCFGPvo
-	3dqgBWbI8K/6Tx55+tcU3dccg+uur3b50QNSHYdvIy8TjVBBFD0PEsHj6FJ1zaA4tUXyxTMO0Cb
-	yPNVNoCR1cIhw0eqUixNO4/m2RlOMRBFwBz3Kh5ROKehtLnEwTHEd2IFUwCh8DaZMWeJf
-X-Gm-Gg: AfdE7cmEY2IxFAI2aJJNcPdGJTTeHAkmyZ0OkpJtLe1tTkI1vB5h+RkayuiBrTz/LrC
-	wvyPDdqlRc6Ng4v7r5LvW1u1E6RWtotavNYcQ/+oqXuIzwvVA9+7K0QOaVa33l8XEmCVtgbm7Ya
-	rI8Sa0j9DmY6CZfPxfDI7ByRCJJ70DVaywCFbUzoQPtqIIGceNZQlEv+3MaKHFLxKH1xcSp6iUP
-	XVTDjF1EXqNtbAdofruke8JOFEAJyCYbyHOMD7Qbc4m0P6uNZ1QBwHf2Grx5QeLmFHe2zT5rfCw
-	9dDwM0NitiqyRIXWj0E4U0jaJrixmv9SDhdnAgNHCA2nDPHJifDWfcy2bPFaFQI845RT8ynLcX4
-	8FSZOhSbaPyf/5TSpUY4ndFynevyRj9YMv0Hb95/B
-X-Received: by 2002:a05:6a21:48d:b0:3bf:9fe1:c27 with SMTP id adf61e73a8af0-3bfed5018efmr5032497637.40.1782964971712;
-        Wed, 01 Jul 2026 21:02:51 -0700 (PDT)
-X-Received: by 2002:a05:6a21:48d:b0:3bf:9fe1:c27 with SMTP id adf61e73a8af0-3bfed5018efmr5032429637.40.1782964971004;
-        Wed, 01 Jul 2026 21:02:51 -0700 (PDT)
-Received: from [10.204.78.220] ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-30f0bbdc4eesm4446432eec.24.2026.07.01.21.02.46
+        bh=9z14DdaScwvuUkS9S1aCzsy5HUZXH5Z2PoiV67T14h4=;
+        b=jwo3ZP94WdqVzBZXblp3IyCGmvHtOShXg1Xz2mzLX1ndfLvlCqArvu74AiAnblFrnX
+         2YP2c9HNt0A4WnQRN/OTz2wJcYKOqX2IUX8wU8OSWJx79oTxngErvdPrQWPrkUwhUmUH
+         n4F5V4CsifCHbNGqLcfVzsxqOvDJa1ieZbwLmMe8l1tQU+wZ8yY0e//CZzLPSTWXSmb2
+         CWyGRsFa3LsOxQOlcE11PMCzQay+pq3VWaw0cFLtkqOG6Tjh/BJIjtzXImyuCntqYVLX
+         cpv/qA8kJ/zVx0gGnDmldyCGb7NlFHEUZo6W5s38E3SXSN+WxEGLtEsdKmotDYGaKz8X
+         V0hw==
+X-Forwarded-Encrypted: i=1; AFNElJ+0O6uYyMldBbMdKvKp2YjyVL+y+ChBivooNB+4TS8vW/Zr+6YUDmVf4F1uHkQ8GcfqmRezI8IGR+iacy7e@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxox71RHq43NA3BpIiMFrpGkRPR+1u2MQq7xof8IW5P1IuUESL6
+	Pudg6J0eRXaBbLra+TTldoDo6FzP62wTfVQGXB/z+pRhFkBZIxxI9zhCSWMRjvc85AwGYRzyeM8
+	aE8grjZlFyluTJTxYMIZ/WuSyTxBSEFY7yhjKIdgvqy+5+n/YC8HbdpxH8rGu5tNE2Gfi
+X-Gm-Gg: AfdE7ck1D/Zn+yXKhFFKUvypfUl+4AHWCJtJv+rzdaxWOUEdCUreQodlnQRqz8INTi0
+	DymbAxuYV6T5MuIN0n360QfJao+3tTNu3zcLnsAd/00Yg36ZkN7ySdrcZwWpKciDvZZMS62VS4k
+	S1terFO4hfPitVZI1LwhRpatB3tI56qchwtEOqYddocZEbdaoiAzmVu1CYxFIO5zVq602UI70pm
+	/sqVm8Y/c3LqeoUtc3eEgep1xYa6UWgybeXqQ+eOEl4lxNDrrrLx75J9j1bFi0DXzhWE5dJWIJr
+	ywik/KEjdG/a/JPrrF1QFgn9gXoumjdlZr6Svieh2uF7Psp2BqXMmky7+ynGLBvloyJUAtAde6X
+	OjegG70V/867GYQmyimiGQ5A05UQmFP1U4bUl8LWWgHs=
+X-Received: by 2002:a05:6a20:918b:b0:3b4:7e2d:a3bc with SMTP id adf61e73a8af0-3bff3c31bd9mr4183271637.0.1782966688028;
+        Wed, 01 Jul 2026 21:31:28 -0700 (PDT)
+X-Received: by 2002:a05:6a20:918b:b0:3b4:7e2d:a3bc with SMTP id adf61e73a8af0-3bff3c31bd9mr4183227637.0.1782966687526;
+        Wed, 01 Jul 2026 21:31:27 -0700 (PDT)
+Received: from [10.218.35.45] ([202.46.22.19])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-30f0bb84366sm5441204eec.16.2026.07.01.21.31.23
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 01 Jul 2026 21:02:50 -0700 (PDT)
-Message-ID: <a79182b2-2582-4c77-a859-b4d013b700f3@oss.qualcomm.com>
-Date: Thu, 2 Jul 2026 09:32:45 +0530
+        Wed, 01 Jul 2026 21:31:27 -0700 (PDT)
+Message-ID: <bb0904d0-81f0-4575-aa17-007aa88f9942@oss.qualcomm.com>
+Date: Thu, 2 Jul 2026 10:01:21 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -106,327 +106,160 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 3/4] misc: fastrpc: Allocate entire reserved memory for
- Audio PD in probe
-To: Srinivas Kandagatla <srini@kernel.org>,
-        Jianping Li <jianping.li@oss.qualcomm.com>,
-        Amol Maheshwari <amahesh@qti.qualcomm.com>
-Cc: Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Abel Vesa <abelvesa@kernel.org>,
-        Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, quic_chennak@quicinc.com,
-        stable@kernel.org
-References: <20260609025938.457-1-jianping.li@oss.qualcomm.com>
- <20260609025938.457-4-jianping.li@oss.qualcomm.com>
- <cca276af-3e6a-44d3-a1b6-c2bc401a28cc@kernel.org>
+Subject: Re: [PATCH v3 1/1] bus: mhi: pci_generic: fix Rolling Wireless
+ RW135R-GL and RW151 support
+To: zwq2226404116@163.com, mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        netdev@vger.kernel.org
+Cc: mani@kernel.org, loic.poulain@oss.qualcomm.com, ryazanov.s.a@gmail.com,
+        andrew+netdev@lunn.ch, davem@davemloft.net, kuba@kernel.org,
+        Wanquan Zhong <wanquan.zhong@fibocom.com>
+References: <20260701095344.309409-1-zwq2226404116@163.com>
 Content-Language: en-US
-From: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
-In-Reply-To: <cca276af-3e6a-44d3-a1b6-c2bc401a28cc@kernel.org>
+From: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+In-Reply-To: <20260701095344.309409-1-zwq2226404116@163.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: TUL-BS6DqmdYzjh2LGLdLD5wB2qtHHWu
-X-Proofpoint-ORIG-GUID: TUL-BS6DqmdYzjh2LGLdLD5wB2qtHHWu
-X-Authority-Analysis: v=2.4 cv=Xbm5Co55 c=1 sm=1 tr=0 ts=6a45e2ec cx=c_pps
- a=vVfyC5vLCtgYJKYeQD43oA==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+X-Authority-Analysis: v=2.4 cv=dtnrzVg4 c=1 sm=1 tr=0 ts=6a45e9a0 cx=c_pps
+ a=Qgeoaf8Lrialg5Z894R3/Q==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=EWVka2mvqR4YGq0-U2gA:9 a=QEXdDO2ut3YA:10
- a=rl5im9kqc5Lf4LNbBjHf:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAyMDAzNiBTYWx0ZWRfX7snpAaUZ0eYe
- 448GMVKYyY72rIEneY7K+uREpGapTeLpCgGqmr0EbXRfL5iTKP1WOGmUl4orPowsgBM4ahSmfc0
- KAVZXdddZOqEYBHHdraEpodwKgmbfMcrZPKICbo5814PBLldIu/UW68gdON3XStweN1tsWxMuvV
- hGmJNarMAZLKbtHPfV5HEJDKnZaWTmvtH+PL9cFoU1XffLpdmmOJd6T4oufy6+OUPYBab1XXPkS
- dtJn54402IVipFo9nE7tigoW+A8ZORrmi+dTqaqLFwmMxXri3vpBDE6Y0yhp5oMW7Q6x7lwZqjv
- AulumEVTn7q+xYUZcjC7MymszPsrKvEqRpBUN4pQf7vp4uIgWt1DPefZPy47crtIeRd15qTLx7H
- M+Faa7V0j9yVxluSRTsAIgvMnEdM/ZV+KD2wNCHHWRapv76ooCFTXhYtP/+FHlPzA0F1eOMT5RO
- TvyE+qj16VfSkK5mV4w==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAyMDAzNiBTYWx0ZWRfX2seuncu8AGhv
- p3mWZqtCTMhrHw67iSEFPekv2KoB5AHCgo9CVaO/mzzia6j242yWYHM6GDkf9dJx4FwSOSeEv5V
- +YTtb6s3Rv5d5k6GHdsDF+QwUPviOy8=
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=Byx-y9mGAAAA:8 a=6GUwiT5CAAAA:8 a=nWUtx5Q0ph_BRYhHASsA:9 a=QEXdDO2ut3YA:10
+ a=x9snwWr2DeNwDh03kgHS:22 a=tp1klI1xYmtLYojU9LVd:22
+X-Proofpoint-ORIG-GUID: xQGpZI5Z4j2mtFEcHfXQ8OKkiQnpnKJt
+X-Proofpoint-GUID: xQGpZI5Z4j2mtFEcHfXQ8OKkiQnpnKJt
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAyMDA0MCBTYWx0ZWRfXwNJlbzUeWfrm
+ XCE83nz5GVsXquyD68eVfMU+a0snbfcsaMri3tgYJtYfBNlBJAEYe5Hef7xJbPTm/kRV6N7yrr3
+ eaacrYPVA9OBE3+ENfIKRn/uYF3rwwrBD7nBGq88NP9rqW3mXP/OEALc6baTH2m+S2ziU4ngxj6
+ 5164Lu0iKJC7/3hDqGEKrwvvjrjlD6y9WzKHLLixwTYfk6ZIiW8eoOWgE10DZYtEN5Luye+SzpC
+ bOviEuJSZ5q78ebaAL49zQMtrKIPk/3brdrAztFj3Y6f60ECBbrh3Lt5mHDHzCQc+d/zd9mpliw
+ n3OKunCxC201LqddZjhAI+/Vj14txiqRDobKIw4Tma8XlydC4gaDHAcotFOyRLb+rYordY+Jk4l
+ GDCXat8QlJp/ymoOsC+aeSB0tOR8Lye9j4QCC2wybB8sJSn+dWyj2Dk6cTFZfGK3S39G8XrMZ0i
+ lXuVB2IUAi+hwfJeb3w==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAyMDA0MCBTYWx0ZWRfXwGFVtQV4mv2X
+ e8Y+Skn30SM7+vNK2UH+P0yrbHD/fy3BWG6EPUo6zythRXWUy+nzL5IIozuMQ6FI0tCjPHz1N94
+ keehdfBVKAySyvQM5l6BwjWJKFpDhUI=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-07-02_01,2026-06-26_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 bulkscore=0 malwarescore=0 lowpriorityscore=0 spamscore=0
- adultscore=0 phishscore=0 priorityscore=1501 impostorscore=0 clxscore=1015
+ impostorscore=0 clxscore=1015 priorityscore=1501 suspectscore=0 spamscore=0
+ lowpriorityscore=0 phishscore=0 malwarescore=0 bulkscore=0 adultscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607020036
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607020040
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-115817-lists,linux-arm-msm=lfdr.de];
-	RCPT_COUNT_TWELVE(0.00)[12];
-	MIME_TRACE(0.00)[0:+];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:from_mime,qualcomm.com:dkim];
+	FREEMAIL_CC(0.00)[kernel.org,oss.qualcomm.com,gmail.com,lunn.ch,davemloft.net,fibocom.com];
+	TAGGED_FROM(0.00)[bounces-115818-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
+	FORGED_RECIPIENTS(0.00)[m:zwq2226404116@163.com,m:mhi@lists.linux.dev,m:linux-arm-msm@vger.kernel.org,m:netdev@vger.kernel.org,m:mani@kernel.org,m:loic.poulain@oss.qualcomm.com,m:ryazanov.s.a@gmail.com,m:andrew+netdev@lunn.ch,m:davem@davemloft.net,m:kuba@kernel.org,m:wanquan.zhong@fibocom.com,m:ryazanovsa@gmail.com,m:andrew@lunn.ch,s:lists@lfdr.de];
+	FORGED_SENDER(0.00)[krishna.chundru@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_TO(0.00)[163.com,lists.linux.dev,vger.kernel.org];
 	FORWARDED(0.00)[lists@lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:srini@kernel.org,m:jianping.li@oss.qualcomm.com,m:amahesh@qti.qualcomm.com,m:arnd@arndb.de,m:gregkh@linuxfoundation.org,m:abelvesa@kernel.org,m:jorge.ramirez-ortiz@linaro.org,m:linux-arm-msm@vger.kernel.org,m:dri-devel@lists.freedesktop.org,m:linux-kernel@vger.kernel.org,m:quic_chennak@quicinc.com,m:stable@kernel.org,s:lists@lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_SENDER(0.00)[ekansh.gupta@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:from_mime,qualcomm.com:dkim,qualcomm.com:email];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[ekansh.gupta@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[krishna.chundru@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	MID_RHS_MATCH_FROM(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	RCPT_COUNT_SEVEN(0.00)[11];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
+	TAGGED_RCPT(0.00)[linux-arm-msm,netdev];
 	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: E132D6F3588
+X-Rspamd-Queue-Id: CF6686F36B8
 
-On 02-07-2026 02:07, Srinivas Kandagatla wrote:
-> 
-> 
-> On 6/9/26 3:59 AM, Jianping Li wrote:
->> Allocating and freeing Audio PD memory from userspace is unsafe because
->> the kernel cannot reliably determine when the DSP has finished using the
->> memory. Userspace may free buffers while they are still in use by the DSP,
->> and remote free requests cannot be safely trusted.
->>
->> Additionally, the current implementation allows userspace to repeatedly
->> grow the Audio PD heap, but does not support shrinking it. This can lead
->> to unbounded memory usage over time, effectively causing a memory leak.
->>
->> Fix this by allocating the entire Audio PD reserved-memory region during
->> rpmsg probe and tying its lifetime to the rpmsg channel. This removes
->> userspace-controlled alloc/free and ensures that memory is reclaimed only
->> when the DSP process is torn down.
->>
->> Add explicit validation for remote_heap presence and size before sending
->> the memory to DSP, and fail early if the reserved-memory region is
->> missing or incomplete.
->>
->> Fixes: 0871561055e66 ("misc: fastrpc: Add support for audiopd")
->> Cc: stable@kernel.org
->> Signed-off-by: Jianping Li <jianping.li@oss.qualcomm.com>
->> ---
->>  drivers/misc/fastrpc.c | 112 ++++++++++++++++++++++-------------------
->>  1 file changed, 59 insertions(+), 53 deletions(-)
->>
->> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
->> index 517884000331..1942e74535e5 100644
->> --- a/drivers/misc/fastrpc.c
->> +++ b/drivers/misc/fastrpc.c
->> @@ -276,6 +276,8 @@ struct fastrpc_channel_ctx {
->>  	struct kref refcount;
->>  	/* Flag if dsp attributes are cached */
->>  	bool valid_attributes;
->> +	/* Flag if audio PD init mem was allocated */
->> +	bool audio_init_mem;
->>  	u32 dsp_attributes[FASTRPC_MAX_DSP_ATTRIBUTES];
->>  	struct fastrpc_device *secure_fdevice;
->>  	struct fastrpc_device *fdevice;
->> @@ -1341,15 +1343,24 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
->>  	struct fastrpc_init_create_static init;
->>  	struct fastrpc_invoke_args *args;
->>  	struct fastrpc_phy_page pages[1];
->> +	struct fastrpc_channel_ctx *cctx = fl->cctx;
->>  	char *name;
->>  	int err;
->> -	bool scm_done = false;
->>  	struct {
->>  		int client_id;
->>  		u32 namelen;
->>  		u32 pageslen;
->>  	} inbuf;
->>  	u32 sc;
->> +	unsigned long flags;
->> +
->> +	if (!cctx->remote_heap || !cctx->remote_heap->dma_addr ||
->> +	    !cctx->remote_heap->size) {
->> +		err = -ENOMEM;
->> +		dev_err(fl->sctx->dev,
->> +			"remote heap memory region is not added\n");
->> +		return err;
->> +	}
->>  
->>  	args = kzalloc_objs(*args, FASTRPC_CREATE_STATIC_PROCESS_NARGS);
->>  	if (!args)
->> @@ -1373,31 +1384,6 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
->>  	inbuf.client_id = fl->client_id;
->>  	inbuf.namelen = init.namelen;
->>  	inbuf.pageslen = 0;
->> -	if (!fl->cctx->remote_heap) {
->> -		err = fastrpc_remote_heap_alloc(fl, fl->sctx->dev, init.memlen,
->> -						&fl->cctx->remote_heap);
->> -		if (err)
->> -			goto err_name;
->> -
->> -		/* Map if we have any heap VMIDs associated with this ADSP Static Process. */
->> -		if (fl->cctx->vmcount) {
->> -			u64 src_perms = BIT(QCOM_SCM_VMID_HLOS);
->> -
->> -			err = qcom_scm_assign_mem(fl->cctx->remote_heap->dma_addr,
->> -							(u64)fl->cctx->remote_heap->size,
->> -							&src_perms,
->> -							fl->cctx->vmperms, fl->cctx->vmcount);
->> -			if (err) {
->> -				dev_err(fl->sctx->dev,
->> -					"Failed to assign memory with dma_addr %pad size 0x%llx err %d\n",
->> -					&fl->cctx->remote_heap->dma_addr,
->> -					fl->cctx->remote_heap->size, err);
->> -				goto err_map;
->> -			}
->> -			scm_done = true;
->> -			inbuf.pageslen = 1;
->> -		}
->> -	}
->>  
->>  	fl->pd = USER_PD;
->>  
->> @@ -1409,8 +1395,17 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
->>  	args[1].length = inbuf.namelen;
->>  	args[1].fd = -1;
->>  
->> -	pages[0].addr = fl->cctx->remote_heap->dma_addr;
->> -	pages[0].size = fl->cctx->remote_heap->size;
->> +	spin_lock_irqsave(&cctx->lock, flags);
->> +	if (!cctx->audio_init_mem) {
->> +		pages[0].addr = cctx->remote_heap->dma_addr;
->> +		pages[0].size = cctx->remote_heap->size;
->> +		cctx->audio_init_mem = true;
->> +		inbuf.pageslen = 1;
->> +	} else {
->> +		pages[0].addr = 0;
->> +		pages[0].size = 0;
-> 
-> What is the expected behavoiur in this case?
-Audio daemon is expected to take the memory information to DSP audio PD
-only the first time it goes and attaches there.
 
-This is the case where daemon was killed but audio PD session is still
-running. In such cases, daemon is not expected to take any memory
-information to audio PD as the earlier shared information is already
-there with audio PD which it is using irrespective of daemon state.>
->> +	}
->> +	spin_unlock_irqrestore(&cctx->lock, flags);
->>  
->>  	args[2].ptr = (u64)(uintptr_t) pages;
->>  	args[2].length = sizeof(*pages);
->> @@ -1428,27 +1423,7 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
->>  
->>  	return 0;
->>  err_invoke:
->> -	if (fl->cctx->vmcount && scm_done) {
->> -		u64 src_perms = 0;
->> -		struct qcom_scm_vmperm dst_perms;
->> -		u32 i;
->> -
->> -		for (i = 0; i < fl->cctx->vmcount; i++)
->> -			src_perms |= BIT(fl->cctx->vmperms[i].vmid);
->> -
->> -		dst_perms.vmid = QCOM_SCM_VMID_HLOS;
->> -		dst_perms.perm = QCOM_SCM_PERM_RWX;
->> -		err = qcom_scm_assign_mem(fl->cctx->remote_heap->dma_addr,
->> -						(u64)fl->cctx->remote_heap->size,
->> -						&src_perms, &dst_perms, 1);
->> -		if (err)
->> -			dev_err(fl->sctx->dev, "Failed to assign memory dma_addr %pad size 0x%llx err %d\n",
->> -				&fl->cctx->remote_heap->dma_addr, fl->cctx->remote_heap->size, err);
->> -	}
->> -err_map:
->> -	fastrpc_buf_free(fl->cctx->remote_heap);
->> -	fl->cctx->remote_heap = NULL;
->> -err_name:
->> +	cctx->audio_init_mem = false;
-> this can race.
-> 
->>  	kfree(name);
->>  err:
->>  	kfree(args);
->> @@ -2415,12 +2390,23 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
->>  		}
->>  	}
->>  
->> -	if (domain_id == SDSP_DOMAIN_ID) {
->> +	if (domain_id == SDSP_DOMAIN_ID || domain_id == ADSP_DOMAIN_ID) {
->>  		struct resource res;
->>  		u64 src_perms;
->>  
->>  		err = of_reserved_mem_region_to_resource(rdev->of_node, 0, &res);
->>  		if (!err) {
->> +			if (domain_id == ADSP_DOMAIN_ID) {
->> +				data->remote_heap =
->> +					kzalloc_obj(*data->remote_heap, GFP_KERNEL);
->> +				if (!data->remote_heap) {
->> +					err = -ENOMEM;
->> +					goto err_free_data;
->> +				}
->> +
->> +				data->remote_heap->dma_addr = res.start;
->> +				data->remote_heap->size = resource_size(&res);
->> +			}
->>  			src_perms = BIT(QCOM_SCM_VMID_HLOS);
->>  
->>  			err = qcom_scm_assign_mem(res.start, resource_size(&res), &src_perms,
->> @@ -2428,7 +2414,6 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
->>  			if (err)
->>  				goto err_free_data;
->>  		}
->> -
->>  	}
->>  
->>  	secure_dsp = !(of_property_read_bool(rdev->of_node, "qcom,non-secure-domain"));
->> @@ -2487,6 +2472,7 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
->>  		misc_deregister(&data->secure_fdevice->miscdev);
->>  
->>  err_free_data:
->> +	kfree(data->remote_heap);
->>  	kfree(data);
->>  	return err;
->>  }
->> @@ -2509,6 +2495,7 @@ static void fastrpc_rpmsg_remove(struct rpmsg_device *rpdev)
->>  	struct fastrpc_buf *buf, *b;
->>  	struct fastrpc_user *user;
->>  	unsigned long flags;
->> +	int err;
->>  
->>  	/* No invocations past this point */
->>  	spin_lock_irqsave(&cctx->lock, flags);
->> @@ -2526,8 +2513,27 @@ static void fastrpc_rpmsg_remove(struct rpmsg_device *rpdev)
->>  	list_for_each_entry_safe(buf, b, &cctx->invoke_interrupted_mmaps, node)
->>  		list_del(&buf->node);
->>  
->> -	if (cctx->remote_heap)
->> -		fastrpc_buf_free(cctx->remote_heap);
->> +	if (cctx->remote_heap && cctx->vmcount) {
->> +		u64 src_perms = 0;
->> +		struct qcom_scm_vmperm dst_perms;
->> +
->> +		for (u32 i = 0; i < cctx->vmcount; i++)
->> +			src_perms |= BIT(cctx->vmperms[i].vmid);
->> +
->> +		dst_perms.vmid = QCOM_SCM_VMID_HLOS;
->> +		dst_perms.perm = QCOM_SCM_PERM_RWX;
->> +
->> +		err = qcom_scm_assign_mem(cctx->remote_heap->dma_addr,
->> +					  cctx->remote_heap->size, &src_perms,
->> +					  &dst_perms, 1);
->> +		if (err)
->> +			dev_err(&rpdev->dev,
->> +				"Failed to assign memory back to HLOS: dma_addr %pad size %#llx err %d\n",
->> +				&cctx->remote_heap->dma_addr, cctx->remote_heap->size, err);
->> +	}
->> +
->> +	kfree(cctx->remote_heap);
->> +	cctx->remote_heap = NULL;
->>  
->>  	of_platform_depopulate(&rpdev->dev);
->>  
-> 
+
+On 7/1/2026 3:23 PM, zwq2226404116@163.com wrote:
+> From: Wanquan Zhong <wanquan.zhong@fibocom.com>
+>
+> bus: mhi: pci_generic: fix Rolling Wireless RW135R-GL and RW151 support
+>
+> - Increase RW151 MBIM channel ring size from 4 to 32
+>
+> On HP and Lenovo laptop platforms the device probes successfully and
+> WWAN ports are created, but pci_generic enables runtime autosuspend
+> (PCI D3hot/M3) after a short idle period. Resume from runtime PM leaves
+> the modem in MHI SYS ERROR; driver recovery (reset) fails and the device
+> becomes inaccessible (PCIe config space reads as 0x7f). The failure is not
+> self-recoverable while runtime PM remains enabled; keeping power/control=on
+> avoids the issue.
+This might not be MHI issue, as the endpoint supports both D3hot and M3.
+After runtime suspend check what does your platform is doing as part of runtime
+suspend. It is more like a platform issue not a mhi issue.
+
+The change is like workaround on platform problem. so for the change
+no_m3 = true is not correct.
+
+- Krishna Chaitanya.
+>
+> Set no_m3 on RW135R-GL and RW151 so probe does not enable runtime M3
+> autosuspend for these modules.
+>
+> Power management testing (separate from runtime PM above):
+> - Suspend-to-RAM (S3/mem): tested on RW135R-GL and RW151; MHI/MBIM/wwan
+>   function after wake.
+> - Suspend-to-disk (hibernate): not available on the test platforms
+>   (/sys/power/state lacks "disk", ENODEV).
+>
+> Signed-off-by: Wanquan Zhong <wanquan.zhong@fibocom.com>
+>
+> ---
+> v2 -> v3: RW151 MBIM ring size 32; disable runtime M3 (no_m3)
+>  drivers/bus/mhi/host/pci_generic.c | 4 +++-
+>  1 file changed, 4 insertions(+), 2 deletions(-)
+>
+> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+> index d598bb3b3981..d0fee7e3ba3a 100644
+> --- a/drivers/bus/mhi/host/pci_generic.c
+> +++ b/drivers/bus/mhi/host/pci_generic.c
+> @@ -942,6 +942,7 @@ static const struct mhi_pci_dev_info mhi_rolling_rw135r_info = {
+>  	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+>  	.dma_data_width = 32,
+>  	.sideband_wake = false,
+> +	.no_m3 = true,
+>  	.mru_default = 32768,
+>  	.edl_trigger = true,
+>  };
+> @@ -949,8 +950,8 @@ static const struct mhi_pci_dev_info mhi_rolling_rw135r_info = {
+>  static const struct mhi_channel_config mhi_rolling_rw151_channels[] = {
+>  	MHI_CHANNEL_CONFIG_UL(4, "DIAG", 16, 1),
+>  	MHI_CHANNEL_CONFIG_DL(5, "DIAG", 16, 1),
+> -	MHI_CHANNEL_CONFIG_UL(12, "MBIM", 4, 0),
+> -	MHI_CHANNEL_CONFIG_DL(13, "MBIM", 4, 0),
+> +	MHI_CHANNEL_CONFIG_UL(12, "MBIM", 32, 0),
+> +	MHI_CHANNEL_CONFIG_DL(13, "MBIM", 32, 0),
+>  	MHI_CHANNEL_CONFIG_UL(14, "NMEA", 32, 0),
+>  	MHI_CHANNEL_CONFIG_DL(15, "NMEA", 32, 0),
+>  	MHI_CHANNEL_CONFIG_UL(32, "DUN", 32, 0),
+> @@ -986,6 +987,7 @@ static const struct mhi_pci_dev_info mhi_rolling_rw151_info = {
+>  	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+>  	.dma_data_width = 32,
+>  	.sideband_wake = false,
+> +	.no_m3 = true,
+>  	.mru_default = 32768,
+>  	.edl_trigger = true,
+>  };
+>
+> --
+> 2.50.0
+>
+>
 
 
