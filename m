@@ -1,53 +1,53 @@
-Return-Path: <linux-arm-msm+bounces-115835-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-115836-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id h646HnYHRmozIAsAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-115835-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Jul 2026 08:38:46 +0200
+	id /SlcMb0JRmqUIAsAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-115836-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Jul 2026 08:48:29 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 118906F3DAA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Jul 2026 08:38:46 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7049F6F3E73
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Jul 2026 08:48:29 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=lC0BZ0he;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115835-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115835-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b="RJ3h/KPe";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115836-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.232.135.74 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115836-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id E7F30307E6BB
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jul 2026 06:35:49 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 69940301FFC8
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jul 2026 06:46:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7A0033890F1;
-	Thu,  2 Jul 2026 06:35:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E563838E8B4;
+	Thu,  2 Jul 2026 06:46:23 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 598263168E6;
-	Thu,  2 Jul 2026 06:35:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D025E38E5FF;
+	Thu,  2 Jul 2026 06:46:22 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782974149; cv=none; b=Md16JpVZgaKXF6Wuz+VQnV9ibxBnFPB9cAQK7SIBLbEoo/uFb3FYoSC/Gq44talUY1Vv7CIAWEJU/cFJigPSWbj1CNj6cEYxIo309wwZfbuBTA9tjFt9/Siis596YOwsUlfq09nzR3bmUaPLJmwUIB7jQQv9a5L92sk70FafAoc=
+	t=1782974783; cv=none; b=mmxSgKQ7c4/UDTUY/LAoPXkeMoxaa6FzbC9NFIUGefxHiXKYdRDnQ657U1QNXB6ztHcyQPnN2Cj9l+de0BMSq5VA0vgXQHMnIBZLdnVXmLqRolvv6Tzwq3N7U8rNuTwnnN3ptdG9jtHxCdFzuyCUKe1dZbIKBeD+q81759YkMgo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782974149; c=relaxed/simple;
-	bh=eQMesfG1s9X4KbRuNXPGTEN6apyrRMbb5BWl39T+s+4=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=JHYb2hMYVeXTJaEOluu764D8XfYd9ADJLZzZ04dBdSw6BY070BHLONOPjgb5L2iQ93GIUKWcWGq030hRDHqPsW3gDflJePPh1FNIZvOyiRKK994wU5USbUoyoRmlTZXH637rFZcyVJJSQghkRylwfM1RZj+KeSCpiqwZTJ7x7AU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lC0BZ0he; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9EC51F00A3D;
-	Thu,  2 Jul 2026 06:35:43 +0000 (UTC)
+	s=arc-20240116; t=1782974783; c=relaxed/simple;
+	bh=Ksx5JsEelRXaz7v2nCwiUP0K/C234Y0sMeDvSbokESw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=BO4axZ3ZnhFiuUVKKTh+/gGjG6oVlVCv4bJOt6ap1JIgnRbsKn3gERILFc3/SPFAeQ4ynAUThH5g50me+X+43lD+CAcI4KCrNYJ86FQiPp2bVkTOiBspvM+MhdCBcRp1BjLEjvbGW82ezZK7fd2AdA98ebor4vpUKhQgefVh70I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RJ3h/KPe; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 856DE1F000E9;
+	Thu,  2 Jul 2026 06:46:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782974147;
-	bh=eFngxlCEGIGaxJMMkCSyGAW+lgQ3qM9bZm3PtAsro/o=;
-	h=Date:Subject:From:To:Cc:References:In-Reply-To;
-	b=lC0BZ0heCoqM7vyBz0g9g+aM/sD2D0EHORwFMB70VWqcKguRJar/CGi+avRaircqp
-	 MaQXqsGgaEXPLUuL0si8rnopVNKTRpHEw2LGWwrBkwSYNFbZ2GLTOduHcsZgIN1gk8
-	 iJnFPgWLEKIV30MBed+p6bQuGuzWGwPv663+0EVXCIzXF4HuoVaVqjY3ycwAeJz+n3
-	 X9fDxJkm7b3Fa1E/fg3euAmNfMVYsNHcz3Cga9zzED8jjgk3fp3iF/Fph6UmcM6B0A
-	 LqvPqs9TaC56l/6xaUJElmtGDM0jYErGe9uYuM6iEBEkd50CEHFyyMx5bGeUmpBFl9
-	 lGUZnEoviVZPg==
-Message-ID: <af2c4b60-7e75-4568-a47c-7198c771e771@kernel.org>
-Date: Thu, 2 Jul 2026 08:35:41 +0200
+	s=k20260515; t=1782974782;
+	bh=AD8tasXyN/lhxwoWmvOAqfCV0TTermi5k/ZYYd4C0Og=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=RJ3h/KPe9Ckf3zjaojadowu7ZZWn7KYNjLvHZePNlZZxzQdxndvZJLHX7PcH6vK9D
+	 k5mL8KaqFhKqGxlzUMbmqj1fELpv3HAiUoVShP5BubHrtyLGYd2HI7CrQJgz1Vz7Y0
+	 SSxrBaBFrhdrno6avLqnaUOPSieiFaUl1oAVdoF6FRT4q3bCZSYpUQzuUJt7PaYRGT
+	 JkxlFXAOco5A6ahqlUVC0ZmzbgqAHm5ldIaP//sUjxzepiKKhI7BgvCj8ItO/m60xj
+	 JoYLPA74Ne4aBudLHUwp7qbQ4EeEApqi45kcYmysn3d+km9NpiIq8FiOSwjFiV+MCZ
+	 hO+Zlgs5TrqUg==
+Message-ID: <51bad771-aa21-4394-8243-2fa7f275cb36@kernel.org>
+Date: Thu, 2 Jul 2026 07:46:08 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -55,60 +55,25 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] dt-bindings: arm: qcom: Add Acer Swift Go Pro AI
- (SFA14-11)
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Kaipeng Zeng <kaipeng94@gmail.com>, devicetree@vger.kernel.org
-Cc: linux-arm-msm@vger.kernel.org, conor+dt@kernel.org, krzk+dt@kernel.org,
- robh@kernel.org, konradybcio@kernel.org, andersson@kernel.org
-References: <20260702063156.35169-1-kaipeng94@gmail.com>
- <20260702063156.35169-2-kaipeng94@gmail.com>
- <9d9645e5-2e63-4c22-8b5f-b0f4368c581f@kernel.org>
+Subject: Re: [PATCH v8 3/4] misc: fastrpc: Allocate entire reserved memory for
+ Audio PD in probe
+To: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>,
+ Srinivas Kandagatla <srini@kernel.org>,
+ Jianping Li <jianping.li@oss.qualcomm.com>,
+ Amol Maheshwari <amahesh@qti.qualcomm.com>
+Cc: Arnd Bergmann <arnd@arndb.de>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Abel Vesa <abelvesa@kernel.org>,
+ Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>,
+ linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ linux-kernel@vger.kernel.org, quic_chennak@quicinc.com, stable@kernel.org
+References: <20260609025938.457-1-jianping.li@oss.qualcomm.com>
+ <20260609025938.457-4-jianping.li@oss.qualcomm.com>
+ <cca276af-3e6a-44d3-a1b6-c2bc401a28cc@kernel.org>
+ <a79182b2-2582-4c77-a859-b4d013b700f3@oss.qualcomm.com>
 Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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
-In-Reply-To: <9d9645e5-2e63-4c22-8b5f-b0f4368c581f@kernel.org>
+From: Srinivas Kandagatla <srini@kernel.org>
+In-Reply-To: <a79182b2-2582-4c77-a859-b4d013b700f3@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Rspamd-Action: no action
@@ -116,61 +81,75 @@ X-Spamd-Result: default: False [-5.16 / 15.00];
 	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
+	FORGED_RECIPIENTS(0.00)[m:ekansh.gupta@oss.qualcomm.com,m:srini@kernel.org,m:jianping.li@oss.qualcomm.com,m:amahesh@qti.qualcomm.com,m:arnd@arndb.de,m:gregkh@linuxfoundation.org,m:abelvesa@kernel.org,m:jorge.ramirez-ortiz@linaro.org,m:linux-arm-msm@vger.kernel.org,m:dri-devel@lists.freedesktop.org,m:linux-kernel@vger.kernel.org,m:quic_chennak@quicinc.com,m:stable@kernel.org,s:lists@lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:kaipeng94@gmail.com,m:devicetree@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:conor+dt@kernel.org,m:krzk+dt@kernel.org,m:robh@kernel.org,m:konradybcio@kernel.org,m:andersson@kernel.org,m:conor@kernel.org,m:krzk@kernel.org,s:lists@lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
-	FREEMAIL_TO(0.00)[gmail.com,vger.kernel.org];
+	FORGED_SENDER(0.00)[srini@kernel.org,linux-arm-msm@vger.kernel.org];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[13];
+	TAGGED_FROM(0.00)[bounces-115836-lists,linux-arm-msm=lfdr.de];
+	MIME_TRACE(0.00)[0:+];
 	FORWARDED(0.00)[lists@lfdr.de];
-	FORGED_SENDER(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	TAGGED_FROM(0.00)[bounces-115835-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[srini@kernel.org,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[kernel.org:+];
-	RCPT_COUNT_SEVEN(0.00)[8];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	TO_DN_SOME(0.00)[];
 	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,vger.kernel.org:from_smtp]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,vger.kernel.org:from_smtp]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 118906F3DAA
+X-Rspamd-Queue-Id: 7049F6F3E73
 
-On 02/07/2026 08:27, Krzysztof Kozlowski wrote:
-> On 02/07/2026 08:31, Kaipeng Zeng wrote:
->> Add compatible values for the Acer Swift Go Pro AI (SFA14-11),
->> using "acer,sfa14-11".
+
+
+On 7/2/26 5:02 AM, Ekansh Gupta wrote:
+>>> @@ -1409,8 +1395,17 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
+>>>  	args[1].length = inbuf.namelen;
+>>>  	args[1].fd = -1;
+>>>  
+>>> -	pages[0].addr = fl->cctx->remote_heap->dma_addr;
+>>> -	pages[0].size = fl->cctx->remote_heap->size;
+>>> +	spin_lock_irqsave(&cctx->lock, flags);
+>>> +	if (!cctx->audio_init_mem) {
+>>> +		pages[0].addr = cctx->remote_heap->dma_addr;
+>>> +		pages[0].size = cctx->remote_heap->size;
+>>> +		cctx->audio_init_mem = true;
+>>> +		inbuf.pageslen = 1;
+>>> +	} else {
+>>> +		pages[0].addr = 0;
+>>> +		pages[0].size = 0;
+>> What is the expected behavoiur in this case?
+> Audio daemon is expected to take the memory information to DSP audio PD
+> only the first time it goes and attaches there.
 > 
-> "Add Acer Swift Go Pro AI (SFA14-11), a laptop based on the Snapdragon X
-> Elite (X1E78100) SoC."
-> 
-> That's it. Don't add unnecessary boilerplate.
+> This is the case where daemon was killed but audio PD session is still
+> running. In such cases, daemon is not expected to take any memory
+> information to audio PD as the earlier shared information is already
+> there with audio PD which it is using irrespective of daemon state.>
+Wow, this behavior is not documented or pl consider adding a comment
+here, Can we not query the dsp before creating new audiopd service?
 
-Also, please fix time on your machine, so you do not send emails
-claiming they are in the future. This affects how they are seen in the
-inbox. Look:
 
-1. Your email:
-Thu, 2 Jul 2026 14:31:55 +0800
-so, 8:31 +0200
+Does it make sense to attach instead of creating?
 
-2. My answer:
-Thu, 2 Jul 2026 08:27:21 +0200
+--srini
 
-I went back in time, did I?
+>>> +	}
+>>> +	spin_unlock_irqrestore(&cctx->lock, flags);
+>>>  
+>>>  	args[2].ptr = (u64)(uintptr_t) pages;
+>>>  	args[2].length = sizeof(*pages);
 
-Best regards,
-Krzysztof
 
