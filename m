@@ -1,256 +1,229 @@
-Return-Path: <linux-arm-msm+bounces-116033-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-116034-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id B79YH5BiRmqXSQsAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-116033-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Jul 2026 15:07:28 +0200
+	id 1oCrDmVmRmr2SgsAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-116034-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Jul 2026 15:23:49 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1C4AE6F8234
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Jul 2026 15:07:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 49BA96F84AF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Jul 2026 15:23:48 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b="QrytFl/T";
-	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=VWNUzpLt;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116033-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116033-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=reject) header.from=qualcomm.com;
+	dkim=pass header.d=linux.dev header.s=key1 header.b=jHDhEc6C;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116034-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116034-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=none) header.from=linux.dev;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 0E112303E4C4
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jul 2026 13:01:51 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 08D5B3033082
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jul 2026 13:13:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B72648034D;
-	Thu,  2 Jul 2026 13:01:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 73E50426411;
+	Thu,  2 Jul 2026 13:13:12 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from out-179.mta0.migadu.com (out-179.mta0.migadu.com [91.218.175.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45D1E35DA56
-	for <linux-arm-msm@vger.kernel.org>; Thu,  2 Jul 2026 13:01:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3598742E8FF;
+	Thu,  2 Jul 2026 13:13:08 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782997310; cv=none; b=F+iEcLchencORB2KuOcbiPCZVIWv1lZCIJc4sBVKfZ+NK4Gr9VYsSk7qYwH3lVbYo+eLBZ9H0DpghVGv68KEd5mzj8+yB0O+9zLb0G06P20DeiHNq6X7zpQtJgDHoK7IWkTUafF6PkC17opgNUPzidMacGXLsokGkuV5Zk2SQJg=
+	t=1782997992; cv=none; b=kS5xWC0EEOuHgHX2pMS5OUNOQgabCKh7QsICm/yPbBACt1f1I/fADHXPDU/lZA4M6tDUcUr/oUhSZ9NpJOoXWb46Cr5/1OzO2NdQl2aldPr1ufmIj6hTd+0aKnfTAjM4ULBti5wh84Bgt4OvHtTUSvMxKaqHrwqH3VaySB0BIpw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782997310; c=relaxed/simple;
-	bh=ezLOtxWqKn29poR3EbKSCjTs8hzTE/3uKWAQhVGNsNY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bVDffol0zVC/k3DDpRzaC06dOO+bLXTR3+Pgp8k+D8ufEYY1wJ15onB6y07tuYyvyaAqRJxudcAP0K7PlSYVOokrPOkU6MDBLC3zQIGGxASjSincVYWO3gr496riVBjWGLjZLoUuHcrdkU+42Qi+0bHTSHhi1Q7goUnNl3mhlsE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=QrytFl/T; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=VWNUzpLt; arc=none smtp.client-ip=205.220.168.131
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 662D0aiA374234
-	for <linux-arm-msm@vger.kernel.org>; Thu, 2 Jul 2026 13:01:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=8O20KImHQpmmLRgmOVM4WWfT
-	ZSqB/dhjPfVMqyEC+IY=; b=QrytFl/TK8VegvviFSMz87RhVvK+2Hh1LCJaJBhC
-	EUF7H/00g5YePMfNI3JTaHZEDKdwruVEUb9bSO7tiGikMoja4laZkI1toPWMyVmQ
-	KSLV+nMC3EgsOJLetSMt9SiDBhJZqZ1eNVcft1BzVLhuMyGfezSquHgqBbE9Fx1f
-	4O8zSpr+6aD83cz8IQ97p9YeC+3jOsRB8lYqhju1fwRz6vEW2khG32WoasGIUp7M
-	NXpI5uIIza7tY+Ro0vasJRLnfPOgHVqIL5v9DaZ/kznhyIE9kzhQssrbAmUK1hji
-	eZb6VjRFnTaWgX6kZenIgjTDplMRA12dKx/kQtaUg1Up0w==
-Received: from mail-oi1-f197.google.com (mail-oi1-f197.google.com [209.85.167.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f5npr8qdx-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 02 Jul 2026 13:01:48 +0000 (GMT)
-Received: by mail-oi1-f197.google.com with SMTP id 5614622812f47-495eadd4143so3136094b6e.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Jul 2026 06:01:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1782997307; x=1783602107; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=8O20KImHQpmmLRgmOVM4WWfTZSqB/dhjPfVMqyEC+IY=;
-        b=VWNUzpLtHe1kmYk6uEWaYzqjwNGJ6I/R5AJPXsV8eH68524+p/062MpoCHFjWoc4un
-         f2h/jPuTn+D+OXI0cXrlMs8bexA1oJ5jIYe9in+DJjIks46vDDVtelBElggZIQLElvE8
-         ag+vfY5jYQSQFLY40SMUG3p5dGyN91bmuSlmMtEo5o2T9nBdUuuD67f8EhwdL1Bzt105
-         7klSQ6XZaPWUZdM3mr2AfkC5KHt7kNbQPtqX0lIfR0Sj9t2VYVKcB7qpjGVwIjuRcvyo
-         rIrwbJm2ILqoYtzuCPZVJX8WwUKJPUJUzqIvnnhSEA5eKLrWOyqhv3YCQ4wWG3T57X3n
-         Hqbg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782997307; x=1783602107;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=8O20KImHQpmmLRgmOVM4WWfTZSqB/dhjPfVMqyEC+IY=;
-        b=XvcTLcIJrJyYVBV4ZAE8FQ71VDo9j0uVxuLplUEyM6cjVIPVF1ub183VuxEG/z3FfN
-         TNmvP6WPnYCIh+J7DKP187ObYarqi7g4BjPLQTFn+YkqT+7KAM+CSe6XIspk8t04USQx
-         mw5z/iCCFUNf5I7mzPnkgQxcfhOgI8W2E6awPnJ3CgfSWhZ5AufoTWs10qbsAGd35dsI
-         bD3Jl54F6rftYcdm6TlaEU/OBRjrK2Eyignc7qx7mD8u/AG8VnecDM6TCE4HgZXqxpEy
-         Kd75ncJF+mpoHnRC6JxoIegI5aMVcSdNE+nIjgX98qXt644Hw7QbNZza2iQ/81k1fSPM
-         K+WA==
-X-Forwarded-Encrypted: i=1; AFNElJ/pa7jTktpG7MSYYU/QaKZ8p3eTNTyB+Riugz0A1A5MT5O8fkKKthMXYDG69RxTH4+DBw01JTp5ZPblRQXp@vger.kernel.org
-X-Gm-Message-State: AOJu0YzpcackCB1sTAvrbTqZQyf3sOheIdxpNd5CzKpkbEMVKPgv2zuW
-	FtUwRgOd97/texqtuC+3HrBe6OpWsMH4KIKxRtHvWfKooM0OzkksMFdveM8Ot694Vr4jHoKg5P9
-	drR+N787NR/oqCMeN7bTK42DC/8T86/pr085Zfpbpmz4Mk6d8wzTPpvCbwXEvw02e2cek
-X-Gm-Gg: AfdE7cmUsu5FzqsO8jEgXrS/X/9D2akbCdwpZoM5YKAl6ibaqCWui2gRbCvPAGe6wi/
-	kOdvzVi+Md58+UJFDu5cNXGYZtPdjYDKIYRchGcwBWiCBqGoH+nyUKEGsnQxCGj7Tky/K3t4ZIB
-	0DVPPsIq2DcWkA/Xq79iovw8U7y2bhdoyR4cEB2MAunXx9PagLdqC99XY6+kZ+4kpFbsCps6kL/
-	txcgrSOJyxfAXeeroJ17W5Klk8O9nkXKWLF0IPIkQwaN0tzN93849zQTB/Xu0/8foZQRTSTRtWK
-	R83JRjYKiln8n2Y4glFlK/CYeBse1cMpC80L14YaR+FjfaNcjBy1IOdc+jQwDj0lSN2EbrhjtOr
-	jMbJO9NA9l3YgzRuioRgED+f2XUeybTBsP5AVH0Vz3ZTpJF+gKCPJZ8Ra+HW6PxyC9eWoypaCqy
-	kdc48LvcSiLo5XNWGRC15epdUb
-X-Received: by 2002:a05:6808:c3cb:b0:489:9e32:16f7 with SMTP id 5614622812f47-4960f12eadcmr4022654b6e.39.1782997307488;
-        Thu, 02 Jul 2026 06:01:47 -0700 (PDT)
-X-Received: by 2002:a05:6808:c3cb:b0:489:9e32:16f7 with SMTP id 5614622812f47-4960f12eadcmr4022557b6e.39.1782997306567;
-        Thu, 02 Jul 2026 06:01:46 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-39b430e7725sm895821fa.19.2026.07.02.06.01.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Jul 2026 06:01:45 -0700 (PDT)
-Date: Thu, 2 Jul 2026 16:01:43 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Rakesh Kota <rakesh.kota@oss.qualcomm.com>
-Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        jishnu.prakash@oss.qualcomm.com, kamal.wadhwa@oss.qualcomm.com
-Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: Fix pm4125 vbus regulator
- compatible and constraints
-Message-ID: <f5ltrexhy7ggnchlhpjax5xojowr6f6m25v6wgdcbgyijrigo7@p73yy57jan2i>
-References: <20260701-add_pm4125-vbus-reg-v2-0-6bac2bac7131@oss.qualcomm.com>
- <20260701-add_pm4125-vbus-reg-v2-3-6bac2bac7131@oss.qualcomm.com>
- <83cdc9dd-65d2-48c0-b172-d66f513b9c74@oss.qualcomm.com>
- <20260702073321.xsyu33rxtrku2xdn@hu-kotarake-hyd.qualcomm.com>
- <4ab24c54-5e37-48df-a410-8fae6d7b5289@oss.qualcomm.com>
- <20260702124331.pogzemduzwv25pau@hu-kotarake-hyd.qualcomm.com>
+	s=arc-20240116; t=1782997992; c=relaxed/simple;
+	bh=pTjKKHwaFHpnWuOGJj9sjtDsv7AR/wPgTwwTBWMLOoo=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=NJUNfkojECwCd/BdcqfSMCYY+SvDPhNyt+LeTey/hJL+xX+8/AganyKRlYivRmm+yPDf65wh0gNoZG9OcIxS1WsU5W/oJTWLmICVgVqbn/V8tT9zRV4+y3cpeycmqF1jlKb/LxDg5TkYOoy+5/tfKDMdYw8IGFAItXdgdg7RVsc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=jHDhEc6C; arc=none smtp.client-ip=91.218.175.179
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1782997985;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=3WkYIESER5H1pxokBfEp6m9xEZZ5ghGe4TjZZy4BO5I=;
+	b=jHDhEc6CTiPftGqyHzVdl3xS/wEnOHSN4PeeVFnRX9fUml//8WA53GAPbsxSbJvWuzc/sf
+	tH1rSEqcTxDFS7qyJ0iIaX/a6tA48FPP/mFE4c/byOkvPcPlvJwYSUFubJkz9Jxs6S5ya/
+	AItLuFoisprFM8kvEpkf04Kk84Cg/T0=
+From: Lance Yang <lance.yang@linux.dev>
+To: ljs@kernel.org
+Cc: akpm@linux-foundation.org,
+	tsbogend@alpha.franken.de,
+	maddy@linux.ibm.com,
+	mpe@ellerman.id.au,
+	maarten.lankhorst@linux.intel.com,
+	mripard@kernel.org,
+	tzimmermann@suse.de,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	l.stach@pengutronix.de,
+	inki.dae@samsung.com,
+	sw0312.kim@samsung.com,
+	kyungmin.park@samsung.com,
+	krzk@kernel.org,
+	peter.griffin@linaro.org,
+	jani.nikula@linux.intel.com,
+	joonas.lahtinen@linux.intel.com,
+	rodrigo.vivi@intel.com,
+	tursulin@ursulin.net,
+	robin.clark@oss.qualcomm.com,
+	lumag@kernel.org,
+	lyude@redhat.com,
+	dakr@kernel.org,
+	tomi.valkeinen@ideasonboard.com,
+	hjc@rock-chips.com,
+	heiko@sntech.de,
+	andy.yan@rock-chips.com,
+	thierry.reding@kernel.org,
+	mperttunen@nvidia.com,
+	jonathanh@nvidia.com,
+	kraxel@redhat.com,
+	dmitry.osipenko@collabora.com,
+	zack.rusin@broadcom.com,
+	matthew.brost@intel.com,
+	thomas.hellstrom@linux.intel.com,
+	oleksandr_andrushchenko@epam.com,
+	deller@gmx.de,
+	bcrl@kvack.org,
+	viro@zeniv.linux.org.uk,
+	brauner@kernel.org,
+	muchun.song@linux.dev,
+	osalvador@suse.de,
+	david@kernel.org,
+	ziy@nvidia.com,
+	baolin.wang@linux.alibaba.com,
+	liam@infradead.org,
+	npache@redhat.com,
+	ryan.roberts@arm.com,
+	dev.jain@arm.com,
+	baohua@kernel.org,
+	lance.yang@linux.dev,
+	hughd@google.com,
+	vbabka@kernel.org,
+	rppt@kernel.org,
+	surenb@google.com,
+	mhocko@suse.com,
+	jannh@google.com,
+	pfalcato@suse.de,
+	kees@kernel.org,
+	perex@perex.cz,
+	tiwai@suse.com,
+	linux-mips@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linuxppc-dev@lists.ozlabs.org,
+	dri-devel@lists.freedesktop.org,
+	etnaviv@lists.freedesktop.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-samsung-soc@vger.kernel.org,
+	intel-gfx@lists.freedesktop.org,
+	linux-arm-msm@vger.kernel.org,
+	freedreno@lists.freedesktop.org,
+	nouveau@lists.freedesktop.org,
+	linux-rockchip@lists.infradead.org,
+	linux-tegra@vger.kernel.org,
+	virtualization@lists.linux.dev,
+	intel-xe@lists.freedesktop.org,
+	xen-devel@lists.xenproject.org,
+	linux-fbdev@vger.kernel.org,
+	linux-aio@kvack.org,
+	linux-fsdevel@vger.kernel.org,
+	linux-mm@kvack.org,
+	linux-sound@vger.kernel.org
+Subject: Re: [PATCH 10/13] mm/vma: convert miscellaneous uses of VMA flags in core mm
+Date: Thu,  2 Jul 2026 21:12:33 +0800
+Message-Id: <20260702131233.59026-1-lance.yang@linux.dev>
+In-Reply-To: <1e7d834c887b6a65627d730addcff13d458c6268.1782760670.git.ljs@kernel.org>
+References: <1e7d834c887b6a65627d730addcff13d458c6268.1782760670.git.ljs@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260702124331.pogzemduzwv25pau@hu-kotarake-hyd.qualcomm.com>
-X-Proofpoint-ORIG-GUID: E_RcY_n742fWeacDpLQPUj9ZrzmNpGcV
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAyMDEzNiBTYWx0ZWRfX99XKMyUP6OK9
- HJO9OIMVHJNeGhmmpgZ5NPaPI0DCah+TXr4xhKYJG+FCwlRBGR63aIMAnTM3jYLhEICAIMzi9Ni
- 0bHiUt3s9PAwWnEFKEVqgjAUElxDebU=
-X-Authority-Analysis: v=2.4 cv=NsvhtcdJ c=1 sm=1 tr=0 ts=6a46613c cx=c_pps
- a=WJcna6AvsNCxL/DJwPP1KA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22 a=EUspDBNiAAAA:8
- a=t5tVnjamzBmkMDoTyUMA:9 a=CjuIK1q_8ugA:10 a=_Y9Zt4tPzoBS9L09Snn2:22
-X-Proofpoint-GUID: E_RcY_n742fWeacDpLQPUj9ZrzmNpGcV
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAyMDEzNiBTYWx0ZWRfXz9TeJnBknScu
- fvGXEYp6uhNnrWd1z7AykKjawG8ya0wOka5e2M/dMZw/t79liZoK+pMspqvuTPbex9YkX6FT9d0
- WWAGc8j+6WS+r6K62ob+X2hxLbz+Pu+MjCAZ1/cXSmCThM+zbZ2SIIqEf2TGdSvUItzVU536gM9
- Dk8kcCmHjBRwKP1Oy+aPfriUrfmWM4q99lufsUQYDvyoiJnR0bdYJNNDlQNWIQWSNf4vAOWGqnj
- Jwfb0Xns6qX1F7s16+9HvYW0+57yd8H8MESq/5STMWIJfEso4oOe9Xo4frhgCZIAvOkvLnfrz9e
- agRuS8R9wYEfKZB4npwRcNoIZbVORbCslxTzrsYYhE7UbPfvwyl2a9rkDW4RDlGHMH+y7joDK2n
- 4xBSqEamt41fbSonu3IjLZ9SZvNdJX9TrIC2KCArSoSnBPwTAOChRdfWVXIPcwbYywj66Bko27f
- Iwuy2LW2znktKnlbH/A==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-07-02_01,2026-06-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 lowpriorityscore=0 bulkscore=0 phishscore=0 suspectscore=0
- malwarescore=0 adultscore=0 clxscore=1015 impostorscore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607020136
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Migadu-Flow: FLOW_OUT
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-0.16 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-1.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	MID_CONTAINS_FROM(1.00)[];
+	DMARC_POLICY_ALLOW(-0.50)[linux.dev,none];
+	R_DKIM_ALLOW(-0.20)[linux.dev:s=key1];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-116033-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:rakesh.kota@oss.qualcomm.com,m:konrad.dybcio@oss.qualcomm.com,m:lgirdwood@gmail.com,m:broonie@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:quic_wcheng@quicinc.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:devicetree@vger.kernel.org,m:jishnu.prakash@oss.qualcomm.com,m:kamal.wadhwa@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
-	FORGED_SENDER(0.00)[dmitry.baryshkov@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[15];
-	FREEMAIL_CC(0.00)[oss.qualcomm.com,gmail.com,kernel.org,quicinc.com,vger.kernel.org];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FORWARDED(0.00)[lists@lfdr.de];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:dkim,oss.qualcomm.com:from_mime,qualcomm.com:dkim,qualcomm.com:email,p73yy57jan2i:mid,vger.kernel.org:from_smtp,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[dmitry.baryshkov@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	ALIAS_RESOLVED(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MISSING_XM_UA(0.00)[];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	FREEMAIL_CC(0.00)[linux-foundation.org,alpha.franken.de,linux.ibm.com,ellerman.id.au,linux.intel.com,kernel.org,suse.de,gmail.com,ffwll.ch,pengutronix.de,samsung.com,linaro.org,intel.com,ursulin.net,oss.qualcomm.com,redhat.com,ideasonboard.com,rock-chips.com,sntech.de,nvidia.com,collabora.com,broadcom.com,epam.com,gmx.de,kvack.org,zeniv.linux.org.uk,linux.dev,linux.alibaba.com,infradead.org,arm.com,google.com,suse.com,perex.cz,vger.kernel.org,lists.ozlabs.org,lists.freedesktop.org,lists.infradead.org,lists.linux.dev,lists.xenproject.org];
+	TAGGED_FROM(0.00)[bounces-116034-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[3];
+	FORGED_RECIPIENTS(0.00)[m:ljs@kernel.org,m:akpm@linux-foundation.org,m:tsbogend@alpha.franken.de,m:maddy@linux.ibm.com,m:mpe@ellerman.id.au,m:maarten.lankhorst@linux.intel.com,m:mripard@kernel.org,m:tzimmermann@suse.de,m:airlied@gmail.com,m:simona@ffwll.ch,m:l.stach@pengutronix.de,m:inki.dae@samsung.com,m:sw0312.kim@samsung.com,m:kyungmin.park@samsung.com,m:krzk@kernel.org,m:peter.griffin@linaro.org,m:jani.nikula@linux.intel.com,m:joonas.lahtinen@linux.intel.com,m:rodrigo.vivi@intel.com,m:tursulin@ursulin.net,m:robin.clark@oss.qualcomm.com,m:lumag@kernel.org,m:lyude@redhat.com,m:dakr@kernel.org,m:tomi.valkeinen@ideasonboard.com,m:hjc@rock-chips.com,m:heiko@sntech.de,m:andy.yan@rock-chips.com,m:thierry.reding@kernel.org,m:mperttunen@nvidia.com,m:jonathanh@nvidia.com,m:kraxel@redhat.com,m:dmitry.osipenko@collabora.com,m:zack.rusin@broadcom.com,m:matthew.brost@intel.com,m:thomas.hellstrom@linux.intel.com,m:oleksandr_andrushchenko@epam.com,m:deller@gmx.de,m:bcrl@kvack.org,m:viro@zeniv.l
+ inux.org.uk,m:brauner@kernel.org,m:muchun.song@linux.dev,m:osalvador@suse.de,m:david@kernel.org,m:ziy@nvidia.com,m:baolin.wang@linux.alibaba.com,m:liam@infradead.org,m:npache@redhat.com,m:ryan.roberts@arm.com,m:dev.jain@arm.com,m:baohua@kernel.org,m:lance.yang@linux.dev,m:hughd@google.com,m:vbabka@kernel.org,m:rppt@kernel.org,m:surenb@google.com,m:mhocko@suse.com,m:jannh@google.com,m:pfalcato@suse.de,m:kees@kernel.org,m:perex@perex.cz,m:tiwai@suse.com,m:linux-mips@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linuxppc-dev@lists.ozlabs.org,m:dri-devel@lists.freedesktop.org,m:etnaviv@lists.freedesktop.org,m:linux-arm-kernel@lists.infradead.org,m:linux-samsung-soc@vger.kernel.org,m:intel-gfx@lists.freedesktop.org,m:linux-arm-msm@vger.kernel.org,m:freedreno@lists.freedesktop.org,m:nouveau@lists.freedesktop.org,m:linux-rockchip@lists.infradead.org,m:linux-tegra@vger.kernel.org,m:virtualization@lists.linux.dev,m:intel-xe@lists.freedesktop.org,m:xen-devel@lists.xenproject.org,m:linux-fb
+ dev@vger.kernel.org,m:linux-aio@kvack.org,m:linux-fsdevel@vger.kernel.org,m:linux-mm@kvack.org,m:linux-sound@vger.kernel.org,s:lists@lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FORGED_SENDER(0.00)[lance.yang@linux.dev,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[linux.dev:+];
 	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[7]
+	MISSING_XM_UA(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	TO_DN_NONE(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[lance.yang@linux.dev,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCPT_COUNT_GT_50(0.00)[83];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	ALIAS_RESOLVED(0.00)[];
+	FORWARDED(0.00)[lists@lfdr.de];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	MIME_TRACE(0.00)[0:+]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 1C4AE6F8234
+X-Rspamd-Queue-Id: 49BA96F84AF
 
-On Thu, Jul 02, 2026 at 06:13:31PM +0530, Rakesh Kota wrote:
-> On Thu, Jul 02, 2026 at 02:07:12PM +0200, Konrad Dybcio wrote:
-> > On 7/2/26 9:33 AM, Rakesh Kota wrote:
-> > > On Wed, Jul 01, 2026 at 01:26:11PM +0200, Konrad Dybcio wrote:
-> > >> On 7/1/26 12:28 PM, Rakesh Kota wrote:
-> > >>> Remove pm8150b fallback compatible from pm4125_vbus and fix regulator
-> > >>> constraints in qrb2210 DTS files to use microvolt instead of
-> > >>> microamp.
-> > >>>
-> > >>> Signed-off-by: Rakesh Kota <rakesh.kota@oss.qualcomm.com>
-> > >>> ---
-> > >>>  arch/arm64/boot/dts/qcom/pm4125.dtsi               | 2 +-
-> > >>>  arch/arm64/boot/dts/qcom/qrb2210-arduino-imola.dts | 4 ++--
-> > >>>  arch/arm64/boot/dts/qcom/qrb2210-rb1.dts           | 4 ++--
-> > >>>  3 files changed, 5 insertions(+), 5 deletions(-)
-> > >>>
-> > >>> diff --git a/arch/arm64/boot/dts/qcom/pm4125.dtsi b/arch/arm64/boot/dts/qcom/pm4125.dtsi
-> > >>> index 542e8fe030da40dfefc7b744dcc30133fdb35e74..3dc8d667d091ceb4267081d32b7aae983fc25071 100644
-> > >>> --- a/arch/arm64/boot/dts/qcom/pm4125.dtsi
-> > >>> +++ b/arch/arm64/boot/dts/qcom/pm4125.dtsi
-> > >>> @@ -37,7 +37,7 @@ pm4125_resin: resin {
-> > >>>  		};
-> > >>>  
-> > >>>  		pm4125_vbus: usb-vbus-regulator@1100 {
-> > >>> -			compatible = "qcom,pm4125-vbus-reg", "qcom,pm8150b-vbus-reg";
-> > >>> +			compatible = "qcom,pm4125-vbus-reg";
-> > >>>  			reg = <0x1100>;
-> > >>>  			status = "disabled";
-> > >>>  		};
-> > >>> diff --git a/arch/arm64/boot/dts/qcom/qrb2210-arduino-imola.dts b/arch/arm64/boot/dts/qcom/qrb2210-arduino-imola.dts
-> > >>> index bf088fa9807f040f0c8f405f9111b01790b09377..2b50f3f577577d30a87fcb6466c7d7690270aaa3 100644
-> > >>> --- a/arch/arm64/boot/dts/qcom/qrb2210-arduino-imola.dts
-> > >>> +++ b/arch/arm64/boot/dts/qcom/qrb2210-arduino-imola.dts
-> > >>> @@ -235,8 +235,8 @@ &mdss_dsi0_phy {
-> > >>>  };
-> > >>>  
-> > >>>  &pm4125_vbus {
-> > >>> -	regulator-min-microamp = <500000>;
-> > >>> -	regulator-max-microamp = <500000>;
-> > >>> +	regulator-min-microvolt = <4250000>;
-> > >>> +	regulator-max-microvolt = <5000000>;
-> > >>
-> > >> Perhaps that's a stupid question, but is there any good reason to
-> > >> not just keep it at 5V if enabled?
-> > >>
-> > > We could hardcode 5V, but keeping the range allows clients to select a
-> > > lower voltage if needed. The driver supports voltage selection per use
-> > > case, so hardcoding 5V would restrict that flexibility.
-> > 
-> > I'm trying to understand if this would ever happen in practice
-> >
-> Fair point.The dependent client here is the one connecting the USB
-> device to the Host. We don't have a concrete example today, but the
-> voltage range is kept flexible to avoid restricting future use cases.
-> That said, if 5V is the agreed practical default, we're open to
-> hardcoding it for simplicity.
 
-Moreover, I think current configuration can end up with the regulator
-being set to 4.25V and thus undervolting connected devices.
+On Mon, Jun 29, 2026 at 08:25:33PM +0100, Lorenzo Stoakes wrote:
+>Update various uses of legacy flags in vma.c and mmap.c to the new
+>vma_flags_t type, updating comments alongside them to be consistent.
+>
+>Also update __install_special_mapping() to rearrange things slightly to
+>accommodate the changes.
+>
+>Signed-off-by: Lorenzo Stoakes <ljs@kernel.org>
+>---
+[...]
+>diff --git a/mm/vma.c b/mm/vma.c
+>index b81c05e67a61..ab2ef0f04420 100644
+>--- a/mm/vma.c
+>+++ b/mm/vma.c
+>@@ -3417,23 +3417,27 @@ struct vm_area_struct *__install_special_mapping(
+> 	vm_flags_t vm_flags, void *priv,
+> 	const struct vm_operations_struct *ops)
+> {
+>-	int ret;
+>+	vma_flags_t vma_flags = legacy_to_vma_flags(vm_flags);
+> 	struct vm_area_struct *vma;
+>+	int ret;
+> 
+> 	vma = vm_area_alloc(mm);
+>-	if (unlikely(vma == NULL))
+>+	if (unlikely(!vma))
+> 		return ERR_PTR(-ENOMEM);
+> 
+>-	vma_set_range(vma, addr, addr + len, 0);
+>-	vm_flags |= vma_flags_to_legacy(mm->def_vma_flags) | VM_DONTEXPAND;
+>+	vma_flags_set_mask(&vma_flags, mm->def_vma_flags);
+>+	vma_flags_set(&vma_flags, VMA_DONTEXPAND_BIT);
+> 	if (pgtable_supports_soft_dirty())
+>-		vm_flags |= VM_SOFTDIRTY;
+>-	vm_flags_init(vma, vm_flags & ~VM_LOCKED_MASK);
+>+		vma_flags_set(&vma_flags, VMA_SOFTDIRTY_BIT);
+>+	vma_flags_clear_mask(&vma_flags, VMA_LOCKED_MASK);
+>+	vma->flags = vma_flags;
 
--- 
-With best wishes
-Dmitry
+Maybe worth a vma_flags_init() helper here to mirror vm_flags_init()?
+With this open-coded, we lose the soft-dirty WARN_ON_ONCE sanity check.
+
+Might be nicer to keep that check in one place ;)
+
+[...]
 
