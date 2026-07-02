@@ -1,207 +1,247 @@
-Return-Path: <linux-arm-msm+bounces-115963-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-115964-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id qxtEHWJRRmq4QgsAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-115963-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Jul 2026 13:54:10 +0200
+	id 2MqFO6ZPRmoOQgsAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-115964-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Jul 2026 13:46:47 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id B3FAC6F717D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Jul 2026 13:54:09 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5ED746F6F75
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Jul 2026 13:46:46 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=EvTdZVOG;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115963-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115963-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=quarantine) header.from=kernel.org;
+	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=b1V0EUVs;
+	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=VpW3Ejyl;
+	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=b1V0EUVs;
+	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=VpW3Ejyl;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115964-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115964-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=none) header.from=suse.de;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 5FFA5310447D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jul 2026 11:28:52 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id E3A0931B36BC
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jul 2026 11:30:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7F7F13F787E;
-	Thu,  2 Jul 2026 11:28:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D20904189D4;
+	Thu,  2 Jul 2026 11:30:05 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 593B33EDAD7;
-	Thu,  2 Jul 2026 11:28:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE82B3909A2
+	for <linux-arm-msm@vger.kernel.org>; Thu,  2 Jul 2026 11:30:02 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782991725; cv=none; b=oZsr+GjHXqsHYOLrxgZS3PsFgxJzco4SbEyks5J2YWy65h5W23jij8Z5E85wPJQ8vxc2Zml5gCUtLZLwxztETDY0ha1GikhZmIYdq0tc3YU5pHPqAq0LNgx6+4OK3fBSQyktEbtl6tzYK6wdnkmGie5sVFmaL1QCk+xplbnB2uI=
+	t=1782991805; cv=none; b=MLclvfXFQV6Jo9YSMTirTGmfUG3xDeY/jCZNEBLDQOmp8mZ9HwgNsApLLSgF3WYbvlApnZQUfGqhMDXHDJvigyKP7mw7h3jo3cZhWxh/ilnYcUbTZ6GtzBP3Jk4GJxvUw7v3TsUxDi3yrR5R4g4/SXJ77anAsEgM8iPSAcLxANU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782991725; c=relaxed/simple;
-	bh=1nALJb+YA7y5h8aPBgSeA8j2VmbMtrXkD/kdNDKRMkk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=sFf1rTyEYECxZ6igpqZ8VoSJlYkiADkwG9BrfXtZwFpqbpdhfvRRAlcxcAT/3wwIkPOjKkSnXGzttwAFVElm2YWuM7qbCvV4GacVgC2Sj+xegC4MVEl7GKkVEhEYSzCYpps4iiT4NIyW0cgVCgS9QXq/zs4Oj9SDJS77Ulg1xAw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EvTdZVOG; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 151691F000E9;
-	Thu,  2 Jul 2026 11:28:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782991724;
-	bh=j+2496+EdZL1GqvlfPj2h34a+6w39M+uQkYKjHLslWY=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=EvTdZVOGcpfVSh7Dgurtt83ghAxAI83lL+mOJlhatiiCZvGl2cWNag8tAyn/Pslen
-	 5jkNEgzssFxl4rJfxBfJzjOPOyFMCW795DYy6c0Gt2db+2ce5qhaSO6V7uRWT+cy2L
-	 zYIw8pJ2hu5s3lfgY4FByH/12vnUvuXNbJ+orjjCujzNpWHisr3mxQvwcQWpkvISKc
-	 Ft3avPhW0R2YhTkzP+Y/5lHmO3rJEQpzNWA/fB4T/DD7aq+yY1FTqye6HoDnd83rWN
-	 vcq1Ado2XtV62z9AUxYCSwPeWldZ98OllaFGlOMd6AR6KUYAoTpNXJjstEPJWmryIY
-	 Hp0scf2/Im6tg==
-Message-ID: <5d5c693b-bd07-40a4-aea5-d9e1884aac50@kernel.org>
-Date: Thu, 2 Jul 2026 13:28:35 +0200
+	s=arc-20240116; t=1782991805; c=relaxed/simple;
+	bh=8jjfSPYg5U66L8zK7oshft2R9Q5n1QusWIFSP0r0Zy8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=s+sw6H4eaPC/RnnNtqSnzt69Bjrqh9skFzRyNYDg1dYw7R5Wb43HJy/QCjcIxK09UdBswKHixURExLrh/H+YXp9wvm4OQG4KzeMN+VpmvYR7loBIkWLQHS6AzzdaCUGacZzoUQlqZaGEMTgqBxAwOxmNOd5fALmGX//cahKMy0s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=b1V0EUVs; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=VpW3Ejyl; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=b1V0EUVs; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=VpW3Ejyl; arc=none smtp.client-ip=195.135.223.130
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 2B0B874188;
+	Thu,  2 Jul 2026 11:30:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1782991801; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=GQ5WNGbzin/8vtFDbM8MbJVMoDULad2+FK2cbMLRvxc=;
+	b=b1V0EUVs7Ryzq47sXHyoMJr4JZZKjRZAq5PgvmgMFnAklikv2OYEmEeg7B9svz/QHBrX66
+	mB5yghfOAlHB0fX34t3q3IyNpEXuiXPxIfmxCvscO3OL7qd/yQ7G0KmD4Jd8J5jXHJYIVS
+	NCERshvGZ/f1dJtc20DF60zU/Yynep8=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1782991801;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=GQ5WNGbzin/8vtFDbM8MbJVMoDULad2+FK2cbMLRvxc=;
+	b=VpW3EjylCJF5yoxNrG2csldpuwjxwS7DCjeAVumRCzdwPhw4Sr5LNXAnK/UsjhF5SleOX3
+	PJir6mDWAi97z3AA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1782991801; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=GQ5WNGbzin/8vtFDbM8MbJVMoDULad2+FK2cbMLRvxc=;
+	b=b1V0EUVs7Ryzq47sXHyoMJr4JZZKjRZAq5PgvmgMFnAklikv2OYEmEeg7B9svz/QHBrX66
+	mB5yghfOAlHB0fX34t3q3IyNpEXuiXPxIfmxCvscO3OL7qd/yQ7G0KmD4Jd8J5jXHJYIVS
+	NCERshvGZ/f1dJtc20DF60zU/Yynep8=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1782991801;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=GQ5WNGbzin/8vtFDbM8MbJVMoDULad2+FK2cbMLRvxc=;
+	b=VpW3EjylCJF5yoxNrG2csldpuwjxwS7DCjeAVumRCzdwPhw4Sr5LNXAnK/UsjhF5SleOX3
+	PJir6mDWAi97z3AA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 9F893779AA;
+	Thu,  2 Jul 2026 11:29:56 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id 4DAfI7RLRmr5dgAAD6G6ig
+	(envelope-from <pfalcato@suse.de>); Thu, 02 Jul 2026 11:29:56 +0000
+Date: Thu, 2 Jul 2026 12:29:54 +0100
+From: Pedro Falcato <pfalcato@suse.de>
+To: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>, 
+	Russell King <linux@armlinux.org.uk>, Dinh Nguyen <dinguyen@kernel.org>, 
+	Simon Schuster <schuster.simon@siemens-energy.com>, 
+	"James E . J . Bottomley" <James.Bottomley@hansenpartnership.com>, Helge Deller <deller@gmx.de>, 
+	Jarkko Sakkinen <jarkko@kernel.org>, Thomas Gleixner <tglx@kernel.org>, 
+	Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>, 
+	Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org, Ian Abbott <abbotti@mev.co.uk>, 
+	H Hartley Sweeten <hsweeten@visionengravers.com>, Lucas Stach <l.stach@pengutronix.de>, 
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+	Patrik Jakobsson <patrik.r.jakobsson@gmail.com>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+	Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>, 
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>, Thierry Reding <thierry.reding@kernel.org>, 
+	Mikko Perttunen <mperttunen@nvidia.com>, Jonathan Hunter <jonathanh@nvidia.com>, 
+	Christian Koenig <christian.koenig@amd.com>, Huang Rui <ray.huang@amd.com>, Ankit Agrawal <ankita@nvidia.com>, 
+	Alex Williamson <alex@shazbot.org>, Alexander Viro <viro@zeniv.linux.org.uk>, 
+	Christian Brauner <brauner@kernel.org>, Dan Williams <djbw@kernel.org>, 
+	Muchun Song <muchun.song@linux.dev>, Oscar Salvador <osalvador@suse.de>, 
+	David Hildenbrand <david@kernel.org>, Suren Baghdasaryan <surenb@google.com>, 
+	"Liam R . Howlett" <liam@infradead.org>, Matthew Wilcox <willy@infradead.org>, 
+	Marek Szyprowski <m.szyprowski@samsung.com>, Peter Zijlstra <peterz@infradead.org>, 
+	Arnaldo Carvalho de Melo <acme@kernel.org>, Namhyung Kim <namhyung@kernel.org>, 
+	Masami Hiramatsu <mhiramat@kernel.org>, Oleg Nesterov <oleg@redhat.com>, 
+	Steven Rostedt <rostedt@goodmis.org>, SeongJae Park <sj@kernel.org>, Miaohe Lin <linmiaohe@huawei.com>, 
+	Hugh Dickins <hughd@google.com>, Mike Rapoport <rppt@kernel.org>, Kees Cook <kees@kernel.org>, 
+	Paolo Bonzini <pbonzini@redhat.com>, linux-kernel@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-parisc@vger.kernel.org, linux-sgx@vger.kernel.org, 
+	etnaviv@lists.freedesktop.org, dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
+	freedreno@lists.freedesktop.org, linux-tegra@vger.kernel.org, kvm@vger.kernel.org, 
+	linux-fsdevel@vger.kernel.org, nvdimm@lists.linux.dev, linux-mm@kvack.org, 
+	iommu@lists.linux.dev, linux-perf-users@vger.kernel.org, 
+	linux-trace-kernel@vger.kernel.org, kasan-dev@googlegroups.com, damon@lists.linux.dev, 
+	Rik van Riel <riel@surriel.com>, Harry Yoo <harry@kernel.org>, Jann Horn <jannh@google.com>
+Subject: Re: [PATCH 25/30] mm/vma: update vmg_adjust_set_range() to offset
+ pgoff instead
+Message-ID: <akZLhkjsJ_3sGdox@pedro-suse.lan>
+References: <cover.1782735110.git.ljs@kernel.org>
+ <910f7b5be78232304dc7ca01cd57c6f5ca8f3d13.1782735110.git.ljs@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] qcom_battmgr: Add batteryless DC-adapter MAINS
- support
-To: Rakesh Kota <rakesh.kota@oss.qualcomm.com>,
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Sebastian Reichel <sre@kernel.org>,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
- jishnu.prakash@oss.qualcomm.com, kamal.wadhwa@oss.qualcomm.com
-References: <20260518-add_dc_in_support-v1-0-31fbaa329879@oss.qualcomm.com>
- <56a54a34-1040-44ae-92e2-ce65a3d3acb5@oss.qualcomm.com>
- <20260519065938.4i5wot72pfxy4m3d@hu-kotarake-hyd.qualcomm.com>
- <ag-NLvh4ROgTCs_L@baldur>
- <d4001407-cdb0-48ee-a138-87c94b5dab01@oss.qualcomm.com>
- <20260702111737.2qtjcfskulav4usd@hu-kotarake-hyd.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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
-In-Reply-To: <20260702111737.2qtjcfskulav4usd@hu-kotarake-hyd.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <910f7b5be78232304dc7ca01cd57c6f5ca8f3d13.1782735110.git.ljs@kernel.org>
+X-Spam-Flag: NO
+X-Spam-Score: -3.01
+X-Spam-Level: 
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-5.16 / 15.00];
-	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	DMARC_POLICY_ALLOW(-0.50)[suse.de,none];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_RECIPIENTS(0.00)[m:rakesh.kota@oss.qualcomm.com,m:konrad.dybcio@oss.qualcomm.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:sre@kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-pm@vger.kernel.org,m:jishnu.prakash@oss.qualcomm.com,m:kamal.wadhwa@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	FREEMAIL_CC(0.00)[linux-foundation.org,armlinux.org.uk,kernel.org,siemens-energy.com,hansenpartnership.com,gmx.de,redhat.com,alien8.de,linux.intel.com,mev.co.uk,visionengravers.com,pengutronix.de,gmail.com,ffwll.ch,suse.de,oss.qualcomm.com,ideasonboard.com,nvidia.com,amd.com,shazbot.org,zeniv.linux.org.uk,linux.dev,google.com,infradead.org,samsung.com,goodmis.org,huawei.com,vger.kernel.org,lists.infradead.org,lists.freedesktop.org,lists.linux.dev,kvack.org,googlegroups.com,surriel.com];
+	TAGGED_FROM(0.00)[bounces-115964-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_SENDER(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[14];
-	TAGGED_FROM(0.00)[bounces-115963-lists,linux-arm-msm=lfdr.de];
-	MIME_TRACE(0.00)[0:+];
-	FORWARDED(0.00)[lists@lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
+	FORGED_SENDER(0.00)[pfalcato@suse.de,linux-arm-msm@vger.kernel.org];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_RECIPIENTS(0.00)[m:ljs@kernel.org,m:akpm@linux-foundation.org,m:linux@armlinux.org.uk,m:dinguyen@kernel.org,m:schuster.simon@siemens-energy.com,m:James.Bottomley@hansenpartnership.com,m:deller@gmx.de,m:jarkko@kernel.org,m:tglx@kernel.org,m:mingo@redhat.com,m:bp@alien8.de,m:dave.hansen@linux.intel.com,m:x86@kernel.org,m:abbotti@mev.co.uk,m:hsweeten@visionengravers.com,m:l.stach@pengutronix.de,m:airlied@gmail.com,m:simona@ffwll.ch,m:patrik.r.jakobsson@gmail.com,m:maarten.lankhorst@linux.intel.com,m:mripard@kernel.org,m:tzimmermann@suse.de,m:robin.clark@oss.qualcomm.com,m:lumag@kernel.org,m:tomi.valkeinen@ideasonboard.com,m:thierry.reding@kernel.org,m:mperttunen@nvidia.com,m:jonathanh@nvidia.com,m:christian.koenig@amd.com,m:ray.huang@amd.com,m:ankita@nvidia.com,m:alex@shazbot.org,m:viro@zeniv.linux.org.uk,m:brauner@kernel.org,m:djbw@kernel.org,m:muchun.song@linux.dev,m:osalvador@suse.de,m:david@kernel.org,m:surenb@google.com,m:liam@infradead.org,m:willy@infradead.org,m:m.szyprow
+ ski@samsung.com,m:peterz@infradead.org,m:acme@kernel.org,m:namhyung@kernel.org,m:mhiramat@kernel.org,m:oleg@redhat.com,m:rostedt@goodmis.org,m:sj@kernel.org,m:linmiaohe@huawei.com,m:hughd@google.com,m:rppt@kernel.org,m:kees@kernel.org,m:pbonzini@redhat.com,m:linux-kernel@vger.kernel.org,m:linux-arm-kernel@lists.infradead.org,m:linux-parisc@vger.kernel.org,m:linux-sgx@vger.kernel.org,m:etnaviv@lists.freedesktop.org,m:dri-devel@lists.freedesktop.org,m:linux-arm-msm@vger.kernel.org,m:freedreno@lists.freedesktop.org,m:linux-tegra@vger.kernel.org,m:kvm@vger.kernel.org,m:linux-fsdevel@vger.kernel.org,m:nvdimm@lists.linux.dev,m:linux-mm@kvack.org,m:iommu@lists.linux.dev,m:linux-perf-users@vger.kernel.org,m:linux-trace-kernel@vger.kernel.org,m:kasan-dev@googlegroups.com,m:damon@lists.linux.dev,m:riel@surriel.com,m:harry@kernel.org,m:jannh@google.com,m:patrikrjakobsson@gmail.com,s:lists@lfdr.de];
+	FORWARDED(0.00)[lists@lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[suse.de:+];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	MISSING_XM_UA(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	ALIAS_RESOLVED(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[6];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	FROM_NEQ_ENVFROM(0.00)[pfalcato@suse.de,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCPT_COUNT_GT_50(0.00)[75];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	TO_DN_SOME(0.00)[];
+	ALIAS_RESOLVED(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,pedro-suse.lan:mid,suse.de:dkim,suse.de:email,suse.de:from_mime]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: B3FAC6F717D
+X-Rspamd-Queue-Id: 5ED746F6F75
 
-On 02/07/2026 13:17, Rakesh Kota wrote:
-> On Tue, Jun 30, 2026 at 04:16:13PM +0200, Konrad Dybcio wrote:
->> On 5/22/26 12:56 AM, Bjorn Andersson wrote:
->>> On Tue, May 19, 2026 at 12:29:38PM +0530, Rakesh Kota wrote:
->>>> On Mon, May 18, 2026 at 04:36:32PM +0200, Konrad Dybcio wrote:
->>>>> On 5/18/26 3:49 PM, Rakesh Kota wrote:
->>>>>> On batteryless boards powered by 12V DC adapters, registering the
->>>>>> power supply as BATTERY causes userspace to incorrectly trigger
->>>>>> battery power-saving sequences.
->>>>>
->>>>> Does battman really offer no way of differentiating whether a battery
->>>>> is *actually* present in such cases?
->>>>>
->>>>> What boards are affected?
->>>>>
->>>> Currently, batteryless support is only implemented for the
->>>> qcs6490-rb3gen2(Kodiak) board.
->>>>
->>>
->>> What do you mean?
->>>
->>> Are you saying that the pmic_glink firmware in Kodiak has a one-off hack
->>> that no other implementation of this firmware has?
->>>
->>> My Lenovo IdeaCentre (hamoa) doesn't have battery, what should I do now?
->>
->> I was going through my inbox.
->> This remains unanswered, and I don't see the discussion progressing
->> without resolving this.
->>
-> To clarify — there is no platform-side hack involved. The Kodiak board
-> has a batteryless variant, but the pmic_glink firmware provides no way
-> to distinguish whether a battery is physically present or not. Since
-> this can't be determined from firmware, we introduced a DT-based
-> property to describe the hardware configuration explicitly.
+On Mon, Jun 29, 2026 at 01:23:36PM +0100, Lorenzo Stoakes wrote:
+> We are calculating the pgoff as an offset, since we have vma_add_pgoff()
+> and vma_sub_pgoff() available, just offset this value directly and use
+> __vma_set_range() for vma->vm_[start, end] values.
 > 
-> This is not Kodiak-specific — any batteryless board, including hamoa,
-> can use the same DT property to avoid incorrect BATTERY registration
+> We take care to update the range before offsetting the page offset, so the
+> adjusted VMA's vm_start and vm_pgoff are mutually consistent at the point
+> the page offset helpers operate - this matters once vma_set_pgoff() comes
+> to assert invariants which relate the two.
+> 
+> Doing so lays the foundation for future work which allows for use of
+> virtual page offsets for MAP_PRIVATE-file backed mappings.
+> 
+> No functional change intended.
+> 
+> Signed-off-by: Lorenzo Stoakes <ljs@kernel.org>
+> ---
+>  mm/vma.c | 15 ++++-----------
+>  1 file changed, 4 insertions(+), 11 deletions(-)
+> 
+> diff --git a/mm/vma.c b/mm/vma.c
+> index e3355eab11f2..0579fc8c9bd5 100644
+> --- a/mm/vma.c
+> +++ b/mm/vma.c
+> @@ -714,9 +714,6 @@ void validate_mm(struct mm_struct *mm)
+>   */
+>  static void vmg_adjust_set_range(struct vma_merge_struct *vmg)
+>  {
+> -	struct vm_area_struct *adjust;
+> -	pgoff_t pgoff;
+> -
+>  	if (vmg->__adjust_middle_start) {
+>  		/*
+>  		 * vmg->start    vmg->end
+> @@ -735,8 +732,8 @@ static void vmg_adjust_set_range(struct vma_merge_struct *vmg)
+>  		struct vm_area_struct *middle = vmg->middle;
+>  		const unsigned long delta = vmg->end - middle->vm_start;
+>  
+> -		pgoff = vma_start_pgoff(middle) + (delta >> PAGE_SHIFT);
+> -		adjust = middle;
+> +		__vma_set_range(middle, vmg->end, middle->vm_end);
+> +		vma_add_pgoff(middle, delta >> PAGE_SHIFT);
+>  	} else if (vmg->__adjust_next_start) {
+>  		/*
+>  		 *                Originally:
+> @@ -764,13 +761,9 @@ static void vmg_adjust_set_range(struct vma_merge_struct *vmg)
+>  		struct vm_area_struct *next = vmg->next;
+>  		const unsigned long delta = next->vm_start - vmg->end;
+>  
+> -		pgoff = vma_start_pgoff(next) - (delta >> PAGE_SHIFT);
+> -		adjust = next;
+> -	} else {
+> -		return;
+> +		__vma_set_range(next, vmg->end, next->vm_end);
+> +		vma_sub_pgoff(next, delta >> PAGE_SHIFT);
+>  	}
+> -
+> -	vma_set_range(adjust, vmg->end, adjust->vm_end, pgoff);
+>  }
 
-Unfortunately the answer might be: fix your firmware. Since your
-firmware is the interface and we do not expose battery in DT, then you
-do not get additional properties. You made conscious design choice of
-abstracting some things in the firmware, so you do control that part of
-the software stack. If you make one choice, it might lead to other, like
-rejecting such properties.
+Maybe this should be squashed with That Other Patch that touches this.
 
-Best regards,
-Krzysztof
+Anyway,
+
+Reviewed-by: Pedro Falcato <pfalcato@suse.de> 
+
+-- 
+Pedro
 
