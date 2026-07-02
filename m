@@ -1,102 +1,103 @@
-Return-Path: <linux-arm-msm+bounces-115887-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-115888-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id rhVAJn0zRmq2LgsAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-115887-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Jul 2026 11:46:37 +0200
+	id bYLMI6k0RmoPLwsAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-115888-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Jul 2026 11:51:37 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 44AEE6F5753
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Jul 2026 11:46:37 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id F1A686F585F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Jul 2026 11:51:36 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=i1QQYMQx;
-	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=HdyBDkpf;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115887-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.232.135.74 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115887-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b="Q/mDQ7xe";
+	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=I+zeS5l8;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-115888-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-115888-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=reject) header.from=qualcomm.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id C32743024885
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jul 2026 09:39:00 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id EC5E830D04F8
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Jul 2026 09:39:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B526848034F;
-	Thu,  2 Jul 2026 09:36:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 31557481253;
+	Thu,  2 Jul 2026 09:36:58 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67E4D47DF80
-	for <linux-arm-msm@vger.kernel.org>; Thu,  2 Jul 2026 09:36:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADB37480942
+	for <linux-arm-msm@vger.kernel.org>; Thu,  2 Jul 2026 09:36:56 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782985014; cv=none; b=RX5roAI5uyQeS0Hn1rYH8pXqY75lSv1FP3kS5JuUvGU9++DIffeIkgKSgDnt5Mo27nWOvx+pvplJxKRCJnaCD/M6giNj+QbqXfKKQ0t9eEDg8O/eufHz7vg0Lo1XAcflzXYyTDBnymsRtk4UTRX2GHmth35/w4PKBPyl6s9mrf4=
+	t=1782985018; cv=none; b=FIbBpQOkUuMEGgbJKa+qWUBz57CE+mmDdh20LWMRZNhZIsx1v+J1Xrk/f02Nj2geyLoglP6G69zZnxSA89bJFvE2j4+z6PzigsPD2bj2LH3qdxQ48X5Onj7rYydsX2VeOE7++pFhQ+A6MRz1DRxlqr6BCGyx+a8b3ntVCPjQUGU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782985014; c=relaxed/simple;
-	bh=ha9fWLnbP01/VrndnLaB1lXP36wWzxUY3v/qBBHW+KU=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=WXngMERj/pn9+WJlMX19mC8zrtU/GHFgbIIWFMPnCsdnFJLYMdHH6vzBGiwq/L6/x96T7Xfu6TFwhqHaYzvWI093by+tTodNfzFCGnwj261OepbOXNAUa6lpLY4dD+v46PbklMXNy7YCLHPiEZq1UI3pdrAjSRh9ajummPllXBA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=i1QQYMQx; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=HdyBDkpf; arc=none smtp.client-ip=205.220.180.131
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6628bHSo3009446
-	for <linux-arm-msm@vger.kernel.org>; Thu, 2 Jul 2026 09:36:52 GMT
+	s=arc-20240116; t=1782985018; c=relaxed/simple;
+	bh=0kUm6iZWqG5LNuIEW9ZY5XabEz3/uGXV5l9LMOHtqBU=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=pZRBq2nz9NpKzaL/OScEFwQ3G218KwSyH5ttMN4Kr4+aNGS6bN0Jpdy8iqiIJyKTUD2ubUWwhmaQ7nZbCbplpf/SCajeAs4/t1eE71QvL29a9NnqKyjbU1oQzL9RM0bEuY46+B5fLsYaHe39GXujhdhucFOK/yUrGbxYvItGLkg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Q/mDQ7xe; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=I+zeS5l8; arc=none smtp.client-ip=205.220.168.131
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6628WRqM3050491
+	for <linux-arm-msm@vger.kernel.org>; Thu, 2 Jul 2026 09:36:56 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=hWNsTDwKnB0nQjRuBjtpdR
-	mOjat4eE37McGVk/KSLto=; b=i1QQYMQx1WqpIO/nb6nJ61tdqzMjSp9ab4dAhs
-	pcfbe9WV3n7roLacoCvkpQe5VgfgBJNiXg1PQN8e2A4tV3oIys7pW1/6XlwQqtLK
-	YdYkwm58AXh8TxUEaEC8jSMpdRTd6kqHicTPsCJqSsNsBXzKtj/dbk4YIM/8fWiV
-	WVDflycizXvaDR/TJAoEBRh/N8m/S8usL/WqSylEa0MlSSUwNgUoh1FhwLBRDo2C
-	P09yLbjD35D0TVvp70owEqErSpipWoo0TiArhUypdVG8+7PC5OydhHjkkIskeAcl
-	aWy60wriy1eKwT7HQVJRWF2v1h+UjTZBo1HZPNU3ez6eXPyQ==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f579ruahw-1
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	qzssNrrhwsh4sqrlnwSb6YO2VDCtJexpyO/5tc+jank=; b=Q/mDQ7xelUqBQBIi
+	pgU1MkWrAEY43QK8+SWGATyPNwy+PVWpi3A2ANEsVbSD4jOhh/EFJKeJvYjf/bhi
+	e8Qr06vXoUIr9fWg+85Ke2/Mn9wzHTWTjoPcZxA3RL3MwTaL4/2sn0GH6UszU0oF
+	Dms552YGpABdJPmYxVUEjv4tgdQhn5KDiC/h1DvgbTspHoIOWeT2vXsaO/f1dynN
+	0d0+7TWcfA74x2fkIwsC/Iy61MVIIV9w/apFkErufgV33ZfSVJpjTy0aw37xcrcz
+	/VfSRmd6PHXQWHblOY23S0Nitd/ibZygEFycb2ztgDNqM59NGHogaAO+YdMpR5L0
+	YB3uZg==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f56gpubyb-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 02 Jul 2026 09:36:52 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-92e82060977so51898385a.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Jul 2026 02:36:52 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 02 Jul 2026 09:36:55 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-92e55721a8cso177737985a.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Jul 2026 02:36:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1782985012; x=1783589812; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=hWNsTDwKnB0nQjRuBjtpdRmOjat4eE37McGVk/KSLto=;
-        b=HdyBDkpfWMxnog9C1r0P900ZoqDhdnaWiAKO8BAkaDSOVIpMO46aXLpVa9wCob5qIO
-         +9jIDjFUyAB3w0hfqG9eJkMJnyzpljzlZv01mTZcehga8fvOk8y4oF5S9xNtnBV6WztP
-         jxVPR+JS/U/Kj62Gz3PTLRAROR53/ioUmvRAxTyHM2rEhPuDcg3K7tOJdaPNj5/OZjgU
-         3OvugXlObuA1H0HxekituT4XYDew44ejZ+UsSjJ2JLzLt1Qo+u53C2cujyzq5QSNsrkp
-         gGzZWxBbJBh9oLpOSdkcR4lmsD7yyCBYJU9L7PDYJL0i/4Wy6vyP7HjVDu53SEvRsJ0d
-         gCGA==
+        d=oss.qualcomm.com; s=google; t=1782985015; x=1783589815; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=qzssNrrhwsh4sqrlnwSb6YO2VDCtJexpyO/5tc+jank=;
+        b=I+zeS5l8JPLGiKy2BtBbFNELRe6Mi7VjCRAi8dIwKUzadnoMuMFaaaGRhVumfP5HsM
+         9BRdw97HPerb8rcwggrRvXpic30KmOJJuvhkGkLheTEw5eiBng2DBnovmp88tDXtBW6u
+         caKyYSA2L5LOGqGFceNvyMxNMNw7lU+Vh0rzfww48gu1AveTNxYz7I5rB9V4Q5ls2QB/
+         HaVIgVHaf7yVAtR1fsM8ZigmvEUOn6cnXwdjPUmF0DYvvKrGQaQj55Wh6xNApYIYtPjn
+         s+H3UryAbTKKZ8TC7tv+J5hoEYwN02ZFjPD06iyx8bYuy81tKOABKECk16fLBuVUPcBc
+         miOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782985012; x=1783589812;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=hWNsTDwKnB0nQjRuBjtpdRmOjat4eE37McGVk/KSLto=;
-        b=kPRGlzZ9RzA7cJ/ZUIP4t65DvUh810W3phcgkAXD1Wks1EPJoImx9ELzMkzkTFxGxe
-         sjbDnMrDnn82+ZBLFJRd2w5RUdFFLbmrvhKpBOO0NedzB8DVe2blsf/gqYlixTsyLRgN
-         r9ZfinDtYyNDv8vnkiwkpaxlnZZJyFBmRXtJrCSdEzWBDjOS95hgUTR/ZJuXaRhyeiNW
-         wR1V+7wzIZd8x9EqxiW2dfWd7BcKWxpUdUBqaFP3EcVMA/2B6hUD5XXvnj29YVlU5TRV
-         M1oWtALg93vG6Jw9qWMwqZe0Ul8m3w8kevSM55eDczRyZocMlZB8TrWIfudry5yCEqT2
-         rqUQ==
-X-Gm-Message-State: AOJu0YwA/nPXz0Ew5Km/J8vOsx/w2hJovBByvRkukQQQ3FbiPBKDXL5Y
-	jeIclo083uOVJGX6nA7VWijG2tJf9Wjn0xZjGN9BIDCVnaxsPvTh43dKRtrwZ6zSOt4/dbVTsCp
-	2C7Y71+yWSUGTJ4DLxUDcXdYsv7rEw2U2RSp3BUIKDtHsAfz1csRlZVXfSUjR2GzSduksXTFkQD
-	Ik
-X-Gm-Gg: AfdE7ck0SjnDMDRcFIQ5POE+3QRcYLxqQfjOhckEP4RNDWuVmiGnYpYmvr/qbZtmrco
-	i+TFrd/gSjGJ1uTsS1Q4Z9ecgPA8mONAZ+N8wewYz/8IZ0cdKlKCJKO3MF1lep+D8Iuh4+qqXi0
-	IPeH4k1twlPpvhlAlV5AnAF1GyqQpw/+xzAYrVTIYu/ccsOaciWGqTyE/b9fbIMPhTcFzN+EdHc
-	RSopRq1cNpkHBdLgHqIppZsZSseY1oG0kYKNOqRe2veseTTCj+ynrBofdR7LElKH0tH/IycGNr9
-	UJwJeqhlS7DzVLd79Jk+PJHxE0ehcnZzyhLjy2UVqCRIb99dtojn84NKQ9Vwj+0pkBhl9+uGVDZ
-	V9rBaPyMpPKWhZErBvHEwRtN1TjSHd3B8/VQ=
-X-Received: by 2002:a05:620a:4550:b0:92e:61f7:5687 with SMTP id af79cd13be357-92e697f1e67mr1220754785a.29.1782985011726;
-        Thu, 02 Jul 2026 02:36:51 -0700 (PDT)
-X-Received: by 2002:a05:620a:4550:b0:92e:61f7:5687 with SMTP id af79cd13be357-92e697f1e67mr1220752485a.29.1782985011322;
-        Thu, 02 Jul 2026 02:36:51 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1782985015; x=1783589815;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=qzssNrrhwsh4sqrlnwSb6YO2VDCtJexpyO/5tc+jank=;
+        b=I2XFnHVJ2ULjjDarngP7M6uVIkI1o8WSwdD5flIoMig/7HRGF/Km6Gj/zDy5vrUZxV
+         jdTyT1/37y2TFjHU7kq1CUtR9Sr6qQgXXc4t3Aij4ciumoyrorfXyJZB4BQpJZ55v0/W
+         +dFhFvLH18USnHwWJTnkmkrG7YMO8P9txecm1/NxjoG8QOopuSnSOSqkNJMfgJmE1MX4
+         Rni9x1rkUEiYAxUensEsyTwNmbTjXZtfS4BIz+rJQgX+APIXHQI7faK1SUhZBmWNQwEV
+         HG6E7Bk35ytZdZpbaxnxRBL7qvntusxtmA1S3/oBLV0ziphXEOvZdrdXnId+iFXDuu7f
+         MySA==
+X-Gm-Message-State: AOJu0YwTZP/3ApiZkx1AffCH7iNRHGtfNHtssJ692IZluwOoJxd5mfGL
+	yf2cBs53TmNmEISdmXAHwTtR7H/SprGLgPt0YN+fv52C55fZ3tw2tMSo5VnOggtAUyOq5Weh4Oj
+	v6BQ9EuLE/LwwMbh5olAhpwgz39GAY4Xz2TjBHkrUQ2ukgdidahH1r1SHl5sp8jYE8KhN
+X-Gm-Gg: AfdE7ckTOPHdqp23MEsuWP8FaHOtqkxsdpn2ohXhLVolNgajbdPEv+wI5cZ+dxTG56a
+	hiKE3roVvxEkXVDPaiNA9mxZ4YF5GF0jJbxjpXCoz1/MC9+qrFl1hdWSMw8mjrBkAjCcfnEnjve
+	fEBx4/kQA/dNf376d452joV6MzBYm5TDirIKh/rxSdSqlC6/ixmAgNCbNMl1BaNovi9J9t+GKXh
+	Cs9kihq3hdldiAjLKylzoxidqkXY9fX5TcY9xVzSIIj6ykWBmI/AjhaegpWAw1ju6aXpagjX8aU
+	d9z7jNc+yeL7Mz+62A4iGB48w5Z1Bf91ABzEp1Dos9fPcQjregwwmBDFOh/BP4o/+sCY3OpDmR3
+	P9pqxOvMtFcmswFbTOyVYctvJ5QV2+f496NA=
+X-Received: by 2002:a05:620a:2947:b0:92b:6805:91aa with SMTP id af79cd13be357-92e7851a911mr723527385a.66.1782985014715;
+        Thu, 02 Jul 2026 02:36:54 -0700 (PDT)
+X-Received: by 2002:a05:620a:2947:b0:92b:6805:91aa with SMTP id af79cd13be357-92e7851a911mr723522485a.66.1782985014066;
+        Thu, 02 Jul 2026 02:36:54 -0700 (PDT)
 Received: from [127.0.1.1] ([178.197.223.174])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-477db3db964sm7101335f8f.8.2026.07.02.02.36.49
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-477db3db964sm7101335f8f.8.2026.07.02.02.36.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Jul 2026 02:36:50 -0700 (PDT)
+        Thu, 02 Jul 2026 02:36:53 -0700 (PDT)
 From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Subject: [PATCH v2 0/2] drm/msm/hdmi: Simplify the code
-Date: Thu, 02 Jul 2026 11:36:39 +0200
-Message-Id: <20260702-drm-msm-hdmi-cleanup-v2-0-a4a4f0e8895b@oss.qualcomm.com>
+Date: Thu, 02 Jul 2026 11:36:40 +0200
+Subject: [PATCH v2 1/2] drm/msm/hdmi_bridge: Simplify register bit updates
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -105,11 +106,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/4WNwQqDMBBEf0X23JUkNkJ76n8UDyFZa8AYzaq0i
- P/e1B567GXgDcy8DZiSJ4ZrsUGi1bOPQwZ1KsB2ZngQepcZlFC1qKRElwIGDti54NH2ZIZlRFF
- pJ6zRtb20kKdjotY/j9t78+VE05Lf51/ZeZ5jeh3qVX7aP5ZVokCrdaXVWbe1o1tkLqfF9DaGU
- OaAZt/3N/Mm5UvUAAAA
-X-Change-ID: 20260311-drm-msm-hdmi-cleanup-035d0ca56c9f
+Message-Id: <20260702-drm-msm-hdmi-cleanup-v2-1-a4a4f0e8895b@oss.qualcomm.com>
+References: <20260702-drm-msm-hdmi-cleanup-v2-0-a4a4f0e8895b@oss.qualcomm.com>
+In-Reply-To: <20260702-drm-msm-hdmi-cleanup-v2-0-a4a4f0e8895b@oss.qualcomm.com>
 To: Rob Clark <robin.clark@oss.qualcomm.com>,
         Dmitry Baryshkov <lumag@kernel.org>,
         Abhinav Kumar <abhinav.kumar@linux.dev>,
@@ -121,48 +120,48 @@ Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
         Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=921;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=8199;
  i=krzysztof.kozlowski@oss.qualcomm.com; h=from:subject:message-id;
- bh=ha9fWLnbP01/VrndnLaB1lXP36wWzxUY3v/qBBHW+KU=;
- b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBqRjErWIym2Fh7Huid6TbyoC9GZP9fOKccezf8I
- 43Uaue8fuOJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCakYxKwAKCRDBN2bmhouD
- 11a3D/4+AtzUox1wG9dcBo0TVCXnxW0eTcd9APyNwpbMG1mxzkrNIWhdF4JaN/vwc6Gz94jkoul
- fXzCHxAW5rEoGKS9rhRnCoeqiK9SNUl0Ej0Ny0qbechpcAOhESx9BJ8x86FHpYL3dtqr0L/D40o
- 11liCTboIHgnvIpj0hGoCnep2hIM9rLmOZ+ejKACJcxcY+Iyaf6TZvNV4S3aZEkLB4x3vmd/dg+
- U7cDi15hjz2cCxjL9D3TY/3dZsJylk+7qp5yDISN9c0SWbYqPnG3jZNc7iaE57ZKt9NGjLFXxlx
- L1ThEc366iVZUVk/r2/UQb02wEPyv6TXgLEcufSbzUKM2evhC2IfbTomg3fRMVoaGBTKYbXZG5d
- BzKkv+Y7DKGX6UKnBghX/T3pFk36yIgRxfw9XPghub3V59oAEa7v0+aKXgxuaJozMek4rIhFTcA
- BqZNqsuzapg5lZSsOLIAJJJsU67iC76p0VmkA/nuZkU2pAmAJZ42ePsU2MWCzGnuVapSVO4aszE
- v+mmb0YWoz2p8EKVr7EQcvv5I2GA/f9dTH+6No1DZxmwV3VG+uxCGESr2Y2uAHLDXa5lr1/OvGU
- CvDZOiVlqcp8dibVudZ3JkuLkthcBQWnPl7Y4FpgO8jx2wbkNFPOK7rX/tguAG3v9zXKw8QgZ6S
- q8TiwnO0cIdArkg==
+ bh=0kUm6iZWqG5LNuIEW9ZY5XabEz3/uGXV5l9LMOHtqBU=;
+ b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBqRjEvqg8NwMGHoCZ/+gBpwkyr3SceUxmA/vOq7
+ DJm399oqveJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCakYxLwAKCRDBN2bmhouD
+ 19LgD/93aR7dOpfuLnOeH0zp0JZOjdpjAIN0dUzgba07j3qfxLEum7tcivrOtw1wsreb2qQp9/s
+ v4NP/EHsnf94y3fTBcL63hD1Te9mueY48vzoKbMUUxSLFZx8+fLGaJFq9hlOvFEIUsUbjyP0619
+ XnacqiEwW3/GzHHe4+U4r7mhhXBI+M4jiQgDbaFWEy6WeCAB5qzn1j/c07QsnixWDunz4efGQDj
+ 5P/PQcv/cGo/CgojBYPFq0UzVcw00N4M+lpY1A3lHfTpiEciWuecIBPqyjD6TYSimUvEpjnc44S
+ pXa5CJD1HBjmREagzxObJr0jc3WPsKPK1IO4IIWaByeRiCmZ4fm+3YGqTZx2oaZEDAjj3L1ZzSl
+ kTA6aCwGF39ZcyigS6loMrqQ1gsMfLeJcMta9+yez2X/nI3jE9TMYYMfoPXRa8MBuKhcOvjm8y4
+ 8c2KbPrMLpvs0anV5joDwjyMEFPrrNs7mHirLOtrcLiAuqQDNOy3Smd3uclQFFvs/1tNDwEpieY
+ U9gXSbxA2HLz+vOi15CwIpS4keeO34yq3Mx5zzpCNBrVYbpvrhXVrlwWzlK25CPI+BgsiEQur0E
+ egSWRMOReNnM8ruSJDRXYs9qmroMVdorsF9nKIfj0kF9NfWMGdQDnmP8WjH4RS9XxJnECvmldNB
+ /7qiPU1m0+zet+g==
 X-Developer-Key: i=krzysztof.kozlowski@oss.qualcomm.com; a=openpgp;
  fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAyMDA5OCBTYWx0ZWRfX1MIJhtyokalF
- +YX9Z1t5DClMFsOGui8UBnI0JsFLMCw/tppeRcXBtxRnN9+WlyVZip7zPtlMNpY5+ATvi2TF8ts
- F1gVVV0/9l6fb/LW4sP1LrvWhccmb1IthnBdZlLJ5I7VSY6qzGXLZxwpy4ho0X0IOXVy+9F26R7
- Xfh0GUXzjoil17j+Rge9QGmHL6M1XpsHC8ZMK5ku0gzs6Z0mzIGQhaO3GJUtDcyM7kh2NzFqYKE
- ceuCcVjKdlnrRBKI40hU8WfgHdXbrP/Y1kR/CFg2V3LOFOhUeB4oF9lC5Y381vUiy7IJ/iFO2ZH
- DDizMU0YXL2lgaq195RmF0IDd4Zea7apJBGtYFg2Ug7zme2zPzJPt9pMzplJQQpx9qEz97xZjZd
- U31cpeRGdndSj7MMCzZGAcKuwaoRBf6xZZurhZ1W0Fn9XeGO/43NgIXi5HONSbpdq5HSJs/QxBH
- e6DmqoxSru9QG+2sJew==
-X-Authority-Analysis: v=2.4 cv=X8pi7mTe c=1 sm=1 tr=0 ts=6a463134 cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=N6niishs+lR9UBL1FN3Qrw==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAyMDA5OCBTYWx0ZWRfX7Jpyob+Jkcok
+ 493ah3xAPnvrNrS8MiMqS7jptuUYjmEw5oxwzjelb3mpTXPrcjBfBBP/+i1LL7/VGF4GA4hCFHS
+ pTsFIsFBPM1Z5lMZPvsPI+B4wJFJ/8w=
+X-Proofpoint-GUID: i--Vc8sPTF0Bd5Womk-xILQPzJm2Q20G
+X-Proofpoint-ORIG-GUID: i--Vc8sPTF0Bd5Womk-xILQPzJm2Q20G
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAyMDA5OCBTYWx0ZWRfX6kTR4+kTFovA
+ 0DcYUbG9olUV49lMpZJR3bbNBdGFGbCrzgYNTJn6oBi9fDIhlgx3fKbLXSRTWOSoJvrle1W2nFT
+ oc+n1XLSAWGZCgekzBF10YtpzjdpyZQ+STh9AxuRbw1bqR9jwrB7f9cofDOvWMahX9cVsDB/Imz
+ ChCaz83C7ADBgsCU2aEl7grbLL6MjwcGSAHq7pq9B6zbdQ2w0d0bITUT97/3aH8no+p6dM4VIFR
+ PPB7W9A3VHhjfXkb94MRDpU/NEuaAXqTLxFSemi7VBGxbdZ1bwQ7TFPb6IHnCL0CPzcPMX4qZd5
+ KNn2DS7wPes1aMa14tckUPV1Fnh+przIZAexK0XLt2DydQfKPi+ZBkGARw9LxeCaxwGFf8I8JQG
+ YEXLOFTXi0GhJ4PM2+8A8h8LhuRGyEaKVOIjkn8CKUuFvUNreNKlnkBQMs6cXL8LJOW7GW5cyf9
+ afYpVRKYUbRihOkulhg==
+X-Authority-Analysis: v=2.4 cv=K9oS2SWI c=1 sm=1 tr=0 ts=6a463137 cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=N6niishs+lR9UBL1FN3Qrw==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=bC-a23v3AAAA:8 a=EUspDBNiAAAA:8 a=kI3vywTxrR2MwHqzhFcA:9 a=QEXdDO2ut3YA:10
- a=bTQJ7kPSJx9SKPbeHEYW:22 a=FO4_E8m0qiDe52t0p3_H:22
-X-Proofpoint-GUID: 15f0NcndPiisk3KhPoNFmc0ZpYaPkLdS
-X-Proofpoint-ORIG-GUID: 15f0NcndPiisk3KhPoNFmc0ZpYaPkLdS
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAyMDA5OCBTYWx0ZWRfX47lG5oEUL8rI
- P6ochxqTiSADsts/3HunfQ7dNu9jkQeN6IX/foyfP/C7bZJQt7AcWw2nHN9YJuHDKXgB9/Qd/yi
- zyXwz6450CADeeI245GO4qPIGMeuwCo=
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=EUspDBNiAAAA:8 a=aOjUM9GFJvKfr9THBUUA:9 a=QEXdDO2ut3YA:10
+ a=IoWCM6iH3mJn3m4BftBB:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-07-02_01,2026-06-26_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 clxscore=1015 priorityscore=1501 impostorscore=0 bulkscore=0
- lowpriorityscore=0 suspectscore=0 phishscore=0 malwarescore=0 adultscore=0
+ bulkscore=0 phishscore=0 priorityscore=1501 lowpriorityscore=0 clxscore=1015
+ adultscore=0 impostorscore=0 suspectscore=0 spamscore=0 malwarescore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607020098
 X-Rspamd-Action: no action
@@ -170,14 +169,14 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-115887-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-115888-lists,linux-arm-msm=lfdr.de];
 	FORGED_RECIPIENTS(0.00)[m:robin.clark@oss.qualcomm.com,m:lumag@kernel.org,m:abhinav.kumar@linux.dev,m:jesszhan0024@gmail.com,m:sean@poorly.run,m:marijn.suijten@somainline.org,m:airlied@gmail.com,m:simona@ffwll.ch,m:linux-arm-msm@vger.kernel.org,m:dri-devel@lists.freedesktop.org,m:freedreno@lists.freedesktop.org,m:linux-kernel@vger.kernel.org,m:dmitry.baryshkov@oss.qualcomm.com,m:krzysztof.kozlowski@oss.qualcomm.com,s:lists@lfdr.de];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,qualcomm.com:dkim,qualcomm.com:email,sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,msgid.link:url,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:from_mime];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:from_mime,vger.kernel.org:from_smtp,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,qualcomm.com:dkim,qualcomm.com:email];
 	FORGED_SENDER(0.00)[krzysztof.kozlowski@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	RCPT_COUNT_TWELVE(0.00)[14];
 	FREEMAIL_TO(0.00)[oss.qualcomm.com,kernel.org,linux.dev,gmail.com,poorly.run,somainline.org,ffwll.ch];
@@ -185,7 +184,7 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	FORWARDED(0.00)[lists@lfdr.de];
 	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
@@ -199,33 +198,223 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
 	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 44AEE6F5753
+X-Rspamd-Queue-Id: F1A686F585F
 
-Changes in v2:
-- Drop all applied patches (1-5).
-- Add Rb to remaining two ones. Rebase, but no changes in the code.
-- Link to v1: https://patch.msgid.link/20260311-drm-msm-hdmi-cleanup-v1-0-c5535245f6de@oss.qualcomm.com
+Simplify reister updates (read, apply mask, write) with a wrapper to
+make code more obvious and avoid possible errors of reading and writing
+to different registers.
 
-Few code simplifications, without functional impact.
-
-Best regards,
-Krzysztof
-
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 ---
-Krzysztof Kozlowski (2):
-      drm/msm/hdmi_bridge: Simplify register bit updates
-      drm/msm/hdmi_hdcp: Simplify register bit updates
-
  drivers/gpu/drm/msm/hdmi/hdmi.h        | 19 +++++++
  drivers/gpu/drm/msm/hdmi/hdmi_bridge.c | 98 ++++++++++++++--------------------
- drivers/gpu/drm/msm/hdmi/hdmi_hdcp.c   | 85 ++++++++++-------------------
- 3 files changed, 88 insertions(+), 114 deletions(-)
----
-base-commit: 7de6ae9e12207ec146f2f3f1e58d1a99317e88bc
-change-id: 20260311-drm-msm-hdmi-cleanup-035d0ca56c9f
+ 2 files changed, 60 insertions(+), 57 deletions(-)
 
-Best regards,
---  
-Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+diff --git a/drivers/gpu/drm/msm/hdmi/hdmi.h b/drivers/gpu/drm/msm/hdmi/hdmi.h
+index 49433f7727c3..436d4f9fe346 100644
+--- a/drivers/gpu/drm/msm/hdmi/hdmi.h
++++ b/drivers/gpu/drm/msm/hdmi/hdmi.h
+@@ -112,6 +112,25 @@ static inline u32 hdmi_read(struct hdmi *hdmi, u32 reg)
+ 	return readl(hdmi->mmio + reg);
+ }
+ 
++static inline void hdmi_clear_bits(struct hdmi *hdmi, u32 reg, u32 mask)
++{
++	u32 val;
++
++	val = hdmi_read(hdmi, reg);
++	val &= ~mask;
++	hdmi_write(hdmi, reg, val);
++}
++
++static inline void hdmi_update_bits(struct hdmi *hdmi, u32 reg, u32 mask, u32 data)
++{
++	u32 val;
++
++	val = hdmi_read(hdmi, reg);
++	val &= ~mask;
++	val |= data & mask;
++	hdmi_write(hdmi, reg, val);
++}
++
+ static inline u32 hdmi_qfprom_read(struct hdmi *hdmi, u32 reg)
+ {
+ 	return readl(hdmi->qfprom_mmio + reg);
+diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
+index c4d5e0faf3b3..9773459250bd 100644
+--- a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
++++ b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
+@@ -58,16 +58,13 @@ static int msm_hdmi_bridge_clear_avi_infoframe(struct drm_bridge *bridge)
+ {
+ 	struct hdmi_bridge *hdmi_bridge = to_hdmi_bridge(bridge);
+ 	struct hdmi *hdmi = hdmi_bridge->hdmi;
+-	u32 val;
+ 
+-	val = hdmi_read(hdmi, REG_HDMI_INFOFRAME_CTRL0);
+-	val &= ~(HDMI_INFOFRAME_CTRL0_AVI_SEND |
+-		 HDMI_INFOFRAME_CTRL0_AVI_CONT);
+-	hdmi_write(hdmi, REG_HDMI_INFOFRAME_CTRL0, val);
++	hdmi_clear_bits(hdmi, REG_HDMI_INFOFRAME_CTRL0,
++			HDMI_INFOFRAME_CTRL0_AVI_SEND |
++			HDMI_INFOFRAME_CTRL0_AVI_CONT);
+ 
+-	val = hdmi_read(hdmi, REG_HDMI_INFOFRAME_CTRL1);
+-	val &= ~HDMI_INFOFRAME_CTRL1_AVI_INFO_LINE__MASK;
+-	hdmi_write(hdmi, REG_HDMI_INFOFRAME_CTRL1, val);
++	hdmi_clear_bits(hdmi, REG_HDMI_INFOFRAME_CTRL1,
++			HDMI_INFOFRAME_CTRL1_AVI_INFO_LINE__MASK);
+ 
+ 	return 0;
+ }
+@@ -76,18 +73,15 @@ static int msm_hdmi_bridge_clear_audio_infoframe(struct drm_bridge *bridge)
+ {
+ 	struct hdmi_bridge *hdmi_bridge = to_hdmi_bridge(bridge);
+ 	struct hdmi *hdmi = hdmi_bridge->hdmi;
+-	u32 val;
+ 
+-	val = hdmi_read(hdmi, REG_HDMI_INFOFRAME_CTRL0);
+-	val &= ~(HDMI_INFOFRAME_CTRL0_AUDIO_INFO_SEND |
+-		 HDMI_INFOFRAME_CTRL0_AUDIO_INFO_CONT |
+-		 HDMI_INFOFRAME_CTRL0_AUDIO_INFO_SOURCE |
+-		 HDMI_INFOFRAME_CTRL0_AUDIO_INFO_UPDATE);
+-	hdmi_write(hdmi, REG_HDMI_INFOFRAME_CTRL0, val);
++	hdmi_clear_bits(hdmi, REG_HDMI_INFOFRAME_CTRL0,
++			HDMI_INFOFRAME_CTRL0_AUDIO_INFO_SEND |
++			HDMI_INFOFRAME_CTRL0_AUDIO_INFO_CONT |
++			HDMI_INFOFRAME_CTRL0_AUDIO_INFO_SOURCE |
++			HDMI_INFOFRAME_CTRL0_AUDIO_INFO_UPDATE);
+ 
+-	val = hdmi_read(hdmi, REG_HDMI_INFOFRAME_CTRL1);
+-	val &= ~HDMI_INFOFRAME_CTRL1_AUDIO_INFO_LINE__MASK;
+-	hdmi_write(hdmi, REG_HDMI_INFOFRAME_CTRL1, val);
++	hdmi_clear_bits(hdmi, REG_HDMI_INFOFRAME_CTRL1,
++			HDMI_INFOFRAME_CTRL1_AUDIO_INFO_LINE__MASK);
+ 
+ 	return 0;
+ }
+@@ -96,13 +90,11 @@ static int msm_hdmi_bridge_clear_spd_infoframe(struct drm_bridge *bridge)
+ {
+ 	struct hdmi_bridge *hdmi_bridge = to_hdmi_bridge(bridge);
+ 	struct hdmi *hdmi = hdmi_bridge->hdmi;
+-	u32 val;
+ 
+-	val = hdmi_read(hdmi, REG_HDMI_GEN_PKT_CTRL);
+-	val &= ~(HDMI_GEN_PKT_CTRL_GENERIC1_SEND |
+-		 HDMI_GEN_PKT_CTRL_GENERIC1_CONT |
+-		 HDMI_GEN_PKT_CTRL_GENERIC1_LINE__MASK);
+-	hdmi_write(hdmi, REG_HDMI_GEN_PKT_CTRL, val);
++	hdmi_clear_bits(hdmi, REG_HDMI_GEN_PKT_CTRL,
++			HDMI_GEN_PKT_CTRL_GENERIC1_SEND |
++			HDMI_GEN_PKT_CTRL_GENERIC1_CONT |
++			HDMI_GEN_PKT_CTRL_GENERIC1_LINE__MASK);
+ 
+ 	return 0;
+ }
+@@ -111,14 +103,12 @@ static int msm_hdmi_bridge_clear_hdmi_infoframe(struct drm_bridge *bridge)
+ {
+ 	struct hdmi_bridge *hdmi_bridge = to_hdmi_bridge(bridge);
+ 	struct hdmi *hdmi = hdmi_bridge->hdmi;
+-	u32 val;
+ 
+-	val = hdmi_read(hdmi, REG_HDMI_GEN_PKT_CTRL);
+-	val &= ~(HDMI_GEN_PKT_CTRL_GENERIC0_SEND |
+-		 HDMI_GEN_PKT_CTRL_GENERIC0_CONT |
+-		 HDMI_GEN_PKT_CTRL_GENERIC0_UPDATE |
+-		 HDMI_GEN_PKT_CTRL_GENERIC0_LINE__MASK);
+-	hdmi_write(hdmi, REG_HDMI_GEN_PKT_CTRL, val);
++	hdmi_clear_bits(hdmi, REG_HDMI_GEN_PKT_CTRL,
++			HDMI_GEN_PKT_CTRL_GENERIC0_SEND |
++			HDMI_GEN_PKT_CTRL_GENERIC0_CONT |
++			HDMI_GEN_PKT_CTRL_GENERIC0_UPDATE |
++			HDMI_GEN_PKT_CTRL_GENERIC0_LINE__MASK);
+ 
+ 	return 0;
+ }
+@@ -129,7 +119,6 @@ static int msm_hdmi_bridge_write_avi_infoframe(struct drm_bridge *bridge,
+ 	struct hdmi_bridge *hdmi_bridge = to_hdmi_bridge(bridge);
+ 	struct hdmi *hdmi = hdmi_bridge->hdmi;
+ 	u32 buf[4] = {};
+-	u32 val;
+ 	int i;
+ 
+ 	if (len != HDMI_INFOFRAME_SIZE(AVI) || len - 3 > sizeof(buf)) {
+@@ -153,15 +142,13 @@ static int msm_hdmi_bridge_write_avi_infoframe(struct drm_bridge *bridge,
+ 	for (i = 0; i < ARRAY_SIZE(buf); i++)
+ 		hdmi_write(hdmi, REG_HDMI_AVI_INFO(i), buf[i]);
+ 
+-	val = hdmi_read(hdmi, REG_HDMI_INFOFRAME_CTRL0);
+-	val |= HDMI_INFOFRAME_CTRL0_AVI_SEND |
+-		HDMI_INFOFRAME_CTRL0_AVI_CONT;
+-	hdmi_write(hdmi, REG_HDMI_INFOFRAME_CTRL0, val);
++	hdmi_update_bits(hdmi, REG_HDMI_INFOFRAME_CTRL0,
++			 HDMI_INFOFRAME_CTRL0_AVI_SEND | HDMI_INFOFRAME_CTRL0_AVI_CONT,
++			 HDMI_INFOFRAME_CTRL0_AVI_SEND | HDMI_INFOFRAME_CTRL0_AVI_CONT);
+ 
+-	val = hdmi_read(hdmi, REG_HDMI_INFOFRAME_CTRL1);
+-	val &= ~HDMI_INFOFRAME_CTRL1_AVI_INFO_LINE__MASK;
+-	val |= HDMI_INFOFRAME_CTRL1_AVI_INFO_LINE(AVI_IFRAME_LINE_NUMBER);
+-	hdmi_write(hdmi, REG_HDMI_INFOFRAME_CTRL1, val);
++	hdmi_update_bits(hdmi, REG_HDMI_INFOFRAME_CTRL1,
++			 HDMI_INFOFRAME_CTRL1_AVI_INFO_LINE__MASK,
++			 HDMI_INFOFRAME_CTRL1_AVI_INFO_LINE(AVI_IFRAME_LINE_NUMBER));
+ 
+ 	return 0;
+ }
+@@ -193,12 +180,11 @@ static int msm_hdmi_bridge_write_audio_infoframe(struct drm_bridge *bridge,
+ 		   buffer[9] << 16 |
+ 		   buffer[10] << 24);
+ 
+-	val = hdmi_read(hdmi, REG_HDMI_INFOFRAME_CTRL0);
+-	val |= HDMI_INFOFRAME_CTRL0_AUDIO_INFO_SEND |
+-		HDMI_INFOFRAME_CTRL0_AUDIO_INFO_CONT |
+-		HDMI_INFOFRAME_CTRL0_AUDIO_INFO_SOURCE |
+-		HDMI_INFOFRAME_CTRL0_AUDIO_INFO_UPDATE;
+-	hdmi_write(hdmi, REG_HDMI_INFOFRAME_CTRL0, val);
++	val = HDMI_INFOFRAME_CTRL0_AUDIO_INFO_SEND |
++	      HDMI_INFOFRAME_CTRL0_AUDIO_INFO_CONT |
++	      HDMI_INFOFRAME_CTRL0_AUDIO_INFO_SOURCE |
++	      HDMI_INFOFRAME_CTRL0_AUDIO_INFO_UPDATE;
++	hdmi_update_bits(hdmi, REG_HDMI_INFOFRAME_CTRL0, val, val);
+ 
+ 	return 0;
+ }
+@@ -231,11 +217,10 @@ static int msm_hdmi_bridge_write_spd_infoframe(struct drm_bridge *bridge,
+ 	for (i = 0; i < ARRAY_SIZE(buf); i++)
+ 		hdmi_write(hdmi, REG_HDMI_GENERIC1(i), buf[i]);
+ 
+-	val = hdmi_read(hdmi, REG_HDMI_GEN_PKT_CTRL);
+-	val |= HDMI_GEN_PKT_CTRL_GENERIC1_SEND |
+-		 HDMI_GEN_PKT_CTRL_GENERIC1_CONT |
+-		 HDMI_GEN_PKT_CTRL_GENERIC1_LINE(SPD_IFRAME_LINE_NUMBER);
+-	hdmi_write(hdmi, REG_HDMI_GEN_PKT_CTRL, val);
++	val = HDMI_GEN_PKT_CTRL_GENERIC1_SEND |
++	      HDMI_GEN_PKT_CTRL_GENERIC1_CONT |
++	      HDMI_GEN_PKT_CTRL_GENERIC1_LINE(SPD_IFRAME_LINE_NUMBER);
++	hdmi_update_bits(hdmi, REG_HDMI_GEN_PKT_CTRL, val, val);
+ 
+ 	return 0;
+ }
+@@ -269,12 +254,11 @@ static int msm_hdmi_bridge_write_hdmi_infoframe(struct drm_bridge *bridge,
+ 	for (i = 0; i < ARRAY_SIZE(buf); i++)
+ 		hdmi_write(hdmi, REG_HDMI_GENERIC0(i), buf[i]);
+ 
+-	val = hdmi_read(hdmi, REG_HDMI_GEN_PKT_CTRL);
+-	val |= HDMI_GEN_PKT_CTRL_GENERIC0_SEND |
+-		 HDMI_GEN_PKT_CTRL_GENERIC0_CONT |
+-		 HDMI_GEN_PKT_CTRL_GENERIC0_UPDATE |
+-		 HDMI_GEN_PKT_CTRL_GENERIC0_LINE(VENSPEC_IFRAME_LINE_NUMBER);
+-	hdmi_write(hdmi, REG_HDMI_GEN_PKT_CTRL, val);
++	val = HDMI_GEN_PKT_CTRL_GENERIC0_SEND |
++	      HDMI_GEN_PKT_CTRL_GENERIC0_CONT |
++	      HDMI_GEN_PKT_CTRL_GENERIC0_UPDATE |
++	      HDMI_GEN_PKT_CTRL_GENERIC0_LINE(VENSPEC_IFRAME_LINE_NUMBER);
++	hdmi_update_bits(hdmi, REG_HDMI_GEN_PKT_CTRL, val, val);
+ 
+ 	return 0;
+ }
+
+-- 
+2.53.0
 
 
