@@ -1,53 +1,53 @@
-Return-Path: <linux-arm-msm+bounces-116250-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-116251-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id rmQ8MDB+R2rhZQAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-116250-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Jul 2026 11:17:36 +0200
+	id GFOjGTx+R2roZQAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-116251-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Jul 2026 11:17:48 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5F61070087C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Jul 2026 11:17:36 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0820A70088D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Jul 2026 11:17:48 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=iUeg0hVH;
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=dJ5ZZl+k;
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116250-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116250-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116251-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.232.135.74 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116251-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 258E83006F19
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jul 2026 09:17:10 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 7521D300CDA9
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jul 2026 09:17:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A0F583B0AC3;
-	Fri,  3 Jul 2026 09:17:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6136A3B0AC3;
+	Fri,  3 Jul 2026 09:17:46 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69402378D9B;
-	Fri,  3 Jul 2026 09:17:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 503BA38B7D6;
+	Fri,  3 Jul 2026 09:17:45 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783070229; cv=none; b=gMmPmQ8JA8N2XvwNYyOvb0uUW/266tg7mLTWza21PyOyjqOe8lw8kBy8TAEf/OuHAnowdiue6ceYP6wKGJdRVnV29lNm+lTT5oPhFQ4IKl+TYGc3GTXfXzTjjGyIeClCHuiCmapGAGjvAE6mYuMPOsg9v8lQ/eyICUWvNQi6Ok8=
+	t=1783070266; cv=none; b=E/ac+vxLcx/8yX9X6Ob0DrqiORu8YgUafItsQ8Udz5abCrHeFeue/zBnLFlZNAvOPVHkuPJyPd15drB/WWnm07A85/E4k0fJtbg4lsIIm9jFrqeSmxw/4IBhuPmr540IMTlwt2enDMWCGDEjS6sAIvH9L2IzLb7haSCVASfd4po=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783070229; c=relaxed/simple;
-	bh=OxZtL/7S6LrV7euzDPmV16mjNXTHXdZrYzdbA95r7ac=;
+	s=arc-20240116; t=1783070266; c=relaxed/simple;
+	bh=ih7ytT8KoG0gVBuOmXWyP3MSFZEnK8Px3Y/aGGip/Go=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=dmAh9erSQwYek0mLJkXbgB0tgjQm4pwDa8ZmSidRcIWCrj9/p/tX+2A5tTmyT4SkZDnpVF0LKh54G8KUUFwwv4Io6xAv+wB2l9FTRIkHC1xQhDBHGyaskOeeYhpbZerkzgQ8hYZPVksgGTxgAws8+49DE+IoEh9RjBfBZNfYqUo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iUeg0hVH; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FAB01F00A3A;
-	Fri,  3 Jul 2026 09:17:02 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=LjUTqx2hFT9gHiyRDeI5uvxQbaBxJzVCAm4fGcniwtQTDtIwiiRRdFaBG5w13pS7p4VYUxdPtKfBgqCSltq9jTnfbeZ4eJhzmh823383nEcqpxvl8KbX3cEkoTSPY2wAHbUvAGrGbsv+7xF8sAMfbv45WhzQcMvG3MYkSEynCXA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dJ5ZZl+k; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 321601F000E9;
+	Fri,  3 Jul 2026 09:17:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783070228;
-	bh=vu+l4A4vujbcMul0Jqsu64kcOQKuFSO3bMAAT0GX0xs=;
+	s=k20260515; t=1783070265;
+	bh=4kJ0NpLhE/egqXjyj2i5Ld+EMykwk9Al4WjVklxardU=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=iUeg0hVHnz17SR9/RZpjFnjVEGCCX7/Hsc/YLSY/+H+rsHy50JmYMmgn/GVqQE28/
-	 5cKoIeGSInZs8aPL9rOt5zEgxZwicXNODWTyHqd+ghsla5w6PzQ8PbHAFwGIvSGyIq
-	 /CUQrsXx/Eund2SFVVIkQkOdAtYKHZvVd1KPYX5ANMH7NKc5M26dsC3MQrj8rEgaQK
-	 k+PG1M+IN/hMRyhSySqnnTgIazSSWaT0PQ8R6BTRjWM6up46rVKOR0h0AEMpA9i7LW
-	 fsWzv4HZ91LkAr9TnjHZ5rT6LiBOQlRDOjIhG12/h3Ou2oIQOEnpVOgdcKNL+pNsbx
-	 7Dbj2rnWF5Elw==
-Message-ID: <7c7ab43f-45c0-48bc-921a-8820408c88c9@kernel.org>
-Date: Fri, 3 Jul 2026 11:16:59 +0200
+	b=dJ5ZZl+kdjFYVzY7EtnpCqJMRjVjwnEY2ipum3mRnmb+N+Xzz6s/TtWabp1lLNid+
+	 D5wiaftUOKw85Mqtv5DbDAn7I9FnwjQfloV844DPFceCV5fnBpn3MOCC0+pN7vEulE
+	 3b0A5f12/N5pAxxXw8KEfM9S3xIoUcN4i/Jp3q6OBr3CKs20mfHPJD/XCxFfadEvxw
+	 DuYoOXvmbnYnHpbSWtCar1gfa32EPunwzhuxczhPHr9FMxZ4r67odH8Y1AktTDrnr7
+	 1PwzJnOHqUoDHuEtj9bSUfuwNH+Cz5dF43wLlHiIZcy2kiJMMI+dakePqD+hO/E8lc
+	 ZMlzmwmvrJd7A==
+Message-ID: <342b6f7f-8070-4135-a885-a6f1b0a485b4@kernel.org>
+Date: Fri, 3 Jul 2026 11:17:38 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -55,25 +55,18 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] qcom_battmgr: Add batteryless DC-adapter MAINS
- support
-To: Rakesh Kota <rakesh.kota@oss.qualcomm.com>
-Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+Subject: Re: [PATCH 3/5] arm64: defconfig: Enable ILI7807S DSI panel driver
+To: Nabige Aala <nabige.aala@oss.qualcomm.com>,
  Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Sebastian Reichel <sre@kernel.org>,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
- jishnu.prakash@oss.qualcomm.com, kamal.wadhwa@oss.qualcomm.com
-References: <20260518-add_dc_in_support-v1-0-31fbaa329879@oss.qualcomm.com>
- <56a54a34-1040-44ae-92e2-ce65a3d3acb5@oss.qualcomm.com>
- <20260519065938.4i5wot72pfxy4m3d@hu-kotarake-hyd.qualcomm.com>
- <ag-NLvh4ROgTCs_L@baldur>
- <d4001407-cdb0-48ee-a138-87c94b5dab01@oss.qualcomm.com>
- <20260702111737.2qtjcfskulav4usd@hu-kotarake-hyd.qualcomm.com>
- <5d5c693b-bd07-40a4-aea5-d9e1884aac50@kernel.org>
- <20260703091319.5kcsqjtx4e4rshsy@hu-kotarake-hyd.qualcomm.com>
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, arpit.saini@oss.qualcomm.com,
+ mohit.dsor@oss.qualcomm.com
+References: <20260627-shikra-dt-changes-v1-0-449a402673d0@oss.qualcomm.com>
+ <20260627-shikra-dt-changes-v1-3-449a402673d0@oss.qualcomm.com>
+ <cfb45d95-7bf1-47dc-96f2-2ea4e9be9e70@kernel.org>
+ <580d67aa-9a5f-4fd0-ad15-f57865b79477@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -119,104 +112,79 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  K9bCVaboTA2T77QYkRcRJYSsO1alGX0ome/hMLD1daXlkrNUp1HWa3K4iytLRXjCSIorWiGs
  n+q3krnpXu3TFkA8qtOFZMdnIiFuiq1yLT8hptsV5xh1TA2nsVvSYiaCr3q4s4BKjS/KrLDb
  qoxzw8ISjdUp4pA85vb6YLCmb39NgidD+7PmAr65lBNveIFynTgsja1rRQ4=
-In-Reply-To: <20260703091319.5kcsqjtx4e4rshsy@hu-kotarake-hyd.qualcomm.com>
+In-Reply-To: <580d67aa-9a5f-4fd0-ad15-f57865b79477@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Rspamd-Action: no action
 X-Spamd-Result: default: False [-5.16 / 15.00];
 	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_RECIPIENTS(0.00)[m:rakesh.kota@oss.qualcomm.com,m:konrad.dybcio@oss.qualcomm.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:sre@kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-pm@vger.kernel.org,m:jishnu.prakash@oss.qualcomm.com,m:kamal.wadhwa@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_SENDER(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[14];
-	TAGGED_FROM(0.00)[bounces-116250-lists,linux-arm-msm=lfdr.de];
-	MIME_TRACE(0.00)[0:+];
-	FORWARDED(0.00)[lists@lfdr.de];
+	TAGGED_FROM(0.00)[bounces-116251-lists,linux-arm-msm=lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:nabige.aala@oss.qualcomm.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:arpit.saini@oss.qualcomm.com,m:mohit.dsor@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FORGED_SENDER(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	MIME_TRACE(0.00)[0:+];
+	RCVD_COUNT_THREE(0.00)[4];
+	FORWARDED(0.00)[lists@lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	TO_DN_SOME(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	MID_RHS_MATCH_FROM(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[11];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	MID_RHS_MATCH_FROM(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,vger.kernel.org:from_smtp,qualcomm.com:email]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 5F61070087C
+X-Rspamd-Queue-Id: 0820A70088D
 
-On 03/07/2026 11:13, Rakesh Kota wrote:
-> On Thu, Jul 02, 2026 at 01:28:35PM +0200, Krzysztof Kozlowski wrote:
->> On 02/07/2026 13:17, Rakesh Kota wrote:
->>> On Tue, Jun 30, 2026 at 04:16:13PM +0200, Konrad Dybcio wrote:
->>>> On 5/22/26 12:56 AM, Bjorn Andersson wrote:
->>>>> On Tue, May 19, 2026 at 12:29:38PM +0530, Rakesh Kota wrote:
->>>>>> On Mon, May 18, 2026 at 04:36:32PM +0200, Konrad Dybcio wrote:
->>>>>>> On 5/18/26 3:49 PM, Rakesh Kota wrote:
->>>>>>>> On batteryless boards powered by 12V DC adapters, registering the
->>>>>>>> power supply as BATTERY causes userspace to incorrectly trigger
->>>>>>>> battery power-saving sequences.
->>>>>>>
->>>>>>> Does battman really offer no way of differentiating whether a battery
->>>>>>> is *actually* present in such cases?
->>>>>>>
->>>>>>> What boards are affected?
->>>>>>>
->>>>>> Currently, batteryless support is only implemented for the
->>>>>> qcs6490-rb3gen2(Kodiak) board.
->>>>>>
->>>>>
->>>>> What do you mean?
->>>>>
->>>>> Are you saying that the pmic_glink firmware in Kodiak has a one-off hack
->>>>> that no other implementation of this firmware has?
->>>>>
->>>>> My Lenovo IdeaCentre (hamoa) doesn't have battery, what should I do now?
->>>>
->>>> I was going through my inbox.
->>>> This remains unanswered, and I don't see the discussion progressing
->>>> without resolving this.
->>>>
->>> To clarify — there is no platform-side hack involved. The Kodiak board
->>> has a batteryless variant, but the pmic_glink firmware provides no way
->>> to distinguish whether a battery is physically present or not. Since
->>> this can't be determined from firmware, we introduced a DT-based
->>> property to describe the hardware configuration explicitly.
+On 03/07/2026 11:10, Nabige Aala wrote:
+> 
+> On 6/28/2026 2:14 PM, Krzysztof Kozlowski wrote:
+>> On 27/06/2026 12:01, Nabige Aala wrote:
+>>> From: Arpit Saini <arpit.saini@oss.qualcomm.com>
 >>>
->>> This is not Kodiak-specific — any batteryless board, including hamoa,
->>> can use the same DT property to avoid incorrect BATTERY registration
+>>> Enable the ILI7807S 1080x1920 video-mode DSI panel driver as a module,
+>>> used on the Shikra board.
+>> So that's a v4, no changelog, tags ignored, comments not responded and
+>> also ignored.
 >>
->> Unfortunately the answer might be: fix your firmware. Since your
->> firmware is the interface and we do not expose battery in DT, then you
->> do not get additional properties. You made conscious design choice of
->> abstracting some things in the firmware, so you do control that part of
->> the software stack. If you make one choice, it might lead to other, like
->> rejecting such properties.
+>> You got yourself one NAK, now second:
 >>
+>> NAK
+>>
+>> Address the comments before you send the next version.
+>>
+>> Best regards,
+>> Krzysztof
 > 
-> This is a hardware limitation — both the debug board and batteryless
-> platform use the same Batt_ID resistor (10K), so the firmware has no way
-> to distinguish between the two at runtime. There is nothing to fix on
-> the firmware side.
+> Hi Krzysztof,
 > 
-> Given this, would a new compatible string (e.g.,qcom,pmic-glink-batteryless)
-> be preferred over a DT property, or do you have another suggestion?
+> 
+> Regarding your initial comment "Does Samsung Shikra CQM EVK have it? I 
+> guess no."
+> I checked internally and found that there is no Samsung specific Shikra 
+> board. Shikra (CQS and CQM) boards have this panel and i am upstreaming 
+> for the same boards.
+> 
+> I hope this clarifies the concern. Please let me know if you have any 
+> further questions.
 
-Debug board is not a end device, thus you basically have only one real
-use case: battery less. Treat everything that.
+I don't know what does it refer to. Please follow mailing list style of
+discussions.
 
 Best regards,
 Krzysztof
