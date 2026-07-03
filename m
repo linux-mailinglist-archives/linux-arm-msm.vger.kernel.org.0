@@ -1,105 +1,104 @@
-Return-Path: <linux-arm-msm+bounces-116141-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-116142-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id lqKNM6A+R2oOUwAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-116141-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Jul 2026 06:46:24 +0200
+	id gGtYJPU/R2o6UwAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-116142-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Jul 2026 06:52:05 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 272826FE7B4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Jul 2026 06:46:24 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id F26D86FE7E9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Jul 2026 06:52:04 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=i6c+HR87;
-	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=HKtpLfjK;
+	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b="l5Qi/bD3";
+	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=UZHqLuhC;
 	dmarc=pass (policy=reject) header.from=qualcomm.com;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116141-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116141-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116142-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116142-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id DF82B3014BC5
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jul 2026 04:45:57 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 5AB683002E4C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jul 2026 04:51:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8ED7031F985;
-	Fri,  3 Jul 2026 04:45:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 788C130E85B;
+	Fri,  3 Jul 2026 04:51:56 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8A333191D0
-	for <linux-arm-msm@vger.kernel.org>; Fri,  3 Jul 2026 04:45:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A760B314B66
+	for <linux-arm-msm@vger.kernel.org>; Fri,  3 Jul 2026 04:51:45 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783053956; cv=none; b=h/odxZVA9OtfA4sUbTdM3tL8FeM59K4UQo96BbNfqwPnMKcq50c8+lIAm1wnRLEu2BvZpmVn76TYldM0tQ+ijppLgpG26HPOBX/pdf5MhixcnHf1tTYL+R62Z+kJdf8mNZEkwQ57NfayZuIo7SVz08YJH1zQpz9UVAkS+jqy2yY=
+	t=1783054314; cv=none; b=n2tFzkK38GSXmt6zIRdFa6xduyHHHI4E55Y/PdMik6QLXUB6EGkpTZjQhoWSKeuCig50ER/o8idUMyfhYOcBNxwmk+rvIcdJsLdJmPLwyMCfHMHTlbH+PEppCzBe9is98Txawyb8R5vkEQmWTRQSvoHumx//aVaRFwiGEUDIDoY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783053956; c=relaxed/simple;
-	bh=QL+b1Uv/Tr6IbU7khICMy0KbSNqhdxtZNbBtNoUgWVQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:Cc:
-	 In-Reply-To:Content-Type; b=ZR4krIrytXrSXSnzAwImGGz7pcscWTbOOkf2YD+6w6gqMjS0mA1azafPXaDGKr3OXaS9/TRIuwSvgAw5jWz/WpUZN7wiOWiUy+grZrz9HujyDpL/3mTJOoQ40RUcH0+a3QODrCmmqvkDYKXrystxjVRPt/1Msbk86jgK93ARwnA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=i6c+HR87; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=HKtpLfjK; arc=none smtp.client-ip=205.220.180.131
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66342XUR2817760
-	for <linux-arm-msm@vger.kernel.org>; Fri, 3 Jul 2026 04:45:40 GMT
+	s=arc-20240116; t=1783054314; c=relaxed/simple;
+	bh=i9VfKxB6W7SE7/7UGu3+PX6t1sBCwGxQEschIHYCu4M=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=dcKLHnTXE0Kn3fYNlpq/8pXwiWmx0d8CnpCbDqDZtW2yRRDI6XYzegroZD2RPebkc4gNe6xOWIAE1rIXCAIF/xelu6MD2KGfZmlp4zpEMwqsDWk2UV4SMFJR8s52BC8MB6f2kKz3InHJQCdTpU4ZMJW20bg5ag9j/Cuzj/IuKGg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=l5Qi/bD3; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=UZHqLuhC; arc=none smtp.client-ip=205.220.180.131
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66342hIx2687156
+	for <linux-arm-msm@vger.kernel.org>; Fri, 3 Jul 2026 04:51:43 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	mK64gRUrP1jCi37aIEHAFmpI/+fr4iexNBUgM3vWG1k=; b=i6c+HR87E+mptGUT
-	c6J73ULsKq4y2pb3ZoBgo5KOrCZezfUzcLZcA9jauzR31XS+BRxE5gYvBbVd/s/S
-	BftW3VHjhc2yqIULhA9LxiN38VF7ZnD8qme4DbrMtYOlGvdc0tt/CZah3KQKN42s
-	bY7PAFRCew6Qz03DSwS5T0HAhfD/C/oAVol3dvXNeUBN9T59qIDtw2CJDaFQLw1e
-	Dd2fl86Z3/kZUlvvv+6UMB6wXaTffooGv2RAWCkc4EmNyC43X5IrPAI9He3Ytz3H
-	DmPGCpGfRdsV6g6bZ3eM8Ic++i+yEIWRagqxkltjVt196P5hrAgLEoQyqR6N3n8c
-	QQudNw==
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f5tpnjh8p-1
+	4woTUuvmZDdwYb7vOc5MfIv0PJgvjUEe4j7hT1Oxb3Y=; b=l5Qi/bD3YIBVa2qu
+	/fFhGumHdYQDXQpqtgn/JvqqXNF4wKC3zREQ/65b73aEt3OVmxI/vmYR5YJFaJK4
+	JTrZADpaN3GS7IExw0Ep5NiO1Q5WSeRrNjFnTuF74gGplIheVDvO4NlOE/v9MjST
+	yZLRdankHJHc0fF+o4yxYs/4DVyG6/sNauqJFraW7I17ZDNctzYhJLu2asjHRNPv
+	PsNums7Bm9nvXS6UW+b6NQ66zmBsT6uB1shIl8c2BXQrLKJWUvbzh2VEjYfsTH3A
+	griXvcjTiRyuaFHBjcDkKRYnzksNyXIUChCM+w4IkdHuPPj7CYbZ0Vh9542YvVHe
+	ILjM8A==
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f648n0fe9-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 03 Jul 2026 04:45:39 +0000 (GMT)
-Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-2c9e994869aso2922765ad.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Jul 2026 21:45:39 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 03 Jul 2026 04:51:43 +0000 (GMT)
+Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-2c9b71388fbso4192135ad.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Jul 2026 21:51:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1783053939; x=1783658739; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:cc:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=mK64gRUrP1jCi37aIEHAFmpI/+fr4iexNBUgM3vWG1k=;
-        b=HKtpLfjKgZfxm5xqt/SxHaCq+dRJFCLQfuIUoFn7FGcEjtSlcTowZO+paOPJkgxxAD
-         lQyI6jyPd0qrd59OD8UqxEIIH7Hej8F79LGLa6zzLPTiTcYM70RpoYdZgR+Z1x4y4fR1
-         qKf8i4PQLy6EbY0Lq1ZjFQXNiHlZQiYxWb0gTyKUV7Ul1ST10r2nEfdJOxJ+7Qu4QsNn
-         kiQeF5C4UUGs2Vu5mn3MXqZEez2umh0N7aVxBkPlLokrXxUfIpdu98dt+HTBNzbZiJ85
-         2zBouEjufJIKSKgW4MPs0C+OJta0B4P2NzqUKirgN4fOQBOMC7Q4CsnVrkkdYkUcXR2h
-         f17g==
+        d=oss.qualcomm.com; s=google; t=1783054302; x=1783659102; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=4woTUuvmZDdwYb7vOc5MfIv0PJgvjUEe4j7hT1Oxb3Y=;
+        b=UZHqLuhCrEu6uv8IOlZOtfhnde0fQ5khuCEv8br692kVla7u1lu2Zh1Vj62c8Alkh6
+         +Jj5mIox35re3b1igUBwhev/hAQLwYWvY57Kv0ClDCz6ktbALTgdbLGy4VAedDUQtOD3
+         81Hg6GglmveoqjeQYNMHTcnlAcF4jaOeuPOZnJH6qK5WbzaG50P6O+rfVoNOTi4Z4g0+
+         B6CPic5a3JrDcto3tT2PzXXmsrRBJpMSdwuGvM7ZDAz0gRc3mnOFphBhakgx3Kp851NY
+         9o2zchH35PgCgk7wQixhI+y+o55vLEyCbqj26dF2cNjLkPI1/WhyoGWr3OScy5s3f5Of
+         xBWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783053939; x=1783658739;
-        h=content-transfer-encoding:in-reply-to:cc:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20251104; t=1783054302; x=1783659102;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=mK64gRUrP1jCi37aIEHAFmpI/+fr4iexNBUgM3vWG1k=;
-        b=fYgySQENqOztHZKhFbaBUylrseNgocmGAaGqNCmx2j4/nh9ES4nzGve+RoD2ptsdY4
-         /FcRbFQDFcFvSO2JqvN5jkI2DTnyjTKGPr+DqMDBqkkNkI5Tt4Drz2TsYKUD6c8aX9sD
-         YzBUhBYaFnDS+ulpcraRutrVRhuc6XTf6DhErv2ql16stR3umsEgl41GQYs+wDjU90Oq
-         s7XwtRMK9w/ivNZN59XwvBanyr9yfjrmn1KnLKQzKgoaPHPiZNnah+JD7B8QZeJivUYp
-         qStLKrnI8Yj0cdkFUx03Ef1M0Mj/hyDN1pU4P4D8L2W263ws1J4xUjJ4KHz2+C69vo/w
-         TElQ==
-X-Forwarded-Encrypted: i=1; AHgh+RqhIq5UXzO13ojE9hstzfNcaYoUtwAGCJCRNLFA5PBTujYzkO0/C+ZtwvIECzI+FwZNWN9vBpHJTUrkWloX@vger.kernel.org
-X-Gm-Message-State: AOJu0YxRwSETyBF4ASOm6tuN+93hoEjNEVKOh7jYoAkbyr4hP/R35NNO
-	rXt6VddINVbZUpeANOmDn4I8Wy5Tg/MrWEK13TJoOmWZoNCvkGBpamQckmSthlFA29jJSZWQ3ld
-	xopLrc/EnBLg11GiY4TaTcgxuny7NzFsD0pr2/Gjza3GwkhGvD0GoNeBsFlSw2F2C8C/H
-X-Gm-Gg: AfdE7cmJqOE1yW3Dg9okH9cZG1GIq81Mh82TLXm7UYnWxtqmxqufr5Q3VrXF7ghcDgU
-	uB1ACzEXSxQ98LZVEJfQeDZm9jhPinDB6WIGXGmt+pKkg9MmqSpyEgpVKyPpVwLKcVL8sLzQLtH
-	m3e+f4EkqxGG15XENikWAVlh1VWFsqSO36v49AnDNZCnfRViCqaX0RRMOY4UBeL6qw2wsWUpb0N
-	Kme7MYwE0BBsDU+Tf9w6y104rJdFIb7W9jD7aYB72BQrhfm6oWQ8eTtfkVna/rOYzoVtoPW4L/R
-	zs1KgBWFy6uW6MzAut3UTgEDh+Hl/z6vBSEs/HFCrsaaL9bG8cCRl75fWml7cJhaocTWocQo4j0
-	jmAPo15jc9tFlqmohqyf4CJT/zxwhwUMV2drHtxHC04ANpVOs5+QAi9gjiY4rKxlTxOywESX/ut
-	ECh4C9aQ==
-X-Received: by 2002:a17:902:f543:b0:2ca:5d24:720b with SMTP id d9443c01a7336-2ca7e882dd6mr98199655ad.39.1783053938705;
-        Thu, 02 Jul 2026 21:45:38 -0700 (PDT)
-X-Received: by 2002:a17:902:f543:b0:2ca:5d24:720b with SMTP id d9443c01a7336-2ca7e882dd6mr98199175ad.39.1783053937967;
-        Thu, 02 Jul 2026 21:45:37 -0700 (PDT)
-Received: from [10.133.33.167] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2cad776589fsm3083945ad.43.2026.07.02.21.45.32
+        bh=4woTUuvmZDdwYb7vOc5MfIv0PJgvjUEe4j7hT1Oxb3Y=;
+        b=VGJ/zOJPxALWSFUZpm2UR8hQKADW+Y9m551vn34IzRu3qFQqFjA80CD7by2d04FvhZ
+         ibNNO04ohYMB0qm8+vBvjt9MhEP2PTpuBPSjw/Xp7yR9w4daxdUDFVyH39HCrKEz6eP4
+         fQ/pru4xtUZ1qjtKmHQytKyEmpmK0q9NtJNfr1hlTmVYCJ0ChJWvwxMFb42kuRb5MyLt
+         gJvWFm5QMCRfEhOKarzmb48EQ5vNU3CjWOD6b8iV2TmrPTgzecDZdzjdNBMnu8ApoEp3
+         uzXC4/IE9MsZgiVao6IGx6VH7da0pCyeWM3yk9KWlp4WngaBmdv5mNo/uNXZt/QPPpVT
+         nQGA==
+X-Forwarded-Encrypted: i=1; AHgh+RpePbWVO1k5WwMnY3jaAjFMe2oyHZlbBYRsSXRb8x5oiLnSf1ucjklk0QUg/+f8MvHw2sgabalsXnNzLR8j@vger.kernel.org
+X-Gm-Message-State: AOJu0YzSQ790MrwBuXgz1BlkZNd5wzpRdAj2rSSzDoebCsz2AHyUl7hD
+	b//Aj4RM+0oJ5JCBlNdKuzMDnhAQmdA4sVuP8Yz+s3uwS3eEZc+Szcb/hrt6TOI4q8i2XVuOJOl
+	+CQBa+hKlCImHcjqgkqcbhPzCP+MCQdf/0S7CmFmeY9CwHA6tSVlVwZ34502vVjbosiaD
+X-Gm-Gg: AfdE7ck6x+ijsPhtEQcSbIdRlGyMkj2a1FMEDYWPkmsOT6gDHyVvYvPMz8AwNIOHqQb
+	dgjRMDlEp25mw3Nh6zF1/bO+Gj+VYnOZKJOCwT39C7SGQG3ARDUn33rcbtZTqpR3KGqszhCaBSd
+	LknAlTRAJkNe0oo/fxUU4et8Mmp27w5dax0nJKS7TkGehRjRFBURtGYYXl/lnOvqrvw97uTnfcg
+	sh8PVs7LCsmHmKPf2nb6Cs5S/rNwoNcpwcFPzY8DdBpZEbGPRjNcc0Q5PMqaoK1QffhF0+8YNFW
+	5HAwYrrszUyaXC8lU2RrzSfo8OMz4eh3tyUPTb0cHwF6UWpkfovgh8ahXNX4UnWfzOiaYTOchKh
+	SZNl2E/8exK9NRSWkjH5c5PxCXYceGiTurZzbWKSb+CT+
+X-Received: by 2002:a17:902:db12:b0:2c6:9f66:d573 with SMTP id d9443c01a7336-2ca7e67eda5mr96601285ad.2.1783054301966;
+        Thu, 02 Jul 2026 21:51:41 -0700 (PDT)
+X-Received: by 2002:a17:902:db12:b0:2c6:9f66:d573 with SMTP id d9443c01a7336-2ca7e67eda5mr96600935ad.2.1783054301351;
+        Thu, 02 Jul 2026 21:51:41 -0700 (PDT)
+Received: from [10.217.218.209] ([202.46.22.19])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-13b3c7fa33asm16106814c88.5.2026.07.02.21.51.37
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 02 Jul 2026 21:45:35 -0700 (PDT)
-Message-ID: <056046b5-00bf-449a-8945-43fa11329286@oss.qualcomm.com>
-Date: Fri, 3 Jul 2026 12:45:16 +0800
+        Thu, 02 Jul 2026 21:51:40 -0700 (PDT)
+Message-ID: <3777cef8-c90a-4c7a-9b71-c563e8d56f2e@oss.qualcomm.com>
+Date: Fri, 3 Jul 2026 10:21:35 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -107,55 +106,52 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 3/4] misc: fastrpc: Allocate entire reserved memory for
- Audio PD in probe
-To: Srinivas Kandagatla <srini@kernel.org>
-References: <20260609025938.457-1-jianping.li@oss.qualcomm.com>
- <20260609025938.457-4-jianping.li@oss.qualcomm.com>
- <cca276af-3e6a-44d3-a1b6-c2bc401a28cc@kernel.org>
+Subject: Re: [PATCH v6] i2c: i2c-qcom-geni: serve transfers during early
+ resume
+To: Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>,
+        andi.shyti@kernel.org, viken.dadhaniya@oss.qualcomm.com,
+        linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Bjorande@oss.qualcomm.com
+Cc: konrad.dybcio@oss.qualcomm.com
+References: <20260629134140.755193-1-mukesh.savaliya@oss.qualcomm.com>
 Content-Language: en-US
-From: Jianping Li <jianping.li@oss.qualcomm.com>
-Cc: amahesh@qti.qualcomm.com, Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>,
-        arnd@arndb.de, Greg KH <gregkh@linuxfoundation.org>,
-        abelvesa@kernel.org, jorge.ramirez-ortiz@linaro.org,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, quic_chennak@quicinc.com
-In-Reply-To: <cca276af-3e6a-44d3-a1b6-c2bc401a28cc@kernel.org>
+From: Aniket RANDIVE <aniket.randive@oss.qualcomm.com>
+In-Reply-To: <20260629134140.755193-1-mukesh.savaliya@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: LkZW-RnpehYn5YCzEfibuJOkWAYCWA3V
-X-Proofpoint-ORIG-GUID: LkZW-RnpehYn5YCzEfibuJOkWAYCWA3V
-X-Authority-Analysis: v=2.4 cv=UMft2ify c=1 sm=1 tr=0 ts=6a473e73 cx=c_pps
- a=IZJwPbhc+fLeJZngyXXI0A==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAzMDA0MiBTYWx0ZWRfX0U5ymlFe6A5f
+ zyIuS5kguEmNmlzFZUSj8HlRaykUT/h329zhNXPy4qTWkLHnvzTOa+Tzu3jikGDKaM+mQtzOXom
+ c0BYS4kdh9lzc+GPB5ojUb8UNHLG73o=
+X-Proofpoint-ORIG-GUID: 3koD6LKkVOBIGT_nReO4pA0M4TeHOu7z
+X-Authority-Analysis: v=2.4 cv=O4wJeh9W c=1 sm=1 tr=0 ts=6a473fdf cx=c_pps
+ a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=kdAfD6VJjniLw_QBAp4A:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=uG9DUKGECoFWVXl0Dc02:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAzMDA0MSBTYWx0ZWRfX1IydHhVhQW/i
- z3RXAk4IecK36XT1D0xEsxP5YGKhqlYxvqFS7Qvl4tp862A+/MmYGL0SrwmROgLxFzij6bWs84U
- 5C2rSWPzWHhNheibcZ9GBzF6APdnDl8=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAzMDA0MSBTYWx0ZWRfX0svBPCdQhTUz
- ncOJtzN+4KLdtbvSVQph/QrfEVVltpg5ds7AXZmW5XPcEJXH+O6IptNAfWJiTWMLxKmA37P8bYU
- esNMhEKSFMPwHOIBR7QfgCoY8sRMw/KNSzf1TlYsFm1iZAEU4SYxlN1xQ4VWOn6FYKCP5b52a2U
- pmJduNdAeFu6/kcxYdyf6CCX1e9hguodReHsNblMM4yPvxPeUcXN9V4SK6LLcuTKL3qqMpc6H8h
- 6+IRhvfqFOWp1sngPNjvYSRoZqKEMlo77/kQ/2P0oPhW6zbdUBvO32JCiBJpNpMlqBInbt2f67h
- GENYatW7+I4kUfsHB5NRH0IXFmqXJuJlCB+ME0OLUVa4FjBCgTdJ8gPlK9pAc0BoqPEuMQQ6ZYM
- sevTvpijOR3DMqNVS1UnHW9kIA4OQs6vqzeIUoAtkzOwldqxQzaiG1kCYYoY9mxQ/c3bBxgcZCq
- x8947eLljJ7nZmWdUHw==
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
+ a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=QyXUC8HyAAAA:8 a=KKAkSRfTAAAA:8
+ a=EUspDBNiAAAA:8 a=5gi8XA0zxOeqIYz4FXMA:9 a=QEXdDO2ut3YA:10
+ a=GvdueXVYPmCkWapjIL-Q:22 a=TjNXssC_j7lpFel5tvFf:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: 3koD6LKkVOBIGT_nReO4pA0M4TeHOu7z
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAzMDA0MiBTYWx0ZWRfX5AtlRIFFLspu
+ lzsZg53OapNCngl2/t38/joMBwppJvkZHg0o4qVMX/jBPhoFaFqsxYxpE8eJ+9Fb9XKzyLKvEDF
+ WC9A38Dhinq6dSqpNb8p88fjm4dTMi/ZLeE7fyBTSXtI+KoP9CqMp3ckPT48s4y0L1hrO6m9sEz
+ zFv4cnkbaUtKKOsVtijVuyg/Nod0Zj3fbRLd5XOZld3ZW95knCCnahnw1JKmSPPS62HduE9309u
+ TOOZ4FdAO0XQTbYdJCsjZBMbOOpHaCByndWyy2Pcw8HhHP5a2N6U8LDdOrkkLMOpHMGJWWRzMj9
+ zVZT2pAFk7jOkAZO7NKdiFuhVZcrGdUqAJ60tX7L2pY+lNsYVUqxKNeTMGrtzSPZbGfGiJcv8Ti
+ TydRcopA4sYIDoCabx+5PV5VCE6yN1B5fMI6GT/0hJUj2rqsF+qXmhoQKk2ySpiN4D3eRgn0FG2
+ 8AqKCGqrFqP0g7Fc2Yg==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-07-03_01,2026-06-26_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 lowpriorityscore=0 suspectscore=0 phishscore=0
- priorityscore=1501 bulkscore=0 impostorscore=0 spamscore=0 adultscore=0
- clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607030041
+ impostorscore=0 priorityscore=1501 bulkscore=0 clxscore=1015 phishscore=0
+ suspectscore=0 malwarescore=0 spamscore=0 adultscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607030042
 X-Rspamd-Action: no action
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
@@ -163,296 +159,168 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	MIME_TRACE(0.00)[0:+];
 	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	FORWARDED(0.00)[lists@lfdr.de];
-	TAGGED_FROM(0.00)[bounces-116141-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-116142-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_SENDER(0.00)[jianping.li@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS(0.00)[m:srini@kernel.org,m:amahesh@qti.qualcomm.com,m:ekansh.gupta@oss.qualcomm.com,m:arnd@arndb.de,m:gregkh@linuxfoundation.org,m:abelvesa@kernel.org,m:jorge.ramirez-ortiz@linaro.org,m:linux-arm-msm@vger.kernel.org,m:dri-devel@lists.freedesktop.org,m:linux-kernel@vger.kernel.org,m:quic_chennak@quicinc.com,s:lists@lfdr.de];
+	FORGED_SENDER(0.00)[aniket.randive@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS(0.00)[m:mukesh.savaliya@oss.qualcomm.com,m:andi.shyti@kernel.org,m:viken.dadhaniya@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:linux-i2c@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:Bjorande@oss.qualcomm.com,m:konrad.dybcio@oss.qualcomm.com,s:lists@lfdr.de];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:url,vger.kernel.org:from_smtp,qualcomm.com:email,qualcomm.com:url,qualcomm.com:dkim,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[jianping.li@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[aniket.randive@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	ALIAS_RESOLVED(0.00)[];
 	MID_RHS_MATCH_FROM(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[11];
+	RCPT_COUNT_SEVEN(0.00)[8];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
 	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 272826FE7B4
+X-Rspamd-Queue-Id: F26D86FE7E9
 
 
-On 7/2/2026 4:37 AM, Srinivas Kandagatla wrote:
->
-> On 6/9/26 3:59 AM, Jianping Li wrote:
->> Allocating and freeing Audio PD memory from userspace is unsafe because
->> the kernel cannot reliably determine when the DSP has finished using the
->> memory. Userspace may free buffers while they are still in use by the DSP,
->> and remote free requests cannot be safely trusted.
->>
->> Additionally, the current implementation allows userspace to repeatedly
->> grow the Audio PD heap, but does not support shrinking it. This can lead
->> to unbounded memory usage over time, effectively causing a memory leak.
->>
->> Fix this by allocating the entire Audio PD reserved-memory region during
->> rpmsg probe and tying its lifetime to the rpmsg channel. This removes
->> userspace-controlled alloc/free and ensures that memory is reclaimed only
->> when the DSP process is torn down.
->>
->> Add explicit validation for remote_heap presence and size before sending
->> the memory to DSP, and fail early if the reserved-memory region is
->> missing or incomplete.
->>
->> Fixes: 0871561055e66 ("misc: fastrpc: Add support for audiopd")
->> Cc: stable@kernel.org
->> Signed-off-by: Jianping Li <jianping.li@oss.qualcomm.com>
->> ---
->>   drivers/misc/fastrpc.c | 112 ++++++++++++++++++++++-------------------
->>   1 file changed, 59 insertions(+), 53 deletions(-)
->>
->> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
->> index 517884000331..1942e74535e5 100644
->> --- a/drivers/misc/fastrpc.c
->> +++ b/drivers/misc/fastrpc.c
->> @@ -276,6 +276,8 @@ struct fastrpc_channel_ctx {
->>   	struct kref refcount;
->>   	/* Flag if dsp attributes are cached */
->>   	bool valid_attributes;
->> +	/* Flag if audio PD init mem was allocated */
->> +	bool audio_init_mem;
->>   	u32 dsp_attributes[FASTRPC_MAX_DSP_ATTRIBUTES];
->>   	struct fastrpc_device *secure_fdevice;
->>   	struct fastrpc_device *fdevice;
->> @@ -1341,15 +1343,24 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
->>   	struct fastrpc_init_create_static init;
->>   	struct fastrpc_invoke_args *args;
->>   	struct fastrpc_phy_page pages[1];
->> +	struct fastrpc_channel_ctx *cctx = fl->cctx;
->>   	char *name;
->>   	int err;
->> -	bool scm_done = false;
->>   	struct {
->>   		int client_id;
->>   		u32 namelen;
->>   		u32 pageslen;
->>   	} inbuf;
->>   	u32 sc;
->> +	unsigned long flags;
->> +
->> +	if (!cctx->remote_heap || !cctx->remote_heap->dma_addr ||
->> +	    !cctx->remote_heap->size) {
->> +		err = -ENOMEM;
->> +		dev_err(fl->sctx->dev,
->> +			"remote heap memory region is not added\n");
->> +		return err;
->> +	}
->>   
->>   	args = kzalloc_objs(*args, FASTRPC_CREATE_STATIC_PROCESS_NARGS);
->>   	if (!args)
->> @@ -1373,31 +1384,6 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
->>   	inbuf.client_id = fl->client_id;
->>   	inbuf.namelen = init.namelen;
->>   	inbuf.pageslen = 0;
->> -	if (!fl->cctx->remote_heap) {
->> -		err = fastrpc_remote_heap_alloc(fl, fl->sctx->dev, init.memlen,
->> -						&fl->cctx->remote_heap);
->> -		if (err)
->> -			goto err_name;
->> -
->> -		/* Map if we have any heap VMIDs associated with this ADSP Static Process. */
->> -		if (fl->cctx->vmcount) {
->> -			u64 src_perms = BIT(QCOM_SCM_VMID_HLOS);
->> -
->> -			err = qcom_scm_assign_mem(fl->cctx->remote_heap->dma_addr,
->> -							(u64)fl->cctx->remote_heap->size,
->> -							&src_perms,
->> -							fl->cctx->vmperms, fl->cctx->vmcount);
->> -			if (err) {
->> -				dev_err(fl->sctx->dev,
->> -					"Failed to assign memory with dma_addr %pad size 0x%llx err %d\n",
->> -					&fl->cctx->remote_heap->dma_addr,
->> -					fl->cctx->remote_heap->size, err);
->> -				goto err_map;
->> -			}
->> -			scm_done = true;
->> -			inbuf.pageslen = 1;
->> -		}
->> -	}
->>   
->>   	fl->pd = USER_PD;
->>   
->> @@ -1409,8 +1395,17 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
->>   	args[1].length = inbuf.namelen;
->>   	args[1].fd = -1;
->>   
->> -	pages[0].addr = fl->cctx->remote_heap->dma_addr;
->> -	pages[0].size = fl->cctx->remote_heap->size;
->> +	spin_lock_irqsave(&cctx->lock, flags);
->> +	if (!cctx->audio_init_mem) {
->> +		pages[0].addr = cctx->remote_heap->dma_addr;
->> +		pages[0].size = cctx->remote_heap->size;
->> +		cctx->audio_init_mem = true;
->> +		inbuf.pageslen = 1;
->> +	} else {
->> +		pages[0].addr = 0;
->> +		pages[0].size = 0;
-> What is the expected behavoiur in this case?
 
-You're right that this behaviour is subtle and deserves an in-code
-comment. I'll add one in v9, right above the spin_lock, along the
-lines of:
-        /*
-	* Audio PD is a static PD and retains the remote heap
-	* information across daemon restarts. Therefore only
-	* the first attach should provide heap information to
-	* DSP. Subsequent attaches reuse the previously
-	* initialized memory pool.
-	*/
+On 6/29/2026 7:11 PM, Mukesh Kumar Savaliya wrote:
+> I2C transfers issued during the resume_noirq phase can fail on GENI I2C
+> controllers.
+> 
+> Some devices require I2C communication before their resume sequence can
+> complete. One example is a USB Ethernet device attached through PCIe,
+> where device configuration must be restored over I2C before PCIe link
+> initialization can proceed. Since such accesses occur during
+> resume_noirq(), the underlying I2C controller must be able to service
+> transfers at that stage.
+> 
+> However, GENI I2C transfers rely on interrupts for command completion,
+> while IRQ handling is still suspended during early resume. Additionally,
+> runtime PM may remain disabled until later in the resume sequence, causing
+> pm_runtime_get_sync() to return -EACCES and preventing controller
+> resources from being enabled.
+> 
+> Allow the controller to operate during early resume by requesting the IRQ
+> with IRQF_NO_SUSPEND and IRQF_EARLY_RESUME so completion interrupts can be
+> delivered during the noirq phase. Also restore runtime PM from
+> resume_noirq() when it is disabled and tolerate transient -EACCES failures
+> from pm_runtime_get_sync() during the PM state transition.
+> 
+> This enables GENI I2C transfers to complete successfully during the
+> resume_noirq phase and allows dependent devices to finish their resume
+> sequence.
+> 
+> Co-developed-by: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
+> Signed-off-by: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
+> Signed-off-by: Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>
+> ---
+> v5->v6 :
+> - Modified commit log to start with problem description as suggested by Bjorn.
+> - Moved to new implementation of the logic while earlier replied to comments on
+>    older design and considers latest fix added recently.
+> - Made change generic to I2C including GPI mode transfer, this was not done earlier.
+> - Changed email address to oss.qualcomm.com domain.
+> Link to V5: https://lore.kernel.org/lkml/20241227130236.755794-1-quic_msavaliy@quicinc.com/
+> 
+> ---
+> v4->v5:
+> - Commit log enhanced considering Bjorn's comments by explaining PCIe usecase.
+> - Enhanced comment with reason when using pm_runtime_force_resume().
+> - Corrected IS_ENABLED(CONFIG_PM) condition inside geni_i2c_xfer().
+> - Improved debug log as per Bjorn's suggestions during suspend, resume.
+> - Reverted back comment before devm_request_irq().
+> Link to V4: https://lore.kernel.org/lkml/bd699719-4958-445a-a685-4b5f6a8ad81f@quicinc.com/
+> 
+> ---
+> v3->v4 :
+>   - Enhanced commit log by explaining client usecase scenario during early resume.
+>   - Covered 'usage_count' of 'struct dev_pm_info' under CONFIG_PM to compile non PM CONFIG.
+> Link to V3: https://lore.kernel.org/all/20241119143031.3331753-1-quic_msavaliy@quicinc.com/T/
+> 
+> ---
+> v2 -> v3:
+>   - Updated exact usecase and scenario in the commit log description.
+>   - Removed bulleted points from technical description, added details in free flow.
+>   - Used pm_runtime_force_resume/suspend() instead customized local implementation.
+>   - Added debug log after pm_runtime_force_suspend().
+> Link to V2: https://lore.kernel.org/lkml/202410132233.P25W2vKq-lkp@intel.com/T/
+> 
+> ---
+> v1 -> v2:
+>   - Changed gi2c->se.dev to dev during dev_dbg() calls.
+>   - Addressed review comments from Andi and Bjorn.
+>   - Returned 0 instead garbage inside geni_i2c_force_resume().
+>   - Added comments explaining forced resume transfer when runtime PM
+>     remains disabled.
+> Link to V1: https://patches.linaro.org/project/linux-i2c/patch/20240328123743.1713696-1-quic_msavaliy@quicinc.com/
+> ---
+> ---
+>   drivers/dma/qcom/gpi.c             |  3 ++-
+>   drivers/i2c/busses/i2c-qcom-geni.c | 12 +++++++++++-
+>   2 files changed, 13 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
+> index c9a6f610ffd9..332f3aa40628 100644
+> --- a/drivers/dma/qcom/gpi.c
+> +++ b/drivers/dma/qcom/gpi.c
+> @@ -615,7 +615,8 @@ static int gpi_config_interrupts(struct gpii *gpii, enum gpii_irq_settings setti
+>   
+>   	if (!gpii->configured_irq) {
+>   		ret = devm_request_irq(gpii->gpi_dev->dev, gpii->irq,
+> -				       gpi_handle_irq, IRQF_TRIGGER_HIGH,
+> +				       gpi_handle_irq,
+> +				       IRQF_TRIGGER_HIGH | IRQF_NO_SUSPEND | IRQF_EARLY_RESUME,
+>   				       "gpi-dma", gpii);
+>   		if (ret < 0) {
+>   			dev_err(gpii->gpi_dev->dev, "error request irq:%d ret:%d\n",
+> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
+> index d2f5055b0b10..d56b36bd1d26 100644
+> --- a/drivers/i2c/busses/i2c-qcom-geni.c
+> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
+> @@ -913,6 +913,10 @@ static int geni_i2c_xfer(struct i2c_adapter *adap,
+>   	gi2c->err = 0;
+>   	reinit_completion(&gi2c->done);
+>   	ret = pm_runtime_get_sync(gi2c->se.dev);
+> +	if (ret == -EACCES) {
+> +		dev_warn(gi2c->se.dev, "Runtime PM is disabled:%d\n", ret);
+> +		ret = 0;
+> +	}
 
->
->> +	}
->> +	spin_unlock_irqrestore(&cctx->lock, flags);
->>   
->>   	args[2].ptr = (u64)(uintptr_t) pages;
->>   	args[2].length = sizeof(*pages);
->> @@ -1428,27 +1423,7 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
->>   
->>   	return 0;
->>   err_invoke:
->> -	if (fl->cctx->vmcount && scm_done) {
->> -		u64 src_perms = 0;
->> -		struct qcom_scm_vmperm dst_perms;
->> -		u32 i;
->> -
->> -		for (i = 0; i < fl->cctx->vmcount; i++)
->> -			src_perms |= BIT(fl->cctx->vmperms[i].vmid);
->> -
->> -		dst_perms.vmid = QCOM_SCM_VMID_HLOS;
->> -		dst_perms.perm = QCOM_SCM_PERM_RWX;
->> -		err = qcom_scm_assign_mem(fl->cctx->remote_heap->dma_addr,
->> -						(u64)fl->cctx->remote_heap->size,
->> -						&src_perms, &dst_perms, 1);
->> -		if (err)
->> -			dev_err(fl->sctx->dev, "Failed to assign memory dma_addr %pad size 0x%llx err %d\n",
->> -				&fl->cctx->remote_heap->dma_addr, fl->cctx->remote_heap->size, err);
->> -	}
->> -err_map:
->> -	fastrpc_buf_free(fl->cctx->remote_heap);
->> -	fl->cctx->remote_heap = NULL;
->> -err_name:
->> +	cctx->audio_init_mem = false;
-> this can race.
+Why we are checking specific error code here? Why can't we use the below 
+error check directly?
+if get sync itself is failed with pm runtime disabled then why we are 
+going ahead by making ret = 0 here? How you will make sure resources are 
+enabled?
 
-Thanks for the review. I'd like to clarify the intent here — please
-let me know if I'm missing something.
+>   	if (ret < 0) {
+>   		dev_err(gi2c->se.dev, "error turning SE resources:%d\n", ret);
+>   		pm_runtime_put_noidle(gi2c->se.dev);
+> @@ -1045,7 +1049,8 @@ static int geni_i2c_probe(struct platform_device *pdev)
+>   	platform_set_drvdata(pdev, gi2c);
+>   
+>   	/* Keep interrupts disabled initially to allow for low-power modes */
+> -	ret = devm_request_irq(dev, gi2c->irq, geni_i2c_irq, IRQF_NO_AUTOEN,
+> +	ret = devm_request_irq(dev, gi2c->irq, geni_i2c_irq,
+> +			       IRQF_NO_AUTOEN | IRQF_NO_SUSPEND | IRQF_EARLY_RESUME,
+>   			       dev_name(dev), gi2c);
+>   	if (ret)
+>   		return dev_err_probe(dev, ret,
+> @@ -1257,7 +1262,12 @@ static int __maybe_unused geni_i2c_resume_noirq(struct device *dev)
+>   	if (ret)
+>   		return ret;
+>   
+> +	/* Enforced disable_depth = 0 to actually enable runtime PM during noirq phase */
+> +	if (!pm_runtime_enabled(dev))
+> +		pm_runtime_enable(dev);
 
-The lock is not really there to protect 'audio_init_mem' itself,
-but to make sure the following is only sent to the DSP once:
+Here we are enabling the pm runtime so where we are disabling it?
 
-     pages[0].addr = fl->cctx->remote_heap->phys;
-     pages[0].size = fl->cctx->remote_heap->size;
+> +
+>   	i2c_mark_adapter_resumed(&gi2c->adap);
+> +
+>   	return 0;
+>   }
+>   
 
-The flow I had in mind is:
-
-   - Thread A enters the critical section, sees audio_init_mem == false,
-     sets it to true, and proceeds to send the pages to the DSP.
-   - If Thread A's invoke fails, we reset audio_init_mem back to false
-     in err_invoke so that a later attempt can retry sending the region.
-   - Once any thread successfully sends the region, audio_init_mem stays
-     true forever and the false branch is never taken again.
-
-So the reset on failure is only meant to allow a retry, not to be
-racy with a concurrent successful path (there can't be one, since
-only one thread is inside the critical section at a time). Do you
-see a specific interleaving I've overlooked? If so, I'm happy to
-switch to a different scheme.
-
->
->>   	kfree(name);
->>   err:
->>   	kfree(args);
->> @@ -2415,12 +2390,23 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
->>   		}
->>   	}
->>   
->> -	if (domain_id == SDSP_DOMAIN_ID) {
->> +	if (domain_id == SDSP_DOMAIN_ID || domain_id == ADSP_DOMAIN_ID) {
->>   		struct resource res;
->>   		u64 src_perms;
->>   
->>   		err = of_reserved_mem_region_to_resource(rdev->of_node, 0, &res);
->>   		if (!err) {
->> +			if (domain_id == ADSP_DOMAIN_ID) {
->> +				data->remote_heap =
->> +					kzalloc_obj(*data->remote_heap, GFP_KERNEL);
->> +				if (!data->remote_heap) {
->> +					err = -ENOMEM;
->> +					goto err_free_data;
->> +				}
->> +
->> +				data->remote_heap->dma_addr = res.start;
->> +				data->remote_heap->size = resource_size(&res);
->> +			}
->>   			src_perms = BIT(QCOM_SCM_VMID_HLOS);
->>   
->>   			err = qcom_scm_assign_mem(res.start, resource_size(&res), &src_perms,
->> @@ -2428,7 +2414,6 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
->>   			if (err)
->>   				goto err_free_data;
->>   		}
->> -
->>   	}
->>   
->>   	secure_dsp = !(of_property_read_bool(rdev->of_node, "qcom,non-secure-domain"));
->> @@ -2487,6 +2472,7 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
->>   		misc_deregister(&data->secure_fdevice->miscdev);
->>   
->>   err_free_data:
->> +	kfree(data->remote_heap);
->>   	kfree(data);
->>   	return err;
->>   }
->> @@ -2509,6 +2495,7 @@ static void fastrpc_rpmsg_remove(struct rpmsg_device *rpdev)
->>   	struct fastrpc_buf *buf, *b;
->>   	struct fastrpc_user *user;
->>   	unsigned long flags;
->> +	int err;
->>   
->>   	/* No invocations past this point */
->>   	spin_lock_irqsave(&cctx->lock, flags);
->> @@ -2526,8 +2513,27 @@ static void fastrpc_rpmsg_remove(struct rpmsg_device *rpdev)
->>   	list_for_each_entry_safe(buf, b, &cctx->invoke_interrupted_mmaps, node)
->>   		list_del(&buf->node);
->>   
->> -	if (cctx->remote_heap)
->> -		fastrpc_buf_free(cctx->remote_heap);
->> +	if (cctx->remote_heap && cctx->vmcount) {
->> +		u64 src_perms = 0;
->> +		struct qcom_scm_vmperm dst_perms;
->> +
->> +		for (u32 i = 0; i < cctx->vmcount; i++)
->> +			src_perms |= BIT(cctx->vmperms[i].vmid);
->> +
->> +		dst_perms.vmid = QCOM_SCM_VMID_HLOS;
->> +		dst_perms.perm = QCOM_SCM_PERM_RWX;
->> +
->> +		err = qcom_scm_assign_mem(cctx->remote_heap->dma_addr,
->> +					  cctx->remote_heap->size, &src_perms,
->> +					  &dst_perms, 1);
->> +		if (err)
->> +			dev_err(&rpdev->dev,
->> +				"Failed to assign memory back to HLOS: dma_addr %pad size %#llx err %d\n",
->> +				&cctx->remote_heap->dma_addr, cctx->remote_heap->size, err);
->> +	}
->> +
->> +	kfree(cctx->remote_heap);
->> +	cctx->remote_heap = NULL;
->>   
->>   	of_platform_depopulate(&rpdev->dev);
->>   
 
