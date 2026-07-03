@@ -1,184 +1,184 @@
-Return-Path: <linux-arm-msm+bounces-116210-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-116211-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id D1T9GNBuR2rZYAAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-116210-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Jul 2026 10:12:00 +0200
+	id wvjPKAJuR2qtYAAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-116211-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Jul 2026 10:08:34 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5204D6FFEF1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Jul 2026 10:11:59 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 216926FFE63
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Jul 2026 10:08:34 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b="WTcc/cBS";
-	dmarc=pass (policy=quarantine) header.from=kernel.org;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116210-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c15:e001:75::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116210-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=gmail.com header.s=20251104 header.b=MzYnb6Ns;
+	dmarc=pass (policy=none) header.from=gmail.com;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116211-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116211-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 72790300FCB8
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jul 2026 07:58:02 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 452FF305093E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jul 2026 08:00:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 03D3A36E498;
-	Fri,  3 Jul 2026 07:58:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0395B37104F;
+	Fri,  3 Jul 2026 08:00:20 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2D5136EA80;
-	Fri,  3 Jul 2026 07:57:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B2E5370AF1
+	for <linux-arm-msm@vger.kernel.org>; Fri,  3 Jul 2026 08:00:18 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783065480; cv=none; b=tDy1iwTkg/uFwvQ1OLmOjKhOWn6sNkTnOyCFYYA/tbU5DvbhmdNaLYM/VSwYHH+amPrseksXAIjdsMLgz/8VYuswM+PwJLovVlLRxdt1EMtey7EEKmBL4ROL8IilpkPkN+vO0h0zU5KpCBCDzWQvbQDCf0O/PsyJWhgnH/nP++c=
+	t=1783065619; cv=none; b=EcNdXMiruNVvIJt9rfAJ2OceMp1k7lTxJcnJ88DW8VX5vr0BbTw7qrnIX/eVxghoyngQTBwFtgCneTeJsyb3PDnH9sfa0u554oRuZ/19bPl7/qHzSOmgBBZmx3cTSadC0GjsrGt1gMCdRg+BiI7wcm2Mc9Wt5mPnhe9NDTgWkfk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783065480; c=relaxed/simple;
-	bh=QqMAmmWsWGziZkiLDOIZG39Nl1QwRx8vulaAvWDhdyI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ELPmFaBa/KHaTvAgQGq1Hj/XvaHSZ0ogpxjT7/ew1h03l5ZHp/OU+VxkQUMW6nojTAUMmHx8bYWR319pTp78c1x2NauhvOk4DG5+qmZnhnPCYlWDvofUmcRvnzDcS65bhsspF5qYJrIpHrdIOfTDuuup34zR7l5213OcJSrf2BI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WTcc/cBS; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B20361F000E9;
-	Fri,  3 Jul 2026 07:57:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783065479;
-	bh=FeGCgCuJqvP+G8Eppj9siBOA1hHncBneFe2lVJW1ZJc=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=WTcc/cBSl825OC+ck/HfN4bHY4aJMIKnIi3MC4IV+m5cObqY+L2kTa5fyHuPYWgPC
-	 h4shs4D+ISVfkzrQuQM24HYQG/zW5jcixXKPY988RZv4O2ivFooZIxtDT5rArkWZuA
-	 LYol9Gk8FNAHHSydMAEDQbDsyZ9qg5JrcZxp7MRXvMqRu+EKQ+/sbjpJbXHBmeVmcF
-	 gRiX82MAHOfFwYlQV3qwOm0gX8BD1A2nNYzjR7RhG3U6FoHEi+9ghzwYWuQ/s4kanN
-	 HEMajuw3L95HWHHksHyahx16zX0PFPwxEs/Vu3XHqmO9Ou5u81iEx8vqrAtKGZ+OGU
-	 3pU3F2IpND/Ew==
-Message-ID: <0e1860c7-08cc-4bf5-b913-80d1239c8b5f@kernel.org>
-Date: Fri, 3 Jul 2026 08:57:56 +0100
+	s=arc-20240116; t=1783065619; c=relaxed/simple;
+	bh=cXawQkAkES/EtQ2U21t1nXPu9yCgC3LC/ilrBUgPwqk=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=sAqqdOtIIFrf0kEfjNghHNs8J/ZXplrihAaK513ettFZ+rVCDmIH2u2o1eFyGgdTwGvIvJBYyEAUI9dP5yxdtOMB6X1TbpceEYgxsEE8O0QE+refuTBDtqcqmQXA63kmWq6Oq8OLOhlOTNbTMVaoiO9t8ni3hxbIcB7t7hlQcAQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MzYnb6Ns; arc=none smtp.client-ip=209.85.221.45
+Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-474560436c3so297739f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Jul 2026 01:00:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1783065617; x=1783670417; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Qbgcaj2LDFDPaFWKXTYQNHTo75owqcWEeCmEV7+wZUs=;
+        b=MzYnb6NsVHamPvRTfPGJPOrxg+08QdX6hv/F7xJ7cY7WJ+tCvrIKzdOodx6rz8/uyF
+         n9xk3rAFr6iIugCE+Y44ygtx95i7h//SsGLrYdsMDh4khNlAD+PAIznNJNRVC5f2yK+V
+         HbV07mAgwz9fVffNg5DscLLZBFHeOiaDsAqmHetBzdiZAsrw5CYwFqOq/u3Xn7zb9cMA
+         tskY8ELh1n2KQ4Id1P42mAn7UmiSwFspN9ri+KEAoUsQ3cY3C+lRC7oPpE4V3kX/NpgH
+         YxKxzOB7RuZ8esCyZNZWyIQY29Xtxka3smryK6OMJAN6gPT02muGl+cA060+PogvrqaP
+         oE/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783065617; x=1783670417;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Qbgcaj2LDFDPaFWKXTYQNHTo75owqcWEeCmEV7+wZUs=;
+        b=qWWnqpKxrpbue5GGikO4szG0ZuVxQvQ6BSflh5af2cHzpTxuhCF5XJhHd01+tcYk1g
+         6F6oVJbuRU3veEcvRM8H9G38RODwKTEOvgrynMUUmKe6jqEOLILFTiOmTSiqB6T3R+j/
+         eQhtMsrIHM8OnDff9/x4cUPMMdYqfLr8GtORUgz4YoC2HIDFWMsby5lelize+JUUnz0p
+         enKQ0PftEw6ojMwCI4BhU3T7AHDKDAOnEWIMSY1VYFU1WuEBiG8LTGZBifk4UIYGpnVe
+         amB1TgY8tZr9c1kAyj1Qqf4PhVc4x3b2lhuEiMVoEl22wqNvUApKRf7Xui/gFMKCBlhp
+         rbYg==
+X-Gm-Message-State: AOJu0Yz3621oq3wedAYwedEhwPXT+XB0llhn8/GSHdpSX7X8pmbOVX3o
+	DihKVSrMikalYmoqSCTK4k4FbMBbdr6a7NQf1Ldm7yQvXV3gqZAwXgVsrMj6ng==
+X-Gm-Gg: AfdE7cldPSrGy+Pcfy0fzpZU1Q3KWiVcY+B9+bej8B2wZZaupZkznZbmKZr6U/dkOl0
+	k4sRfn54E67dyEstezyAHaE2ITGJNtzzNlt0h5I7zb3ixfYydxhfwkQSdje7T8waAHG5dw7CMOB
+	k85u5E+OQmWEGLHfA1I1fqii/LmWBXDQco7tghuPru3NSio/e32BPIV5P51I6FwbqAIwEWEcrdJ
+	7eTYCVnhJ/5hMVbH0Vd6qH/2z8xCF6Xoaz4PZRfJ5dqYNme4w7zbGygPteDBtnqje4RCBN2BzkB
+	08NL6/3VY27L2MpP4Tvb6G0l1HmBGh8IZh3VrYvh144ymr8Hiqj+/zg6p/Bj44lyIOTcVlDgcJi
+	sy4P1mPdhYVvDHQg44+3lNFHuZs39i3C5SZLDlpE1PBwkxtYShuIl0fs65TpDWkg+VzYGRXm9cy
+	Kd3JPnvX7OelgPxffKjQ==
+X-Received: by 2002:a5d:56cf:0:b0:475:f0d1:eb5d with SMTP id ffacd0b85a97d-477b1b996a6mr9797187f8f.56.1783065616579;
+        Fri, 03 Jul 2026 01:00:16 -0700 (PDT)
+Received: from [192.168.8.79] ([2a00:f502:160:cb6f:2cd6:80ba:ca9:891c])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-477d766e0b4sm15116051f8f.0.2026.07.03.01.00.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 03 Jul 2026 01:00:16 -0700 (PDT)
+From: Erikas Bitovtas <xerikasxx@gmail.com>
+Subject: [PATCH 0/3] arm64: dts: qcom: sm7125-samsung: add initial device
+ tree for SM7125 Samsung platform
+Date: Fri, 03 Jul 2026 10:59:37 +0300
+Message-Id: <20260703-sm7125-samsung-v1-0-3e5f752048c1@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 0/3] ASoC: qcom: lpass: Switch VA/WSA macros to PM
- clock framework
-To: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>,
- Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
- Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
- Srinivas Kandagatla <srini@kernel.org>
-Cc: linux-sound@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-References: <20260702-xo-sd-codec-v7-b4-v8-0-d39d0fdb7859@oss.qualcomm.com>
-Content-Language: en-US
-From: Srinivas Kandagatla <srini@kernel.org>
-In-Reply-To: <20260702-xo-sd-codec-v7-b4-v8-0-d39d0fdb7859@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIzMDMyNz3eJcc0MjU93ixNzi0rx03SQzC9MUiyTL5BQTAyWgpoKi1LTMCrC
+ B0bEQfnFpUlZqcgnIFKXaWgBZ3v1xcgAAAA==
+X-Change-ID: 20260627-sm7125-samsung-b685d8b9cd40
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Bartosz Golaszewski <brgl@kernel.org>, 
+ Kees Cook <kees@kernel.org>, Tony Luck <tony.luck@intel.com>, 
+ "Guilherme G. Piccoli" <gpiccoli@igalia.com>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Stefan Hansson <newbyte@postmarketos.org>, 
+ ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
+ Erikas Bitovtas <xerikasxx@gmail.com>, Vitalii Skorkin <nikroksm@mail.ru>
+X-Mailer: b4 0.15.2
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-5.16 / 15.00];
-	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-116211-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
+	FORGED_RECIPIENTS(0.00)[m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:brgl@kernel.org,m:kees@kernel.org,m:tony.luck@intel.com,m:gpiccoli@igalia.com,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:newbyte@postmarketos.org,m:~postmarketos/upstreaming@lists.sr.ht,m:phone-devel@vger.kernel.org,m:xerikasxx@gmail.com,m:nikroksm@mail.ru,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	FORGED_SENDER(0.00)[xerikasxx@gmail.com,linux-arm-msm@vger.kernel.org];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:ajay.nandam@oss.qualcomm.com,m:lgirdwood@gmail.com,m:broonie@kernel.org,m:perex@perex.cz,m:tiwai@suse.com,m:srini@kernel.org,m:linux-sound@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:konrad.dybcio@oss.qualcomm.com,s:lists@lfdr.de];
-	FREEMAIL_TO(0.00)[oss.qualcomm.com,gmail.com,kernel.org,perex.cz,suse.com];
+	FREEMAIL_FROM(0.00)[gmail.com];
+	FREEMAIL_CC(0.00)[vger.kernel.org,postmarketos.org,lists.sr.ht,gmail.com,mail.ru];
+	RCPT_COUNT_TWELVE(0.00)[17];
 	FORWARDED(0.00)[lists@lfdr.de];
-	FORGED_SENDER(0.00)[srini@kernel.org,linux-arm-msm@vger.kernel.org];
-	TAGGED_FROM(0.00)[bounces-116210-lists,linux-arm-msm=lfdr.de];
+	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	ALIAS_RESOLVED(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[srini@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	RCPT_COUNT_SEVEN(0.00)[10];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
 	TO_DN_SOME(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[xerikasxx@gmail.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[gmail.com:+];
+	ALIAS_RESOLVED(0.00)[];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,vger.kernel.org:from_smtp,msgid.link:url,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,vger.kernel.org:from_smtp]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 5204D6FFEF1
+X-Rspamd-Queue-Id: 216926FFE63
 
+Samsung Galaxy A52/A72 are smartphones released in 2021 on SM7125
+(atoll) platform. This patch series introduces support for SM7125
+Samsung devices with the following components enabled:
+- Framebuffer
+- GPIO keys
+- Hall sensor
+- Vibrator
+- Regulators
+- Reset input
+- Real-time clock
+- SD card
+- UFS
+- USB
+Along with that, SM7125 was affected by a hang when launching SHM
+bridge. A similar issue was reported on a similar chipset:
+https://lore.kernel.org/all/20250721-sc7180-shm-hang-v1-1-99ad9ffeb5b4@trvn.ru/
+Add SM7125 to the qcom_tzmem_blacklist to avoid hangs when booting.
 
+Signed-off-by: Erikas Bitovtas <xerikasxx@gmail.com>
+---
+Erikas Bitovtas (2):
+      dt-bindings: arm: qcom: Document Samsung Galaxy A52/A72
+      arm64: dts: qcom: sm7125-samsung: add initial device tree
 
-On 7/1/26 7:44 PM, Ajay Kumar Nandam wrote:
-> Hi,
-> 
-> This series converts the LPASS WSA and VA macro codec drivers to the
-> PM clock framework for runtime PM clock handling.
-> 
-> The runtime clock enable/disable sequencing is moved to PM clock helpers
-> for clocks described in device tree, while regcache state handling remains
-> in the codec runtime PM callbacks. This keeps register cache synchronization
-> explicit in the driver and lets runtime PM drop codec clock votes when the
-> macros are idle.
-> 
-> The series also keeps WSA MCLK-output clock registration resource-managed
-> by switching it to devm_clk_hw_register(), which allows the empty WSA remove
-> callback to be dropped.
-> 
-> Changes since v7:
->   - Dropped va_macro_setup_pm_clocks() helper in the VA patch and inlined
->     devm_pm_clk_create() + of_pm_clk_add_clks() directly in probe, matching
->     the WSA pattern for consistency.
-> 
-> Changes since v6:
-> - Dropped the now-empty WSA macro remove callback.
-> - Sorted the VA macro pm_clock.h include.
-> - Re-sent as v7 with proper cover-letter threading after the broken v6
->   resend was accidentally sent as separate threads.
-> 
-> Changes since v5:
-> - Rebased to current linux-next/master and regenerated as a standalone
->   series that applies cleanly.
-> - Added depends on PM_CLK for SND_SOC_LPASS_WSA_MACRO and
->   SND_SOC_LPASS_VA_MACRO since PM clock APIs are used.
-> - Improved runtime-PM probe/resume unwind handling in WSA/VA error paths.
-> - Kept runtime autosuspend delay at 100 ms in both PM-clock conversion
->   patches.
-> 
-> Link: https://lore.kernel.org/r/20260604124823.3467457-1-ajay.nandam@oss.qualcomm.com
-> Link: https://lore.kernel.org/r/20260623071708.2822269-1-ajay.nandam@oss.qualcomm.com
-> Signed-off-by: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
-> ---
-> Changes in v8:
-> - EDITME: describe what is new in this series revision.
-> - EDITME: use bulletpoints and terse descriptions.
-> - Link to v7: https://patch.msgid.link/20260629-xo-sd-codec-v7-b4-v7-0-fb37ce457c42@oss.qualcomm.com
-> 
-> ---
-> Ajay Kumar Nandam (3):
->       ASoC: codecs: lpass-wsa-macro: Switch to PM clock framework for runtime PM
->       ASoC: codecs: lpass-va-macro: Switch to PM clock framework for runtime PM
->       ASoC: codecs: lpass-wsa-macro: Use devm_clk_hw_register() for MCLK output
+Vitalii Skorkin (1):
+      firmware: qcom: tzmem: disable SHM bridge for SM7125 platform
 
+ Documentation/devicetree/bindings/arm/qcom.yaml    |   2 +
+ arch/arm64/boot/dts/qcom/Makefile                  |   2 +
+ arch/arm64/boot/dts/qcom/sm7125-samsung-a52q.dts   |  31 ++
+ arch/arm64/boot/dts/qcom/sm7125-samsung-a72q.dts   |  31 ++
+ .../arm64/boot/dts/qcom/sm7125-samsung-common.dtsi | 518 +++++++++++++++++++++
+ drivers/firmware/qcom/qcom_tzmem.c                 |   1 +
+ 6 files changed, 585 insertions(+)
+---
+base-commit: 6eb8711ece2ce27e52e327a5b7a628ed39b97f45
+change-id: 20260627-sm7125-samsung-b685d8b9cd40
 
-Thanks for the patches, We should the same to tx and rx macros too.
-For this series, I have tested it on my T14s
-
-Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Tested-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-
---srini
-> 
->  sound/soc/codecs/Kconfig           |   2 +
->  sound/soc/codecs/lpass-va-macro.c  | 129 ++++++++++++++++++-----------------
->  sound/soc/codecs/lpass-wsa-macro.c | 133 +++++++++++++++----------------------
->  3 files changed, 122 insertions(+), 142 deletions(-)
-> ---
-> base-commit: 4e5dfb7c84012007c3c7061126491bbc92d71bf1
-> change-id: 20260623-xo-sd-codec-v7-b4-8769da3a41ad
-> 
-> Best regards,
-> --  
-> Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
-> 
+Best regards,
+--  
+Erikas Bitovtas <xerikasxx@gmail.com>
 
 
