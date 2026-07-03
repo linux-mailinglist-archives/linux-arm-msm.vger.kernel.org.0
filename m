@@ -1,57 +1,58 @@
-Return-Path: <linux-arm-msm+bounces-116145-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-116146-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id mvasD2NCR2qgUwAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-116145-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Jul 2026 07:02:27 +0200
+	id 9fiDO2BCR2qfUwAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-116146-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Jul 2026 07:02:25 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id C47396FE87F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Jul 2026 07:02:26 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id C1FA66FE87B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Jul 2026 07:02:24 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20201202 header.b=PbKYaFfh;
+	dkim=pass header.d=kernel.org header.s=k20201202 header.b=nxHBp3PO;
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116145-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116145-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116146-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c09:e001:a7::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116146-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id AB8043025A52
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jul 2026 05:02:25 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 5AD923029650
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jul 2026 05:02:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6F0E0345CBC;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0F0D73451B0;
 	Fri,  3 Jul 2026 05:02:05 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4975A33FE33;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 496A233F8D4;
 	Fri,  3 Jul 2026 05:02:02 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783054922; cv=none; b=J0hkN5cyszvAurWfeTnzWUvVrdtCjnA6MyxxtjuqCXAi9Ki6iXPtalqFPk2Lqf70mtHM10bnsTkTG0x97GLMhHIkgDZBl+fL1ZwrobFwejlbC2nq3EcPeJLLelwoI9jIgtWZr/2qyj+gipuC2GXWOy9+WnYAFC4ziQo5VQhv/6U=
+	t=1783054922; cv=none; b=E1a3DdTpxPocUbAETDp8RJpzDeL94vncfxti2gFkKOkOXOOQXM4VYTuQX/hwMuMhjragVHVNvML2sjWlH0/1h/4HlVj7WgiwMFFbLrwrzElfWTGikhFbsdbuonEN6QMAKqa3H3RSYLZlWewBsSk85V08ppwJIxIEzIr/9TfH7Ho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1783054922; c=relaxed/simple;
-	bh=wwA8TPrc+rTbvIB405fen2b59HI69rtriTEjTTG57GI=;
+	bh=VyfLwM5lbgN18nmeHXfOE3MKdEsUxvDJNMoBL95qAXU=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=BZR4ltfqZ6z5b5G3wpJEB4MTWn/NXTOC5Vu8tdC3sMn4MyhGbg8L6jqaG7csbhL57UY1Xbnn5xEXrWPpjYSfSL+F0YWZFmy9N2lbE6LNXa8uTeTcEPkinVQioK2VXABEe7zrx/p5h7iF6Ub73ztBrKIcSKW1oEKuvOoTE61DfZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PbKYaFfh; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 4E868C2BCF5;
+	 In-Reply-To:To:Cc; b=A++Llt9LeDq7fzQHQimWcDX9dThNwnPDKrbScyMrtTi3G+FRaRKrbL8ZddCi7uHmSE3sqHnwyLv+OpTQe+mQRAvtGQqIWgS+o7IQkYmhDaZ7gsbIFQDbkb8XqNa95P4bpqGHr7f8QPlALhQbF3au0Z/yp+b+/6SuYhnjqNbZjcU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nxHBp3PO; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 5F8C0C2BCFC;
 	Fri,  3 Jul 2026 05:02:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1783054921;
-	bh=wwA8TPrc+rTbvIB405fen2b59HI69rtriTEjTTG57GI=;
+	bh=VyfLwM5lbgN18nmeHXfOE3MKdEsUxvDJNMoBL95qAXU=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=PbKYaFfh053jNLkCCmo4D8HPaT/9EHDf3lvqIPasocoJUB6TqlHbm+MtwsHpnmlmK
-	 b6YMpwBXgunuBHC64kxCydZxwZ7gksQkgDJjietp8FaHVhfJ4Eug5UXC9ahmJLv7NR
-	 JXMtC4gDozSfYxuEOxscYHv/WCHgaWFBh3BrlblPtQc0Y5v//idtzDiBIiunpdtps7
-	 nemC+pcUWuNuF/QjqL99Yku4sxkjJjnp0Kd+s3Ki//J47KPP8ZdG8WQRV4Nohu2SN7
-	 nTCot/HWNkzbBebvIBHWNcZLKlBR4BKPT7ZKNxlvpuHcgEveyJY4QbMQ0x7JSQh072
-	 a8fPQbYCtlvIQ==
+	b=nxHBp3PO+24usf3SL9aJ5v+eojm7afCp7Ryd6T8yp+/wARVApeLvuyc/wvZ22u3aG
+	 of3NHbPiMfWZQ/Yx1Zw2E2AzSQJyxOPk6OHut6AZApWHhj5RfOvSwVxdBP1ukc08Xu
+	 0jNYE5XdyJjBZozkM9+2oBb8qvfENFjVRB9lW/32HfZHia1T8yHEIiNauXBblM/4fC
+	 ccfrB/QG17EY+R7NC2pBY6KCx+3jRIbV5bizUh/9dNT3DCuQQ3JJgVwjMMZp5b4tvA
+	 3cW0U4Wiz5FZAsRdVjVRHY8jiJQSkAMwMsIyJM5Qv4cdkR5zSXvZzdw19U+fGdxWTg
+	 3CJ7bhWF7xN6Q==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E993C44501;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 43CE6C44502;
 	Fri,  3 Jul 2026 05:02:01 +0000 (UTC)
 From: George Moussalem via B4 Relay <devnull+george.moussalem.outlook.com@kernel.org>
-Date: Fri, 03 Jul 2026 09:01:50 +0400
-Subject: [PATCH v3 2/6] Bluetooth: btqca: Add IPQ5018 support
+Date: Fri, 03 Jul 2026 09:01:51 +0400
+Subject: [PATCH v3 3/6] firmware: qcom: scm: Add support for setting
+ Bluetooth power modes
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -60,7 +61,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260703-ipq5018-bluetooth-v3-2-62da72818ab3@outlook.com>
+Message-Id: <20260703-ipq5018-bluetooth-v3-3-62da72818ab3@outlook.com>
 References: <20260703-ipq5018-bluetooth-v3-0-62da72818ab3@outlook.com>
 In-Reply-To: <20260703-ipq5018-bluetooth-v3-0-62da72818ab3@outlook.com>
 To: Bartosz Golaszewski <brgl@kernel.org>, 
@@ -75,11 +76,11 @@ Cc: linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
  George Moussalem <george.moussalem@outlook.com>, 
  Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1783054918; l=3179;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1783054918; l=3492;
  i=george.moussalem@outlook.com; s=20250321; h=from:subject:message-id;
- bh=VsRRymuoav40YjOA1nuQIwCq+MFzT9PHwoR+fGa1uZA=;
- b=jFuxJdXBVTClZ2B4SAYdCC069D+/9Rj/f8J4KsqAqGAkZEWTiG4YsfXCTRgKVt2M6wuF4mN8F
- gTXfOy2Gx0EC6L/kkF7eHpc1va8bAy5Ze7BXnxRyJZBLoKW9v+vxHIO
+ bh=J2esFcAMc0BwqZnD7lz+a1GHFMeiuZUIt3j0q34Iiqg=;
+ b=2xMQ5uI2uH09qPo75c+KJiqFwLyBd14YmZwQsiju3byyWehRTRQt2BaSoTI0Tm5ySIBwHX09W
+ tSCzCUpGar4AGkITWp11QTZOKG1nyg1GPTfu4I+AdQun+cb/DkcWXC/
 X-Developer-Key: i=george.moussalem@outlook.com; a=ed25519;
  pk=/PuRTSI9iYiHwcc6Nrde8qF4ZDhJBlUgpHdhsIjnqIk=
 X-Endpoint-Received: by B4 Relay for george.moussalem@outlook.com/20250321
@@ -93,12 +94,12 @@ X-Spamd-Result: default: False [-1.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-116145-lists,linux-arm-msm=lfdr.de,george.moussalem.outlook.com];
+	TAGGED_FROM(0.00)[bounces-116146-lists,linux-arm-msm=lfdr.de,george.moussalem.outlook.com];
 	RCVD_TLS_LAST(0.00)[];
 	FORGED_RECIPIENTS(0.00)[m:brgl@kernel.org,m:marcel@holtmann.org,m:luiz.dentz@gmail.com,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:andersson@kernel.org,m:konradybcio@kernel.org,m:p.zabel@pengutronix.de,m:linux-arm-msm@vger.kernel.org,m:linux-bluetooth@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:george.moussalem@outlook.com,m:bartosz.golaszewski@oss.qualcomm.com,m:luizdentz@gmail.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	FREEMAIL_REPLYTO(0.00)[outlook.com];
@@ -108,7 +109,7 @@ X-Spamd-Result: default: False [-1.66 / 15.00];
 	RCPT_COUNT_TWELVE(0.00)[15];
 	MIME_TRACE(0.00)[0:+];
 	FREEMAIL_TO(0.00)[kernel.org,holtmann.org,gmail.com,pengutronix.de];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,outlook.com:replyto,outlook.com:mid,outlook.com:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,qualcomm.com:email];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,outlook.com:replyto,outlook.com:mid,outlook.com:email,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,qualcomm.com:email];
 	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
 	HAS_REPLYTO(0.00)[george.moussalem@outlook.com];
 	FORGED_SENDER_FORWARDING(0.00)[];
@@ -122,118 +123,107 @@ X-Spamd-Result: default: False [-1.66 / 15.00];
 	REPLYTO_DOM_NEQ_TO_DOM(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	DKIM_TRACE(0.00)[kernel.org:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: C47396FE87F
+X-Rspamd-Queue-Id: C1FA66FE87B
 
 From: George Moussalem <george.moussalem@outlook.com>
 
-Add the IPQ5018 SoC type and support for loading its firmware.
+The Bluetooth subsystem (BTSS) on the IPQ5018 SoC supports setting power
+modes which are required to be configured through a Secure Channel
+Manager (SCM) call to TrustZone. However, not all Trusted Execution
+Environment (QSEE) images support this call, so first check if the call
+is available.
 
-The firmware tested has been taken from GPL sources of various router
-boards. Firmware files needed are:
-- qca/bt_fw_patch.mbn
-- qca/mpnv10.bin
-
-Acked-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: George Moussalem <george.moussalem@outlook.com>
 ---
- drivers/bluetooth/btqca.c | 16 ++++++++++++++++
- drivers/bluetooth/btqca.h |  3 +++
- 2 files changed, 19 insertions(+)
+ drivers/firmware/qcom/qcom_scm.c       | 44 ++++++++++++++++++++++++++++++++++
+ drivers/firmware/qcom/qcom_scm.h       |  1 +
+ include/linux/firmware/qcom/qcom_scm.h |  1 +
+ 3 files changed, 46 insertions(+)
 
-diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
-index 04ebe290bc78..e136e91976cf 100644
---- a/drivers/bluetooth/btqca.c
-+++ b/drivers/bluetooth/btqca.c
-@@ -380,6 +380,9 @@ static int qca_tlv_check_data(struct hci_dev *hdev,
- 		break;
+diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
+index 6b601a4b89db..a34e0f75df3c 100644
+--- a/drivers/firmware/qcom/qcom_scm.c
++++ b/drivers/firmware/qcom/qcom_scm.c
+@@ -1094,6 +1094,50 @@ bool qcom_scm_pas_supported(u32 pas_id)
+ }
+ EXPORT_SYMBOL_GPL(qcom_scm_pas_supported);
  
- 	case TLV_TYPE_NVM:
-+		if (soc_type == QCA_IPQ5018)
-+			break;
++/**
++ * qcom_scm_pas_set_bluetooth_power_mode() - Configure power mode for the
++ *					     Bluetooth subsystem (BTSS)
++ * @pas_id:	peripheral authentication service id
++ * @eco_mode:	true for ECO mode, false for normal operation
++ *
++ * Return: 0 on success, negative errno on failure.
++ * Returns -EOPNOTSUPP if the firmware configuration call is unavailable.
++ */
++int qcom_scm_pas_set_bluetooth_power_mode(u32 pas_id, bool eco_mode)
++{
++	struct qcom_scm_desc desc = {
++		.svc = QCOM_SCM_SVC_PIL,
++		.cmd = QCOM_SCM_PIL_PAS_BT_PWR_MODE,
++		.arginfo = QCOM_SCM_ARGS(2),
++		.args[0] = pas_id,
++		.args[1] = eco_mode ? 0x4 : 0x0,
++		.owner = ARM_SMCCC_OWNER_SIP,
++	};
++	struct qcom_scm_res res;
++	int ret;
 +
- 		if (fw_size < sizeof(struct tlv_type_hdr))
- 			return -EINVAL;
- 
-@@ -794,6 +797,9 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
- 	else
- 		rom_ver = ((soc_ver & 0x00000f00) >> 0x04) | (soc_ver & 0x0000000f);
- 
-+	if (soc_type == QCA_IPQ5018)
-+		goto download_nvm;
++	if (!__qcom_scm_is_call_available(__scm->dev, QCOM_SCM_SVC_PIL,
++					  QCOM_SCM_PIL_PAS_BT_PWR_MODE))
++		return -EOPNOTSUPP;
 +
- 	if (soc_type == QCA_WCN6750)
- 		qca_send_patch_config_cmd(hdev);
- 
-@@ -881,6 +887,7 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
- 	if (soc_type == QCA_QCA2066 || soc_type == QCA_WCN7850)
- 		qca_read_fw_board_id(hdev, &boardid);
- 
-+download_nvm:
- 	/* Download NVM configuration */
- 	config.type = TLV_TYPE_NVM;
- 	if (firmware_name) {
-@@ -939,6 +946,10 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
- 			qca_get_nvm_name_by_board(config.fwname, sizeof(config.fwname),
- 				 "hmtnv", soc_type, ver, rom_ver, boardid);
- 			break;
-+		case QCA_IPQ5018:
-+			snprintf(config.fwname, sizeof(config.fwname),
-+				 "qca/mpnv%02x.bin", rom_ver);
-+			break;
- 		default:
- 			snprintf(config.fwname, sizeof(config.fwname),
- 				 "qca/nvm_%08x.bin", soc_ver);
-@@ -958,6 +969,9 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
- 		return err;
- 	}
- 
-+	if (soc_type == QCA_IPQ5018)
-+		msleep(NVM_READY_DELAY_MS);
++	ret = qcom_scm_clk_enable();
++	if (ret)
++		return ret;
 +
- 	switch (soc_type) {
- 	case QCA_QCA2066:
- 	case QCA_QCA6390:
-@@ -965,6 +979,7 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
- 	case QCA_WCN6750:
- 	case QCA_WCN6855:
- 	case QCA_WCN7850:
-+	case QCA_IPQ5018:
- 		err = qca_disable_soc_logging(hdev);
- 		if (err < 0)
- 			return err;
-@@ -1001,6 +1016,7 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
- 	case QCA_WCN6750:
- 	case QCA_WCN6855:
- 	case QCA_WCN7850:
-+	case QCA_IPQ5018:
- 		/* get fw build info */
- 		err = qca_read_fw_build_info(hdev);
- 		if (err < 0)
-diff --git a/drivers/bluetooth/btqca.h b/drivers/bluetooth/btqca.h
-index 8f3c1b1c77b3..343cd62d1137 100644
---- a/drivers/bluetooth/btqca.h
-+++ b/drivers/bluetooth/btqca.h
-@@ -54,6 +54,8 @@
- #define QCA_HSP_GF_SOC_ID		0x1200
- #define QCA_HSP_GF_SOC_MASK		0x0000ff00
- 
-+#define NVM_READY_DELAY_MS		1500
++	ret = qcom_scm_bw_enable();
++	if (ret)
++		goto disable_clk;
 +
- enum qca_baudrate {
- 	QCA_BAUDRATE_115200	= 0,
- 	QCA_BAUDRATE_57600,
-@@ -158,6 +160,7 @@ enum qca_btsoc_type {
- 	QCA_WCN6750,
- 	QCA_WCN6855,
- 	QCA_WCN7850,
-+	QCA_IPQ5018,
- };
++	ret = qcom_scm_call(__scm->dev, &desc, &res);
++	qcom_scm_bw_disable();
++
++disable_clk:
++	qcom_scm_clk_disable();
++
++	return ret ? : res.result[0];
++}
++EXPORT_SYMBOL_GPL(qcom_scm_pas_set_bluetooth_power_mode);
++
+ static int __qcom_scm_pas_mss_reset(struct device *dev, bool reset)
+ {
+ 	struct qcom_scm_desc desc = {
+diff --git a/drivers/firmware/qcom/qcom_scm.h b/drivers/firmware/qcom/qcom_scm.h
+index caab80a73e17..5579df5a2aca 100644
+--- a/drivers/firmware/qcom/qcom_scm.h
++++ b/drivers/firmware/qcom/qcom_scm.h
+@@ -105,6 +105,7 @@ int qcom_scm_shm_bridge_enable(struct device *scm_dev);
+ #define QCOM_SCM_PIL_PAS_SHUTDOWN	0x06
+ #define QCOM_SCM_PIL_PAS_IS_SUPPORTED	0x07
+ #define QCOM_SCM_PIL_PAS_MSS_RESET	0x0a
++#define QCOM_SCM_PIL_PAS_BT_PWR_MODE	0x21
+ #define QCOM_SCM_PIL_PAS_GET_RSCTABLE	0x21
  
- #if IS_ENABLED(CONFIG_BT_QCA)
+ #define QCOM_SCM_SVC_IO			0x05
+diff --git a/include/linux/firmware/qcom/qcom_scm.h b/include/linux/firmware/qcom/qcom_scm.h
+index 5747bd191bf1..aca937ac8ddd 100644
+--- a/include/linux/firmware/qcom/qcom_scm.h
++++ b/include/linux/firmware/qcom/qcom_scm.h
+@@ -93,6 +93,7 @@ struct resource_table *qcom_scm_pas_get_rsc_table(struct qcom_scm_pas_context *c
+ 						  size_t *output_rt_size);
+ 
+ int qcom_scm_pas_prepare_and_auth_reset(struct qcom_scm_pas_context *ctx);
++int qcom_scm_pas_set_bluetooth_power_mode(u32 pas_id, bool eco_mode);
+ 
+ int qcom_scm_io_readl(phys_addr_t addr, unsigned int *val);
+ int qcom_scm_io_writel(phys_addr_t addr, unsigned int val);
 
 -- 
 2.53.0
