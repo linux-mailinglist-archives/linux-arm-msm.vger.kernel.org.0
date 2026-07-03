@@ -1,104 +1,104 @@
-Return-Path: <linux-arm-msm+bounces-116297-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-116298-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id XtdrKL+eR2qkcQAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-116297-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Jul 2026 13:36:31 +0200
+	id raQOKN2bR2qZcAAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-116298-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Jul 2026 13:24:13 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id A4340701E88
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Jul 2026 13:36:30 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 19922701CEB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Jul 2026 13:24:13 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=gmail.com header.s=20251104 header.b="nH/XqD44";
+	dkim=pass header.d=gmail.com header.s=20251104 header.b=DzG189z8;
 	dmarc=pass (policy=none) header.from=gmail.com;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116297-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c15:e001:75::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116297-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116298-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116298-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=2")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 443AE300D7B9
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jul 2026 11:19:57 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 759823040421
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jul 2026 11:20:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F2E193C3C12;
-	Fri,  3 Jul 2026 11:19:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ED2AD3C4563;
+	Fri,  3 Jul 2026 11:19:49 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
+Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C08B3C062F
-	for <linux-arm-msm@vger.kernel.org>; Fri,  3 Jul 2026 11:19:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0304F3C3458
+	for <linux-arm-msm@vger.kernel.org>; Fri,  3 Jul 2026 11:19:47 +0000 (UTC)
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783077588; cv=pass; b=oVL8ir2XMnUGURly0Lsd3AZE8QOZG0Lnj6B6Z0OVMiSdSS5+b8jdiP88s+uZn6po2F2XyC9eXgwa8FROtbDgSynjDjPo12Fxce4NNx60kD3Z9eWkDUuFKwkaECDIzwAytbn6ZX3jX6GyiVH1wdu5MNVvIBXxNn5NK9xKG3iNFtQ=
+	t=1783077589; cv=pass; b=lIeo0EZDlE8iW45TjClnNmaQJ/7FpqZAtYTW56wD+tAAS5Bqs9gZrigCQ8bdFUrCI5G7tiXfNCjj0SF5tpuYFOQQdqempInhXIjAoqWprLPxmrPuj/YH/FAQQb6Z0RGLw/YUe1I3g90zJwSG4svsP7tCEBJSbxVhxHXGb4TnXOE=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783077588; c=relaxed/simple;
-	bh=XTkL4yGRK/zbi9Cyxhhj2/aMF+zh8RgXRgSHRjgbvAc=;
+	s=arc-20240116; t=1783077589; c=relaxed/simple;
+	bh=8TU4XadQIjVSNyYnv2+Mkm/Ifb5yfUsgGnL8EhkLlso=;
 	h=In-Reply-To:References:MIME-Version:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=uG2XkAsnZH582yb+fzMN4CgZeQdGwxVqvW38Yvdezv0Nkw4iAA70I2hnxtkuKBKWpNI08TMVP5j+P2XvlwcpnWQWwRIXXUw6CTltLnRGxcvjoZsUATVBCDP/+LFJ//NlA49ZQPgY0qm0XxqtAJVjwIMbT/tNd82S814lBG2lz6E=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nH/XqD44; arc=pass smtp.client-ip=209.85.128.176
-Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-80814edb536so4283197b3.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Jul 2026 04:19:46 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783077585; cv=none;
+	 To:Cc:Content-Type; b=Ipt3OVL5VZPAPgpivfJRcaPm8UWSgb2AV/ib6X8WhROgT6m1EOCIGSPErY0JPbQRFv0qyS/G5aiTlT1DHObQ0XETVzoO6CQDTyB+GzwMzHTuOrgLco3Xlbj5E4VLdkyng35SOcJBhA39F4NWR41OTZgAvwfzBriJxxsIMHatL/8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DzG189z8; arc=pass smtp.client-ip=209.85.128.178
+Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-8143d904b01so3985697b3.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Jul 2026 04:19:47 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783077587; cv=none;
         d=google.com; s=arc-20260327;
-        b=Mt9oc2OnSV63XKqKbJDqTfTX2ZhjypMRdRqok2SMuLYxVA8fm8uSu45HBhCP8ty+um
-         hvupSmS/CQk3s/Sf0y/O1if/eQtGBqvTK6bl78H7ggidxVMcHnhzDD6KZdMt6agF/Zqx
-         FHj2QAKBa9eUanArL6f0Yp9TxiumGv4DW4eX1BPO/16y/WmThhldgQpQ0dvwyJ7oatM4
-         6RWiPmKdeW4jBzudVh4Yw0W3klZw02waC9lYB4iVtFkfsIZK1PQ63hkg4u7ZW10Z6UNF
-         Ce1lsjRRHB9ssoCTnCIqRQROVNfTYQHDu2Iyp/5Csy5GTnHxgrd0I19tCOoyZiAHwtRz
-         glWw==
+        b=V9iF8SN5yTmuv8x/iVRywhG5nywUn3c0Ony6h6ibphBPki9Gb7/lDJbLJoarLD6AIY
+         cJpfLm02eJpjwnKbbTOS05J0I3bt2sPgZ61af23PJPbUvJkN5fvM0sk/OVGxWoKfDGpg
+         lEstmsyJrM0vnbaBs3k/QkMTrl0fuB4gJqJp80cSPANbdtGgIxdrvxTGqcSX4HfvVwgz
+         36Cswp62ZyFgoWrwwwMcSpuhtpaIDQmGT+zroGcsY8nAvQzw1mWEHX7mtnNQn5jHtAyV
+         tHnzhj8dbwg+LoDBWU/JaQUIwggeHyNEXPJNJ+A9p0CG5ATXVPi6YOA8LU1Qxtsm6YE5
+         N1Fg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=cc:to:subject:message-id:date:from:mime-version:references
          :in-reply-to:dkim-signature;
-        bh=XTkL4yGRK/zbi9Cyxhhj2/aMF+zh8RgXRgSHRjgbvAc=;
-        fh=yDjs0O2a0LtG9POT8wY0vT1hc5AeMpIZWj/kpN/tf1A=;
-        b=grv4rRW80cWj0S5V71ancIGc6u71de73FJL7zCMdyo4n3o2h1tSmzWc+0AXgXp+1uv
-         aBMq+NfrZNiJoneplSvgaJ7T7MhoiLtVc25mS5cQ2EAQEYq0pMuJoXVb+Rpsa6gM+6ZW
-         7+GQCzsXtc3kH0ZOvNI1q+rnXvTR2ZtlXDhqlWh5BP1rgLMERfTAzIP14p4IGQz3LoFQ
-         Q9ZRid8XSod2NZyNv3hWCWwzEg56tVHS7r8aIO2QQUJ4DiPKVnDkpX6d8D82wVzxtmwl
-         KD56sTfvoIIt9Qsi+QJNNOxwswne6VpEiBGEnuVStCmaiCPf/fhRLULqV8yQAfby526/
-         211w==;
+        bh=8TU4XadQIjVSNyYnv2+Mkm/Ifb5yfUsgGnL8EhkLlso=;
+        fh=NdiO164G9Zf5wnOwjzLmMJpBpcOYXgGyFhfg3ZOEvcE=;
+        b=ksPeYsn309g1YDuFNO0AUHFOFbP7ySFNr7jIirXpDKS+KdpeuOWjJSy6qx5wKIAHos
+         JHTV1GhA09p0VkJi04CKUudKgt8bxPmtp+RyWKZQfXIWsnbCBW83y+S4eatAp2OA2GXs
+         VGtDQkJdjewrX1DTEfs233hNwjSsZW0NFpoPZJ7jQiBoUukf4dV4OvKCuN8YyoTP0yjU
+         PM2xnquJ7rRCLqVkFYVpSAva8eSNxHxLblqb6EtgSbCYAwJ0f9VKrJZ1aXXWODMa6Cro
+         /nDVVEUgk0sZqwwwzwpPxu0BOIZlIgZSjlwjIWdOnIQT0t8IgA8/TWwix45ZHOhkDtqJ
+         IK5g==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783077585; x=1783682385; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:mime-version
-         :references:in-reply-to:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=XTkL4yGRK/zbi9Cyxhhj2/aMF+zh8RgXRgSHRjgbvAc=;
-        b=nH/XqD44PFmX780L6BL4FHISvrQgSnysA5x5WYhpZubDYg3bW0hZKTFZ80fk453Jbh
-         sVWYwAB8HeeVoEj1TJNbiSMznTousaTJ1ewqguV68664G/ZqANz32GgXYG3gJ7+NqnPL
-         NMpc7mQcHuvdFjCuchmsiP89iyk7bYxK1QodDBJEhHyaO2FquTSxvXxQ6maTWFcKk2DX
-         EeDsQkDP2HOHD17vXLc4JITEB28sTs3KD1lK3esPf6rp5OKShO2cIP1UU3faLfLGdwpN
-         Bqxz6EF1Mf5tPEjaN3RX4Z8PLr62SOpTBhAm6LHMqUXTi4972aHRklhZsvBhxI82JuT7
-         sJww==
+        d=gmail.com; s=20251104; t=1783077587; x=1783682387; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:mime-version:references
+         :in-reply-to:from:to:cc:subject:date:message-id:reply-to;
+        bh=8TU4XadQIjVSNyYnv2+Mkm/Ifb5yfUsgGnL8EhkLlso=;
+        b=DzG189z8ybat/tXgI7bnckrrA6uEDp4dHyhC4XdYGg6gkvaBtFeV/uu5ahoIwt4DMm
+         gH+O12Nl3rPLFoba/HXTKWgXhBHM6ifZ8pibgGA2wNFem88y111XsX+Mwv5XHuXtgUjD
+         g8fHy5BVLv0Y2cUgv4u4zMDRI7Rd5P413DRiYPUpTAuGPMiKS6cTmaTrnE3Ah0HlPlSk
+         Zs6Jhf+9CMXJwDZFixnm3T6UGlrp3L6NrDP8mAx55Iriu3xLX/6fDrhar105gB/IVJkS
+         8LMclkMuCWtI24GtjChBGiswIKQEL4CRNMmeecv4GXmfv2w53W4UmmvFF7TdNmK/wkvu
+         s+tA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783077585; x=1783682385;
-        h=content-type:cc:to:subject:message-id:date:from:mime-version
-         :references:in-reply-to:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=XTkL4yGRK/zbi9Cyxhhj2/aMF+zh8RgXRgSHRjgbvAc=;
-        b=p67EGy3u2itDY3+mCJP8jJ0x27YgxL8rapTycTSXjBBFBCoVmHYf/XRwV7BuA2kD2c
-         3E6UT8ikIf0k6j8fh2znEXH+U2PBMzS65uyc8qDc8/ff5xrTp/vOQv8TDTGqfROh53w8
-         YO3Yow9DR51RIjMWExFCbgidxnEB/fPojRTN7FK56i+uws9Aq+28g4GirzNoXSJBzFCW
-         dbmVj2MirB4pCr83piJPf5X1Zu3/Pf5UJh3F0rx7z/OrDQCtfxNDeZi3Sf1S3isLo+TU
-         M1b7C77Z4EwaonsPEH82tz9LzaKEyw0C320kkAMSmUeLEajVh7D2K8ony5rsYQ6YPwqq
-         PXQA==
-X-Forwarded-Encrypted: i=1; AHgh+RpFh4WEy8nI/XQi7QYz6Xnh96JzktSS+xxXrbnPdNHxCpm0fVtJU+iz9chiHrsAayvN/Am8qjKB4GE6BxQm@vger.kernel.org
-X-Gm-Message-State: AOJu0YxGZVGcAuLO/BwFHFPHMojrUnUgyZUpIo6jAZn8IYP3OV1Xwr5c
-	Nx58Og5WRrj40oKeqx2attUaGwg23GeEcIf15PgcQVHHOviD0TEQVl4319jdLSLX8iXUer4Xkc3
-	pX/q2cNBINBp2ZeWSsExL1SWZCbsu4dcgRQ==
-X-Gm-Gg: AfdE7clNorGHhsX7Av+syGf8rj4Bat4B1bh4t9F/dXIGrywgXbqLjs/fs9u2wYHlt5+
-	3ej0hTl3tA8HKnawRuorOG0SdUjKoQnnpgaiGWHfhH/UlZuwXtBbuJsO+KAvwZ5CyVG1cAf9PeG
-	sgVs8rmM9zX06+RhQP7dpjfEQl7p8+QBY7jsT35DFFjX8WIUq88pdoxKNdQ/kuO517EZBHlpFlM
-	CshTJNggQCGVfTn1BpWtiXWpBqR501WPMFGFw0jDqjlEZwFyxSut+R82fyJeRY8X9lpr4Z9oEct
-	+R8HItUD
-X-Received: by 2002:a05:690c:6011:b0:810:1db9:d5c with SMTP id
- 00721157ae682-8138af803b3mr89706627b3.53.1783077584937; Fri, 03 Jul 2026
- 04:19:44 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1783077587; x=1783682387;
+        h=cc:to:subject:message-id:date:from:mime-version:references
+         :in-reply-to:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=8TU4XadQIjVSNyYnv2+Mkm/Ifb5yfUsgGnL8EhkLlso=;
+        b=RvGmmY6a8df0lNFYCmIprUVnpceUUtEwL1HsPfU1OW2lFO+41l7hi7dFpfKbtpZvPm
+         QjvPhgcmcTzVe8q1p602ofbjNeO9iKc4H0YhVHaqpVQBUC6rkRi8CzWnOoesJwKtRtN9
+         HF8Em4cNfYCL8OrMtcJzM244P4AURVJeMF8E5NRk7DhM9Lcx08gZL9aLMhJhzX9anrcd
+         GuFMkp7RIDrMQD1e8ghTfcKRM6V0DhSy/pePBwXWH8etCAdXMI3YM/X4EvXQPTnbIoRp
+         7lwLFhgWSv150keFTdMVbUtqbexU+0lKe3pTTJqrAb4BpOY6UtGG/H7XKrvYO4UFvQOa
+         Z9fg==
+X-Forwarded-Encrypted: i=1; AHgh+Rp5n61QdaMhFmFzRE/84ljTeAgP65aS4ctN8cBPdgFfzSVTdMtBbFoueQ4jAGqTnWZU0NL/5lIcORljq9j1@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz5B+ysPgbv1XVenLTrKqnEoKhbfhMI+jQXQ5wfDcbe/0Lkyp/B
+	Cko2lh05aXgsHkWUPRemd0Wqoiurohua7RH+2nEnADVqFPVYkcJqS2V1KEcy34i1Fph/ylmOZ23
+	3Q3IM6/JKX7mXWQR4nrTbWztcbktU+SE=
+X-Gm-Gg: AfdE7clzCE7MD1oHJP5EI2sN5+p2oFElTeG2/V9EAOZJcamPAjyak8SIm9UOTFh0bR9
+	T4g6CsDKz4OnO+hF7cJZRym6phHZB8Tjuunp4bkAj/omo/m8hYWT1n0wSL87UyFSKuy7Qbw62ew
+	XpWVPNq2Qyav7DIvpfKJbP5Ku3aarmxqL6f5zco7f4OV9RBv+hceoX9+lCltzV90JwkzKlezzyZ
+	qzDghd583aXV5PaG4CMeNQ5quLqeinn+FlITqGQjS5WRh7H1kszMlYE9kd8R1ZxzR2g8ebtjQ==
+X-Received: by 2002:a05:690c:7209:b0:80a:9f1a:d494 with SMTP id
+ 00721157ae682-812ebb6ea8cmr101070877b3.55.1783077586846; Fri, 03 Jul 2026
+ 04:19:46 -0700 (PDT)
 Received: from 77377267392 named unknown by gmailapi.google.com with HTTPREST;
- Fri, 3 Jul 2026 07:19:44 -0400
+ Fri, 3 Jul 2026 04:19:45 -0700
 Received: from 77377267392 named unknown by gmailapi.google.com with HTTPREST;
- Fri, 3 Jul 2026 07:19:44 -0400
-In-Reply-To: <bb91ed5e-0fe9-4317-b73d-b28b593d4c25@kernel.org>
-References: <20260624174410.6074-1-alhouseenyousef@gmail.com> <bb91ed5e-0fe9-4317-b73d-b28b593d4c25@kernel.org>
+ Fri, 3 Jul 2026 04:19:45 -0700
+In-Reply-To: <a176e929-9e2b-4123-ad86-0aec712c3cb1@kernel.org>
+References: <20260624192700.5388-1-alhouseenyousef@gmail.com>
+ <c1984f80-f8a8-4ee2-a087-c49ad3ad1e39@oss.qualcomm.com> <CAMuQ4bXSG5piN9nwLoTcAOCRoZppmJegcPwghikdbQWGuGS+sg@mail.gmail.com>
+ <a176e929-9e2b-4123-ad86-0aec712c3cb1@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -106,36 +106,35 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 From: Yousef Alhouseen <alhouseenyousef@gmail.com>
-Date: Fri, 3 Jul 2026 07:19:44 -0400
-X-Gm-Features: AVVi8CfC61qA-zhGAfkEFZwRqDaaCWmYjf-vdXRpER3zSmKsqK8xOm7dSEAkn1g
-Message-ID: <CAMuQ4bWgF+wFnfR-kSkSdY_iZcHpr6qP1e7fd1kucOGMGNPF_w@mail.gmail.com>
-Subject: Re: [PATCH] misc: fastrpc: reject overflowing invoke buffer ranges
-To: srini@kernel.org, amahesh@qti.qualcomm.com
+Date: Fri, 3 Jul 2026 04:19:45 -0700
+X-Gm-Features: AVVi8CeCnz9dVym3-yo3TwJd1GlzF9YbbBllKNkTYvcb0boRv6JJd2jAn5bfopU
+Message-ID: <CAMuQ4bU0p=QX3iY_uo+_S_3R9dZRtiJMHKs++Nm2yzdmkKOpYA@mail.gmail.com>
+Subject: Re: [PATCH] misc: fastrpc: release pending invoke refs on rpmsg removal
+To: srini@kernel.org, konrad.dybcio@oss.qualcomm.com, amahesh@qti.qualcomm.com
 Cc: arnd@arndb.de, gregkh@linuxfoundation.org, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
-	ekansh.gupta@oss.qualcomm.com
+	dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 X-Rspamd-Action: no action
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
 	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-116297-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-116298-lists,linux-arm-msm=lfdr.de];
 	DKIM_TRACE(0.00)[gmail.com:+];
 	RCVD_TLS_LAST(0.00)[];
 	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:srini@kernel.org,m:amahesh@qti.qualcomm.com,m:arnd@arndb.de,m:gregkh@linuxfoundation.org,m:linux-arm-msm@vger.kernel.org,m:dri-devel@lists.freedesktop.org,m:linux-kernel@vger.kernel.org,m:ekansh.gupta@oss.qualcomm.com,s:lists@lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:srini@kernel.org,m:konrad.dybcio@oss.qualcomm.com,m:amahesh@qti.qualcomm.com,m:arnd@arndb.de,m:gregkh@linuxfoundation.org,m:linux-arm-msm@vger.kernel.org,m:dri-devel@lists.freedesktop.org,m:linux-kernel@vger.kernel.org,s:lists@lfdr.de];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	FORWARDED(0.00)[lists@lfdr.de];
 	FORGED_SENDER(0.00)[alhouseenyousef@gmail.com,linux-arm-msm@vger.kernel.org];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	FREEMAIL_FROM(0.00)[gmail.com];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[6];
@@ -147,115 +146,65 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	ALIAS_RESOLVED(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
 	MID_RHS_MATCH_FROMTLD(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,mail.gmail.com:mid,vger.kernel.org:from_smtp]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[mail.gmail.com:mid,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,vger.kernel.org:from_smtp,qualcomm.com:email]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: A4340701E88
+X-Rspamd-Queue-Id: 19922701CEB
 
 Hi Srini,
 
-These are not fixes from a FastRPC use case I am running, and I do not
-have FastRPC hardware for runtime testing. They came from static code
-review. I used an AI coding assistant during discovery and drafting,
-then reviewed the changes and ran strict checkpatch and focused
-compile checks before sending them.
+The patches received strict checkpatch and focused compile/static
+review only. I do not have Qualcomm FastRPC hardware or a DSP setup,
+so there was no runtime validation of teardown, reply, or refcount
+races.
 
-I had not completed a proper reconciliation against the current
-mailing-list work before sending the patches independently. That, and
-sending so many related changes as separate threads, was a process
-mistake.
-
-I am pausing this set. I will first compare every item with the
-existing list series, drop duplicates and weak findings, and re-audit
-the lifetime changes in light of the reported concurrency concerns. I
-will only return with a small ordered series if anything remains
-defensible, with the testing limits stated explicitly.
+That is not sufficient for this lifetime change, especially given the
+concurrency problems raised in review. Please do not apply this patch
+as-is. I am pausing the FastRPC set while I reconcile it with current
+mailing-list work and re-audit the lifecycle assumptions. Any
+replacement would be an ordered series with targeted fault/race
+testing and clear hardware-testing limitations.
 
 Thanks,
 Yousef
 
-On Wed, 1 Jul 2026 21:05:37 +0100, Srinivas Kandagatla <srini@kernel.org> wrote:
-> On 6/24/26 6:44 PM, Yousef Alhouseen wrote:
-> > fastrpc_get_buff_overlaps() builds end addresses from user ranges.
+On Wed, 1 Jul 2026 21:08:58 +0100, Srinivas Kandagatla <srini@kernel.org> wrote:
+> On 6/25/26 10:07 AM, Yousef Alhouseen wrote:
+> > Hi Konrad,
 > >
-> > A wrapped end can understate the payload size.
-> >
-> > It can also feed bad ranges into the invoke metadata.
-> >
-> > Reject invoke buffers whose pointer plus length overflows.
-> >
-> > Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
-> You have sent 11 patches independently, I would prefer it to be sent as
-> single series.
+> > You're right. These touch related FastRPC lifetime and bounds paths,
+> > and several of them depend on the same state cleanup. I grouped the
+> > follow-up fixes I still think are valid into a small series, and I'll
+> > keep any further FastRPC changes batched instead of sending more
+> > standalone threads.
 >
-> Are these patches fixing anything that your usecases are hitting?
->
-> Have you looked at the patches in the mailing list which fixes some of
-> these issues?
->
-> Or
->
-> Is AI generating these patches ?
+> I also like to understand how are these patches tested?
 >
 > --srini
->
-> > ---
-> > drivers/misc/fastrpc.c | 18 +++++++++++++++---
-> > 1 file changed, 15 insertions(+), 3 deletions(-)
 > >
-> > diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-> > index f3a493845..ba4ade874 100644
-> > --- a/drivers/misc/fastrpc.c
-> > +++ b/drivers/misc/fastrpc.c
-> > @@ -13,6 +13,7 @@
-> > #include <linux/module.h>
-> > #include <linux/of_address.h>
-> > #include <linux/of.h>
-> > +#include <linux/overflow.h>
-> > #include <linux/platform_device.h>
-> > #include <linux/sort.h>
-> > #include <linux/of_platform.h>
-> > @@ -607,14 +608,17 @@ static int olaps_cmp(const void *a, const void *b)
-> > return st == 0 ? ed : st;
-> > }
+> > Thanks,
+> > Yousef
 > >
-> > -static void fastrpc_get_buff_overlaps(struct fastrpc_invoke_ctx *ctx)
-> > +static int fastrpc_get_buff_overlaps(struct fastrpc_invoke_ctx *ctx)
-> > {
-> > u64 max_end = 0;
-> > int i;
-> >
-> > for (i = 0; i < ctx->nbufs; ++i) {
-> > ctx->olaps[i].start = ctx->args[i].ptr;
-> > - ctx->olaps[i].end = ctx->olaps[i].start + ctx->args[i].length;
-> > + if (check_add_overflow(ctx->olaps[i].start,
-> > + ctx->args[i].length,
-> > + &ctx->olaps[i].end))
-> > + return -EOVERFLOW;
-> > ctx->olaps[i].raix = i;
-> > }
-> >
-> > @@ -641,6 +645,8 @@ static void fastrpc_get_buff_overlaps(struct fastrpc_invoke_ctx *ctx)
-> > max_end = ctx->olaps[i].end;
-> > }
-> > }
-> > +
-> > + return 0;
-> > }
-> >
-> > static struct fastrpc_invoke_ctx *fastrpc_context_alloc(
-> > @@ -675,7 +681,13 @@ static struct fastrpc_invoke_ctx *fastrpc_context_alloc(
-> > return ERR_PTR(-ENOMEM);
-> > }
-> > ctx->args = args;
-> > - fastrpc_get_buff_overlaps(ctx);
-> > + ret = fastrpc_get_buff_overlaps(ctx);
-> > + if (ret) {
-> > + kfree(ctx->olaps);
-> > + kfree(ctx->maps);
-> > + kfree(ctx);
-> > + return ERR_PTR(ret);
-> > + }
-> > }
-> >
-> > /* Released in fastrpc_context_put() */
+> > On Thu, 25 Jun 2026 09:40:53 +0200, Konrad Dybcio
+> > <konrad.dybcio@oss.qualcomm.com> wrote:
+> >> On 6/24/26 9:27 PM, Yousef Alhouseen wrote:
+> >>> fastrpc_rpmsg_remove() wakes pending invoke waiters when the rpmsg device
+> >>> is removed, but it does not release the send references taken before each
+> >>> request was submitted. Those references normally disappear only when a DSP
+> >>> reply arrives, which cannot be relied on after endpoint removal.
+> >>>
+> >>> Walk the channel IDR during removal, mark in-flight contexts completed,
+> >>> and schedule the send-reference put while waking waiters with -EPIPE. This
+> >>> prevents disconnected channels from pinning invoke contexts indefinitely.
+> >>>
+> >>> Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
+> >>> ---
+> >>
+> >> You sent ~10 patches to fastrpc as separate threads, do they have
+> >> any sort of co-dependence? Can they be applied in random order?
+> >>
+> >> Generally if your changes are even vaguely related, it's best to
+> >> send them in a single series, if only to reduce the possibility of
+> >> a merge conflict
+> >>
+> >> Konrad
 
