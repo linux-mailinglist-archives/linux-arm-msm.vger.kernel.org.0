@@ -1,126 +1,124 @@
-Return-Path: <linux-arm-msm+bounces-116422-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-116423-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id /sRcAdYjSGoKmwAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-116422-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Jul 2026 23:04:22 +0200
+	id bhUlIhYlSGpPmwAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-116423-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Jul 2026 23:09:42 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 813A7705ACD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Jul 2026 23:04:21 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1C636705B12
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Jul 2026 23:09:42 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=mVPZG9WZ;
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=S7HEqDSY;
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116422-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116422-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116423-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.232.135.74 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116423-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id E8451303101E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jul 2026 21:04:19 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 8DA24302A4DE
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jul 2026 21:09:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A62413264E4;
-	Fri,  3 Jul 2026 21:04:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B4133331EBC;
+	Fri,  3 Jul 2026 21:09:38 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A77829B200
-	for <linux-arm-msm@vger.kernel.org>; Fri,  3 Jul 2026 21:04:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD7EF2DFA4A;
+	Fri,  3 Jul 2026 21:09:37 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783112658; cv=none; b=adpJPKcOjFLFPNS1cjlYRPU1AMtgbAavlCjKDlU9CU0kRctGFTFgImkT8C2P6RQ4rZYCmZ9qhc3oLgWme3Vt3BbZoPjJWZr88P+kAywlTC8jrl+Q1OC7wUyotBnIktFY84gaD4FbWT99WlXHgPtuBwBvFY0TBkRLhC2DJqW174M=
+	t=1783112978; cv=none; b=GdMhDCLvK6VnmbxsoF0fzyuL5rt2jQMbe5f/rprAIKdZzcoSc0fPxe4Vc82k616djlnVqLD/901HiSTjIoLRN3K8oQUDd1OnQDgP76qvvPY/JsBAOwjHn38JHVh5ywFMqag74QzfQRLVvDyhhJ0svMMELlRpoUqULFIC5hGrMTU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783112658; c=relaxed/simple;
-	bh=057Zy9OBNEVAmmErkRANAIhVeUwl/UkARFKpq+4xQ5c=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ri+IaEWpGwmMt0Zzr0g/DAR+WYECuNwIlto010DiXJlXeonZED1lEicnLxpmK6t3J4H7QQ4Bs10X0O743/AEURTMalzhV9M1QWdfAiLFFzEWgQcO11NPHNy5+XFiFJe5aa26m8UkBRfUv/B+EQHlyvm1n4MEOTXua+UySMcal+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mVPZG9WZ; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 239131F01558
-	for <linux-arm-msm@vger.kernel.org>; Fri,  3 Jul 2026 21:04:17 +0000 (UTC)
+	s=arc-20240116; t=1783112978; c=relaxed/simple;
+	bh=GZQ1FBSifAsE+04rbRtkuF1fB/OD0zBWi+bNiSovTww=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=fBOKEcw79jhVnxveKAgzoV++4XWLKgc1slQVCoeCVYMMEYa4mE0ZwaOkdW2SoGThRwn48B2raofndyoL+YZoB0TeEiof1/9GwNNdkWW4wGHwFif4qPI2VplfxdKvJ7+ok/c+a/+YiLVSi/5UNhF7K50B4aE7L07tXPreLMVIaSE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=S7HEqDSY; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 934E31F000E9;
+	Fri,  3 Jul 2026 21:09:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783112657;
-	bh=057Zy9OBNEVAmmErkRANAIhVeUwl/UkARFKpq+4xQ5c=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc;
-	b=mVPZG9WZWetiuUBQBQcNKKAVmZqIdOPlkulglymkdujUkySjI5GzGt05vOJ0HuIK/
-	 h8WmGozV76kUvSzOPgDE0V7wzFDe/RKMOLQ10Jc37DosdcnEBPUoLl0javX5eRWm5k
-	 I44FfYvnvOwVUzBDxeRTTUu12IqYD3IDOyAPZtIMURyInQ3WipdncvIa3gDpKMduQ1
-	 TTHD5E3Xw8bRMgXmr9DYligCt/h3E03ZAubyHVZmJIgsjZyx3ZXYvR7VJOlRqXnI8x
-	 2uRKThWhM5rz4YZuAbefx1vfNCuD02NZob/JzwXuvzj8Z/YN1GWkBTUWl1NvvNJ0tm
-	 te6KdL94iPkww==
-Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-5aebd52488cso1067282e87.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Jul 2026 14:04:17 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AHgh+Rp7oNX5thRGConU3EwJb5ougLEVTnZdmFjN7/7daeArSF9xA8TnnuNeNOB8cfAQZlPQlJCbkIBPBOeuYW8x@vger.kernel.org
-X-Gm-Message-State: AOJu0YwbCLDb/zk/RhnSGSzjSaoyb20xotjm0UZ9l3E0cIdoDTV0ocdM
-	mJuoAMvHCRc1j1eO1hH472dYNAUtpsjtn9yETKiiLn7kX2Ryg9hAfJIb5JLDclhPhsg3qDVCGFz
-	8/uq+TmdURS0+JEjyPbRveLBoZZV/QN8=
-X-Received: by 2002:a05:6512:244:b0:5ae:b764:3ba5 with SMTP id
- 2adb3069b0e04-5aed50bf5cbmr58705e87.64.1783112655874; Fri, 03 Jul 2026
- 14:04:15 -0700 (PDT)
+	s=k20260515; t=1783112977;
+	bh=8nPMkOdgH6vPZv3E0L1/87s6y+9ZPPA8sJI8Ebig5cs=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date;
+	b=S7HEqDSYehX2rE5vhDX8v14E4SNDupI2Ar+VTfduze3wgDCGmtKl3PY0K7NwFtoav
+	 vUyQ6t88vQuJXNk2OXcou2i3wHOKRlgG50hgAMRTrA+ZKyj0znPrtm9taYOMsnqKW2
+	 e/p889jsPO4pPy1DGhsJaUbljXoOXkU8cawVP4lzbCAXV8CdQSrFn/kkywUirB0Tb/
+	 qdMFAN/OfEac0aIrJFBFPZFsEIUEReLQs7fsUymShyoexqeavoi23EWt8wp8lzgbR0
+	 w59zXlXKA3/rCUNZLsZSA6fd8xAkkV7eTNHZAQOJaOzjwCnYxUItdanQl2NeIL3h8/
+	 8q6xNCGlumizQ==
+From: Thomas Gleixner <tglx@kernel.org>
+To: Mark Rutland <mark.rutland@arm.com>, Sneh Mankad
+ <sneh.mankad@oss.qualcomm.com>
+Cc: Daniel Lezcano <daniel.lezcano@oss.qualcomm.com>, Peter Zijlstra
+ <peterz@infradead.org>, "Rafael J. Wysocki" <rafael@kernel.org>, Pavel
+ Machek <pavel@kernel.org>, Len Brown <lenb@kernel.org>, Catalin Marinas
+ <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-pm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH v2] arm64: Disallow disabling boot CPU based on config
+In-Reply-To: <akfHIH_dZrr5bosu@J2N7QTR9R3>
+References: <20260703-disable_boot_cpu_offline-v2-1-782d16ff58c3@oss.qualcomm.com>
+ <akfHIH_dZrr5bosu@J2N7QTR9R3>
+Date: Fri, 03 Jul 2026 23:09:34 +0200
+Message-ID: <878q7rlr01.ffs@fw13>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260703073029.2588960-1-ravi.hothi@oss.qualcomm.com>
-In-Reply-To: <20260703073029.2588960-1-ravi.hothi@oss.qualcomm.com>
-From: Linus Walleij <linusw@kernel.org>
-Date: Fri, 3 Jul 2026 23:04:03 +0200
-X-Gmail-Original-Message-ID: <CAD++jLnmyZauNi11xdPYUXZMA+X_Ztg6TNxkKrK+ATZTP=W7_w@mail.gmail.com>
-X-Gm-Features: AVVi8CfrQpkfG73YJB3yBFkLAI4xFHb3eiNzbFOQ7XgJ7pxmuRx31N4Mgw7eoz4
-Message-ID: <CAD++jLnmyZauNi11xdPYUXZMA+X_Ztg6TNxkKrK+ATZTP=W7_w@mail.gmail.com>
-Subject: Re: [PATCH v1 0/2] pinctrl: qcom: Add Eliza LPASS LPI support
-To: Ravi Hothi <ravi.hothi@oss.qualcomm.com>, Bartosz Golaszewski <brgl@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Luca Weiss <luca.weiss@fairphone.com>, linux-arm-msm@vger.kernel.org, 
-	linux-gpio@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, mohammad.rafi.shaik@oss.qualcomm.com, 
-	ajay.nandam@oss.qualcomm.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-5.16 / 15.00];
+X-Spamd-Result: default: False [-4.16 / 15.00];
 	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	MID_RHS_NOT_FQDN(0.50)[];
+	R_MISSING_CHARSET(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-116422-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:ravi.hothi@oss.qualcomm.com,m:brgl@kernel.org,m:andersson@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:luca.weiss@fairphone.com,m:linux-arm-msm@vger.kernel.org,m:linux-gpio@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:mohammad.rafi.shaik@oss.qualcomm.com,m:ajay.nandam@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	FORGED_SENDER(0.00)[tglx@kernel.org,linux-arm-msm@vger.kernel.org];
 	RCPT_COUNT_TWELVE(0.00)[13];
-	FORGED_SENDER(0.00)[linusw@kernel.org,linux-arm-msm@vger.kernel.org];
+	RCVD_TLS_LAST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
+	RCVD_COUNT_THREE(0.00)[4];
+	FORGED_RECIPIENTS(0.00)[m:mark.rutland@arm.com,m:sneh.mankad@oss.qualcomm.com,m:daniel.lezcano@oss.qualcomm.com,m:peterz@infradead.org,m:rafael@kernel.org,m:pavel@kernel.org,m:lenb@kernel.org,m:catalin.marinas@arm.com,m:will@kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-pm@vger.kernel.org,m:linux-arm-kernel@lists.infradead.org,s:lists@lfdr.de];
 	FORWARDED(0.00)[lists@lfdr.de];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	MISSING_XM_UA(0.00)[];
-	TO_DN_SOME(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[linusw@kernel.org,linux-arm-msm@vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-116423-lists,linux-arm-msm=lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[tglx@kernel.org,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	ALIAS_RESOLVED(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	MISSING_XM_UA(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,vger.kernel.org:from_smtp,mail.gmail.com:mid]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 813A7705ACD
+X-Rspamd-Queue-Id: 1C636705B12
 
-Hi Ravi,
+On Fri, Jul 03 2026 at 15:28, Mark Rutland wrote:
+> On Fri, Jul 03, 2026 at 04:50:02PM +0530, Sneh Mankad wrote:
+>> +       depends on HOTPLUG_CPU
+>> +       depends on SUSPEND
+>> +       help
+>> +         Disallow boot CPU (CPU0) offline when the suspend_ops->enter()
+>> +         has to be executed by boot CPU.
+>
+> As above, I don't think this makse sense as a config option.
 
-we are in a bit of maintainer transition for Qcom stuff,
-Bartosz will apply and coordinate qcom pin control
-patches!
+Correct. That's pointless as it can be determined at boot time either
+through firmware (ACPI/DT) or if that's not possible for whatever
+reasons then a runtime detection quirk which depends on that particular
+platform.
 
-Acked-by: Linus Walleij <linusw@kernel.org>
-
-Yours,
-Linus Walleij
 
