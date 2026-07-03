@@ -1,262 +1,343 @@
-Return-Path: <linux-arm-msm+bounces-116353-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-116354-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id inkDHp3UR2qjfwAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-116353-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Jul 2026 17:26:21 +0200
+	id bh1mJ8nVR2ohgAAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-116354-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Jul 2026 17:31:21 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 96302703D5A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Jul 2026 17:26:20 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 03D67703E5B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Jul 2026 17:31:21 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=Nvidia.com header.s=selector2 header.b=mnMlyBtK;
-	dmarc=pass (policy=reject) header.from=nvidia.com;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116353-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116353-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	arc=reject ("cv is fail on i=2")
+	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=ZdK3Urio;
+	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=ZC03+r+l;
+	dmarc=pass (policy=reject) header.from=qualcomm.com;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116354-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116354-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 1C89530209CE
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jul 2026 15:19:33 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 625EE306FD49
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jul 2026 15:28:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D5B76414DE5;
-	Fri,  3 Jul 2026 15:19:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E56D7417364;
+	Fri,  3 Jul 2026 15:28:34 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from SN4PR2101CU001.outbound.protection.outlook.com (mail-southcentralusazon11012039.outbound.protection.outlook.com [40.93.195.39])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B43421FF25;
-	Fri,  3 Jul 2026 15:19:30 +0000 (UTC)
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783091971; cv=fail; b=PkXB1GJ2crwlm/JFqSTLufFM8XdEpWnyVm9HO6Vam3efe4N2Av2Ex8MOXcWiLCjenpFXRRZIPI7QBo0R479njDHEtFRlcCbRImvPM7rSoSgIY43MsNm2NlSEHTkNt6Kyngge24XCIhYP9k06FLJYsN4evYcVAEQjGcdh5UGDBLg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783091971; c=relaxed/simple;
-	bh=YPa7KdLprzgJKnzrNqkOpWSmYODb/lIws8zy1Jg2mGw=;
-	h=Content-Type:Date:Message-Id:From:Subject:Cc:To:References:
-	 In-Reply-To:MIME-Version; b=VEiNgSKmWpQosmgNuaCOEJmPlqWHvohJDA19znkyvW92mYrZv9ML2dF8GnVcvv3fW/LPm3SFiv1SkCxX7TOcG52LcGYBkAcS847ZUpVbFEsd3p0wWXyoz2Kgwj1NBcHzCnKCmJWh+KTwsZ2engtnDwIwhzUq+26lVIHyWQfki7I=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=mnMlyBtK; arc=fail smtp.client-ip=40.93.195.39
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Rd5m6Emj+TW16fmXTB1pci+NBqwXYENjsKVlpGD9ECAMCq4EcFrxnPhVkkMIW4RcBBI34HG37RaG8Led8uF8M2iHrVrQhWK0ccbQVS97v/TAk8XweX7IU+Im+ztTSRWr01bT95TmQVED8847wafdlWo0alwby0VEPrXLaJBYqd1qna8fahsLtay9GBEHQkZelBLdDUBRqRCdp6q5++t3mjkLOshLuIMEObh3eWu3aCjsib4zYzDtSuX1s2ZI4MKmvbl6Sg6FprEiJjqnSItTfENlHySq7y4E2btiZUFnzKRv9ZmvnwdIJ2hTV8ICwEmJ/p5UdY1af2cxKeOf1lphMw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=PJsWbDxlK1lfEc9swedmNLuoU5uhFAQRmSm+tgJfwMs=;
- b=MlVpoqHTH5ZYuGcvTo6vQxZA6Q+ZxE+n0kqcyo0CHUW8OzzzU3R+YG0Xk7iVG7BIY8GscI80LAzKFruvS7JRoWgLCMnnVSCfzPfhQeTaPtlEJn60ndflIMTsW/V/EmUZR2HLExQ/ew5kD1VFvDtf1hFVrbyh8+L9uh7jaFUOPGMYCPEeMZpBIjXcGjWwGAZjmbSjKHVD7RmG1sfNtW7KvaUQu8+8sdTbGYrtz++fAbn+xA3YfIFkluhIzjw8GmvIRLGcxKcCcA5sivFJ0tqfe5BEkgEUbXe84jqVgO73hHpXrCdlAvDAcNowP1n+1b/iWw7bPkEpQ2edrmJoRjCrew==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=PJsWbDxlK1lfEc9swedmNLuoU5uhFAQRmSm+tgJfwMs=;
- b=mnMlyBtKDLgxm2OMOM0mkmruD50fISkEz0+Rm+W8d9qTDm8k5EzC4Q3/8cx1JgWQOS8tPYLdVYIkTY19mOOH12wdO6H9G0SrjIYZE/9oDIZtJiWO1BfN5drpSK7RapWDqpnIAwIgo53cOphJ4MhLrRJv9Y5xq2GkaeWUIDPMrAf7Uv6B439nR/YQdSgOzevGmaTP/v/4/DxTYP9XtMsDyRyqHf+IEvLadGOW7bA/7ZiAPMhnMqJshOpYXFQBXVXCOxGhiHJ9UzunYdxaS+1ZvY7HagMXeCCs77ohgUMUuxtU0WMyOp9GuYgmcxgs0NxNoqKsXfRV4OaEnw5ikaO1Og==
-Received: from IA0PR12MB8374.namprd12.prod.outlook.com (2603:10b6:208:40e::7)
- by PH7PR12MB5856.namprd12.prod.outlook.com (2603:10b6:510:1d7::19) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.8; Fri, 3 Jul 2026
- 15:19:24 +0000
-Received: from IA0PR12MB8374.namprd12.prod.outlook.com
- ([fe80::d85f:4c87:ae84:3f16]) by IA0PR12MB8374.namprd12.prod.outlook.com
- ([fe80::d85f:4c87:ae84:3f16%5]) with mapi id 15.21.0181.009; Fri, 3 Jul 2026
- 15:19:23 +0000
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 03 Jul 2026 11:19:17 -0400
-Message-Id: <DJP1CGPF8ZW3.3BI3XRFCCYU6D@nvidia.com>
-From: "Zi Yan" <ziy@nvidia.com>
-Subject: Re: [PATCH 01/13] mm: introduce vma_flags_can_grow() and
- vma_can_grow()
-Cc: "Thomas Bogendoerfer" <tsbogend@alpha.franken.de>, "Madhavan Srinivasan"
- <maddy@linux.ibm.com>, "Michael Ellerman" <mpe@ellerman.id.au>, "Maarten
- Lankhorst" <maarten.lankhorst@linux.intel.com>, "Maxime Ripard"
- <mripard@kernel.org>, "Thomas Zimmermann" <tzimmermann@suse.de>, "David
- Airlie" <airlied@gmail.com>, "Simona Vetter" <simona@ffwll.ch>, "Lucas
- Stach" <l.stach@pengutronix.de>, "Inki Dae" <inki.dae@samsung.com>,
- "Seung-Woo Kim" <sw0312.kim@samsung.com>, "Kyungmin Park"
- <kyungmin.park@samsung.com>, "Krzysztof Kozlowski" <krzk@kernel.org>,
- "Peter Griffin" <peter.griffin@linaro.org>, "Jani Nikula"
- <jani.nikula@linux.intel.com>, "Joonas Lahtinen"
- <joonas.lahtinen@linux.intel.com>, "Rodrigo Vivi" <rodrigo.vivi@intel.com>,
- "Tvrtko Ursulin" <tursulin@ursulin.net>, "Rob Clark"
- <robin.clark@oss.qualcomm.com>, "Dmitry Baryshkov" <lumag@kernel.org>,
- "Lyude Paul" <lyude@redhat.com>, "Danilo Krummrich" <dakr@kernel.org>,
- "Tomi Valkeinen" <tomi.valkeinen@ideasonboard.com>, "Sandy Huang"
- <hjc@rock-chips.com>, =?utf-8?q?Heiko_St=C3=BCbner?= <heiko@sntech.de>,
- "Andy Yan" <andy.yan@rock-chips.com>, "Thierry Reding"
- <thierry.reding@kernel.org>, "Mikko Perttunen" <mperttunen@nvidia.com>,
- "Jonathan Hunter" <jonathanh@nvidia.com>, "Gerd Hoffmann"
- <kraxel@redhat.com>, "Dmitry Osipenko" <dmitry.osipenko@collabora.com>,
- "Zack Rusin" <zack.rusin@broadcom.com>, "Matthew Brost"
- <matthew.brost@intel.com>, "Thomas Hellstrom"
- <thomas.hellstrom@linux.intel.com>, "Oleksandr Andrushchenko"
- <oleksandr_andrushchenko@epam.com>, "Helge Deller" <deller@gmx.de>,
- "Benjamin LaHaise" <bcrl@kvack.org>, "Alexander Viro"
- <viro@zeniv.linux.org.uk>, "Christian Brauner" <brauner@kernel.org>,
- "Muchun Song" <muchun.song@linux.dev>, "Oscar Salvador"
- <osalvador@suse.de>, "David Hildenbrand" <david@kernel.org>, "Baolin Wang"
- <baolin.wang@linux.alibaba.com>, "Liam R . Howlett" <liam@infradead.org>,
- "Nico Pache" <npache@redhat.com>, "Ryan Roberts" <ryan.roberts@arm.com>,
- "Dev Jain" <dev.jain@arm.com>, "Barry Song" <baohua@kernel.org>, "Lance
- Yang" <lance.yang@linux.dev>, "Hugh Dickins" <hughd@google.com>, "Vlastimil
- Babka" <vbabka@kernel.org>, "Mike Rapoport" <rppt@kernel.org>, "Suren
- Baghdasaryan" <surenb@google.com>, "Michal Hocko" <mhocko@suse.com>, "Jann
- Horn" <jannh@google.com>, "Pedro Falcato" <pfalcato@suse.de>, "Kees Cook"
- <kees@kernel.org>, "Jaroslav Kysela" <perex@perex.cz>, "Takashi Iwai"
- <tiwai@suse.com>, <linux-mips@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>, <linuxppc-dev@lists.ozlabs.org>,
- <dri-devel@lists.freedesktop.org>, <etnaviv@lists.freedesktop.org>,
- <linux-arm-kernel@lists.infradead.org>,
- <linux-samsung-soc@vger.kernel.org>, <intel-gfx@lists.freedesktop.org>,
- <linux-arm-msm@vger.kernel.org>, <freedreno@lists.freedesktop.org>,
- <nouveau@lists.freedesktop.org>, <linux-rockchip@lists.infradead.org>,
- <linux-tegra@vger.kernel.org>, <virtualization@lists.linux.dev>,
- <intel-xe@lists.freedesktop.org>, <xen-devel@lists.xenproject.org>,
- <linux-fbdev@vger.kernel.org>, <linux-aio@kvack.org>,
- <linux-fsdevel@vger.kernel.org>, <linux-mm@kvack.org>,
- <linux-sound@vger.kernel.org>
-To: "Lorenzo Stoakes" <ljs@kernel.org>, "Andrew Morton"
- <akpm@linux-foundation.org>
-X-Mailer: aerc 0.21.0
-References: <cover.1782760670.git.ljs@kernel.org>
- <f2e8c32515d328db62279cc8bab8398ea278d74f.1782760670.git.ljs@kernel.org>
-In-Reply-To: <f2e8c32515d328db62279cc8bab8398ea278d74f.1782760670.git.ljs@kernel.org>
-X-ClientProxiedBy: DM6PR05CA0061.namprd05.prod.outlook.com
- (2603:10b6:5:335::30) To IA0PR12MB8374.namprd12.prod.outlook.com
- (2603:10b6:208:40e::7)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36F3E41735C
+	for <linux-arm-msm@vger.kernel.org>; Fri,  3 Jul 2026 15:28:33 +0000 (UTC)
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783092514; cv=none; b=Q4umhLLfNAVf06hpatigFWCDjowLrx3mdXHTgDWGJEWED7T574QwHXWE2jVBehYGRAP3q3b85ef2GxrZ2Ktuu9y75OJz/k0Rlzi5C1d3a31l83fU9hdoiV5K8gEF3Z0OWMTT5QO2iuvNqLV6SjHyxwE5ljl2iqEcKhyLETNQelk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783092514; c=relaxed/simple;
+	bh=150+8HL6LJJfiLHm6ieX1zJrqRUok0x5WkQYbkbbdqA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=nNuqEeqUziSbUMyADoHzn5dRHacZOQ59SdrsWme/piSD5zQ7SHKLHs4IXR1BWP21Re7WtEpNPGhGPMUDQf+pqTijX3U9PVqC5dPeQlE6lKkVtISMbMULf6kRYm8SjjyxmDAcJhwiJjkdy2V3ydLb1TI6aExhCbgRVj0+ta2I5Z4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ZdK3Urio; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=ZC03+r+l; arc=none smtp.client-ip=205.220.168.131
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 663BSVSl3054318
+	for <linux-arm-msm@vger.kernel.org>; Fri, 3 Jul 2026 15:28:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	AciCzvVuG7PhBcPDjsdU+1dVF4U7pvIIGAG3L/zLdWM=; b=ZdK3UriohUzLsGQr
+	5AveQQAoU94llCIcFaCL3Wu8pEcTKGxM/6gPAFu5dNuw8QUzL054/shX4W9G+WzY
+	2FMFGmAiIE3e3lO5DDhmkOtAPvC7pNv/4CZsxKF75AoITtxisT5n0ifqsW4nXFFj
+	m+8D9MErpMheDOY3Zq+sq4fiNkdMW2n1QnHSdv3hQZWXCXGg/4n8RoN9iZp+2DEO
+	wcimnjxg4wHoTQ5GVpAQYPWaIlKNa/Ipshp+3AwCd7bEfTiEE1mwnPopU/dYZQuv
+	+wIeouFUfZ5nzPF0avG4nr8s8vLFsXrPhaWM/eQwNLMkLQCz00uYvFG8b5VC2G2c
+	5dlJuw==
+Received: from mail-vk1-f200.google.com (mail-vk1-f200.google.com [209.85.221.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f67j02107-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 03 Jul 2026 15:28:32 +0000 (GMT)
+Received: by mail-vk1-f200.google.com with SMTP id 71dfb90a1353d-59d595bfd94so242094e0c.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Jul 2026 08:28:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1783092511; x=1783697311; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=AciCzvVuG7PhBcPDjsdU+1dVF4U7pvIIGAG3L/zLdWM=;
+        b=ZC03+r+lY+oyH3rfvj+HwKmomPznc2Zg7DH6TNQAo0KX2xNSzcLzBHDnHf7mZ4+aP9
+         ow5pzcX4ct9+U/j/Z+oAJQeJl99ADm2twM24faTVfFyhOQUae/lU6MWjpQgzQQaNL6T5
+         OVCPmxOXQkz33IMtPYnh+lpy9XxXl0EY5GEicc295UAyUV20fw++ERJo12afQf0/duAQ
+         G1GU9FwIgnALop/lKP4iUzYoxQfOY7Jp8VfeXeiG3bt6sSG2+ZTMqdu8V0dyDHobC7Tt
+         JMfoHI6sO7etGEY4/4LFu9fYdb4QEPFcDYFqbUvCWvIUIECjYA2pVXY1J1zZBXbiJg8X
+         MWrg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783092511; x=1783697311;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=AciCzvVuG7PhBcPDjsdU+1dVF4U7pvIIGAG3L/zLdWM=;
+        b=ICWd9DyZnf4SkSQzcP+FHBqRIvJSvoxF4IV/i4rq4qt+xK0fPbi9JJqRsnhzlHCsjB
+         dC3Vc649SYWXDZjkbjEmkLN42ydWpERYV5TUrQWFUQAv6xN0TJYIsyQQX+DgWCE3oIm3
+         lfAR2ctrGwCHDu70tItQMrc5SfX7oKByh64d0RYVV246g1YcckA/5j3Kg1OqhBHQH3l/
+         oMVYRKG2jpCSvbFsneHtXAKsCgIbaJuMdWGMWPa9UAor9dLuTYO7qhs698GGjNC9KPIo
+         VbUflZ0isCYlW9UoUdqg2ULtgFo+2uPwPUasUby5urv7VJ5KjgI+wi3HmJX1HVpF/Fda
+         BPGw==
+X-Forwarded-Encrypted: i=1; AHgh+Rreni8JYtvn7x6rZRvSYQfw6upnUYY3OVz/J7WSbQOb7EyzbAB13qE/I+yPjGB6k5AqhhUkIZdSlrClXFW/@vger.kernel.org
+X-Gm-Message-State: AOJu0YzO9s5z1bilkyy8f5gnPPwIGxlyJNpQu21jdN/3jA4dvXEdCwFh
+	CqtODPG+QXzwl2FY9CmkepOWeACb4Wz8QtmaJO+Tq4UgO3V1B3fu7zIjNVNoaqnXb8y60e4kNvG
+	GoTK/lyew2lfI8bObEDo4W/eLbZ63bCBvmDDrY6YvWKvntxLXCSbNIu3BOSFmJtxIuO6u
+X-Gm-Gg: AfdE7cn7zBeZERj628DzDs4tgYzW4PqD40R/2m5QlXUxJhTgjlkEeYVWewqRYMAyF6u
+	FQZclwltpJRDM4uvX4d5fr4+uDRk0aJWGR/5/sy7bBdcBcO+8ZVWibyIfbbnKfXudS6BGsuiks4
+	I/vKW82RxsHu739MzQLZKHW4/yL1OWZtV2FfoQ5nCM8Izwq4JSJoCjM06p4vo2rEWkn1A41lXKt
+	WEY7yMf9UULOYsp67a6SU8pO1EJQyNPbZnIJe2skaWPZQxbH9N3TXKDWqKooNYex4JuU1UWUNPg
+	ccrlymuSFosM83yh0ZpwNBT79iScmASJiEhIeMQ8a22ZtheVKPoyQzTMc3n2BIsF1RFHgEZI87Y
+	iuh407y5UrpeGaVC90hQkK50PwV7cuhuCPseVD4owQccm90g8QECWpwGJsjUWG6yiWOecwk9Uyg
+	nvpkEUCLS5/T8SDeeqdmtQUsx4
+X-Received: by 2002:a05:6122:896:b0:5a0:5805:c8ba with SMTP id 71dfb90a1353d-5be1028b9f8mr180e0c.11.1783092511243;
+        Fri, 03 Jul 2026 08:28:31 -0700 (PDT)
+X-Received: by 2002:a05:6122:896:b0:5a0:5805:c8ba with SMTP id 71dfb90a1353d-5be1028b9f8mr167e0c.11.1783092510604;
+        Fri, 03 Jul 2026 08:28:30 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5aed13c8c3asm548295e87.82.2026.07.03.08.28.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 03 Jul 2026 08:28:29 -0700 (PDT)
+Date: Fri, 3 Jul 2026 18:28:27 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Rakesh Kota <rakesh.kota@oss.qualcomm.com>
+Cc: Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        sashiko-reviews@lists.linux.dev,
+        Komal Bajaj <komal.bajaj@oss.qualcomm.com>, robh@kernel.org,
+        linux-phy@lists.infradead.org, neil.armstrong@linaro.org,
+        vkoul@kernel.org, olteanv@gmail.com, krzk+dt@kernel.org,
+        conor+dt@kernel.org, devicetree@vger.kernel.org,
+        Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>
+Subject: Re: [PATCH 3/4] arm64: dts: qcom: Add Shikra CQM SoM platform
+Message-ID: <sfilvfwibse2vpi74vownkx32kz2dhkkvriphtti5jn2p32ffx@2q4p7nahzoxz>
+References: <t2sw6owdxy5iyodjqsldbw6bfaqnezhgvc4hhylxuyrrbjkjto@iwf4dr5nmot3>
+ <20260513142936.kauwa3czigfs7qs5@hu-kotarake-hyd.qualcomm.com>
+ <0ac665bb-1a21-4077-aa9e-97162f7f4784@oss.qualcomm.com>
+ <20260514103918.cs5m5kcxcrcgukvx@hu-kamalw-hyd.qualcomm.com>
+ <obdxony34ckfbtsqj66siszw44sgieskcye5hg66ulkisctpwl@fyqczpze5tnw>
+ <20260518114927.edxbzvklqatlntv2@hu-kamalw-hyd.qualcomm.com>
+ <CAO9ioeVMieo8HtpRw+n4ZU9uV-_RQM061q5XfAA1Dtk2fnp4+g@mail.gmail.com>
+ <bvankzuazswuigrm7hvyjqigzfaru5o43wi3zvyphgme2pgqwz@pyspqky3u6cn>
+ <5idu4ljmcvcvzqsr5g73h2roxzs36l6xxc5ju6ovc5aitt3gx4@wmfqueyf2rj6>
+ <20260630124220.4lja4zshpf66kwj3@hu-kotarake-hyd.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: IA0PR12MB8374:EE_|PH7PR12MB5856:EE_
-X-MS-Office365-Filtering-Correlation-Id: 51d166c3-9eb7-44b5-2305-08ded9167693
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|366016|7416014|376014|23010399003|18002099003|22082099003|6133799003|4143699003|56012099006|11063799006;
-X-Microsoft-Antispam-Message-Info:
-	waK9HC66LHyvBqm/X6oa+SmhtU6o8X1iOE5NifCkoFkl5td3cp7RXlP+HRoyh/cPFfi70qQO5DQzjzA6/Tubl7xExcVdSWQd+1uWXGR2/gZnGhw4MqYnjDvjFzQBfBBDyvbTxCAthTYUGWdeifgcBwOPeuRIdFPiiFRrUf8cI8NyQLgNhYG1d9toWhc/iTV/sMRgjuC0gqZf7KKvfczTA/r5DoDHE8+8uw0r0waNlUYq+kVtsogTd4HMeap1Q/ZGs42D2YrV+r+5WQkQWUapt0DojyhDAdAmhm5LrxJpJK5EtINZouQbNgQHddP19XtOobJmcUt8jShLMIJocHpoBUnvaALynq3QYcf3VBJXViaATppkrRwmpHWnhW9MoQaFLp9BTE3SbavKLcA5+Anm6t+qECfj0oVTwXb2i5QOQvWEe074SxPlzNCClQ6OAFZGUJuEWuCn9futMXAribhavfRqlwDtPIMaz2obrS2xVTK5R2ZKOxYDiTNfSZL85RJTGnykaasKwCuBFvLX3U+DscbIUXiSF/qxXs4R/q6jP3tNiYzOl6jM/E8w+7V/mCisjndwxIaC2DrRoSjttxMZ6IXYMQZBdUWQ0gMF335ajCA/GS4nm1PUrfUwMqdVRVfSiqilkJEQMTsQvGZqvzNXMXkjxvHcG3sxuHOFhqZeEzI=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:IA0PR12MB8374.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(7416014)(376014)(23010399003)(18002099003)(22082099003)(6133799003)(4143699003)(56012099006)(11063799006);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?bGpZaHFMRFpUd2wzWXozWHFHZE9SK1B5ZHB0c01aVldkSTV4eWRWRWU5OWFS?=
- =?utf-8?B?Ri9rM0MzSjdwMlZyTHFkalNyb2wvQ0ZsSTJUSnlyOThOQll3MEFTcDRHTzQz?=
- =?utf-8?B?NEJIUzVUSkk1Sm96UXlNM0ZZNllxNC9EV2dTV3dwN3JhdWdDYWVZSGFYUWt6?=
- =?utf-8?B?ZjVYb29udGpJTFQ1U2tmMzVBa3FwamoyU3c2Q3JyOW1RZW1RNUNaYjQ2U1Iv?=
- =?utf-8?B?WjRNMHUxckZxcnArY2xtMWd0MXVlMWg1RjZzMGZTdjl1QjhqaEVNeXF1bDBJ?=
- =?utf-8?B?aXd4eW83U2IxdzhCV1VWUU5YdXcwQWFINTM2ck84TTlQdkpsMXRDZEZBdEMv?=
- =?utf-8?B?eVh1REs1THArbElVQi9RVzZuQW1wMjZoRjZJN0M4U0NpVW9sS0NQY0tXVjc4?=
- =?utf-8?B?aXhQM2kwUGE5ZzVGUVlOdVp0ckM5MksrWEluNUhYeENtdzVaNmt6MGh0QjF6?=
- =?utf-8?B?WWlVaTVRd0JUR0x1UUtMYklDeEhQRXJDbHNHaDN2Ly9PcHJtRGljelJvcUtV?=
- =?utf-8?B?aGM4RU9YY2orSUMxLzBBMHkvNmVlRkwrVlZMNzRMR09kZ3BlenRyT1ZZN1c1?=
- =?utf-8?B?SHNTY05SUWFoTDdLTy9ycGF1b1BWaWJSSjYzNTF5RFBvZVFwMEZqd3hEV255?=
- =?utf-8?B?bVRhd3dlRWx3ZUczQzN1Uzk3NVM1ZUhMeEszcWZ5eXd6Z0RONU9qaWRwTjc0?=
- =?utf-8?B?RzdrcEduZTZPS0I5UWc2U1ZlajNQVlc0cXJNV1pNTHI5bDZtQzBnRnhYSFRh?=
- =?utf-8?B?SG9vMTNuRittdGxrZWNmaFZTZzNiamlpU2Riay8xRVlsL0lnUTVKQkgrOUdG?=
- =?utf-8?B?SC9SQkRvdkd0L0x1VFR1TnBYSDFoYXNKVG1GcFVOQ1JLNnA3VDI4b2FRVU41?=
- =?utf-8?B?UlVTVHB3YkRWVFhzeFZtc2YrQzZSVDlwRVYwSTFodlhNbm95MkQ5bjBhTCs4?=
- =?utf-8?B?UGZKUjZKODhnTVI4SU1wRjgvZjZwM0t6Rjg2ZnBYcUQ2VSs3d3VUOUlyYklu?=
- =?utf-8?B?Z3NkMUJUQzJpMFY2WmxWRkh1eEhhbDZFOERtdEh5NE5WUTYrbWxUQVQwNmky?=
- =?utf-8?B?NlpTTUwwVWxtVHlJOTl3cjFtSDh0RjMwUlVIcThYU3FJZ0dlOHdTU3hraTl1?=
- =?utf-8?B?TzdlMHlIaUVPT0d0L1c0SzhEWWlpUGdsbWV1UDFmWDNtYzZzYmZWVVhRV3VT?=
- =?utf-8?B?a3M4Nkpscm5tZnhYVjhMVUtNRk9yQXg1K1QzOUFObURza091SlYveU0rM2VD?=
- =?utf-8?B?cDNIYnhWZkZQNG8vWHVEQnFWcFRVTENRNkF2eUVBYzBjT2FLZm5HK1NjQTRK?=
- =?utf-8?B?eW9HNkRwRXBZWllRRGgwODZqTmNXSWpBVVpPaUF4cm1LL05BTVlLcFJWclZQ?=
- =?utf-8?B?eXZRM1dyMjRVbWM4aytMTDkxc2djWVVacFFMQWFzL0JrczlzR2J2ZXhBUjlm?=
- =?utf-8?B?ODU3WFhwZmRWOFlKUDUwcnMrR3MrQWJhOGY4K0lmKy9qOU1rVUhlRUhtVnlk?=
- =?utf-8?B?TWdvanpBN1ZJaEpZY3BCbmt2aDBWd0Q5QzVONm94Z0doVHVnVFRHRlhYR1I2?=
- =?utf-8?B?SjRNVDgyZm9MYzNiRHhNMnEyL2NONDJtUkN0dVV0aGF0cUNsVmovM1Z4dUgv?=
- =?utf-8?B?dHlyb0J4eVlJVXpkME16N0Jqci82UGdKQmkwNEFaVUc2aUJEZ2Q2NTd2QVo3?=
- =?utf-8?B?b2x0SHBSeGkwVXNmQWsvYlZ0aVIyZlJVNW96R0xkZWpHd2EwZkRFVEg0SGdH?=
- =?utf-8?B?VVM2MzArMWF2K3hsbmgySllIaFJmZlQzUVd4SmRhWGZ3Wmw5WTlKRXBCb0JQ?=
- =?utf-8?B?cTVzT1l4UlpWNU42cHpnc2lnSk05QmZsekR6aDJKNDR3SWs0b0tLTjR0dVJR?=
- =?utf-8?B?UlVJdmhIQTRlcFZ2M1VsVHcvWFVyZWFNMzlsSUFSdGVUV0xXREdaYjI5YXky?=
- =?utf-8?B?VU5zV2tHL0VHdEYyREpSd3FFaUtzaUhDYnMzWFpnOGd1ckJqaS96dnBxbE5W?=
- =?utf-8?B?ZGNSaDdEY2dsQnk2RVBYUzMyOU94UzY0QWRQd21hUHFDV25qUG9ObW0wUWQx?=
- =?utf-8?B?RlM4Y2l3ZW1QQWhCcjhmaVdqMU5QRno3QktZbndYNUhWbENBZCtXbm54OXFo?=
- =?utf-8?B?b2F6dk9XOTY0OG84ODZPWnB0L2RzbVpxdm9IM1JYZ2ZPYkRlZUx6NlZmb1lk?=
- =?utf-8?B?MC91eVNkVm4rekk1UVlyQ1J1anQxRmxuZ2IxSlNVdHh4VlJjSmFyM1hxMnZt?=
- =?utf-8?B?QlBTK1FpRk96U3JZUGcvSEZaR1pDMWs3QnRPVWlnZzV0U1lINjZzSE9pOENE?=
- =?utf-8?Q?FLvWesTPpyJ9tzjTvw?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 51d166c3-9eb7-44b5-2305-08ded9167693
-X-MS-Exchange-CrossTenant-AuthSource: IA0PR12MB8374.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Jul 2026 15:19:23.7516
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: ve4DjdZRKH5W6DDGg77kv2BkqOMwB0CUDzxD06BnHw7k9x0Ex3i12jMTXkRZN8oc
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB5856
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260630124220.4lja4zshpf66kwj3@hu-kotarake-hyd.qualcomm.com>
+X-Proofpoint-GUID: sxGhbBw8aHf9kzbhE2AnueXlqSE8GI8L
+X-Proofpoint-ORIG-GUID: sxGhbBw8aHf9kzbhE2AnueXlqSE8GI8L
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAzMDE1MiBTYWx0ZWRfX+uqfbEp8FU6F
+ 0KFcVSxMNogNL0D7tnZAwoBKAkuIKu9fjrzVCGNTjfd1tuOk5nI/vcxIFjwN1+XrA5WPecpXoB2
+ NkpBjPBpD1eeOFk7+pFo8zQ0/qA3RT0=
+X-Authority-Analysis: v=2.4 cv=Yuc/gYYX c=1 sm=1 tr=0 ts=6a47d520 cx=c_pps
+ a=wuOIiItHwq1biOnFUQQHKA==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22 a=VwQbUJbxAAAA:8
+ a=EUspDBNiAAAA:8 a=DumtbP4wScXUqnNUUE4A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=XD7yVLdPMpWraOa8Un9W:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAzMDE1MiBTYWx0ZWRfX0h0HDOprueU6
+ vCLV2pgHbuRcb5ejDqH89fEF+Hvt5TVkeXRqiXz+infe87f9EbfHo0+noF9hzNL2QIRyHYIuG1p
+ 1JUMwnV0lIRQVzwElBY9I03bBK9dZagxOjJn2Cr3KINzC56fWOvorEteUaswnJo842wuhAMrXd2
+ oT1tXOvmYxu1oLynO4c+Ixq/k+Ri3Gb9pFDYSc0+5wmnP4OWW2lG+6op3LzGlF/DZwcqCgANwBt
+ mpA3vFeJMQMrUN+LNpez8SfPzlVb3tsy+r7aEc+huuDz4RvBh3nrffK7RMhoqws27BE3dGTpbpu
+ k9D6p6OriIch1I5j13xYQ9FbCAJ3O2v/FuJV1Bs4ZWAEKYOcBwLCB98amzZbrp2EeusHvus8MZL
+ 8CkRHH3oUX/o0BJb4bzimGSl/OylPV2ENgxAh9Gm/7UU9crnNIRw9J1J/YQEKMMu4hzsjYNOvlC
+ C4y4PSDK9C1OBOscv/A==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-07-03_02,2026-06-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 malwarescore=0 impostorscore=0 suspectscore=0 phishscore=0
+ bulkscore=0 clxscore=1015 adultscore=0 priorityscore=1501 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607030152
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-7.16 / 15.00];
-	WHITELIST_DMARC(-7.00)[nvidia.com:D:+];
-	ARC_REJECT(1.00)[cv is fail on i=2];
-	DMARC_POLICY_ALLOW(-0.50)[nvidia.com,reject];
-	R_DKIM_ALLOW(-0.20)[Nvidia.com:s=selector2];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+X-Spamd-Result: default: False [-0.16 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[alpha.franken.de,linux.ibm.com,ellerman.id.au,linux.intel.com,kernel.org,suse.de,gmail.com,ffwll.ch,pengutronix.de,samsung.com,linaro.org,intel.com,ursulin.net,oss.qualcomm.com,redhat.com,ideasonboard.com,rock-chips.com,sntech.de,nvidia.com,collabora.com,broadcom.com,epam.com,gmx.de,kvack.org,zeniv.linux.org.uk,linux.dev,linux.alibaba.com,infradead.org,arm.com,google.com,suse.com,perex.cz,vger.kernel.org,lists.ozlabs.org,lists.freedesktop.org,lists.infradead.org,lists.linux.dev,lists.xenproject.org];
-	TAGGED_FROM(0.00)[bounces-116353-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-116354-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER(0.00)[ziy@nvidia.com,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS(0.00)[m:rakesh.kota@oss.qualcomm.com,m:kamal.wadhwa@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:sashiko-reviews@lists.linux.dev,m:komal.bajaj@oss.qualcomm.com,m:robh@kernel.org,m:linux-phy@lists.infradead.org,m:neil.armstrong@linaro.org,m:vkoul@kernel.org,m:olteanv@gmail.com,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:devicetree@vger.kernel.org,m:jishnu.prakash@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	FORGED_SENDER(0.00)[dmitry.baryshkov@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[14];
+	FREEMAIL_CC(0.00)[oss.qualcomm.com,vger.kernel.org,lists.linux.dev,kernel.org,lists.infradead.org,linaro.org,gmail.com];
 	MIME_TRACE(0.00)[0:+];
-	FORGED_RECIPIENTS(0.00)[m:tsbogend@alpha.franken.de,m:maddy@linux.ibm.com,m:mpe@ellerman.id.au,m:maarten.lankhorst@linux.intel.com,m:mripard@kernel.org,m:tzimmermann@suse.de,m:airlied@gmail.com,m:simona@ffwll.ch,m:l.stach@pengutronix.de,m:inki.dae@samsung.com,m:sw0312.kim@samsung.com,m:kyungmin.park@samsung.com,m:krzk@kernel.org,m:peter.griffin@linaro.org,m:jani.nikula@linux.intel.com,m:joonas.lahtinen@linux.intel.com,m:rodrigo.vivi@intel.com,m:tursulin@ursulin.net,m:robin.clark@oss.qualcomm.com,m:lumag@kernel.org,m:lyude@redhat.com,m:dakr@kernel.org,m:tomi.valkeinen@ideasonboard.com,m:hjc@rock-chips.com,m:heiko@sntech.de,m:andy.yan@rock-chips.com,m:thierry.reding@kernel.org,m:mperttunen@nvidia.com,m:jonathanh@nvidia.com,m:kraxel@redhat.com,m:dmitry.osipenko@collabora.com,m:zack.rusin@broadcom.com,m:matthew.brost@intel.com,m:thomas.hellstrom@linux.intel.com,m:oleksandr_andrushchenko@epam.com,m:deller@gmx.de,m:bcrl@kvack.org,m:viro@zeniv.linux.org.uk,m:brauner@kernel.org,m:muchun.son
- g@linux.dev,m:osalvador@suse.de,m:david@kernel.org,m:baolin.wang@linux.alibaba.com,m:liam@infradead.org,m:npache@redhat.com,m:ryan.roberts@arm.com,m:dev.jain@arm.com,m:baohua@kernel.org,m:lance.yang@linux.dev,m:hughd@google.com,m:vbabka@kernel.org,m:rppt@kernel.org,m:surenb@google.com,m:mhocko@suse.com,m:jannh@google.com,m:pfalcato@suse.de,m:kees@kernel.org,m:perex@perex.cz,m:tiwai@suse.com,m:linux-mips@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linuxppc-dev@lists.ozlabs.org,m:dri-devel@lists.freedesktop.org,m:etnaviv@lists.freedesktop.org,m:linux-arm-kernel@lists.infradead.org,m:linux-samsung-soc@vger.kernel.org,m:intel-gfx@lists.freedesktop.org,m:linux-arm-msm@vger.kernel.org,m:freedreno@lists.freedesktop.org,m:nouveau@lists.freedesktop.org,m:linux-rockchip@lists.infradead.org,m:linux-tegra@vger.kernel.org,m:virtualization@lists.linux.dev,m:intel-xe@lists.freedesktop.org,m:xen-devel@lists.xenproject.org,m:linux-fbdev@vger.kernel.org,m:linux-aio@kvack.org,m:linux-fsdevel@vger
- .kernel.org,m:linux-mm@kvack.org,m:linux-sound@vger.kernel.org,m:ljs@kernel.org,m:akpm@linux-foundation.org,s:lists@lfdr.de];
-	FORWARDED(0.00)[lists@lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[Nvidia.com:+];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	TO_DN_SOME(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[ziy@nvidia.com,linux-arm-msm@vger.kernel.org];
+	FORWARDED(0.00)[lists@lfdr.de];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,qualcomm.com:email,qualcomm.com:dkim,vger.kernel.org:from_smtp,oss.qualcomm.com:from_mime,oss.qualcomm.com:dkim,2q4p7nahzoxz:mid];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_GT_50(0.00)[82];
-	MID_RHS_MATCH_FROM(0.00)[];
+	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[dmitry.baryshkov@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	ALIAS_RESOLVED(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MISSING_XM_UA(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,Nvidia.com:dkim,nvidia.com:from_mime,nvidia.com:email,nvidia.com:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 96302703D5A
+X-Rspamd-Queue-Id: 03D67703E5B
 
-On Mon Jun 29, 2026 at 3:25 PM EDT, Lorenzo Stoakes wrote:
-> These test whether the VMA has stack sematics, i.e. is able to grow upwar=
-ds
-> or downwards depending on the architecture.
->
-> In order to account for arches which do not support upward-growing stacks=
-,
-> introduce VMA_GROWSUP whose definition depends on the architecture
-> supporting it, and use vma_flags_test_single_mask() in vma_flags_can_grow=
-()
-> to account for this.
->
-> Update the VMA userland tests to reflect the changes
->
-> No functional change intended.
->
-> Signed-off-by: Lorenzo Stoakes <ljs@kernel.org>
-> ---
->  include/linux/mm.h              | 21 ++++++++++++++++++---
->  tools/testing/vma/include/dup.h |  4 ++++
->  2 files changed, 22 insertions(+), 3 deletions(-)
->
+On Tue, Jun 30, 2026 at 06:12:20PM +0530, Rakesh Kota wrote:
+> On Sun, Jun 28, 2026 at 03:33:23PM +0300, Dmitry Baryshkov wrote:
+> > On Thu, Jun 25, 2026 at 09:11:19PM +0530, Kamal Wadhwa wrote:
+> > > On Wed, Jun 17, 2026 at 03:48:14PM +0300, Dmitry Baryshkov wrote:
+> > > > On Mon, 18 May 2026 at 14:49, Kamal Wadhwa
+> > > > <kamal.wadhwa@oss.qualcomm.com> wrote:
+> > > > >
+> > > > > On Sun, May 17, 2026 at 08:18:15PM +0300, Dmitry Baryshkov wrote:
+> > > > > > On Thu, May 14, 2026 at 04:09:18PM +0530, Kamal Wadhwa wrote:
+> > > > > > > On Wed, May 13, 2026 at 06:14:20PM +0300, Dmitry Baryshkov wrote:
+> > > > > > > > On 13/05/2026 17:29, Rakesh Kota wrote:
+> > > > > > > > > On Wed, May 13, 2026 at 03:01:47PM +0300, Dmitry Baryshkov wrote:
+> > > > > > > > > > On Wed, May 13, 2026 at 04:28:35AM +0000, sashiko-bot@kernel.org wrote:
+> > > > > > > > > > > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> > > > > > > > > > > - [High] The PMIC regulator definitions omit their required input supply dependencies (e.g., `vdd_s2-supply`, `vdd_l3-supply`), breaking the power hierarchy.
+> > > > > > > > > > > - [Medium] The device tree inaccurately hardcodes the `compatible` string to a different PMIC model (`qcom,rpm-pm2250-regulators`) instead of explicitly identifying the actual hardware (PM4125).
+> > > > > > > > > > > --
+> > > > > > > > > > > > +
+> > > > > > > > > > > > +         pm4125_s2: s2 {
+> > > > > > > > > > > > +                 regulator-min-microvolt = <1000000>;
+> > > > > > > > > > > > +                 regulator-max-microvolt = <1200000>;
+> > > > > > > > > > > > +         };
+> > > > > > > > > > >
+> > > > > > > > > > > Do these regulators need to explicitly define their input supply dependencies
+> > > > > > > > > > > such as vdd_s2-supply?
+> > > > > > > > > > >
+> > > > > > > > > > > Without these properties, the regulator framework might be unaware that the
+> > > > > > > > > > > PMIC regulators draw power from upstream supplies.
+> > > > > > > > > > >
+> > > > > > > > > > > If the kernel dynamically manages the upstream supply and its reference count
+> > > > > > > > > > > drops to zero, could it be disabled, causing an unexpected power loss for
+> > > > > > > > > > > downstream components?
+> > > > > > > > > >
+> > > > > > > > > > And this is a correct comment. Please provide missing supplies.
+> > > > > > > > > >
+> > > > > > > > > As per the Qualcomm system design, the parent-child supply relationship
+> > > > > > > > > is managed by the RPM firmware, not the Linux regulator framework. The
+> > > > > > > > > RPM ensures the parent supply is never disabled until all subsystem
+> > > > > > > > > votes are cleared.
+> > > > > > > >
+> > > > > > > > How is this different from other, previous platforms?
+> > > > > > >
+> > > > > > > This is not different. In the previous platforms too this is taken care from the
+> > > > > > > RPM/RPMH firmware side, the only case where we may need explicit vote to parent
+> > > > > > > is for non-rpmh/rpm regulator rails (like i2c based regulator pm8008), which
+> > > > > > > may have a RPM/RPMH regulator as a parent.
+> > > > > > >
+> > > > > > > Even on those previous targets the parent rail of all RPM/RPMH regulators are
+> > > > > > > internally voted by RPM/RPMH FW at proper voltage with required headroom
+> > > > > > > calculated based on the active child rails. This was done for all the
+> > > > > > > subsystems (including APPS) regulators.
+> > > > > > >
+> > > > > > > So no explicit handling from the APPS is required for parent supply.
+> > > > > >
+> > > > > > You are explaining the driver behaviour. But the question is about the
+> > > > > > hardware description. If there is no difference, please add necessary
+> > > > > > supplies back.
+> > > > >
+> > > > > I understand your concern about descibing the parent-child relation in the
+> > > > > devicetree, and given that we have been almost always followed this for all
+> > > > > the previous targets, it will expected of us to add them.
+> > > > 
+> > > > Yes.
+> > > > 
+> > > > >
+> > > > > However, we want to avoid the unnecessary access to the parent from APPS.
+> > > > 
+> > > > Why? What is the reason? Do we want to do the same for all the
+> > > > platforms? Only for Shikra? Something else?
+> > > > 
+> > > > > At the moment, I do not see a way to avoid that, if we add the parent
+> > > > > regulators.
+> > > > 
+> > > > That depend on the answer to the previous question. In the end, we can
+> > > > make the driver ignore the parents by removing them from the regulator
+> > > > desc.
+> > > 
+> > > Ok, this seems like a good suggestion, so you mean its ok if we define the
+> > > regulator desc's supply column with NULL? And only keep that in the DT?
+> > > 
+> > > you mean like this?
+> > > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/regulator/qcom-rpmh-regulator.c?h=v7.1#n1453
+> > > 
+> > > (please let me know if i got that right. thanks)
+> > 
+> > Yes. Don't forget to explain in the commit message, why you are doing
+> > so.
+> 
+> Currently, Agatti uses the same PMIC, so we cannot set the driver
+> supply name reference to NULL. Since it's an older target,
+> we'll need to run a regression before making any driver-level changes.
 
-Reviewed-by: Zi Yan <ziy@nvidia.com>
+Sure, just do it please.
+
+> Additionally, the child-to-parent regulator ganging differs between
+> Shikra and Agatti:
+> 
+>  - On Agatti, l3 regulator is ganged with vdd_l13_l14_l15_l16
+>  - On Shikra, l3 is ganged with vdd_l2_l3
+
+Well, somebody tried to be too smart when contributing Agatti. Now that
+needs to be fixed. Be sure to keep backwards compatibility with the
+existing DTs.
+
+From the schematics that I see, the pins are:
+
+- vin_l1
+- vin_l2_l3
+- vin_l5_l6_l7_l11_l12
+- vin_l8_l9
+- vin_l10
+- vin_l13_l14
+- vin_l15_l16
+- vin_l17_l22
+- vin_l18_l19
+- vin_l4_l20_l21
+- vin_xo_rf
+
+Please correct the bindings and adjust the driver.
+
+> Since vdd_l2_l3 is not present as a supply name in the driver, it will
+> be skipped by the driver and would only serve as a representational
+> reference in the DT.
+> 
+> We have two options to consider:
+> 
+> Option 1: Skip adding the child/parent relationship for Shikra for now,
+> since the DT bindings are not enforcing it. (Ref:
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml?h=v7.1)
+> 
+> Option 2: Go ahead and add the Shikra-specific ganging in DT now. Since
+> the supply name (vdd_l2_l3) does not match what the driver expects
+> (Agatti's mapping), it will be gracefully skipped by the driver — making
+> it safe to add for documentation/representation purposes without any
+> functional impact.
+> 
+> So,Please share your thoughts on above options ?
+
+Option 3. The PMIC is not Shikra-specific. You've spotted an error.
+Correct the way it is described an used while adding support for Shikra.
 
 
---=20
-Best Regards,
-Yan, Zi
-
+-- 
+With best wishes
+Dmitry
 
