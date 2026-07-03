@@ -1,85 +1,85 @@
-Return-Path: <linux-arm-msm+bounces-116364-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-116365-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id GYa5NTbbR2qEgQAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-116364-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Jul 2026 17:54:30 +0200
+	id GdAzKj7bR2qIgQAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-116365-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Jul 2026 17:54:38 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id C48A57040C8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Jul 2026 17:54:29 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 19D567040DC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Jul 2026 17:54:38 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=linaro.org header.s=google header.b=LOoT2DFp;
+	dkim=pass header.d=linaro.org header.s=google header.b=tb2kYVKA;
 	dmarc=pass (policy=none) header.from=linaro.org;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116364-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c15:e001:75::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116364-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116365-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116365-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id A494D3013C43
+	by tor.lore.kernel.org (Postfix) with ESMTP id EAD65307CD34
 	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jul 2026 15:52:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1C2B32F7F07;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1F65C2F7F09;
 	Fri,  3 Jul 2026 15:52:02 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8EE22E7635
-	for <linux-arm-msm@vger.kernel.org>; Fri,  3 Jul 2026 15:51:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2B5F2EA468
+	for <linux-arm-msm@vger.kernel.org>; Fri,  3 Jul 2026 15:51:58 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783093921; cv=none; b=clDIfnxeS5or//YV9NfM0p1K8/iH6NZsXpENtrS1b7U0Prk5sPqa+q+bl15IK6TeK9g47Cht5DqagUDjHMyD/yRgk5z+dQcMn48fRvPUIcEQuTF+bRtT+3G7QsZZ9ob30y52VGvdPlILN/eWcQyMbA4o47knxtl7XDFMNnun4dQ=
+	t=1783093921; cv=none; b=a64CliEAv9tife2hWPD9Xjna4iEuwQOd3FkyFouDGQdbGbxVz7yKU8wE5Cwcwq23grTUQZEtkdtpZZ4D5ANGR57fwECQWgKThO8E5X39HL6yvu81J1G+mAEh8RaFddhu42BZLK0hUMEhRCuEEcR3/ChMTCybzB0oXg0jjTcV8NI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1783093921; c=relaxed/simple;
-	bh=H2asgX0wDrlwzHBfEnS3Wi258Svm32QlbkiPzR5hYj4=;
+	bh=lMEezlRl7UB8pNkOdE/LvPfi73YIs9Z7Z/E7bHKc93A=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=QYcxl1+OmbgSUbUsQI0rM4LM2aZFWddimkM1Jr+9e2/G5fKNYu2YRT5njhWuQOcvLBh6ZMaNMOfB7fx7VtLC3ItoH3I6PENtMwhFWBSWjHj5mNVAVgEQcfugQNu+NaahufoNCBS+RAEIlG6I7xy1yZLeZ19VJwXr6uhTZocjAHs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=LOoT2DFp; arc=none smtp.client-ip=209.85.128.48
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-493c733f15aso6489285e9.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Jul 2026 08:51:57 -0700 (PDT)
+	 In-Reply-To:To:Cc; b=GDzEdHjXPliEjb3MjbfTiI1/trDH7Jx4JHRc9XRe4n8lV5uBdkY5JRv8czaYt7R8HRSicRJlTON0GKCgKRzFrkujSoYAJs6u9sPa1nyHJL89Z3jqADvoxx6OEVOMyJ5Kh4Q2fKlYZ4UrNF4xGDz5oawQOTL8hTlrRObb2BnYx5g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tb2kYVKA; arc=none smtp.client-ip=209.85.128.50
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-493b6f1b14bso3266905e9.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Jul 2026 08:51:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1783093916; x=1783698716; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1783093917; x=1783698717; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=1ymAMy3nK21UB9/V3gR9xqfNNZyKdhEreKKHSe1qORU=;
-        b=LOoT2DFpP6phhFk5NMy1ORYpsn5hxn/ORTRuaCYsGHSf9YNJkR+/HLZVWl+a7rOLi5
-         zxLnpb1+DOxuvSctNqKNpMaoznuef6rmY3A8iatIBrowvYqTi1QDM9f5eJHiBOOEqg/i
-         v/l05a08epjmvv6sRfO8h4F4MAZqT7Gy+ZNgfJa/xiaACJjEqN43YMbQSQJXWwticMcd
-         CVQyAucvAp0ap1f1SnF7ZFF5YFVerkegPZBlhqTfUWlPJkaO3g5YLetuDbgAV9hdD+XC
-         GTWXZ5LDpxYjrg/tfRNV+hd1BQxjJyIkwfrc2cdd+xnm3Degs2uz07C2R0YpyuITCagC
-         6pbw==
+        bh=YBk6Poj1k6/y0ZxnA9P27hj+o9UIvkcLF1wC8BW5Ufg=;
+        b=tb2kYVKAQADV56MR/OIaUCxvM+XBMsohaN3Qi5BHhbApXY9ztgRj3a5enr2MY18pa1
+         mx8sSvLAu7KTQViy70BAPUmnQQ9CX/aEBZVuzFyZbSddp60l1bowxx3qT0Ss2v2g474N
+         MsRTJ8kntU1VC1DHlNccC2h4wiHF04TGwiDcJV9xH10ly4C7ReEHfsf8I/U0sDkPa49H
+         z+QTKsiBJ0VuGjiY+bp5xWZiu1Ep0W0f9qvWuW3ZXLUKiXbofUGCLn4aSQZ6e2I0Qzk8
+         GBSS8C73N9cm4rxV8/9Fj+8Ml2git9O+CiUVyNHhBJyaJbergW5kglE1HQnGuZo9/5Qb
+         X8VQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783093916; x=1783698716;
+        d=1e100.net; s=20251104; t=1783093917; x=1783698717;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=1ymAMy3nK21UB9/V3gR9xqfNNZyKdhEreKKHSe1qORU=;
-        b=Jgsnun8io9RZLc1/QeKR1Ah0vgEsAyYWmWjkA8sOZBIIpgolzwsqMHiTnbv6JbXp6i
-         GoXvhFifcVVb3Q5JpgG40QsDm8IiQeF04y68NzPuBCWZaOWquPJjWYjfPJY9UpasosKr
-         J07BuuXwV6zqGAWdu1bakA6VnbQMs4mlWS7yKAKvj7MwE6HVNWyFKaq4W8yfrd9IoiOp
-         7Dkbz2SdVeYIVPyK3TTc/C504KkSjjvLm/ynKEmwu1y9GTJ6uUXYtONlb+HpRKQKGWTU
-         VZYvLTlY2MQAWACzv3uN56l+HJLE7w0USJq6H3LNSxJkue3Ny9iqUUlXwBvrwKFed2zS
-         Wcew==
-X-Gm-Message-State: AOJu0YzaUWSZ8oCglGH/OHnw+ljhr1uGLu79zuvn9zDpVPIPdcrUfPsS
-	Em9wA+QAbW1W0lpf8W6BS+aP8UGuxG+vl9w4GOsvarN7YTNDAxdK49uPCIB8+yX3bdA=
-X-Gm-Gg: AfdE7cnPrHrMfAc1xxAYbVhZhu1j/omWTYcu8dzpUGY7xS1yhk6mTEjG9Un7AjRL8LS
-	/53zKqgBIk2SL7jCfPohrCGwFs2iqb4PL4cs1/obMFZ8halBlH/B4eO8KPyn/uSxVD0OfHpGHu2
-	fcq4ps0JVyBWAqbbBXYNuXQ3jVibGuJIzS9BDy1yMgXRRSnFhDmanjYBmSjGJYUAqOzUXT9ES+o
-	1vLpZH2dHyO9ip5rSnmwnx5QRuXo7+mArBtPQhimKlk6tqriVU2HYWQL7Uvo5vZq6QV1D7j6tSB
-	VjqtKB4ZTb2PEh+/OflIib49hceoOVH+P9Vb6cFcwT5EGZKmOTAV63kNChPBniRh4m9AYgWO/lc
-	MuiGVB5tBgG4cX850NngedvIN65+iZq/zw0z7A1DmumuBueiKLaAwdQeiP08gYPMMGYFAlZwFis
-	NXcZ1pBg==
-X-Received: by 2002:a05:600c:811a:b0:493:cd3f:d097 with SMTP id 5b1f17b1804b1-493d0f0bf6fmr4760055e9.12.1783093916108;
-        Fri, 03 Jul 2026 08:51:56 -0700 (PDT)
+        bh=YBk6Poj1k6/y0ZxnA9P27hj+o9UIvkcLF1wC8BW5Ufg=;
+        b=FCjb0W4bII78sswpIG6QiLdATTVedKX02c66nv4MPKR1GXUk5Ez+hPG4Mf/N7uDlU8
+         wGQbjXVybksLYrzD/KfQh41yzUYkfdcKwuqGUz12UVGMqUUQ8vw58ECeE5xdVrDUt2wK
+         MoxqpltYSRAF0omAp7FauFsrTwpyMbNfLhWgl54epiB1jKSL4lLw58asy6zvXPzgdT4v
+         KbglYiKV/NqBEDDvCoC+2hpXxaBwgFVbv/0kZ1T5bvqGyWfj/RYlresFgrk95GLJFVw1
+         lCXWa0oHO1onMkx8dAckGOU0LCbl83OSynjQypa0QRfs0/TFrKVN0PySC/lFgBfPcumx
+         4r9g==
+X-Gm-Message-State: AOJu0YyxyylOcXjuvi3rQIc0qVzJaQ/QW+37h7fejJFoZaOcMLlODkiN
+	zgQk+eQhFQkGbvIQU7sTwgblr9lG8ItdYnoldhIjZWIb1sq3VZ83qp6rHDSOsSagjlo=
+X-Gm-Gg: AfdE7cnirw7fXEW5UeegjyXzyws0FDlVsDj9aQE3XgKAbVmGTKiabV1nMUYIXLH0bni
+	NLgZ4bQ9j9k8R6o6hzfTLN7ZJXfQQn6wjDM86bXkoN1t4yBq/lkEA5+2g7mIyzgaEdiSxQ2uzAJ
+	PbiXZWP3V9ehYBOQGGBz936kMQZ98ptaFzYNksij2i7acmCUQJcEQ9lfiCbB/UrQwG0Fw7p5YSr
+	oVebVOKEZ97vUCigM9PCEmAOoqhMJpUPQvcWu9xlRDE7zvDxW3ZMGDSTRjKGFBvm6jckpGEjlwz
+	ir/SJsv6jM2SQG3KZLDdcI7T+gTQonc3UquAB/GpOoPUZslvvTFJPPa3HcZ2LUpb4Bjc2/k06/4
+	1/d14Jdv9tKOX/8WSeBNlYUo7azPfBClKRft83QaB1J6AzzVZ3yErV868qpGR0jr7pWTA9FIfcp
+	wZ+cjFew==
+X-Received: by 2002:a05:600c:49a6:b0:493:cb96:7658 with SMTP id 5b1f17b1804b1-493d0f097c1mr3391475e9.2.1783093917050;
+        Fri, 03 Jul 2026 08:51:57 -0700 (PDT)
 Received: from [127.0.0.1] ([78.152.220.181])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-493c63ba97csm141294655e9.12.2026.07.03.08.51.55
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-493c63ba97csm141294655e9.12.2026.07.03.08.51.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Jul 2026 08:51:55 -0700 (PDT)
+        Fri, 03 Jul 2026 08:51:56 -0700 (PDT)
 From: "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>
 X-Google-Original-From: Bryan O'Donoghue <bod@kernel.org>
-Date: Fri, 03 Jul 2026 16:51:49 +0100
-Subject: [PATCH 5/7] media: qcom: camss: qcom-icp: ipe: Add initial v4l2
- m2m IPE driver
+Date: Fri, 03 Jul 2026 16:51:50 +0100
+Subject: [PATCH 6/7] media: qcom: camss: Switch on ICP and BPS as make
+ options
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -88,7 +88,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260703-qcom-laptops-v6-18-rc4-camss-icp-bps-ipe-icp-boots-stats-b4-v1-5-595df9e67790@kernel.org>
+Message-Id: <20260703-qcom-laptops-v6-18-rc4-camss-icp-bps-ipe-icp-boots-stats-b4-v1-6-595df9e67790@kernel.org>
 References: <20260703-qcom-laptops-v6-18-rc4-camss-icp-bps-ipe-icp-boots-stats-b4-v1-0-595df9e67790@kernel.org>
 In-Reply-To: <20260703-qcom-laptops-v6-18-rc4-camss-icp-bps-ipe-icp-boots-stats-b4-v1-0-595df9e67790@kernel.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -103,20 +103,20 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, linux-media@vger.kernel.org, 
  Bryan O'Donoghue <bod@kernel.org>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=17342; i=bod@kernel.org;
- h=from:subject:message-id; bh=H2asgX0wDrlwzHBfEnS3Wi258Svm32QlbkiPzR5hYj4=;
- b=owEBbQKS/ZANAwAKASJxO7Ohjcg6AcsmYgBqR9qUPp47eZgloi3NybCgB0dvBurUwdiWaqawt
- raAGRdo0vCJAjMEAAEKAB0WIQTmk/sqq6Nt4Rerb7QicTuzoY3IOgUCakfalAAKCRAicTuzoY3I
- OnNYD/4p5i4p7RZRFCUd7xFjngnqS2dtbq+MOheW2ogKUOE4MlcSK+o91zn7+mb8dbsUtvFeso0
- 3lAHC5n4o9sCjr4J2fbYQf2vR/Bq8oLImV/bGhIK2nX5a36/7dmz9JweILQXYWBiAxhqeoiL4Ph
- LqRpxnbH6tJ/soP1mB2afWAT7QrG4+wV0SFjkbQOZoDc9ih1/VDMKZ7E1TafIp4CwvlmITEG2T9
- qKr0ASfnyBH761F2/3pkerR7mmq1qI7vEy1mlb30RS+HpR9yxX5+6N1gnuGZ5O+MK1m3694gb+9
- 4zH8mbUF416bPnfhV7VKaA93zkEfzjYwqes8TaqoJ/nEtF/NQfRG8dPldNlFO81UKshudXptmTH
- t2TCNl5HKYH45d7tyxcr18i0Y5WZwoTrJm4wdrmBRqo7w4LSCzQHfMIOSYLgnFyvhd8QMrxNj09
- n2YtJ6jfZXPSHS3ZLkf8FMU5C+ebZaa+q9N8GIRiEBONWAKIeECDI4L1ThlCJYXsZstkn0utjod
- r7w1iGFQqbpht7yB1Fz3GipZ7ACHIWURcztSKw285jhpAfbf2HH/vA2Mwc1qLJT7vk3VfS9rpxU
- TiPAV5tQhNwd5Ch3hRvfaxuhh/RiOLqP6DSEm0UO9HNkN37Ievvuojiico9jSXPZ4bbCSq1hHOZ
- ghOrEfYlEk0oIUA==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2086; i=bod@kernel.org;
+ h=from:subject:message-id; bh=lMEezlRl7UB8pNkOdE/LvPfi73YIs9Z7Z/E7bHKc93A=;
+ b=owEBbQKS/ZANAwAKASJxO7Ohjcg6AcsmYgBqR9qUdw/sqL1EwVcyotvmJX4pYXP7e3Hr8wFq/
+ Pu2nPDDAK6JAjMEAAEKAB0WIQTmk/sqq6Nt4Rerb7QicTuzoY3IOgUCakfalAAKCRAicTuzoY3I
+ Ou9xD/9Pm444dRgXV6l59T2ETWbxdfNgvHfcZ5vMK6lKhmRKBGl65rJ5ire0kOJnY8NZpMZdV4j
+ zCrZC/NMjSmNOBsK6IvosAlrvtaE11AlsZMawSv3vYeBrDvHdpsLF77Jt7Uf9Nv5unLGJkUZizS
+ 63X6pb1RqXqGclzs0xEryDZtb9M2HMdrzr2IuvyIw8EDJwyjhiKwmeRQgZ+wklPfUkgUZSv3V8A
+ XxAFcEYpqPmlnzy+3EK7Zz7x98cr3IvP8XPx37+moEYDyYQzvW9NiEFMfQe4Lrul3rWZreFyicG
+ +LYdqdBVfqHlvr+3tIdYKxVgMOyiclHWfjqQ+FOIwR5YmWT/U3LACtU+lv3YPsdyk2+KgB4YLv5
+ cFpOFnO5HZQd2Ntf/3mANETMWAu9lg6Q8HpsHInal52K9Kz6VMpktn5erYBI3WLVj4jG8BLlF0m
+ E42SFUG3XN067HqZNgOxkKghU9EtIEy25HMgjillMs/LTYYO9ldvouiB6Vt0XfSEJHrhlsgsijq
+ 2GjoxG4A5VB8diCuXV4WSI7fvoyWxXE7QlcUUYRGNa79IJJGJEAfNqp+NctzNxCB+FnBBzhHLAP
+ GmWlbberksNQVaxG4HG5J2+7mKi7xhQzVPNObhaHVm3bp8p2HudP7BVFjchyXicVh2NH73hywgM
+ 1jBmPFw9avz0LmQ==
 X-Developer-Key: i=bod@kernel.org; a=openpgp;
  fpr=E693FB2AABA36DE117AB6FB422713BB3A18DC83A
 X-Rspamd-Action: no action
@@ -124,7 +124,7 @@ X-Spamd-Result: default: False [-1.16 / 15.00];
 	MID_RHS_MATCH_TO(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
@@ -137,7 +137,7 @@ X-Spamd-Result: default: False [-1.16 / 15.00];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER(0.00)[bryan.odonoghue@linaro.org,linux-arm-msm@vger.kernel.org];
-	TAGGED_FROM(0.00)[bounces-116364-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-116365-lists,linux-arm-msm=lfdr.de];
 	FORWARDED(0.00)[lists@lfdr.de];
 	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
@@ -150,657 +150,66 @@ X-Spamd-Result: default: False [-1.16 / 15.00];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	TO_DN_SOME(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:from_mime,linaro.org:dkim,vger.kernel.org:from_smtp,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:from_mime,linaro.org:dkim,vger.kernel.org:from_smtp,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: C48A57040C8
+X-Rspamd-Queue-Id: 19D567040DC
 
 Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
 ---
- drivers/media/platform/qcom/camss/camss-ipe.c | 558 ++++++++++++++++++++++++++
- drivers/media/platform/qcom/camss/camss-ipe.h |  69 ++++
- 2 files changed, 627 insertions(+)
+ drivers/media/platform/qcom/camss/Kconfig  | 24 ++++++++++++++++++++++++
+ drivers/media/platform/qcom/camss/Makefile |  8 ++++++++
+ 2 files changed, 32 insertions(+)
 
-diff --git a/drivers/media/platform/qcom/camss/camss-ipe.c b/drivers/media/platform/qcom/camss/camss-ipe.c
-new file mode 100644
-index 0000000000000..c579c2b5904e3
---- /dev/null
-+++ b/drivers/media/platform/qcom/camss/camss-ipe.c
-@@ -0,0 +1,558 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * Qualcomm CAMSS IPE (Image Processing Engine) V4L2 M2M Driver
-+ *
-+ * Responsibilities:
-+ * - Manage IPE power and clocks (independent of ICP)
-+ * - Implement V4L2 mem2mem interface
-+ * - Use ICP for HFI communication with firmware
-+ *
-+ * Copyright (c) 2026 Bryan O'Donoghue.
-+ */
-+
-+#include <linux/clk.h>
-+#include <linux/interconnect.h>
-+#include <linux/module.h>
-+#include <linux/of.h>
-+#include <linux/platform_device.h>
-+#include <linux/pm_runtime.h>
-+
-+#include <media/v4l2-device.h>
-+#include <media/v4l2-ioctl.h>
-+#include <media/v4l2-mem2mem.h>
-+#include <media/videobuf2-dma-contig.h>
-+
-+#include "camss-icp.h"
-+
-+#define IPE_NAME		"qcom-camss-ipe"
-+#define IPE_CLK_MAX		6
-+
-+struct ipe_device {
-+	struct device *dev;
-+	void __iomem *base;
-+
-+	/* IPE's own clocks */
-+	struct clk_bulk_data clocks[IPE_CLK_MAX];
-+	int num_clocks;
-+
-+	/* IPE's own interconnect */
-+	struct icc_path *icc_mem;
-+
-+	/* IPE's own power state */
-+	bool powered;
-+
-+	/* UBWC config */
-+	struct icp_ubwc_cfg ubwc;
-+
-+	/* ICP reference */
-+	struct icp_device *icp;
-+
-+	/* V4L2 */
-+	struct v4l2_device v4l2_dev;
-+	struct video_device vdev;
-+	struct v4l2_m2m_dev *m2m_dev;
-+	struct mutex lock;
-+};
-+
-+struct ipe_ctx {
-+	struct v4l2_fh fh;
-+	struct ipe_device *ipe;
-+	struct icp_context *icp_ctx;
-+
-+	/* Format info */
-+	u32 width;
-+	u32 height;
-+	u32 src_fmt;
-+	u32 dst_fmt;
-+};
-+
-+/* ============================================================
-+ * IPE Power Management (independent of ICP)
-+ * ============================================================ */
-+
-+static int ipe_power_on(struct ipe_device *ipe)
-+{
-+	int ret;
-+
-+	if (ipe->powered)
-+		return 0;
-+
-+	ret = pm_runtime_resume_and_get(ipe->dev);
-+	if (ret)
-+		return ret;
-+
-+	ret = icc_set_bw(ipe->icc_mem, 0, MBps_to_icc(8000));
-+	if (ret)
-+		goto err_rpm;
-+
-+	/* Set clock rates */
-+	clk_set_rate(ipe->clocks[3].clk, 700000000);  /* nps */
-+	clk_set_rate(ipe->clocks[4].clk, 700000000);  /* pps */
-+
-+	ret = clk_bulk_prepare_enable(ipe->num_clocks, ipe->clocks);
-+	if (ret)
-+		goto err_icc;
-+
-+	ipe->powered = true;
-+	dev_dbg(ipe->dev, "IPE powered on\n");
-+	return 0;
-+
-+err_icc:
-+	icc_set_bw(ipe->icc_mem, 0, 0);
-+err_rpm:
-+	pm_runtime_put(ipe->dev);
-+	return ret;
-+}
-+
-+static void ipe_power_off(struct ipe_device *ipe)
-+{
-+	if (!ipe->powered)
-+		return;
-+
-+	clk_bulk_disable_unprepare(ipe->num_clocks, ipe->clocks);
-+	icc_set_bw(ipe->icc_mem, 0, 0);
-+	pm_runtime_put(ipe->dev);
-+
-+	ipe->powered = false;
-+	dev_dbg(ipe->dev, "IPE powered off\n");
-+}
-+
-+/* ============================================================
-+ * V4L2 Operations
-+ * ============================================================ */
-+
-+static int ipe_querycap(struct file *file, void *priv,
-+			struct v4l2_capability *cap)
-+{
-+	strscpy(cap->driver, IPE_NAME, sizeof(cap->driver));
-+	strscpy(cap->card, "Qualcomm IPE", sizeof(cap->card));
-+
-+	return 0;
-+}
-+
-+static int ipe_enum_fmt(struct file *file, void *priv,
-+			struct v4l2_fmtdesc *f)
-+{
-+	/* Support NV12 for now */
-+	if (f->index > 0)
-+		return -EINVAL;
-+
-+	f->pixelformat = V4L2_PIX_FMT_NV12;
-+	return 0;
-+}
-+
-+static int ipe_g_fmt(struct file *file, void *priv, struct v4l2_format *f)
-+{
-+	struct ipe_ctx *ctx = container_of(priv, struct ipe_ctx, fh);
-+
-+	f->fmt.pix_mp.width = ctx->width ?: 1920;
-+	f->fmt.pix_mp.height = ctx->height ?: 1080;
-+	f->fmt.pix_mp.pixelformat = V4L2_PIX_FMT_NV12;
-+	f->fmt.pix_mp.num_planes = 2;
-+	f->fmt.pix_mp.plane_fmt[0].bytesperline = f->fmt.pix_mp.width;
-+	f->fmt.pix_mp.plane_fmt[0].sizeimage = f->fmt.pix_mp.width * f->fmt.pix_mp.height;
-+	f->fmt.pix_mp.plane_fmt[1].bytesperline = f->fmt.pix_mp.width;
-+	f->fmt.pix_mp.plane_fmt[1].sizeimage = f->fmt.pix_mp.width * f->fmt.pix_mp.height / 2;
-+
-+	return 0;
-+}
-+
-+static int ipe_s_fmt(struct file *file, void *priv, struct v4l2_format *f)
-+{
-+	struct ipe_ctx *ctx = container_of(priv, struct ipe_ctx, fh);
-+
-+	ctx->width = f->fmt.pix_mp.width;
-+	ctx->height = f->fmt.pix_mp.height;
-+
-+	return ipe_g_fmt(file, priv, f);
-+}
-+
-+static const struct v4l2_ioctl_ops ipe_ioctl_ops = {
-+	.vidioc_querycap		= ipe_querycap,
-+	.vidioc_enum_fmt_vid_cap	= ipe_enum_fmt,
-+	.vidioc_enum_fmt_vid_out	= ipe_enum_fmt,
-+	.vidioc_g_fmt_vid_cap_mplane	= ipe_g_fmt,
-+	.vidioc_g_fmt_vid_out_mplane	= ipe_g_fmt,
-+	.vidioc_s_fmt_vid_cap_mplane	= ipe_s_fmt,
-+	.vidioc_s_fmt_vid_out_mplane	= ipe_s_fmt,
-+	.vidioc_try_fmt_vid_cap_mplane	= ipe_g_fmt,
-+	.vidioc_try_fmt_vid_out_mplane	= ipe_g_fmt,
-+
-+	.vidioc_reqbufs			= v4l2_m2m_ioctl_reqbufs,
-+	.vidioc_querybuf		= v4l2_m2m_ioctl_querybuf,
-+	.vidioc_qbuf			= v4l2_m2m_ioctl_qbuf,
-+	.vidioc_dqbuf			= v4l2_m2m_ioctl_dqbuf,
-+	.vidioc_prepare_buf		= v4l2_m2m_ioctl_prepare_buf,
-+	.vidioc_create_bufs		= v4l2_m2m_ioctl_create_bufs,
-+	.vidioc_expbuf			= v4l2_m2m_ioctl_expbuf,
-+
-+	.vidioc_streamon		= v4l2_m2m_ioctl_streamon,
-+	.vidioc_streamoff		= v4l2_m2m_ioctl_streamoff,
-+};
-+
-+/* ============================================================
-+ * V4L2 M2M Callbacks
-+ * ============================================================ */
-+
-+static void ipe_job_abort(void *priv)
-+{
-+	struct ipe_ctx *ctx = priv;
-+
-+	if (ctx->icp_ctx)
-+		icp_ctx_abort(ctx->icp_ctx);
-+}
-+
-+static void ipe_frame_done(struct icp_context *icp_ctx, int status)
-+{
-+	struct ipe_ctx *ctx = icp_ctx->priv;
-+	struct vb2_v4l2_buffer *src, *dst;
-+
-+	src = v4l2_m2m_src_buf_remove(ctx->fh.m2m_ctx);
-+	dst = v4l2_m2m_dst_buf_remove(ctx->fh.m2m_ctx);
-+
-+	if (status) {
-+		v4l2_m2m_buf_done(src, VB2_BUF_STATE_ERROR);
-+		v4l2_m2m_buf_done(dst, VB2_BUF_STATE_ERROR);
-+	} else {
-+		v4l2_m2m_buf_done(src, VB2_BUF_STATE_DONE);
-+		v4l2_m2m_buf_done(dst, VB2_BUF_STATE_DONE);
-+	}
-+
-+	v4l2_m2m_job_finish(ctx->ipe->m2m_dev, ctx->fh.m2m_ctx);
-+}
-+
-+static void ipe_device_run(void *priv)
-+{
-+	struct ipe_ctx *ctx = priv;
-+	struct vb2_v4l2_buffer *src, *dst;
-+	struct icp_frame_request req;
-+
-+	src = v4l2_m2m_next_src_buf(ctx->fh.m2m_ctx);
-+	dst = v4l2_m2m_next_dst_buf(ctx->fh.m2m_ctx);
-+
-+	req.input_iova = vb2_dma_contig_plane_dma_addr(&src->vb2_buf, 0);
-+	req.input_size = vb2_plane_size(&src->vb2_buf, 0);
-+	req.output_iova = vb2_dma_contig_plane_dma_addr(&dst->vb2_buf, 0);
-+	req.output_size = vb2_plane_size(&dst->vb2_buf, 0);
-+	req.cmdbufs_iova = 0;  /* Would be set up properly */
-+	req.cmdbufs_size = 0;
-+	req.priv = ctx;
-+
-+	if (icp_ctx_submit_frame(ctx->icp_ctx, &req))
-+		ipe_frame_done(ctx->icp_ctx, -EIO);
-+}
-+
-+static const struct v4l2_m2m_ops ipe_m2m_ops = {
-+	.device_run = ipe_device_run,
-+	.job_abort = ipe_job_abort,
-+};
-+
-+/* ============================================================
-+ * V4L2 Queue Operations
-+ * ============================================================ */
-+
-+static int ipe_queue_setup(struct vb2_queue *vq, unsigned int *nbuffers,
-+			   unsigned int *nplanes, unsigned int sizes[],
-+			   struct device *alloc_devs[])
-+{
-+	struct ipe_ctx *ctx = vb2_get_drv_priv(vq);
-+	unsigned int size = ctx->width * ctx->height * 3 / 2;
-+
-+	if (*nplanes) {
-+		if (*nplanes != 2)
-+			return -EINVAL;
-+		return 0;
-+	}
-+
-+	*nplanes = 2;
-+	sizes[0] = ctx->width * ctx->height;
-+	sizes[1] = size - sizes[0];
-+
-+	return 0;
-+}
-+
-+static int ipe_buf_prepare(struct vb2_buffer *vb)
-+{
-+	return 0;
-+}
-+
-+static void ipe_buf_queue(struct vb2_buffer *vb)
-+{
-+	struct vb2_v4l2_buffer *vbuf = to_vb2_v4l2_buffer(vb);
-+	struct ipe_ctx *ctx = vb2_get_drv_priv(vb->vb2_queue);
-+
-+	v4l2_m2m_buf_queue(ctx->fh.m2m_ctx, vbuf);
-+}
-+
-+static int ipe_start_streaming(struct vb2_queue *vq, unsigned int count)
-+{
-+	struct ipe_ctx *ctx = vb2_get_drv_priv(vq);
-+	struct ipe_device *ipe = ctx->ipe;
-+	int ret;
-+
-+	/* Power on IPE (IPE manages its own power) */
-+	ret = ipe_power_on(ipe);
-+	if (ret)
-+		return ret;
-+
-+	/*
-+	 * Create ICP context - ICP boots itself automatically
-+	 * on first context creation
-+	 */
-+	ctx->icp_ctx = icp_ctx_create(ipe->icp, HFI_DEV_TYPE_IPE,
-+				      ipe_frame_done, ctx);
-+	if (IS_ERR(ctx->icp_ctx)) {
-+		ret = PTR_ERR(ctx->icp_ctx);
-+		ctx->icp_ctx = NULL;
-+		ipe_power_off(ipe);
-+		return ret;
-+	}
-+
-+	return 0;
-+}
-+
-+static void ipe_stop_streaming(struct vb2_queue *vq)
-+{
-+	struct ipe_ctx *ctx = vb2_get_drv_priv(vq);
-+	struct ipe_device *ipe = ctx->ipe;
-+	struct vb2_v4l2_buffer *vbuf;
-+
-+	/* Return all buffers */
-+	while ((vbuf = v4l2_m2m_src_buf_remove(ctx->fh.m2m_ctx)))
-+		v4l2_m2m_buf_done(vbuf, VB2_BUF_STATE_ERROR);
-+	while ((vbuf = v4l2_m2m_dst_buf_remove(ctx->fh.m2m_ctx)))
-+		v4l2_m2m_buf_done(vbuf, VB2_BUF_STATE_ERROR);
-+
-+	/*
-+	 * Destroy ICP context - ICP shuts itself down automatically
-+	 * when last context is destroyed
-+	 */
-+	if (ctx->icp_ctx) {
-+		icp_ctx_destroy(ctx->icp_ctx);
-+		ctx->icp_ctx = NULL;
-+	}
-+
-+	ipe_power_off(ipe);
-+}
-+
-+static const struct vb2_ops ipe_vb2_ops = {
-+	.queue_setup = ipe_queue_setup,
-+	.buf_prepare = ipe_buf_prepare,
-+	.buf_queue = ipe_buf_queue,
-+	.start_streaming = ipe_start_streaming,
-+	.stop_streaming = ipe_stop_streaming,
-+	.wait_prepare = vb2_ops_wait_prepare,
-+	.wait_finish = vb2_ops_wait_finish,
-+};
-+
-+static int ipe_queue_init(void *priv, struct vb2_queue *src_vq,
-+			  struct vb2_queue *dst_vq)
-+{
-+	struct ipe_ctx *ctx = priv;
-+	int ret;
-+
-+	src_vq->type = V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE;
-+	src_vq->io_modes = VB2_MMAP | VB2_DMABUF;
-+	src_vq->drv_priv = ctx;
-+	src_vq->buf_struct_size = sizeof(struct vb2_v4l2_buffer);
-+	src_vq->ops = &ipe_vb2_ops;
-+	src_vq->mem_ops = &vb2_dma_contig_memops;
-+	src_vq->timestamp_flags = V4L2_BUF_FLAG_TIMESTAMP_COPY;
-+	src_vq->lock = &ctx->ipe->lock;
-+	src_vq->dev = ctx->ipe->dev;
-+
-+	ret = vb2_queue_init(src_vq);
-+	if (ret)
-+		return ret;
-+
-+	dst_vq->type = V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE;
-+	dst_vq->io_modes = VB2_MMAP | VB2_DMABUF;
-+	dst_vq->drv_priv = ctx;
-+	dst_vq->buf_struct_size = sizeof(struct vb2_v4l2_buffer);
-+	dst_vq->ops = &ipe_vb2_ops;
-+	dst_vq->mem_ops = &vb2_dma_contig_memops;
-+	dst_vq->timestamp_flags = V4L2_BUF_FLAG_TIMESTAMP_COPY;
-+	dst_vq->lock = &ctx->ipe->lock;
-+	dst_vq->dev = ctx->ipe->dev;
-+
-+	return vb2_queue_init(dst_vq);
-+}
-+
-+/* ============================================================
-+ * File Operations
-+ * ============================================================ */
-+
-+static int ipe_open(struct file *file)
-+{
-+	struct ipe_device *ipe = video_drvdata(file);
-+	struct ipe_ctx *ctx;
-+
-+	ctx = kzalloc(sizeof(*ctx), GFP_KERNEL);
-+	if (!ctx)
-+		return -ENOMEM;
-+
-+	ctx->ipe = ipe;
-+	ctx->width = 1920;
-+	ctx->height = 1080;
-+
-+	v4l2_fh_init(&ctx->fh, &ipe->vdev);
-+	ctx->fh.m2m_ctx = v4l2_m2m_ctx_init(ipe->m2m_dev, ctx, ipe_queue_init);
-+	if (IS_ERR(ctx->fh.m2m_ctx)) {
-+		int ret = PTR_ERR(ctx->fh.m2m_ctx);
-+		v4l2_fh_exit(&ctx->fh);
-+		kfree(ctx);
-+		return ret;
-+	}
-+
-+	file->private_data = &ctx->fh;
-+	v4l2_fh_add(&ctx->fh, file);
-+
-+	return 0;
-+}
-+
-+static int ipe_release(struct file *file)
-+{
-+	struct ipe_ctx *ctx = container_of(file->private_data, struct ipe_ctx, fh);
-+
-+	v4l2_fh_del(&ctx->fh, file);
-+	v4l2_m2m_ctx_release(ctx->fh.m2m_ctx);
-+	v4l2_fh_exit(&ctx->fh);
-+	kfree(ctx);
-+
-+	return 0;
-+}
-+
-+static const struct v4l2_file_operations ipe_fops = {
-+	.owner = THIS_MODULE,
-+	.open = ipe_open,
-+	.release = ipe_release,
-+	.poll = v4l2_m2m_fop_poll,
-+	.unlocked_ioctl = video_ioctl2,
-+	.mmap = v4l2_m2m_fop_mmap,
-+};
-+
-+/* ============================================================
-+ * Platform Driver
-+ * ============================================================ */
-+
-+static int camss_ipe_probe(struct platform_device *pdev)
-+{
-+	struct device *dev = &pdev->dev;
-+	struct ipe_device *ipe;
-+	int ret;
-+
-+	ipe = devm_kzalloc(dev, sizeof(*ipe), GFP_KERNEL);
-+	if (!ipe)
-+		return -ENOMEM;
-+
-+	ipe->dev = dev;
-+	platform_set_drvdata(pdev, ipe);
-+	mutex_init(&ipe->lock);
-+
-+	/* Map registers */
-+	ipe->base = devm_platform_ioremap_resource(pdev, 0);
-+	if (IS_ERR(ipe->base))
-+		return PTR_ERR(ipe->base);
-+
-+	/* Get clocks */
-+	ipe->clocks[0].id = "ahb";
-+	ipe->clocks[1].id = "nps_fast_ahb";
-+	ipe->clocks[2].id = "pps_fast_ahb";
-+	ipe->clocks[3].id = "nps";
-+	ipe->clocks[4].id = "pps";
-+	ipe->clocks[5].id = "cpas";
-+	ipe->num_clocks = IPE_CLK_MAX;
-+
-+	ret = devm_clk_bulk_get(dev, ipe->num_clocks, ipe->clocks);
-+	if (ret)
-+		return ret;
-+
-+	/* Get interconnect */
-+	ipe->icc_mem = devm_of_icc_get(dev, "mem");
-+	if (IS_ERR(ipe->icc_mem))
-+		return PTR_ERR(ipe->icc_mem);
-+
-+	/* Get UBWC config */
-+	of_property_read_u32(dev->of_node, "ubwc-fetch-cfg", &ipe->ubwc.fetch_cfg);
-+	of_property_read_u32(dev->of_node, "ubwc-write-cfg", &ipe->ubwc.write_cfg);
-+
-+	/* Get ICP reference */
-+	ipe->icp = icp_get(dev);
-+	if (IS_ERR(ipe->icp))
-+		return PTR_ERR(ipe->icp);
-+
-+	/* Set UBWC config in ICP */
-+	icp_set_ubwc_config(ipe->icp, HFI_DEV_TYPE_IPE, &ipe->ubwc);
-+
-+	/* Register V4L2 device */
-+	ret = v4l2_device_register(dev, &ipe->v4l2_dev);
-+	if (ret)
-+		goto err_icp;
-+
-+	/* Create M2M device */
-+	ipe->m2m_dev = v4l2_m2m_init(&ipe_m2m_ops);
-+	if (IS_ERR(ipe->m2m_dev)) {
-+		ret = PTR_ERR(ipe->m2m_dev);
-+		goto err_v4l2;
-+	}
-+
-+	/* Register video device */
-+	ipe->vdev.fops = &ipe_fops;
-+	ipe->vdev.ioctl_ops = &ipe_ioctl_ops;
-+	ipe->vdev.release = video_device_release_empty;
-+	ipe->vdev.v4l2_dev = &ipe->v4l2_dev;
-+	ipe->vdev.vfl_dir = VFL_DIR_M2M;
-+	ipe->vdev.lock = &ipe->lock;
-+	ipe->vdev.device_caps = V4L2_CAP_VIDEO_M2M_MPLANE | V4L2_CAP_STREAMING;
-+	strscpy(ipe->vdev.name, "qcom-ipe", sizeof(ipe->vdev.name));
-+	video_set_drvdata(&ipe->vdev, ipe);
-+
-+	ret = video_register_device(&ipe->vdev, VFL_TYPE_VIDEO, -1);
-+	if (ret)
-+		goto err_m2m;
-+
-+	pm_runtime_enable(dev);
-+
-+	dev_info(dev, "IPE registered as /dev/video%d\n", ipe->vdev.num);
-+
-+	return 0;
-+
-+err_m2m:
-+	v4l2_m2m_release(ipe->m2m_dev);
-+err_v4l2:
-+	v4l2_device_unregister(&ipe->v4l2_dev);
-+err_icp:
-+	icp_put(ipe->icp);
-+	return ret;
-+}
-+
-+static void camss_ipe_remove(struct platform_device *pdev)
-+{
-+	struct ipe_device *ipe = platform_get_drvdata(pdev);
-+
-+	pm_runtime_disable(ipe->dev);
-+	video_unregister_device(&ipe->vdev);
-+	v4l2_m2m_release(ipe->m2m_dev);
-+	v4l2_device_unregister(&ipe->v4l2_dev);
-+	icp_put(ipe->icp);
-+}
-+
-+static const struct of_device_id camss_ipe_dt_match[] = {
-+	{ .compatible = "qcom,x1e80100-camss-ipe" },
-+	{ }
-+};
-+MODULE_DEVICE_TABLE(of, camss_ipe_dt_match);
-+
-+static struct platform_driver camss_ipe_driver = {
-+	.probe = camss_ipe_probe,
-+	.remove = camss_ipe_remove,
-+	.driver = {
-+		.name = "camss-ipe",
-+		.of_match_table = camss_ipe_dt_match,
-+	},
-+};
-+
-+module_platform_driver(camss_ipe_driver);
-+
-+MODULE_DESCRIPTION("Qualcomm CAMSS IPE V4L2 M2M driver");
-+MODULE_LICENSE("GPL");
-diff --git a/drivers/media/platform/qcom/camss/camss-ipe.h b/drivers/media/platform/qcom/camss/camss-ipe.h
-new file mode 100644
-index 0000000000000..3f6d43a269d2d
---- /dev/null
-+++ b/drivers/media/platform/qcom/camss/camss-ipe.h
-@@ -0,0 +1,69 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
-+/*
-+ * Qualcomm CAMSS IPE (Image Processing Engine) Driver
-+ *
-+ * The IPE performs image post-processing controlled by ICP firmware.
-+ * It consists of two sub-blocks:
-+ * - NPS (Noise Processing Segment): Noise reduction, sharpening
-+ * - PPS (Post Processing Segment): Colour correction, scaling
-+ *
-+ * Copyright (c) 2026 Bryan O'Donoghue.
-+ */
-+
-+#ifndef __CAMSS_IPE_H__
-+#define __CAMSS_IPE_H__
-+
-+#include <linux/clk.h>
-+#include <linux/device.h>
-+#include <linux/interconnect.h>
-+#include <linux/types.h>
-+
-+/* Forward declaration */
-+struct camss_icp;
-+
-+/*
-+ * IPE Clock Indices
-+ */
-+enum ipe_clk_id {
-+	IPE_CLK_NPS_AHB,
-+	IPE_CLK_NPS_FAST_AHB,
-+	IPE_CLK_PPS_FAST_AHB,
-+	IPE_CLK_NPS,
-+	IPE_CLK_PPS,
-+	IPE_CLK_CPAS_IPE_NPS,
-+	IPE_CLK_MAX,
-+};
-+
-+/*
-+ * IPE Device
-+ */
-+struct camss_ipe {
-+	struct device *dev;
-+	struct camss_icp *icp;
-+
-+	/* Register base (informational - ICP firmware programs registers) */
-+	void __iomem *base;
-+
-+	/* Clocks */
-+	struct clk *clocks[IPE_CLK_MAX];
-+
-+	/* Power domain (IPE_0_GDSC) */
-+	struct device *pd;
-+	struct device_link *pd_link;
-+
-+	/* Interconnect */
-+	struct icc_path *icc_mem;
-+
-+	/* State */
-+	bool powered;
-+	u32 clock_rate;
-+};
-+
-+/*
-+ * API Functions
-+ */
-+int camss_ipe_power_on(struct camss_ipe *ipe);
-+void camss_ipe_power_off(struct camss_ipe *ipe);
-+int camss_ipe_set_clock(struct camss_ipe *ipe, u32 rate);
-+
-+#endif /* __CAMSS_IPE_H__ */
+diff --git a/drivers/media/platform/qcom/camss/Kconfig b/drivers/media/platform/qcom/camss/Kconfig
+index 1edc5e5a1829e..d62d5f6b383f8 100644
+--- a/drivers/media/platform/qcom/camss/Kconfig
++++ b/drivers/media/platform/qcom/camss/Kconfig
+@@ -8,3 +8,27 @@ config VIDEO_QCOM_CAMSS
+ 	select VIDEOBUF2_DMA_SG
+ 	select V4L2_FWNODE
+ 	select PHY_QCOM_MIPI_CSI2
++
++config VIDEO_QCOM_CAMSS_HARD_ISP
++	tristate "Qualcomm CAMSS Hardware ISP (ICP/IPE/BPS)"
++	depends on VIDEO_QCOM_CAMSS
++	depends on QCOM_MDT_LOADER
++	depends on QCOM_SCM
++	depends on VIDEO_DEV
++	select VIDEOBUF2_DMA_CONTIG
++	select V4L2_MEM2MEM_DEV
++	help
++	  Enable support for the hardware ISP found in Qualcomm camera
++	  subsystems on SoCs like X1E80100. This includes:
++
++	  - ICP (Image Control Processor): Tensilica LX7 that runs
++	    camera firmware and provides HFI interface
++	  - IPE (Image Processing Engine): V4L2 m2m device for noise
++	    reduction, sharpening, and scaling
++	  - BPS (Bayer Processing Segment): V4L2 m2m device for
++	    demosaicing raw Bayer data
++
++	  If unsure, say N.
++
++	  To compile this as modules, choose M here. The modules will
++	  be called camss-icp, camss-ipe, and camss-bps, respecitvely.
+diff --git a/drivers/media/platform/qcom/camss/Makefile b/drivers/media/platform/qcom/camss/Makefile
+index 5e349b4915130..940af23da5675 100644
+--- a/drivers/media/platform/qcom/camss/Makefile
++++ b/drivers/media/platform/qcom/camss/Makefile
+@@ -29,3 +29,11 @@ qcom-camss-objs += \
+ 		camss-format.o \
+ 
+ obj-$(CONFIG_VIDEO_QCOM_CAMSS) += qcom-camss.o
++
++qcom-camss-icp-objs += camss-icp.o \
++		       camss-icp-hfi.o
++obj-$(CONFIG_VIDEO_QCOM_CAMSS_HARD_ISP) += qcom-camss-icp.o
++
++qcom-camss-bps-objs += camss-bps.o \
++		       camss-bps-cmd.o
++obj-$(CONFIG_VIDEO_QCOM_CAMSS_HARD_ISP) += qcom-camss-bps.o
 
 -- 
 2.54.0
