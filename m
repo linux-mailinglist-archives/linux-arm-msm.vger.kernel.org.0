@@ -1,98 +1,100 @@
-Return-Path: <linux-arm-msm+bounces-116378-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-116379-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id PDzwLPUPSGp/lQAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-116378-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Jul 2026 21:39:33 +0200
+	id FPzFBygQSGqplQAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-116379-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Jul 2026 21:40:24 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2223270521C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Jul 2026 21:39:33 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6A05A705253
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Jul 2026 21:40:23 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=YEMeysY1;
-	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=L4su3hCC;
+	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=iZuu44D6;
+	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=imCz7XTN;
 	dmarc=pass (policy=reject) header.from=qualcomm.com;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116378-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116378-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116379-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116379-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 9C6AD302B80E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jul 2026 19:39:31 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 772D73024A47
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jul 2026 19:39:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 936E6331ED7;
-	Fri,  3 Jul 2026 19:39:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EE02A314D06;
+	Fri,  3 Jul 2026 19:39:53 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E50932E743
-	for <linux-arm-msm@vger.kernel.org>; Fri,  3 Jul 2026 19:39:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 127AE330644
+	for <linux-arm-msm@vger.kernel.org>; Fri,  3 Jul 2026 19:39:51 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783107570; cv=none; b=M7YmWKaMsGuj0XRRg+1lGwy5I/ja9YMQpbUxKUqwCuuhn7OAdnBqsjBGe9ShdX8HnrvV6PBvUJTGEu1F4k2HkTbuAH1ddnEVFiFkM4Xk+hE15rVT5k5dxwT9eSoSJqI5ypsTxa9Ii4phfeYc4q98fNs4A5fXyHrcD07hsuV1EHQ=
+	t=1783107593; cv=none; b=npwAEo0W5mPTYDUISVLY0KBVp6XmhERJl3UcjdrL9Ip44G2THE8QLerC2EDPdBDp1Lb9s32yoibzg0YTLnvvTK6hDjDeLdXtmfKMeZsNNVY7XnvsP4AL/flZ2W6LUYl/Iu/BXwH/PCrXEpa1jAxkQDiaRZoVamBLHIdjcZ98M1w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783107570; c=relaxed/simple;
-	bh=gf0y849jqsWicWT8x2zXtY5gzlbXBv3ZHwVF2zzNRiU=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=SHLRmFQSsZKDT5MHN+yJXYZ/MXhxinDCYUamFdm6vbUSyzdxfvnfajrMgsLT0/iPKgHuK83P0pBIFqXeLBfSaZXHEeOwK418U4teFp1FT1xmtPA/HFhaht/GU1wam885phvDgDYaiEl+iyvSkuo6cy1eMoTQ/J0L/vd229LP7f8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=YEMeysY1; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=L4su3hCC; arc=none smtp.client-ip=205.220.180.131
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 663HiZn9676632
-	for <linux-arm-msm@vger.kernel.org>; Fri, 3 Jul 2026 19:39:27 GMT
+	s=arc-20240116; t=1783107593; c=relaxed/simple;
+	bh=cqEZRJv7tWTgKRoN4adZzdInLmkRCuJ5Uo0VyqJuYaU=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=r1NzvkJQnOBdgBuZVdtcsRzOZcDqVgCiKEN7cgaeqNSer5z6dSjYcy0UzMdg/P064jptjFP0wL5kQqrpgmwpw09S7lXL75Sap7sWQjDRtE017LrgcFuB0jMWotGjcHotqQKvpYKXDtH+xaTkqyokBoZBUKYLkScczqC9wbPHI3E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=iZuu44D6; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=imCz7XTN; arc=none smtp.client-ip=205.220.168.131
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 663HiEjH683605
+	for <linux-arm-msm@vger.kernel.org>; Fri, 3 Jul 2026 19:39:51 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=yuDgKoAlw/JRHunDNfGXYB
-	YzhSRLVnjx2xmNmMEK1vs=; b=YEMeysY1/myhDao0i74e7TNlV74ktXTCfMwdq9
-	CR3QbS5AITeviE8hf9EJ30WAllVldtcYL4AMMm0/LzjQKzr0t0eqDF0S43incuSV
-	MyApeWy7M1IbpM60LNShiFzTpmwg+/W0PKTj+Lp+cXYVgARiHsuxhXD426SvD7cT
-	GGZrPR1QcL7iICOr24d23aBH8a/MPY5danZVa1/zTiMmF2fSUTDZMyH3oHPCfVAv
-	4nbvlJJiytEOZCVzenusm2J4e5XUbEHMVWQY64oswPjfiGG059bwY0hXxdENEoJ/
-	sJbKqjoPigEwtHk2s+fe6Ba9Tfz1f/tpFlGt1x1q0Mz2ipmQ==
-Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com [209.85.215.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f6dkkh8kj-1
+	cc:content-transfer-encoding:date:from:in-reply-to:message-id
+	:mime-version:references:subject:to; s=qcppdkim1; bh=kAqGWShsALr
+	UvOo44yJ9PZPqBuVxxzDIDv0SXARnsDY=; b=iZuu44D62fDE9nUkMGsQ/kikCWN
+	vJtcLEgw6+dGCeIIHuOlMsUIpFKZZGJPJqfdF+O1SYEhJ9Ewxr3bmWpbtRmLiIqQ
+	jYkNIvEv+KCpR6MtdXix1MGky2N2ZQ+IKKh/NsqwJzV4809aM+q8nNtoVSj4h9GS
+	7ZOJF8MX23ckx9HxrND4qmrfOFK47QtXOdWwXxI5gur6l6dxQmmA/LR6so3jKGq/
+	W7A00TMFaZJ0ko+VVC0tHFFvu0ryV81DeIP4S6UmjKnzb0SJmxCATCZFjAZe9zfa
+	KCzmbOBkJT97xvyMzhw69zt86W2jJf7+4G93pb8Mz+QzA56HX9qkqRm3E6A==
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com [209.85.216.70])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f64b5brnh-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 03 Jul 2026 19:39:27 +0000 (GMT)
-Received: by mail-pg1-f197.google.com with SMTP id 41be03b00d2f7-c9fe2607511so1340876a12.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Jul 2026 12:39:26 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 03 Jul 2026 19:39:51 +0000 (GMT)
+Received: by mail-pj1-f70.google.com with SMTP id 98e67ed59e1d1-38127ae6b99so1224585a91.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Jul 2026 12:39:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1783107566; x=1783712366; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=yuDgKoAlw/JRHunDNfGXYBYzhSRLVnjx2xmNmMEK1vs=;
-        b=L4su3hCCMdFYIuBJEM12NFaEaRw+ZWrpRoUoyVEDZh11YUI4DjvK9ddaNZ0BMExuOd
-         2hZlmHNXLfT5J8fol4KPgg59lbmOlBJHJLvtyeCImy1jF/kSMAwbrvs4EsymejeyhoUS
-         /D69VBuMEU9+bQrWlCo9Q4tGeOgT5oF8uflGGrEJlvxUMOhJacFTLRwWMaWR97u17Rpi
-         xXWAwefS+ZCjHSKA5lVMOmvVHyBlDrgnI830dGEmuQEet0ynOmFsg9X8jg2fsX8v2jSh
-         lnK1qZBLx5Yh+mty7iPWOejD9hF4OZEM8wC0ZwWLIYTv36W4CCsUu9hWMxrpqNm130fL
-         nHbg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783107566; x=1783712366;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=oss.qualcomm.com; s=google; t=1783107591; x=1783712391; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=yuDgKoAlw/JRHunDNfGXYBYzhSRLVnjx2xmNmMEK1vs=;
-        b=sGlt9xW2kF+04zloHec9gHr+luxqpSsqqJtQQOLcanvuSDqzNCapL1otwzbMFy0+98
-         Da+0u0ZOh881DJ3gsDE56WCq7SP+XPcZAy+YAn4vximC5aObzO9wBBP9lEPEjNMX/PtX
-         OlG2Wb0Xd2PXDJwSloPLErMhV/QZh0THA4zkhUeHBmfpvBdGDntbuxztXeprSLZLWU0o
-         2Kb3ICZxLfk4oc968eBDptHnqWrrsscXUhgHabfldYajf2kFAgLyYXi64lVBi5iN5LSp
-         H18/SXNgnI8UDCxAVwl4XhTnjbywIvs4QIGRYhy1MMGEHXizaUQK1AO+0osdbBRpRwrI
-         ToFA==
-X-Forwarded-Encrypted: i=1; AFNElJ/m7AYxmeKd22/WbBOLM0hXTTkpV5pI5X4NsRJnZGl54+uicM6DonfgbUDS8DKLmyObBt6umQE5j1Fuv57u@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyct8RDjKVNJFV8d8PUkO0bdjOc8kO7Gy4V02ijhxCOXjy9Vw4D
-	GOZ0rLG9bxLdMSD8lt7N8N2j7HmV5mal5jkE9RBSMgoqscOsk3BunAl5DGYtnqMUQpmIU3c6nla
-	wcOiq/t1zU935VziqV/QNQ61YT1gDEu2HEDGcYB5pV6UNdaAZkoWU81qRYcpPyW1rjcjD
-X-Gm-Gg: AfdE7cn0F8Vtm86S17WlzaLtH5mosl/Bn9fsB8zCbaOd07WIduA/m7QVzJlv8mAzGv5
-	0D3tTVqQrnEdNhSzGwg10yZSbaDQog1bQczsiEwqr3zSJr5ynp3ZaPIgsdjI8IwQsjfj0QF9fy3
-	NEWLGNX9SFqIbxH+HwZQCMOJf8/OU4b+3IKegsirK/Ut4O1hKbubYeyAsssNO24FqYDZ4+W9Ca/
-	zyswJyeL1mq9aONW7hqxc9O4GBqTMSSXbJFjyBFlLBRhsscox3pPkNgB7w5WQxc5Jw7FRikXMZx
-	FNQ63lRKg0cnoi2ETv9yFQNu0tTDFUwVmekcGXTL0wIEw0QY4jRoPjSXCl85Qt77P2kSxh2FTmK
-	nlIXPn6MyKUsGDSL0BtCsWUJxpABUjNIya5DBig==
-X-Received: by 2002:a05:6a21:4c81:b0:3bf:e291:496c with SMTP id adf61e73a8af0-3c03e298475mr701925637.17.1783107565960;
-        Fri, 03 Jul 2026 12:39:25 -0700 (PDT)
-X-Received: by 2002:a05:6a21:4c81:b0:3bf:e291:496c with SMTP id adf61e73a8af0-3c03e298475mr701865637.17.1783107565344;
-        Fri, 03 Jul 2026 12:39:25 -0700 (PDT)
+        bh=kAqGWShsALrUvOo44yJ9PZPqBuVxxzDIDv0SXARnsDY=;
+        b=imCz7XTNXbbxst+q2sIytN6PFNeB73MLPbAvkC1cHwORS1GGW+IMJGRWSF5dap8Lpl
+         WnSCd7s9Dm7NTis237Lwd8OSC2ys+uLI/5JV1vFO81PgU6kto8u6rlHDDjAYAXHv0JEZ
+         UjJkDkuLVmFYDdPrk8TPC4tnXmPnnIIor4xdZcle9aOVUpC2iCL41L8C207+PzjVu0P5
+         ObdtEf1BzK/Qm6exA+zzkX92CsH0MDT1kaOf0iJYbtbNY9mFtzGB27IstY8fKOmXgzfY
+         EYcI7V1XRwpJ6CTprWCOl0IzDVN6A/zpkbV9Gt7yIzmHmouD7f5hDOb1o4RAT5Gkvcgq
+         YdWA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783107591; x=1783712391;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=kAqGWShsALrUvOo44yJ9PZPqBuVxxzDIDv0SXARnsDY=;
+        b=CzBtvDtsOqnGZ/RWHr66pCBpYQUTfcrJS03QZFCuMKnjpV87QxbZjxBHdsskJXq4aU
+         DzI5VwPVndTwRwoC/krnRxSSv9+ZXh0RWctiLNJMKwSbSRLFnC1y9jiymA/K6HljoRNs
+         jxRvTdyTrWyFchEbcthq0OxQBemQMs4hryd9uFDX7jTByj+bJlZTxElL6NckXALmpKXp
+         EyLMIP4zDBW+tRCyZT1qnBqHI9tAhLauyUdz3pgS51JFAbvdIdJTOvQdsFInY5yu5u0Q
+         7Cv3zLh0Iesk6h2uXMu4JazHdSoBawL9XrunSh1i9CWvOHuphoYkZ328qwMevV7mC4W/
+         AU/w==
+X-Forwarded-Encrypted: i=1; AHgh+RoJHbzYoSrDBPMZetP/aevn1CU24HZ6cBu4vDJSfTXPujHKnahxxtEEaRJUfvfnlbA13XcoBa+EsFUSG3aF@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzo5J1SySxKrcu00c7haydJ3lHbkzLR/fNREq7M2fc2lRW8sbw0
+	/9Azh7MF7wgAXAolm5oVLqQPZEytYRrI6VN2ubBgQjuEbaEB1F62OgXNhohCAIVKE2wHMwuhZm0
+	Q1fM/HBO1dWwG6QHprQojlm0h+rKlmv/LD1I5Fa6u3qglnZmphL8SIbbJlBBN8LbnMEvv
+X-Gm-Gg: AfdE7cm+2Z2nG8oPypMhv4HOE01QQqxLjsrko4Tz8MLd5dlpyXA1aUp02wHPnTBuEs+
+	pyufsMT9KgfQH9iyyz3m4VZHlYWGs8y7LJnR41QHXKh8k8WVUvtPGrp5scf+vxuLb1M6s3pQsgI
+	M3lj45F+B3wJ72CWJuZf2eRvg/a/Wj4KAuadrkBsqaiWg4eclmRl3RgUw12zaE7NIAUPPL9LDtE
+	Pz14+rHh7FBhJUKuM+MyEzw1Il/TiRPtE1mVbb3srvreSNRRh/w38AbzUfuyRB7wCRYgY/Bc74Z
+	p/0pGn6l2bABhz0OemW1rX6GURN/S0lbjOO7fUGDC0NU8uNd9W7BaFUYcydtGIazmBj03ZkJrY+
+	HI4U23zYI1GUShRq85cdNBD9QKRcHDvfl7/7BFw==
+X-Received: by 2002:a17:90a:e70c:b0:380:ce69:2669 with SMTP id 98e67ed59e1d1-381122ebda9mr5933694a91.9.1783107590234;
+        Fri, 03 Jul 2026 12:39:50 -0700 (PDT)
+X-Received: by 2002:a17:90a:e70c:b0:380:ce69:2669 with SMTP id 98e67ed59e1d1-381122ebda9mr5933658a91.9.1783107589588;
+        Fri, 03 Jul 2026 12:39:49 -0700 (PDT)
 Received: from hu-mojha-hyd.qualcomm.com ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-30f290b6bc2sm10065845eec.27.2026.07.03.12.39.01
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-30f290b6bc2sm10065845eec.27.2026.07.03.12.39.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Jul 2026 12:39:24 -0700 (PDT)
+        Fri, 03 Jul 2026 12:39:49 -0700 (PDT)
 From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
 To: Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konradybcio@kernel.org>,
@@ -167,194 +169,202 @@ Cc: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>,
         linux-remoteproc@vger.kernel.org, linux-staging@lists.linux.dev,
         linux-sound@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
         imx@lists.linux.dev, sound-open-firmware@alsa-project.org,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
         Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-Subject: [PATCH 00/42] of: reserved_mem: Introduce devres helpers and convert drivers
-Date: Sat,  4 Jul 2026 01:08:13 +0530
-Message-ID: <20260703193855.110619-1-mukesh.ojha@oss.qualcomm.com>
+Subject: [PATCH 01/42] of: reserved_mem: Introduce devres-managed initialization functions
+Date: Sat,  4 Jul 2026 01:08:14 +0530
+Message-ID: <20260703193855.110619-2-mukesh.ojha@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260703193855.110619-1-mukesh.ojha@oss.qualcomm.com>
+References: <20260703193855.110619-1-mukesh.ojha@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAzMDE5OCBTYWx0ZWRfXzGojkG2jeD3l
- RJv26dZo9hVO/TMP8aKGBTvXKo8d/6ykJ13utkxw4Oh2Ee5EaooS0Y0Fw9XoB1CtwUYvx2NumIZ
- ddVTeNLAq0U/3FUswfDjoEqdTTeu9kVowIYAlmAn5P321yyoKD0Xbj/6uoSBjFk2Ge1Tu0p96ud
- Sq9+xzeAa5hQnlt2P34zqMQEXviDoqtuwtzmTQ3NDimZSQMeg6csXPF/kq8OXYd+N4kZa+kDD3f
- QZqWcKTkVMekIZj8slZ4GB5hvKZqalSlVpklTC52kXGOUv9epA5Mlgi9mW3UqD3LB/jhxXNztVt
- sufD8tvz+Llm3GZc+Boe9ylAXjcRTLMdRUM9ccLDMNlyd+JmLQVwV8NepF2tT17kKTI6cEvjni9
- eBZSFeUnT3Vh9jEf1VBNkunYnZqyYJL/je16DlDnnPxzSjIwKCrhmTrl4zDID9rxh3t3PpO0TDW
- ZyFTVuifSlQJmwedS9g==
-X-Authority-Analysis: v=2.4 cv=LeUMLDfi c=1 sm=1 tr=0 ts=6a480fef cx=c_pps
- a=rz3CxIlbcmazkYymdCej/Q==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=c_1ikP4J58vCyc_cPHMA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=bFCP_H2QrGi7Okbo017w:22
-X-Proofpoint-ORIG-GUID: loXBIxSPtqaaeas6IKOiXujJjfxkSMkc
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAzMDE5OCBTYWx0ZWRfX8HUzQ0FbOQc+
- hHJbuPgtGtUWLiarQnZw59lGtfWP0hVjce/eDUkEdKCrGhZKyKu4OZ3zvwya2FXunRi+SXMC1G7
- P4XxKcsQrCLQU2wWvs8kJsraj3nQY2k=
-X-Proofpoint-GUID: loXBIxSPtqaaeas6IKOiXujJjfxkSMkc
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAzMDE5OCBTYWx0ZWRfX4lGuB0pCP5i/
+ gZjokGR/d+SW2w1wWasj5xo21NoXEgPC1Br9KRwMIwxCOXLZxkND6uumxovpxSRnNZ30gqZ607l
+ KDNvOePHCbb1CMuZDnU97yTdLc2+gSs=
+X-Authority-Analysis: v=2.4 cv=FOQrAeos c=1 sm=1 tr=0 ts=6a481007 cx=c_pps
+ a=0uOsjrqzRL749jD1oC5vDA==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+ a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22 a=EUspDBNiAAAA:8
+ a=C96w-YAaP-Zupzk_Mv8A:9 a=mQ_c8vxmzFEMiUWkPHU9:22
+X-Proofpoint-ORIG-GUID: R8Yew8NBct98TCwa7kc0uiFfVwYa2MpK
+X-Proofpoint-GUID: R8Yew8NBct98TCwa7kc0uiFfVwYa2MpK
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAzMDE5OCBTYWx0ZWRfX1Bcn5mgDKBRb
+ YQcR0XYFFv+HcdKJxgpwJJX5vq29tkTxJVIq5PcWCRDzgTFDu5P1P8LLlc8Pk02SlJaqduEWpyz
+ jK6NZJDE4y/cI0kQrkt+bo1urc5CoDqkf7ciWOF3MWPt6aQtBj29NIa+UA0MoK1A0kSwAkCmEzp
+ Caq3k2qE2Iwk1ICsrnrU5WtCcfuaQeb6YaeBQcKrn9o7x4Ar247QPv/fUenJPZ/GlZAdeP/7sHR
+ Tr7aoDuH83jxC9vypmPpeTvfLm5yYDQsbBoYv3saGRxXgxYmRRGeSCslPqRZTOZTwuUiNXvX9xW
+ XqaAxyRb1L3IRV0TtmFAtayrUYf5v0ALHpfycQVy6Jt4Ux2bBfX309RLkkOilaT5CWQ/9nGq0UW
+ K9mN24ScSBO2ERF3XZf7jtoyBTxQEL5Pj+LhfszFIXbCk8dLWQGMEUtjl1Vt4Ms6ZJWLnbAw7jc
+ YzQTuz6j1vISMCEMCCA==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-07-03_03,2026-07-03_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 phishscore=0 adultscore=0 malwarescore=0 lowpriorityscore=0
- suspectscore=0 bulkscore=0 impostorscore=0 priorityscore=1501 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607030198
+ impostorscore=0 suspectscore=0 priorityscore=1501 lowpriorityscore=0
+ bulkscore=0 adultscore=0 clxscore=1015 malwarescore=0 phishscore=0
+ spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607030198
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [0.34 / 15.00];
+X-Spamd-Result: default: False [0.84 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	MID_CONTAINS_FROM(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	R_MISSING_CHARSET(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	MIME_TRACE(0.00)[0:+];
 	FORWARDED(0.00)[lists@lfdr.de];
 	FREEMAIL_CC(0.00)[oss.qualcomm.com,bstai.top,gmail.com,pengutronix.de,linux.intel.com,linux.dev,amd.com,cixtech.com,vger.kernel.org,lists.freedesktop.org,lists.ozlabs.org,lists.infradead.org,lists.linux.dev,collabora.com,alsa-project.org];
-	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-116378-lists,linux-arm-msm=lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_TO(0.00)[kernel.org,arm.com,linux.intel.com,suse.de,gmail.com,ffwll.ch,jms.id.au,codeconstruct.com.au,crapouillou.net,intel.com,sys-base.io,sholland.org,synopsys.com,ideasonboard.com,amd.com,linux.ibm.com,mediatek.com,collabora.com,nuvoton.com,nvidia.com,arndb.de,linuxfoundation.org,bst.ai,linaro.org,perex.cz,suse.com,nxp.com,pengutronix.de,linux.alibaba.com,cixtech.com];
+	FORGED_SENDER(0.00)[mukesh.ojha@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-116379-lists,linux-arm-msm=lfdr.de];
 	FORGED_RECIPIENTS(0.00)[m:andersson@kernel.org,m:konradybcio@kernel.org,m:liviu.dudau@arm.com,m:maarten.lankhorst@linux.intel.com,m:mripard@kernel.org,m:tzimmermann@suse.de,m:airlied@gmail.com,m:simona@ffwll.ch,m:joel@jms.id.au,m:andrew@codeconstruct.com.au,m:paul@crapouillou.net,m:anitha.chrisanthus@intel.com,m:paulk@sys-base.io,m:linusw@kernel.org,m:wens@kernel.org,m:jernej.skrabec@gmail.com,m:samuel@sholland.org,m:abrodkin@synopsys.com,m:laurent.pinchart@ideasonboard.com,m:tomi.valkeinen@ideasonboard.com,m:michal.simek@amd.com,m:dan.scally@ideasonboard.com,m:jacopo.mondi@ideasonboard.com,m:mchehab@kernel.org,m:eajames@linux.ibm.com,m:tiffany.lin@mediatek.com,m:andrew-ct.chen@mediatek.com,m:yunfei.dong@mediatek.com,m:minghsiu.tsai@mediatek.com,m:houlong.wei@mediatek.com,m:matthias.bgg@gmail.com,m:angelogioacchino.delregno@collabora.com,m:kwliu@nuvoton.com,m:kflin@nuvoton.com,m:dmitry.osipenko@collabora.com,m:krzk@kernel.org,m:thierry.reding@kernel.org,m:jonathanh@nvidia.com,m:srin
  i@kernel.org,m:arnd@arndb.de,m:gregkh@linuxfoundation.org,m:gordon.ge@bst.ai,m:adrian.hunter@intel.com,m:ulfh@kernel.org,m:robh@kernel.org,m:saravanak@kernel.org,m:mathieu.poirier@linaro.org,m:perex@perex.cz,m:tiwai@suse.com,m:shengjiu.wang@gmail.com,m:Xiubo.Lee@gmail.com,m:lgirdwood@gmail.com,m:broonie@kernel.org,m:Frank.Li@nxp.com,m:s.hauer@pengutronix.de,m:peter.ujfalusi@linux.intel.com,m:yung-chuan.liao@linux.intel.com,m:daniel.baluta@nxp.com,m:orsonzhai@gmail.com,m:baolin.wang@linux.alibaba.com,m:peter.chen@cixtech.com,m:fugang.duan@cixtech.com,m:ekansh.gupta@oss.qualcomm.com,m:bst-upstream@bstai.top,m:festevam@gmail.com,m:nicoleotsuka@gmail.com,m:kernel@pengutronix.de,m:kai.vehmanen@linux.intel.com,m:pierre-louis.bossart@linux.dev,m:Vijendar.Mukunda@amd.com,m:zhang.lyra@gmail.com,m:cix-kernel-upstream@cixtech.com,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:dri-devel@lists.freedesktop.org,m:linux-aspeed@lists.ozlabs.org,m:linux-arm-kernel@lists.infradead.or
- g,m:linux-mips@vger.kernel.org,m:linux-sunxi@lists.linux.dev,m:linux-media@vger.kernel.org,m:openbmc@lists.ozlabs.org,m:linux-mediatek@lists.infradead.org,m:kernel@collabora.com,m:linux-tegra@vger.kernel.org,m:linux-mmc@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-remoteproc@vger.kernel.org,m:linux-staging@lists.linux.dev,m:linux-sound@vger.kernel.org,m:linuxppc-dev@lists.ozlabs.org,m:imx@lists.linux.dev,m:sound-open-firmware@alsa-project.org,m:mukesh.ojha@oss.qualcomm.com,s:lists@lfdr.de];
-	FORGED_SENDER(0.00)[mukesh.ojha@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,qualcomm.com:dkim,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,oss.qualcomm.com:from_mime,oss.qualcomm.com:dkim,oss.qualcomm.com:mid];
+ g,m:linux-mips@vger.kernel.org,m:linux-sunxi@lists.linux.dev,m:linux-media@vger.kernel.org,m:openbmc@lists.ozlabs.org,m:linux-mediatek@lists.infradead.org,m:kernel@collabora.com,m:linux-tegra@vger.kernel.org,m:linux-mmc@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-remoteproc@vger.kernel.org,m:linux-staging@lists.linux.dev,m:linux-sound@vger.kernel.org,m:linuxppc-dev@lists.ozlabs.org,m:imx@lists.linux.dev,m:sound-open-firmware@alsa-project.org,m:konrad.dybcio@oss.qualcomm.com,m:mukesh.ojha@oss.qualcomm.com,s:lists@lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FREEMAIL_TO(0.00)[kernel.org,arm.com,linux.intel.com,suse.de,gmail.com,ffwll.ch,jms.id.au,codeconstruct.com.au,crapouillou.net,intel.com,sys-base.io,sholland.org,synopsys.com,ideasonboard.com,amd.com,linux.ibm.com,mediatek.com,collabora.com,nuvoton.com,nvidia.com,arndb.de,linuxfoundation.org,bst.ai,linaro.org,perex.cz,suse.com,nxp.com,pengutronix.de,linux.alibaba.com,cixtech.com];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[mukesh.ojha@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,oss.qualcomm.com:from_mime,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,qualcomm.com:email,qualcomm.com:dkim,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns];
+	PRECEDENCE_BULK(0.00)[];
 	FROM_HAS_DN(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[mukesh.ojha@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	RCPT_COUNT_GT_50(0.00)[93];
+	RCPT_COUNT_GT_50(0.00)[94];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	TO_DN_SOME(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
 	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 2223270521C
+X-Rspamd-Queue-Id: 6A05A705253
 
-Drivers using of_reserved_mem_device_init() and its variants must
-manually call of_reserved_mem_device_release() in their remove and
-error-unwind paths. This is repetitive boilerplate that is easy to
-get wrong, and several drivers have open-coded the teardown
-inconsistently or skipped it entirely, leading to dangling reserved
-memory references.
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-This series introduces devres-managed wrappers —
-devm_of_reserved_mem_device_init(), devm_of_reserved_mem_device_init_by_idx(),
-and devm_of_reserved_mem_device_init_by_name() — that tie the reserved
-memory region lifetime to the device, releasing it automatically on
-unbind. The remaining 40 patches convert drivers across the drm, media,
-ASoC, remoteproc, firmware, mmc, memory and misc subsystems to use these
-helpers, yielding a net reduction of ~90 lines of boilerplate.
+Introduce devres-based helpers for of_reserved_mem_device_init(_by_idx)
+to help fight dangling references and ever so slightly reduce the
+number of boilerplate deinitialization calls.
 
-This series depends on  https://lore.kernel.org/lkml/20260703164457.4040457-1-mukesh.ojha@oss.qualcomm.com/
+Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+---
+ drivers/of/of_reserved_mem.c    | 41 +++++++++++++++++++++++++++++++++
+ include/linux/of_reserved_mem.h | 25 ++++++++++++++++++++
+ 2 files changed, 66 insertions(+)
 
-Konrad Dybcio (1):
-  of: reserved_mem: Introduce devres-managed initialization functions
-
-Mukesh Ojha (41):
-  of: reserved_mem: Add devm_of_reserved_mem_device_init_by_name()
-  firmware: qcom: scm: Use devm_of_reserved_mem_device_init()
-  remoteproc: da8xx: Use devm_of_reserved_mem_device_init()
-  remoteproc: keystone: Use devm_of_reserved_mem_device_init()
-  media: synopsys: hdmirx: Use devm_of_reserved_mem_device_init()
-  remoteproc: omap: Use devm_of_reserved_mem_device_init()
-  drm: logicvc: Use devm_of_reserved_mem_device_init()
-  drm: hdlcd: Use devm_of_reserved_mem_device_init()
-  drm: pl111: Use devm_of_reserved_mem_device_init()
-  remoteproc: mtk_scp: Use devm_of_reserved_mem_device_init()
-  media: aspeed: Use devm_of_reserved_mem_device_init()
-  media: nuvoton: npcm-video: Use devm_of_reserved_mem_device_init()
-  memory: tegra210-emc: Use devm_of_reserved_mem_device_init_by_name()
-  drm: komeda: Use devm_of_reserved_mem_device_init()
-  drm: malidp: Use devm_of_reserved_mem_device_init()
-  drm: ingenic: Use devm_of_reserved_mem_device_init()
-  drm: kmb: Use devm_of_reserved_mem_device_init()
-  drm: sun4i: Use devm_of_reserved_mem_device_init()
-  drm: xlnx: zynqmp_dpsub: Use devm_of_reserved_mem_device_init()
-  media: arm: mali-c55: Use devm_of_reserved_mem_device_init()
-  media: mediatek: vpu: Use devm_of_reserved_mem_device_init()
-  mmc: sdhci-of-bst: Use devm_of_reserved_mem_device_init_by_idx()
-  remoteproc: ti_k3: Use devm_of_reserved_mem_device_init()
-  ASoC: mediatek: mt8192: Use devm_of_reserved_mem_device_init()
-  ASoC: mediatek: mt8196: Use devm_of_reserved_mem_device_init()
-  ASoC: mediatek: mt8183: Use devm_of_reserved_mem_device_init()
-  ASoC: mediatek: mt8189: Use devm_of_reserved_mem_device_init()
-  ASoC: SOF: imx: Use devm_of_reserved_mem_device_init_by_name()
-  staging: media: cedrus: Use devm_of_reserved_mem_device_init()
-  ASoC: cix-ipbloq: Use devm_of_reserved_mem_device_init()
-  drm: aspeed: Use devm_of_reserved_mem_device_init()
-  drm: arcpgu: Use devm_of_reserved_mem_device_init()
-  ASoC: mediatek: mt8173: Use devm_of_reserved_mem_device_init()
-  ASoC: mediatek: mt8186: Use devm_of_reserved_mem_device_init()
-  ASoC: mediatek: mt8188: Use devm_of_reserved_mem_device_init()
-  ASoC: mediatek: mt8195: Use devm_of_reserved_mem_device_init()
-  ASoC: SOF: mediatek: mt8186: Use devm_of_reserved_mem_device_init()
-  ASoC: SOF: mediatek: mt8195: Use devm_of_reserved_mem_device_init()
-  misc: fastrpc: Use devm_of_reserved_mem_device_init()
-  ASoC: fsl: imx-rpmsg: Use devm_of_reserved_mem_device_init_by_idx()
-  ASoC: sprd: Use devm_of_reserved_mem_device_init()
-
- drivers/firmware/qcom/qcom_scm.c              | 22 +++------
- .../gpu/drm/arm/display/komeda/komeda_dev.c   |  4 +-
- drivers/gpu/drm/arm/hdlcd_drv.c               |  6 +--
- drivers/gpu/drm/arm/malidp_drv.c              |  4 +-
- drivers/gpu/drm/aspeed/aspeed_gfx_drv.c       |  2 +-
- drivers/gpu/drm/ingenic/ingenic-drm-drv.c     | 13 +-----
- drivers/gpu/drm/kmb/kmb_drv.c                 | 12 +----
- drivers/gpu/drm/logicvc/logicvc_drm.c         | 21 ++++-----
- drivers/gpu/drm/pl111/pl111_drv.c             |  4 +-
- drivers/gpu/drm/sun4i/sun4i_drv.c             |  4 +-
- drivers/gpu/drm/tiny/arcpgu.c                 |  2 +-
- drivers/gpu/drm/xlnx/zynqmp_dpsub.c           |  4 +-
- .../platform/arm/mali-c55/mali-c55-core.c     | 12 ++---
- drivers/media/platform/aspeed/aspeed-video.c  | 12 ++---
- drivers/media/platform/mediatek/vpu/mtk_vpu.c |  3 +-
- drivers/media/platform/nuvoton/npcm-video.c   |  9 +---
- .../platform/synopsys/hdmirx/snps_hdmirx.c    | 16 +------
- drivers/memory/tegra/tegra210-emc-core.c      | 21 ++++-----
- drivers/misc/fastrpc.c                        |  2 +-
- drivers/mmc/host/sdhci-of-bst.c               |  7 +--
- drivers/of/of_reserved_mem.c                  | 41 +++++++++++++++++
- drivers/remoteproc/da8xx_remoteproc.c         | 10 +---
- drivers/remoteproc/keystone_remoteproc.c      | 16 +------
- drivers/remoteproc/mtk_scp.c                  |  3 +-
- drivers/remoteproc/omap_remoteproc.c          | 13 +-----
- drivers/remoteproc/ti_k3_common.c             | 13 +-----
- drivers/remoteproc/ti_k3_common.h             |  1 -
- .../staging/media/sunxi/cedrus/cedrus_hw.c    |  6 +--
- include/linux/of_reserved_mem.h               | 46 +++++++++++++++++++
- sound/hda/controllers/cix-ipbloq.c            |  2 +-
- sound/soc/fsl/imx-rpmsg.c                     |  2 +-
- sound/soc/mediatek/mt8173/mt8173-afe-pcm.c    |  2 +-
- sound/soc/mediatek/mt8183/mt8183-afe-pcm.c    | 13 +-----
- sound/soc/mediatek/mt8186/mt8186-afe-pcm.c    |  2 +-
- sound/soc/mediatek/mt8188/mt8188-afe-pcm.c    |  2 +-
- sound/soc/mediatek/mt8189/mt8189-afe-pcm.c    | 16 +------
- sound/soc/mediatek/mt8192/mt8192-afe-pcm.c    | 11 +----
- sound/soc/mediatek/mt8195/mt8195-afe-pcm.c    |  2 +-
- sound/soc/mediatek/mt8196/mt8196-afe-pcm.c    | 14 +-----
- sound/soc/sof/imx/imx-common.c                |  9 ++--
- sound/soc/sof/mediatek/mt8186/mt8186.c        |  2 +-
- sound/soc/sof/mediatek/mt8195/mt8195.c        |  2 +-
- sound/soc/sprd/sprd-pcm-dma.c                 |  3 +-
- 43 files changed, 162 insertions(+), 249 deletions(-)
-
+diff --git a/drivers/of/of_reserved_mem.c b/drivers/of/of_reserved_mem.c
+index 82222bd45ac6..b35541e9fbe8 100644
+--- a/drivers/of/of_reserved_mem.c
++++ b/drivers/of/of_reserved_mem.c
+@@ -787,6 +787,47 @@ void of_reserved_mem_device_release(struct device *dev)
+ }
+ EXPORT_SYMBOL_GPL(of_reserved_mem_device_release);
+ 
++static void devm_of_reserved_mem_device_release(struct device *dev, void *res)
++{
++	of_reserved_mem_device_release(*(struct device **)res);
++}
++
++/**
++ * devm_of_reserved_mem_device_init_by_idx() - Resource managed of_reserved_mem_device_init_by_idx()
++ * @dev: Pointer to the device to configure
++ * @np: Pointer to the device node with 'memory-region' property
++ * @idx: Index of selected region
++ *
++ * This is a resource managed version of of_reserved_mem_device_init_by_idx().
++ * The reserved memory region will be released automatically when the device
++ * is unbound.
++ *
++ * Returns: Negative errno on failure or zero on success.
++ */
++int devm_of_reserved_mem_device_init_by_idx(struct device *dev,
++					    struct device_node *np, int idx)
++{
++	struct device **ptr;
++	int ret;
++
++	ptr = devres_alloc(devm_of_reserved_mem_device_release, sizeof(*ptr),
++			   GFP_KERNEL);
++	if (!ptr)
++		return -ENOMEM;
++
++	ret = of_reserved_mem_device_init_by_idx(dev, np, idx);
++	if (ret) {
++		devres_free(ptr);
++		return ret;
++	}
++
++	*ptr = dev;
++	devres_add(dev, ptr);
++
++	return 0;
++}
++EXPORT_SYMBOL_GPL(devm_of_reserved_mem_device_init_by_idx);
++
+ /**
+  * of_reserved_mem_lookup() - acquire reserved_mem from a device node
+  * @np:		node pointer of the desired reserved-memory region
+diff --git a/include/linux/of_reserved_mem.h b/include/linux/of_reserved_mem.h
+index e8b20b29fa68..b9fd78123d77 100644
+--- a/include/linux/of_reserved_mem.h
++++ b/include/linux/of_reserved_mem.h
+@@ -40,6 +40,9 @@ int of_reserved_mem_device_init_by_name(struct device *dev,
+ 					const char *name);
+ void of_reserved_mem_device_release(struct device *dev);
+ 
++int devm_of_reserved_mem_device_init_by_idx(struct device *dev,
++					    struct device_node *np, int idx);
++
+ struct reserved_mem *of_reserved_mem_lookup(struct device_node *np);
+ int of_reserved_mem_region_to_resource(const struct device_node *np,
+ 				       unsigned int idx, struct resource *res);
+@@ -68,6 +71,13 @@ static inline int of_reserved_mem_device_init_by_name(struct device *dev,
+ 
+ static inline void of_reserved_mem_device_release(struct device *pdev) { }
+ 
++static inline int devm_of_reserved_mem_device_init_by_idx(struct device *dev,
++							  struct device_node *np,
++							  int idx)
++{
++	return -EOPNOTSUPP;
++}
++
+ static inline struct reserved_mem *of_reserved_mem_lookup(struct device_node *np)
+ {
+ 	return NULL;
+@@ -108,4 +118,19 @@ static inline int of_reserved_mem_device_init(struct device *dev)
+ 	return of_reserved_mem_device_init_by_idx(dev, dev->of_node, 0);
+ }
+ 
++/**
++ * devm_of_reserved_mem_device_init() - Resource managed version of of_reserved_mem_device_init()
++ * @dev:	Pointer to the device to configure
++ *
++ * This is a resource managed version of of_reserved_mem_device_init().
++ * The reserved memory region will be released automatically when the device
++ * is unbound.
++ *
++ * Returns error code or zero on success.
++ */
++static inline int devm_of_reserved_mem_device_init(struct device *dev)
++{
++	return devm_of_reserved_mem_device_init_by_idx(dev, dev->of_node, 0);
++}
++
+ #endif /* __OF_RESERVED_MEM_H */
 -- 
 2.53.0
 
