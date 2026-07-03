@@ -1,277 +1,210 @@
-Return-Path: <linux-arm-msm+bounces-116336-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-116337-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id HREOKtnHR2rAfAAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-116336-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Jul 2026 16:31:53 +0200
+	id GTMuKbHHR2qxfAAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-116337-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Jul 2026 16:31:13 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0C3D77036DC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Jul 2026 16:31:53 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1DB917036C2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Jul 2026 16:31:13 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=nih+aH55;
-	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=Eb4evn1j;
-	dmarc=pass (policy=reject) header.from=qualcomm.com;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116336-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116336-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=arm.com header.s=foss header.b=sgpwwyrA;
+	dmarc=pass (policy=none) header.from=arm.com;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116337-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116337-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id BF6D130EBAC2
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jul 2026 14:13:52 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 5F44A301C974
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jul 2026 14:29:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 172D03DA5DE;
-	Fri,  3 Jul 2026 14:13:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7EBF43E0C4C;
+	Fri,  3 Jul 2026 14:29:01 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85EB23D9DD3
-	for <linux-arm-msm@vger.kernel.org>; Fri,  3 Jul 2026 14:13:50 +0000 (UTC)
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 283F634FF79;
+	Fri,  3 Jul 2026 14:29:00 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783088032; cv=none; b=rbMAAq0ye8zfMt9qkaH2cHje0zmx6aRjqP0VHstd/2L7LtViv16ioqg7c0m+Afn0nZM0qobhFizz2GEnSVG8jgkuJhvX+Da1cmFvQxNsoy9YgG8yvojsJx7CgLbKgUWSJtv5xk4AZd4kyfu1prLWBgKkrZQO3qWzcdDF0nYLf2Q=
+	t=1783088941; cv=none; b=qJl9dyLNtlmeFU5thcXpy/7U+SEvEZIbhO6/43Ja3UV+UgYMzQw6jtK/xaDJjZ+YTAkO7NcRKyC9BEOIeH4Z7mqf+Pc2iKN+AtKZ4/LQCyippYJKNrN8RbL3YnD5TlHQKXMX16kVSknuWQ7UO8o0w+DRaPTc0D9nzYqiA+mtbNY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783088032; c=relaxed/simple;
-	bh=jZH7Z/Hh9/KA7OFIOvJ+Blue//Yx5ANVh8OHRWIHUL4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Wg9za2opizaLIJv43HvED9aBYY/IW37HO1doNNw92BIukAbRepF0auw5xKQ0S1B7eKMfi1/h/jZRXCIVaoobz5GcFWm3Rtz+2+5kYPO8ozbUg+dhwMxV5GdEgKHJ4W/dZOoHM3UqbqhMZUydrpFL0yhAu1kOUlB3y2X4JYf7Huk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=nih+aH55; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Eb4evn1j; arc=none smtp.client-ip=205.220.180.131
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 663B04g13108915
-	for <linux-arm-msm@vger.kernel.org>; Fri, 3 Jul 2026 14:13:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	GHZ92YcdPWa0r97qjH1sqNLcd4z27ftXzdTvY6KflVg=; b=nih+aH553/jrJcar
-	AKW+idlmhmgME47w/cwuMueRhmbaO8B9JNsBqMR4C/Z8MxXFGlAdQsUERPv7kFzq
-	apt/yG0BKz1j6weTVQh/2edOBnAeV9blSk16Owz7culb6ZvvpjbLjQ8sS/rZ1pYD
-	UueElgcDlxqSbqaAz3FpuAEjQfcDbwcrTc3zLDSiGnsNsF0jAdMBMGPv/OO/xUwf
-	O+ztrxHvkolXC/oAg20uqZRJ0anFMH22m7p0uksWPiLpw4Qt5oio88vDEb9EwkLs
-	1hEd9Mw9+sPBNqAT0oUw1xI0DtS1Dy3b9gVV33BX2ZwTL/ZRiEA4KwQiZb7uMq5B
-	KTkvZg==
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f60eybd37-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 03 Jul 2026 14:13:49 +0000 (GMT)
-Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-2c9960cf96cso11268005ad.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Jul 2026 07:13:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1783088028; x=1783692828; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=GHZ92YcdPWa0r97qjH1sqNLcd4z27ftXzdTvY6KflVg=;
-        b=Eb4evn1jP6AXqJy6AodiSm9En5UNNizCsst9IYF4h7ZI0sJR5mvpcUEoEjiJkvT5y+
-         ur7XIH0PJhqnhLEb+22apuFgJsnPukD9QwJWa4zHX9sOfyCUIdxP8D9q9gv3sQPDgjo/
-         i4/OrBbZp4Ekz/dNyFZfCE3blZXGtV15HhKXFjLjmQZOKhT7Sag4YuTOAqxbhA6bQe3z
-         Os4eRd8nscR3lQuX8KKCOQPz9P6pfJHBrRtnYp+tNNpNjqTcafSO/L+2lwJVRkcp5PyA
-         n+zGoyrPBaea2Eu+ueULU4Za4f5cGP8ntNIIFqYRlvWH9Jnpx+G9vxrvjNASQWUGK1yq
-         upow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783088028; x=1783692828;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=GHZ92YcdPWa0r97qjH1sqNLcd4z27ftXzdTvY6KflVg=;
-        b=EwYoGJ0N/VPWuRzTtycZun3n2A2RKTXTztFclq/FpPnFXYkj9WVSTQSAHY0BaXq3F+
-         2CtM1BtXXK5PPTdmZn5/hvWgDXaaY1vvOxSiJvPRcqdO0wQBlsY6vMxnVbADqV0nrWu7
-         CDHne9SJtlWToOVOPFgKULSD3wrIhV7QF22/5fxcW+Gm3ilADJamdfFoeBg6UtVAoQSV
-         CmCASca9geHMSgpGObVB356iPkXD2OZPe2PmDw5SBFN5txGmne+sTe1aPnDN1Ft3/Jdr
-         Ezawm3qYxEpFOY7/Thfpc9fHtdN8jf/QZFfski88IVqmhOIR9XA+UzZDnRmYRWKxhZm4
-         jtpw==
-X-Gm-Message-State: AOJu0Yx6oy4AhGFa5uJNfRPbFDVJkhvyIyCPvWpS2C31vcpaKb+Jr8hH
-	CByfybvrt8jwgQ83hADalx+JHTP201BL3cD261WpHhQJdkasUN5zahulpNPUfa1QzokyqQgDnvQ
-	HqmqQ+uV1qwWpiE/w7uxT6YYNBK8en4tvasUjUjvFgWd4wJ5LXcaE8zoQm61BvQ2cxORhkRGsQV
-	om
-X-Gm-Gg: AfdE7ckYnQ9GaO1yv0lvNgNW5IloGRxi/ueTf8yWKldWJTtA5NKUxJqIyVr7lxCoSMw
-	eSS9EIxdgcQQk7/Bna9mU46jTQbCwikhjMzsm/3UqqaH82+65CUEH9JsnRg463uYKDhLmqLnOuF
-	qTGDo9angGOv2REAF/L0NbUHlQEd8Fb6gYLGbvb+sznsu15MB1yqFMwdU2nds5JP9gooKJMexE8
-	QRerrYF+F6s3vGayDums8ht4XTRTEPDB1UGXol+tC9tuEbdyWVwT8N3QbdnLgUOn4uDEDAXGE55
-	xpMVhPnI67TST1eWyaJRk4O7cYSkE20twELaRbQX3ApyPeRyfUJQHaah8DogLbLofEobKoTNeWN
-	mb1b6sorxaWeM9xyAmtK+3VnP8kTcFXomzo8eXRPhYA==
-X-Received: by 2002:a17:903:22c5:b0:2ca:ecf6:9122 with SMTP id d9443c01a7336-2caecf698d5mr12018475ad.17.1783088028441;
-        Fri, 03 Jul 2026 07:13:48 -0700 (PDT)
-X-Received: by 2002:a17:903:22c5:b0:2ca:ecf6:9122 with SMTP id d9443c01a7336-2caecf698d5mr12018115ad.17.1783088027979;
-        Fri, 03 Jul 2026 07:13:47 -0700 (PDT)
-Received: from [192.168.1.13] ([106.222.231.34])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-13b3c85b345sm32244894c88.10.2026.07.03.07.13.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 03 Jul 2026 07:13:47 -0700 (PDT)
-Message-ID: <8ad14017-bce7-485e-9677-9cbf8ecb2742@oss.qualcomm.com>
-Date: Fri, 3 Jul 2026 19:43:39 +0530
+	s=arc-20240116; t=1783088941; c=relaxed/simple;
+	bh=nv3+ueVUIqGIKl6icFEdZ93kbNEcdpBz4MyhQ3JR4po=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=S7LqaXHXqxFPPn2lSL8b3zaKaX2kT1ZE6OYfO116G/wqwyfKgbz9PuzwDurdCP5ag0xIelh76b7xaw7KwwthLmdmmBznthUXeTU0PCNoqV4YH6B1L6E07ZNOvIGnk6tBtNoUJBwJHvCXSAhxmQx9yYUF4bfEpQZLqjbxzqApFqI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=sgpwwyrA; arc=none smtp.client-ip=217.140.110.172
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 2D44B1EA6;
+	Fri,  3 Jul 2026 07:28:55 -0700 (PDT)
+Received: from J2N7QTR9R3 (usa-sjc-imap-foss1.foss.arm.com [10.121.207.14])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 6C2863F905;
+	Fri,  3 Jul 2026 07:28:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1783088939; bh=nv3+ueVUIqGIKl6icFEdZ93kbNEcdpBz4MyhQ3JR4po=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=sgpwwyrA/S1qdbCYzbpunx+YSOi/jbPy7mBef/QF23F8VqcSZmHV4PamfxqlyayUB
+	 sq2PIBc7rIVuruoOoPtnyLYPY+bSDlQGmACa4RDkTcGSIIPiF6xcDbM7b2i+disHMG
+	 NSjNMHHWVx90IeXhriurCRV5kA4+6xDVTZCTt0Hs=
+Date: Fri, 3 Jul 2026 15:28:48 +0100
+From: Mark Rutland <mark.rutland@arm.com>
+To: Sneh Mankad <sneh.mankad@oss.qualcomm.com>
+Cc: Thomas Gleixner <tglx@kernel.org>,
+	Daniel Lezcano <daniel.lezcano@oss.qualcomm.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Pavel Machek <pavel@kernel.org>, Len Brown <lenb@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH v2] arm64: Disallow disabling boot CPU based on config
+Message-ID: <akfHIH_dZrr5bosu@J2N7QTR9R3>
+References: <20260703-disable_boot_cpu_offline-v2-1-782d16ff58c3@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 01/10] dt-bindings: firmware: qcom: tmd: add TMD device
- type constants
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@oss.qualcomm.com>,
-        Amit Kucheria <amit.kucheria@oss.qualcomm.com>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Kees Cook <kees@kernel.org>,
-        "Gustavo A. R. Silva" <gustavoars@kernel.org>,
-        cros-qcom-dts-watchers@chromium.org
-Cc: linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-hardening@vger.kernel.org,
-        Manaf Meethalavalappu Pallikunhi <manaf.pallikunhi@oss.qualcomm.com>
-References: <20260703-qmi-tmd-v4-0-3882189c1f83@oss.qualcomm.com>
- <20260703-qmi-tmd-v4-1-3882189c1f83@oss.qualcomm.com>
- <977711ef-c1fb-4735-b82a-4ca2f4797f51@oss.qualcomm.com>
-Content-Language: en-US
-From: Gaurav Kohli <gaurav.kohli@oss.qualcomm.com>
-In-Reply-To: <977711ef-c1fb-4735-b82a-4ca2f4797f51@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAzMDE0MCBTYWx0ZWRfXzAiJwUiPNamC
- VfbgBKLNKFSV1bNYEYZXfIjmfd7RcMqAsXP95sEH9eRcqUdoYz+JIKOUWimx61MZ1aTtyJANROD
- sHyOtJmdVswrVqnb3hdnOC8pRMig8Ja+EstmxsIpYnhql8vmZxsh1J3nLJlCq9eaLZrHJMTH95A
- pX9CfIlrtWFaSKYav7klnHILQs4XSreIjTvZjN9QDPnSJJSay6EyLLUKNkNYGjx0T6eZzNZssJV
- cDbINYbIHIn4DDBsy7UdcNDEMw3MrU6lkRdHvlMTZdzAJgy9brh3NGto5jdHZVwtEWJyYyMtAjK
- YOETggpAsV6vEsCZJ6beEfRvjz5vXqmLRu2Cnod7rtBF87kxkxfb8kygmVZ2nxjSCKEZr26E1Y3
- esavHjQ/rMtvHpSd91DHLO/YvtXK1qltunXWNXCyi6tg8SE5gzfFWXKMqyzWRWCgiMjmBCEUH3o
- RPJuAYqm/nqVsh99iTQ==
-X-Proofpoint-GUID: bugAq_WcxMTrqE2Lb56JOIKvZ10t9BER
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAzMDE0MCBTYWx0ZWRfXynaLh2q/u8TU
- HikTBCAVata1GXewsjn3l/BM3z7OlmpdLdvayRl14piVRgGxWhWgGc5wXaODiHMEMYmOXC8erpQ
- WCmgndV3859mZSQdtdJYP96aTi1RvL4=
-X-Authority-Analysis: v=2.4 cv=SPRykuvH c=1 sm=1 tr=0 ts=6a47c39d cx=c_pps
- a=JL+w9abYAAE89/QcEU+0QA==:117 a=JaHktJlP2QtFIg7UHuVw+g==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=KAs4MCmhXsdL-kvopiEA:9 a=QEXdDO2ut3YA:10
- a=324X-CrmTo6CU4MGRt3R:22
-X-Proofpoint-ORIG-GUID: bugAq_WcxMTrqE2Lb56JOIKvZ10t9BER
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-07-03_02,2026-06-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 adultscore=0 malwarescore=0 bulkscore=0 priorityscore=1501
- lowpriorityscore=0 phishscore=0 spamscore=0 suspectscore=0 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607030140
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260703-disable_boot_cpu_offline-v2-1-782d16ff58c3@oss.qualcomm.com>
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	DMARC_POLICY_ALLOW(-0.50)[arm.com,none];
+	MID_RHS_NOT_FQDN(0.50)[];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_DKIM_ALLOW(-0.20)[arm.com:s=foss];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-116336-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,oss.qualcomm.com:from_mime,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email,qualcomm.com:dkim];
-	FORGED_SENDER(0.00)[gaurav.kohli@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[20];
-	FORGED_RECIPIENTS(0.00)[m:konrad.dybcio@oss.qualcomm.com,m:andersson@kernel.org,m:mathieu.poirier@linaro.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:daniel.lezcano@oss.qualcomm.com,m:amit.kucheria@oss.qualcomm.com,m:mani@kernel.org,m:konradybcio@kernel.org,m:kees@kernel.org,m:gustavoars@kernel.org,m:cros-qcom-dts-watchers@chromium.org,m:linux-arm-msm@vger.kernel.org,m:linux-remoteproc@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-pm@vger.kernel.org,m:linux-hardening@vger.kernel.org,m:manaf.pallikunhi@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	TAGGED_FROM(0.00)[bounces-116337-lists,linux-arm-msm=lfdr.de];
+	FROM_HAS_DN(0.00)[];
+	FORGED_SENDER(0.00)[mark.rutland@arm.com,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[13];
+	FORGED_RECIPIENTS(0.00)[m:sneh.mankad@oss.qualcomm.com,m:tglx@kernel.org,m:daniel.lezcano@oss.qualcomm.com,m:peterz@infradead.org,m:rafael@kernel.org,m:pavel@kernel.org,m:lenb@kernel.org,m:catalin.marinas@arm.com,m:will@kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-pm@vger.kernel.org,m:linux-arm-kernel@lists.infradead.org,s:lists@lfdr.de];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	FORWARDED(0.00)[lists@lfdr.de];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	DKIM_TRACE(0.00)[arm.com:+];
+	MISSING_XM_UA(0.00)[];
 	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[gaurav.kohli@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[mark.rutland@arm.com,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCVD_COUNT_SEVEN(0.00)[7]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[arm.com:from_mime,arm.com:dkim,vger.kernel.org:from_smtp,qualcomm.com:email,J2N7QTR9R3:mid,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 0C3D77036DC
+X-Rspamd-Queue-Id: 1DB917036C2
 
+On Fri, Jul 03, 2026 at 04:50:02PM +0530, Sneh Mankad wrote:
+> The Qualcomm SoCs like LeMans, Monaco 
 
+Are those released products?
 
-On 7/3/2026 1:23 PM, Konrad Dybcio wrote:
-> On 7/3/26 7:03 AM, Gaurav Kohli wrote:
->> Add Device Tree binding constants for Qualcomm Thermal Mitigation
->> Device (TMD) types used by remoteproc-backed thermal cooling devices.
->>
->> Qualcomm remote processors expose thermal mitigation endpoints
->> through QMI. These endpoints can be registered with the thermal
->> framework via the `#cooling-cells` property on the remoteproc node.
->>
->> The QMI TMD protocol identifies devices using string names (for example,
->> "pa", "modem", and "cdsp_sw"), while the DT cooling-device binding with
->> `#cooling-cells = <3>` requires numeric device id in the form:
->>
->>    <&phandle device_id min_state max_state>
->>
->> Define common TMD device index constants shared across currently
->> supported platforms. If a future target requires a different mapping,
->> additional target-specific constants can be introduced while preserving
->> existing DT ABI.
->>
->> Signed-off-by: Gaurav Kohli <gaurav.kohli@oss.qualcomm.com>
->> ---
->>   MAINTAINERS                                 |  1 +
->>   include/dt-bindings/firmware/qcom,qmi-tmd.h | 20 ++++++++++++++++++++
->>   2 files changed, 21 insertions(+)
->>
->> diff --git a/MAINTAINERS b/MAINTAINERS
->> index 57656ec0e9d5..ffd85fd1dd80 100644
->> --- a/MAINTAINERS
->> +++ b/MAINTAINERS
->> @@ -3410,6 +3410,7 @@ F:	drivers/firmware/qcom/
->>   F:	drivers/soc/qcom/
->>   F:	drivers/watchdog/gunyah_wdt.c
->>   F:	include/dt-bindings/arm/qcom,ids.h
->> +F:	include/dt-bindings/firmware/qcom,qmi-tmd.h
->>   F:	include/dt-bindings/firmware/qcom,scm.h
->>   F:	include/dt-bindings/soc/qcom*
->>   F:	include/linux/firmware/qcom
->> diff --git a/include/dt-bindings/firmware/qcom,qmi-tmd.h b/include/dt-bindings/firmware/qcom,qmi-tmd.h
->> new file mode 100644
->> index 000000000000..73efecef0f3c
->> --- /dev/null
->> +++ b/include/dt-bindings/firmware/qcom,qmi-tmd.h
->> @@ -0,0 +1,20 @@
->> +/* SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause */
->> +/*
->> + * Qualcomm QMI TMD (Thermal Mitigation Device) cooling device indices
->> + *
->> + * These indices are used in device tree cooling-maps to reference
->> + * specific TMD devices provided by remote processors via QMI.
->> + *
->> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
->> + */
->> +#ifndef _DT_BINDINGS_FIRMWARE_QCOM_QMI_TMD_H
->> +#define _DT_BINDINGS_FIRMWARE_QCOM_QMI_TMD_H
->> +
->> +/* CDSP thermal mitigation device id */
->> +#define QCOM_CDSP_TMD_CDSP_SW	0
->> +
->> +/* Modem thermal mitigation device id */
->> +#define QCOM_MODEM_TMD_PA	0
->> +#define QCOM_MODEM_TMD_MODEM	1
+Are those mobile phone parts, or somthing else?
+
+> support suspend to ram which leads the SoC to ACPI S3 similar state
+> where SoC is turned off and DDR is retained. The hardware design on
+> these SoCs forces a constraint to suspend and resume the system on
+> boot CPU / CPU0.
 > 
-> What about the dozens other ones that Dmitry's laptop reports?Ri
+> If CPU0 is already offline before starting suspend to ram the
+> freeze_secondary_cpus() picks alternate CPU as primary / last CPU and
+> proceed further to invoke PSCI SYSTEM_SUSPEND.
+> This leads to a system crash.
+
+Ok, so that's a firmware bug.
+
+Why does the FW permit CPU0 to be offlined in the first place if it
+can't handle this?
+
+What does PSCI_MIGRATE_INFO_TYPE report?
+
+Ideally it'd report Uniprocessor (UP) not migrate capable (1), which
+would prevent CPU_OFF on that CPU, and would force suspend to happen
+there...
+
+> In order to prevent such an issue introduce PM_SLEEP_SMP_CPU_ZERO_STRICT
+> config and when enabled prohibit the CPU0 from getting disabled.
+
+I don't think it makes sense for this to be a config option.
+
+This is a platform-specific property, and it's possible to build a
+kernel that boots on this platform and/or other platforms.
+
+> Signed-off-by: Sneh Mankad <sneh.mankad@oss.qualcomm.com>
+> ---
+> Changes in v2:
+> - Moved the check to arm64 specific code.
+> - Link to v1: https://lore.kernel.org/r/20260605-disable_boot_cpu_offline-v1-1-4c68fe1a6cf8@oss.qualcomm.com
+> ---
+>  arch/arm64/Kconfig       | 9 +++++++++
+>  arch/arm64/kernel/psci.c | 6 ++++++
+>  2 files changed, 15 insertions(+)
 > 
+> diff --git a/arch/arm64/Kconfig b/arch/arm64/Kconfig
+> index fe60738e5943ba279e5571862423df4fed3db661..21697a535a25d286a2f8afe4921a41b13cc32c0a 100644
+> --- a/arch/arm64/Kconfig
+> +++ b/arch/arm64/Kconfig
+> @@ -263,6 +263,15 @@ config ARM64
+>  	help
+>  	  ARM 64-bit (AArch64) Linux support.
+>  
+> +config PM_SLEEP_SMP_CPU_ZERO_STRICT
+> +       bool "Disallow boot CPU (CPU0) offline"
+> +       depends on ARCH_QCOM
 
-Thanks for the review, Konrad.
+Why can't others select this?
 
-We are only defining constants for the TMD devices that are actually 
-used for thermal mitigation on the platforms supported by this series.
-More constants can be added as needed.
+> +       depends on HOTPLUG_CPU
+> +       depends on SUSPEND
+> +       help
+> +         Disallow boot CPU (CPU0) offline when the suspend_ops->enter()
+> +         has to be executed by boot CPU.
 
-> https://lore.kernel.org/linux-arm-msm/4gs664zboaqgpok33x7bgorfmhh3f2fahjkt4jjl6fbzpwixnm@hxzz2xeogd4k/
+As above, I don't think this makse sense as a config option.
+
+Either we handle the FW bug, or we do not.
+
+Mark.
+
+> +
+>  config RUSTC_SUPPORTS_ARM64
+>  	def_bool y
+>  	depends on CPU_LITTLE_ENDIAN
+> diff --git a/arch/arm64/kernel/psci.c b/arch/arm64/kernel/psci.c
+> index fabd732d0a2dfee37074ef4ebb6ce5894871c8bd..4ad90ae6f8bacf0cbd3203d66580107d467ea232 100644
+> --- a/arch/arm64/kernel/psci.c
+> +++ b/arch/arm64/kernel/psci.c
+> @@ -49,6 +49,12 @@ static int cpu_psci_cpu_boot(unsigned int cpu)
+>  #ifdef CONFIG_HOTPLUG_CPU
+>  static bool cpu_psci_cpu_can_disable(unsigned int cpu)
+>  {
+> +#ifdef CONFIG_PM_SLEEP_SMP_CPU_ZERO_STRICT
+> +	if (cpu == get_boot_cpu_id()) {
+> +		pr_info("Disabling boot CPU is not supported\n");
+> +		return false;
+> +	}
+> +#endif
+>  	return !psci_tos_resident_on(cpu);
+>  }
+>  
 > 
-> Konrad
-
+> ---
+> base-commit: ba3e43a9e601636f5edb54e259a74f96ca3b8fd8
+> change-id: 20260603-disable_boot_cpu_offline-eb4f55ac96f2
+> 
+> Best regards,
+> -- 
+> Sneh Mankad <sneh.mankad@oss.qualcomm.com>
+> 
+> 
 
