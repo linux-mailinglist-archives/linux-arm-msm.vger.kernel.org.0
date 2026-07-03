@@ -1,67 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-116172-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-116173-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id EifhOOBTR2rtWAAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-116172-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Jul 2026 08:17:04 +0200
+	id 0tRCD+xUR2qNWQAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-116173-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Jul 2026 08:21:32 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3F28C6FF018
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Jul 2026 08:17:04 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 957856FF0A2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Jul 2026 08:21:31 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=VTAcMmNt;
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=bZjVQ4k1;
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116172-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116172-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116173-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116173-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 2229F3020A84
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jul 2026 06:15:46 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 38A303028E99
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jul 2026 06:20:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B4168370AE2;
-	Fri,  3 Jul 2026 06:15:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 10543369D6D;
+	Fri,  3 Jul 2026 06:20:29 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB13E331ECD;
-	Fri,  3 Jul 2026 06:15:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 040173019AA;
+	Fri,  3 Jul 2026 06:20:27 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783059344; cv=none; b=HGxrL2lLK5ukF0611QYnqyrw1vkwtxkGRa0L/LHV7vkxz8eximEd707kcCyhUs2uRxcGr3sLWj5K1Unrw/LO4GzcEEu9QegkZSy3GdJfbBfJW17EhqxDU/Ywip3kVqgRO6d1gbc1LiqzpTnwgfKTiOyZUL/hyZeiHXuGtYh51BU=
+	t=1783059629; cv=none; b=Oauo0zqJnFvWuqbBo+4M3VtuP7nwRA4Nh/NTOBgi206LTITdUYB2oO7dPDoFy6JEnSulIgtue8LIogxAT1Aw9VDhcPnm5Guhjry7a8cs3Vf4tt0pilsomxC20k4npYn5IftmzzzTN0L/R4J61lcrFwmY73exr9NoSnaYZKndqdc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783059344; c=relaxed/simple;
-	bh=pY5hqi0+reTptXuZwHs9IeB9paJDLSD5xGycgtC3hLI=;
+	s=arc-20240116; t=1783059629; c=relaxed/simple;
+	bh=vjuDqyfxp0IWWyjc+HDhwkXzpy2rC9dZ3qsZEn3remU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gOu8X0ZHudAUEo52fz1ITShEALUrhSjLLHWnfVKS+QgjEWfNdma+gaRCPR6Yt0EolVqVU7yo1gsjT3JL2Q7T/BjYA15fssZqczCLOwO/pWWcTNiqPX/gBM1Y8gEvHC6fN6fLF0UXmbIHzlFGUZCSZLF9rCcTBE8sllxiUAgmqfg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VTAcMmNt; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6310A1F000E9;
-	Fri,  3 Jul 2026 06:15:41 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=XHIf/JlXkLWkpkItGeNwWdqmHkSQ5h99JXPVmCkiE2dPaHvF2j/ABj962iO+CW44Uiyi/e3m6kaDeN31U+J36oUiQVLy4DgQl0kvcoJktx7jxaVKIQ4okVgTw8KzeVo37ED8w2soI5qLMMfBwXctEXAQ+rEX+qqw8S9ePx7r8fQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bZjVQ4k1; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F19E1F000E9;
+	Fri,  3 Jul 2026 06:20:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783059343;
-	bh=ivDUJNOEvDfNkuRKqBghFP4Jc4tBNoouNPss6oOibWY=;
+	s=k20260515; t=1783059627;
+	bh=pm0t9ydFcpktLa35+YRQ3ivYFMa29UixUYCSb79e5D8=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=VTAcMmNtx1bJ77NW6v9C22knTL0q6dRUfj5oR95c9gY1Kmi6GShLBxD+NxavhyODy
-	 scU6ULZk/5aCbr3w8pQcUsWh5+UZpi1Tz3Gyr4pTw9v9SUMlNofCU5w9LUlwljHaHK
-	 ApBOPr5N/VAnoAyNMa6UikBeAYrbggxcyPsAulXSlybWFclwJwZkNCKbR6e6YZ7eoT
-	 4AeAz6K1ui4Xtd1x08QLg8jL3ASq1jgzXsiwMgv5JBS0tuTKRgQlEZSocqy1kcimQg
-	 MnS41xMTHKvM5UVJLIyyYY7UDmQqn2PgA0Ot22Q0JxU3HgaT57l1RML/aSaR9G8uVb
-	 zZKiVrtyXDacA==
-Date: Fri, 3 Jul 2026 08:15:39 +0200
+	b=bZjVQ4k1ra3vF0HtF3nNyzma+8cJst63bGd3qSZv05vgRXmQ6HgYGgtlWuQaxzKdv
+	 WMxVwoM1CzZ4je2Wdj3qTHgPkL1xphlqNmCZ6dSSsbLqNwdhgHWvWaidTFF9/WuB4Q
+	 2REp+aPksQ/wVw09Zjh1DXLL4FmY3bySjRICl2/f9DNj/iEDNUXnnvw6Efru05dw3B
+	 MQpdndhbVHZXlhTrZ6nnpj8qtFz1AZ7EtqnYa2z80gdOzTImPgF1ciyw9nTFzu3IkT
+	 Oti/vNwmXdZ/bQz5St0kuy3K1J1fE29hs9Eqkd8UQoyfJK91I1B245EeYBAOCAm8Ks
+	 QAeXrAdwTEVyA==
+Date: Fri, 3 Jul 2026 08:20:23 +0200
 From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Imran Shaik <imran.shaik@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
+To: Manaf Meethalavalappu Pallikunhi <manaf.pallikunhi@oss.qualcomm.com>
+Cc: Rob Herring <robh@kernel.org>, 
 	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Loic Poulain <loic.poulain@oss.qualcomm.com>, 
-	Brian Masney <bmasney@redhat.com>, Dmitry Baryshkov <lumag@kernel.org>, 
-	Ajit Pandey <ajit.pandey@oss.qualcomm.com>, Taniya Das <taniya.das@oss.qualcomm.com>, 
-	Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>, linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v5 03/19] dt-bindings: clock: qcom,qcm2290-dispcc: Add
- missing power-domains property
-Message-ID: <20260703-positive-arcane-limpet-c5422a@quoll>
-References: <20260703-shikra-dispcc-gpucc-v5-0-cc13826d4d5a@oss.qualcomm.com>
- <20260703-shikra-dispcc-gpucc-v5-3-cc13826d4d5a@oss.qualcomm.com>
+	"Rafael J. Wysocki" <rafael@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Daniel Lezcano <daniel.lezcano@oss.qualcomm.com>, 
+	Gaurav Kohli <gaurav.kohli@oss.qualcomm.com>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org
+Subject: Re: [PATCH v3 1/4] dt-bindings: power: Add common power limit
+ controller schema
+Message-ID: <20260703-modern-indigo-wolverine-6b6eaa@quoll>
+References: <20260702-qcom_spel_driver_upstream-v3-0-434d50f0c5b0@oss.qualcomm.com>
+ <20260702-qcom_spel_driver_upstream-v3-1-434d50f0c5b0@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -70,59 +68,81 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260703-shikra-dispcc-gpucc-v5-3-cc13826d4d5a@oss.qualcomm.com>
+In-Reply-To: <20260702-qcom_spel_driver_upstream-v3-1-434d50f0c5b0@oss.qualcomm.com>
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-3.16 / 15.00];
+X-Spamd-Result: default: False [-4.66 / 15.00];
 	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
-	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	FORGED_RECIPIENTS(0.00)[m:manaf.pallikunhi@oss.qualcomm.com,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:rafael@kernel.org,m:andersson@kernel.org,m:konradybcio@kernel.org,m:daniel.lezcano@oss.qualcomm.com,m:gaurav.kohli@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-pm@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
 	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[18];
-	FORGED_RECIPIENTS(0.00)[m:imran.shaik@oss.qualcomm.com,m:andersson@kernel.org,m:mturquette@baylibre.com,m:sboyd@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:konradybcio@kernel.org,m:loic.poulain@oss.qualcomm.com,m:bmasney@redhat.com,m:lumag@kernel.org,m:ajit.pandey@oss.qualcomm.com,m:taniya.das@oss.qualcomm.com,m:jagadeesh.kona@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:linux-clk@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
-	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[13];
+	FORGED_SENDER(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	MIME_TRACE(0.00)[0:+];
 	FORWARDED(0.00)[lists@lfdr.de];
-	TAGGED_FROM(0.00)[bounces-116172-lists,linux-arm-msm=lfdr.de];
-	DKIM_TRACE(0.00)[kernel.org:+];
+	TAGGED_FROM(0.00)[bounces-116173-lists,linux-arm-msm=lfdr.de];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	TO_DN_SOME(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MISSING_XM_UA(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[quoll:mid,vger.kernel.org:from_smtp,qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,qualcomm.com:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,quoll:mid]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 3F28C6FF018
+X-Rspamd-Queue-Id: 957856FF0A2
 
-On Fri, Jul 03, 2026 at 12:01:25AM +0530, Imran Shaik wrote:
-> Add the missing power-domains property to associate DISPCC with RPMPD_CX.
-> This is to ensure the genpd performance state votes on the GDSC to get
-> propagated to the CX rail and to avoid the rail under-voltage conditions.
-> This change breaks ABI, as the power-domains property is maked as required.
+On Thu, Jul 02, 2026 at 10:52:54PM +0530, Manaf Meethalavalappu Pallikunhi wrote:
+> +title: Power Limit Controller
+> +
+> +maintainers:
+> +  - Manaf Meethalavalappu Pallikunhi <manaf.pallikunhi@oss.qualcomm.com>
+> +
+> +description:
+
+You should have | to preserve formatting,
+
+> +  Power limit controllers are hardware blocks that enforce power consumption
+> +  limits on SoC power domains to prevent thermal overload, maintain system
+> +  stability, and comply with platform power budgets.
+> +
+> +  These controllers typically provide
+> +    - Hardware-enforced power capping for one or more power domains
+> +    - Configurable power limits (e.g., sustained, burst, peak)
+> +    - Time window controls for power averaging
+> +    - Energy or power monitoring and reporting capabilities
+> +    - Power balancing algorithms across domains
+> +
+> +  This binding describes the common properties for power limit controller
+> +  provider nodes. Individual controller bindings should reference this schema
+> +  and add device-specific properties.
+
+Where are the properties? I see nothing - empty list of properties.
+
+> +
+> +select: false
+> +
+> +properties:
+> +  $nodename:
+> +    pattern: "^power-limits(@.*)?$"
+> +
+> +additionalProperties: true
 > 
-> Signed-off-by: Imran Shaik <imran.shaik@oss.qualcomm.com>
-> ---
->  Documentation/devicetree/bindings/clock/qcom,qcm2290-dispcc.yaml | 7 +++++++
->  1 file changed, 7 insertions(+)
-
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-
-Best regards,
-Krzysztof
-
+> -- 
+> 2.43.0
+> 
 
