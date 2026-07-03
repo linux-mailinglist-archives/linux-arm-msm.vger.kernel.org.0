@@ -1,191 +1,313 @@
-Return-Path: <linux-arm-msm+bounces-116317-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-116318-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id 9RQdK16vR2r5dQAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-116317-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Jul 2026 14:47:26 +0200
+	id vIYZDnu1R2p1dwAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-116318-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Jul 2026 15:13:31 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id AB2BA702806
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Jul 2026 14:47:25 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 807A5702B95
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Jul 2026 15:13:30 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=kafx6H3s;
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=oFEFLmep;
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116317-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 104.64.211.4 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116317-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116318-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116318-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 4E98D301CD25
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jul 2026 12:45:10 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 76DFA300A607
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jul 2026 12:55:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9843D3C343A;
-	Fri,  3 Jul 2026 12:44:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 392F7282F05;
+	Fri,  3 Jul 2026 12:55:06 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AAEA34041E;
-	Fri,  3 Jul 2026 12:44:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF97F34041E
+	for <linux-arm-msm@vger.kernel.org>; Fri,  3 Jul 2026 12:55:04 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783082689; cv=none; b=KMz6Gg19noKMqIikx7semi9l3oNdJ5Jl4b6Eka/7Tbf24HrgpLAVb3X/UBjQDgMB2JNe10g5xqRyOMSSukuqieUdk6kZVcNbTNQJB1XSkeUhNRT2p05z5gRyzGi3s+N1SvvWg41U5VGvHkkTFiti+EK6igGqskzUffWXCbAQ4Ww=
+	t=1783083306; cv=none; b=dmU3yqr3Ok2IdVEQxhcQXfhU6KLuAezhaw6cXDjD32RC/78OVR35gtQ015cvDGYWlcmLRYfEbPh1empQvwrV9wp9P4Udn4+x+x3VqtOuGr4hEqhcT8Zd8R4wv7MxrDJMIQNUEsK2Gw/8igMa92OC0N7pRWdCS9AxyTb9E+qicZc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783082689; c=relaxed/simple;
-	bh=b/WWAPYdRAjKErf0Eu7ZRh2UjM2MygsTpmXF+WndGzE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=p8IFxk+kOS/X8CQDbKBaJ1e5CJ/YMWORJCAuXenGoyir7j+FbMCsUO8OdErSzrR6EVbEFxZvYj/N0mnspBGYvmZwc0ScBwsM+RZOaJJPhUTWPc2L1PdlQl20+gENW93xK504kS5j+/b84eJhgFcyCYHtzPZ6g1EWXMaEv8buJv8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kafx6H3s; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 462C51F000E9;
-	Fri,  3 Jul 2026 12:44:43 +0000 (UTC)
+	s=arc-20240116; t=1783083306; c=relaxed/simple;
+	bh=bdU5xdh0Tc/MPdcudIvPVvHcaR+4k114SWbdCZzN3IU=;
+	h=From:In-Reply-To:MIME-Version:References:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=liW1/678ekYGpu339ycLJyPEFqutVN1q7gnS4UFVG1hv7pBMJP20s7TD1U/AISN3x9+u9a7oROD6DC2Ja4t4WvfoosCwf4lyqz9PIseNw3bUjeOcT9xt4rcLsKrXqN5LWMIqarPJRrnSAx525PDDbIdUw6vByW/qTz6zSclePkU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oFEFLmep; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABC011F00ADB
+	for <linux-arm-msm@vger.kernel.org>; Fri,  3 Jul 2026 12:55:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783082688;
-	bh=BBDSXJplzut526vw//w0ovqRNPrNaoNvABnT0V7Jts8=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=kafx6H3se9JnIJCJzSSqdrVMxZ4SceV6FHYnKgaPo5VVgfTFajAT91h/PSoTlzV6U
-	 k2AOUFkFMfuJ0LL2YcP6Sc9m7cKme+LWW1TGpHF9f+XeS57L6nh27kkonOmMcZWhkN
-	 3iDg62JXqpfvT2QhTGw4QQ2Oi4YYpEMis2dnKtT92Niws0ly+GEu9E1IoYHN7dS7Gj
-	 3jdX8jIJxjGw/rlrt6fDU7hi42kVMv81H26bUqgB+1EVNhueHb1Fh8/W++BfqVNwI8
-	 RMF7Jv59tDEMARo5jBRa3IgWWFcjiqtNwaoYgJu2y62zxNqMyw77sHt4JuyP/n7R+r
-	 o3p07xJHya24A==
-Message-ID: <579360fe-9276-4d5b-9da3-e479ab8e5e37@kernel.org>
-Date: Fri, 3 Jul 2026 14:44:41 +0200
+	s=k20260515; t=1783083304;
+	bh=c75kjWTkP9f44+dLf5buuakgGrlKoWDYJf3mAFR9pPc=;
+	h=From:In-Reply-To:References:Date:Subject:To:Cc;
+	b=oFEFLmepxsCwvE1Qv348g7an2YOgSJZcs9og7aKPnnUcNFcEEBuE9wdoxFjG08xCO
+	 tkTZuIRumkCS+1S+LlhoqnqB66NIiIaSRiTRdqHfxrGAe8D69w1OU3haMre5B6PLE1
+	 oWy2ZmaOpB8OBAb36rJAoGIWKlPgi5ypW32j+GioZTfpZ8Hmzkg3aupiDtVv8jTZ57
+	 FQqTOgDF+seEDXCff77L7B70sn2USvL3EsEsDJIC35k5jentemF2YJc1vOeaBKHINg
+	 Qsokd8GE44ekLZSFP9Tfv9CD8d6NPXnvpTQWImt3dNxzIqP+wF85HpkfFFRC5HHQSy
+	 YyKuas5Ky87Fw==
+Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-39b1eb7bd9bso4706641fa.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Jul 2026 05:55:04 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AHgh+Roca+cjl+ULpAlAg4C0wI2V7UY1MjJuWhAwYf/LOsQXJU2Zm/XvcJEZEE5tivTYHa8JJhEtyPsY4LZg5RyA@vger.kernel.org
+X-Gm-Message-State: AOJu0YwOCpyxZQoyDoWAzKXyoWHfiRFLJicbml+mGRm/ZKq0biB5UkM7
+	leSPdiwFwDff0aJzBALosrO1fNtHKmKvNs5grHWQyGdo3Y97F1LS8tFbiCGcyd4mbhJMzmzy47O
+	iZsCR0i+2PPR6bp8XrxvpwajXv7crTj/A4UyFxxr/bQ==
+X-Received: by 2002:a2e:a58f:0:b0:39b:2ff8:64ae with SMTP id
+ 38308e7fff4ca-39b33f7e610mr21068041fa.9.1783083303375; Fri, 03 Jul 2026
+ 05:55:03 -0700 (PDT)
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 3 Jul 2026 07:55:02 -0500
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 3 Jul 2026 07:55:02 -0500
+From: Bartosz Golaszewski <brgl@kernel.org>
+In-Reply-To: <20260703-ipq5018-bluetooth-v3-4-62da72818ab3@outlook.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/3] remoteproc: qcom: pas: add needs_tzmem flag to
- force shmbridge creation
-To: Ananthu C V <ananthu.cv@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Mathieu Poirier <mathieu.poirier@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-remoteproc@vger.kernel.org
-References: <20260703-glymur-soccp-v4-0-b706c4c9b3e2@oss.qualcomm.com>
- <20260703-glymur-soccp-v4-1-b706c4c9b3e2@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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
-In-Reply-To: <20260703-glymur-soccp-v4-1-b706c4c9b3e2@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20260703-ipq5018-bluetooth-v3-0-62da72818ab3@outlook.com> <20260703-ipq5018-bluetooth-v3-4-62da72818ab3@outlook.com>
+Date: Fri, 3 Jul 2026 07:55:02 -0500
+X-Gmail-Original-Message-ID: <CAMRc=Mda=t_ndCGKwFGLq529QGkeWayhKzqnfeyO1CckDFgLAw@mail.gmail.com>
+X-Gm-Features: AVVi8Cdbe92Pp63-wnnrvVfXEFdbZSbcghifFWVZYjARCA6v05lMUDAiRtMVOVw
+Message-ID: <CAMRc=Mda=t_ndCGKwFGLq529QGkeWayhKzqnfeyO1CckDFgLAw@mail.gmail.com>
+Subject: Re: [PATCH v3 4/6] Bluetooth: Introduce Qualcomm IPQ5018 IPC based
+ HCI driver
+To: george.moussalem@outlook.com
+Cc: George Moussalem via B4 Relay <devnull+george.moussalem.outlook.com@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Bartosz Golaszewski <brgl@kernel.org>, Marcel Holtmann <marcel@holtmann.org>, 
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Philipp Zabel <p.zabel@pengutronix.de>
+Content-Type: text/plain; charset="UTF-8"
 X-Rspamd-Action: no action
 X-Spamd-Result: default: False [-3.66 / 15.00];
 	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-116317-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-116318-lists,linux-arm-msm=lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:george.moussalem@outlook.com,m:devnull+george.moussalem.outlook.com@kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-bluetooth@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:brgl@kernel.org,m:marcel@holtmann.org,m:luiz.dentz@gmail.com,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:andersson@kernel.org,m:konradybcio@kernel.org,m:p.zabel@pengutronix.de,m:devnull@kernel.org,m:luizdentz@gmail.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,mail.gmail.com:mid,outlook.com:email];
+	FORGED_SENDER(0.00)[brgl@kernel.org,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[15];
+	FREEMAIL_TO(0.00)[outlook.com];
 	MIME_TRACE(0.00)[0:+];
-	FORGED_RECIPIENTS(0.00)[m:ananthu.cv@oss.qualcomm.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:mathieu.poirier@linaro.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-remoteproc@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
-	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_SENDER(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
 	FORWARDED(0.00)[lists@lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	FREEMAIL_CC(0.00)[kernel.org,vger.kernel.org,holtmann.org,gmail.com,pengutronix.de];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	ALIAS_RESOLVED(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	RCPT_COUNT_SEVEN(0.00)[11];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	TO_DN_SOME(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
+	PRECEDENCE_BULK(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[brgl@kernel.org,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	ALIAS_RESOLVED(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,george.moussalem.outlook.com,dt];
+	MISSING_XM_UA(0.00)[];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,vger.kernel.org:from_smtp]
+	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: AB2BA702806
+X-Rspamd-Queue-Id: 807A5702B95
 
-On 03/07/2026 14:31, Ananthu C V wrote:
-> Most Qualcomm platforms feature Gunyah hypervisor, which typically
-> handles Stage 2 IOMMU configuration. Additionally, SHM bridge setup
-> is required to enable memory protection for both remoteproc metadata
-> and its memory regions. When the aforementioned hypervisor is absent,
-> the operating system must perform these configurations instead. We've
-> been relying on the iommu property being present for this, but for
-> remoteprocs that are already running like SoCCP the mappings are already
-> in place, and any attempt to recreate them while active would lead to smmu
-> faults and a non-functional remoteproc. Fix this by adding a needs_tzmem
-> flag which ensures tzmem and SHM bridge setup is performed independent to
-> the iommu property being present.
+On Fri, 3 Jul 2026 07:01:52 +0200, George Moussalem via B4 Relay
+<devnull+george.moussalem.outlook.com@kernel.org> said:
+> From: George Moussalem <george.moussalem@outlook.com>
+>
+> Add support for the Bluetooth controller found in the IPQ5018 SoC.
+> This driver implements firmware loading and the transport layer between
+> the HCI core and the Bluetooth controller.
+>
+> The firmware is loaded by the host into the dedicated reserved memory
+> carveout and authenticated by TrustZone. A Secure Channel Manager (SCM)
+> call safely brings the peripheral core out of reset.
+>
+> A shared memory ring buffer topology handles runtime data frame
+> transport between the host APSS and the controller.
+>
+> An outgoing APCS IPC bit and an incoming GIC interrupt handle host/guest
+> signaling.
+>
+> Signed-off-by: George Moussalem <george.moussalem@outlook.com>
+> ---
+>  drivers/bluetooth/Kconfig     |   11 +
+>  drivers/bluetooth/Makefile    |    1 +
+>  drivers/bluetooth/btqcomipc.c | 1041 +++++++++++++++++++++++++++++++++++++++++
+>  3 files changed, 1053 insertions(+)
+>
+> diff --git a/drivers/bluetooth/Kconfig b/drivers/bluetooth/Kconfig
+> index 4e8c24d757e9..c9785f43c87c 100644
+> --- a/drivers/bluetooth/Kconfig
+> +++ b/drivers/bluetooth/Kconfig
+> @@ -413,6 +413,17 @@ config BT_MTKUART
+>  	  Say Y here to compile support for MediaTek Bluetooth UART devices
+>  	  into the kernel or say M to compile it as module (btmtkuart).
+>
+> +config BT_QCOMIPC
+> +	tristate "Qualcomm IPQ5018 IPC based HCI support"
+> +	select BT_QCA
 
-Looks awfully like LLM written and considering obvious problem, this
-feels vibe coded.
+You seem to need to depend on CONFIG_OF.
 
-According to current docs YOU SHOULD add vibe-coding tag to the commit
-when doing that.
+> +	help
+> +	  Qualcomm IPQ5018 IPC based HCI driver.
+> +	  This driver is used to load firmware and bridge HCI data onto shared
+> +	  memory between the host and the Bluetooth controller.
+> +
+> +	  Say Y here to compile support for HCI over Qualcomm IPC into the
+> +	  kernel or say M to compile as a module.
+> +
+>  config BT_QCOMSMD
+>  	tristate "Qualcomm SMD based HCI support"
+>  	depends on RPMSG || (COMPILE_TEST && RPMSG=n)
 
->  static const struct of_device_id qcom_pas_of_match[] = {
->  	{ .compatible = "qcom,eliza-adsp-pas", .data = &sm8550_adsp_resource },
-> +	{ .compatible = "qcom,glymur-soccp-pas", .data = &glymur_soccp_resource },
+...
 
-Please run scripts/checkpatch.pl on the patches and fix reported
-warnings. After that, run also 'scripts/checkpatch.pl --strict' on the
-patches and (probably) fix more warnings. Some warnings can be ignored,
-especially from --strict run, but the code here looks like it needs a
-fix. Feel free to get in touch if the warning is not clear.
+Sashiko already generated a wall-of-text review but just a few more nits:
 
->  	{ .compatible = "qcom,kaanapali-soccp-pas", .data = &kaanapali_soccp_resource },
->  	{ .compatible = "qcom,milos-adsp-pas", .data = &sm8550_adsp_resource },
->  	{ .compatible = "qcom,milos-cdsp-pas", .data = &milos_cdsp_resource },
-> 
+> +
+> +static int btqcomipc_probe(struct platform_device *pdev)
+> +{
+> +	struct reset_control *btss_reset;
+> +	struct device *dev = &pdev->dev;
+> +	struct qcom_btss *desc;
+> +	struct hci_dev *hdev;
+> +	unsigned int args[2];
+> +	struct clk *lpo_clk;
+> +	int ret;
+> +
+> +	desc = devm_kzalloc(dev, sizeof(*desc), GFP_KERNEL);
+> +	if (!desc)
+> +		return -ENOMEM;
+> +
+> +	desc->dev = dev;
+> +
+> +	ret = of_property_read_string(dev->of_node, "firmware-name",
+> +				      &desc->firmware);
+> +	if (ret < 0)
+> +		return ret;
+> +
+> +	ret = btqcomipc_alloc_memory_region(desc);
+> +	if (ret)
+> +		return ret;
+> +
+> +	desc->regmap = syscon_regmap_lookup_by_phandle_args(dev->of_node,
+> +							    "qcom,ipc",
+> +							    2, args);
+> +	if (IS_ERR(desc->regmap))
+> +		return PTR_ERR(desc->regmap);
+> +
+> +	desc->offset = args[0];
+> +	desc->bit = args[1];
+> +
+> +	lpo_clk = devm_clk_get_enabled(dev, "lpo");
+> +	if (IS_ERR(lpo_clk))
+> +		return dev_err_probe(dev, PTR_ERR(lpo_clk),
+> +				     "Failed to get lpo clock\n");
+> +
+> +	btss_reset = devm_reset_control_get_exclusive_deasserted(dev, NULL);
+> +	if (IS_ERR_OR_NULL(btss_reset))
+> +		return dev_err_probe(dev, PTR_ERR(btss_reset),
+> +				     "unable to deassert reset\n");
+> +
+> +	desc->irq = platform_get_irq(pdev, 0);
+> +	if (desc->irq < 0)
+> +		return dev_err_probe(dev, desc->irq, "Failed to acquire IRQ\n");
+> +
+> +	ret = btqcomipc_init(desc);
+> +	if (ret)
+> +		return dev_err_probe(dev, ret, "Failed to initialize\n");
+> +
+> +	hdev = hci_alloc_dev();
+> +	if (!hdev) {
+> +		btqcomipc_deinit(desc);
+> +		return -ENOMEM;
+> +	}
+> +
+> +	hci_set_drvdata(hdev, desc);
+> +	desc->hdev = hdev;
+> +	SET_HCIDEV_DEV(hdev, &pdev->dev);
+> +	hdev->bus = HCI_IPC;
+> +
+> +	hdev->open = btqcomipc_open;
+> +	hdev->close = btqcomipc_close;
+> +	hdev->setup = btqcomipc_setup;
+> +	hdev->send = btqcomipc_send;
+> +	hdev->flush = btqcomipc_flush;
+> +	hdev->set_bdaddr = qca_set_bdaddr;
+> +
+> +	ret = hci_register_dev(hdev);
+> +	if (ret < 0) {
+> +		btqcomipc_deinit(desc);
+> +		hci_free_dev(hdev);
+> +		return dev_err_probe(dev, -EBUSY, "Failed to register hdev\n");
+> +	}
+> +
+> +	platform_set_drvdata(pdev, desc);
+> +
+> +	return 0;
+> +}
+> +
+> +static void btqcomipc_remove(struct platform_device *pdev)
+> +{
+> +	struct qcom_btss *desc = platform_get_drvdata(pdev);
+> +
+> +	if (!desc)
+> +		return;
 
+This is only called if probe succeeded so desc can't be NULL.
 
-Best regards,
-Krzysztof
+> +
+> +	btqcomipc_deinit(desc);
+> +
+
+This is a different ordering of cleanup from the initialization, is this
+on purpose?
+
+> +	if (desc->hdev) {
+> +		hci_unregister_dev(desc->hdev);
+> +		hci_free_dev(desc->hdev);
+> +	}
+> +}
+> +
+> +static const struct of_device_id btqcomipc_of_match[] = {
+> +	{ .compatible = "qcom,ipq5018-bt" },
+> +	{ /* sentinel */},
+> +};
+> +MODULE_DEVICE_TABLE(of, btqcomipc_of_match);
+> +
+> +static struct platform_driver btqcomipc_driver = {
+> +	.probe = btqcomipc_probe,
+> +	.remove = btqcomipc_remove,
+> +	.driver = {
+> +		.name = "btqcomipc",
+> +		.of_match_table = btqcomipc_of_match,
+> +	},
+> +};
+> +
+> +module_platform_driver(btqcomipc_driver);
+> +
+> +MODULE_DESCRIPTION("Qualcomm Bluetooth IPC Driver");
+> +MODULE_LICENSE("GPL");
+>
+> --
+> 2.53.0
+>
+>
+>
+
+Bart
 
