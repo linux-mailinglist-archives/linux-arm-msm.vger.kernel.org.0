@@ -1,83 +1,85 @@
-Return-Path: <linux-arm-msm+bounces-116217-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-116218-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id sVLWCX1uR2rIYAAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-116217-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Jul 2026 10:10:37 +0200
+	id TS3/G09yR2pqYQAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-116218-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Jul 2026 10:26:55 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 99C7F6FFEBC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Jul 2026 10:10:36 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 04F0B7000A1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Jul 2026 10:26:55 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=linaro.org header.s=google header.b=z8YsEicG;
+	dkim=pass header.d=linaro.org header.s=google header.b=QSmuKG0e;
 	dmarc=pass (policy=none) header.from=linaro.org;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116217-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c09:e001:a7::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116217-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116218-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116218-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id D944D300F757
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jul 2026 08:10:31 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 69E0B30E0AC7
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Jul 2026 08:10:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D198636F900;
-	Fri,  3 Jul 2026 08:10:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AF096371D15;
+	Fri,  3 Jul 2026 08:10:27 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38A192FE0F
-	for <linux-arm-msm@vger.kernel.org>; Fri,  3 Jul 2026 08:10:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 391073603D5
+	for <linux-arm-msm@vger.kernel.org>; Fri,  3 Jul 2026 08:10:26 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783066226; cv=none; b=UO3XUjEhHGDtCGemCmVHVBiGmHHu7V6EkjFojnNd/rginLEe8N6cHXuJI7vcwnGOaofDFZ4Jb0CKXXwwyXpECRHqPKozDMv9mDJbrYp2M5ihSib0ITO9RHJVJVct8yIGVys4CHUmv0OxEMuGcyGFoDtdOKCY59L1/w6N8H7RDrE=
+	t=1783066227; cv=none; b=LxEH0gtv+iZpNtYDtlPbekQGIvHzIpy7aGmN7aCN6q9VzhDtN7YR/I3HH1exlq/k3EsIUknZY6Ii8u8Z99QA7Vu9WqAhZ3H2+WtBQms0wfm18876PFnTKz4xD5Qk8jVnPlJBA2SIotoWJH0xDvj9XkJIZqIL1A1S5GaLE8XbHQY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783066226; c=relaxed/simple;
-	bh=u6X1PmFCEi6loJAdL+eqKmVSp7B3NbRSN22WkKSjOnQ=;
+	s=arc-20240116; t=1783066227; c=relaxed/simple;
+	bh=Yyz8hVRuE/i71NBx8+ByVi/xmrQ6crnI+5L7v14sBCQ=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=bMm28W1Taj/myigU2nni84325l3RKpB9TLZmm+kplQQTzdJbwrgmoLqmA436daOlWdfZvdPQqNhe/zjq2dfJNXPS4GjYTvzeKdGdDiKDxVwLOBvQ0qbrd4+Fm087+l61fTYtrpUkBkFNV101eLMhoZwuTYZwYNOS7HHI7+Ft1TI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=z8YsEicG; arc=none smtp.client-ip=209.85.221.47
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-4728c12ba97so166787f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Jul 2026 01:10:24 -0700 (PDT)
+	 In-Reply-To:To:Cc; b=IyYKY+5YhiO3Bg5IITptMpu3CcY8tkGKu5G5WgIZVLoCkTXjIvrbtoziBhIySR3D3OeYHTHtld2k9d9I0i2E+gkCqIeYt4tztO3cfAjGMYPTVv54EYwIFczjBfvTUJfv7D1ylvzEwCril2Zktb/J+e6Ur26dIckGOpgNTwdaaU4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=QSmuKG0e; arc=none smtp.client-ip=209.85.221.44
+Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-476a130c138so301226f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Jul 2026 01:10:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1783066224; x=1783671024; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1783066225; x=1783671025; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=nSPmWMOnYMh4YzScP5oQHK6zIv+hGpTPzQ1TRS7oZG0=;
-        b=z8YsEicGXlLVMn9MR4ZAaog+p+QAc21a2ggeKAYCZNkrj/HU8R3mTYncmJIlFmpO5A
-         Alh6yDH0Mct/dSYRoBGS7WL5+w4U4VwIrgmHzdxazGkjeI1mSVLZ+EzbZDE64t8JPKkk
-         SwdSmqLQJ4IgsgwFf79WB9/0mdDNhzTvbMLhsjCH3rtDb1xP5JOndBBo+kxE26XkFy35
-         rA7BPesGFJzen2fpR+D6zidddb51ACSlN+vvx4KxSlZXN+PmXfQuQTppOXFANckbHPse
-         ApM2RkBQyziwcrYO+EvY5sSRixN0T//RPeDn1fYTExAnbxiBvfbja6ixArCMWN/8rohP
-         /XeQ==
+         :content-type:mime-version:subject:date:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=BgEZk0tfqjsFMjOWFQjsdTyTXUp3gCU0p3CTG/HdZ5o=;
+        b=QSmuKG0ehDuF6ziivZRkhgYbknjVYiJlCnFaLfkFKuum7RQ6Rn3Tikr+Ena9NODwxe
+         5GZlrY83LOGyH1Bm9EOYDn3Gy34kMo7wxDVkziSxy7hY2nE1Zunq1kUy5l3wqIMd02CN
+         dQFizsFmp8Xb4oUjgem7cvaBlbsDv1Gw8Av4CJGVHG0KddjKv1PUOpEklutSA5Aqrohh
+         CtJsMhFQozvrH0ONZ3vQt0oNdVZore9PWS3MfP0WXlRpmmUf3wYbeckbK7OJNOjYErgD
+         xiYRWVtjhNidMPVSje4bID16NMdVq6FQr+FHP8TWZ7w7fp6jMUovxpaLFHR2TzPQxlUi
+         /pMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783066224; x=1783671024;
+        d=1e100.net; s=20251104; t=1783066225; x=1783671025;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=nSPmWMOnYMh4YzScP5oQHK6zIv+hGpTPzQ1TRS7oZG0=;
-        b=N2vQwSYic+zVwSnsi6t/9OojVsFaAWFh+GJJ6LigF65GtensYYu0PuOjGmCX3RHKZM
-         KNh8XPq35SXXcypDHWrmJLcrpQLcJQ3MeBdSEszKixLcQvffE9UoHGXGfDyq+VXxT1QI
-         Hu2yJ/c0r/JadnZdNNlwucZ7Nj08BxseixDGiytSvPGu4LrhxHc69aRGOuRwKRVR7Gzr
-         asm6ZTAjI4BuNagLnhrOg6BIIAO4+/VTe4RUsOLH+1Wo3AnBuGgGkttf8qJVEuUAzTb4
-         ou0bQwn8Lq5yhlfzjqQ8z2GBt07bise6W5M39QnQ3AsSqfl+3cTOBTTjfwx1ntCQjAfJ
-         GLyQ==
-X-Gm-Message-State: AOJu0YzSD2Tj2cAfcnoXEQ71Z7yDgBmJsvNEmQzQ1RJcL6KEj1wTapzJ
-	tJFlkPCGxf+2/zLIhseFhJa3ShoekL4tB45HgKyCTSVP3qP+oTIxsKIk99vv1YRf3Ms=
-X-Gm-Gg: AfdE7cledSmoG4Qe9jy2krr3b0X42dOLMX+ltLOX2PYv7XfEIg48Cuufi/h9OwSTavi
-	OTB0X69f9ZThPQF0KZIFIMtPk6PAAcoJL9JfvYckuzRd03vWWBIPTyjCFmZjc481vdgsRKdq3KG
-	nc3WSKZgOcpmQ0ONXQ+qycswj9IpHhmVJng2OrgzAkkrq8akg5kpn6R1Bm1e6ZdRXwJnk3dm/98
-	R/F9qyY9wvzmnsMQkc2gAxLyQsJ5sVHJ8e1rb1oymaWDzQUpKKgtaZUWlQffXxgYxIkb8GJ+P8U
-	f3K3joAUqhcJOHBerwViRnvDVaXxuat6RlhqiA6GET8ttVlo9rh3W9F4nvJ5k/OGEzSytjQCuol
-	lBt/vDxyQtLSFvsxCfFR7kJP6aULYWoIrfsW5A6l4M9wmdsFyOqyyY5xl2GaeiX+Ht4EjoCau+W
-	8K2tOafIKKcFFBOunduwdZ02E6Krs=
-X-Received: by 2002:a5d:5f54:0:b0:472:3090:d878 with SMTP id ffacd0b85a97d-477571cb785mr13709799f8f.4.1783066223396;
-        Fri, 03 Jul 2026 01:10:23 -0700 (PDT)
+         :content-type:mime-version:subject:date:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=BgEZk0tfqjsFMjOWFQjsdTyTXUp3gCU0p3CTG/HdZ5o=;
+        b=S6EPAtHsemYv8o5g3bpcNxAKgRPx6/M7KH1mQ+qjS4yk5KHwtEBzHzvRpyc4j+jZsC
+         MSuIuhy4YFv9rVFm+xR6IhE6Q4msi610hAQv7+QP/tOX2BNFnZ8R4IZQD7WyKiCp8hVG
+         SI1vIAj63t6byAWZQVBTNlXQzgPLPl8xnKnVDZdxEMjsHPwOdLSN2TzUQ9osBEONnwXo
+         cHS65Pn4BZ9/6UjkiXpYcNMs+GDAqdEO3L3vNFSNH0ZEz1ymdfv8S5kj11bXp1B2NU7C
+         bG5+7djPq5R12ta9X5YoaKl+VJ0m5y0hJ5slg0Q9NZrHsz73KkwiIcjOXaIr5TB9tmPe
+         eMaQ==
+X-Gm-Message-State: AOJu0YxTVfs1Gbn5+7YJXyyYn1DybxfZbG7Ll6lQxNfBM030z1Fac13F
+	c4TaI0kBF/h6b2pQaKLezWRr9tE7QBA7wR/TQRjVsgvc875+zIvv3t5E/6ChCnT18jo=
+X-Gm-Gg: AfdE7clAAZC5j9Jde1a7VJ/or/u89gm5/RN/vItOX5wBy4faWXSAJ0l9tdrBCBf+8Ec
+	UO1hdOIW/l2H6hnwlWVJwdlCMKeQFqEUx5MmigH/ZXRdXCLUJOOFY8NwlwGJc34DhEmE0TvZw4j
+	/YC1GiBtzY+CcijVL24c0AUKhIooCgXgAtEJnS/n/GBHL6CHYuqSFNz8K5eXog4wpnXw+P97lpH
+	ql8a31bAyHBeZyxf8bqQkdQoMTqZ1NYpt5B/550vznE0m3dprbdqsKQaByoYvmNZmex97i60N0V
+	rxCsWAuAq9QR658oLrWrRzLAy9tSOIoq1PrSn07iH771IyjQHLYzHH8NuMkP3O+qDa5JlZStViD
+	L8G/UWJff/jeDvEib1Ncc8246shRc6MnFuftc35rWZ3a9O2LhqMznTauTeiflkXznrwukGFwKK6
+	62q1XEgRZAnnFkWOTMfgxcJCKhJCs=
+X-Received: by 2002:adf:ea87:0:b0:472:8c12:b93a with SMTP id ffacd0b85a97d-477b5296cf6mr8758338f8f.28.1783066224462;
+        Fri, 03 Jul 2026 01:10:24 -0700 (PDT)
 Received: from arrakeen-2.home ([2a01:e0a:106d:1080:52eb:f6ff:feb3:451a])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-477db8a44d7sm14920012f8f.9.2026.07.03.01.10.22
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-477db8a44d7sm14920012f8f.9.2026.07.03.01.10.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Jul 2026 01:10:23 -0700 (PDT)
+        Fri, 03 Jul 2026 01:10:24 -0700 (PDT)
 From: Neil Armstrong <neil.armstrong@linaro.org>
-Date: Fri, 03 Jul 2026 10:10:19 +0200
-Subject: [PATCH v4 1/2] drm/panel: Enable DSC for Visionox VTDR6130 panel
+Date: Fri, 03 Jul 2026 10:10:20 +0200
+Subject: [PATCH v4 2/2] drm/panel: visionox-vtdr6130: switch to devm panel
+ calls and drop remove
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -86,7 +88,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260703-topic-sm8x50-vtdr6130-dsc-v4-1-9eff51ec717a@linaro.org>
+Message-Id: <20260703-topic-sm8x50-vtdr6130-dsc-v4-2-9eff51ec717a@linaro.org>
 References: <20260703-topic-sm8x50-vtdr6130-dsc-v4-0-9eff51ec717a@linaro.org>
 In-Reply-To: <20260703-topic-sm8x50-vtdr6130-dsc-v4-0-9eff51ec717a@linaro.org>
 To: Jessica Zhang <jesszhan0024@gmail.com>, 
@@ -96,23 +98,22 @@ To: Jessica Zhang <jesszhan0024@gmail.com>,
 Cc: linux-arm-msm@vger.kernel.org, 
  Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
  Doug Anderson <dianders@chromium.org>, dri-devel@lists.freedesktop.org, 
- linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>, 
- Jun Nie <jun.nie@linaro.org>
+ linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>
 X-Mailer: b4 0.15.1
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3169;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1850;
  i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=8Zw0MXaPsWTl48e5TuYlrhdzoxfYdkEW8De0VsWE2Qc=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBqR25sF0x/xevRh6INh4UzdIjc3l6Qze2uwMfUqdJ9
- YqnSV3aJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCakdubAAKCRB33NvayMhJ0V2CEA
- CMCr4BZUhBdFJKI6Z3AXX7a7XNPIrKviWw/ixFpB4bVY8CWzeUDeQiv4XgcZetZxZebT7JULBXu3/I
- Q+dcUQVpVrGBDZeE7RF6EWMYaLvUF7flgoJAJKAbouWL5ELf3URnzT8OUsRKQ6wABz5KvUErdBi6un
- QU4oltuDAaPINQYH1bHu+CcMeTsxUgF6apXh10uPZVyAgRk/Jvk3PBLbn/Hn6Xz03KPfeOW7E4lS52
- WMKM7jv4dr7LwZqC/N8+MX8v4r4ObztuTnrlWprqfVxSLopkISqMzdjEIHc2FshdJZM0UoysP1/xxM
- Y485WKM1zetJU+qdYPx9HqLY3c0lV8WgnSwVjjKIrJNizdXRG9H1AF0jXDRwA/D6dkPW+1nGrcRj7p
- /kvOd1tIoa7C+ArIu1MSqQa+5H8FpxnCDVpLWbX8/hK6cyv3PWuxYCZiJoTF8TcBA+bZ/A1jd7qOSJ
- SyhjMj1An1JQXEXzKEnNd/v9vqJRjn2Sm+3Q6xI1z2tS69eEWuSZP803yb38ruXsFkE3a8pVwIBe+Z
- VLlDRp+A2vTHJ8fLDJmYCKxY5d+Dgzqp4/CRI2jDrjujaFhY0x2Cw46xK9k4KWr8rNJ/L4wazUl/z0
- tskjH2yIrTKE6NjQvlDNYWwrAICabAz3jVK3Aj8jtyYUg0Lsngh3KMwyym0g==
+ bh=Yyz8hVRuE/i71NBx8+ByVi/xmrQ6crnI+5L7v14sBCQ=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBqR25t+puVMYVgPh8aSCdBB6rtM+sw3nkkuNmv/kpu
+ kbcI/nGJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCakdubQAKCRB33NvayMhJ0WGxEA
+ C2xG1iP6R2BDtrSwkYdjw1KkyFk2c3P7seAfoSeV3+huXSJUWyeTKbdbZ8k7XpZ6IyXrn6bWKWthmS
+ GqA4fKQM0hufvCQJeFSqTZEjkYx5daqgLYbavvUYUmEsCDDgymFEVFdvW/kptmIiew/3r1w3tqYIP9
+ SugPmDdtd+6GWKlL3NmNGJ6waGkTRl4eBGkRe9vB4ECHJpGR1CX7AeJ0zVe8a1GG/Akh8PQHWK8LBO
+ ZrBmOmau4q0ptItQnvTFaIv9wDom5btSCvTFuJmdniNItbKAoXR6IPkWk6Ycj5770St4crUdCZ6eiO
+ ed7h/flVOKrIt+vkuDnGxOvZAy5+7qMRBsVjYihCgdK32ACpcb5ItppjJEpWI7jWdelRk3ItQGnFum
+ +FHx9CZVUFXhqOZaPghKXB+LLgsmIcBSTTUWzFx4+wTa4MOeDRqDVafA7U3Hpg9xkeBvZCfNGcN3El
+ QPZa2vBSqpfiauaywcR8rAZH8iVPaAE/5BF7J8p5VFSQcX3Y8Ng3OvR8bhuqVLZ1WVM1jjaMtMDSE6
+ pJzxoVymPmCIr8Gihm09jAQkF3OA1Zzqqutj56a+JsBD5vqpYdQhneyQrsqssipRNj8OcQ0sp6G5Se
+ LocVsmzefRc6LAJHLyn1dPriCpsoBco0S8v2MVDe4vyfvS/6HTgIm3RB4/2A==
 X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
  fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 X-Rspamd-Action: no action
@@ -120,22 +121,22 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
 	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-116217-lists,linux-arm-msm=lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:jesszhan0024@gmail.com,m:maarten.lankhorst@linux.intel.com,m:mripard@kernel.org,m:tzimmermann@suse.de,m:airlied@gmail.com,m:simona@ffwll.ch,m:linux-arm-msm@vger.kernel.org,m:dmitry.baryshkov@oss.qualcomm.com,m:dianders@chromium.org,m:dri-devel@lists.freedesktop.org,m:linux-kernel@vger.kernel.org,m:neil.armstrong@linaro.org,m:jun.nie@linaro.org,s:lists@lfdr.de];
+	TAGGED_FROM(0.00)[bounces-116218-lists,linux-arm-msm=lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:jesszhan0024@gmail.com,m:maarten.lankhorst@linux.intel.com,m:mripard@kernel.org,m:tzimmermann@suse.de,m:airlied@gmail.com,m:simona@ffwll.ch,m:linux-arm-msm@vger.kernel.org,m:dmitry.baryshkov@oss.qualcomm.com,m:dianders@chromium.org,m:dri-devel@lists.freedesktop.org,m:linux-kernel@vger.kernel.org,m:neil.armstrong@linaro.org,s:lists@lfdr.de];
 	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER(0.00)[neil.armstrong@linaro.org,linux-arm-msm@vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[13];
+	RCPT_COUNT_TWELVE(0.00)[12];
 	FREEMAIL_TO(0.00)[gmail.com,linux.intel.com,kernel.org,suse.de,ffwll.ch];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	FORWARDED(0.00)[lists@lfdr.de];
 	DKIM_TRACE(0.00)[linaro.org:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	TO_DN_SOME(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[5];
@@ -147,104 +148,63 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,qualcomm.com:email,linaro.org:from_mime,linaro.org:email,linaro.org:mid,linaro.org:dkim]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,linaro.org:from_mime,linaro.org:email,linaro.org:mid,linaro.org:dkim,vger.kernel.org:from_smtp,qualcomm.com:email]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 99C7F6FFEBC
+X-Rspamd-Queue-Id: 04F0B7000A1
 
-From: Jun Nie <jun.nie@linaro.org>
+Switch to devm_drm_panel_add() and devm_mipi_dsi_attach() and drop
+the remove() callback.
 
-Enable display compression (DSC v1.2) for 1080x2400 Visionox
-VTDR6130 AMOLED DSI panel.
-
-This panel is the default panel for the following devices:
-- SM8550-QRD
-- SM8550-HDK
-- SM8650-QRD
-- SM8650-HDK
-
-Enable DSC since now functional in the MSM/DPU/DSI driver.
-
-Signed-off-by: Jun Nie <jun.nie@linaro.org>
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 ---
- drivers/gpu/drm/panel/Kconfig                   |  2 ++
- drivers/gpu/drm/panel/panel-visionox-vtdr6130.c | 18 ++++++++++++++++++
- 2 files changed, 20 insertions(+)
+ drivers/gpu/drm/panel/panel-visionox-vtdr6130.c | 24 +++---------------------
+ 1 file changed, 3 insertions(+), 21 deletions(-)
 
-diff --git a/drivers/gpu/drm/panel/Kconfig b/drivers/gpu/drm/panel/Kconfig
-index c0cc2bb4a3eb..fd2552203610 100644
---- a/drivers/gpu/drm/panel/Kconfig
-+++ b/drivers/gpu/drm/panel/Kconfig
-@@ -1352,6 +1352,8 @@ config DRM_PANEL_VISIONOX_VTDR6130
- 	depends on OF
- 	depends on DRM_MIPI_DSI
- 	depends on BACKLIGHT_CLASS_DEVICE
-+	select DRM_DISPLAY_DSC_HELPER
-+	select DRM_DISPLAY_HELPER
- 	help
- 	  Say Y here if you want to enable support for Visionox
- 	  VTDR6130 1080x2400 AMOLED DSI panel.
 diff --git a/drivers/gpu/drm/panel/panel-visionox-vtdr6130.c b/drivers/gpu/drm/panel/panel-visionox-vtdr6130.c
-index 97a79411e1ec..0cdcdbbc766d 100644
+index 0cdcdbbc766d..6733e0e1d061 100644
 --- a/drivers/gpu/drm/panel/panel-visionox-vtdr6130.c
 +++ b/drivers/gpu/drm/panel/panel-visionox-vtdr6130.c
-@@ -9,6 +9,7 @@
- #include <linux/of.h>
+@@ -298,28 +298,11 @@ static int visionox_vtdr6130_probe(struct mipi_dsi_device *dsi)
+ 		return dev_err_probe(dev, PTR_ERR(ctx->panel.backlight),
+ 				     "Failed to create backlight\n");
  
- #include <drm/display/drm_dsc.h>
-+#include <drm/display/drm_dsc_helper.h>
- #include <drm/drm_mipi_dsi.h>
- #include <drm/drm_modes.h>
- #include <drm/drm_panel.h>
-@@ -17,6 +18,7 @@
+-	drm_panel_add(&ctx->panel);
+-
+-	ret = mipi_dsi_attach(dsi);
+-	if (ret < 0) {
+-		dev_err(dev, "Failed to attach to DSI host: %d\n", ret);
+-		drm_panel_remove(&ctx->panel);
++	ret = devm_drm_panel_add(dev, &ctx->panel);
++	if (ret)
+ 		return ret;
+-	}
+-
+-	return 0;
+-}
+-
+-static void visionox_vtdr6130_remove(struct mipi_dsi_device *dsi)
+-{
+-	struct visionox_vtdr6130 *ctx = mipi_dsi_get_drvdata(dsi);
+-	int ret;
+-
+-	ret = mipi_dsi_detach(dsi);
+-	if (ret < 0)
+-		dev_err(&dsi->dev, "Failed to detach from DSI host: %d\n", ret);
  
- struct visionox_vtdr6130 {
- 	struct drm_panel panel;
-+	struct drm_dsc_config dsc;
- 	struct mipi_dsi_device *dsi;
- 	struct gpio_desc *reset_gpio;
- 	struct regulator_bulk_data *supplies;
-@@ -47,9 +49,12 @@ static int visionox_vtdr6130_on(struct visionox_vtdr6130 *ctx)
- {
- 	struct mipi_dsi_device *dsi = ctx->dsi;
- 	struct mipi_dsi_multi_context dsi_ctx = { .dsi = dsi };
-+	struct drm_dsc_picture_parameter_set pps;
- 
- 	dsi->mode_flags |= MIPI_DSI_MODE_LPM;
- 
-+	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x03, 0x01);
-+
- 	mipi_dsi_dcs_set_tear_on_multi(&dsi_ctx, MIPI_DSI_DCS_TEAR_MODE_VBLANK);
- 
- 	mipi_dsi_dcs_write_seq_multi(&dsi_ctx,
-@@ -123,6 +128,9 @@ static int visionox_vtdr6130_on(struct visionox_vtdr6130 *ctx)
- 	mipi_dsi_dcs_set_display_on_multi(&dsi_ctx);
- 	mipi_dsi_msleep(&dsi_ctx, 20);
- 
-+	drm_dsc_pps_payload_pack(&pps, dsi->dsc);
-+	mipi_dsi_picture_parameter_set_multi(&dsi_ctx, &pps);
-+
- 	return dsi_ctx.accum_err;
+-	drm_panel_remove(&ctx->panel);
++	return devm_mipi_dsi_attach(dev, dsi);
  }
  
-@@ -269,6 +277,16 @@ static int visionox_vtdr6130_probe(struct mipi_dsi_device *dsi)
- 	ctx->dsi = dsi;
- 	mipi_dsi_set_drvdata(dsi, ctx);
+ static const struct of_device_id visionox_vtdr6130_of_match[] = {
+@@ -330,7 +313,6 @@ MODULE_DEVICE_TABLE(of, visionox_vtdr6130_of_match);
  
-+	ctx->dsc.dsc_version_major = 0x1;
-+	ctx->dsc.dsc_version_minor = 0x2;
-+	ctx->dsc.slice_height = 40;
-+	ctx->dsc.slice_width = 540;
-+	ctx->dsc.slice_count = 2;
-+	ctx->dsc.bits_per_component = 8;
-+	ctx->dsc.bits_per_pixel = 8 << 4;
-+	ctx->dsc.block_pred_enable = true;
-+
-+	dsi->dsc = &ctx->dsc;
- 	dsi->lanes = 4;
- 	dsi->format = MIPI_DSI_FMT_RGB888;
- 	dsi->mode_flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_NO_EOT_PACKET |
+ static struct mipi_dsi_driver visionox_vtdr6130_driver = {
+ 	.probe = visionox_vtdr6130_probe,
+-	.remove = visionox_vtdr6130_remove,
+ 	.driver = {
+ 		.name = "panel-visionox-vtdr6130",
+ 		.of_match_table = visionox_vtdr6130_of_match,
 
 -- 
 2.34.1
