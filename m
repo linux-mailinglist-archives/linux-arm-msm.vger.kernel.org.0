@@ -1,42 +1,42 @@
-Return-Path: <linux-arm-msm+bounces-116471-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-116472-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id 5sX6MKeGSGolrQAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-116471-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 04 Jul 2026 06:05:59 +0200
+	id UxzXG/qGSGoxrQAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-116472-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 04 Jul 2026 06:07:22 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 33844706982
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 04 Jul 2026 06:05:59 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id D540170698F
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 04 Jul 2026 06:07:21 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
 	dkim=none;
 	dmarc=none;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116471-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116471-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116472-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116472-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 24F3F302960F
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Jul 2026 04:05:58 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id DA4353028C80
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Jul 2026 04:07:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 65D713815DF;
-	Sat,  4 Jul 2026 04:05:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 912443815FF;
+	Sat,  4 Jul 2026 04:07:19 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from cstnet.cn (smtp25.cstnet.cn [159.226.251.25])
 	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C98A737DAD0;
-	Sat,  4 Jul 2026 04:05:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBF9A3812EA;
+	Sat,  4 Jul 2026 04:07:07 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783137954; cv=none; b=fe4XkR9886rsmaJNxsYN5i8YosLO9PaGUqWq9H/Z8/AAQDSpTcRLn+8VvdEKH8DVTiE5RtllDF8GA/UF1a0D7qFU3wa2CYn7EiU427u2Z9gWY+wy+SbTFGN7xjrz3LSsQGwiKF+1Kj47rlTZBs2dsNyMyf8G4vozOuUaNuG97/U=
+	t=1783138036; cv=none; b=rQYYvb3lq3djdekpFyMrDg6bqRXM0eVRbXe3Nd8qL1detJj58JOxvVP4lfEsSQj4VLWgyG6LpoQc2Tl2EikEBU0v6H5XR78YVufsGsu2rRNC+tOy8/tcbfqRCIoAHb5WKr3lYm1JNJbm9jT0fLOVo67Oa3zvMGfGt7hWxg2ET08=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783137954; c=relaxed/simple;
-	bh=iwNn5hUzwrwUzyUJG3mMdOwkqS05JrWXLhKu68o3R3w=;
+	s=arc-20240116; t=1783138036; c=relaxed/simple;
+	bh=GkFWXLcBgoRNdy7uNBFTc17slNHY3FWQvxwu7VumNU0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VNmfylcY5wSCbAuU0f04aGH537c+r6DMh4fL1YdoDOmghom0Kd1ztS+3KYjwUqNi/nx6TVn6ZKfiXh7dfRrPz+R2eUwzd186CiOdQaz2N+FbGkbOuiIQsizzLRf1NorcFsaA5WGn4ErwOu0y6rCAIAIY11ISW4O/0kc/M/cVm+4=
+	 MIME-Version; b=ITVlJXXtF0RIsohJPp/7mHpShPoGZrM4tXo4iYoMAhMfqV1LJuEvO+4qImTFLzRnuPlDl4bawST1zNTVX++0xynHvZKhwQeYBVXiYX9nTJwDrzC+FuOx0UYTUzWBvyKkd56GmmJSGvcy2T5qdk//jBBvrdIr2pqmSVpEheL/Isc=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.25
 Received: from localhost.localdomain (unknown [111.196.245.140])
-	by APP-05 (Coremail) with SMTP id zQCowABHkcSLhkhqyV_JFg--.55815S2;
-	Sat, 04 Jul 2026 12:05:32 +0800 (CST)
+	by APP-05 (Coremail) with SMTP id zQCowABX0vXchkhqwWrJFg--.13332S2;
+	Sat, 04 Jul 2026 12:06:53 +0800 (CST)
 From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 To: Liam Girdwood <lgirdwood@gmail.com>,
 	Mark Brown <broonie@kernel.org>
@@ -60,9 +60,9 @@ Cc: Srinivas Kandagatla <srini@kernel.org>,
 	Shengjiu Wang <shengjiu.wang@nxp.com>,
 	Sharique Mohammad <sharq0406@gmail.com>,
 	Pengpeng Hou <pengpeng@iscas.ac.cn>
-Subject: [PATCH 17/19] ASoC: codecs: rt5682-sdw: Propagate regcache_sync() errors
-Date: Sat,  4 Jul 2026 12:05:30 +0800
-Message-ID: <20260704040530.40047-1-pengpeng@iscas.ac.cn>
+Subject: [PATCH 18/19] ASoC: codecs: max98396: Unwind supplies on resume failure
+Date: Sat,  4 Jul 2026 12:06:51 +0800
+Message-ID: <20260704040651.47558-1-pengpeng@iscas.ac.cn>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260704034845.14291-1-pengpeng@iscas.ac.cn>
 References: <20260704034845.14291-1-pengpeng@iscas.ac.cn>
@@ -73,10 +73,10 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:zQCowABHkcSLhkhqyV_JFg--.55815S2
-X-Coremail-Antispam: 1UD129KBjvJXoW7ZF13uFykZFWDWw47ury3Arb_yoW8Kw17pr
-	ZxCFWDtrW8XrsrAF1avr4UJF4rKrZ7K3Way34rt3W0kwn8Cw12gF13JF4UZFy0qrWDKF47
-	ur4Uta4DWF4UWaUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+X-CM-TRANSID:zQCowABX0vXchkhqwWrJFg--.13332S2
+X-Coremail-Antispam: 1UD129KBjvJXoW7Wry3Xw4rKr4xJr4kGr4UArb_yoW8Cw48pr
+	sxJrWF9rW8XrWSkrZ3Aa15J3Z5u3yft3ZxAw4UC348Zrs8GFy7tr18Jr1jvFn3Jr1xGr43
+	ArZFkFWUuF1DtaUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
 	9KBjDU0xBIdaVrnRJUUU9q14x267AKxVW5JVWrJwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
 	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
 	1l84ACjcxK6xIIjxv20xvE14v26ryj6F1UM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4U
@@ -96,7 +96,7 @@ X-Spamd-Result: default: False [0.04 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MID_CONTAINS_FROM(1.00)[];
 	R_MISSING_CHARSET(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
@@ -110,7 +110,7 @@ X-Spamd-Result: default: False [0.04 / 15.00];
 	FORGED_SENDER(0.00)[pengpeng@iscas.ac.cn,linux-arm-msm@vger.kernel.org];
 	MIME_TRACE(0.00)[0:+];
 	FORWARDED(0.00)[lists@lfdr.de];
-	TAGGED_FROM(0.00)[bounces-116471-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-116472-lists,linux-arm-msm=lfdr.de];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
@@ -122,73 +122,72 @@ X-Spamd-Result: default: False [0.04 / 15.00];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
 	R_DKIM_NA(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,iscas.ac.cn:from_mime,iscas.ac.cn:email,iscas.ac.cn:mid,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 33844706982
+X-Rspamd-Queue-Id: D540170698F
 
-rt5682_io_init() and rt5682_dev_resume() both leave cache-only mode
-before replaying cached register state with regcache_sync(). Both paths
-ignore the sync result, which can hide a failed hardware restore.
+max98396_resume() enables the core, pvdd, and vbat supplies before
+leaving cache-only mode, resetting the device, and replaying cached
+register state. The function currently ignores regcache_sync() failures,
+and the optional pvdd/vbat enable failures return without unwinding
+supplies that were already enabled in this resume attempt.
 
-Propagate regcache_sync() failures from both paths. The first hardware
-init path now has a dedicated sync-failure cleanup that restores cache
-bypass, cache-only, and dirty-cache state before balancing the runtime
-PM reference. The resume path restores both regmaps to cache-only mode
-and marks the main cache dirty before returning the error.
+Rework the function to use common error labels. This propagates sync
+failures, restores cache-only/dirty state on failed cache replay, and
+disables each supply acquired by this resume path before returning the
+error.
 
 Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
 ---
- sound/soc/codecs/rt5682-sdw.c | 20 ++++++++++++++++++--
- 1 file changed, 18 insertions(+), 2 deletions(-)
+ sound/soc/codecs/max98396.c | 24 +++++++++++++++++++++---
+ 1 file changed, 21 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/codecs/rt5682-sdw.c b/sound/soc/codecs/rt5682-sdw.c
-index dec8c2147d68..e49ec28b6103 100644
---- a/sound/soc/codecs/rt5682-sdw.c
-+++ b/sound/soc/codecs/rt5682-sdw.c
-@@ -410,7 +410,9 @@ static int rt5682_io_init(struct device *dev, struct sdw_slave *slave)
- 	if (rt5682->first_hw_init) {
- 		regcache_cache_bypass(rt5682->regmap, false);
- 		regcache_mark_dirty(rt5682->regmap);
--		regcache_sync(rt5682->regmap);
-+		ret = regcache_sync(rt5682->regmap);
-+		if (ret)
-+			goto err_sync;
+diff --git a/sound/soc/codecs/max98396.c b/sound/soc/codecs/max98396.c
+index 9c1d7213410c..e5a2fe824c03 100644
+--- a/sound/soc/codecs/max98396.c
++++ b/sound/soc/codecs/max98396.c
+@@ -1600,19 +1600,37 @@ static int max98396_resume(struct device *dev)
+ 	if (max98396->pvdd) {
+ 		ret = regulator_enable(max98396->pvdd);
+ 		if (ret < 0)
+-			return ret;
++			goto err_core_supplies;
+ 	}
  
- 		/* volatile registers */
- 		regmap_update_bits(rt5682->regmap, RT5682_CBJ_CTRL_2,
-@@ -472,8 +474,16 @@ static int rt5682_io_init(struct device *dev, struct sdw_slave *slave)
- 	/* Mark Slave initialization complete */
- 	rt5682->hw_init = true;
- 	rt5682->first_hw_init = true;
-+	goto out;
-+
-+err_sync:
-+	regcache_cache_bypass(rt5682->regmap, false);
-+	regcache_cache_only(rt5682->sdw_regmap, true);
-+	regcache_cache_only(rt5682->regmap, true);
-+	regcache_mark_dirty(rt5682->regmap);
+ 	if (max98396->vbat) {
+ 		ret = regulator_enable(max98396->vbat);
+ 		if (ret < 0)
+-			return ret;
++			goto err_pvdd;
+ 	}
  
- err_nodev:
-+out:
- 	pm_runtime_put_autosuspend(&slave->dev);
- 
- 	dev_dbg(&slave->dev, "%s hw_init complete: %d\n", __func__, ret);
-@@ -776,7 +786,13 @@ static int rt5682_dev_resume(struct device *dev)
- 
- 	regcache_cache_only(rt5682->sdw_regmap, false);
- 	regcache_cache_only(rt5682->regmap, false);
--	regcache_sync(rt5682->regmap);
-+	ret = regcache_sync(rt5682->regmap);
-+	if (ret) {
-+		regcache_cache_only(rt5682->sdw_regmap, true);
-+		regcache_cache_only(rt5682->regmap, true);
-+		regcache_mark_dirty(rt5682->regmap);
-+		return ret;
+ 	regcache_cache_only(max98396->regmap, false);
+ 	max98396_reset(max98396, dev);
+-	regcache_sync(max98396->regmap);
++	ret = regcache_sync(max98396->regmap);
++	if (ret < 0) {
++		regcache_cache_only(max98396->regmap, true);
++		regcache_mark_dirty(max98396->regmap);
++		goto err_vbat;
 +	}
- 
++
  	return 0;
++
++err_vbat:
++	if (max98396->vbat)
++		regulator_disable(max98396->vbat);
++err_pvdd:
++	if (max98396->pvdd)
++		regulator_disable(max98396->pvdd);
++err_core_supplies:
++	regulator_bulk_disable(MAX98396_NUM_CORE_SUPPLIES,
++			       max98396->core_supplies);
++
++	return ret;
  }
+ 
+ static const struct dev_pm_ops max98396_pm = {
 -- 
 2.43.0
 
