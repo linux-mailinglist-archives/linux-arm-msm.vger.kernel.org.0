@@ -1,216 +1,172 @@
-Return-Path: <linux-arm-msm+bounces-116474-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-116473-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id OVkjN0WHSGo7rQAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-116474-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 04 Jul 2026 06:08:37 +0200
+	id kGwvOzyHSGo5rQAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-116473-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 04 Jul 2026 06:08:28 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8F8537069AB
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 04 Jul 2026 06:08:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 645B37069A5
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 04 Jul 2026 06:08:28 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
 	dkim=none;
-	dmarc=fail reason="SPF not aligned (relaxed), No valid DKIM" header.from=radxa.com (policy=none);
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116474-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116474-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=none;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116473-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116473-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 246A630442B0
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Jul 2026 04:08:31 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 6A3813042412
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Jul 2026 04:08:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5FEA8383987;
-	Sat,  4 Jul 2026 04:08:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A4EF538399F;
+	Sat,  4 Jul 2026 04:08:26 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtpbgsg2.qq.com (smtpbgsg2.qq.com [54.254.200.128])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from cstnet.cn (smtp25.cstnet.cn [159.226.251.25])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00EFB382F1F;
-	Sat,  4 Jul 2026 04:08:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE074382370;
+	Sat,  4 Jul 2026 04:08:06 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783138106; cv=none; b=pkP3iKIgdc+VPf3Uf9z5Sv3gNuL9hnOWe+ykn4E4jQdIcvDrcp+ZK8PJC2gniRTb7qFoUxiXrIpNvm8b/Cplbi/e4TKmsubXtAxaal8jIxQZMf3juf5amawljSsYuk75PXtA6RJcAn6oye/qkYKKNi3Eo23qKvrOle/QSt5C63U=
+	t=1783138106; cv=none; b=Ymj5jRgQMmP2WFd/oOGuHI8cJ8/sS14myIXKVHn5944nG7mDBxaBLwJArsMVsKLw25b8faZV5Yy6d7rBA+SdFUu7CzVQvhFFPqDTDVBtoDfbArzPGWK6NVWvdzY9DF9zaRXuEm5BqWToU+PefJaB67UBakzEgjpAPSa4EVLtarY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1783138106; c=relaxed/simple;
-	bh=nXymSW/VcDeMtmXhKW0zT1XxT85EAUSLbI6y+AmpCMI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=I/oXpZ7+9S/awztvWwh9DGjrLyOVYpgfRQIZLABEBGYPcqwnMt3ohCxJ7d/xyJG5diI5oAA/7T8F1QRAzUL9RRVVlHonmhh/eNBW3gjGcy5bWyUDhWgA9m+UzklXRTIueNWvstLvcftksShWVJNAYE2g/sYyEB0vHE7Vu76dUrk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com; spf=pass smtp.mailfrom=radxa.com; arc=none smtp.client-ip=54.254.200.128
-X-QQ-mid: esmtpsz10t1783138057t5d0dfb99
-X-QQ-Originating-IP: Dagi/XUOgU2h5qBFe9Smlbn5jn2uD2jIEPlXcDV7yKU=
-Received: from [127.0.0.1] ( [119.98.234.251])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Sat, 04 Jul 2026 12:07:35 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 6974827005784446003
-Message-ID: <926681E76F71D6A7+5482f550-9a97-4a01-95dd-6d4083bcf5aa@radxa.com>
-Date: Sat, 4 Jul 2026 12:07:34 +0800
+	bh=uNRZ9ajMP3twrD64L/EBr9vku3NgFZGSDAKL6Nq3u1w=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=AsfdAB4w0hKa1Eh4Mo8L2Y1n2kim/8dzxPqk0ZfMkw538cKqW3tsaQkivJ1Y3qVuTjsN6iNZjXHJd1+UsEy6mnCxWwr2m6ZyPM8edQcTlszHsQ7NNPldoSGezY/4XRv34KltYvyaMgeRsix01TesKi3d3Yzdkgunmsfehd+uzps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.25
+Received: from localhost.localdomain (unknown [111.196.245.140])
+	by APP-05 (Coremail) with SMTP id zQCowACX7hEVh0hqD3LJFg--.13458S2;
+	Sat, 04 Jul 2026 12:07:50 +0800 (CST)
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+To: Liam Girdwood <lgirdwood@gmail.com>,
+	Mark Brown <broonie@kernel.org>
+Cc: Srinivas Kandagatla <srini@kernel.org>,
+	Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.com>,
+	linux-sound@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Oder Chiou <oder_chiou@realtek.com>,
+	Shenghao Ding <shenghao-ding@ti.com>,
+	Kevin Lu <kevin-lu@ti.com>,
+	Baojun Xu <baojun.xu@ti.com>,
+	David Rhodes <david.rhodes@cirrus.com>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	patches@opensource.cirrus.com,
+	Bartosz Golaszewski <brgl@kernel.org>,
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>,
+	Shengjiu Wang <shengjiu.wang@nxp.com>,
+	Sharique Mohammad <sharq0406@gmail.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>
+Subject: [PATCH 19/19] ASoC: codecs: max98090: Propagate runtime regcache_sync() errors
+Date: Sat,  4 Jul 2026 12:07:47 +0800
+Message-ID: <20260704040747.56587-1-pengpeng@iscas.ac.cn>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20260704034845.14291-1-pengpeng@iscas.ac.cn>
+References: <20260704034845.14291-1-pengpeng@iscas.ac.cn>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Thunderbird Daily
-Subject: Re: [PATCH 2/3] arm64: dts: qcom: eliza-evk: Add PCIe1 with TC9563
- PCIe switch
-To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Manivannan Sadhasivam <mani@kernel.org>,
- Bartosz Golaszewski <brgl@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
- linux-pm@vger.kernel.org
-References: <20260703-eliza_evk-v1-0-7624440bd76d@oss.qualcomm.com>
- <20260703-eliza_evk-v1-2-7624440bd76d@oss.qualcomm.com>
-Content-Language: en-US
-From: Xilin Wu <sophon@radxa.com>
-In-Reply-To: <20260703-eliza_evk-v1-2-7624440bd76d@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpsz:radxa.com:qybglogicsvrsz:qybglogicsvrsz3b-0
-X-QQ-XMAILINFO: Mnff/9wu0oJYqWtcVqD8otk0vkTiqqiNAovR6/gQr3QwaN0k7a3zlmLW
-	VIZiiMS6l4M5wUxOYpGS1bBFuRlvgNj09EHpqjkyOhoNdysPfp1N654pJt2xBTKFaYqNfh2
-	xMta4LEXJDu6faOl722wkHAyQU6Rtah+Q3FZnH67U83764RSbVgrDnkggy2UMllRVXZac8C
-	iMlIgLyouM3dYjeGc/ddmUIae2PRmt6FVBPHFQKQ9V5OCtbG691Q70E52wRRpEvWBrAb6MY
-	86TI7u0gPTnm0EVZOUpU63rwB2IoW/kYn19/WADTct+NEyxVaBK7n3Hl8wH6VNY4A1kub6b
-	Nv5p55IuCC4NrrHuQvY2fK1qbc5r0JQTxoMGkOUas+tCUU+7Ed/0P/PqPLwP/xfaWm0yaad
-	EQDK17w6TNZoWTB2XtOhv//vWxq8YloUJgFT0Y3oqaPMpA/rCm3+vUpICdFsMvjwoB2FEHn
-	hRG9z1vX43B29svBOsI1F8l7RPwABWzOpQxTz/prxe8JA1549//o1KcuNFfx6T7l/u4uRBs
-	ZAL0Ds09XT9RY/JGEz6FB0O4zzRt2dQfn4PSM2Gf9rsRGPccXfCyjrWyEnJbqOXWpDFTiUL
-	aRExQrK/dHC7sninmQOhx9rcgzolfjhT4xVLRImXz8/maj27Xx/IMd87iFMsHiaZTSNxd1W
-	Dj/2T5CGoGibX/PiR3UK5FBoHUOYF3eAt1MuAm57Na5aiT9jdD63EEKKD2UikZMyzVml1Nm
-	ZtoDHxVNy6ZLj2cfaJytuE8CIt6i/nqqGqDHx1/XS9+4unpmZNTavgQ8Dw5CdSJUn7Mn7OW
-	/cWpVWWMB8UKcTuPbCW68ypOMWoHFu8RSTSLJXZKKnbUNpNC91lPtS5yA6p7A6uPhYtiuPs
-	XmN4Udaj9YFMSAfGl2a5JgfL4/YoW3pJt6odt9csPGOp1UG5sRJUropIj6r5VRbRow8I35D
-	MjmAqKsz9I7hYgCIXmRHAV036DCgIo5Rp3nDIMsLdCUwvuzHRawDBmz5M6dDZcghSJp67Uy
-	Q3Om1AS8O1t1YJZGfGcIcgqDUuUuY9ealNRUWhUchzqcMRPREi
-X-QQ-XMRINFO: Nq+8W0+stu50tPAe92KXseR0ZZmBTk3gLg==
-X-QQ-RECHKSPAM: 0
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:zQCowACX7hEVh0hqD3LJFg--.13458S2
+X-Coremail-Antispam: 1UD129KBjvJXoW7ZryktF47uF47Ar4rAF4fKrg_yoW8GFy5pr
+	ZxAFW5G3y8Xw17Crs7Aw45GF1fK39aya13Cw4Ut348Aw15Jr17tFyfXFyjvF9xGry7GFsr
+	Ar4UtayUuFs8tF7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUU9q14x267AKxVW5JVWrJwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
+	1l84ACjcxK6xIIjxv20xvE14v26ryj6F1UM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4U
+	JVWxJr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AKxV
+	WxJr0_GcWle2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8CrVC2j2Wl
+	Yx0E2Ix0cI8IcVAFwI0_Jw0_WrylYx0Ex4A2jsIE14v26r4j6F4UMcvjeVCFs4IE7xkEbV
+	WUJVW8JwACjcxG0xvY0x0EwIxGrwACjI8F5VA0II8E6IAqYI8I648v4I1lFIxGxcIEc7Cj
+	xVA2Y2ka0xkIwI1lc7CjxVAaw2AFwI0_GFv_Wryl42xK82IYc2Ij64vIr41l4I8I3I0E4I
+	kC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWU
+	WwC2zVAF1VAY17CE14v26r4a6rW5MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Gr
+	0_Xr1lIxAIcVC0I7IYx2IY6xkF7I0E14v26r4UJVWxJr1lIxAIcVCF04k26cxKx2IYs7xG
+	6r1j6r1xMIIF0xvEx4A2jsIE14v26r4j6F4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr1j6F
+	4UJbIYCTnIWIevJa73UjIFyTuYvjTRABMKDUUUU
+X-CM-SenderInfo: pshqw1xhqjqxpvfd2hldfou0/
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-1.35 / 15.00];
+X-Spamd-Result: default: False [0.04 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	MID_CONTAINS_FROM(1.00)[];
+	R_MISSING_CHARSET(0.50)[];
 	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
-	DMARC_POLICY_SOFTFAIL(0.10)[radxa.com : SPF not aligned (relaxed), No valid DKIM,none];
 	HAS_LIST_UNSUB(-0.01)[];
-	XM_UA_NO_VERSION(0.01)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	RECEIVED_HELO_LOCALHOST(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:krishna.chundru@oss.qualcomm.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:mani@kernel.org,m:brgl@kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-pci@vger.kernel.org,m:linux-pm@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER(0.00)[sophon@radxa.com,linux-arm-msm@vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[13];
+	DMARC_NA(0.00)[iscas.ac.cn];
+	FORGED_RECIPIENTS(0.00)[m:lgirdwood@gmail.com,m:broonie@kernel.org,m:srini@kernel.org,m:perex@perex.cz,m:tiwai@suse.com,m:linux-sound@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:oder_chiou@realtek.com,m:shenghao-ding@ti.com,m:kevin-lu@ti.com,m:baojun.xu@ti.com,m:david.rhodes@cirrus.com,m:rf@opensource.cirrus.com,m:patches@opensource.cirrus.com,m:brgl@kernel.org,m:kuninori.morimoto.gx@renesas.com,m:ckeepax@opensource.cirrus.com,m:sebastian.krzyszkowiak@puri.sm,m:shengjiu.wang@nxp.com,m:sharq0406@gmail.com,m:pengpeng@iscas.ac.cn,s:lists@lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
+	RCVD_COUNT_THREE(0.00)[4];
+	FREEMAIL_TO(0.00)[gmail.com,kernel.org];
 	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[22];
+	FORGED_SENDER(0.00)[pengpeng@iscas.ac.cn,linux-arm-msm@vger.kernel.org];
+	MIME_TRACE(0.00)[0:+];
 	FORWARDED(0.00)[lists@lfdr.de];
-	TAGGED_FROM(0.00)[bounces-116474-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-116473-lists,linux-arm-msm=lfdr.de];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	ALIAS_RESOLVED(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[sophon@radxa.com,linux-arm-msm@vger.kernel.org];
-	FORGED_MUA_MAILLIST(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[pengpeng@iscas.ac.cn,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	FREEMAIL_CC(0.00)[kernel.org,perex.cz,suse.com,vger.kernel.org,realtek.com,ti.com,cirrus.com,opensource.cirrus.com,renesas.com,puri.sm,nxp.com,gmail.com,iscas.ac.cn];
+	ALIAS_RESOLVED(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
 	R_DKIM_NA(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MID_RHS_MATCH_FROM(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,vger.kernel.org:from_smtp,qualcomm.com:email,radxa.com:from_mime,radxa.com:email,radxa.com:mid]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,iscas.ac.cn:from_mime,iscas.ac.cn:email,iscas.ac.cn:mid,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 8F8537069AB
+X-Rspamd-Queue-Id: 645B37069A5
 
-On 7/3/2026 8:38 PM, Krishna Chaitanya Chundru wrote:
-> The Eliza EVK board connects PCIe1 (8GT/s x2) to a Toshiba TC9563
-> PCIe switch. Enable PCIe1 and its QMP PHY nodes.
-> 
-> TC9563 uses I2C (at address 0x77 on I2C4) for its management interface.
-> 
-> Override the base iommu-map with the expanded set covering all the
-> switch's downstream ports (0x1400-0x1408 SID range).
-> 
-> The TC9563 RESX# and PERST# are OR-ed internally to assert reset on the
-> switch. Use TC9563 RESX# pin via a TLMM GPIO and skip wiring PERST#
-> from the PCIe controller.
-> 
-> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-> ---
->   arch/arm64/boot/dts/qcom/eliza-evk.dtsi | 141 ++++++++++++++++++++++++++++++++
->   1 file changed, 141 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/eliza-evk.dtsi b/arch/arm64/boot/dts/qcom/eliza-evk.dtsi
-> index ba41dbc34b81..c2afb8372ab7 100644
-> --- a/arch/arm64/boot/dts/qcom/eliza-evk.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/eliza-evk.dtsi
-> @@ -12,6 +12,26 @@ chosen {
->   		stdout-path = "serial0:115200n8";
->   	};
->   
-> +	vreg_0p9: regulator-0v9 {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "VREG_0P9";
-> +
-> +		regulator-min-microvolt = <900000>;
-> +		regulator-max-microvolt = <900000>;
-> +		regulator-always-on;
-> +		regulator-boot-on;
-> +	};
-> +
-> +	vreg_1p8: regulator-1v8 {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "VREG_1P8";
-> +
-> +		regulator-min-microvolt = <1800000>;
-> +		regulator-max-microvolt = <1800000>;
-> +		regulator-always-on;
-> +		regulator-boot-on;
-> +	};
-> +
->   	vreg_pcie_m_3p3: regulator-3p3 {
->   		compatible = "regulator-fixed";
->   
-> @@ -102,6 +122,104 @@ pcieport0_ep: endpoint {
->   	};
->   };
->   
-> +&pcie1 {
-> +	pinctrl-names = "default";
-> +	pinctrl-0 = <&pcie1_default_state>;
-> +
-> +	iommu-map = <0x0 &apps_smmu 0x1400 0x1>,
-> +		    <0x100 &apps_smmu 0x1401 0x1>,
-> +		    <0x208 &apps_smmu 0x1402 0x1>,
-> +		    <0x210 &apps_smmu 0x1403 0x1>,
-> +		    <0x218 &apps_smmu 0x1404 0x1>,
-> +		    <0x300 &apps_smmu 0x1405 0x1>,
-> +		    <0x400 &apps_smmu 0x1406 0x1>,
-> +		    <0x500 &apps_smmu 0x1407 0x1>,
-> +		    <0x501 &apps_smmu 0x1408 0x1>;
-> +
-> +	status = "okay";
-> +};
-> +
-> +&pcie1_phy {
-> +	vdda-phy-supply = <&vreg_l1k>;
-> +	vdda-pll-supply = <&vreg_l3k>;
-> +
-> +	status = "okay";
-> +};
-> +
-> +&pcie1port0 {
-> +	wake-gpios = <&tlmm 53 GPIO_ACTIVE_LOW>;
-> +
+max98090_runtime_suspend() puts the regmap into cache-only mode. Runtime
+resume clears cache-only mode, resets the device, and replays cached
+register state with regcache_sync(), but currently ignores a failed
+replay.
 
-Just wondering, is there any side effect if PERST# is described here as 
-well?
+Return the sync error and restore cache-only/dirty state before failing
+runtime resume. This deliberately leaves the separate system-resume sync
+call unchanged because the source does not provide an equally strong
+paired system suspend/cache-only proof for that path.
 
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+---
+ sound/soc/codecs/max98090.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
+diff --git a/sound/soc/codecs/max98090.c b/sound/soc/codecs/max98090.c
+index da416329b038..53f8894db9e0 100644
+--- a/sound/soc/codecs/max98090.c
++++ b/sound/soc/codecs/max98090.c
+@@ -2645,12 +2645,18 @@ static void max98090_i2c_remove(struct i2c_client *client)
+ static int max98090_runtime_resume(struct device *dev)
+ {
+ 	struct max98090_priv *max98090 = dev_get_drvdata(dev);
++	int ret;
+ 
+ 	regcache_cache_only(max98090->regmap, false);
+ 
+ 	max98090_reset(max98090);
+ 
+-	regcache_sync(max98090->regmap);
++	ret = regcache_sync(max98090->regmap);
++	if (ret < 0) {
++		regcache_cache_only(max98090->regmap, true);
++		regcache_mark_dirty(max98090->regmap);
++		return ret;
++	}
+ 
+ 	return 0;
+ }
 -- 
-Best regards,
-Xilin Wu <sophon@radxa.com>
+2.43.0
+
 
