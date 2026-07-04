@@ -1,57 +1,57 @@
-Return-Path: <linux-arm-msm+bounces-116493-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-116495-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id 39xXEzoTSWrdyAAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-116493-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 04 Jul 2026 16:05:46 +0200
+	id wphSJpUhSWpdygAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-116495-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 04 Jul 2026 17:07:01 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id AF0F1707BC0
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 04 Jul 2026 16:05:45 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id C81FD707CA8
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 04 Jul 2026 17:07:00 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=ixit.cz header.s=dkim header.b=AwnVd9jo;
+	dkim=pass header.d=ixit.cz header.s=dkim header.b=GNXDJf9w;
 	dmarc=pass (policy=quarantine) header.from=ixit.cz;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116493-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116493-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116495-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116495-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 04140300DD4F
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Jul 2026 14:05:44 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 7858A3011F22
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Jul 2026 15:06:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A680C23E325;
-	Sat,  4 Jul 2026 14:05:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 146EB23395F;
+	Sat,  4 Jul 2026 15:06:59 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from ixit.cz (ixit.cz [185.100.197.86])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADC4A288BA;
-	Sat,  4 Jul 2026 14:05:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5526318CBE1;
+	Sat,  4 Jul 2026 15:06:57 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783173940; cv=none; b=J46guvfEYBEKoAAHuCVeG8fnTZiJTTd93n/T5DgpexmjVzFE5n5p7pdfvTy1rGzogtvVIpmdyoSeS/jRJuvRI1diDbB7e4/oAiZiysVly8KuKuLsM0pVFzyZjZ90F6TyY7s7y7qiUD9OtlHRWTAlNEEjQK3yHIcoBMiqdaTBWn4=
+	t=1783177619; cv=none; b=VaQGdPyeNIPn3Bz3CTuuEPikKtKowdthm3hr2iIdASxa/hVZdQkmIjvyIEeJkxQSniOjYwaSrcyAyYRtoa3Ao9Y3htn2K9evpHrZtpY1bwBmvtptzMkW/VUJy++WJvXkwr7Ehl3xKuDQ34UYdxNR6Sj3ku4dvJf1FSJOT33TRFI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783173940; c=relaxed/simple;
-	bh=85yg9uwIapESEcAZLgoMfN21ra+0H+FZBzcXl27xzFo=;
+	s=arc-20240116; t=1783177619; c=relaxed/simple;
+	bh=Z9l9EfRDenyYxHcM+BCBaqaiRrKlyyyYDV58SrskrA8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=tSAD2dHeRTZ588SiBzH4adv7KNtRCANDmfoYQPZQ1O86Mk4jJap38tduC/3cBrv2y7qrqvNWaqgIg7A0Ww32Pb+ySkMpFsVuaxD/UsQYN+wwLPvwiTfPmWeIiEx8N2XVPCIzvpj6KSYb3g1l4ado3qcbpcbW6Aq1DUv2MDic/YI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=AwnVd9jo; arc=none smtp.client-ip=185.100.197.86
+	 In-Reply-To:Content-Type; b=tMTHGzc8IUWz8adZRS7UilNgEcv0MV0H4jCHN86VOm4DXMJE/OfIYIWh9e45Mh7Q81bPjLfBvxa2vZtbn+TPVD3XxCt9evz5CeNubEUUyjPa3NMrERiE5nVm8coIocoxBiibgrQIsgROP4uWOEk0u9NxepB9sRDGtBAiqxdf+Q0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=GNXDJf9w; arc=none smtp.client-ip=185.100.197.86
 Received: from [172.20.10.2] (78-80-20-180.customers.tmcz.cz [78.80.20.180])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by ixit.cz (Postfix) with ESMTPSA id EA48A5341BA0;
-	Sat, 04 Jul 2026 16:05:24 +0200 (CEST)
+	by ixit.cz (Postfix) with ESMTPSA id 533325341B78;
+	Sat, 04 Jul 2026 17:06:49 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-	t=1783173925;
+	t=1783177610;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=6UUJxdtelhYrr+VCZpbztlO/VhgiOAMMYGZdjo+bdyM=;
-	b=AwnVd9joofvY7kp2FkL7LJHpZ1T6uF64HafFyJMwMU3hGO0MI6gvBbcWg7M9Q0q0JN7Wzw
-	j+RhCuN2EWgjFt36BW7PZMt7NoSIWxjTRHZwJslHMD2xfpG7XSaxemJtr8YbT+icoRUFm/
-	3TQAIbDd4r08M7WtWRzqG+qakWHZj0E=
-Message-ID: <d4708a56-cf6d-4e70-9acf-79292caa3f44@ixit.cz>
-Date: Sat, 4 Jul 2026 16:05:24 +0200
+	bh=YchiOn0aIhurw2DMYPSvRHYrkDyW/1Rfmj7bTE1YKUI=;
+	b=GNXDJf9wNS36qP5xkPoszwq3xtJthZbo5JN99nfrNmSxY7Szp0o9AGE0qNE0Ms33V6qnY0
+	eQuNgPWK2cc4scdH1Y09GHVJe9aE+b40gwMmzIAtMC3VpGhjsA7hEqb/klMXFNUK3nN8dR
+	fdwzPvt+ezt/6Ce8cRYkc/yyC2LT5g4=
+Message-ID: <d63230b5-2665-4d32-9587-e47846821555@ixit.cz>
+Date: Sat, 4 Jul 2026 17:06:48 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -59,20 +59,22 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] arm64: dts: qcom: sm7125-samsung: add initial device
- tree
-To: Erikas Bitovtas <xerikasxx@gmail.com>,
- Bjorn Andersson <andersson@kernel.org>,
+Subject: Re: [PATCH v2 2/2] arm64: dts: qcom: sdm845-oneplus: Update
+ compatible to include model
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: linux-input@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ phone-devel@vger.kernel.org, Vincent Huang <vincent.huang@tw.synaptics.com>,
+ "Jason A. Donenfeld" <Jason@zx2c4.com>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Dmitry Torokhov <dmitry.torokhov@gmail.com>,
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bartosz Golaszewski <brgl@kernel.org>,
- Kees Cook <kees@kernel.org>, Tony Luck <tony.luck@intel.com>,
- "Guilherme G. Piccoli" <gpiccoli@igalia.com>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, Stefan Hansson <newbyte@postmarketos.org>,
- phone-devel@vger.kernel.org
-References: <20260703-sm7125-samsung-v1-0-3e5f752048c1@gmail.com>
- <20260703-sm7125-samsung-v1-3-3e5f752048c1@gmail.com>
+ Krzysztof Kozlowski <krzk@kernel.org>,
+ Matthias Schiffer <matthias.schiffer@ew.tq-group.com>,
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Conor Dooley <conor+dt@kernel.org>
+References: <20260523-synaptics-rmi4-dt-v2-0-0645122babdc@ixit.cz>
+ <20260523-synaptics-rmi4-dt-v2-2-0645122babdc@ixit.cz>
 Content-Language: en-US
 From: David Heidelberg <david@ixit.cz>
 Autocrypt: addr=david@ixit.cz; keydata=
@@ -118,7 +120,7 @@ Autocrypt: addr=david@ixit.cz; keydata=
  zRKcgRumz2Tc1ouHj6qINlzEe3a5ldctIn/dvR1l2Ko7GBTG+VGp9U5NOAEkGpxHG9yg6eeY
  fFYnMme51H/HKiyUlFiE3yd5LSmv8Dhbf+vsI4x6BOOOq4Iyop/Exavj1owGxW0hpdUGcCl1
  ovlwVPO/6l/XLAmSGwdnGqok5eGZQzSst0tj9RC9O0dXO1TZocOsf0tJ8dR2egX4kxM=
-In-Reply-To: <20260703-sm7125-samsung-v1-3-3e5f752048c1@gmail.com>
+In-Reply-To: <20260523-synaptics-rmi4-dt-v2-2-0645122babdc@ixit.cz>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Rspamd-Action: no action
@@ -127,21 +129,21 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[ixit.cz,quarantine];
 	R_DKIM_ALLOW(-0.20)[ixit.cz:s=dkim];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-116493-lists,linux-arm-msm=lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:xerikasxx@gmail.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:brgl@kernel.org,m:kees@kernel.org,m:tony.luck@intel.com,m:gpiccoli@igalia.com,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:newbyte@postmarketos.org,m:phone-devel@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_TO(0.00)[gmail.com,kernel.org,intel.com,igalia.com];
-	FORGED_SENDER(0.00)[david@ixit.cz,linux-arm-msm@vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[15];
+	TAGGED_FROM(0.00)[bounces-116495-lists,linux-arm-msm=lfdr.de];
+	FROM_HAS_DN(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
+	FORGED_SENDER(0.00)[david@ixit.cz,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[16];
+	FORGED_RECIPIENTS(0.00)[m:andersson@kernel.org,m:linux-input@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:phone-devel@vger.kernel.org,m:vincent.huang@tw.synaptics.com,m:Jason@zx2c4.com,m:krzk+dt@kernel.org,m:dmitry.torokhov@gmail.com,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk@kernel.org,m:matthias.schiffer@ew.tq-group.com,m:konrad.dybcio@oss.qualcomm.com,m:conor+dt@kernel.org,m:dmitrytorokhov@gmail.com,m:conor@kernel.org,s:lists@lfdr.de];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	FORWARDED(0.00)[lists@lfdr.de];
-	FROM_HAS_DN(0.00)[];
+	FREEMAIL_CC(0.00)[vger.kernel.org,tw.synaptics.com,zx2c4.com,kernel.org,gmail.com,ew.tq-group.com,oss.qualcomm.com];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
@@ -152,273 +154,53 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	MID_RHS_MATCH_FROM(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,vger.kernel.org:from_smtp]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,vger.kernel.org:from_smtp,ixit.cz:from_mime,ixit.cz:email,ixit.cz:mid,ixit.cz:dkim,qualcomm.com:email]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: AF0F1707BC0
+X-Rspamd-Queue-Id: C81FD707CA8
 
-On 03/07/2026 09:59, Erikas Bitovtas wrote:
-> Samsung Galaxy A52/A72 are devices released on atoll (SM7125) platform
-> in 2021. Add initial device tree for SM7125 Samsung platform with
-> support for:
-> - Framebuffer
-> - GPIO keys
-> - Hall sensor
-> - Vibrator
-> - Regulators
-> - Reset input
-> - Real-time clock
-> - SD card
-> - UFS
-> - USB
+On 23/05/2026 11:45, David Heidelberg via B4 Relay wrote:
+> From: David Heidelberg <david@ixit.cz>
 > 
-> Tested-by: Stefan Hansson <newbyte@postmarketos.org>
-> Signed-off-by: Erikas Bitovtas <xerikasxx@gmail.com>
-> ---
->   arch/arm64/boot/dts/qcom/Makefile                  |   2 +
->   arch/arm64/boot/dts/qcom/sm7125-samsung-a52q.dts   |  31 ++
->   arch/arm64/boot/dts/qcom/sm7125-samsung-a72q.dts   |  31 ++
->   .../arm64/boot/dts/qcom/sm7125-samsung-common.dtsi | 518 +++++++++++++++++++++
->   4 files changed, 582 insertions(+)
+> We know the driver is reporting s3706b, introduce the compatible so we
+> can more easily introduce quirks for weird touchscreen replacements in
+> followup series.
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index 6f33c4e2f09c..d90311806e21 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -344,6 +344,8 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sm6125-xiaomi-laurel-sprout.dtb
->   dtb-$(CONFIG_ARCH_QCOM)	+= sm6125-xiaomi-willow.dtb
->   dtb-$(CONFIG_ARCH_QCOM)	+= sm6350-sony-xperia-lena-pdx213.dtb
->   dtb-$(CONFIG_ARCH_QCOM)	+= sm6375-sony-xperia-murray-pdx225.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= sm7125-samsung-a52q.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= sm7125-samsung-a72q.dtb
->   dtb-$(CONFIG_ARCH_QCOM)	+= sm7125-xiaomi-curtana.dtb
->   dtb-$(CONFIG_ARCH_QCOM)	+= sm7125-xiaomi-joyeuse.dtb
->   dtb-$(CONFIG_ARCH_QCOM)	+= sm7225-fairphone-fp4.dtb
-> diff --git a/arch/arm64/boot/dts/qcom/sm7125-samsung-a52q.dts b/arch/arm64/boot/dts/qcom/sm7125-samsung-a52q.dts
-> new file mode 100644
-> index 000000000000..e4d005054b00
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/sm7125-samsung-a52q.dts
-> @@ -0,0 +1,31 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/*
-> + * SM7125 Samsung Galaxy A52 (a52q) specific device tree source
-> + *
-> + * Copyright (c) 2026, The Linux Foundation. All rights reserved.
-> + */
-> +
-> +/dts-v1/;
-> +
-> +#include "sm7125-samsung-common.dtsi"
-> +
-> +/ {
-> +	model = "Samsung Galaxy A52";
-> +	compatible = "samsung,a52q", "qcom,sm7125";
-> +	qcom,board-id = <0x22 0x6>;
-> +
-> +	reserved-memory {
-> +		#address-cells = <2>;
-> +		#size-cells = <2>;
-> +		ranges;
-> +
-> +		rmtfs_mem: memory@f4f01000 {
-> +			compatible = "qcom,rmtfs-mem";
-> +			reg = <0 0xf4f01000 0 0x200000>;
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> Signed-off-by: David Heidelberg <david@ixit.cz>
 
-Hi Erikas!
+Bjorn,
 
-the start on the 0x1000 offset sounds suspicious, doesn't it need 0xf4f0 0000 
-and size 0x202000  with qcom,use-guard-pages ?
-
-You can also share most of the properties and define it in the -common.dtsi
-
-
-> +			no-map;
-> +
-> +			qcom,client-id = <1>;
-> +			qcom,vmid = <QCOM_SCM_VMID_MSS_MSA>;
-> +		};
-> +	};
-> +};
-> diff --git a/arch/arm64/boot/dts/qcom/sm7125-samsung-a72q.dts b/arch/arm64/boot/dts/qcom/sm7125-samsung-a72q.dts
-> new file mode 100644
-> index 000000000000..df8d637ef16f
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/sm7125-samsung-a72q.dts
-> @@ -0,0 +1,31 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/*
-> + * SM7125 Samsung Galaxy A72 (a72q) specific device tree source
-> + *
-> + * Copyright (c) 2026, The Linux Foundation. All rights reserved.
-> + */
-> +
-> +/dts-v1/;
-> +
-> +#include "sm7125-samsung-common.dtsi"
-> +
-> +/ {
-> +	model = "Samsung Galaxy A72";
-> +	compatible = "samsung,a72q", "qcom,sm7125";
-> +	qcom,board-id = <0x22 0x5>;
-> +
-> +	reserved-memory {
-> +		#address-cells = <2>;
-> +		#size-cells = <2>;
-> +		ranges;
-> +
-> +		rmtfs_mem: memory@f3701000 {
-> +			compatible = "qcom,rmtfs-mem";
-> +			reg = <0 0xf3701000 0 0x200000>;
-
-same rmtfs comment as above
-
-> +			no-map;
-> +
-> +			qcom,client-id = <1>;
-> +			qcom,vmid = <QCOM_SCM_VMID_MSS_MSA>;
-> +		};
-> +	};
-> +};
-> diff --git a/arch/arm64/boot/dts/qcom/sm7125-samsung-common.dtsi b/arch/arm64/boot/dts/qcom/sm7125-samsung-common.dtsi
-> new file mode 100644
-> index 000000000000..836dc9b8b1a5
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/sm7125-samsung-common.dtsi
-> @@ -0,0 +1,518 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/*
-> + * SM7125 Samsung common device tree source
-> + *
-> + * Copyright (c) 2026, The Linux Foundation. All rights reserved.
-> + */
-> +
-> +#include <dt-bindings/arm/qcom,ids.h>
-> +#include <dt-bindings/gpio/gpio.h>
-> +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
-> +#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
-> +#include "sm7125.dtsi"
-> +#include "pm6150.dtsi"
-> +#include "pm6150l.dtsi"
-> +
-> +/delete-node/ &rmtfs_mem;
-> +/delete-node/ &ipa_fw_mem;
-> +/delete-node/ &tz_mem;
-> +
-> +/ {
-> +	chassis-type = "handset";
-> +
-> +	qcom,msm-id = <QCOM_ID_SM7125 0>;
-> +
-> +	chosen {
-> +		#address-cells = <2>;
-> +		#size-cells = <2>;
-> +		ranges;
-> +
-> +		framebuffer@9c000000 {
-> +			compatible = "simple-framebuffer";
-> +			reg = <0x0 0x9c000000 0x0 (1080 * 2400 * 4)>;
-
-use memory-region = <&cont_splash_mem>; instead of reg
+please pick me $subj, counterpart got in (or if u want I can resend).
 
 David
-
-> +			width = <1080>;
-> +			height = <2400>;
-> +			stride = <(1080 * 4)>;
-> +			format = "a8r8g8b8";
-> +			clocks = <&gcc GCC_DISP_HF_AXI_CLK>;
-> +		};
-> +	};
-> +
-> +	gpio-keys {
-> +		compatible = "gpio-keys";
-> +
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&key_vol_up_default>, <&hall_sensor_default>;
-> +
-> +		vol-up {
-> +			label = "Volume up";
-> +			gpios = <&pm6150l_gpios 8 GPIO_ACTIVE_LOW>;
-> +			linux,code = <KEY_VOLUMEUP>;
-> +			debounce-interval = <15>;
-> +		};
-> +
-> +		event-hall-sensor {
-> +			label = "Hall Effect Sensor";
-> +			gpios = <&pm6150_gpios 10 GPIO_ACTIVE_LOW>;
-> +			linux,input-type = <EV_SW>;
-> +			linux,code = <SW_LID>;
-> +			debounce-interval = <15>;
-> +		};
-> +	};
-> +
-> +	reserved-memory {
-> +		#address-cells = <2>;
-> +		#size-cells = <2>;
-> +		ranges;
-> +
-> +		tz_mem: memory@80b00000 {
-> +			reg = <0x0 0x80b00000 0x0 0x7100000>;
-> +			no-map;
-> +		};
-> +
-> +		mpss_mem: memory@8b000000 {
-> +			reg = <0x0 0x8b000000 0x0 0x8900000>;
-> +			no-map;
-> +		};
-> +
-> +		wlan_mem: memory@93900000 {
-> +			reg = <0x0 0x93900000 0x0 0x200000>;
-> +			no-map;
-> +		};
-> +
-> +		ipa_fw_mem: memory@93b00000 {
-> +			reg = <0x0 0x93b00000 0x0 0x10000>;
-> +			no-map;
-> +		};
-> +
-> +		ipa_gsi_region: memory@93b10000 {
-> +			reg = <0x0 0x93b10000 0x0 0x5000>;
-> +			no-map;
-> +		};
-> +
-> +		gpu_mem: memory@93b15000 {
-> +			reg = <0x0 0x93b15000 0x0 0x2000>;
-> +			no-map;
-> +		};
-> +
-> +		adsp_mem: memory@93c00000 {
-> +			reg = <0x0 0x93c00000 0x0 0x3e00000>;
-> +			no-map;
-> +		};
-> +
-> +		camera_region: memory@97a00000 {
-> +			reg = <0x0 0x97a00000 0x0 0x500000>;
-> +			no-map;
-> +		};
-> +
-> +		pil_npu_region: memory@97f00000 {
-> +			reg = <0x0 0x97f00000 0x0 0x500000>;
-> +			no-map;
-> +		};
-> +
-> +		venus_mem: memory@98400000 {
-> +			reg = <0x0 0x98400000 0x0 0x500000>;
-> +			no-map;
-> +		};
-> +
-> +		cdsp_mem: memory@98900000 {
-> +			reg = <0x0 0x98900000 0x0 0x1e00000>;
-> +			no-map;
-> +		};
-> +
-> +		cont_splash_mem: memory@9c000000 {
-> +			reg = <0x0 0x9c000000 0x0 (1080 * 2400 * 4)>;
-> +			no-map;
-> +		};
-> +
-
-[...]
+> ---
+>   arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
+> index 6b7378cf4d493..148164d456a5a 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
+> @@ -475,17 +475,17 @@ bq27441_fg: bq27441-battery@55 {
+>   	};
+>   };
+>   
+>   &i2c12 {
+>   	status = "okay";
+>   	clock-frequency = <400000>;
+>   
+>   	synaptics-rmi4-i2c@20 {
+> -		compatible = "syna,rmi4-i2c";
+> +		compatible = "syna,rmi4-s3706b", "syna,rmi4-i2c";
+>   		reg = <0x20>;
+>   		#address-cells = <1>;
+>   		#size-cells = <0>;
+>   		interrupts-extended = <&tlmm 125 IRQ_TYPE_EDGE_FALLING>;
+>   
+>   		pinctrl-names = "default";
+>   		pinctrl-0 = <&ts_default_pins>;
+>   
+> 
 
