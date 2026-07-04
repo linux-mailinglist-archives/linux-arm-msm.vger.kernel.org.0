@@ -1,41 +1,41 @@
-Return-Path: <linux-arm-msm+bounces-116484-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-116485-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id 0vSNLuy4SGr7swAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-116484-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 04 Jul 2026 09:40:28 +0200
+	id RATLGJS6SGpStAAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-116485-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 04 Jul 2026 09:47:32 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 020D0706F63
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 04 Jul 2026 09:40:28 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id A9DBC706FEE
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 04 Jul 2026 09:47:31 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
 	dkim=none;
 	dmarc=none;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116484-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116484-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116485-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116485-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 5970E303D735
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Jul 2026 07:39:25 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 398553023DF5
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Jul 2026 07:45:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2A4F2395240;
-	Sat,  4 Jul 2026 07:39:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4460439AD49;
+	Sat,  4 Jul 2026 07:45:09 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from cstnet.cn (smtp21.cstnet.cn [159.226.251.21])
 	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A01F5332614;
-	Sat,  4 Jul 2026 07:39:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8697F305669;
+	Sat,  4 Jul 2026 07:44:43 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783150761; cv=none; b=Z3MtllGWMtYRO97YUKEI4Jpnfwe6rJ9bUEjex/3oGl/71pH7i5SRWec/SY/CI0YLnBlnAiKgGpRtXgA+sw4xWGIFVgiY04HyHOpW5snu2uZWOkNhQ5OBi+MC/U3W2GG6Z8wnWS6GDJ6P+4CT5AFvm6uefQCYsYXKbZc/gNawpqA=
+	t=1783151106; cv=none; b=TCSdbTNv4FVtrUZRSnn38gAX3gsKzhIMq8eNb4FPMM7NjXNa9Y7eDxde5x6XSDe/J8tjixyF+jvMQe6Ctkvu0my2wbwiBijaiNmtIrGo7Xid5zfMt2sisV33nD0xq3EaHWfCL8SkhJvw9Brfpbf+gdvETZfqY+OWl9qgjXb/Yso=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783150761; c=relaxed/simple;
-	bh=vDi7ZIv0LX30+38k104O0IV/0nwgYD5f6bk7Uoz6wSc=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=WjB8II9j0s/JYIcZwtDAi7S7AazwiGo1lIqppOnM/6/VH5yIU3O63ODi1CF/eYHvMzuOWxhJDJSQ0uVzyWXurFo6nimytDFSiis0c+pOHojQsRqXXj05IulOG8Q1Hy/2g3ulxmpjn/TXh8Rm9y9CKOavvmSUWQxIWP9Q4xM+Hgs=
+	s=arc-20240116; t=1783151106; c=relaxed/simple;
+	bh=vEicX5XDYGUd/9ClncHb1iFoPQvynD4II9lehZ6RvW8=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=qoH85lrkezzZ3Jl1BTJ3cWZeKymazYuz8URoYwcQ2ZUFeDlqetL9KPReqEXUZ2aeQR1LWKIMuFLwuR2wZUFL+h20XgGA4Ae8YDMOmBANxE6LqFVicriE/O+p6gwUEm+Qlrns9XUyelOfeO6ixiPF2nVfi462d+b9YPGlCr2XApI=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.21
 Received: from localhost.localdomain (unknown [111.196.245.140])
-	by APP-01 (Coremail) with SMTP id qwCowACHLdaXuEhqWRehBA--.10561S2;
-	Sat, 04 Jul 2026 15:39:03 +0800 (CST)
+	by APP-01 (Coremail) with SMTP id qwCowABnBM3kuUhqIDWhBA--.11840S2;
+	Sat, 04 Jul 2026 15:44:36 +0800 (CST)
 From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 To: Srinivas Kandagatla <srini@kernel.org>,
 	Liam Girdwood <lgirdwood@gmail.com>,
@@ -46,9 +46,9 @@ To: Srinivas Kandagatla <srini@kernel.org>,
 	linux-arm-msm@vger.kernel.org,
 	linux-kernel@vger.kernel.org
 Cc: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Subject: [PATCH] ASoC: codecs: lpass-va-macro: Propagate regcache_sync() errors
-Date: Sat,  4 Jul 2026 15:39:01 +0800
-Message-ID: <20260704073901.40058-1-pengpeng@iscas.ac.cn>
+Subject: [PATCH] ASoC: codecs: wsa881x: Propagate regcache_sync() errors
+Date: Sat,  4 Jul 2026 15:44:34 +0800
+Message-ID: <20260704074434.54200-1-pengpeng@iscas.ac.cn>
 X-Mailer: git-send-email 2.50.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -57,30 +57,30 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:qwCowACHLdaXuEhqWRehBA--.10561S2
-X-Coremail-Antispam: 1UD129KBjvdXoW7GF1xGw13uF1ruF4ktryxKrg_yoWkXwc_ua
-	4kursruF4rWFnagayUtr4UA392grn7AFW5Kwnaqan7JryUtr43urW7Crnxuwn8Jw4Ik3W3
-	Wr4q9r48ArnIkjkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
-	9fnUUIcSsGvfJTRUUUb4kFF20E14v26r4j6ryUM7CY07I20VC2zVCF04k26cxKx2IYs7xG
+X-CM-TRANSID:qwCowABnBM3kuUhqIDWhBA--.11840S2
+X-Coremail-Antispam: 1UD129KBjvdXoWrtFWUZrWUWF4rKFW5Cw4fuFg_yoWDZFcEga
+	4xur4qgF4FgF4xC34UtrWYyrZ2gFs7CFy7Kr9agw43t34rtFnxAryUArnxua1UWry8C3W3
+	uF4q9r1fAFyjkjkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+	9fnUUIcSsGvfJTRUUUbxxFF20E14v26r4j6ryUM7CY07I20VC2zVCF04k26cxKx2IYs7xG
 	6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8w
-	A2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Cr0_
-	Gr1UM28EF7xvwVC2z280aVAFwI0_Cr1j6rxdM28EF7xvwVC2z280aVCY1x0267AKxVW0oV
-	Cq3wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0
-	I7IYx2IY67AKxVWUAVWUtwAv7VC2z280aVAFwI0_Gr0_Cr1lOx8S6xCaFVCjc4AY6r1j6r
-	4UM4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwCY1x0262kKe7AKxVWU
-	tVW8ZwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14
-	v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jw0_GFylIxkG
-	c2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUCVW8JwCI42IY6xIIjxv20xvEc7CjxVAFwI
-	0_Cr0_Gr1UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVW8JVWx
-	JwCI42IY6I8E87Iv6xkF7I0E14v26F4UJVW0obIYCTnIWIevJa73UjIFyTuYvjfU5dgADU
-	UUU
+	A2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Gr1j
+	6F4UJwA2z4x0Y4vEx4A2jsIE14v26F4UJVW0owA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_Gc
+	CE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E
+	2Ix0cI8IcVAFwI0_Jw0_WrylYx0Ex4A2jsIE14v26F4j6r4UJwAm72CE4IkC6x0Yz7v_Jr
+	0_Gr1lF7xvr2IYc2Ij64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7MxkF7I0En4kS14v2
+	6r1q6r43MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrV
+	AFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUtVW8ZwCI
+	c40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r4j6ryUMIIF0xvE2Ix0cI8IcVCY1x0267
+	AKxVWxJVW8Jr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26F4j
+	6r4UJwCI42IY6I8E87Iv6xkF7I0E14v26F4UJVW0obIYCTnIWIevJa73UjIFyTuYvjfUFh
+	L0UUUUU
 X-CM-SenderInfo: pshqw1xhqjqxpvfd2hldfou0/
 X-Rspamd-Action: no action
 X-Spamd-Result: default: False [0.04 / 15.00];
 	MID_CONTAINS_FROM(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	R_MISSING_CHARSET(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
@@ -88,13 +88,13 @@ X-Spamd-Result: default: False [0.04 / 15.00];
 	RCVD_TLS_LAST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	TAGGED_FROM(0.00)[bounces-116484-lists,linux-arm-msm=lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:srini@kernel.org,m:lgirdwood@gmail.com,m:broonie@kernel.org,m:perex@perex.cz,m:tiwai@suse.com,m:linux-sound@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:pengpeng@iscas.ac.cn,s:lists@lfdr.de];
+	TAGGED_FROM(0.00)[bounces-116485-lists,linux-arm-msm=lfdr.de];
 	FORWARDED(0.00)[lists@lfdr.de];
 	FORGED_SENDER(0.00)[pengpeng@iscas.ac.cn,linux-arm-msm@vger.kernel.org];
 	FREEMAIL_TO(0.00)[kernel.org,gmail.com,perex.cz,suse.com,vger.kernel.org];
-	FORGED_RECIPIENTS(0.00)[m:srini@kernel.org,m:lgirdwood@gmail.com,m:broonie@kernel.org,m:perex@perex.cz,m:tiwai@suse.com,m:linux-sound@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:pengpeng@iscas.ac.cn,s:lists@lfdr.de];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	RCVD_COUNT_THREE(0.00)[4];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
@@ -106,38 +106,37 @@ X-Spamd-Result: default: False [0.04 / 15.00];
 	R_DKIM_NA(0.00)[];
 	TO_DN_SOME(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,iscas.ac.cn:from_mime,iscas.ac.cn:email,iscas.ac.cn:mid,vger.kernel.org:from_smtp]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,iscas.ac.cn:from_mime,iscas.ac.cn:email,iscas.ac.cn:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 020D0706F63
+X-Rspamd-Queue-Id: A9DBC706FEE
 
-va_macro_runtime_resume() enables clocks, leaves cache-only mode, and
-replays cached register state. It currently ignores regcache_sync()
-failures and can report success.
+wsa881x_runtime_resume() powers the device up, waits for SoundWire
+initialization, leaves cache-only mode, and replays cached register
+state. It currently ignores regcache_sync() failures and returns
+success.
 
-Propagate sync failures, restore cache-only/dirty state, and unwind
-clocks enabled by the resume path.
+Propagate sync failures, restore cache-only/dirty state, and undo the
+shutdown GPIO state acquired by resume.
 
 Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
 ---
- sound/soc/codecs/lpass-va-macro.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ sound/soc/codecs/wsa881x.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/lpass-va-macro.c b/sound/soc/codecs/lpass-va-macro.c
-index 528d5b167ecf..06793e880c84 100644
---- a/sound/soc/codecs/lpass-va-macro.c
-+++ b/sound/soc/codecs/lpass-va-macro.c
-@@ -1744,7 +1744,15 @@ static int va_macro_runtime_resume(struct device *dev)
+diff --git a/sound/soc/codecs/wsa881x.c b/sound/soc/codecs/wsa881x.c
+index 5174614c3e83..47ac3e4985a5 100644
+--- a/sound/soc/codecs/wsa881x.c
++++ b/sound/soc/codecs/wsa881x.c
+@@ -1178,7 +1178,13 @@ static int wsa881x_runtime_resume(struct device *dev)
  	}
  
- 	regcache_cache_only(va->regmap, false);
--	regcache_sync(va->regmap);
-+	ret = regcache_sync(va->regmap);
+ 	regcache_cache_only(regmap, false);
+-	regcache_sync(regmap);
++	ret = regcache_sync(regmap);
 +	if (ret) {
-+		regcache_cache_only(va->regmap, true);
-+		regcache_mark_dirty(va->regmap);
-+		if (va->has_npl_clk)
-+			clk_disable_unprepare(va->npl);
-+		clk_disable_unprepare(va->mclk);
++		regcache_cache_only(regmap, true);
++		regcache_mark_dirty(regmap);
++		gpiod_direction_output(wsa881x->sd_n, 1);
 +		return ret;
 +	}
  
