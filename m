@@ -1,42 +1,42 @@
-Return-Path: <linux-arm-msm+bounces-116469-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-116470-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id /gvcIziGSGoXrQAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-116469-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 04 Jul 2026 06:04:08 +0200
+	id QH/ZOm+GSGogrQAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-116470-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 04 Jul 2026 06:05:03 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id D692D70696F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 04 Jul 2026 06:04:07 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 49099706977
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 04 Jul 2026 06:05:03 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
 	dkim=none;
 	dmarc=none;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116469-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116469-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116470-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116470-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id A1D69301E963
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Jul 2026 04:04:06 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 006903031805
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Jul 2026 04:05:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 84B923812D1;
-	Sat,  4 Jul 2026 04:04:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 92A8F3815D0;
+	Sat,  4 Jul 2026 04:05:00 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from cstnet.cn (smtp25.cstnet.cn [159.226.251.25])
 	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5888D37D11F;
-	Sat,  4 Jul 2026 04:03:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CFF03815DB;
+	Sat,  4 Jul 2026 04:04:38 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783137842; cv=none; b=PykOjrEO01WBAOHQs8vW0PY5Oqo96JBLIuW7jy9DDaWs2LSG4gw7cjWOkb3xNg6aSGcUhrTlnRGY3l5kwACyv0E8Hp8NHaThYs7KQ/43v48uhQnKQFFNkj3oxswDo0VLoakfVPj3TQsM1rwdlxJW7HDF3o+tlqB2/W3USI/tEx4=
+	t=1783137898; cv=none; b=RgRivEi9iz1oscavHJjqfOUgsaj7ZJnpWGgHyub3BzvhisQ8bQJRSvURrZfBDtIhsUXZqW6P81drJrD6/siAD1CdGu/ARmeUqQq1htBRyP8qrx75aCF+ONa/Y98kcvXCiop09eGz/IdKrtBIjsR6A/IE4tNoFSrasHnCtF+ME10=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783137842; c=relaxed/simple;
-	bh=GGNYwNPMSN6X99uYlMjfEa1h7SXX4MP7VULEFAiUWHY=;
+	s=arc-20240116; t=1783137898; c=relaxed/simple;
+	bh=R76cSiyn8M6Wqa6cnBG0PzAz5tesi2ulW3T+rCaQYnA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i36YKOqfrlKQvOTu/WiBNTHHorub2xPstIfqjw4guNge6sKwUFzVOi+YqOH2xyXFbgJ4GFmzyamuRFltJDyy5OeVSQ8qjEfUPGJzZx/fIVOfyJW4rsPO3A+m1rlTMuGODr+GRnkOQSkxsfmmIcuLvpng947Z8amS6uvYbb/OUo8=
+	 MIME-Version; b=SBdWVrb4Kkriy/eSyEhcMyJtFPihJ3gcYsr4DjtKGvauaTAK/MpMNV79JKaGx2NnOsNXDsjizHikCRpu0vh8b+yx0Bn/PR7nxBb6of2CvJpafrCtMmo7RLLI2IsTmYgHStf4UsHLBXohLaIXao/BYD+DI1vIjfCkagr+8OoW7fk=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.25
 Received: from localhost.localdomain (unknown [111.196.245.140])
-	by APP-05 (Coremail) with SMTP id zQCowADXYQUThkhq0FDJFg--.29904S2;
-	Sat, 04 Jul 2026 12:03:31 +0800 (CST)
+	by APP-05 (Coremail) with SMTP id zQCowAD3bfFDhkhqMFbJFg--.13151S2;
+	Sat, 04 Jul 2026 12:04:20 +0800 (CST)
 From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 To: Liam Girdwood <lgirdwood@gmail.com>,
 	Mark Brown <broonie@kernel.org>
@@ -60,9 +60,9 @@ Cc: Srinivas Kandagatla <srini@kernel.org>,
 	Shengjiu Wang <shengjiu.wang@nxp.com>,
 	Sharique Mohammad <sharq0406@gmail.com>,
 	Pengpeng Hou <pengpeng@iscas.ac.cn>
-Subject: [PATCH 15/19] ASoC: codecs: cs4349: Propagate regcache_sync() errors
-Date: Sat,  4 Jul 2026 12:03:30 +0800
-Message-ID: <20260704040330.23616-1-pengpeng@iscas.ac.cn>
+Subject: [PATCH 16/19] ASoC: codecs: rt1320-sdw: Propagate regcache_sync() errors
+Date: Sat,  4 Jul 2026 12:04:18 +0800
+Message-ID: <20260704040418.28181-1-pengpeng@iscas.ac.cn>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260704034845.14291-1-pengpeng@iscas.ac.cn>
 References: <20260704034845.14291-1-pengpeng@iscas.ac.cn>
@@ -73,30 +73,30 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:zQCowADXYQUThkhq0FDJFg--.29904S2
-X-Coremail-Antispam: 1UD129KBjvdXoWruFy8AF48trykXrWUGF13CFg_yoWDKFc_W3
-	4xuanruw45tF47G3yDJF4Fy3ykXrsruFy2v34qgwsrJ34rCFn8AFy7ZrnxCw1UXr4xCFW3
-	GFn29Fn5Ar9F9jkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
-	9fnUUIcSsGvfJTRUUUb-8FF20E14v26ryj6rWUM7CY07I20VC2zVCF04k26cxKx2IYs7xG
-	6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8w
-	A2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Gr1j
-	6F4UJwA2z4x0Y4vEx4A2jsIE14v26r4UJVWxJr1l84ACjcxK6I8E87Iv6xkF7I0E14v26F
-	4UJVW0owAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv
-	7VC0I7IYx2IY67AKxVWUtVWrXwAv7VC2z280aVAFwI0_Gr0_Cr1lOx8S6xCaFVCjc4AY6r
-	1j6r4UM4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwACI402YVCY1x02
-	628vn2kIc2xKxwCY1x0262kKe7AKxVW8ZVWrXwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4
-	IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1r
-	MI8E67AF67kF1VAFwI0_GFv_WrylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVW8JV
-	W5JwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Gr1j6F4UJwCI42IY6xAIw20EY4v20xvaj40_
-	Jr0_JF4lIxAIcVC2z280aVAFwI0_Gr0_Cr1lIxAIcVC2z280aVCY1x0267AKxVW8Jr0_Cr
-	1UYxBIdaVFxhVjvjDU0xZFpf9x0pRc6p9UUUUU=
+X-CM-TRANSID:zQCowAD3bfFDhkhqMFbJFg--.13151S2
+X-Coremail-Antispam: 1UD129KBjvJXoW7ZrW5CF4UWFyxJFyfuF4UArb_yoW8Wrykpr
+	ZxCFyDKF4xWr13uF43Xr17J3Z5Kr93Ka1fZw1Yywsa93Z8Ww12vF15AFWUZF90gry7GFsr
+	Zr4jyayUuF15XaUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUU9q14x267AKxVW5JVWrJwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
+	1l84ACjcxK6xIIjxv20xvE14v26ryj6F1UM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4U
+	JVWxJr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AKxV
+	WxJr0_GcWle2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8CrVC2j2Wl
+	Yx0E2Ix0cI8IcVAFwI0_Jw0_WrylYx0Ex4A2jsIE14v26r4j6F4UMcvjeVCFs4IE7xkEbV
+	WUJVW8JwACjcxG0xvY0x0EwIxGrwACjI8F5VA0II8E6IAqYI8I648v4I1lFIxGxcIEc7Cj
+	xVA2Y2ka0xkIwI1lc7CjxVAaw2AFwI0_GFv_Wryl42xK82IYc2Ij64vIr41l4I8I3I0E4I
+	kC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWU
+	WwC2zVAF1VAY17CE14v26r4a6rW5MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Gr
+	0_Xr1lIxAIcVC0I7IYx2IY6xkF7I0E14v26r4UJVWxJr1lIxAIcVCF04k26cxKx2IYs7xG
+	6r1j6r1xMIIF0xvEx4A2jsIE14v26r4j6F4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr1j6F
+	4UJbIYCTnIWIevJa73UjIFyTuYvjTRABMKDUUUU
 X-CM-SenderInfo: pshqw1xhqjqxpvfd2hldfou0/
 X-Rspamd-Action: no action
 X-Spamd-Result: default: False [0.04 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MID_CONTAINS_FROM(1.00)[];
 	R_MISSING_CHARSET(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
@@ -110,7 +110,7 @@ X-Spamd-Result: default: False [0.04 / 15.00];
 	FORGED_SENDER(0.00)[pengpeng@iscas.ac.cn,linux-arm-msm@vger.kernel.org];
 	MIME_TRACE(0.00)[0:+];
 	FORWARDED(0.00)[lists@lfdr.de];
-	TAGGED_FROM(0.00)[bounces-116469-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-116470-lists,linux-arm-msm=lfdr.de];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
@@ -122,42 +122,56 @@ X-Spamd-Result: default: False [0.04 / 15.00];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
 	R_DKIM_NA(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,vger.kernel.org:from_smtp,iscas.ac.cn:from_mime,iscas.ac.cn:email,iscas.ac.cn:mid]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: D692D70696F
+X-Rspamd-Queue-Id: 49099706977
 
-regcache_sync() can fail while replaying cached register state during
-runtime resume. cs4349_runtime_resume() currently ignores that failure
-and returns success.
+rt1320_dev_resume() clears cache-only mode for both regmaps and
+replays cached register state into the device. Both regcache_sync()
+calls currently ignore their return values, so resume can report
+success even if either replay failed.
 
-Propagate the error, restore cache-only/dirty state, and hold reset low
-again on sync failure.
+Check both sync operations and return the first error. On failure,
+restore both regmaps to cache-only mode and mark both caches dirty,
+so a later successful resume attempt starts from a coherent suspended
+cache state instead of a partially live pair of regmaps.
 
 Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
 ---
- sound/soc/codecs/cs4349.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ sound/soc/codecs/rt1320-sdw.c | 17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/codecs/cs4349.c b/sound/soc/codecs/cs4349.c
-index 6ac6d306b054..9a7f70175717 100644
---- a/sound/soc/codecs/cs4349.c
-+++ b/sound/soc/codecs/cs4349.c
-@@ -340,7 +340,13 @@ static int cs4349_runtime_resume(struct device *dev)
- 	gpiod_set_value_cansleep(cs4349->reset_gpio, 1);
+diff --git a/sound/soc/codecs/rt1320-sdw.c b/sound/soc/codecs/rt1320-sdw.c
+index 1e930b27c67a..b7e2d44ae2fb 100644
+--- a/sound/soc/codecs/rt1320-sdw.c
++++ b/sound/soc/codecs/rt1320-sdw.c
+@@ -3062,10 +3062,23 @@ static int rt1320_dev_resume(struct device *dev)
+ 		return ret;
  
- 	regcache_cache_only(cs4349->regmap, false);
--	regcache_sync(cs4349->regmap);
-+	ret = regcache_sync(cs4349->regmap);
-+	if (ret) {
-+		regcache_cache_only(cs4349->regmap, true);
-+		regcache_mark_dirty(cs4349->regmap);
-+		gpiod_set_value_cansleep(cs4349->reset_gpio, 0);
-+		return ret;
-+	}
- 
+ 	regcache_cache_only(rt1320->regmap, false);
+-	regcache_sync(rt1320->regmap);
++	ret = regcache_sync(rt1320->regmap);
++	if (ret)
++		goto err_sync;
++
+ 	regcache_cache_only(rt1320->mbq_regmap, false);
+-	regcache_sync(rt1320->mbq_regmap);
++	ret = regcache_sync(rt1320->mbq_regmap);
++	if (ret)
++		goto err_sync;
++
  	return 0;
++
++err_sync:
++	regcache_cache_only(rt1320->regmap, true);
++	regcache_cache_only(rt1320->mbq_regmap, true);
++	regcache_mark_dirty(rt1320->regmap);
++	regcache_mark_dirty(rt1320->mbq_regmap);
++	return ret;
  }
+ 
+ static const struct dev_pm_ops rt1320_pm = {
 -- 
 2.43.0
 
