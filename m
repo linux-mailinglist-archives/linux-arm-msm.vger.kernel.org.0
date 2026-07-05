@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-116613-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-116614-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id j0RMDBXaSmqdIgEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-116613-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Jul 2026 00:26:29 +0200
+	id HXSWDW/aSmq5IgEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-116614-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Jul 2026 00:27:59 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7540270BA09
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Jul 2026 00:26:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A83BD70BA2C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Jul 2026 00:27:58 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b="Oc2EpdS/";
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=F6JeEaOT;
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116613-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116613-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116614-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116614-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 26F8530053D7
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  5 Jul 2026 22:26:27 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id EBA6530075D7
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  5 Jul 2026 22:27:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A10B3370D7D;
-	Sun,  5 Jul 2026 22:26:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 02FDB371072;
+	Sun,  5 Jul 2026 22:27:55 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 705832FE56E;
-	Sun,  5 Jul 2026 22:26:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF0532FE56E;
+	Sun,  5 Jul 2026 22:27:53 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783290386; cv=none; b=PJD7No+Xc00xiNdxNwL8WZBjk5rL8HIfA6czZeD0vunUoqcrWGPld3pgr6kNUdeUB7dWbWW8BRLgR10mdSevxOZSMYZfE4uTESZD30um9mmk86MFG8zGp+TjsQMqT7gNoevyZPLzN/jqyZ/T+lOey6TVXRx8Uz0opGEmiBzZIuI=
+	t=1783290474; cv=none; b=ET3gOqGIhlbGHieEeCJAqqUac6rlrpwp5jmc+ewVDxGqUg+aX14WuStpTDtyQC7WXfYMNj46ldP969r9tJ3C8RtwwkZ1kPYDzF+0xtAZ5/KzUVu+DjcvzPMXx/V6lonmByZ4DoQFGfz8JetOrmar3hzjHh2jgqNv0WN12uJ9iZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783290386; c=relaxed/simple;
-	bh=Li3zyx8I9449OSxEiPYCCAq4TNpMSTfm3cYi6CSjwgA=;
+	s=arc-20240116; t=1783290474; c=relaxed/simple;
+	bh=wnwfn0itXQqF4lAfzF0kkcrD3IsXi6LMP1l5ZnCqviI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mkxhO7+Rru0SqSQ3JmcZ7j2/j2qGPTCkyg6XFEGhBaLpUdsgBM6b4gZlOwvdtXHFGRHPPgpR4ddauQoHvN51n/NA1Eo56KQW0mQGaWHJLz758492fF3li5zLJbj91ZiXYph/pQU6KFUkhVcBDs0Nn0V+LbZv+acn94RVttPEQwM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Oc2EpdS/; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 962BF1F000E9;
-	Sun,  5 Jul 2026 22:26:24 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=ldflw0mcQ/kOOHL/Yx5WT8Wv+XEwAL2uYHabI1Kj0a20VlhQBSEr8xSnLolTynrvXsUcLXBMqEPy903F2kcF4C25XzSQvSSz0QzmZUJBo5pFokq+1ONvEh2Wy4cFD4x/ubp8p/gQT+Z6Xs1p0+KbyKVl5ya3tai+lAiFrdFhyOI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F6JeEaOT; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 164DB1F000E9;
+	Sun,  5 Jul 2026 22:27:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783290385;
-	bh=XKHn5GQOs/hGw34f8hdEnhHa/THNjs4DDuEXGF5lsqA=;
+	s=k20260515; t=1783290473;
+	bh=7k/DZf/BFptIPxHIul4Wz5wKNd0rMsNKb4fOGcMur3w=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=Oc2EpdS/geufNhuSK4NmGv7bWrgjd9DJc7x51qAPx9dNV6ia5q5wqCtITDwGlyUKP
-	 ZbtHI8Em5dCRc7smQWqeIIhO6ofKmxHQ1PdtoHcuoQwFit59qzq7ggCfojcTJDsF83
-	 HJ722qdrGmep31f6roZbTdBovtbU4gnqndn7c6Jeqb2hm7YYJwpVpaPKvrtk1JECBl
-	 rHim1LVUbpfllt0U8eK0iu0I2Uof2Z2/xxieKtYEXS9yextu7V0z689SRcjoCB3DPx
-	 6yhNt3ob+z0mPl+mymYiLRZXwDEmlyMuFNrouFycSbtCEwOw6O9hKYQoa3k4607YaD
-	 7yJPHDNPDk5Dw==
-Date: Sun, 5 Jul 2026 17:26:22 -0500
+	b=F6JeEaOTSIdEKgBbz9ErXGAo4X1MYmXHzIVrUM54SyII9pn129l5QEpaWGTEVdLat
+	 wWwox3PJKDoyiiSt6/VFIRs/nQtJATPwJQ8zraOHgumOlPvOSP6gw7YxZF8Tm1MZnF
+	 ZfaSlQFHOeco7bSXbhaAvvfqzQB6yj7QqlT4cNacNhbB/GIKVHavMv955ieemUFB+r
+	 ERfExnt4n031u/FcvdXhrJa6f1STPH22uBFQdl5aR02ozdfI0m4ZXVlktQGDGNVI3D
+	 SLHooChSBD6QbGrvovZD/uFKiq3YkuNdpdWd/d7GbrFlErRbjyR9Ft6yTggXLb9HWp
+	 nTQMlNZSw+oxg==
+Date: Sun, 5 Jul 2026 17:27:50 -0500
 From: Bjorn Andersson <andersson@kernel.org>
 To: Ananthu C V <ananthu.cv@oss.qualcomm.com>
 Cc: Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
 	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
 	Mathieu Poirier <mathieu.poirier@linaro.org>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
 	linux-kernel@vger.kernel.org, linux-remoteproc@vger.kernel.org
-Subject: Re: [PATCH v4 1/3] remoteproc: qcom: pas: add needs_tzmem flag to
- force shmbridge creation
-Message-ID: <akrWGWtPpIJhL0pF@baldur>
+Subject: Re: [PATCH v4 2/3] arm64: dts: qcom: fix SoCCP memory mappings for
+ Glymur
+Message-ID: <akraIZWuQlYvPW8v@baldur>
 References: <20260703-glymur-soccp-v4-0-b706c4c9b3e2@oss.qualcomm.com>
- <20260703-glymur-soccp-v4-1-b706c4c9b3e2@oss.qualcomm.com>
+ <20260703-glymur-soccp-v4-2-b706c4c9b3e2@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,22 +66,21 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260703-glymur-soccp-v4-1-b706c4c9b3e2@oss.qualcomm.com>
+In-Reply-To: <20260703-glymur-soccp-v4-2-b706c4c9b3e2@oss.qualcomm.com>
 X-Rspamd-Action: no action
 X-Spamd-Result: default: False [-3.16 / 15.00];
 	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-116613-lists,linux-arm-msm=lfdr.de];
-	URIBL_MULTI_FAIL(0.00)[sea.lore.kernel.org:server fail,qualcomm.com:server fail,vger.kernel.org:server fail,baldur:server fail];
 	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-116614-lists,linux-arm-msm=lfdr.de];
 	FORGED_RECIPIENTS(0.00)[m:ananthu.cv@oss.qualcomm.com,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:mathieu.poirier@linaro.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-remoteproc@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	FORGED_SENDER(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
 	MIME_TRACE(0.00)[0:+];
@@ -102,112 +101,52 @@ X-Spamd-Result: default: False [-3.16 / 15.00];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,vger.kernel.org:from_smtp,qualcomm.com:email]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,baldur:mid,vger.kernel.org:from_smtp]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 7540270BA09
+X-Rspamd-Queue-Id: A83BD70BA2C
 
-On Fri, Jul 03, 2026 at 05:31:11AM -0700, Ananthu C V wrote:
-> Most Qualcomm platforms feature Gunyah hypervisor, which typically
-> handles Stage 2 IOMMU configuration.
+On Fri, Jul 03, 2026 at 05:31:12AM -0700, Ananthu C V wrote:
+> Fixup the SoCCP/SoCCP DTB memory regions to reflect the memory
+> region requirements of the SoCCP firmware, as described in the
+> Glymur v21 memory map release.
 
-This statement is true, but the IOMMU isn't involved in the interaction
-between OS and TZ, so it doesn't add value to your problem description.
-
-> Additionally, SHM bridge setup is required to enable memory protection
-> for both remoteproc metadata and its memory regions.
-
-"Additionally"? Isn't this the entire problem?
-
-> When the aforementioned hypervisor is absent, the operating system
-> must perform these configurations instead.
-
-Please rephrase these three sentences to make sure we have a clear
-problem description.
-
-Then, at this point in the text you have established the problem, so
-break the paragraph with an empty line.
-
-> We've been relying on the iommu property being present for this, but
-> for remoteprocs that are already running like SoCCP the mappings are
-> already in place, and any attempt to recreate them while active would
-> lead to smmu faults and a non-functional remoteproc.
-
-This is a significant detail. Please expand the description around
-"attempt to recreate them while active" to ensure that it's clear to the
-reader what the problem (what does it mean that mappings are already in
-place).
-
-Then another </p><p> here, as we're once again in need of some breathing
-and thinking-room.
-
-> Fix this by adding a needs_tzmem
-> flag which ensures tzmem and SHM bridge setup is performed independent to
-> the iommu property being present.
-
-"flag which ensures...", the flag doesn't ensure anything, it is
-propagates as an alternative trigger to the PAS helpers to ensure that
-the shmbridge is established.
-
-Regards,
-Bjorn
+Please change your commit message to start with a problem description,
+not the action taken by the patch.
 
 > 
 > Signed-off-by: Ananthu C V <ananthu.cv@oss.qualcomm.com>
 > ---
->  drivers/remoteproc/qcom_q6v5_pas.c | 24 ++++++++++++++++++++++--
->  1 file changed, 22 insertions(+), 2 deletions(-)
+>  arch/arm64/boot/dts/qcom/glymur.dtsi | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
 > 
-> diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
-> index 60a4337d9e51..cd7273fbcf98 100644
-> --- a/drivers/remoteproc/qcom_q6v5_pas.c
-> +++ b/drivers/remoteproc/qcom_q6v5_pas.c
-> @@ -61,6 +61,7 @@ struct qcom_pas_data {
->  	bool region_assign_shared;
->  	int region_assign_vmid;
->  	bool early_boot;
-> +	bool needs_tzmem;
->  };
+> diff --git a/arch/arm64/boot/dts/qcom/glymur.dtsi b/arch/arm64/boot/dts/qcom/glymur.dtsi
+> index 20b49af7298e..5f44f68efde2 100644
+> --- a/arch/arm64/boot/dts/qcom/glymur.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/glymur.dtsi
+> @@ -602,13 +602,13 @@ spss_region_mem: spss@88a00000 {
+>  			no-map;
+>  		};
 >  
->  struct qcom_pas {
-> @@ -914,8 +915,8 @@ static int qcom_pas_probe(struct platform_device *pdev)
->  		goto remove_ssr_sysmon;
->  	}
+> -		soccpdtb_mem: soccpdtb@892e0000 {
+> -			reg = <0x0 0x892e0000 0x0 0x20000>;
+> +		soccpdtb_mem: soccpdtb@89200000 {
+> +			reg = <0x0 0x89200000 0x0 0x20000>;
+>  			no-map;
+>  		};
 >  
-> -	pas->pas_ctx->use_tzmem = rproc->has_iommu;
-> -	pas->dtb_pas_ctx->use_tzmem = rproc->has_iommu;
-> +	pas->pas_ctx->use_tzmem = desc->needs_tzmem || rproc->has_iommu;
-> +	pas->dtb_pas_ctx->use_tzmem = desc->needs_tzmem || rproc->has_iommu;
+> -		soccp_mem: soccp@89300000 {
+> -			reg = <0x0 0x89300000 0x0 0x400000>;
+> +		soccp_mem: soccp@88e00000 {
+
+Now the sort order is wrong.
+
+Regards,
+Bjorn
+
+> +			reg = <0x0 0x88e00000 0x0 0x400000>;
+>  			no-map;
+>  		};
 >  
->  	if (desc->early_boot)
->  		pas->rproc->state = RPROC_DETACHED;
-> @@ -1657,8 +1658,27 @@ static const struct qcom_pas_data kaanapali_soccp_resource = {
->  	.early_boot = true,
->  };
->  
-> +static const struct qcom_pas_data glymur_soccp_resource = {
-> +	.crash_reason_smem = 656,
-> +	.firmware_name = "soccp.mbn",
-> +	.dtb_firmware_name = "soccp_dtb.mbn",
-> +	.pas_id = 51,
-> +	.dtb_pas_id = 0x41,
-> +	.proxy_pd_names = (char*[]){
-> +		"cx",
-> +		"mx",
-> +		NULL
-> +	},
-> +	.ssr_name = "soccp",
-> +	.sysmon_name = "soccp",
-> +	.auto_boot = true,
-> +	.early_boot = true,
-> +	.needs_tzmem = true,
-> +};
-> +
->  static const struct of_device_id qcom_pas_of_match[] = {
->  	{ .compatible = "qcom,eliza-adsp-pas", .data = &sm8550_adsp_resource },
-> +	{ .compatible = "qcom,glymur-soccp-pas", .data = &glymur_soccp_resource },
->  	{ .compatible = "qcom,kaanapali-soccp-pas", .data = &kaanapali_soccp_resource },
->  	{ .compatible = "qcom,milos-adsp-pas", .data = &sm8550_adsp_resource },
->  	{ .compatible = "qcom,milos-cdsp-pas", .data = &milos_cdsp_resource },
 > 
 > -- 
 > 2.43.0
