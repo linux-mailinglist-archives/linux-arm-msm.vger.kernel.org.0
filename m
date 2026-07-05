@@ -1,83 +1,53 @@
-Return-Path: <linux-arm-msm+bounces-116550-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-116551-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id XaTPKqB5SmoaDwEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-116550-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 05 Jul 2026 17:34:56 +0200
+	id /KDhCb16Smp6DwEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-116551-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 05 Jul 2026 17:39:41 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id E907D70A75F
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 05 Jul 2026 17:34:55 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 839B270A7A2
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 05 Jul 2026 17:39:40 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=gmail.com header.s=20251104 header.b=OuVK7ctZ;
-	dmarc=pass (policy=none) header.from=gmail.com;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116550-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116550-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=OO60nRwj;
+	dmarc=pass (policy=quarantine) header.from=kernel.org;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116551-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116551-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 95C9A3008229
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  5 Jul 2026 15:34:54 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 81D3E301387E
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  5 Jul 2026 15:39:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 41A603806D9;
-	Sun,  5 Jul 2026 15:34:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 63CE1380FDA;
+	Sun,  5 Jul 2026 15:39:36 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC8FC283FCE
-	for <linux-arm-msm@vger.kernel.org>; Sun,  5 Jul 2026 15:34:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54453357D08;
+	Sun,  5 Jul 2026 15:39:35 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783265694; cv=none; b=UQH1VmPzUk8KYAJAKZaH1vcSMiPLaxaSNpZJpAac+bQ02HwAJRJeNiU13dtrZyPpPAukZ4/hokuFyvzy9cETL7hCRQcUJ747exGFu7pQyxU+2dmgF1IJRiWy/uRkmrOTf9+yXPmfGJGpFMH2Rsx4nXOIXE+NQE6j4LG6jjXJUWQ=
+	t=1783265976; cv=none; b=Q0eWERAG3UuW8i7HQ/2kit/ENKwwLFPPojW8565mr2GGmxMCfGSbymgdZTUIkxp6MExLl2clAALYUxyQAhf2IE8SCRd1b2k8YXTtT1ykLH6YpPs3lnJ5/+Y19kGNDWZQPKQ6UkTVyp2LgpxvZsskV/WlXrA2XHGEknj5Ogk6MFk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783265694; c=relaxed/simple;
-	bh=2Yc2IMD0mgTkF39SyRHg6q3EK+7fbcohsK/5Wz6q898=;
+	s=arc-20240116; t=1783265976; c=relaxed/simple;
+	bh=Ztv7XBugNgvHIDMFuwQqtJbP+aCw1Pf+o+IMT3Ctbjs=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=GZdE/96+xLZEAbpQ6x5vXypUSFmw6JlTpvdwWTh85zg//MoIVS1f9fZ/acJ6Ic8XmZ1DusSeNk/MutEStgPQK0ZKXu90KuLAolxtPYFYFlgTqw3d+V/cExN8qVMz7juWRAMYVSYJGDGXyML/LitziITSHfBAwIqymVKYzXo0mmA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OuVK7ctZ; arc=none smtp.client-ip=209.85.214.170
-Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-2cace91f112so16809695ad.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 05 Jul 2026 08:34:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783265692; x=1783870492; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=uPm/HN4GUNTi7jMto5jqjALmE4rLy5csX5siSaTYK+Q=;
-        b=OuVK7ctZpjf4W8wbXOGHLD8m7MevTq1rZcAL52EoyQF1kaRyTGE5ljbawcs/cAYtps
-         wkra1OME/NgilTSPXM5iY7ZiyM9TOpLwN4l0VVZNWFq5lVcxIXAmMtl66cGeHHk2VrLN
-         UFvljSV4pIPASSFglVUsBefT47qj/LMVyWcKQvEhehrrIMm+KkqatTDWvzYZV6OPxH6g
-         GHa+7D1vcEjpN0LrFAzB/WKIuBx9YQOXOSNFMd59koSV1boh9+72FnaId9+93zoHsB3q
-         HDp5AOsXxjIVwmsH7ZpvNC1++4ggxyrxXQu0t+cEj5z5Mf9uv4/F0OC9yg2TEEL8O+kx
-         F8JQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783265692; x=1783870492;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=uPm/HN4GUNTi7jMto5jqjALmE4rLy5csX5siSaTYK+Q=;
-        b=q0O5fh7crbt0khWUmfQ5cP/ro28KwTBD4036Hv4v/xFjxbB8ocmIOqKSjmzaJNRSFR
-         kOcTZjx0eaiQPECqP7zo/3srofgQ9vP4MtsXy4RE+YQC0VwFEs5j782CGmorXoFlQOZ9
-         0N6HRZx9xwq8JZu/fJS+7GkefYUsatQV1w7jz5BJq89Lr9tUBiP2vo+nHyLmq7E+d+GM
-         hTQ54LHj9f9zpq4/w3yvntJw4NnNKQUoF0RaFxE17lP9pHmiLlLp0hj0Lik623yAx8T6
-         SmLZASGt3eA2MJEkwPU2Mk8sRv+mh6rrXijgLKbJMNYRkgCzbfeYPk9zXfuQY0JRjMr/
-         GzOQ==
-X-Gm-Message-State: AOJu0YyZ2zK2lNEFmUq/soAMtG/RLEYmgNn0OT4+rs+0QCJbt4rjMzEB
-	FEcKRZSkfNq0rOuthuY8KRkrHjnxiqqc9Xu2DiXDFgkRoSQL2S+MfAUw
-X-Gm-Gg: AfdE7cmD1HrEZUTREmE+vHIwgHucUwukJDJtjSMrRr9BQAJ6Ed1YWvF74a4zC9l66zR
-	wPhvu2n6aFcAQo4IVgBxylPqBRrNjPYlBloZCJgw0e70oLvwDMIfzWcWvUn0qaEO8IGCSTuoQ5v
-	zFKSG/pcYGX6EfAQotcQcXbPEvOVrl/Bp2vWps+xfSzkLqwooegAyADoEdyNAyePJviNpbyp1Zk
-	kaXUXByw47Rvg4zeyrBQmb5lKRQHEN8C3+u46wFzY+LRff60aoS45WeHY2QqdPxiuerjroE6H+G
-	S1NvOC9rhQUqJbKR/8oZpjsDgSWqR8NVP/uwTruFe7ff/7XlVC+KuZdQNeZIH7MAr4SmAy7KZPH
-	slq8XWpwsa1M9B8+1J7QgmsH8oJrCIYihCPV+TgS7AFQF/L2MuMi/wYY+hNNxVcyJ2n0S9Gs9fz
-	P6upAl2VbyJEdV4aU/HzdRhdObycf/
-X-Received: by 2002:a17:90b:134b:b0:380:534f:58c2 with SMTP id 98e67ed59e1d1-3829f5e8447mr5859302a91.30.1783265692223;
-        Sun, 05 Jul 2026 08:34:52 -0700 (PDT)
-Received: from [192.168.1.91] (cwgw.codeweavers.com. [4.36.164.2])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-30f3c8b19c7sm25398486eec.4.2026.07.05.08.34.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 05 Jul 2026 08:34:51 -0700 (PDT)
-Message-ID: <68b83361-42a5-45ac-8441-f0661b005f85@gmail.com>
-Date: Sun, 5 Jul 2026 23:34:45 +0800
+	 In-Reply-To:Content-Type; b=vBjMXhLIVRW/jVN/ARaYmfZn8l1p7+v55X7K9y96u//e+enO/ZMKAR6V8n7d0xtEmMILTrytJmEy5ve/WZN94eOkOBvC53qA7ggX4ducYRwwEdJxL0JTXzEo0P4CP9DMLw0vi1El23jh3pnsk/3W05onIpbX+YxHbN/rTrZXS40=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OO60nRwj; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D18521F000E9;
+	Sun,  5 Jul 2026 15:39:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1783265975;
+	bh=fPFv6wrmFhvEO9FsjYFBiyfFxiZykbqBmyRffHnAoo0=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=OO60nRwjnJcARAgoaalIWDAWJZK0DLyawG3EUvndofyYhxMSvl5L4M/5OQAW5sgdG
+	 L+CVdYOQ3XznJb+Ps4RMv0g2J4k+UJ/c9Tqbprky88S7NlpzdtxdPXXe72FdRn624J
+	 0GRDXGD5vGS9zmajxmzXorxWRsF1MjpWy2jnFtVn7cQsBfKKoaMzstQZ0vlxPql8Yl
+	 ehm2mt3KR7S3ufX/kElxhGCFWeEZrsMLOQpW3LkF7mWcA3WrbBchuMN3iL0mqg8Yf0
+	 QpdUXIOhsERx9SGNm1H6/ZX/ZVUz9OZwebvmr4Zo/F+y2esdm8xJ80rJNjOylULkST
+	 V/RPOOpuEdgYQ==
+Message-ID: <2392702d-d2e9-4537-ae51-9c6b619ec334@kernel.org>
+Date: Sun, 5 Jul 2026 17:39:29 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -87,7 +57,7 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH 1/2] dt-bindings: arm: qcom: Add Acer Swift Go Pro AI
  (SFA14-11)
-To: Krzysztof Kozlowski <krzk@kernel.org>,
+To: Kaipeng Zeng <kaipeng94@gmail.com>,
  Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, devicetree@vger.kernel.org
 Cc: linux-arm-msm@vger.kernel.org, conor+dt@kernel.org, krzk+dt@kernel.org,
  robh@kernel.org, konradybcio@kernel.org, andersson@kernel.org
@@ -96,106 +66,116 @@ References: <20260702063156.35169-1-kaipeng94@gmail.com>
  <9d9645e5-2e63-4c22-8b5f-b0f4368c581f@kernel.org>
  <bdac77fc-41a2-4c89-9f60-3a8eefc9b9a4@oss.qualcomm.com>
  <a15ae7ec-4a83-4d14-b187-738f5006008a@kernel.org>
+ <68b83361-42a5-45ac-8441-f0661b005f85@gmail.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
-From: Kaipeng Zeng <kaipeng94@gmail.com>
-In-Reply-To: <a15ae7ec-4a83-4d14-b187-738f5006008a@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Autocrypt: addr=krzk@kernel.org; keydata=
+ xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
+ cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
+ JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
+ gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
+ J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
+ NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
+ BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
+ vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
+ Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
+ TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzSVLcnp5c3p0b2Yg
+ S296bG93c2tpIDxrcnprQGtlcm5lbC5vcmc+wsGPBBMBCgA5AhsDBgsJCAcDAgYVCAIJCgsE
+ FgIDAQIeAQIXgBYhBJvQfg4MUfjVlne3VBuTQ307QWKbBQJp2mE8AAoJEBuTQ307QWKbeaIP
+ /ihHTkTW4KsN/DQ945JJbyu5tI0J80Wue7QyyLPglyKfhgb5cLLNPpOC8cCIJsc7+W3i2P38
+ s2c1cOH6CYGE7E9ur3Vfme8NW2S2I/Z8VC7bZnzyS23wT17LrsdS/qCpx4o8U+pt/xdXDKph
+ EGRYrIEmMpUWvyYzyYKGIe25FtaayIIKpq8eZYyFcp2f/sG5IkOW5uZzHPMPdcm87jU7fyuQ
+ rAU2vx9r+ulUfQ/q9Z2roC/ode3l7t2pN7BCBCsUDp6JCrUyZrtT1e7EbA0ZRP3aOBNk2P2E
+ DQOgJGjGdO5Yx2Y9LFtltu6JbsBJHi1syGRX3AtQYOMc4Y1WGoeZJmMlvKj2ZqqXNkcWi2DS
+ IQEWB0uW6CqFsBBIMGDa+6OzdaVO/uAVXWDWml02Men3CILdI1MbVjoh8ECqYUY7OQ+JJvNN
+ vnliuq5WM3Ghd3jg/LZZrxXjdIginRHFQCjIJYLKpLZWm1/iDFedcfzqRNYmTtqscdCNHW41
+ oT3Z7BmO9xwdjuwBS6nmS6JJwkbf5Ot2QR4pB/DRU7ZwjT1qHe+9r9gF32wXVQatHNGK/VVu
+ sfwOnkdxCWkp/qb2gdQRmZh+SedStWshigH6sNfuHBloF/q+hjMRc8b2m326OZdrbSHwY1Sz
+ vti8Hn7n8NjdHO9LKB7BIdjkA9DA5WsqOuVCzsFNBFVDXDQBEADNkrQYSREUL4D3Gws46JEo
+ Z9HEQOKtkrwjrzlw/tCmqVzERRPvz2Xg8n7+HRCrgqnodIYoUh5WsU84N03KlLueMNsWLJBv
+ BaubYN4JuJIdRr4dS4oyF1/fQAQPHh8Thpiz0SAZFx6iWKB7Qrz3OrGCjTPcW6eiOMheesVS
+ 5hxietSmlin+SilmIAPZHx7n242u6kdHOh+/SyLImKn/dh9RzatVpUKbv34eP1wAGldWsRxb
+ f3WP9pFNObSzI/Bo3kA89Xx2rO2roC+Gq4LeHvo7ptzcLcrqaHUAcZ3CgFG88CnA6z6lBZn0
+ WyewEcPOPdcUB2Q7D/NiUY+HDiV99rAYPJztjeTrBSTnHeSBPb+qn5ZZGQwIdUW9YegxWKvX
+ XHTwB5eMzo/RB6vffwqcnHDoe0q7VgzRRZJwpi6aMIXLfeWZ5Wrwaw2zldFuO4Dt91pFzBSO
+ IpeMtfgb/Pfe/a1WJ/GgaIRIBE+NUqckM+3zJHGmVPqJP/h2Iwv6nw8U+7Yyl6gUBLHFTg2h
+ YnLFJI4Xjg+AX1hHFVKmvl3VBHIsBv0oDcsQWXqY+NaFahT0lRPjYtrTa1v3tem/JoFzZ4B0
+ p27K+qQCF2R96hVvuEyjzBmdq2esyE6zIqftdo4MOJho8uctOiWbwNNq2U9pPWmu4vXVFBYI
+ GmpyNPYzRm0QPwARAQABwsF2BBgBCgAgAhsMFiEEm9B+DgxR+NWWd7dUG5NDfTtBYpsFAmna
+ YUkACgkQG5NDfTtBYptX+BAApg32CkxwNucNEi8WfWA8oKkW0y8YDuY6ORMo9FWNGiT/OTy0
+ vyJrLocrpn86zwfjVp+eCrssPYh8eqJfnWqmYv6ACQtHPYzPZQ3mSo8H97Z01oUxITzCxpXm
+ ZkLgPIqtDPcC2E3dPM/fVxcyowM8XsaMA9wcsaUYrta8toOq2b9tKcjleKMfMrm0gQ9u7wUc
+ QbLkwj6TCLOwucb07GXzLTNF9PZmaDUpKAZjMjmrW+le+SFvQbhamx0rxLWPR0NWntXpbCn+
+ +ACch03p/JyTBVktxFsFyCt7pTPE1kEaeuXBTe/a2D9iQvRxRW19LvuO2e59/u1wYUiH/orz
+ wbIC2S4dBsPAPihL3ztOU1yE86GPyQtSE0kU+/7snnLt4QGi6PChf3t5gnNjAzjUUovO8rgI
+ c+5yN5heq5loYHgK6OQ9OlHzsPHO9e9MOQcKlFycs1pyijFGzDwdNUm/SchK8iWT2QApTx4A
+ K9bCVaboTA2T77QYkRcRJYSsO1alGX0ome/hMLD1daXlkrNUp1HWa3K4iytLRXjCSIorWiGs
+ n+q3krnpXu3TFkA8qtOFZMdnIiFuiq1yLT8hptsV5xh1TA2nsVvSYiaCr3q4s4BKjS/KrLDb
+ qoxzw8ISjdUp4pA85vb6YLCmb39NgidD+7PmAr65lBNveIFynTgsja1rRQ4=
+In-Reply-To: <68b83361-42a5-45ac-8441-f0661b005f85@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-3.66 / 15.00];
+	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-116550-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-116551-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:krzk@kernel.org,m:konrad.dybcio@oss.qualcomm.com,m:devicetree@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:conor+dt@kernel.org,m:krzk+dt@kernel.org,m:robh@kernel.org,m:konradybcio@kernel.org,m:andersson@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER(0.00)[kaipeng94@gmail.com,linux-arm-msm@vger.kernel.org];
-	TO_DN_SOME(0.00)[];
-	DKIM_TRACE(0.00)[gmail.com:+];
+	RCVD_COUNT_THREE(0.00)[4];
+	FREEMAIL_TO(0.00)[gmail.com,oss.qualcomm.com,vger.kernel.org];
+	FORGED_SENDER(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
 	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	FORGED_RECIPIENTS(0.00)[m:kaipeng94@gmail.com,m:konrad.dybcio@oss.qualcomm.com,m:devicetree@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:conor+dt@kernel.org,m:krzk+dt@kernel.org,m:robh@kernel.org,m:konradybcio@kernel.org,m:andersson@kernel.org,m:conor@kernel.org,m:krzk@kernel.org,s:lists@lfdr.de];
 	FORWARDED(0.00)[lists@lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	FREEMAIL_FROM(0.00)[gmail.com];
+	TO_DN_SOME(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[kaipeng94@gmail.com,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	RCPT_COUNT_SEVEN(0.00)[9];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,vger.kernel.org:from_smtp]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: E907D70A75F
+X-Rspamd-Queue-Id: 839B270A7A2
 
-
-
-On 7/2/26 17:32, Krzysztof Kozlowski wrote:
-> On 02/07/2026 11:29, Konrad Dybcio wrote:
->> On 7/2/26 8:27 AM, Krzysztof Kozlowski wrote:
->>> On 02/07/2026 08:31, Kaipeng Zeng wrote:
->>>> Add compatible values for the Acer Swift Go Pro AI (SFA14-11),
->>>> using "acer,sfa14-11".
->>>
->>> "Add Acer Swift Go Pro AI (SFA14-11), a laptop based on the Snapdragon X
->>> Elite (X1E78100) SoC."
->>>
->>> That's it. Don't add unnecessary boilerplate.
->>>
->>>
->>>>
->>>> The laptop is based on the Snapdragon X Elite (X1E78100) SoC.
->>>>
->>>> Signed-off-by: Kaipeng Zeng <kaipeng94@gmail.com>
->>>> ---
->>>>   Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
->>>>   1 file changed, 1 insertion(+)
->>>>
->>>> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
->>>> index 50cc18a6ec5e..6b997d615bad 100644
->>>> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
->>>> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
->>>> @@ -1142,6 +1142,7 @@ properties:
->>>>   
->>>>         - items:
->>>>             - enum:
->>>> +              - acer,sfa14-11
->>>
->>> Why no user-recognizable name is used? Look at other consumer products:
->>> lenovo,thinkpad-x13s, lenovo,flex-5g, microsoft,surface-prox,
->>> lenovo,thinkpad-t14s-lcd, tuxedo,elite14gen1, microsoft,denali,
->>> asus,vivobook-s15... and so on.
+On 05/07/2026 17:34, Kaipeng Zeng wrote:
+>>> e.g. microsoft,denali that you mentioned is a MS codename for the
+>>> Surface Pro something something
 >>
->> We have a good mix of both. I tend to dislike relying on marketing
->> names, as they may be similar (or identical) across wholly different
->> products.
+>> I am fine with mixing (swift-go-sfa14-11), but the model number alone is
+>> very hard to parse by humans.
 >>
->> e.g. microsoft,denali that you mentioned is a MS codename for the
->> Surface Pro something something
+>> Best regards,
+>> Krzysztof
 > 
-> I am fine with mixing (swift-go-sfa14-11), but the model number alone is
-> very hard to parse by humans.
+> Initially, I chose the model number because Acer has several QCOM 
+> powered laptops with similar product names:
+>   - Acer Swift Go Pro AI (SFA14-11)
+>   - Acer Swift Go 14 AI (SFG14-*)
+>   - Acer Swift Spin 14 AI (SFSP14-Q51T)
+>   - Acer Swift 14 AI (SF14-11*)
 > 
-> Best regards,
-> Krzysztof
+> Using the product name directly here can be confusing.
+> I think using a mixed name (swift-go-sfa14-11) is better, too.
+> 
 
-Initially, I chose the model number because Acer has several QCOM 
-powered laptops with similar product names:
-  - Acer Swift Go Pro AI (SFA14-11)
-  - Acer Swift Go 14 AI (SFG14-*)
-  - Acer Swift Spin 14 AI (SFSP14-Q51T)
-  - Acer Swift 14 AI (SF14-11*)
+All the names are different, so I do not see confusion.
 
-Using the product name directly here can be confusing.
-I think using a mixed name (swift-go-sfa14-11) is better, too.
-
+Best regards,
+Krzysztof
 
