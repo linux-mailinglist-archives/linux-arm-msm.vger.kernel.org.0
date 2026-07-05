@@ -1,65 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-116523-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-116524-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id xwi7AF8VSmqu+AAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-116523-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 05 Jul 2026 10:27:11 +0200
+	id 6sfJEJAWSmrY+AAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-116524-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 05 Jul 2026 10:32:16 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8B40C7096FF
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 05 Jul 2026 10:27:09 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 17A2A709757
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 05 Jul 2026 10:32:15 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=gondor.apana.org.au header.s=h01 header.b=IdE6efxt;
+	dkim=pass header.d=gondor.apana.org.au header.s=h01 header.b=EISUI8Id;
 	dmarc=pass (policy=quarantine) header.from=apana.org.au;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116523-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116523-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116524-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116524-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 6ADEC3009992
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  5 Jul 2026 08:27:08 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 611E3300E3A8
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  5 Jul 2026 08:31:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 20ED53672B5;
-	Sun,  5 Jul 2026 08:27:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0E7CE33EAF3;
+	Sun,  5 Jul 2026 08:31:24 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from abb.hmeau.com (abb.hmeau.com [180.181.231.80])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3237330C158;
-	Sun,  5 Jul 2026 08:27:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F5B2433E7A;
+	Sun,  5 Jul 2026 08:31:22 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783240027; cv=none; b=oHuQfrREuFlHJWGSEQFilAVAFUUw4R/fR6xTcBgVCCBodVS1NsePLEsDtBdeSUOjMMHfc6bJfzXGrnbl/tqCIg+pIjyFjhO3kDl1huvZSH4PJ0RUgiGyWOZsAq5TxpRFROiiurHBu95541Clw87BZehocBWlKm4+geGKl5S8EHs=
+	t=1783240283; cv=none; b=UDTaAZ2Q34J472nQkCUgdSEx7tQRnH3pFmNEUUGf37qpeb45IMD2rzktbIGD433j7m2GNpTwHRLGkf6ZLEiLREPVLWFq7UVg4OwCnzecTYVe2YF9/fDNF2baAxLaz6PuELEOqtuRT3sfzmPwtmS3dMSZlaZVBBtOeeXdH54svW4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783240027; c=relaxed/simple;
-	bh=EpKlMW5LveiYMuciMiXq64pDB1DX6k3eAxVfOX1YcKM=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=WJb9vFva69HiMScS7MYvFXHl5IqYLZPWQmJ7LsFn7yLFuV43oMtgY1kloUVqfUNnSJbTYleFRPZJlKi+zihZBmKj6L8WT2DePqnFM+HW/8Eaewmzc0fLhtuCATr53jq2iuGTPR45xBW50w80ESGJpxp/kvSm8O+wKIwy8QRIUew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gondor.apana.org.au; spf=pass smtp.mailfrom=gondor.apana.org.au; dkim=pass (2048-bit key) header.d=gondor.apana.org.au header.i=@gondor.apana.org.au header.b=IdE6efxt; arc=none smtp.client-ip=180.181.231.80
+	s=arc-20240116; t=1783240283; c=relaxed/simple;
+	bh=SZbbJ8EO083td5pS9EEjBmJm8dGqmqPEVdLuCn4fQds=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jEYphhy7hufuBHjuJvlxXcyKQCRlrtm3gnwevcP1ridzu83QtZnrvX8V86NdRc/Z/msdz7mB1JKRGUNdxxul1LpFQPV8uk3YsyjTa/aBGXkkuTp13gyxYH0qdglGwR9LIhI4uuiHx0rLbp63aXBpyb1nLPLVh3ZG6OVOU9Sj3eg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gondor.apana.org.au; spf=pass smtp.mailfrom=gondor.apana.org.au; dkim=pass (2048-bit key) header.d=gondor.apana.org.au header.i=@gondor.apana.org.au header.b=EISUI8Id; arc=none smtp.client-ip=180.181.231.80
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=gondor.apana.org.au; s=h01; h=In-Reply-To:Content-Type:MIME-Version:
-	Message-ID:Subject:Cc:To:From:Date:cc:to:subject:message-id:date:from:
-	content-type:references:reply-to;
-	bh=uOa1wMFrNOEdUyDKqta6glQyq4ySoPGgS/Mn8d2L3d4=; b=IdE6efxtbCK7cJNiuqrnOQfxlc
-	5W1XYMbFN8Yq3RH/oSL2bjG9FtgjEjFJs/cckyV7SsMLIFWWuo9gARB3dcwoertEWMXm5m6qFBrPM
-	Zz377ylFTUilGGFn+mBc9ckLtikGk92HqsGpPdoDNUU5B6i7WmP4YpCjEGxWdWdI7nsfusKlYk6g2
-	RKVDqKmRBeVPGrNHIOBCuqHsm+JGcARXntMBbvapSL1v4J+oMEPERMtRIIXyfuuyHLdMULCY2soeF
-	lfU+7kp7/rjZqMwwA4NhxSJj3ZxszybTydpP8RK8ndzEmjzDJxwK4cneukBRu9AjfGFmDpX4CZ/D8
-	LPbZxVbQ==;
+	References:Message-ID:Subject:Cc:To:From:Date:cc:to:subject:message-id:date:
+	from:content-type:reply-to; bh=2xN3+gAOrfXpLJmizIv3UK+61coP9zg3wxQZiNEZEoo=; 
+	b=EISUI8Id3g51j1MFVxLSImb8m2nO+cfrpFp5l27/IiXmLjwKDGr4YiVapt3pyLQmLe08WgMjviP
+	aZ0MqzP0T78BX3ckbCpheJ5hau7b4h3KtbnTdflIXAtVBcwoVgEm2JZRm8ltjb1Amovptf15F46dj
+	81IHdzQrXhew48uh0sv6xk1S8bAMtgxbtFnpur8ow1K8KAqKOoVxrmtw68s/8Jatu+av0Z3lP+t2S
+	QBvmG6bdoSW/gbD+6183Q5tgNul4Z9Cyb3AI5eIs2Il/vDBW9SGtV5vZjLh0e/AyYaKBMlL5i4xHH
+	AXEqomU5CCb1CXlUj3QVzb1uxJ3NRMBOpE0w==;
 Received: from loth.rohan.me.apana.org.au ([192.168.167.2])
 	by formenos.hmeau.com with smtp (Exim 4.98.2 #2 (Debian))
-	id 1wgIBj-0000000Akub-44HX;
-	Sun, 05 Jul 2026 16:26:57 +0800
-Received: by loth.rohan.me.apana.org.au (sSMTP sendmail emulation); Sun, 05 Jul 2026 16:26:55 +0800
-Date: Sun, 5 Jul 2026 16:26:55 +0800
+	id 1wgIFz-0000000AkyY-0rEO;
+	Sun, 05 Jul 2026 16:31:20 +0800
+Received: by loth.rohan.me.apana.org.au (sSMTP sendmail emulation); Sun, 05 Jul 2026 16:31:19 +0800
+Date: Sun, 5 Jul 2026 16:31:19 +0800
 From: Herbert Xu <herbert@gondor.apana.org.au>
-To: Eric Biggers <ebiggers@kernel.org>
-Cc: linux-crypto@vger.kernel.org, linux-kernel@vger.kernel.org,
-	quic_omprsing@quicinc.com, quic_bjorande@quicinc.com,
-	neil.armstrong@linaro.org, linux-arm-msm@vger.kernel.org,
-	olivia@selenic.com, ebiggers@kernel.org,
-	neeraj.soni@oss.qualcomm.com, dmitry.baryshkov@oss.qualcomm.com,
-	konrad.dybcio@oss.qualcomm.com
-Subject: Re: [PATCH v2 0/4] qcom-rng fixes and cleanups
-Message-ID: <akoVT0XHNhxy9-ej@gondor.apana.org.au>
+To: Thorsten Blum <thorsten.blum@linux.dev>
+Cc: Bartosz Golaszewski <brgl@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	linux-crypto@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] crypto: qce - drop unused scatterlist traversal in
+ qce_ahash_update
+Message-ID: <akoWV03fY7bcL0xh@gondor.apana.org.au>
+References: <20260614152605.701754-3-thorsten.blum@linux.dev>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,30 +67,28 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260608175848.2045229-1-ebiggers@kernel.org>
-X-Newsgroups: apana.lists.os.linux.cryptoapi,apana.lists.os.linux.kernel
+In-Reply-To: <20260614152605.701754-3-thorsten.blum@linux.dev>
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[apana.org.au,quarantine];
 	R_DKIM_ALLOW(-0.20)[gondor.apana.org.au:s=h01];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-116523-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-116524-lists,linux-arm-msm=lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:thorsten.blum@linux.dev,m:brgl@kernel.org,m:davem@davemloft.net,m:linux-crypto@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,s:lists@lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER(0.00)[herbert@gondor.apana.org.au,linux-arm-msm@vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[12];
-	FORGED_RECIPIENTS(0.00)[m:ebiggers@kernel.org,m:linux-crypto@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:quic_omprsing@quicinc.com,m:quic_bjorande@quicinc.com,m:neil.armstrong@linaro.org,m:linux-arm-msm@vger.kernel.org,m:olivia@selenic.com,m:neeraj.soni@oss.qualcomm.com,m:dmitry.baryshkov@oss.qualcomm.com,m:konrad.dybcio@oss.qualcomm.com,s:lists@lfdr.de];
-	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
+	FORGED_SENDER(0.00)[herbert@gondor.apana.org.au,linux-arm-msm@vger.kernel.org];
+	MIME_TRACE(0.00)[0:+];
 	FORWARDED(0.00)[lists@lfdr.de];
 	DKIM_TRACE(0.00)[gondor.apana.org.au:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	MISSING_XM_UA(0.00)[];
-	TO_DN_SOME(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
@@ -100,50 +97,26 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	ALIAS_RESOLVED(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	RCPT_COUNT_FIVE(0.00)[6];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,apana.org.au:url,apana.org.au:email]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,linux.dev:email,apana.org.au:url,apana.org.au:email,gondor.apana.org.au:from_mime,gondor.apana.org.au:dkim,gondor.apana.org.au:mid,vger.kernel.org:from_smtp]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 8B40C7096FF
+X-Rspamd-Queue-Id: 17A2A709757
 
-Eric Biggers <ebiggers@kernel.org> wrote:
-> This series fixes several bugs in qcom-rng, including failure to enable
-> the clock before accessing the hardware, generating biased random
-> numbers, and generating duplicate or non-random numbers due to missing
-> locking.  To fix the latter bug, it drops the support for the
-> duplicative crypto_rng interface, which isn't used in practice, leaving
-> just hwrng which is the one that actually matters.
+On Sun, Jun 14, 2026 at 05:26:07PM +0200, Thorsten Blum wrote:
+> Commit df12ef60c87b ("crypto: qce/sha - Do not modify scatterlist passed
+> along with request") removed the only use of sg_last, rendering the
+> scatterlist traversal useless. Remove it and its local variables.
 > 
-> This series is targeting cryptodev/master
+> Also remove the redundant hash_later check, inline the source offset,
+> and assign the number of complete blocks directly to req->nbytes.
 > 
-> Changed in v2:
->  - Changed patch 3 to make the driver continue to be bound even when
->    hwrng is unsupported.
->  - Added blank line in patch 2
->  - Added Reviewed-by
-> 
-> Eric Biggers (4):
->  crypto: qcom-rng - Enable clock in hwrng case
->  crypto: qcom-rng - Allow zero as a random number
->  crypto: qcom-rng - Remove crypto_rng interface
->  hwrng: qcom - Move qcom-rng.c into drivers/char/hw_random/
-> 
-> arch/arm/configs/multi_v7_defconfig           |   2 +-
-> arch/arm/configs/qcom_defconfig               |   2 +-
-> arch/arm64/configs/defconfig                  |   2 +-
-> drivers/char/hw_random/Kconfig                |  11 ++
-> drivers/char/hw_random/Makefile               |   1 +
-> drivers/{crypto => char/hw_random}/qcom-rng.c | 156 +++---------------
-> drivers/crypto/Kconfig                        |  12 --
-> drivers/crypto/Makefile                       |   1 -
-> drivers/gpu/drm/ci/arm64.config               |   2 +-
-> 9 files changed, 41 insertions(+), 148 deletions(-)
-> rename drivers/{crypto => char/hw_random}/qcom-rng.c (53%)
-> 
-> 
-> base-commit: 79bbe453e5bfa6e1c6aa2e8329bfc8f152b81c9b
+> Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+> ---
+>  drivers/crypto/qce/sha.c | 31 +++++--------------------------
+>  1 file changed, 5 insertions(+), 26 deletions(-)
 
-All applied.  Thanks.
+Patch applied.  Thanks.
 -- 
 Email: Herbert Xu <herbert@gondor.apana.org.au>
 Home Page: http://gondor.apana.org.au/~herbert/
