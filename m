@@ -1,67 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-116529-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-116530-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id JsX4AIskSmrt+gAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-116529-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 05 Jul 2026 11:31:55 +0200
+	id bIVoJ38lSmoU+wAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-116530-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 05 Jul 2026 11:35:59 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8123A709955
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 05 Jul 2026 11:31:54 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2C3F270997F
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 05 Jul 2026 11:35:59 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=W5DotYFt;
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b="l/IhxcFI";
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116529-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116529-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116530-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.232.135.74 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116530-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 4075B300D172
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  5 Jul 2026 09:31:52 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 8BA183006791
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  5 Jul 2026 09:35:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 78481352002;
-	Sun,  5 Jul 2026 09:31:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3327A361670;
+	Sun,  5 Jul 2026 09:35:55 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C1871D130E;
-	Sun,  5 Jul 2026 09:31:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 253A824A05D;
+	Sun,  5 Jul 2026 09:35:53 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783243911; cv=none; b=V9LH1Ub1Soi0jTnkF4FBXcnb23VUBf1AH4Td5W0dAEC57SB+iIFSKW+JmbzPA44jBW7wsN3Skj+l/S83lLZNreT26UvK+Sr0yGYVUrSr0nHZwwqmUBQ0ydpXPriYRr5iSYkUIMQLb2gROvWJ9rDcr1DUGoEi6bcl2tB0mcT2QD0=
+	t=1783244155; cv=none; b=PeoR67S6s8nEzOScqHbyElBySmW8H+ApLZDzS2TQV669lJv6oFHfd401Yzu7d6VkVjbJhKi4b3/mxlvXOJnquq082bhhDP69S8QLN408f+n4PrxSG7AjOOgumZ6t2ovTDjPhZ2oAe9gNvmTDIINn8n0ix285+TJ7C5SeSVEGUx8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783243911; c=relaxed/simple;
-	bh=FrdBIXfI87EjNHJxTGU394axaDD/ZXI+EE2y/y+SutE=;
+	s=arc-20240116; t=1783244155; c=relaxed/simple;
+	bh=o1BJHUBsPXb8Ud96OJ3zZlbU/KK4SIIrjGn5vrio3bo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=q/krvjPg2+l9Jy2hGO7emg4ELbqlk2o8uef+4E3u7xkv5cKqGEarve4IVkcSgJR6/fkmKSm8WsCQa6onKm4XfBKWAUttKlicLMskKfnvV6C5Yiy0M4LI9Z1aOIiSqG1A/XTrrvzPE3fOZE63PnUieVGxRVhNHzwj+nxNLybXvEw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=W5DotYFt; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 228841F000E9;
-	Sun,  5 Jul 2026 09:31:48 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=a7UyFa8eLxjP/u+wjKH2KLNvak86PsBrVVonBLDKuGoE7eyx5koIliJ90KemlwJ+PBOtXKO1wZdOlxbJhNrYgiyc8oQHoH1PhbsyeOAR1MrHo8uNySjvv0QktI+x5XEVNWn7GfriqxSN3Ctvu4kl7TxU6i7gqRY5oiUzHqrUzpY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=l/IhxcFI; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D30451F000E9;
+	Sun,  5 Jul 2026 09:35:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783243910;
-	bh=AhGPdjF+r5UBWPWxnx50rWXjfnljknqyyw0l2Tw+k6Y=;
+	s=k20260515; t=1783244153;
+	bh=ZUAr26t0ojsub7u6Y2sX2AnXHej3bubC6EbR5cuucDg=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=W5DotYFtavKGQ4u82DcYZuX/X+sA82xmEtnofouFEYpo8kZP6bu94ZzQsYRmNsz2K
-	 N5/D7o36Piz0siQQYwguyJFDdXxl+8Cxao+I/aiEsUZ3AR6RuhOOgatm8uYz+z/91c
-	 4eYqa672YwaWNBhpwmV1wdKEwSucOvhCr9FkDC2KDI/t2mR63TIhf4i6BQ94iBLI6d
-	 Fa8Y5y+4AcpBb0sBTisbncEXISiHGBVq+MxsAEsr13goexUR9pURzaV6kPDI9UCtXD
-	 LuVhQq7V2jiUXrZ9BVRKAIf4iHS4KBxXI9V7s4P+r1kz3XS3ctlXGUuJ1OSgsRIZYK
-	 ZeUp9avQQUvQA==
-Date: Sun, 5 Jul 2026 11:31:46 +0200
+	b=l/IhxcFIZ3ialoR579LXwaYa9cYQ5F0VQNoFru6ywKtuCpZvEWhHTsfYT/z/iA6M4
+	 q6ejThERW19SIX533KJfDsWpBv4sZSTHJbcxHTDmqMHmIR1sEUfHT69SgsV3TaLDMz
+	 qee91Qq8MJSEH+mANb93JpqR3oHIGuaI0AkyMb33bBIV2zGUdGiJqzF5s85EguIKOp
+	 DFnUQ3IsEXS5w59PH9z5ePMnj1B2dyViu0J+6kzhBCwE0IXfALOxB3gWt/+vNA6lnI
+	 UMAwg0wdCwyST2RcjlnUM55Pu2UlrsejGPjIj7qyTbkEhnLNikJFAguRCDJ7oEfJiF
+	 yhc9a3Drgc6Rw==
+Date: Sun, 5 Jul 2026 11:35:50 +0200
 From: Krzysztof Kozlowski <krzk@kernel.org>
 To: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
-Cc: Neil Armstrong <neil.armstrong@linaro.org>, 
-	Vinod Koul <vkoul@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
-	Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>, Johan Hovold <johan+linaro@kernel.org>, 
-	Loic Poulain <loic.poulain@oss.qualcomm.com>, Shawn Guo <shengchao.guo@oss.qualcomm.com>, 
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, Abel Vesa <abel.vesa@oss.qualcomm.com>, 
-	Wesley Cheng <wesley.cheng@oss.qualcomm.com>, linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 0/4] Add USB Phy driver and binding changes for
- Qualcomm Shikra SoC
-Message-ID: <20260705-functional-vivid-seahorse-a8c149@quoll>
-References: <20260701165051.4122259-1-krishna.kurapati@oss.qualcomm.com>
+Cc: Rob Herring <robh@kernel.org>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Wesley Cheng <wesley.cheng@oss.qualcomm.com>, 
+	linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3] dt-bindings: usb: qcom,snps-dwc3: Add Shikra
+ compatible
+Message-ID: <20260705-vengeful-axiomatic-goshawk-c4919f@quoll>
+References: <20260701162745.4043106-1-krishna.kurapati@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -70,65 +66,66 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260701165051.4122259-1-krishna.kurapati@oss.qualcomm.com>
+In-Reply-To: <20260701162745.4043106-1-krishna.kurapati@oss.qualcomm.com>
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-3.16 / 15.00];
+X-Spamd-Result: default: False [-4.66 / 15.00];
 	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
-	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[19];
-	FORGED_RECIPIENTS(0.00)[m:krishna.kurapati@oss.qualcomm.com,m:neil.armstrong@linaro.org,m:vkoul@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:andersson@kernel.org,m:konrad.dybcio@oss.qualcomm.com,m:xiangxu.yin@oss.qualcomm.com,m:johan+linaro@kernel.org,m:loic.poulain@oss.qualcomm.com,m:shengchao.guo@oss.qualcomm.com,m:dmitry.baryshkov@oss.qualcomm.com,m:abel.vesa@oss.qualcomm.com,m:wesley.cheng@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:linux-phy@lists.infradead.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,m:johan@kernel.org,s:lists@lfdr.de];
 	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	FORWARDED(0.00)[lists@lfdr.de];
-	TAGGED_FROM(0.00)[bounces-116529-lists,linux-arm-msm=lfdr.de];
-	DKIM_TRACE(0.00)[kernel.org:+];
+	RCVD_COUNT_THREE(0.00)[4];
+	FORGED_RECIPIENTS(0.00)[m:krishna.kurapati@oss.qualcomm.com,m:robh@kernel.org,m:gregkh@linuxfoundation.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:wesley.cheng@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:linux-usb@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FORGED_SENDER(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-116530-lists,linux-arm-msm=lfdr.de];
+	FROM_HAS_DN(0.00)[];
+	MISSING_XM_UA(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	RCPT_COUNT_SEVEN(0.00)[10];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	TO_DN_SOME(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt,linaro];
-	MISSING_XM_UA(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,qualcomm.com:email,quoll:mid]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[quoll:mid,vger.kernel.org:from_smtp,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 8123A709955
+X-Rspamd-Queue-Id: 2C3F270997F
 
-On Wed, Jul 01, 2026 at 10:20:47PM +0530, Krishna Kurapati wrote:
-> This series adds Driver and binding changes for USB Phys on Shikra.
-> There are two USB controllers - One of them is SS capable and other is
-> highspeed only capable.
-> 
-> Changes in v4:
-> - Moved to using qcs615-usb3-dp-phy and added resets specific to shikra
-> - Updated bindings to reflect that there are 3 resets used in qmp phy
-> - Add remote endpoints and orientation-switch for Type-c handling
-> 
+On Wed, Jul 01, 2026 at 09:57:45PM +0530, Krishna Kurapati wrote:
+> diff --git a/Documentation/devicetree/bindings/usb/qcom,snps-dwc3.yaml b/Documentation/devicetree/bindings/usb/qcom,snps-dwc3.yaml
+> index 8201656b41ed..026fc715eebf 100644
+> --- a/Documentation/devicetree/bindings/usb/qcom,snps-dwc3.yaml
+> +++ b/Documentation/devicetree/bindings/usb/qcom,snps-dwc3.yaml
+> @@ -60,6 +60,7 @@ properties:
+>            - qcom,sdx55-dwc3
+>            - qcom,sdx65-dwc3
+>            - qcom,sdx75-dwc3
+> +          - qcom,shikra-dwc3
+>            - qcom,sm4250-dwc3
+>            - qcom,sm6115-dwc3
+>            - qcom,sm6125-dwc3
+> @@ -386,6 +387,7 @@ allOf:
+>          compatible:
+>            contains:
+>              enum:
+> +              - qcom,shikra-dwc3
+>                - qcom,sm8350-dwc3
 
-b4 diff 20260701165051.4122259-1-krishna.kurapati@oss.qualcomm.com
-Looking up https://lore.kernel.org/all/20260701165051.4122259-1-krishna.kurapati@oss.qualcomm.com/
-Grabbing thread from lore.kernel.org/all/20260701165051.4122259-1-krishna.kurapati@oss.qualcomm.com/t.mbox.gz
-Checking for older revisions
----
-Analyzing 33 messages in the thread
-Could not find lower series to compare against.
-
-Great. We asked many times already to use b4.
+Why is xo clock optional? If it is not there, this should be rather in
+"if:" block for Kaanapali.
 
 Best regards,
 Krzysztof
