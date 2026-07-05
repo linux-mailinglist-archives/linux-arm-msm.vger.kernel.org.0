@@ -1,84 +1,84 @@
-Return-Path: <linux-arm-msm+bounces-116577-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-116578-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id 1F0aGWmtSmrWFwEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-116577-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 05 Jul 2026 21:15:53 +0200
+	id wuUJEz6tSmrCFwEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-116578-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 05 Jul 2026 21:15:10 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 109DE70AEF6
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 05 Jul 2026 21:15:53 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id D145570AECC
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 05 Jul 2026 21:15:09 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=gmail.com header.s=20251104 header.b=TZE+3K1Z;
+	dkim=pass header.d=gmail.com header.s=20251104 header.b=YunYPb6f;
 	dmarc=pass (policy=none) header.from=gmail.com;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116577-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116577-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116578-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.232.135.74 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116578-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 931A23016493
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  5 Jul 2026 19:14:53 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 20C403014254
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  5 Jul 2026 19:14:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AE3CE3A641D;
-	Sun,  5 Jul 2026 19:14:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8EEA73A7826;
+	Sun,  5 Jul 2026 19:14:43 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07ADC3A6B6F
-	for <linux-arm-msm@vger.kernel.org>; Sun,  5 Jul 2026 19:14:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4BEB3A380C
+	for <linux-arm-msm@vger.kernel.org>; Sun,  5 Jul 2026 19:14:40 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783278881; cv=none; b=nyx78Mmu5XEZoGF+oL3xtZjbN4NX8vMj9aBbmd0OWZkZxJSG9C1MRPxmCziECsXw907kqoxzRza4I5gkLsg1yspx2edqEfjD9Ff22Hmxb+2vvuaRk2KaSyhxS6dHEatERzYMtmddD3+4iE5Pf3MDu2PLnWeeftpoGjQWFq//0OI=
+	t=1783278883; cv=none; b=l9R9Lu6pEZqltJzJmUbsxcmj9uA4F+TlYXw0diENnPLm42aidj7NNoU1aGh9Ds6k1RmdT7ljP1G/U5w32VYqEiX9Sc1qpLNR9jt0CmwhnwhNf4LMiCdEFNwFrngCjXhXElheJyuIWyLeSchsjgklBF2Y3gqP/qp+SqpwvaQpyZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783278881; c=relaxed/simple;
-	bh=GNmboLcpB1u+4sbu+20YXtJhFgR6gBIC5iE7jNeRoQc=;
+	s=arc-20240116; t=1783278883; c=relaxed/simple;
+	bh=wmCqgt9bbc7y6girDLeQUG/lasgVe98klmVzcoHOM/o=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Zs3pR30pftIfHLyQaoYwCy9RlRXwmU9MHbs13MlLoZ/62LgbWwnGLeI1Oz5tpyoZBgO6q2ufMjxfkCTctPZOZ7tFzLJ+k/qM23+Ky6QT6eWocI9wSUvyhVOBpzSevalYUSdhbsxbfDAPdieaXkqnVQKWmmR5erdesIulGs/1WY8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TZE+3K1Z; arc=none smtp.client-ip=209.85.221.53
-Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-47d6c634f45so422214f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 05 Jul 2026 12:14:38 -0700 (PDT)
+	 In-Reply-To:To:Cc; b=SS9HUvrqphaKmyu+b/xcirpe3NVqJkJ/F77rKg/JId9hXjR8+vTGPkNK23pinLf2BmCFsSRQMKoK7TO+iGe6WzTrg0hAlLbx9Pq/6JVTcwBtn7IXXhkjjzs+bGcz1EuSec0N/vLFBeanTzLdlj3lLcimoFBiKNmwPD/mRIWXmfc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YunYPb6f; arc=none smtp.client-ip=209.85.128.43
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-493c2b3dc8bso15622955e9.2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 05 Jul 2026 12:14:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783278877; x=1783883677; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1783278879; x=1783883679; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=nZ84WH17cmaqhOLzZnVtdcV+4jwRY2Bo5WKI6TnLcX4=;
-        b=TZE+3K1ZM/b+odEXRleMZZGmVRrAiU8q8s90auZdSliCzgJmukFnbc0xZv+XIgHm/O
-         15bz4J/nCVCiL7jPfusgHxhU0oDVmIisLBpiUA0iJE3+23KNvZQgyzuQLK2mV0WfJNsh
-         OYqZFxF/G9UilEpUJT/Y8SJO9Q/mMFYzdz1e6o4LNPR33qAzmZOIlGgfSgA37S/jy5sH
-         3CZZ3qwfwHK7KbIySkiB6zLuOWg0FB1YSHTVG5bYbnuHXV3sEXEyR4VyuKYy1TDVB5DD
-         CeqS2/w7WS6hJenDLev175BmCdlwhh+aZyDRiJR9swIy1uK0mWLikCyWabBakaLXGNZ3
-         RKCw==
+        bh=C8zcaiL31SCCh1YPdlPY6GbxJWdviTylW/ogJ//b4zE=;
+        b=YunYPb6fLEi839drRXRBXRyV5+J1auPYZgtYJf8T4q/IpYGnN/qdlRWs2Oz/sgH083
+         gh9znccHCwaDqgsc3H6fAzMaJnGxhSSdBzXccf8dkvp19A5wtDtK5sh2t5sn0Ey0PZ2u
+         d6f2OsGzzf0DFIPFlNtOgdIbjBYow2SYLl5VJsXvo3gUrA2XHXwvGHjcjJzy15dBhAvz
+         AfhshRCyJ9rlBGqlDd9c7yIXY2/sm1PPn4p+/M72AiWLDSWvw+pDTpA6xzuMePvbJAIz
+         ekXRT7+HHqWkDD+vTdBZFUPnr8SKwwk84E9hi4Y/PF93KQKv501RMYKdgvHpZhqxmrIK
+         CO6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783278877; x=1783883677;
+        d=1e100.net; s=20251104; t=1783278879; x=1783883679;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=nZ84WH17cmaqhOLzZnVtdcV+4jwRY2Bo5WKI6TnLcX4=;
-        b=b7L2wq0Z5yKXF+VDHGEVJHvhLZNcJxCOTxkeus6CaA07dC7xZwtYFgM4SZ2W+cYh+a
-         jdrgke9Wz9f9Y5HAzHdSQWKF2y3+aS5zh1YZ62ngV3drQoWjeHMA/YzOXH9Uz/+cTPlt
-         MrENNdlDvKmxcarBuadkHQN0WlYh1CW2e9wGwcyNlb1a1maE2R5AVu3NS+PUIc7Sy3fI
-         1mwHBDHH6HIfmbngpdHtGWlQo5duYzK2epLSPkBv/yjS5J7NmTwy+N68Mp4txA/lSUwO
-         sKpUxUiNfddUew9UmzDIxzaLWpF7KUk2/FUr/NSWnDeuW+T8s3cNgtRo+mHfGlItbVgS
-         FjxQ==
-X-Forwarded-Encrypted: i=1; AHgh+RpVgZHs377LSC1CjDAgNERsbKPvZd6ASdQ/hPUFOQ6LNmr9cMwvg2/eAoriElRp+fZDup1S9OZqjqRoWFak@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywy085juW0ECh1hRXQTf4i4/4nGrM4zzF3/3ejakjhjAYeSf72/
-	heyy1Qz3m17uozHKhfQl1bGvoJKeVcU9j6EjbR2C1RdowQT13rwDr4o=
-X-Gm-Gg: AfdE7cn856dOovjoXwIm2a2bSQKcoskXHtY1epy3CVMSexPNAQR5ZrhNeWBlBP+zJv2
-	JEZH2j5P88i8Cw/gHcsMzIp5U89gL53xqBnFKP+0IkJ+g8wtBKbflrFS5Ij51AYeIK18niF0Tbk
-	zpRVJCSP5sd0SF8HNv7ZqN3cAB8Eh9NYzI39mZpi5T+oh7E9xr2hjM8Lua/7+iI5MJPFN2Ir9FO
-	GvERXvKKz64USdA5NHhKLv9pinNyHIcnvD+ZR2KtSZC/rLgH/uLIORMPtJOCk8Bw91YvFPOmV0C
-	b4FoOf0IWZXqlYvDnIJs+5Jx+C+YPuLBJUwMqeyZm5CPYckSMIwiNU9NRpSaueklhFrICmfolUa
-	JfNYPYRdviFv57ypvYODJi2LOXyP1Kzme03YoGd97M0CSisVcrhz1/HDro5Vjqs7v4f7lsWOISM
-	t3F6HMw4vSdm4yoc3WKwI6KaqaYUpEDw==
-X-Received: by 2002:a05:6000:1846:b0:473:cefa:98da with SMTP id ffacd0b85a97d-47aaa60de86mr8534994f8f.10.1783278876921;
-        Sun, 05 Jul 2026 12:14:36 -0700 (PDT)
+        bh=C8zcaiL31SCCh1YPdlPY6GbxJWdviTylW/ogJ//b4zE=;
+        b=Ui7cZj5+OsePJ6RVyFjjDyAPzyzFw7dQM+jX/ef/ipJ/ieCQBvEFPfV7nQhHyThK1A
+         EIC4X+EMyjNQAWQgUOQ6cEvM11YZM/ixi5LK3QE+gON0eGBXnkNaIO3lp/1e5YFXOirr
+         KS7SraLxXmwAvowXZFYDQy+5bhm/UCf4FBEMVleDejXNj8ulHFl6AeVk4W3vJ1BTh8zK
+         OCeJCgibq3gvxj4Cbz4gvhcER38RJzG1DI0hfxEjz7b7gg8eYhjda9FhKKb57/u7dLOf
+         ZB/7KsVliZSPDZppRoWBA7ZO6+ntSZUq+RCIrXmtB37c9gzBH/cZs6d8RNDcqLIRCPBI
+         vm3w==
+X-Forwarded-Encrypted: i=1; AHgh+Rq6lQaagC6NOFQjCEiKuPtEa3RcsAdyP3E5jxgTylZCUh4729Azgv7utnVw6IG/mlAU7m9hAgile6zCPsaG@vger.kernel.org
+X-Gm-Message-State: AOJu0YwXNACYak4iOQheldDEhwcB8awZFDlIGb0JkCsDRwh67ZYEBFMs
+	wf6HmWbQj7M3Fplluo3D06lbHG/Tz/MG2mrAG4HEtYoj+GxE1jnp/8o=
+X-Gm-Gg: AfdE7cmCZjgahIFgW3ZQbMTbyZuqHmx8b3nEHsLRMeJ3/CLI3ThwbNyjvriyYch50I9
+	ON7x2m1t+c7ZX3Bqt221M0AaDz+8s/0M1ff03cFC4cWGu3Htsx8hGeNPtysiWZDD2JhZ/mgx5Ne
+	l0rY2Ou/HAP94HvEs+K+ZsacmSowJPJhEyRtUMZllk0W0pQcy31RpYMAuv8aoqvy7www1D3Ed3z
+	lp1HVCGY1EYKleDhKytnxd/QUOJt64d6rWV9k6+XLhyYvOcyqOkusaeP4nZKVlPdqBpIzC0TotH
+	bA413oFt37lfY10fTuncvZ/5P367B6JorbpbXtFkoCjHvVxNhQuqZtAAuOjkHay8sIXR3funbJ6
+	0aIUWQ/1Kyfn+11tvZOpWYJuVIivpmDH0tEK7cCQEb82EqK2UdjpxXonBZZ99SYHz/I//Y5vZIU
+	JMSdFHd6ILEwaYhoc=
+X-Received: by 2002:a05:600c:c16f:b0:492:523f:a3df with SMTP id 5b1f17b1804b1-493d52ac417mr60885215e9.5.1783278878843;
+        Sun, 05 Jul 2026 12:14:38 -0700 (PDT)
 Received: from [192.168.1.67] ([2001:b07:2ec:601d:4b26:1672:75c7:805a])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47aa0960634sm19209528f8f.26.2026.07.05.12.14.35
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47aa0960634sm19209528f8f.26.2026.07.05.12.14.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 05 Jul 2026 12:14:36 -0700 (PDT)
+        Sun, 05 Jul 2026 12:14:38 -0700 (PDT)
 From: Anna Maniscalco <anna.maniscalco2000@gmail.com>
-Date: Sun, 05 Jul 2026 21:13:46 +0200
-Subject: [PATCH RFC 12/13] drm/msm: set ctxbank and asid based on ring
+Date: Sun, 05 Jul 2026 21:13:47 +0200
+Subject: [PATCH RFC 13/13] drm/msm: add lpac ring to devcoredump
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -87,7 +87,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260705-descriptive-name-lpac-upstream-v1-12-01d50c3e0c99@gmail.com>
+Message-Id: <20260705-descriptive-name-lpac-upstream-v1-13-01d50c3e0c99@gmail.com>
 References: <20260705-descriptive-name-lpac-upstream-v1-0-01d50c3e0c99@gmail.com>
 In-Reply-To: <20260705-descriptive-name-lpac-upstream-v1-0-01d50c3e0c99@gmail.com>
 To: Rob Clark <robin.clark@oss.qualcomm.com>, Will Deacon <will@kernel.org>, 
@@ -109,11 +109,11 @@ Cc: iommu@lists.linux.dev, linux-arm-msm@vger.kernel.org,
  dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
  devicetree@vger.kernel.org, Anna Maniscalco <anna.maniscalco2000@gmail.com>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1783278851; l=1658;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1783278851; l=2731;
  i=anna.maniscalco2000@gmail.com; s=20240815; h=from:subject:message-id;
- bh=GNmboLcpB1u+4sbu+20YXtJhFgR6gBIC5iE7jNeRoQc=;
- b=rmC2QQUsBeGBctekJrkX9Bu4XpWytNrOy081NaDsxEdKs3EL5tzPk65CpjizWt1u9+G71Ip0Z
- pqDS3aq7HVdCwtuw5G8Lc0fcU6h3n5cTjmCTycxplXu/JrouOa8zMbf
+ bh=wmCqgt9bbc7y6girDLeQUG/lasgVe98klmVzcoHOM/o=;
+ b=PVK05TezP6oByIlmJqXX6RCKZc0Sfa+FvqbaJD2D2MNQt18wh5zplyqPzMUoPj4wq2v3x/AHS
+ ORhKtsBbYDeCcbFNugaM2rR3PLhNr8TrJkg/x8sEhnkPAzo9vnVPIw+
 X-Developer-Key: i=anna.maniscalco2000@gmail.com; a=ed25519;
  pk=0zicFb38tVla+iHRo4kWpOMsmtUrpGBEa7LkFF81lyY=
 X-Rspamd-Action: no action
@@ -121,13 +121,13 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
 	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	FROM_HAS_DN(0.00)[];
-	TAGGED_FROM(0.00)[bounces-116577-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-116578-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	FORGED_RECIPIENTS(0.00)[m:robin.clark@oss.qualcomm.com,m:will@kernel.org,m:robin.murphy@arm.com,m:joro@8bytes.org,m:sean@poorly.run,m:konradybcio@kernel.org,m:akhilpo@oss.qualcomm.com,m:lumag@kernel.org,m:abhinav.kumar@linux.dev,m:jesszhan0024@gmail.com,m:marijn.suijten@somainline.org,m:airlied@gmail.com,m:simona@ffwll.ch,m:andersson@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:maarten.lankhorst@linux.intel.com,m:mripard@kernel.org,m:tzimmermann@suse.de,m:iommu@lists.linux.dev,m:linux-arm-msm@vger.kernel.org,m:linux-arm-kernel@lists.infradead.org,m:linux-kernel@vger.kernel.org,m:dri-devel@lists.freedesktop.org,m:freedreno@lists.freedesktop.org,m:devicetree@vger.kernel.org,m:anna.maniscalco2000@gmail.com,m:krzk@kernel.org,m:conor@kernel.org,m:annamaniscalco2000@gmail.com,s:lists@lfdr.de];
 	FORGED_SENDER(0.00)[annamaniscalco2000@gmail.com,linux-arm-msm@vger.kernel.org];
@@ -147,53 +147,83 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	DKIM_TRACE(0.00)[gmail.com:+];
 	ALIAS_RESOLVED(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,vger.kernel.org:from_smtp]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 109DE70AEF6
+X-Rspamd-Queue-Id: D145570AECC
 
-qcom-arm-smmu always maps asid and ctxbank 1:1 and lpac is always 1
+Add the LPAC ring state to the devcoredump for debugging.
 
 Signed-off-by: Anna Maniscalco <anna.maniscalco2000@gmail.com>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c | 19 ++++++++++---------
+ drivers/gpu/drm/msm/msm_gpu.h           |  2 +-
+ 2 files changed, 11 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index 4417a9d04d7c..a8a061652ec2 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -247,7 +247,7 @@ static void a6xx_set_pagetable(struct a6xx_gpu *a6xx_gpu,
- 	struct adreno_gpu *adreno_gpu = &a6xx_gpu->base;
- 	phys_addr_t ttbr;
- 	bool is_lpac = ring == a6xx_gpu->base.base.lpac_rb;
--	u32 asid;
-+	u32 asid, ctxbank;
- 	u64 memptr = rbmemptr(ring, ttbr0);
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+index 94dbec9464a4..030bb1aeb7ee 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+@@ -782,25 +782,26 @@ int adreno_gpu_state_get(struct msm_gpu *gpu, struct msm_gpu_state *state)
  
- 	if (ctx->seqno == ring->cur_ctx_seqno)
-@@ -256,6 +256,9 @@ static void a6xx_set_pagetable(struct a6xx_gpu *a6xx_gpu,
- 	if (msm_iommu_pagetable_params(to_msm_vm(vm)->mmu, &ttbr, &asid))
- 		return;
+ 	ktime_get_real_ts64(&state->time);
  
-+	/* qcom-arm-smmu always maps asid and ctxbank 1:1 */
-+	ctxbank = asid = is_lpac;
-+
- 	if (adreno_gpu->info->family >= ADRENO_7XX_GEN1) {
- 		/* Wait for previous submit to complete before continuing: */
- 		OUT_PKT7(ring, CP_WAIT_TIMESTAMP, 4);
-@@ -313,7 +316,7 @@ static void a6xx_set_pagetable(struct a6xx_gpu *a6xx_gpu,
- 		CP_SMMU_TABLE_UPDATE_1_TTBR0_HI(upper_32_bits(ttbr)) |
- 		CP_SMMU_TABLE_UPDATE_1_ASID(asid));
- 	OUT_RING(ring, CP_SMMU_TABLE_UPDATE_2_CONTEXTIDR(0));
--	OUT_RING(ring, CP_SMMU_TABLE_UPDATE_3_CONTEXTBANK(0));
-+	OUT_RING(ring, CP_SMMU_TABLE_UPDATE_3_CONTEXTBANK(ctxbank));
+-	for (i = 0; i < gpu->nr_rings; i++) {
++	for (i = 0; i < gpu->nr_rings + !!gpu->lpac_rb; i++) {
++		struct msm_ringbuffer *ring = i < gpu->nr_rings ? gpu->rb[i] : gpu->lpac_rb;
+ 		int size = 0, j;
  
- 	/*
- 	 * Write the new TTBR0 to the memstore. This is good for debugging.
+-		state->ring[i].fence = gpu->rb[i]->memptrs->fence;
+-		state->ring[i].iova = gpu->rb[i]->iova;
+-		state->ring[i].seqno = gpu->rb[i]->fctx->last_fence;
+-		state->ring[i].rptr = get_rptr(adreno_gpu, gpu->rb[i]);
+-		state->ring[i].wptr = get_wptr(gpu->rb[i]);
++		state->ring[i].fence = ring->memptrs->fence;
++		state->ring[i].iova = ring->iova;
++		state->ring[i].seqno = ring->fctx->last_fence;
++		state->ring[i].rptr = get_rptr(adreno_gpu, ring);
++		state->ring[i].wptr = get_wptr(ring);
+ 
+ 		/* Copy at least 'wptr' dwords of the data */
+ 		size = state->ring[i].wptr;
+ 
+ 		/* After wptr find the last non zero dword to save space */
+ 		for (j = state->ring[i].wptr; j < MSM_GPU_RINGBUFFER_SZ >> 2; j++)
+-			if (gpu->rb[i]->start[j])
++			if (ring->start[j])
+ 				size = j + 1;
+ 
+ 		if (size) {
+-			state->ring[i].data = kvmemdup(gpu->rb[i]->start, size << 2, GFP_KERNEL);
++			state->ring[i].data = kvmemdup(ring->start, size << 2, GFP_KERNEL);
+ 			if (state->ring[i].data)
+ 				state->ring[i].data_size = size << 2;
+ 		}
+@@ -1001,7 +1002,7 @@ void adreno_show(struct msm_gpu *gpu, struct msm_gpu_state *state,
+ 
+ 	drm_puts(p, "ringbuffer:\n");
+ 
+-	for (i = 0; i < gpu->nr_rings; i++) {
++	for (i = 0; i < gpu->nr_rings + !!gpu->lpac_rb; i++) {
+ 		drm_printf(p, "  - id: %d\n", i);
+ 		drm_printf(p, "    iova: 0x%016llx\n", state->ring[i].iova);
+ 		drm_printf(p, "    last-fence: %u\n", state->ring[i].seqno);
+diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
+index 263dafeb9652..4fbf0dedc334 100644
+--- a/drivers/gpu/drm/msm/msm_gpu.h
++++ b/drivers/gpu/drm/msm/msm_gpu.h
+@@ -639,7 +639,7 @@ struct msm_gpu_state {
+ 		void *data;
+ 		int data_size;
+ 		bool encoded;
+-	} ring[MSM_GPU_MAX_RINGS];
++	} ring[MSM_GPU_MAX_RINGS+1];
+ 
+ 	int nr_registers;
+ 	u32 *registers;
 
 -- 
 2.54.0
