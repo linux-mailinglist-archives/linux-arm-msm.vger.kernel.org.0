@@ -1,202 +1,250 @@
-Return-Path: <linux-arm-msm+bounces-116950-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-116951-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id WHdINkrZS2qRbQEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-116950-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Jul 2026 18:35:22 +0200
+	id EqRwCbzbS2o4bgEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-116951-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Jul 2026 18:45:48 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 517A171358D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Jul 2026 18:35:22 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id 288A471377D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Jul 2026 18:45:47 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=ZK0kGXxM;
-	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=iDOl8fYS;
-	dmarc=pass (policy=reject) header.from=qualcomm.com;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116950-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116950-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=Vine5mIy;
+	dmarc=pass (policy=quarantine) header.from=kernel.org;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116951-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 104.64.211.4 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116951-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id ECFC9309E5CF
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jul 2026 16:00:44 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 8D7883137C70
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jul 2026 16:01:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AFC9638D40B;
-	Mon,  6 Jul 2026 16:00:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 368C8390230;
+	Mon,  6 Jul 2026 16:00:49 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41D65343899
-	for <linux-arm-msm@vger.kernel.org>; Mon,  6 Jul 2026 16:00:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6A7C334C08;
+	Mon,  6 Jul 2026 16:00:47 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783353641; cv=none; b=qaqj+1PVGis82xpYR5MEibzyt+jxMLM2BZ018TQFs/kdazGjxRXNBN0FP0/nP5YMg1exCvY4cxkSmguedNtzDdylCI0HP8IHr8i2YeNNg1gcDeZfV6rjdG9hIsGdAvUybsc7MWOHBpVsf2YyKpmUkOOn6U+mCjIuvJyRlUUXbnQ=
+	t=1783353649; cv=none; b=iBKMqDolnr/ecvgeWZ7SP8k8IEjZOal9Hm2Tb+p4cAzUMVH85qzSn4X/AEedoaYGMdG+v82fEFMRzVaoH15+mi8hQtdiI5Zr4/JmAnd4/GdY1JTtKyAQiAh34Pu5MNJ6xnbGBkbzJbI8VWAbkKtA5gIUUrW5BO93C8OZzNa3JDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783353641; c=relaxed/simple;
-	bh=GkZB2kFkducGYXvPaZYByw2eUSJdtvjP2KUbiBQT+Hs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=CTjDoo8Od2qAoaJnCyZxXGQyOX8UmPUPxeH3e0L6aQaqx0dt4/yFeVw66IDQyE1mm1WoAbe+O936r9NMpGu9LbLLc/9C17PWJ78eEW6AT91b3jKUoRbmdaoj+mt66ufPG17Zgb3hMKtZGhCENj9NXgbqV/a2+QzIjuVn9b10Jpw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ZK0kGXxM; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=iDOl8fYS; arc=none smtp.client-ip=205.220.180.131
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 666FFAfm958540
-	for <linux-arm-msm@vger.kernel.org>; Mon, 6 Jul 2026 16:00:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	GycIZkc5tJBR40OgyU0h+N+3BJXNBJqmCnBI58QvZyA=; b=ZK0kGXxMXKyHEEKQ
-	eY65aAB76x/z6AzUPFjhbuA7L1aI0oGaB/VpW/mO27XwWO8o3Wxy0kPUMubC+Sc4
-	aQ8cHyEPIPnFlAo899tKNGdMpEET3KaXdgNTxxHb2ophTgtKgR6U6Zkaq7CmMwh1
-	x2ki5gvsYgRL0Gom9MVtVZKCAegqQb0Ft8sogGc4Exir3SB+w/zEzlco/dsvZUrZ
-	uG1Dn2nLAFW0xBg7gqjur0Q4ycgiawqSj6rR2ndgOAiBUkNhqWdLlxc28daa+728
-	y7nzSxgu3GIJSPydaoKdW/N5z2ppV9u89zabqJkDV9UMktn3uxGP9XVbKSNEKuwb
-	tJszQQ==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f88h9a4ux-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 06 Jul 2026 16:00:39 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-51c069f73e4so10482491cf.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Jul 2026 09:00:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1783353638; x=1783958438; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=GycIZkc5tJBR40OgyU0h+N+3BJXNBJqmCnBI58QvZyA=;
-        b=iDOl8fYSURCkKwoHJUglllUHEFdpO5lRC9yh/Cq0OQT25ghXW7PIGYY7ApcPYRQx+o
-         59+FJCfrNxIwqSj23h4zuNcF8c21qQ1tiMhmBzNQUuFZh1tczC+L+EvDNOW2ZwB+lPnD
-         JgHzqsFlGDHWtTUxVS4EDH7gWaAICpsb4kwakLGwATXBXEomAjebnCrykG+BA1kpsUD6
-         XhiobUVcTzr+7D6G4iQXlhSUwzcqqW/+ZSt5eaxxFZRyjxJL8ZE0kPwnequBcHaBzJqH
-         YQ5ZWq6m3BnE26g7Rap4k1uGXPgC6FPzBtbc8UXTKxCIoW9SXu/EYYdy8+Z9tvkGGs7n
-         CdcQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783353638; x=1783958438;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=GycIZkc5tJBR40OgyU0h+N+3BJXNBJqmCnBI58QvZyA=;
-        b=GUcaQRvZPgmDqcoNIi4yER+9BSgmJXO9Z7GezD271uFL4Mdk16KUf7WOJU741VFuVg
-         tO2abFMvIcOPJKvH1K6YYTCTyQHMiDLNbrnn7ZYy1zKsU30UCIEDMGabRCG14Eukztoq
-         IqQ2/One319wH6n3bh8/u5lGWsNpI1T8sMRP6foA5xV9Vf70yS0zuUrklmyzEimweC6O
-         lAH6xgCeRbJSDWUba5YVc+074DGyhUBq7oKyD+t8TI5jreGnyAyGxpTuwYSVNFPUp/rd
-         V5XU+QOSf38G8R9XsD9KM6Efyn9kpW8vpvsiPMMA714wQLk1GszYvQThfnPr8VctUxT2
-         QJAg==
-X-Forwarded-Encrypted: i=1; AHgh+RpepXuKMPb4+UufiWHQyrR9AX04p6yqmcEHDMxI+FuGip1Q0aRr52D73PYU0YGd8sTArGlstSVyKkb6lCfR@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzq5TlDupf5A/P03AEaLetcE7tLTxcJ/Ijudb6mxT1/cK1ti7nw
-	AsL6UdrX82Cs/kMPgJvzXqkw1QVoWDfPvUE6wZp12H8rvARi4GYo8E31C1N5CHyXE2TT/Rm9QDm
-	XI8a5ZH3Cx2ozAGuOHJCB9pqx3Sd0n1le3YdPshG8EwwMOtjok7Xl6qgx2TUe/lMb+sZW
-X-Gm-Gg: AfdE7cniPWuhKapLKu8EE1PipQpXJrFDS+P6x1ZXmiki3lMBoNepyBb7cShl2P13mNt
-	GUYyuQWTitN9xgAasKAXvuQ98RDaKJKCn1+O/JnZa4ebKO5s14pbPVzphgUQbe9NiChc4MQd6sK
-	vuIGlSvGlJDCdBvNxtwdcNIUUlnzZ+mJl/iL0VYFWde3U/slQ9IfO3iZo//QBUlwvtOSd9jfMVV
-	NGrDjncoP8dRgtDmPSTDbxoVpirvQRYOCFYSHB7XMQFDDdJ7bo96TT7litnjm4YmHSx5jx/5soG
-	bPt/CKR2ujJ43RJoZdn1XSrd3mCYfFZT31V75uV46hnjMQ2ZDIjzhp4I50jdtFVRDfdvg8vrcDM
-	sAYeALReeF20DuJbzyokaHCS13g5mJpaDSZY=
-X-Received: by 2002:a05:622a:282:b0:50f:b9a6:82ae with SMTP id d75a77b69052e-51c4bd95127mr94396141cf.2.1783353637980;
-        Mon, 06 Jul 2026 09:00:37 -0700 (PDT)
-X-Received: by 2002:a05:622a:282:b0:50f:b9a6:82ae with SMTP id d75a77b69052e-51c4bd95127mr94395171cf.2.1783353637311;
-        Mon, 06 Jul 2026 09:00:37 -0700 (PDT)
-Received: from [192.168.120.193] ([178.235.128.140])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c12b62f5babsm767201566b.60.2026.07.06.09.00.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 06 Jul 2026 09:00:36 -0700 (PDT)
-Message-ID: <901f6be3-9c13-4168-8233-1187f2f2767b@oss.qualcomm.com>
-Date: Mon, 6 Jul 2026 18:00:34 +0200
+	s=arc-20240116; t=1783353649; c=relaxed/simple;
+	bh=ru9/BVkvLc8kkNDhSrt81cELJIbfxZ4aO7n6MTGARtk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=guQWzKcbDoUDdo/h5NF42h0AH6DPsNwBwUT1PEw4FxfBF2k26aifKxsG/D5d62HXpG5e2mY01D8AGKuQ94IrYzRHKnxdI5Hpwv2q616W/7gqloUQH9YQPO+esZPLuAfZynPkYCs4U69pmTykGbGfaFeZTv+bAVAaJPzQ6Sg+wrE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Vine5mIy; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 611961F000E9;
+	Mon,  6 Jul 2026 16:00:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1783353647;
+	bh=KvwXXsYdupx6ACDENBnJ1vKCi25iIdxSRW47q8PffTc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=Vine5mIy9BQ8t3HsFhxMZs8TnZvLK+rg9ZFm+TxlFbQ6wT305jT86BP8XoKNtGgOP
+	 38XImVrDFwsyhOOtI/Sma06OVT0YTIpnPBzFiFdzTeVYuoNtA2imgOE5u3I/Ww7Fro
+	 HlVpS+u1CNttbI+kq18y0KyGwh8HpfZxtr+H+UP4L9HpDkS/lkpMtefWHJp/Vyw2zb
+	 YWR+dR1Rl/XhUWjoctM+YjkDcytuY5w4uuPLXVsz/8EgdaRfyIoJ/42fm563JSOB04
+	 ljLS8yP6JppBgO9Wf8cv+j3WNU5gbtygRZBIlB2xKNZbh7JQjjxT9Pjl/HUljY+EBm
+	 odEljBLLopHAQ==
+Date: Mon, 6 Jul 2026 18:00:39 +0200
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Miquel Raynal <miquel.raynal@bootlin.com>
+Cc: Stephan Gerhold <stephan.gerhold@linaro.org>, 
+	Richard Weinberger <richard@nod.at>, Vignesh Raghavendra <vigneshr@ti.com>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, linux-mtd@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 0/4] mtd: rawnand: qcom: Add MDM9607
+Message-ID: <spaihty2s3zfj7jsv63ex7elf3bwz3bbak5ubageusatdgiodd@qh5gfhhh5ppo>
+References: <20260608-qcom-nandc-mdm9607-v1-0-4639a0492274@linaro.org>
+ <4kdjxrn3bxg7rhkdovidxv2b2f6evnknng7gjtbz7pahyqaakh@qkgxaz6xlav2>
+ <akult0UUSSwKQ8F5@linaro.org>
+ <875x2smf39.fsf@bootlin.com>
+ <akus-hN7-yf4Y6XU@linaro.org>
+ <v4wc36d5slcbq6vsubrpzdoz6x7iq2t2xxlg7onak7fq3bcpjz@kxoqbvi734pp>
+ <87y0foji2a.fsf@bootlin.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] remoteproc: qcom_q6v5_mss: Make ssctl_id configurable
- per platform
-To: Stephan Gerhold <stephan.gerhold@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>
-Cc: =?UTF-8?B?QmFybmFiw6FzIEN6w6ltw6Fu?= <barnabas.czeman@mainlining.org>,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20260706-qcom-q6v5-mss-mdm9607-ssctl-id-v1-0-f59e728af621@linaro.org>
- <20260706-qcom-q6v5-mss-mdm9607-ssctl-id-v1-1-f59e728af621@linaro.org>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20260706-qcom-q6v5-mss-mdm9607-ssctl-id-v1-1-f59e728af621@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: xSSnsK7_OSG6isDJwQ9D1oYP4AWxkso0
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA2MDE2MiBTYWx0ZWRfX64msAuyZiFko
- 27qw8eJvCoIo1bhwxONCEVU/9o1qqPFmk1494CL/1VMnHTrLVtFvOgtjzwSiAW1vB+/9MlDuPx8
- 9qsFsr5bjzt228ubZCNZ34tH3Ywtnak=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA2MDE2MiBTYWx0ZWRfX0MIHRkquUAkZ
- eV7wvAARCF24y4SArCGvUQZsoKRfCCj+Z2+lNE22DAoVHHZ+EmuKKRwkkDyKQnd+s4t0igY7ZO0
- Ez+peiosIeMgIY9TEZhV7jCnBlnNrdcEeNSCOszufDmjVNHzl6BdtDQXZ2EXt/1hZUOwF3jR2gt
- 5Nc4cxP2ahK/+sLRRmEsOM2vYc1A1yLY6nmZB/KFnkrfXRNTnZiCzn/odoBvH495oHJNmLBeQdf
- xhrsXWlfCHZMmcLnxCWC5+zDg+Eeie1J6cI6xnRWuU7Tk8PO4xcrZOQ0wzb0VRbW1D/T5fsZg5q
- 55y92ltSSKFOET8BmHRm1qpjsN2jgbhIK0UHtSKXbbo5TmT/XdgOvN2jYKe68muq7S2EdlJCO+V
- OcIFnMl4rYdaXS5Iv2UUvozQemdRUmxtKIG7yTzC4ApeHWUkprQc4TJrclZpK42cyj5uMp28pxT
- VZCmovKy57kAhWV/C2A==
-X-Proofpoint-GUID: xSSnsK7_OSG6isDJwQ9D1oYP4AWxkso0
-X-Authority-Analysis: v=2.4 cv=GulyPE1C c=1 sm=1 tr=0 ts=6a4bd127 cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=PRfkaYvzSr8QmIIGAkY2Sg==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=bjVS6o9MGAhJDIbh6jUA:9 a=QEXdDO2ut3YA:10
- a=dawVfQjAaf238kedN5IG:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-06_02,2026-07-06_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 adultscore=0 clxscore=1015 malwarescore=0 impostorscore=0
- priorityscore=1501 suspectscore=0 lowpriorityscore=0 phishscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607060162
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87y0foji2a.fsf@bootlin.com>
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-3.16 / 15.00];
+	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	FORWARDED(0.00)[lists@lfdr.de];
-	TAGGED_FROM(0.00)[bounces-116950-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-116951-lists,linux-arm-msm=lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:miquel.raynal@bootlin.com,m:stephan.gerhold@linaro.org,m:richard@nod.at,m:vigneshr@ti.com,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linux-mtd@lists.infradead.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	FORGED_SENDER(0.00)[mani@kernel.org,linux-arm-msm@vger.kernel.org];
+	MIME_TRACE(0.00)[0:+];
+	RCVD_COUNT_THREE(0.00)[4];
+	FORWARDED(0.00)[lists@lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_SENDER(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS(0.00)[m:stephan.gerhold@linaro.org,m:andersson@kernel.org,m:mathieu.poirier@linaro.org,m:barnabas.czeman@mainlining.org,m:linux-arm-msm@vger.kernel.org,m:linux-remoteproc@vger.kernel.org,m:linux-kernel@vger.kernel.org,s:lists@lfdr.de];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:email,qualcomm.com:email,qualcomm.com:dkim,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,oss.qualcomm.com:from_mime,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,vger.kernel.org:from_smtp];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[7];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[mani@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	RCPT_COUNT_SEVEN(0.00)[11];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MISSING_XM_UA(0.00)[];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCVD_COUNT_SEVEN(0.00)[7]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,linaro.org:email,vger.kernel.org:from_smtp,qh5gfhhh5ppo:mid]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 517A171358D
+X-Rspamd-Queue-Id: 288A471377D
 
-On 7/6/26 5:37 PM, Stephan Gerhold wrote:
-> Currently, qcom_q6v5_mss hardcodes 0x12 as the instance ID for the
-> subsystem control (ssctl) QMI service. However, some platforms (e.g.
-> MDM9607) provide the service with a different instance ID (0x22).
+On Mon, Jul 06, 2026 at 04:42:21PM +0200, Miquel Raynal wrote:
+> On 06/07/2026 at 16:19:04 +02, Manivannan Sadhasivam <mani@kernel.org> wrote:
 > 
-> Make it possible to override the ssctl_id per platform by adding it to the
-> platform-specific rproc_hexagon_res struct. The same pattern also exists
-> already inside qcom_q6v5_pas.
+> > On Mon, Jul 06, 2026 at 03:26:18PM +0200, Stephan Gerhold wrote:
+> >> On Mon, Jul 06, 2026 at 03:18:18PM +0200, Miquel Raynal wrote:
+> >> > On 06/07/2026 at 14:55:26 +02, Stephan Gerhold <stephan.gerhold@linaro.org> wrote:
+> >> > > On Mon, Jun 29, 2026 at 05:46:57PM +0200, Manivannan Sadhasivam wrote:
+> >> > >> On Mon, Jun 08, 2026 at 03:20:21PM +0200, Stephan Gerhold wrote:
+> >> > >> > MDM9607 has QPIC v1.5 that supports the OP_PAGE_READ_ONFI_READ command, but
+> >> > >> > is missing the rest of the hardware changes in QPIC v2. There is also only
+> >> > >> > a single clock that can be controlled using the RPM firmware. Document and
+> >> > >> > add the new qcom,mdm9607-nand compatible for this setup.
+> >> > >> > 
+> >> > >> > Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+> >> > >> 
+> >> > >> You could ammend patch 1's commit message with the information I shared in the
+> >> > >> reply. But nevertheless:
+> >> > >> 
+> >> > >> Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+> >> > >> 
+> >> > >
+> >> > > Do you want me to resend the series with patch 1 commit message
+> >> > > adjusted? There were no other changes requested as far as I can tell.
+> >> > 
+> >> > I was mostly waiting for answers on my questions from the DT binding
+> >> > maintainers, but I understand they must be too loaded at the moment.
+> >> > 
+> >> > > I think the current commit message there is fine, especially if you add
+> >> > > the Link: tag during applying. The extra context will be there.
+> >> > >
+> >> > > If you want me to resend, I would just replace the second paragraph in
+> >> > > patch 1 with the following:
+> >> > >
+> >> > > ---
+> >> > > On MDM9607 and other recent SoCs, the QPIC hardware requires 3 clocks
+> >> > > (ahb, core, aon). However, the access to these clocks is restricted to
+> >> > > the RPM firmware that controls the shared power resources for the whole
+> >> > > SoC. The clocks cannot be controlled separately, there is only a single
+> >> > > RPM_SMD_QPIC_CLK clock that implicitly enables all of the 3 clocks.
+> >> > > The only exception to this are some IPQ* SoC that are not using RPM,
+> >> > > there the clocks are directly controlled by the kernel via the clock
+> >> > > controller (GCC). Require only one clock in the dt-bindings for MDM9607
+> >> > > to avoid having to define dummy clock entries.
+> >> > 
+> >> > I am sorry but this is still incorrect. You don't have to define 2 dummy
+> >> > clocks. You would have to define 3 times the same clock (and that's not
+> >> > a problem). I have been working on the concept of clock nexus which
+> >> > may solve this kind of issue in a rather elegant way but that's not
+> >> > ready yet.
+> >> > 
+> >> > In my opinion the binding that you want to push (a single clock) is
+> >> > wrong, but since I've been explaining this for several weeks already,
+> >> > please at least fix the commit message and I will take it as you want.
+> >> > 
+> >> 
+> >> Thanks for your feedback!
+> >> 
+> >> Either way works for me personally, but now we have a conflict between
+> >> your requested changes and the feedback from Mani, who maintains this
+> >> driver. :-)
+> >> 
+> >> @Mani: Would you also be fine with defining all 3 clocks in the DT
+> >> ("ahb", "core", "aon") and then assigning the RPM_SMD_QPIC_CLK to all of
+> >> them?
+> >> 
+> >
+> > AFAIU, devicetree binding should describe the "OS view of the
+> > hardware", not the
 > 
-> Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
-> ---
+> Like Geert pointed out in the below thread, I am equally surprised by
+> this shift but I guess SoC complexity requires adaptations.
+> 
+> > hardware itself. We have many predecents to this rule. One of them is the SCMI
+> > based resource control in Qcom Automotive SoCs, where clocks/regulators to
+> > individual IPs are controlled by the SCMI server and OS just sees a single SCMI
+> > power-domain for the IP. So we only describe the SCMI power-domain in the
+> > binding and not the physical clocks/regulators received by the IP in hardware.
+> >
+> > We had a recent discussion around the same topic and you can see the reply from
+> > Krzk here: https://lore.kernel.org/all/c83ca485-1e2e-46ba-bd15-1168aa8955d3@kernel.org
+> >
+> > So here also, the hardware receives 3 clocks physically, but OS cannot control
+> > all 3 of them, but just a single clock from RPMh which controls the 3 real
+> > clocks. Moreover, assigning the same clock to 3 different clock sources doesn't
+> > accurately describe the hardware either, because those 3 clocks operate on
+> > different frequencies
+> 
+> Ah, this is a point that was missing to my understanding. You actually
+> have three *different* clocks, and you control all of them through some
+> kind of firmware proxy called RPMh with a single handle. So basically
+> the kernel just enables one clock and the firmware enables/configures
+> two other clocks differently automatically. Is that it? Feels like you
+> almost need a power domain here.
+> 
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+RPMh indeed provides power-domains, but those serve a different purpose than
+the clocks provided by it. RPMh power-domains represent an internal block that
+aggregates votes from different clients like OS, Co-processor etc... and
+controls power to various IPs inside the SoC. Likewise, RPMh also aggregates
+clock votes from various clients inside the SoC and controls clock inputs to
+various IP blocks.
 
-Konrad
+So both are not the same here.
+
+> > and if the driver queries the frequency of
+> > RPM_SMD_QPIC_CLK, it would just return the same frequency. This is where the
+> > dummy clock comes handy as it atleast provides a valid clock frequency to the
+> > driver. But I'm not advocating for its usage here anymore.
+> >
+> > Hence IMO, assigning the same RPM_SMD_QPIC_CLK to all 3 clocks is not the right
+> > approach and we should be assigning a single RPM_SMD_QPIC_CLK to
+> > 'core' clk.
+> 
+> You said using three times the same clock would be wrong because we
+> would get three times the same rate whereas in practice it's wrong. This
+> means the OS has access to these clocks somehow,
+
+No, there is no way the OS can access these 3 clocks individually on the RPMh
+enabled platforms. But the OS indeed has access to these 3 clocks on non-RPMh
+platforms like the older IPQ ones.
+
+> so if we need to
+> describe what the OS sees of the hardware, as you say, defining a single
+> clock is incomplete.
+> 
+> Again, I am not totally opposed to the single clock idea if you all feel
+> like this is the way forward. Yet, it sounds a bit hackish.
+> 
+
+I don't see it as a hackish representation, but rather a proper one because, OS
+only sees a single clock for the NAND controller.
+
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
