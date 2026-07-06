@@ -1,192 +1,176 @@
-Return-Path: <linux-arm-msm+bounces-116974-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-116975-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id jzSJNMTkS2oDcQEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-116974-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Jul 2026 19:24:20 +0200
+	id 5wt/D/PjS2q2cAEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-116975-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Jul 2026 19:20:51 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id CA23B713D22
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Jul 2026 19:24:19 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id A2219713CBE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Jul 2026 19:20:50 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=baylibre.com header.s=google header.b=juxdu8pD;
-	dmarc=none;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116974-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c15:e001:75::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116974-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=aUwJ1iel;
+	dmarc=pass (policy=quarantine) header.from=kernel.org;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116975-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116975-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 7D54E304E70A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jul 2026 17:10:43 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 155223020138
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jul 2026 17:13:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2A5BA343D64;
-	Mon,  6 Jul 2026 17:10:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 31EB136CE06;
+	Mon,  6 Jul 2026 17:13:24 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E33132F690F
-	for <linux-arm-msm@vger.kernel.org>; Mon,  6 Jul 2026 17:10:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E34E0346E43
+	for <linux-arm-msm@vger.kernel.org>; Mon,  6 Jul 2026 17:13:22 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783357841; cv=none; b=cfubIARs1XKD0xzsiBrXthEbvoDUzghgv4/QhPoMdMfuOhVvMSTQPnDTWVIblqzqSpAOTxm1hAaobbQAYNWivCZ4nk3eYQhEiQWvOsu1l8lYVFB45UYWh0lQVJ8uH3tLY9upPStT4qN3L08eZWkC0gHmcR7aJAwHzZt7dzTdGzc=
+	t=1783358004; cv=none; b=GhFC6EMcK4+ekVqiH/FiNoPdcSQwKxDe+I6R1Fmb6ECbW6lOY/jF3SVenbwFHiD8A4BIi/H4ykdEvK33iWC+UhmsY7Z6mGUiFctrA+bxO63bl0jNczJDpavnLrZumYPa9wQLSJztJ0J5MeGnRexqxuMoHJvvKQ2rPo6JpfxHUDU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783357841; c=relaxed/simple;
-	bh=YwUdG1I8kJNunEWTpdhFYSiUn8LDq7cMo60LuGY0n18=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZQ69Fi/6+5YSsjDgy8WRUAMJgyo8yv+bIm335GKxGrrgp9vAhxhkkin8i+okmx1dBJPJ1aXynkC50o3SNANQozZY4S5GGUnbaekwJvNOSDcwV5W5nwHmTCI24+wNl3YllwHdcufL1X05FFAoiVvh5vFkUQlQedFl0UukPIAF1SI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b=juxdu8pD; arc=none smtp.client-ip=209.85.128.45
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-493b779003fso16556885e9.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Jul 2026 10:10:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre.com; s=google; t=1783357837; x=1783962637; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=YwUdG1I8kJNunEWTpdhFYSiUn8LDq7cMo60LuGY0n18=;
-        b=juxdu8pD2AEmX4JXz9DmYETSYkWMa2bZGpCVvCKoJPK0ZGAv0548w+WplHh7m/xasa
-         bfV0SwHv2B92WnWJ32KyM0OP6NVYfND0ksKrqHMgBoTFOxk6T8Lhx+PfiKf+BECSLJJ1
-         HmS7AD61p5N2ox3/Hqc+UcXvX+b68NyJ82/1yTiXBJ9usnVgyMKp/syTnSUNBrjHhhGi
-         yTSbB5hbbiDbqaDKuTdy2/x0XuhB9x44yOOxXaKGSdrie/3I3Ul2LgiZ2OzRabueWhFx
-         PM+BPeNQ6Q7rNG7Bsw0eeaDRJnYNc8+RAbA9roZVZeGaPooeVsgxepIL5ziMkYJA8/J0
-         qV4g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783357837; x=1783962637;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=YwUdG1I8kJNunEWTpdhFYSiUn8LDq7cMo60LuGY0n18=;
-        b=AJAmYSqN1vSo8Bm2zKfMK5LL6ap+9obTiaISToxzMUoXKY/uR8sv5wxqyhOI7Yt/Vd
-         Q8j3H0kkDRzr31RZNB7xnwU40QZU/o2v+Js+pWVJoHb2nOnyoC2pWPNAx3acviOX9FMP
-         MX+f+Tim0E+TRJkk11LQfFIWUwPbX853CBtd+dBeFPMoZj1aTlx+zyy+YmsZtWBMoBGX
-         ZLQB6u8kBAr7VP2H2xiuoDbfW+C1yqvcf2cdAt7DTBrtACz96Xm+/B7KNOeM3USZSRd9
-         /6cTRIyNzKp3WbmNeRFtouOCNQgrXrn1xZupju35pnXtrR2EUCfHzFcd+gg9SVGa4219
-         a7RA==
-X-Forwarded-Encrypted: i=1; AHgh+RozKaRbMAUebqAeL1dxmGrLSEp5fEnx4Kioa5IeCV3tNLiIsL6pW2zc65dReHnwRakdMt5DcjpGKxufX4nf@vger.kernel.org
-X-Gm-Message-State: AOJu0YwCSJtxbeOGse9u4qBHYoaEdE/nMrpzN3GGihh5/+ZkCBtx6hHK
-	eOO3jd9YWEPjYbmlaZ5UGyYa7w1rYsjrnHKgiBeZCzkkI5/+1c0HTVTiO/n1YMApDCk=
-X-Gm-Gg: AfdE7cnZZaeu25AQZXcku+bziQjWEceFeVA+NoHrRjcdLw0wIrwcq2SOzPTFaN/28gz
-	TbFeYn02l4CwWppmtt8dA4BrTxlxlUr6+Ct+MLKKwhHH1hU6cXFUQYXDIsmQGvUjceq5u6WfJ/t
-	qkofW+ssDTLnh4Wx4OY72kRs+iGxxG1u5MZ7V5stNOpytddYN+QMdyEpaV0kqlApFcAp8hXTzIs
-	x61x3Ky2Cn50c0IL39BemqUSoel6QjIcHYzZO5q+rLhWBZyala4pDTItRUmvSoyphvU6aNUh1JL
-	7CiTMTvTTRusgytN9GFwx2P8IaD7zT1+H+1Ll8Ly4wmnRZ0B2htQPVI+VEkGzdMxXZb5TRvz6QA
-	y0nR5Bh9sBQ8MclkIIlx9UKZG0fmdcvl6xP68XfYGlo98MZ+ukj9nZvzsWAHHMeSq+k9Xlt/FhL
-	f6kPbm8xuCQ1thWzq0wjIp6a4ItzSa4IA5v9ZhmPhSG/QD9+quc8T77M+Z+ujjh1WG4oUCAnNbT
-	68=
-X-Received: by 2002:a05:600c:548d:b0:493:c478:8744 with SMTP id 5b1f17b1804b1-493df0644a7mr17176475e9.18.1783357837297;
-        Mon, 06 Jul 2026 10:10:37 -0700 (PDT)
-Received: from localhost (p200300f65f47db0404eb41111570ffdc.dip0.t-ipconnect.de. [2003:f6:5f47:db04:4eb:4111:1570:ffdc])
-        by smtp.gmail.com with UTF8SMTPSA id 5b1f17b1804b1-493df703391sm6037585e9.0.2026.07.06.10.10.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Jul 2026 10:10:36 -0700 (PDT)
-Date: Mon, 6 Jul 2026 19:10:34 +0200
-From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
-To: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Andrew Lunn <andrew+netdev@lunn.ch>, "David S. Miller" <davem@davemloft.net>, 
-	Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, 
-	Paolo Abeni <pabeni@redhat.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
-	Alexandre Torgue <alexandre.torgue@foss.st.com>, Vinod Koul <vkoul@kernel.org>, 
-	Giuseppe Cavallaro <peppe.cavallaro@st.com>, Chen-Yu Tsai <wens@kernel.org>, 
-	Jernej Skrabec <jernej.skrabec@gmail.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	Kevin Hilman <khilman@baylibre.com>, Jerome Brunet <jbrunet@baylibre.com>, 
-	Shawn Guo <shawnguo@kernel.org>, Fabio Estevam <festevam@gmail.com>, 
-	Jan Petrous <jan.petrous@oss.nxp.com>, s32@nxp.com, Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>, 
-	Romain Gantois <romain.gantois@bootlin.com>, Geert Uytterhoeven <geert+renesas@glider.be>, 
-	Magnus Damm <magnus.damm@gmail.com>, Maxime Ripard <mripard@kernel.org>, 
-	Christophe Roullier <christophe.roullier@foss.st.com>, Bartosz Golaszewski <brgl@kernel.org>, 
-	Radu Rendec <rrendec@redhat.com>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, netdev@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com, 
-	linux-arm-kernel@lists.infradead.org, Drew Fustini <dfustini@tenstorrent.com>, 
-	linux-sunxi@lists.linux.dev, linux-amlogic@lists.infradead.org, linux-mips@vger.kernel.org, 
-	imx@lists.linux.dev, linux-renesas-soc@vger.kernel.org, 
-	linux-rockchip@lists.infradead.org, sophgo@lists.linux.dev, linux-riscv@lists.infradead.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [PATCH net-next v12 2/7] phy: qcom: add the SGMII SerDes PHY
- driver for SCMI systems
-Message-ID: <akvhUwQ_FFSJYICA@monoceros>
-References: <20260706-qcom-sa8255p-emac-v12-0-e3ab1ecf2901@oss.qualcomm.com>
- <20260706-qcom-sa8255p-emac-v12-2-e3ab1ecf2901@oss.qualcomm.com>
+	s=arc-20240116; t=1783358004; c=relaxed/simple;
+	bh=e6qWc66kU+xXDmvKGlirsKMaIbvc1QxArJkePbV+wf4=;
+	h=From:In-Reply-To:MIME-Version:References:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Z7L8mM1yXWrlLLBa2fvNd7VBKuH707lXyioLr8F1vxLqSpfeG0xbhdhtZ75uOaT063VO/hZV5t1dHlYKMd1xQDYKeMEyLHZPZm3INtMBLXlHUsQzrGs+ToxztZkfAzDb/98PmqEGOcMAgHzqN1hk+ofv9oVos2SPChiqUMmltHo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aUwJ1iel; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 860151F00ACF
+	for <linux-arm-msm@vger.kernel.org>; Mon,  6 Jul 2026 17:13:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1783358002;
+	bh=mpqsxHTdNQuABlRbSrSTXdX6rgBTyZ1QRwkSHQqkvs8=;
+	h=From:In-Reply-To:References:Date:Subject:To:Cc;
+	b=aUwJ1ielEp9fKqMoRpbf7+KlsAEkx1ItUo/4tUkjlvyTMT/NZIU/Sfs9aLmDyh/pU
+	 dws1njqufItlb4Ts99FlfeGkNaAmFAP7jmRVp9CFbufRmxNFLiMPUqN9dVeeQezBJp
+	 27WL0AcS7DIU9vkvih713YctIfY+JQ6QonKsU8skRLVL5z/6z3EAp4XBXQsVEryUe5
+	 hYHk5hc4FyjFw8sKxD7w8NaMdcn3Hn0U7HTHVjCh6VhngzLmp3012I/7OCSheRIjY7
+	 cDatDpx7O8gSH3cDoY+eDfHzEnfSJhGwNxBdfiyXteiz3VS3hxmUmZKRt3SHYb3CXI
+	 wA/fAxKf5T3GA==
+Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-39669bcaadfso36820211fa.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Jul 2026 10:13:22 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AHgh+RpOWECaqhDnbcBQ0npHqpSD0kIfcj5zIjjXPvIPObeBNFc93LrcC4hb/NZoHJxVm4f5GHOfgMQ8+X4nGZNk@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx55YqKwiNM9bpahuteXKXsSeQfPd0/W609pa80tQiyZdRwnV7D
+	WltQAXfrgZjeYYJ9Yw88PEtdV5+XunOa4eP+E8LtofpmKIEqEsPCdJkkq7CJ3BlzCZ8BVVUdByo
+	5lbWbXR6m/yZwwXzc7PfCtHu8t1yXP2eDfpsGYTYQTQ==
+X-Received: by 2002:a05:651c:546:b0:39b:32b3:b31f with SMTP id
+ 38308e7fff4ca-39c5fd2f09bmr3944171fa.5.1783358001073; Mon, 06 Jul 2026
+ 10:13:21 -0700 (PDT)
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 6 Jul 2026 13:13:19 -0400
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 6 Jul 2026 13:13:19 -0400
+From: Bartosz Golaszewski <brgl@kernel.org>
+In-Reply-To: <20260706-busy-grumpy-limpet-c59789@quoll>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="hya7dxqb4rmwvjro"
-Content-Disposition: inline
-In-Reply-To: <20260706-qcom-sa8255p-emac-v12-2-e3ab1ecf2901@oss.qualcomm.com>
+References: <20260704004408.2303468-1-shengchao.guo@oss.qualcomm.com>
+ <b693a9d2-4f1d-4c17-8a63-99c7ac79ed41@oss.qualcomm.com> <20260706-busy-grumpy-limpet-c59789@quoll>
+Date: Mon, 6 Jul 2026 13:13:19 -0400
+X-Gmail-Original-Message-ID: <CAMRc=Mcg-6XajFJCjTDgGACQ7YLGggw5TEtHv4QMEA=dFLOhTg@mail.gmail.com>
+X-Gm-Features: AVVi8Ce2TYLFYmgt3xidz5HirHvkB2ef9twCkJ6HFyZf4MtkHSN7YtUE_SSftbg
+Message-ID: <CAMRc=Mcg-6XajFJCjTDgGACQ7YLGggw5TEtHv4QMEA=dFLOhTg@mail.gmail.com>
+Subject: Re: [PATCH RESEND] dt-bindings: crypto: qcom,inline-crypto-engine:
+ Document Nord ICE
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Shawn Guo <shengchao.guo@oss.qualcomm.com>, 
+	Herbert Xu <herbert@gondor.apana.org.au>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Dmitry Baryshkov <lumag@kernel.org>, 
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>, 
+	Deepti Jaggi <deepti.jaggi@oss.qualcomm.com>, linux-crypto@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, 
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>, 
+	Harshal Dev <harshal.dev@oss.qualcomm.com>, 
+	Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-1.76 / 15.00];
-	SIGNED_PGP(-2.00)[];
+X-Spamd-Result: default: False [-3.66 / 15.00];
+	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
-	MIME_GOOD(-0.20)[multipart/signed,text/plain];
-	R_DKIM_ALLOW(-0.20)[baylibre.com:s=google];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
+	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+,1:+,2:~];
-	RECEIVED_HELO_LOCALHOST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[48];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_SENDER(0.00)[u.kleine-koenig@baylibre.com,linux-arm-msm@vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-116975-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[18];
+	FORGED_SENDER(0.00)[brgl@kernel.org,linux-arm-msm@vger.kernel.org];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_RECIPIENTS(0.00)[m:krzk@kernel.org,m:shengchao.guo@oss.qualcomm.com,m:herbert@gondor.apana.org.au,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:andersson@kernel.org,m:konradybcio@kernel.org,m:lumag@kernel.org,m:bartosz.golaszewski@oss.qualcomm.com,m:deepti.jaggi@oss.qualcomm.com,m:linux-crypto@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:krzysztof.kozlowski@oss.qualcomm.com,m:harshal.dev@oss.qualcomm.com,m:kuldeep.singh@oss.qualcomm.com,m:conor@kernel.org,s:lists@lfdr.de];
 	FORWARDED(0.00)[lists@lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:bartosz.golaszewski@oss.qualcomm.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:andrew+netdev@lunn.ch,m:davem@davemloft.net,m:edumazet@google.com,m:kuba@kernel.org,m:pabeni@redhat.com,m:mcoquelin.stm32@gmail.com,m:alexandre.torgue@foss.st.com,m:vkoul@kernel.org,m:peppe.cavallaro@st.com,m:wens@kernel.org,m:jernej.skrabec@gmail.com,m:neil.armstrong@linaro.org,m:khilman@baylibre.com,m:jbrunet@baylibre.com,m:shawnguo@kernel.org,m:festevam@gmail.com,m:jan.petrous@oss.nxp.com,m:s32@nxp.com,m:mohd.anwar@oss.qualcomm.com,m:romain.gantois@bootlin.com,m:geert+renesas@glider.be,m:magnus.damm@gmail.com,m:mripard@kernel.org,m:christophe.roullier@foss.st.com,m:brgl@kernel.org,m:rrendec@redhat.com,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:netdev@vger.kernel.org,m:linux-stm32@st-md-mailman.stormreply.com,m:linux-arm-kernel@lists.infradead.org,m:dfustini@t
- enstorrent.com,m:linux-sunxi@lists.linux.dev,m:linux-amlogic@lists.infradead.org,m:linux-mips@vger.kernel.org,m:imx@lists.linux.dev,m:linux-renesas-soc@vger.kernel.org,m:linux-rockchip@lists.infradead.org,m:sophgo@lists.linux.dev,m:linux-riscv@lists.infradead.org,m:bartosz.golaszewski@linaro.org,m:krzk@kernel.org,m:conor@kernel.org,m:andrew@lunn.ch,m:mcoquelinstm32@gmail.com,m:jernejskrabec@gmail.com,m:geert@glider.be,m:magnusdamm@gmail.com,s:lists@lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-116974-lists,linux-arm-msm=lfdr.de];
-	DMARC_NA(0.00)[baylibre.com];
-	FROM_HAS_DN(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,vger.kernel.org:from_smtp,mail.gmail.com:mid,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns];
+	MISSING_XM_UA(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[baylibre.com:+];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[u.kleine-koenig@baylibre.com,linux-arm-msm@vger.kernel.org];
-	FREEMAIL_CC(0.00)[kernel.org,lunn.ch,davemloft.net,google.com,redhat.com,gmail.com,foss.st.com,st.com,linaro.org,baylibre.com,oss.nxp.com,nxp.com,oss.qualcomm.com,bootlin.com,glider.be,vger.kernel.org,st-md-mailman.stormreply.com,lists.infradead.org,tenstorrent.com,lists.linux.dev];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[brgl@kernel.org,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	ALIAS_RESOLVED(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt,netdev,renesas];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	TO_DN_SOME(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,monoceros:mid,baylibre.com:from_mime,baylibre.com:dkim,vger.kernel.org:from_smtp]
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: CA23B713D22
+X-Rspamd-Queue-Id: A2219713CBE
 
+On Mon, 6 Jul 2026 08:54:22 +0200, Krzysztof Kozlowski <krzk@kernel.org> said:
+> On Sun, Jul 05, 2026 at 11:15:45PM +0530, Kuldeep Singh wrote:
+>> On 04-07-2026 06:14, Shawn Guo wrote:
+>> > Document Inline Crypto Engine (ICE) on Qualcomm Nord SoC.
+>> >
+>> > Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+>> > Reviewed-by: Harshal Dev <harshal.dev@oss.qualcomm.com>
+>> > Signed-off-by: Shawn Guo <shengchao.guo@oss.qualcomm.com>
+>> > ---
+>> > It was included in the Nord SA8797P DTS series [1] due to that
+>> > the prerequisite changes were picked up by Bjorn for 7.2. Resend it to
+>> > Herbert as the dependency is gone now with 7.2-rc1.
+>> >
+>> > [1] https://lore.kernel.org/all/20260526051300.1669201-1-shengchao.guo@oss.qualcomm.com/
+>> >
+>> >  .../devicetree/bindings/crypto/qcom,inline-crypto-engine.yaml   | 2 ++
+>> >  1 file changed, 2 insertions(+)
+>> >
+>> > diff --git a/Documentation/devicetree/bindings/crypto/qcom,inline-crypto-engine.yaml b/Documentation/devicetree/bindings/crypto/qcom,inline-crypto-engine.yaml
+>> > index db895c50e2d2..d690eff2e86d 100644
+>> > --- a/Documentation/devicetree/bindings/crypto/qcom,inline-crypto-engine.yaml
+>> > +++ b/Documentation/devicetree/bindings/crypto/qcom,inline-crypto-engine.yaml
+>> > @@ -17,6 +17,7 @@ properties:
+>> >            - qcom,hawi-inline-crypto-engine
+>> >            - qcom,kaanapali-inline-crypto-engine
+>> >            - qcom,milos-inline-crypto-engine
+>> > +          - qcom,nord-inline-crypto-engine
+>> >            - qcom,qcs8300-inline-crypto-engine
+>> >            - qcom,sa8775p-inline-crypto-engine
+>> >            - qcom,sc7180-inline-crypto-engine
+>> > @@ -63,6 +64,7 @@ allOf:
+>> >              enum:
+>> >                - qcom,eliza-inline-crypto-engine
+>> >                - qcom,milos-inline-crypto-engine
+>> > +              - qcom,nord-inline-crypto-engine
+>>
+>> With below patch, we don't need nord entry here.
+>> https://lore.kernel.org/lkml/20260702-b4-shikra_crypto_changse-v2-1-66173f2f28b3@qti.qualcomm.com/
+>
+> Patch has conflict. This (Nord) should go after above one, with this
+> fixed.
+>
 
---hya7dxqb4rmwvjro
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
-Subject: Re: [PATCH net-next v12 2/7] phy: qcom: add the SGMII SerDes PHY
- driver for SCMI systems
-MIME-Version: 1.0
+The other series still hasn't made its way upstream. This one's simple, can we
+queue it now and rebase the other one?
 
-On Mon, Jul 06, 2026 at 03:20:17PM +0200, Bartosz Golaszewski wrote:
-> +#include <linux/mod_devicetable.h>
-
-Please only include those <linux/device-id/*.h> that you actually need.
-I'm actively working on deprecating <linux/mod_devicetable.h>.
-
-Thanks
-Uwe
-
---hya7dxqb4rmwvjro
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmpL4YcACgkQj4D7WH0S
-/k57CAf/UgOJNneAcYY3lQuZ+RhwSluKHlS9kU+LP6KfWURj/Pj78uMbougI/MWm
-NOPHFAV0gOZPyox4TK4XImoVNCHq9wWJVtMM0UMCguoEBhrqgoeV/Esik9YncvIc
-INlZjmDSd0r0OJd9oMZmIM7O1eIZxLQugbLTCT2WK9eW0OCT+20CmmtgHzGHZ7eU
-krIfDqpfq0wJOa70OZmh/lowgwbJIjabcxyyCGiY0Scvf4F31ClocQmot5e6gabR
-OcwHOulxqkUKBtOVZtPrt5lRsawYjY+ZslpAnnZvlrbrqmj2M9IuVyQGMqEW6kkC
-CFP1TQBoEVajey5oRSMzdQ2ZlvM/wA==
-=Sskc
------END PGP SIGNATURE-----
-
---hya7dxqb4rmwvjro--
+Bart
 
