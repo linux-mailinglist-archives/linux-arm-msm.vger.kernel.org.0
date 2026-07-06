@@ -1,67 +1,67 @@
-Return-Path: <linux-arm-msm+bounces-116629-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-116630-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id GE5xEC9BS2owOQEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-116629-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Jul 2026 07:46:23 +0200
+	id UbrTE/RAS2obOQEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-116630-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Jul 2026 07:45:24 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9083370CB09
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Jul 2026 07:46:22 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5B15D70CAE8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Jul 2026 07:45:23 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=intel.com header.s=Intel header.b=jIEMZ9S9;
+	dkim=pass header.d=intel.com header.s=Intel header.b=cCJF9DNz;
 	dmarc=pass (policy=none) header.from=intel.com;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116629-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116629-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116630-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.232.135.74 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116630-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id BBA1B3008788
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jul 2026 05:44:25 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id C34A030028AA
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jul 2026 05:45:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 19F563BE16F;
-	Mon,  6 Jul 2026 05:44:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC63D3BE16A;
+	Mon,  6 Jul 2026 05:45:20 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.21])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.10])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C358D3AEF36;
-	Mon,  6 Jul 2026 05:44:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 540CC371D0A;
+	Mon,  6 Jul 2026 05:45:19 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783316665; cv=none; b=jo3i3ivHyLj8xGk1wwdNfAkquBkjtUhhydN8JpnW0VglIesGCK7dgwxy4DuTqd8s62tAklJ9QyA4WyzQEexDsJ0jwzvEuPCV/JUb/coFj9tYvzsCgpl6s8vcESeFGylzb6M82s+oVDxKvGrw+6TXN86VbRzHm/ISr/Ob/Iu3/No=
+	t=1783316720; cv=none; b=G0LhXpcqU/fJ+W6T9BSkJpHA/awlXeYUw/Xtyw0tm09UlrTgMErL0LwFmhiV8qDTrk9boOFicdm+UMvcFCdJWKirIQ1TNTXrYIXNRWqGwpdrOjbQdQNs7XuHt4EnWpdp3onxr5aB6HG0w1Y9r8Af6XintlWi9sGEuSoxrDaZjYU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783316665; c=relaxed/simple;
-	bh=IrUMWPDZ/VCpuPUVVBVYqvMi5P3Rt+n7hhw8JrpkD0w=;
+	s=arc-20240116; t=1783316720; c=relaxed/simple;
+	bh=lsnmS/u8NCo9XXYFOWuyuTUeIcFEKQZni4hHgmFmNoo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TuaGLA4TX/8YWgvlsbfDCw/G91nZRpzhi2HZ0LXaEBGuTs4VfNHoKs/YcUukAX/Sg4p+Drc/iFRIdq29fkB9THanSCi+qRIdDxX6Kw1sLcvgn9TY991uNxtUH7T3lcwicnRRbJRiJylh9HHswUQzd5UTmbiuoc8MEuW3EGK/a1U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=jIEMZ9S9; arc=none smtp.client-ip=198.175.65.21
+	 Content-Type:Content-Disposition:In-Reply-To; b=Nab8JVFtXtI/EnSGloJX4hPZsQ+rflqIGph6Ps5k+wfUr9G80OR7PBZJiqIBU67T25mUp5yDYy0dGG6i8cxIe7MyLyyUU+YYTIQ3OKAEffkaQVfZCxU6Vu9QrppyTqh5ttzGcks6C4Zq7pRVxYqACshMN1R2Loy4Ku5yvoYL6i8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=cCJF9DNz; arc=none smtp.client-ip=192.198.163.10
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1783316663; x=1814852663;
+  t=1783316720; x=1814852720;
   h=date:from:to:cc:subject:message-id:references:
    mime-version:in-reply-to;
-  bh=IrUMWPDZ/VCpuPUVVBVYqvMi5P3Rt+n7hhw8JrpkD0w=;
-  b=jIEMZ9S9ODSVVxlDP3TrwZCSMmeowWKPPKL1OzT/KsYlLZoA0iwXmG++
-   QITX2EzaZyqTFEznsqBhlYNUykAU6er6kcnCXayFe6fD2eg9i7v0sSTxV
-   Tehfk6JFZlql4Kn+NkAxoMVmFc72iiFMTOz4nuLODEmHVk9hnZ49FAvM0
-   7N1CA/GMsRvLyZ9oktu6rdChBaIOCv8EbGs+0Bg55K4GdfXmHOjBeOR1r
-   xF5bHbCs7zkKzH4QPQrWFKLw8T6qEuBHBCduZRCZChyHxOlio8IA+M84Z
-   K9o8LZQw1f5LdAmzNNbZtqt8mPImKLXsrsNKfJzNjA4OwYMIOTp/bp0GQ
-   Q==;
-X-CSE-ConnectionGUID: L5FBMgd4S82ZP7ydk2aCyg==
-X-CSE-MsgGUID: a6XtVV5uSQ2vokAmmJLX3A==
-X-IronPort-AV: E=McAfee;i="6800,10657,11838"; a="83802674"
+  bh=lsnmS/u8NCo9XXYFOWuyuTUeIcFEKQZni4hHgmFmNoo=;
+  b=cCJF9DNzCHB9baWOK7TPEoA6IolWqWH6bQpuhMfUfhltXNrpnRzYwqA6
+   RCjBYxYSA3XvHQl9BHHF6x13eqMej6tb4YWa5bJQk1v7hDnOQNQXPhn/y
+   WZEb78aXz9ClSYjsbvsZ6+ZFuksA8KBjqrq8KzpzS7Q02XjhbWHbpttOZ
+   GmcSsYqmQ7QkBhMpUjH8dC1T/hVlDK8qZj8Wg1wg6j2CUKygElpnNsvs2
+   zAN8wHy8FtjOw3ZtUSnvqKA5CKSPO78NFrCCo8nRSN0FaUoX6/V+NPP6B
+   eXJulMaZTdCCzPFDEDHFSS3VHuwvVILfzPyPbkAhXa4c2uM4GKc+a55GY
+   w==;
+X-CSE-ConnectionGUID: vZ7jMdbDS/CEW6kqI/P3PQ==
+X-CSE-MsgGUID: 8nGYu6CDT3ua9VnF64jN7Q==
+X-IronPort-AV: E=McAfee;i="6800,10657,11838"; a="95318101"
 X-IronPort-AV: E=Sophos;i="6.25,149,1779174000"; 
-   d="scan'208";a="83802674"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
-  by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Jul 2026 22:44:22 -0700
-X-CSE-ConnectionGUID: hHhCO/19S3SGJ8Zo8luRZQ==
-X-CSE-MsgGUID: GRBidsKSTbaofQnKNC5SYw==
+   d="scan'208";a="95318101"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Jul 2026 22:45:15 -0700
+X-CSE-ConnectionGUID: HRLQl3dDRPuI4zFfbzEdcg==
+X-CSE-MsgGUID: BMVnKobxQBunIaatW5GVjw==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.25,149,1779174000"; 
-   d="scan'208";a="291766650"
+   d="scan'208";a="257201279"
 Received: from vpanait-mobl.ger.corp.intel.com (HELO localhost) ([10.245.244.48])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Jul 2026 22:44:17 -0700
-Date: Mon, 6 Jul 2026 08:44:15 +0300
+  by ORVIESA003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Jul 2026 22:45:11 -0700
+Date: Mon, 6 Jul 2026 08:45:08 +0300
 From: Andy Shevchenko <andriy.shevchenko@intel.com>
 To: Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>
 Cc: Jonathan Cameron <jic23@kernel.org>,
@@ -79,11 +79,10 @@ Cc: Jonathan Cameron <jic23@kernel.org>,
 	Anjelique Melendez <anjelique.melendez@oss.qualcomm.com>,
 	Neil Armstrong <neil.armstrong@linaro.org>,
 	Stephan Gerhold <stephan.gerhold@linaro.org>
-Subject: Re: [PATCH v3 2/3] iio: adc: qcom-spmi-adc5-gen3: Remove an
- unnecessary print
-Message-ID: <aktArynt5xftgij1@ashevche-desk.local>
+Subject: Re: [PATCH v3 0/3] thermal: qcom: add support for PMIC5 Gen3 ADC
+ thermal monitoring
+Message-ID: <aktA5JZIcbbDP_hs@ashevche-desk.local>
 References: <20260705-gen3_adc_tm-v3-0-ac62f387dbce@oss.qualcomm.com>
- <20260705-gen3_adc_tm-v3-2-ac62f387dbce@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -92,7 +91,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260705-gen3_adc_tm-v3-2-ac62f387dbce@oss.qualcomm.com>
+In-Reply-To: <20260705-gen3_adc_tm-v3-0-ac62f387dbce@oss.qualcomm.com>
 Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
  krs, Bertel Jungin Aukio 5, 02600 Espoo
 X-Rspamd-Action: no action
@@ -102,14 +101,14 @@ X-Spamd-Result: default: False [-3.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[intel.com,none];
 	R_DKIM_ALLOW(-0.20)[intel.com:s=Intel];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	MIME_TRACE(0.00)[0:+];
 	RCPT_COUNT_TWELVE(0.00)[20];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-116629-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-116630-lists,linux-arm-msm=lfdr.de];
 	FORWARDED(0.00)[lists@lfdr.de];
 	FORGED_RECIPIENTS(0.00)[m:jishnu.prakash@oss.qualcomm.com,m:jic23@kernel.org,m:dlechner@baylibre.com,m:nuno.sa@analog.com,m:andy@kernel.org,m:amitk@kernel.org,m:thara.gopinath@gmail.com,m:rafael@kernel.org,m:daniel.lezcano@kernel.org,m:rui.zhang@intel.com,m:lukasz.luba@arm.com,m:linux-arm-msm@vger.kernel.org,m:linux-iio@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-pm@vger.kernel.org,m:kamal.wadhwa@oss.qualcomm.com,m:david.collins@oss.qualcomm.com,m:anjelique.melendez@oss.qualcomm.com,m:neil.armstrong@linaro.org,m:stephan.gerhold@linaro.org,m:tharagopinath@gmail.com,s:lists@lfdr.de];
 	HAS_ORG_HEADER(0.00)[];
@@ -127,32 +126,36 @@ X-Spamd-Result: default: False [-3.66 / 15.00];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	MISSING_XM_UA(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,ashevche-desk.local:mid,intel.com:from_mime,intel.com:email,intel.com:dkim,vger.kernel.org:from_smtp]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[ashevche-desk.local:mid,vger.kernel.org:from_smtp,intel.com:from_mime,intel.com:dkim,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 9083370CB09
+X-Rspamd-Queue-Id: 5B15D70CAE8
 
-On Sun, Jul 05, 2026 at 10:23:34PM +0530, Jishnu Prakash wrote:
-> devm_request_threaded_irq internally prints an error message using
+On Sun, Jul 05, 2026 at 10:23:32PM +0530, Jishnu Prakash wrote:
+> Support for the main PMIC5 Gen3 ADC driver has been merged now.
+> 
+> In order to complete adding support for the Gen3 ADC_TM auxiliary
+> driver, some more changes are needed in the main driver, mainly to
+> improve its shared interrupt's handling mechanism.
+> 
+> Patch 1 simplifies the interrupt handling in the main ADC driver
+> by declaring the interrupt as a shared one and dropping the logic
+> used to call the ADC_TM notifier for handling ADC_TM interrupts on
+> the first SDAM whose interrupt is shared.
+> 
+> Patch 2 removes an unneeded print in the main ADC driver.
+> 
+> Patch 3 adds the auxiliary thermal driver which supports the ADC_TM
+> functionality of ADC5 Gen3.
 
-devm_request_threaded_irq()
+> ---
+> Changes in v3:
+> - Collected Reviewed-by tag from Jonathan on patch 1.
+> - Added new patch to remove an unnecessary print in main ADC driver, as
+>   suggested by Andy.
 
-> dev_err_probe in case of any errors. Remove the error print in the
-
-dev_err_probe()
-
-> devm_request_threaded_irq failure path as it is not needed.
-devm_request_threaded_irq()
-
-This patch should go first. The patch 1 is not marked as a fix and we don't
-need this message to be printed even before the patch 1 of your current version
-of the series.
-
-With that being addressed,
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-
-Also note we refer to the functions as func(), id est mind the parentheses.
+Add Suggested-by tag
 
 -- 
 With Best Regards,
