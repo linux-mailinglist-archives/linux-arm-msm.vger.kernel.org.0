@@ -1,189 +1,252 @@
-Return-Path: <linux-arm-msm+bounces-116901-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-116902-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id C8aICo/PS2rYagEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-116901-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Jul 2026 17:53:51 +0200
+	id KwR4KQvQS2rwagEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-116902-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Jul 2026 17:55:55 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 97276712DAE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Jul 2026 17:53:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 07FEE712E0A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Jul 2026 17:55:55 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=linaro.org header.s=google header.b=BMgJFb73;
-	dmarc=pass (policy=none) header.from=linaro.org;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116901-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116901-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=mailbox.org header.s=mail20150812 header.b=j5hgDtth;
+	dmarc=pass (policy=reject) header.from=mailbox.org;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116902-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116902-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 5DEED36599E1
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jul 2026 14:35:36 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 6A8E2395748E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jul 2026 14:41:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 43A723A7F41;
-	Mon,  6 Jul 2026 14:35:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 469FA432BE0;
+	Mon,  6 Jul 2026 14:39:36 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout-p-102.mailbox.org (mout-p-102.mailbox.org [80.241.56.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98E5239891D
-	for <linux-arm-msm@vger.kernel.org>; Mon,  6 Jul 2026 14:35:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 465A13FE369;
+	Mon,  6 Jul 2026 14:39:32 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783348518; cv=none; b=BTACCDD1jjqPm6Uw1WdJeZ+FZsTFucJFOK8QqLf789NOFkxwQg9qXwWT6Z5ZQH+NFzOlM37hA8dhinRUfXZdSwqTiEyfNoeUZOcTg0FQ1Tb/B/KSOEuoFBOK96Yk93C8Dgbh0y4Cnw1HTKZD/Ka3cIgLQHTSSOWAgpDBvASrTdg=
+	t=1783348776; cv=none; b=noxbZI1nrFuG780WPjI43f+AOHxt2wabmGYDWis5JA6mWxvGtO8yX3OhJTV6bMR7k09CE9x7SFTIAt1lhWScjG/9WLKlstD6aQdYxD1sQqoU5cH1Z6I90H6XZs9tx4qiSztflSoys0sdxp31S7yLpLsIBnAKAb5vbOuybcZ80Ho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783348518; c=relaxed/simple;
-	bh=qbcykGapVHfJqKgmk81AzQE5m3FAmFj5hgBqq4G2K80=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Ic5fnuTdzEWqjxfPnNM01vFhdEQxewGlEEejZ5h72Z7OkmNC7nL3uUPQGKavMU1T06esQDhSKMyH204b9XyZey0gKTvNMBufc9JiQSfy0te4M7lCwXrCF4RcRcy1g/23XODGjbpbvunIpq9JTKJiuCsJ8ltqT7Kh5mcM8RwDIP8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=BMgJFb73; arc=none smtp.client-ip=209.85.167.46
-Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-5aebd7da975so368142e87.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Jul 2026 07:35:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1783348515; x=1783953315; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from:references
-         :cc:to:subject:user-agent:mime-version:date:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=4NvKO6c1aWnO7A3eGSV7QhwSsdTS9m/BEA8j1DxA8pU=;
-        b=BMgJFb73KuX+uJomEoYRx3iLRbw4WlxBxrRGOWglEJuA6fP45IHv5VjKFT455Grvky
-         rRY3imrwdYW0UfR/Zpu/kTLx6VXsHZ654QgxFAoMoBQ1glWOFneQ1UgjtT/5r15b/PxT
-         pfOiiGbVaTjs/wZZvZaxOP+/eobY9RZ2OMB/boyRJQ8zXMGaaprWZMJd2gUExA8BM9FK
-         O8Xl/EKQbhTtiFkALC0q6ocLTpdwqREw+xYP3ufkASX1/OKFbFOjmWHJkxxHp3arXohS
-         GcRAnq3k9HBYLpEb1viDb7v1uU3cc6y1vAhxJxIxUcM6xHsmTUxargiN8ogPSZ9HFbzp
-         o90A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783348515; x=1783953315;
-        h=content-transfer-encoding:content-type:in-reply-to:from:references
-         :cc:to:subject:user-agent:mime-version:date:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=4NvKO6c1aWnO7A3eGSV7QhwSsdTS9m/BEA8j1DxA8pU=;
-        b=lmFoeLiQcmUQw7YnZfhBn0oWg2iHELeELzRqH84piTZp7/5rbMzM6d1LgiMf96bM2F
-         u758kJC3JV7WWfX1U7vtkeLsIbpzqJSbDwOxdlT/+DRRP8Wbz1Zax3pHHzY6/CBAcpmj
-         H/3ecdmPu3K8CUwZraFK1V3x6FBURJmKsu6ABDPMxs2gsAbse4GTxu1GIYLHXBZn8PAS
-         UE6YEn5OcY33qoTvmBHCf18GF/B8t2Cj8UyYQWpKmASKlPf3PGma6e9BlvyjOGx+e57P
-         AmWAMXj62ek2vjF5goKsOfUSp/KFnsdQGvrlZ43YZIqWX+64OynEQlnNbF/Bms9KQKp/
-         f6Sg==
-X-Forwarded-Encrypted: i=1; AHgh+RobqchEG1m3GcLrRXNGa8HCMVSB7I8FdNcMSKkBDkABviE18uMwZ0znSKyx8iZSbxibyA8SOcLDTo3OOWb1@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy/wwtSZOc5oeRfTK6/ZrgsdP+d7pz2z1NhZWj/zisClJ6+0zXg
-	A86lladxhOGuZzkGdNUSH03XMd+iUo2/5k7ZFpvkJHBtrgF38N70U+LS7sxaivWInMU=
-X-Gm-Gg: AfdE7ck8w7sJvWiM678/oFFdnWqrhjjZeS5dL046+lgv8FLfF4ED/rM0W75sYLH6d4i
-	yBBDGQS4UirUNY8kS187ZfzH/eZ08yeH1l1TneaBnsM4lbjaVhM+OWZ5+x4PwJ6XUdTXek+68aw
-	FSO7l/1p8Zd+hqLiTyvOhfY17apZ6xmyUyJlvaRkDfybLJmiQDyeMmpp6XYHuxE/JNhMvrJQySS
-	3y7CDtceM8jgcBxZ5lFSaHYLtR2vsHqsxk1E/CtuwhUoF/xK+7oTPqk4e2xA0j0opU4AY4WOMMw
-	J4k/81MJcE2X6ZcrW504cy10raqQR3gwrLWz5LPQgnQpSrZ9AwodbJyLOvsifVkTC84TD2vRjCB
-	3WI+YrjLdJm7KTEOxnaiUbHUeaKMX1vixHKjeu4BDbys9366nrr7iJcS2nuTrLqW5gX9g1FqPtg
-	0X6/KL1bxXp25EcyAONjZHNaG3h8PkESt7rGPmMAx/jU4bjmc+ssmC8KhXIekxu+/eKBQ=
-X-Received: by 2002:a05:6512:8348:b0:5ae:ba8f:ad39 with SMTP id 2adb3069b0e04-5aed454f924mr837407e87.4.1783348514716;
-        Mon, 06 Jul 2026 07:35:14 -0700 (PDT)
-Received: from [192.168.1.100] (91-159-24-186.elisa-laajakaista.fi. [91.159.24.186])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5aed13bffcasm2971872e87.61.2026.07.06.07.35.13
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 06 Jul 2026 07:35:14 -0700 (PDT)
-Message-ID: <3b0f7a36-05d7-417f-8efe-d6ba06488406@linaro.org>
-Date: Mon, 6 Jul 2026 17:35:13 +0300
+	s=arc-20240116; t=1783348776; c=relaxed/simple;
+	bh=XtbXxotRn4eonCuXI7S2La3x2DD6roUS8w7lR6Aocns=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=lMdJJ2Iu67n4dpWr9NIE68p82Jgj5lM61GKlchI1pRPAfNOLddcgdu6ZN+qnXc2JSMwfEaPfcMxDaHaYNtd+k5CQ8ld4AaHZgA3gQoi/5A6SRzK3EGVObmBEw3zHyYppObiewBwo9QwOiAdyE2Vo00MMvXAuihGfLhZ38iO3PaM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org; spf=pass smtp.mailfrom=mailbox.org; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=j5hgDtth; arc=none smtp.client-ip=80.241.56.152
+Received: from smtp102.mailbox.org (smtp102.mailbox.org [IPv6:2001:67c:2050:b231:465::102])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA512)
+	(No client certificate requested)
+	by mout-p-102.mailbox.org (Postfix) with ESMTPS id 4gv6Sc3JlwzKrrB;
+	Mon, 06 Jul 2026 16:39:28 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
+	t=1783348768;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=PTWGfLdwlWAV/LMkx8q6n+16+BLtwX+Uw6eFuSY1pwE=;
+	b=j5hgDtthz8XCNdelXgr2Njc2HaTruqIkCO//JWKxiT4W2gEybWyIlcK2aQ1bxIe+BwUJVp
+	sosZFgtgjTYiKegpajhDS7wAQRa5vbGhsdYsOBErEWcCcj6imJ3WhTyng3CLWaw/u/6S/u
+	Ia++ekOByRWNtL6C0p1KPkAMQ78opS9K6p4731SNIh3G/Gtr0smcjJ5LSbWseUhYMLmi5g
+	bSnkIEWLW+D0H8udCi/rtV6GiUxmmd3h/zBT1zxIEz9pUZOsZhePq4tVuE6vy2STKylPsN
+	pNYuSZntPPijS4W0+CuI8ZBjLVluSsSHTtbS9e6dlXfCM6eF2pFoZi1CDk9EnQ==
+Message-ID: <fbc50f89e0c3bb148656a3b8d96974f591576dec.camel@mailbox.org>
+Subject: Re: [PATCH v3 02/20] driver core: platform: provide
+ platform_device_set_of_node()
+From: Manuel Ebner <manuelebner@mailbox.org>
+To: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>, Lee Jones	
+ <lee@kernel.org>, Thierry Reding <thierry.reding@avionic-design.de>, 
+ Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>, Andrew Lunn
+ <andrew+netdev@lunn.ch>, "David S. Miller"	 <davem@davemloft.net>, Eric
+ Dumazet <edumazet@google.com>, Jakub Kicinski	 <kuba@kernel.org>, Paolo
+ Abeni <pabeni@redhat.com>, Srinivas Kandagatla	 <srini@kernel.org>, Greg
+ Kroah-Hartman <gregkh@linuxfoundation.org>, Vinod Koul	 <vkoul@kernel.org>,
+ "Rafael J. Wysocki" <rafael@kernel.org>, Danilo Krummrich	
+ <dakr@kernel.org>, Rob Herring <robh@kernel.org>, Saravana Kannan	
+ <saravanak@kernel.org>, Madhavan Srinivasan <maddy@linux.ibm.com>, Michael
+ Ellerman <mpe@ellerman.id.au>, Nicholas Piggin <npiggin@gmail.com>,
+ "Christophe Leroy (CS GROUP)"	 <chleroy@kernel.org>, Andi Shyti
+ <andi.shyti@kernel.org>, Andy Shevchenko	
+ <andriy.shevchenko@linux.intel.com>, Joerg Roedel <joro@8bytes.org>, Will
+ Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>, Doug Berger
+ <opendmb@gmail.com>,  Florian Fainelli <florian.fainelli@broadcom.com>,
+ Broadcom internal kernel review list	
+ <bcm-kernel-feedback-list@broadcom.com>, Ulf Hansson <ulfh@kernel.org>, 
+ Frank Li <Frank.Li@nxp.com>, Sascha Hauer <s.hauer@pengutronix.de>,
+ Pengutronix Kernel Team	 <kernel@pengutronix.de>, Fabio Estevam
+ <festevam@gmail.com>, Matthew Brost	 <matthew.brost@intel.com>, Thomas
+ =?ISO-8859-1?Q?Hellstr=F6m?=	 <thomas.hellstrom@linux.intel.com>, Rodrigo
+ Vivi <rodrigo.vivi@intel.com>,  David Airlie <airlied@gmail.com>, Simona
+ Vetter <simona@ffwll.ch>, Peter Chen <peter.chen@kernel.org>,  Paul
+ Cercueil <paul@crapouillou.net>, Bin Liu <b-liu@ti.com>, Philipp Zabel
+ <p.zabel@pengutronix.de>,  Maximilian Luz <luzmaximilian@gmail.com>, Hans
+ de Goede <hansg@kernel.org>, Ilpo =?ISO-8859-1?Q?J=E4rvinen?=	
+ <ilpo.jarvinen@linux.intel.com>, Krzysztof Kozlowski <krzk@kernel.org>, 
+ Benjamin Herrenschmidt <benh@kernel.crashing.org>
+Cc: brgl@kernel.org, linux-kernel@vger.kernel.org, netdev@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org, 
+	driver-core@lists.linux.dev, devicetree@vger.kernel.org, 
+	linuxppc-dev@lists.ozlabs.org, linux-i2c@vger.kernel.org,
+ iommu@lists.linux.dev, 	linux-pm@vger.kernel.org, imx@lists.linux.dev, 
+	linux-arm-kernel@lists.infradead.org, intel-xe@lists.freedesktop.org, 
+	dri-devel@lists.freedesktop.org, linux-usb@vger.kernel.org, 
+	linux-mips@vger.kernel.org, platform-driver-x86@vger.kernel.org, 
+	mfd@lists.linux.dev
+Date: Mon, 06 Jul 2026 16:39:00 +0200
+In-Reply-To: <20260706-pdev-fwnode-ref-v3-2-1ff028e33779@oss.qualcomm.com>
+References: <20260706-pdev-fwnode-ref-v3-0-1ff028e33779@oss.qualcomm.com>
+	 <20260706-pdev-fwnode-ref-v3-2-1ff028e33779@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 0/5] Add Qualcomm JPEG V4L2 encoder for SM8250
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Atanas Filipov <atanas.filipov@oss.qualcomm.com>, linux-media@vger.kernel.org
-Cc: loic.poulain@oss.qualcomm.com, mchehab@kernel.org, robh@kernel.org,
- krzk+dt@kernel.org, conor+dt@kernel.org, andersson@kernel.org,
- konradybcio@kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-References: <20260706071113.383215-1-atanas.filipov@oss.qualcomm.com>
- <68e59764-5a10-4abc-849c-14ea2d9ef76e@linaro.org>
- <d74d7839-d126-427a-b151-ca895a27a83e@linaro.org>
- <437d1eb0-4495-406a-9501-b0515cfa3151@linaro.org>
- <e04cb9dc-76dd-4fa8-92f4-be002bf7ee8b@linaro.org>
- <8116c54e-4050-4e9d-b236-59d74846bd57@linaro.org>
- <48c3ce6b-1e2a-457c-93b2-8fbc0912dc20@linaro.org>
- <f3d148cc-496d-4301-af45-51d8921d7798@linaro.org>
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <f3d148cc-496d-4301-af45-51d8921d7798@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+X-MBO-RS-ID: ca569d00ad7df478929
+X-MBO-RS-META: 1q71yutefcf1nyjzwoom4gu47fi8rss3
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
+	DMARC_POLICY_ALLOW(-0.50)[mailbox.org,reject];
+	R_DKIM_ALLOW(-0.20)[mailbox.org:s=mail20150812];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-116901-lists,linux-arm-msm=lfdr.de];
-	RCPT_COUNT_TWELVE(0.00)[13];
 	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-116902-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	FORWARDED(0.00)[lists@lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:bryan.odonoghue@linaro.org,m:atanas.filipov@oss.qualcomm.com,m:linux-media@vger.kernel.org,m:loic.poulain@oss.qualcomm.com,m:mchehab@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:andersson@kernel.org,m:konradybcio@kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:devicetree@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_SENDER(0.00)[vladimir.zapolskiy@linaro.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[linaro.org:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	FORGED_SENDER(0.00)[manuelebner@mailbox.org,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_TO(0.00)[oss.qualcomm.com,kernel.org,avionic-design.de,gmail.com,lunn.ch,davemloft.net,google.com,redhat.com,linuxfoundation.org,linux.ibm.com,ellerman.id.au,linux.intel.com,8bytes.org,arm.com,broadcom.com,nxp.com,pengutronix.de,intel.com,ffwll.ch,crapouillou.net,ti.com,kernel.crashing.org];
+	FORGED_RECIPIENTS(0.00)[m:bartosz.golaszewski@oss.qualcomm.com,m:lee@kernel.org,m:thierry.reding@avionic-design.de,m:sebastian.hesselbarth@gmail.com,m:andrew+netdev@lunn.ch,m:davem@davemloft.net,m:edumazet@google.com,m:kuba@kernel.org,m:pabeni@redhat.com,m:srini@kernel.org,m:gregkh@linuxfoundation.org,m:vkoul@kernel.org,m:rafael@kernel.org,m:dakr@kernel.org,m:robh@kernel.org,m:saravanak@kernel.org,m:maddy@linux.ibm.com,m:mpe@ellerman.id.au,m:npiggin@gmail.com,m:chleroy@kernel.org,m:andi.shyti@kernel.org,m:andriy.shevchenko@linux.intel.com,m:joro@8bytes.org,m:will@kernel.org,m:robin.murphy@arm.com,m:opendmb@gmail.com,m:florian.fainelli@broadcom.com,m:bcm-kernel-feedback-list@broadcom.com,m:ulfh@kernel.org,m:Frank.Li@nxp.com,m:s.hauer@pengutronix.de,m:kernel@pengutronix.de,m:festevam@gmail.com,m:matthew.brost@intel.com,m:thomas.hellstrom@linux.intel.com,m:rodrigo.vivi@intel.com,m:airlied@gmail.com,m:simona@ffwll.ch,m:peter.chen@kernel.org,m:paul@crapouillou.net,m:b-liu@ti.com,m:p.zabe
+ l@pengutronix.de,m:luzmaximilian@gmail.com,m:hansg@kernel.org,m:ilpo.jarvinen@linux.intel.com,m:krzk@kernel.org,m:benh@kernel.crashing.org,m:brgl@kernel.org,m:linux-kernel@vger.kernel.org,m:netdev@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-sound@vger.kernel.org,m:driver-core@lists.linux.dev,m:devicetree@vger.kernel.org,m:linuxppc-dev@lists.ozlabs.org,m:linux-i2c@vger.kernel.org,m:iommu@lists.linux.dev,m:linux-pm@vger.kernel.org,m:imx@lists.linux.dev,m:linux-arm-kernel@lists.infradead.org,m:intel-xe@lists.freedesktop.org,m:dri-devel@lists.freedesktop.org,m:linux-usb@vger.kernel.org,m:linux-mips@vger.kernel.org,m:platform-driver-x86@vger.kernel.org,m:mfd@lists.linux.dev,m:sebastianhesselbarth@gmail.com,m:andrew@lunn.ch,s:lists@lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
+	RCPT_COUNT_GT_50(0.00)[66];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[vladimir.zapolskiy@linaro.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	FROM_NEQ_ENVFROM(0.00)[manuelebner@mailbox.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[mailbox.org:+];
 	ALIAS_RESOLVED(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	TO_DN_SOME(0.00)[];
 	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,linaro.org:from_mime,linaro.org:dkim,linaro.org:mid]
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm,netdev];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,intel.com:email,vger.kernel.org:from_smtp,mailbox.org:from_mime,mailbox.org:email,mailbox.org:mid,mailbox.org:dkim]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 97276712DAE
+X-Rspamd-Queue-Id: 07FEE712E0A
 
-On 7/6/26 17:12, Bryan O'Donoghue wrote:
-> On 06/07/2026 14:57, Vladimir Zapolskiy wrote:
->>> This debate is going nowhere. Check the downstream you don't need the
->>> docs titan_top_gdsc is provided by CAMCC.
->>>
->>
->> There is no debate, since my arguments are not debated so far... Why?
-> 
-> An odd claim, since this is the fourth ? level of email reply.
-> 
->> And at the same time you didn't provide any support to have N identical
->> spread hardware property descriptions instead of the single one.
->>
->> What is a good enough reason to prefer complexity over simplicity?
-> 
-> I'm not sure I parse your here. The core fact is there is no "thing" in
-> the CAMSS block that can be modelled as a provider to JPEG in lieu of
-> TITAN_TOP_GDSC.
+Hi Bartosz,
 
-That's fine, I have never said the opposite.
+On Mon, 2026-07-06 at 14:44 +0200, Bartosz Golaszewski wrote:
+> Encapsulate the reference counting logic for OF nodes assigned to
+> platform devices created with platform_device_alloc() in a helper
+> function. Make the kerneldoc state that this is the proper interface for
+> assigning OF nodes to dynamically allocated platform devices. This will
+> allow us to switch to counting the references of the device's firmware
+> nodes, not only the OF nodes.
+>=20
+> Reviewed-by: Manuel Ebner <manuelebner@mailbox.org>
+> Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+> ---
+> =C2=A0drivers/base/platform.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0 | 18 ++++++++++++++++++
+> =C2=A0include/linux/platform_device.h |=C2=A0 4 ++++
+> =C2=A02 files changed, 22 insertions(+)
+>=20
+> diff --git a/drivers/base/platform.c b/drivers/base/platform.c
+> index fb9120b0bcfe0e7dd9dfc0d29b91e0ad40a01440..3188d5aba5f90622f821c6950=
+49cacda030204fb
+> 100644
+> --- a/drivers/base/platform.c
+> +++ b/drivers/base/platform.c
+> @@ -693,6 +693,24 @@ int platform_device_add_data(struct platform_device =
+*pdev, const
+> void *data,
+> =C2=A0}
+> =C2=A0EXPORT_SYMBOL_GPL(platform_device_add_data);
+> =C2=A0
+> +/**
+> + * platform_device_set_of_node - assign an OF node to device
+> + * @pdev: platform device to add the node for
+> + * @np: new device node
+> + *
+> + * Assign an OF node to this platform device. Internally keep track of t=
+he
+> + * reference count. Devices created with platform_device_alloc() must us=
+e this
+> + * function instead of assigning the node manually.
 
-> That GDSC is provided by CAMCC not by any other silicon block. So
+I did some more pondering about this patch and concluded the right place
+for a warning would be the lines been read right before or after assigning
+a node manually.=20
+I think this would be in platform_device_alloc() (as I suggested in v2).
 
-That's fine.
+BUT my knowledge in C isn't sound. So if it's good as is keep it. If it isn=
+'t
+add or move the remark.
 
-> omitting power-domains for individual nodes is incorrect. Best practice
-> and in fact the _only_ practice that can work is to list power-domains,
+Either way Thanks and
+ Reviewed-by Manuel Ebner.
 
-Let's step back and discuss hardware description of CAMSS IPs, so far
-there is no point to jump to the practice.
+---
+Note:
+I removed Mark Brown <broonie@opensource.wolfsonmicro.com> from recipients =
+because:
+=E2=80=9CRCPT TO <broonie@opensource.wolfsonmicro.com> failed:
+<broonie@opensource.wolfsonmicro.com>: Recipient address rejected: Domain n=
+ot found=E2=80=9D.
 
-> interconnects in the individual nodes themselves as - I've pointed out
-> multiple times now - those blocks have to ramp clocks and scale voltages
-> dependent on their particular use cases.
-> 
 
-Right, you've pointed it a few times, no surprise a straw man fallacy
-argument resembles as is, because it does not address or debate the
-initial point of concern [1], when the absolutely excessive complexity
-is proposed to be implemented for "CAMSS power island" and its IPs.
-
-[1] https://lore.kernel.org/linux-media/e04cb9dc-76dd-4fa8-92f4-be002bf7ee8b@linaro.org
-
--- 
-Best wishes,
-Vladimir
+> + */
+> +void platform_device_set_of_node(struct platform_device *pdev,
+> +				 struct device_node *np)
+> +{
+> +	of_node_put(pdev->dev.of_node);
+> +	pdev->dev.of_node =3D of_node_get(np);
+> +	pdev->dev.fwnode =3D of_fwnode_handle(np);
+> +}
+> +EXPORT_SYMBOL_GPL(platform_device_set_of_node);
+> +
+> =C2=A0/**
+> =C2=A0 * platform_device_add - add a platform device to device hierarchy
+> =C2=A0 * @pdev: platform device we're adding
+> diff --git a/include/linux/platform_device.h b/include/linux/platform_dev=
+ice.h
+> index 8c566f09d04efe420d85ffa046f92c44c6d08526..e9f7baceeb4c8269dbc0143c4=
+d8fc9d73ba024ca
+> 100644
+> --- a/include/linux/platform_device.h
+> +++ b/include/linux/platform_device.h
+> @@ -19,6 +19,8 @@
+> =C2=A0struct irq_affinity;
+> =C2=A0struct mfd_cell;
+> =C2=A0struct property_entry;
+> +struct platform_device_id;
+> +struct device_node;
+> =C2=A0
+> =C2=A0struct platform_device {
+> =C2=A0	const char	*name;
+> @@ -262,6 +264,8 @@ extern int platform_device_add_resources(struct platf=
+orm_device
+> *pdev,
+> =C2=A0					 unsigned int num);
+> =C2=A0extern int platform_device_add_data(struct platform_device *pdev,
+> =C2=A0				=C2=A0=C2=A0=C2=A0 const void *data, size_t size);
+> +void platform_device_set_of_node(struct platform_device *pdev,
+> +				 struct device_node *np);
+> =C2=A0extern int platform_device_add(struct platform_device *pdev);
+> =C2=A0extern void platform_device_del(struct platform_device *pdev);
+> =C2=A0extern void platform_device_put(struct platform_device *pdev);
 
