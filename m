@@ -1,105 +1,105 @@
-Return-Path: <linux-arm-msm+bounces-116848-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-116850-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id i34yL5O2S2ozZAEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-116848-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Jul 2026 16:07:15 +0200
+	id nJV0JKy2S2o9ZAEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-116850-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Jul 2026 16:07:40 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 04B39711BAA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Jul 2026 16:07:15 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8E2E9711BC3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Jul 2026 16:07:39 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b="Bx6/5iA8";
-	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=jQR+LPbb;
+	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=Zc1EkE2C;
+	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=OzOMeKiu;
 	dmarc=pass (policy=reject) header.from=qualcomm.com;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116848-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c15:e001:75::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116848-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116850-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 104.64.211.4 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116850-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 6559B309ECDA
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jul 2026 13:21:33 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 4C7B0313ECB0
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jul 2026 13:21:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2D8E042CB14;
-	Mon,  6 Jul 2026 13:20:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 62708430CD6;
+	Mon,  6 Jul 2026 13:21:04 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 323EE416120
-	for <linux-arm-msm@vger.kernel.org>; Mon,  6 Jul 2026 13:20:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FB2C41A79D
+	for <linux-arm-msm@vger.kernel.org>; Mon,  6 Jul 2026 13:20:51 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783344055; cv=none; b=hZEpflmCUw6wbAV2DE6m0y0beLFrqzNxlZ19xxWqx0g2YK6z8Tsqjp/f6Yx+7XOw95OzSXJ5ZMjh1SdLbjJXzI7UDWFo/kNwn3meuYacvheghRFmlvhJB6YOyiF0bSGgyt55bCthO4l9f/vlEyMHjpbOJ0o/66yiANBcW95PMRo=
+	t=1783344060; cv=none; b=EbtNmVL6Z/myzvJHv/GqjXudiXXMPRG0qbEdSU9Q70Mu8k5peYGz21m4Zwhocq0kdpqt+uDPEWzFBgmFheqxq5kJNuy/KpIHmqFkD7T4U0X7CSrBUp0+x3JSTShA5xogHbFOSene3fm4Wm0EyJehfoJfkmO8nE3RfYV+riDzE6A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783344055; c=relaxed/simple;
-	bh=px3gFNalJW0myw4JO8FxOi8xC4WUF57/BsmFQdIQdYc=;
+	s=arc-20240116; t=1783344060; c=relaxed/simple;
+	bh=LRjIisCu/glMNLOToFdhwLy73s2Ibl4RGtKI4L0PO3o=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=NRrGKoF6n1q+xd9szVl7Wj7dRxlFpGgqXwx6MxclnKknN+CTJ2ngIXnr6jD/hmvVitH/R1ZX618hlAHRH3JxcPOfnFv2oui6W09l2FrIQiq1vz5LyQBtX2WAvkO0r8FAw7cTzYyhXHja8eumTDlH5h8qvB/wlJnHA9ed2XdN7MU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Bx6/5iA8; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=jQR+LPbb; arc=none smtp.client-ip=205.220.180.131
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 666AxPhh317026
-	for <linux-arm-msm@vger.kernel.org>; Mon, 6 Jul 2026 13:20:44 GMT
+	 In-Reply-To:To:Cc; b=WmNfCmn+/MsXawKuGDxh50NYzWfyZL6Nsxv+TnzLSBhhOwaCFTA4TQdc/dh7j2nsYtN2rhDxCWUa67PCeESqQia7Y9uRytkF4StP25CrJ3wjG36uIpC619VUXicuFvKkhEqoLfGUl93vkHVr+le1eRy4zY0hpAT5kvlpMlm38PM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Zc1EkE2C; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=OzOMeKiu; arc=none smtp.client-ip=205.220.168.131
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 666AxF6m366779
+	for <linux-arm-msm@vger.kernel.org>; Mon, 6 Jul 2026 13:20:48 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	vgfh2/38B3WhwVMaRw3DoRNAiK5OOTw4W1PNnpwazmU=; b=Bx6/5iA8yJdpooEK
-	R2A+v9gulHZ0/xkiPZwpFWlwTCFG/s9Hpm1m8cPKBU5weMyM3ELRPL/80Q5Stnrx
-	iMwvKi2tOtMu0gDZ8Jxt1DODBXblbCH6zbaXbl011l19fyRsvuCS308SV4KZ1vCL
-	wiW8KzLanfWIPHYVTZrusFNdQdTaK54hkqDFTid3Ra5yu3FCJ46T6FWvzhZlTJhW
-	CU87NG3zJ7ozueEYfJ4/gAI+3b4MK/VCd1h/6fSPzvNVOxKDbulHBkPyNi3tzaIK
-	FMtZ8NewXu3R6g2Zl5hOL+oA+3+SEWa54HnCIvLSJJz1+E0+k5/92rkh9cmMxMo9
-	DzIB5w==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f87q7he39-1
+	/oqnZuDdWAmB4m0Xe06rkenFSd7BVIxfsMiqDGzqlqw=; b=Zc1EkE2C3zUSYtNN
+	NM/DcPdWj1AtDGeGqjBFYCyBkvEPYHsJ5fCub2NWHFnmT3KR4/sN3QvrSUhvTMhO
+	d5hTR/VBmPUVWumMyBPjicq6JVY2zNnhFdEajv51i9emAbCSuwJ1veKIjAZvnz/X
+	DunhnNrvJ1Wn6X3aVYZXqe/6aasHMlbDM6u2/x/BsuYIZ1UrGCnrTOgqda3ee1SW
+	QBNAI0A17cWfGt5o+M41r46xzyjeUDJh0ht3MoK3c3hYgHG0uj5Hw/Duu1KOJbfP
+	hBYV9xqmDoKL0yZ7YQGsVxkWziU1V50lyWnOE3GCQSTwTSLtiaPXYJ0UaipvPxAX
+	3W+1kg==
+Received: from mail-vk1-f199.google.com (mail-vk1-f199.google.com [209.85.221.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f891us2ft-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 06 Jul 2026 13:20:44 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-92e538afe65so291319785a.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Jul 2026 06:20:44 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 06 Jul 2026 13:20:47 +0000 (GMT)
+Received: by mail-vk1-f199.google.com with SMTP id 71dfb90a1353d-5be258eaf60so2395662e0c.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Jul 2026 06:20:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1783344044; x=1783948844; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1783344047; x=1783948847; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=vgfh2/38B3WhwVMaRw3DoRNAiK5OOTw4W1PNnpwazmU=;
-        b=jQR+LPbbVmUg6P53qtDcOPLQJ+PjwKnctc/a8+XK0s508Z3o4QJnSrZ2C/dqa+4bQ+
-         Av26bvHJ/nv6toHVQ6DuhVdyIEbIIjuObWqS5smYbqX7Tb9fvRRTTaa9KKkA5QfTt+Qv
-         xh5JKhlpSNiq2Hcb14sy3F4DeV2W1onboIypWlzGrWpEb1+mQKl3JBo7JX4mcdtE1/0+
-         KG0T7n1YUIZxVkGwd74jue2DR6l5uL5x1p5UfCVLrSDH7RseAw5g8KTkkicBZO/O05YO
-         W51f7NS7SQIUzQ5zj9+qY3mdQjnUfKlCgvhMGsnHn4ceJJ+cIKRXuooOq1y/0EILcpW5
-         uDPA==
+        bh=/oqnZuDdWAmB4m0Xe06rkenFSd7BVIxfsMiqDGzqlqw=;
+        b=OzOMeKiug7O+gV7uWVWLTkS1mHySkDfDATn0eYoL1WtMnz6vew2f8PtwPLxS/Ok3CI
+         VzOQzrssVZvaH1WB8mYn0E51rjiduvEfkI2VXuAIbOJ8SeJFA5Q/xfOcUHMC6Cks2/B2
+         3crj/1hZuSwXkfPTTDtnEt9u+PtyG99MI/tV3KBHRVBXcinIQhh2p4mWTyR7w0nF87dO
+         Df+HbIHsEa7zSY4w1q1OXJfa2e7dIKJpZOst8ir4n6VhdpO+2QLV8MbmKFk6XPMfMa5J
+         W6l/w8UlvaU2LMp9Rh6y1uzFEQnE17OWTbzsG9aY07hv8vP6I7Q+GO0JTJxd67c6WPRj
+         PaQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783344044; x=1783948844;
+        d=1e100.net; s=20251104; t=1783344047; x=1783948847;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=vgfh2/38B3WhwVMaRw3DoRNAiK5OOTw4W1PNnpwazmU=;
-        b=o46GE6KqJ76nUE+bpPAJdiF5EJL/wGSLlp+MeoZpZYGx0w20oRlVDSTFJlt/OvG75+
-         mCLfXPnP36Bdfug+d8XXrY0MB4NVQ9ZK5St5r2GIwhrxjIq22wyYU22qgKdn/y4Ut5Tl
-         QKsoewIGVrlLQF+0R1uT7ecNwN5OKlpVC7BOacpSJKAUiAstqMXpXvu1eI6z1Uc+TVyg
-         ZwlbG6Ds+3rpD1M1r6pg4ZL3Aqoj//s3y0Xcxxwre4PxlEQQ68LH74QKxESEJeH5NpmD
-         dtpwDMGqzTZnJyLa7btREB+FAJls2sTfBjNuX33WapH5gk2RguEtKXj64JBYVA14bDGW
-         pSkw==
-X-Gm-Message-State: AOJu0YyONIb4QNZsKD6iTcN4Bh3AHrr6t7Tihy0of+Pxt1LK7M8e1Ak0
-	/AcX5pazP2OVw4qm8nlZLrvp0oh6PepFP6W7YGUh39oxfhWX0Hpw9IXp78GU/o0cNxvvn96/ntt
-	qZ3k5z6aI2gz30DXfX39o+a8DtYqRAH9xlKhO7VAvpYRjP84GzCYfyxpAgReO4dg5o4Tg1YXxRl
-	0k
-X-Gm-Gg: AfdE7clmueYdYm6zG2s4DrT2j35Vlj+pDEIJ02dFhPW30iNjy5UAZXKayjoBx8ox+zS
-	w7PZX6QG+80rb0I6dY6P3uuNPBj1L4l7BV4Zcvb3DNDN1ZvW7N1tbl93YsFPGGFUPP8nRG6A53O
-	hCN7bcvf1pzhtvfbh2o6bWKPifowUCFF1wOU1yFRb4yWzYh09l/9DBQhWubWmq/S6cG9h2QGsl1
-	KUfgvpuA0Zl7B4k8AG/50RQzzQLS3HpzpqEfan882ZicDG1fniVyq+OjLgLIotVMb7IKMDna4WS
-	9PbjaPz4MDFHYn1cjvpjD46mphLCBF3fn04qSzzKDXj4vQnZK1gaEFuO7uBPD9G7pkJbM5zBZar
-	mpoIdW4MW4qAJxviktZVr3H2921t4RdTzOYj/7v9N
-X-Received: by 2002:a05:620a:27cd:b0:92a:c203:471e with SMTP id af79cd13be357-92ebb4c940emr65804485a.9.1783344043778;
-        Mon, 06 Jul 2026 06:20:43 -0700 (PDT)
-X-Received: by 2002:a05:620a:27cd:b0:92a:c203:471e with SMTP id af79cd13be357-92ebb4c940emr65795885a.9.1783344043148;
-        Mon, 06 Jul 2026 06:20:43 -0700 (PDT)
+        bh=/oqnZuDdWAmB4m0Xe06rkenFSd7BVIxfsMiqDGzqlqw=;
+        b=B6HCCJNMeWtI2VFaNT2kYpYnf3IGOjomAjIH2KUBmyTPYE62xNjpgkVxWsQrOlJZTs
+         acJkzfk5DGWJxFezXb5BTSNxfmEubE2KLyFSqdA2juf3bfa8B3eGfJu2qpBG3cu7oK06
+         O5Nx+z3+xCSUKwg9Iy3KqLUoWwicI4lnrSw+cqvEY15RDRMe9X+W3BYBHvgRRcX19x2i
+         JzWEUGoOnPdHPikGLTTLwWQtJkUVquvTvWlKsMdh6L4r0mrvmqPx+6hONZ1ZieXPgrEE
+         pjVpbNrlk+5/CeGWkKN6L9zBmFhxttCRmD2PSIkH3G2mBHPKrdzz3yF3NYGquxzVjI1x
+         fQdw==
+X-Gm-Message-State: AOJu0YyaCqM2/I30oS68gh1I203nJBUFOYr2prRbVFXYhnLeILalHq3J
+	9Y2BqW5fdfJC4HI7TkXoRqoXPg+4tMO8GsM5O1gIHuP0cwwtL3nU58GD+eZGPq+NtyUQNajFKAR
+	3Z3H4tYTirkOKVoN+esR54jq+rE8kCopVtG7FsUeqetkDGFUgXXUTEvdhme5P4qN2alCxpow7SP
+	oe
+X-Gm-Gg: AfdE7cl4w/LXFQxDYYlqYmPRrqg0oLsUKZw+q0xEEw8hCrqP02L1xInworj6L2DRkDl
+	y3y21PB+3sZi3A1kcQsOTsTzzv2IWjnonAjlxXu7Sj3pelEohmr/+OQIFM1SGt2q3wLUXRAXaha
+	6SkqL6i6BuGr/Emt5F5cvFNO5Pai20Ts/iPjB06oGIh98U6QnxQIcM/Dd/DIdD6JrO/4X9dGh+Y
+	UtMRkvM7yrPzfI2ZjMR+TwxioFOIDin49j2jPayMboqihJAywzcn6LH/d7MwsNooBi9VfTUO1tw
+	66ijWjFRh6t4YxkyGzG7yhdrK+ZYi6nfDybyxBZYZ1yX6djLrFbTimHcP6m2KRFY174czeQy20V
+	mIsz/rwIioZQTWL/GZIGKGdVOmHv9nC9CZ1Qd0c+o
+X-Received: by 2002:a05:6122:278e:b0:5bd:7fbd:ecec with SMTP id 71dfb90a1353d-5be908cc9b5mr280374e0c.13.1783344046477;
+        Mon, 06 Jul 2026 06:20:46 -0700 (PDT)
+X-Received: by 2002:a05:6122:278e:b0:5bd:7fbd:ecec with SMTP id 71dfb90a1353d-5be908cc9b5mr280300e0c.13.1783344045804;
+        Mon, 06 Jul 2026 06:20:45 -0700 (PDT)
 Received: from brgl-qcom.local ([2a01:cb1d:dc:7e00:86f0:c42b:ef4c:d3bb])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47ad69519c2sm25910584f8f.37.2026.07.06.06.20.40
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47ad69519c2sm25910584f8f.37.2026.07.06.06.20.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Jul 2026 06:20:42 -0700 (PDT)
+        Mon, 06 Jul 2026 06:20:45 -0700 (PDT)
 From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Date: Mon, 06 Jul 2026 15:20:17 +0200
-Subject: [PATCH net-next v12 2/7] phy: qcom: add the SGMII SerDes PHY
- driver for SCMI systems
+Date: Mon, 06 Jul 2026 15:20:18 +0200
+Subject: [PATCH net-next v12 3/7] dt-bindings: net: qcom: document the
+ ethqos device for SCMI-based systems
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -108,7 +108,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260706-qcom-sa8255p-emac-v12-2-e3ab1ecf2901@oss.qualcomm.com>
+Message-Id: <20260706-qcom-sa8255p-emac-v12-3-e3ab1ecf2901@oss.qualcomm.com>
 References: <20260706-qcom-sa8255p-emac-v12-0-e3ab1ecf2901@oss.qualcomm.com>
 In-Reply-To: <20260706-qcom-sa8255p-emac-v12-0-e3ab1ecf2901@oss.qualcomm.com>
 To: Bjorn Andersson <andersson@kernel.org>,
@@ -148,49 +148,55 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-rockchip@lists.infradead.org, sophgo@lists.linux.dev,
         linux-riscv@lists.infradead.org, brgl@kernel.org,
         Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-        Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+        Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+        Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=6726;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=18313;
  i=bartosz.golaszewski@oss.qualcomm.com; h=from:subject:message-id;
- bh=px3gFNalJW0myw4JO8FxOi8xC4WUF57/BsmFQdIQdYc=;
- b=owEBbQKS/ZANAwAKAQWdLsv/NoTDAcsmYgBqS6uchS4csS4YIcS0mi1Ifm+LIJhbGgTUvShSf
- ydPuYJXWmaJAjMEAAEKAB0WIQSR5RMt5bVGHXuiZfwFnS7L/zaEwwUCakurnAAKCRAFnS7L/zaE
- w0zzD/9SCsUE9nshAQyInqJLWoFIM8/bv54ACwjrQ2SLcq5ghDCutaXpCzCQFH79QU3gcsV7hid
- 9WRL1B3pvXCNlRmZMDmiPdmHymy+1cCQ2nz0kzyELvhGm19aaJyIVRajtt2qkCdUFa9rJTnrL1L
- EHSieziZDKkw0UCo1GTEJZl4oq9Fb08FdSsJBMFI0aRlr8DrhYRVVE1Nj2qjHPRV+RWbNqmSf0K
- 69XA2gEVSIYqykcHzGIi1V6hIoxhbwdoJsPv9KoAhoJqv7McGTZkRu2VpR31aH7rAWw1La5PFeH
- KU96pFcBkSvy8a+lh5eJ9ES5FPv/hth4mNWQtUdjugM9b0o1GGTOXkyId2OwBA6IqbaAz4dzKtl
- 3u/I28s1UVntXT33yfliBNrV0d3ZVUYOqNXWhDx0yRCv70fP6LJiP8fitPovwynNOlTNHdOHSVH
- 3Q+emhc9KPvwGauW5lipa3RqCqGmcwZQsMpyqNQh66czQKWB4V+HFkls+Ao55bX83NRZHK67g4W
- ur9Dokj/KleRMu3g2FU4zm3nR6sdWnRNacQS4MyBnxzSpdDxICRxC6udFodF0Xtw4Wk+jVZvqwX
- ZYoqv4ylO5Kal6ukUy3bUMkLTbCdLXdXPjNekUOOOkss7LcURiWU073B59r/QQSY/BGGwersAeW
- gWBpQTcQFWqJsaA==
+ bh=bPUJkobfN6fP9zKkpofqwMZ4l6iWzFjo7phamyQJ86w=;
+ b=owEBbQKS/ZANAwAKAQWdLsv/NoTDAcsmYgBqS6udxd1qNa2aw7JDmBK0vi0huQX9bnFy163J2
+ xffS1j1QlOJAjMEAAEKAB0WIQSR5RMt5bVGHXuiZfwFnS7L/zaEwwUCakurnQAKCRAFnS7L/zaE
+ w3xWD/9CgoIk0wekh7MbFUX0iMEmiJZn7NZhz5BfIBt/zAxYE+L0gdnjfJHup+g1mSeZ2M5MSvR
+ iZHR4o9Txq9bczxg/Iy00Xk4283TayioDlNNlpVabN03Kydd9m68tR8xuuzIa4efJUe9hiF0J+L
+ DgAYTMatYfe/lWQvYyhXAj+st60so2GNfAW+8t5wBcLVxRpH/g5YcOLksWsDgz8tZZT85qbbpLc
+ ZTCnelc9X4RyfRKliAkO0xHHi+8FabYXkkizu9+1/bCF/gVzd3iT+DSJpawpadmfuvJgzGCUFvz
+ I8Hio8QQRZlPnWogN9OeWE9dCh59NPWNBRMmwbcplgIfl/jK+ehN9IDVnlFo6HQFKx/M6x4z2Oo
+ Xk5dz3Y9Y8arIDNnLbCJYRHkPsttAdpgw+05u8BwQDpuFh88W2Q7zwJrWlIRrU4CSGoVuUfd3Oh
+ rnEOgFsmXfx8Td1dMlfxBM6fveZDXuwFgVq9c5ilTz18gP7RE2n3ptlQfuaz//AVv/g5oV780mD
+ R6121mrjwMTNm4yo26k1WbNDKmRgshRCSe3OSurPTlMNrTKlCZccivsN4iteVxiRaM2gB4dcAXh
+ JaCf5tjKsx2mQ2jMjjRpL8eLwzFzjpllLk4in87d7OYBXkRuIVccB06lgYHEn1/Tv8hcTzQhM2v
+ ttYuuW7k/h00wmg==
 X-Developer-Key: i=bartosz.golaszewski@oss.qualcomm.com; a=openpgp;
  fpr=169DEB6C0BC3C46013D2C79F11A72EA01471D772
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA2MDEzNiBTYWx0ZWRfX+HMsHIvcWuIw
- 25mZD+Ws9HnwfsNkSJTMWvHDrAin7v5jrSJHTEJCWp8lBaF+iqtovaD0IJY5V1Dx5ALliAZYi6t
- PkIQnk48e6029Ljt8NmD0XC0BUMMiqv5rt9zKD3UPG369Cl6381reTguA5dYA3hJoLj/IeLeNiG
- NBeGOQ3pVEBemwfBppeVD1VpKnJpw2YRX0Om8t382RPq8ONG3rCiZaxtKOJ61xCfQgk0aJVnXei
- N1DtcaaXzXSuYtWu3MyzVf370Jvu2/p5AJ+99m3uHXz/KqG9POTeg7ZR/syyuFWNnQgEXPgdtVR
- n9kgmQeLz8UbGSvkBSTwP1T1i1i4qV3NVRo04VjysWCC3KWeaehvM+m+O8/pxYiD2i7PhVfXjlX
- 1AuwotR4jiLp1R1V7D+RB5OyprpfNrtjXbqQK5GtcHyFGJDngBJrTfFGY7dyDFNa0Wdyr/OG732
- fZQ5erde5kxnle/tuWw==
-X-Proofpoint-ORIG-GUID: CLs23ipPzzXpEUeA2RvDtWYLGmOdYMt6
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA2MDEzNiBTYWx0ZWRfX0mfY4jMIp/97
- NElNe/Wsr8G+yKmIVEO3YKPhd6g3Dg12XfUDxOLYYnL+5Dzc9FyLP2i05vTB03BNa9PHKwfei4R
- d3nk7Xm15EB/4A9/ItXmtMs5wJCWlJc=
-X-Proofpoint-GUID: CLs23ipPzzXpEUeA2RvDtWYLGmOdYMt6
-X-Authority-Analysis: v=2.4 cv=f9N4wuyM c=1 sm=1 tr=0 ts=6a4babac cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+X-Proofpoint-GUID: hapG_prTeGtY4MCojcM-N6Q-Sj7jvLCa
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA2MDEzNiBTYWx0ZWRfX5C6fHneL3wCg
+ fnbcjNxujEXO12gegnHrAyrfuxRLLf37+tHMuh4TjwGdjvyWCxu7/iGwsdmkTtWCFGqx2+6Bcej
+ xO9sBWKBkiHhwor8wZEy9XZaiTbAacU=
+X-Authority-Analysis: v=2.4 cv=Mo1iLWae c=1 sm=1 tr=0 ts=6a4babaf cx=c_pps
+ a=+D9SDfe9YZWTjADjLiQY5g==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
  a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22 a=EUspDBNiAAAA:8
- a=ZvYg6ySBQLmwDIutsxAA:9 a=QEXdDO2ut3YA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22 a=gEfo2CItAAAA:8
+ a=KKAkSRfTAAAA:8 a=mK_AVkanAAAA:8 a=EUspDBNiAAAA:8 a=yC-0_ovQAAAA:8
+ a=P-IC7800AAAA:8 a=VwQbUJbxAAAA:8 a=RHTE8E8__7OEo5vASDQA:9 a=QEXdDO2ut3YA:10
+ a=vmgOmaN-Xu0dpDh8OwbV:22 a=sptkURWiP4Gy88Gu7hUp:22 a=cvBusfyB2V15izCimMoJ:22
+ a=3gWm3jAn84ENXaBijsEo:22 a=d3PnA9EDa4IxuAV0gXij:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA2MDEzNiBTYWx0ZWRfX2z+UvMrvyh/E
+ 90Z/ezmgNXKwSQWM/CwrLRF9iAfTpvBwUCR6wEJFoQUIVL5VASm/64YdxWQUY57oK43C5cybK1g
+ mVAlUZZLwnQ/HJaZTB/53b6MXGEELgDa1J/8TWGH87TypVniEBgqN0CwT9ODnwacvI8BeLZcpRS
+ WjSt7T0QKuYd+tTMXEDUGPeVt0leI1ECmRiIuNM74qt70lm5mrSGn96IL1PYHMtULVMyJaub1zX
+ xeQjmLzVTEse0bV43hvNL0GbPhDaKlXWIP2/KVhanM1qIKf6Za6pxWb3crN32j4qnSj3cYGWUap
+ jVpXkqs4Z6Qn7kBU/w92bI7xwX0hUTAbibovR1QpdaHH/HVoVgn8aqTBwsGjOnxGhZVCGwrDf2Q
+ RrrJyez8XQ1wrHc95NOo1TTrNd9sl4fhfz753clYtRa31NUkmuDkPjEoroWzzN7v0uUaVg+mm71
+ UaUax1jTJnIUR3l75HA==
+X-Proofpoint-ORIG-GUID: hapG_prTeGtY4MCojcM-N6Q-Sj7jvLCa
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-06_01,2026-07-06_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 adultscore=0 impostorscore=0 bulkscore=0 suspectscore=0
- clxscore=1015 spamscore=0 phishscore=0 priorityscore=1501 malwarescore=0
+ clxscore=1015 impostorscore=0 bulkscore=0 adultscore=0 priorityscore=1501
+ suspectscore=0 spamscore=0 phishscore=0 lowpriorityscore=0 malwarescore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607060136
 X-Rspamd-Action: no action
@@ -199,244 +205,529 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-116848-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_CC(0.00)[vger.kernel.org,st-md-mailman.stormreply.com,lists.infradead.org,tenstorrent.com,lists.linux.dev,kernel.org,linaro.org,oss.qualcomm.com,googlemail.com,bp.renesas.com];
 	RCVD_TLS_LAST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[49];
-	FORWARDED(0.00)[lists@lfdr.de];
+	TAGGED_FROM(0.00)[bounces-116850-lists,linux-arm-msm=lfdr.de];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns];
 	FREEMAIL_TO(0.00)[kernel.org,lunn.ch,davemloft.net,google.com,redhat.com,gmail.com,foss.st.com,st.com,linaro.org,baylibre.com,oss.nxp.com,nxp.com,oss.qualcomm.com,bootlin.com,glider.be];
+	MIME_TRACE(0.00)[0:+];
 	FORGED_RECIPIENTS(0.00)[m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:andrew+netdev@lunn.ch,m:davem@davemloft.net,m:edumazet@google.com,m:kuba@kernel.org,m:pabeni@redhat.com,m:mcoquelin.stm32@gmail.com,m:alexandre.torgue@foss.st.com,m:vkoul@kernel.org,m:peppe.cavallaro@st.com,m:wens@kernel.org,m:jernej.skrabec@gmail.com,m:neil.armstrong@linaro.org,m:khilman@baylibre.com,m:jbrunet@baylibre.com,m:shawnguo@kernel.org,m:festevam@gmail.com,m:jan.petrous@oss.nxp.com,m:s32@nxp.com,m:mohd.anwar@oss.qualcomm.com,m:romain.gantois@bootlin.com,m:geert+renesas@glider.be,m:magnus.damm@gmail.com,m:mripard@kernel.org,m:christophe.roullier@foss.st.com,m:brgl@kernel.org,m:rrendec@redhat.com,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:netdev@vger.kernel.org,m:linux-stm32@st-md-mailman.stormreply.com,m:linux-arm-kernel@lists.infradead.org,m:dfustini@tenstorrent.com,m:linux-sunxi@lists.linu
- x.dev,m:linux-amlogic@lists.infradead.org,m:linux-mips@vger.kernel.org,m:imx@lists.linux.dev,m:linux-renesas-soc@vger.kernel.org,m:linux-rockchip@lists.infradead.org,m:sophgo@lists.linux.dev,m:linux-riscv@lists.infradead.org,m:bartosz.golaszewski@linaro.org,m:bartosz.golaszewski@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,m:andrew@lunn.ch,m:mcoquelinstm32@gmail.com,m:jernejskrabec@gmail.com,m:geert@glider.be,m:magnusdamm@gmail.com,s:lists@lfdr.de];
+ x.dev,m:linux-amlogic@lists.infradead.org,m:linux-mips@vger.kernel.org,m:imx@lists.linux.dev,m:linux-renesas-soc@vger.kernel.org,m:linux-rockchip@lists.infradead.org,m:sophgo@lists.linux.dev,m:linux-riscv@lists.infradead.org,m:bartosz.golaszewski@linaro.org,m:bartosz.golaszewski@oss.qualcomm.com,m:martin.blumenstingl@googlemail.com,m:krzysztof.kozlowski@oss.qualcomm.com,m:prabhakar.mahadev-lad.rj@bp.renesas.com,m:krzk@kernel.org,m:conor@kernel.org,m:andrew@lunn.ch,m:mcoquelinstm32@gmail.com,m:jernejskrabec@gmail.com,m:geert@glider.be,m:magnusdamm@gmail.com,s:lists@lfdr.de];
+	FORWARDED(0.00)[lists@lfdr.de];
 	FORGED_SENDER(0.00)[bartosz.golaszewski@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,vger.kernel.org:from_smtp,oss.qualcomm.com:from_mime,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,qualcomm.com:email,qualcomm.com:dkim];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
+	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[bartosz.golaszewski@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	ALIAS_RESOLVED(0.00)[];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	TO_DN_SOME(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCPT_COUNT_GT_50(0.00)[52];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
+	ALIAS_RESOLVED(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt,netdev,renesas];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 04B39711BAA
+X-Rspamd-Queue-Id: 8E2E9711BC3
 
-Implement support for the firmware-managed SGMII/SerDes PHY present on
-Qualcomm platforms. Do this as a separate driver from the HLOS-managed
-variant as they don't share almost any code.
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
+Describe the firmware-managed variant of the QCom DesignWare MAC. As the
+properties here differ a lot from the HLOS-managed variant, lets put it
+in a separate file. Since we need to update the maximum number of power
+domains, let's update existing bindings referencing the top-level
+snps,dwmac.yaml and limit their maxItems for power-domains to 1.
+
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Reviewed-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Reviewed-by: Romain Gantois <romain.gantois@bootlin.com> # For RZ/N1
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 ---
- drivers/phy/qualcomm/Kconfig                   |  11 ++
- drivers/phy/qualcomm/Makefile                  |   1 +
- drivers/phy/qualcomm/phy-qcom-sgmii-eth-scmi.c | 161 +++++++++++++++++++++++++
- 3 files changed, 173 insertions(+)
+ .../bindings/net/allwinner,sun7i-a20-gmac.yaml     |   3 +
+ .../bindings/net/altr,socfpga-stmmac.yaml          |   3 +
+ .../bindings/net/amlogic,meson-dwmac.yaml          |   3 +
+ .../devicetree/bindings/net/eswin,eic7700-eth.yaml |   3 +
+ .../devicetree/bindings/net/intel,dwmac-plat.yaml  |   3 +
+ .../bindings/net/loongson,ls1b-gmac.yaml           |   3 +
+ .../bindings/net/loongson,ls1c-emac.yaml           |   3 +
+ .../devicetree/bindings/net/nxp,dwmac-imx.yaml     |   3 +
+ .../devicetree/bindings/net/nxp,lpc1850-dwmac.yaml |   3 +
+ .../devicetree/bindings/net/nxp,s32-dwmac.yaml     |   3 +
+ .../devicetree/bindings/net/qcom,ethqos.yaml       |   3 +
+ .../bindings/net/qcom,sa8255p-ethqos.yaml          | 107 +++++++++++++++++++++
+ .../devicetree/bindings/net/renesas,rzn1-gmac.yaml |   3 +
+ .../bindings/net/renesas,rzv2h-gbeth.yaml          |   3 +
+ .../devicetree/bindings/net/rockchip-dwmac.yaml    |   3 +
+ .../devicetree/bindings/net/snps,dwmac.yaml        |   5 +-
+ .../bindings/net/sophgo,cv1800b-dwmac.yaml         |   3 +
+ .../bindings/net/sophgo,sg2044-dwmac.yaml          |   3 +
+ .../bindings/net/starfive,jh7110-dwmac.yaml        |   3 +
+ .../devicetree/bindings/net/stm32-dwmac.yaml       |   3 +
+ .../devicetree/bindings/net/tesla,fsd-ethqos.yaml  |   3 +
+ .../devicetree/bindings/net/thead,th1520-gmac.yaml |   3 +
+ .../bindings/net/toshiba,visconti-dwmac.yaml       |   3 +
+ MAINTAINERS                                        |   1 +
+ 24 files changed, 175 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/phy/qualcomm/Kconfig b/drivers/phy/qualcomm/Kconfig
-index 60a0ead127fa9f08749e1bc686e15cc5eb341c28..a7cf348f6a7aa18e8b3f39f109b02ea672ae4177 100644
---- a/drivers/phy/qualcomm/Kconfig
-+++ b/drivers/phy/qualcomm/Kconfig
-@@ -232,3 +232,14 @@ config PHY_QCOM_SGMII_ETH
- 	help
- 	  Enable this to support the internal SerDes/SGMII PHY on various
- 	  Qualcomm chipsets.
+diff --git a/Documentation/devicetree/bindings/net/allwinner,sun7i-a20-gmac.yaml b/Documentation/devicetree/bindings/net/allwinner,sun7i-a20-gmac.yaml
+index 23e92be33ac8609a16db530782989caed22a5730..b12632545673b2ad0148a677f45a7447309a43cd 100644
+--- a/Documentation/devicetree/bindings/net/allwinner,sun7i-a20-gmac.yaml
++++ b/Documentation/devicetree/bindings/net/allwinner,sun7i-a20-gmac.yaml
+@@ -40,6 +40,9 @@ properties:
+     description:
+       PHY regulator
+ 
++  power-domains:
++    maxItems: 1
 +
-+config PHY_QCOM_SGMII_ETH_SCMI
-+	tristate "Qualcomm DWMAC SGMII SerDes/PHY driver (firmware managed)"
-+	depends on OF && (ARCH_QCOM || COMPILE_TEST)
-+	select GENERIC_PHY
-+	select PM
-+	select PM_GENERIC_DOMAINS
-+	help
-+	  Enable this to support the internal SerDes/SGMII PHY on Qualcomm
-+	  chipsets where the SerDes hardware (clocks and registers) is owned
-+	  by the firmware.
-diff --git a/drivers/phy/qualcomm/Makefile b/drivers/phy/qualcomm/Makefile
-index b71a6a0bed3f1489b1d07664ecd728f1db145986..032e582f2e1af96687484ce28aaba0c2ef73e754 100644
---- a/drivers/phy/qualcomm/Makefile
-+++ b/drivers/phy/qualcomm/Makefile
-@@ -25,3 +25,4 @@ obj-$(CONFIG_PHY_QCOM_USB_SS)		+= phy-qcom-usb-ss.o
- obj-$(CONFIG_PHY_QCOM_USB_SNPS_FEMTO_V2)+= phy-qcom-snps-femto-v2.o
- obj-$(CONFIG_PHY_QCOM_IPQ806X_USB)	+= phy-qcom-ipq806x-usb.o
- obj-$(CONFIG_PHY_QCOM_SGMII_ETH)	+= phy-qcom-sgmii-eth.o
-+obj-$(CONFIG_PHY_QCOM_SGMII_ETH_SCMI)	+= phy-qcom-sgmii-eth-scmi.o
-diff --git a/drivers/phy/qualcomm/phy-qcom-sgmii-eth-scmi.c b/drivers/phy/qualcomm/phy-qcom-sgmii-eth-scmi.c
+ required:
+   - compatible
+   - reg
+diff --git a/Documentation/devicetree/bindings/net/altr,socfpga-stmmac.yaml b/Documentation/devicetree/bindings/net/altr,socfpga-stmmac.yaml
+index fc445ad5a1f1ac490e921696d6f7ca83d15de459..448e617cddc4cda8dbc77e83324495ffd5dfb9be 100644
+--- a/Documentation/devicetree/bindings/net/altr,socfpga-stmmac.yaml
++++ b/Documentation/devicetree/bindings/net/altr,socfpga-stmmac.yaml
+@@ -140,6 +140,9 @@ properties:
+           - description: offset of the control register
+           - description: shift within the control register
+ 
++  power-domains:
++    maxItems: 1
++
+ patternProperties:
+   "^mdio[0-9]$":
+     type: object
+diff --git a/Documentation/devicetree/bindings/net/amlogic,meson-dwmac.yaml b/Documentation/devicetree/bindings/net/amlogic,meson-dwmac.yaml
+index 5c91716d1f21e617543b03c5a90b993f8aee053c..9c9cc3ef384da0270489c21b3426572ea46d9499 100644
+--- a/Documentation/devicetree/bindings/net/amlogic,meson-dwmac.yaml
++++ b/Documentation/devicetree/bindings/net/amlogic,meson-dwmac.yaml
+@@ -158,6 +158,9 @@ properties:
+   interrupt-names:
+     const: macirq
+ 
++  power-domains:
++    maxItems: 1
++
+ required:
+   - compatible
+   - reg
+diff --git a/Documentation/devicetree/bindings/net/eswin,eic7700-eth.yaml b/Documentation/devicetree/bindings/net/eswin,eic7700-eth.yaml
+index 65882ff79d8d7e3227e31415676639dd86f7098f..081a21174fd42bc4925d1850b1147545e111363c 100644
+--- a/Documentation/devicetree/bindings/net/eswin,eic7700-eth.yaml
++++ b/Documentation/devicetree/bindings/net/eswin,eic7700-eth.yaml
+@@ -95,6 +95,9 @@ properties:
+           - description: Optional offset of register controlling TXD delay
+           - description: Optional offset of register controlling RXD delay
+ 
++  power-domains:
++    maxItems: 1
++
+ required:
+   - compatible
+   - reg
+diff --git a/Documentation/devicetree/bindings/net/intel,dwmac-plat.yaml b/Documentation/devicetree/bindings/net/intel,dwmac-plat.yaml
+index 62c1da36a2b5a29290e5e01be87c48158c4adf89..e41851931b947559c89b0cd6f4756f71046f9594 100644
+--- a/Documentation/devicetree/bindings/net/intel,dwmac-plat.yaml
++++ b/Documentation/devicetree/bindings/net/intel,dwmac-plat.yaml
+@@ -47,6 +47,9 @@ properties:
+   interrupt-names:
+     const: macirq
+ 
++  power-domains:
++    maxItems: 1
++
+ required:
+   - compatible
+   - clocks
+diff --git a/Documentation/devicetree/bindings/net/loongson,ls1b-gmac.yaml b/Documentation/devicetree/bindings/net/loongson,ls1b-gmac.yaml
+index c4f3224bad387b87a5b4a3049dabd75f2c4bd42f..c9a131b8d8304c41559a416b324df749c0a87d14 100644
+--- a/Documentation/devicetree/bindings/net/loongson,ls1b-gmac.yaml
++++ b/Documentation/devicetree/bindings/net/loongson,ls1b-gmac.yaml
+@@ -66,6 +66,9 @@ properties:
+       - mii
+       - rgmii-id
+ 
++  power-domains:
++    maxItems: 1
++
+ required:
+   - compatible
+   - reg
+diff --git a/Documentation/devicetree/bindings/net/loongson,ls1c-emac.yaml b/Documentation/devicetree/bindings/net/loongson,ls1c-emac.yaml
+index 99001b940b8361f69bb917617f857ee99f4b3fa5..49db18423dd807683b9bb297978f5da8ea6cee3d 100644
+--- a/Documentation/devicetree/bindings/net/loongson,ls1c-emac.yaml
++++ b/Documentation/devicetree/bindings/net/loongson,ls1c-emac.yaml
+@@ -65,6 +65,9 @@ properties:
+       - mii
+       - rmii
+ 
++  power-domains:
++    maxItems: 1
++
+ required:
+   - compatible
+   - reg
+diff --git a/Documentation/devicetree/bindings/net/nxp,dwmac-imx.yaml b/Documentation/devicetree/bindings/net/nxp,dwmac-imx.yaml
+index e5db346beca9649be4f97727b78fda8973095912..b240c76e7dd5254d0c3752610c4aa848a3c3d65b 100644
+--- a/Documentation/devicetree/bindings/net/nxp,dwmac-imx.yaml
++++ b/Documentation/devicetree/bindings/net/nxp,dwmac-imx.yaml
+@@ -83,6 +83,9 @@ properties:
+     description:
+       To select RMII reference clock from external.
+ 
++  power-domains:
++    maxItems: 1
++
+ required:
+   - compatible
+   - clocks
+diff --git a/Documentation/devicetree/bindings/net/nxp,lpc1850-dwmac.yaml b/Documentation/devicetree/bindings/net/nxp,lpc1850-dwmac.yaml
+index 05acd9bc7616356e68090ebdd4df20e42f70dd7e..f61188ab0dbe3c0cec5b10f7a65dfaff4dc3898f 100644
+--- a/Documentation/devicetree/bindings/net/nxp,lpc1850-dwmac.yaml
++++ b/Documentation/devicetree/bindings/net/nxp,lpc1850-dwmac.yaml
+@@ -51,6 +51,9 @@ properties:
+     items:
+       - const: stmmaceth
+ 
++  power-domains:
++    maxItems: 1
++
+ required:
+   - compatible
+   - reg
+diff --git a/Documentation/devicetree/bindings/net/nxp,s32-dwmac.yaml b/Documentation/devicetree/bindings/net/nxp,s32-dwmac.yaml
+index 753a04941659b82b655dad1439ff66f8b37fa18b..fcad2274302d9cff36760184b74918a9835906f7 100644
+--- a/Documentation/devicetree/bindings/net/nxp,s32-dwmac.yaml
++++ b/Documentation/devicetree/bindings/net/nxp,s32-dwmac.yaml
+@@ -81,6 +81,9 @@ properties:
+       - const: rx
+       - const: ptp_ref
+ 
++  power-domains:
++    maxItems: 1
++
+ required:
+   - clocks
+   - clock-names
+diff --git a/Documentation/devicetree/bindings/net/qcom,ethqos.yaml b/Documentation/devicetree/bindings/net/qcom,ethqos.yaml
+index 423959cb928d945aa3e758a3c803d12bd61ec42b..ef520f8105773e22c0536ff419dad55fe316e1bd 100644
+--- a/Documentation/devicetree/bindings/net/qcom,ethqos.yaml
++++ b/Documentation/devicetree/bindings/net/qcom,ethqos.yaml
+@@ -86,6 +86,9 @@ properties:
+   phy-names:
+     const: serdes
+ 
++  power-domains:
++    maxItems: 1
++
+ required:
+   - compatible
+   - clocks
+diff --git a/Documentation/devicetree/bindings/net/qcom,sa8255p-ethqos.yaml b/Documentation/devicetree/bindings/net/qcom,sa8255p-ethqos.yaml
 new file mode 100644
-index 0000000000000000000000000000000000000000..8ee62189556fe4ff0d8aa2f8b105175e08000b7c
+index 0000000000000000000000000000000000000000..5158481e5e5b0feed5b3dcd2cda2f593b7ff62e4
 --- /dev/null
-+++ b/drivers/phy/qualcomm/phy-qcom-sgmii-eth-scmi.c
-@@ -0,0 +1,161 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-+ *
-+ * Firmware-managed variant of the Qualcomm DWMAC SGMII SerDes/PHY driver.
-+ */
++++ b/Documentation/devicetree/bindings/net/qcom,sa8255p-ethqos.yaml
+@@ -0,0 +1,107 @@
++# SPDX-License-Identifier: GPL-2.0 OR BSD-2-Clause
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/net/qcom,sa8255p-ethqos.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
 +
-+#include <linux/delay.h>
-+#include <linux/ethtool.h>
-+#include <linux/mod_devicetable.h>
-+#include <linux/module.h>
-+#include <linux/of.h>
-+#include <linux/phy.h>
-+#include <linux/phy/phy.h>
-+#include <linux/platform_device.h>
-+#include <linux/pm_domain.h>
-+#include <linux/pm_runtime.h>
++title: Qualcomm Ethernet ETHQOS device (firmware managed)
 +
-+struct qcom_dwmac_sgmii_phy_scmi {
-+	unsigned int perf_state;
-+};
++maintainers:
++  - Bjorn Andersson <andersson@kernel.org>
++  - Konrad Dybcio <konradybcio@kernel.org>
++  - Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 +
-+static int qcom_dwmac_sgmii_phy_scmi_power_on(struct phy *phy)
-+{
-+	struct qcom_dwmac_sgmii_phy_scmi *priv = phy_get_drvdata(phy);
-+	struct device *dev = phy->dev.parent;
-+	int ret;
++description:
++  dwmac based Qualcomm ethernet devices which support Gigabit
++  ethernet (version v2.3.0 and onwards) with clocks, interconnects, etc.
++  managed by firmware
 +
-+	ret = pm_runtime_resume_and_get(dev);
-+	if (ret)
-+		return ret;
++allOf:
++  - $ref: snps,dwmac.yaml#
 +
-+	ret = dev_pm_genpd_set_performance_state(dev, priv->perf_state);
-+	if (ret) {
-+		pm_runtime_put(dev);
-+		return ret;
-+	}
++properties:
++  compatible:
++    const: qcom,sa8255p-ethqos
 +
-+	usleep_range(5000, 10000);
++  reg:
++    maxItems: 2
 +
-+	return 0;
-+}
++  reg-names:
++    items:
++      - const: stmmaceth
++      - const: rgmii
 +
-+static int qcom_dwmac_sgmii_phy_scmi_power_off(struct phy *phy)
-+{
-+	struct device *dev = phy->dev.parent;
++  interrupts:
++    items:
++      - description: Combined signal for various interrupt events
++      - description: The interrupt that occurs when HW safety error triggered
 +
-+	dev_pm_genpd_set_performance_state(dev, 0);
-+	pm_runtime_put(dev);
++  interrupt-names:
++    items:
++      - const: macirq
++      - const: sfty
 +
-+	return 0;
-+}
++  power-domains:
++    minItems: 2
++    maxItems: 2
 +
-+static int qcom_dwmac_sgmii_phy_scmi_validate(struct phy *phy, enum phy_mode mode,
-+					      int submode,
-+					      union phy_configure_opts *opts)
-+{
-+	if (mode != PHY_MODE_ETHERNET)
-+		return -EINVAL;
++  power-domain-names:
++    items:
++      - const: core
++      - const: mdio
 +
-+	switch (submode) {
-+	case PHY_INTERFACE_MODE_SGMII:
-+	case PHY_INTERFACE_MODE_1000BASEX:
-+	case PHY_INTERFACE_MODE_2500BASEX:
-+		return 0;
-+	default:
-+		return -EINVAL;
-+	}
-+}
++  phys:
++    maxItems: 1
 +
-+static int qcom_dwmac_sgmii_phy_scmi_set_mode(struct phy *phy, enum phy_mode mode,
-+					      int submode)
-+{
-+	struct qcom_dwmac_sgmii_phy_scmi *priv = phy_get_drvdata(phy);
-+	int ret;
++  phy-names:
++    items:
++      - const: serdes
 +
-+	ret = qcom_dwmac_sgmii_phy_scmi_validate(phy, mode, submode, NULL);
-+	if (ret)
-+		return ret;
++  iommus:
++    maxItems: 1
 +
-+	priv->perf_state = (submode == PHY_INTERFACE_MODE_2500BASEX) ?
-+			   SPEED_2500 : SPEED_1000;
++  dma-coherent: true
 +
-+	return 0;
-+}
++required:
++  - compatible
++  - reg-names
++  - power-domains
++  - power-domain-names
 +
-+static const struct phy_ops qcom_dwmac_sgmii_phy_scmi_ops = {
-+	.power_on	= qcom_dwmac_sgmii_phy_scmi_power_on,
-+	.power_off	= qcom_dwmac_sgmii_phy_scmi_power_off,
-+	.set_mode	= qcom_dwmac_sgmii_phy_scmi_set_mode,
-+	.validate	= qcom_dwmac_sgmii_phy_scmi_validate,
-+	.owner		= THIS_MODULE,
-+};
++unevaluatedProperties: false
 +
-+static void qcom_dwmac_sgmii_phy_scmi_runtime_disable(void *data)
-+{
-+	struct device *dev = data;
++examples:
++  - |
++    #include <dt-bindings/interrupt-controller/arm-gic.h>
 +
-+	pm_runtime_disable(dev);
-+}
++    ethernet: ethernet@23040000 {
++        compatible = "qcom,sa8255p-ethqos";
++        reg = <0x23040000 0x10000>,
++              <0x23056000 0x100>;
++        reg-names = "stmmaceth", "rgmii";
 +
-+static int qcom_dwmac_sgmii_phy_scmi_probe(struct platform_device *pdev)
-+{
-+	struct qcom_dwmac_sgmii_phy_scmi *priv;
-+	struct device *dev = &pdev->dev;
-+	struct phy_provider *provider;
-+	struct phy *phy;
-+	int ret;
++        iommus = <&apps_smmu 0x120 0x7>;
 +
-+	priv = devm_kzalloc(dev, sizeof(*priv), GFP_KERNEL);
-+	if (!priv)
-+		return -ENOMEM;
++        interrupts = <GIC_SPI 946 IRQ_TYPE_LEVEL_HIGH>,
++                     <GIC_SPI 782 IRQ_TYPE_LEVEL_HIGH>;
++        interrupt-names = "macirq", "sfty";
 +
-+	priv->perf_state = SPEED_1000;
++        dma-coherent;
 +
-+	/*
-+	 * Enable runtime PM on the provider before creating the PHY so that the
-+	 * PHY core enables runtime PM on the PHY device too. The single SCMI
-+	 * power domain has already been attached to this device by the driver
-+	 * core, so runtime PM votes propagate to firmware through the genpd
-+	 * device link. No register or clock access is done here - firmware owns
-+	 * the SerDes.
-+	 */
-+	pm_runtime_enable(dev);
++        snps,tso;
++        snps,pbl = <32>;
++        rx-fifo-depth = <16384>;
++        tx-fifo-depth = <16384>;
 +
-+	ret = devm_add_action_or_reset(dev, qcom_dwmac_sgmii_phy_scmi_runtime_disable, dev);
-+	if (ret)
-+		return ret;
++        phy-handle = <&ethernet_phy>;
++        phy-mode = "2500base-x";
 +
-+	phy = devm_phy_create(dev, NULL, &qcom_dwmac_sgmii_phy_scmi_ops);
-+	if (IS_ERR(phy))
-+		return dev_err_probe(dev, PTR_ERR(phy), "failed to create the phy\n");
++        snps,mtl-rx-config = <&mtl_rx_setup1>;
++        snps,mtl-tx-config = <&mtl_tx_setup1>;
 +
-+	phy_set_drvdata(phy, priv);
++        power-domains = <&scmi8_pd 0>, <&scmi8_pd 1>;
++        power-domain-names = "core", "mdio";
 +
-+	provider = devm_of_phy_provider_register(dev, of_phy_simple_xlate);
-+	if (IS_ERR(provider))
-+		return dev_err_probe(dev, PTR_ERR(provider),
-+				     "failed to register the PHY provider\n");
++        phys = <&serdes1>;
++        phy-names = "serdes";
++    };
+diff --git a/Documentation/devicetree/bindings/net/renesas,rzn1-gmac.yaml b/Documentation/devicetree/bindings/net/renesas,rzn1-gmac.yaml
+index 16dd7a2631abf6fb7dc8e0c90755ab1e81915b38..ed0d10a19ca4c47c05f6873c64b0537b90acd15a 100644
+--- a/Documentation/devicetree/bindings/net/renesas,rzn1-gmac.yaml
++++ b/Documentation/devicetree/bindings/net/renesas,rzn1-gmac.yaml
+@@ -44,6 +44,9 @@ properties:
+       phandle pointing to a PCS sub-node compatible with
+       renesas,rzn1-miic.yaml#
+ 
++  power-domains:
++    maxItems: 1
 +
-+	return 0;
-+}
+ required:
+   - compatible
+ 
+diff --git a/Documentation/devicetree/bindings/net/renesas,rzv2h-gbeth.yaml b/Documentation/devicetree/bindings/net/renesas,rzv2h-gbeth.yaml
+index 2125b5ddf73dadd8b0d372e83a6b5c4624f5e648..8338834f49cd21df6c697a1f52a8b195c0208c23 100644
+--- a/Documentation/devicetree/bindings/net/renesas,rzv2h-gbeth.yaml
++++ b/Documentation/devicetree/bindings/net/renesas,rzv2h-gbeth.yaml
+@@ -154,6 +154,9 @@ properties:
+       Documentation/devicetree/bindings/net/pcs/renesas,rzn1-miic.yaml#
+       (Refer RZ/T2H portion in the DT-binding file)
+ 
++  power-domains:
++    maxItems: 1
 +
-+static const struct of_device_id qcom_dwmac_sgmii_phy_scmi_of_match[] = {
-+	{ .compatible = "qcom,sa8255p-dwmac-sgmii-phy" },
-+	{ }
-+};
-+MODULE_DEVICE_TABLE(of, qcom_dwmac_sgmii_phy_scmi_of_match);
+ required:
+   - compatible
+   - reg
+diff --git a/Documentation/devicetree/bindings/net/rockchip-dwmac.yaml b/Documentation/devicetree/bindings/net/rockchip-dwmac.yaml
+index 80c252845349c4533deff85b052157984d0e2f23..3ec3f6dc2a125908ba98f20b1120311de8967954 100644
+--- a/Documentation/devicetree/bindings/net/rockchip-dwmac.yaml
++++ b/Documentation/devicetree/bindings/net/rockchip-dwmac.yaml
+@@ -123,6 +123,9 @@ properties:
+   phy-supply:
+     description: PHY regulator
+ 
++  power-domains:
++    maxItems: 1
 +
-+static struct platform_driver qcom_dwmac_sgmii_phy_scmi_driver = {
-+	.probe	= qcom_dwmac_sgmii_phy_scmi_probe,
-+	.driver = {
-+		.name = "qcom-dwmac-sgmii-phy-scmi",
-+		.of_match_table = qcom_dwmac_sgmii_phy_scmi_of_match,
-+	},
-+};
-+module_platform_driver(qcom_dwmac_sgmii_phy_scmi_driver);
+ required:
+   - compatible
+   - clocks
+diff --git a/Documentation/devicetree/bindings/net/snps,dwmac.yaml b/Documentation/devicetree/bindings/net/snps,dwmac.yaml
+index 2449311c6d28ed3fbf8c92526ce8b872900653f4..d3aff1df3070d1b22198766ee2e0131dcf925287 100644
+--- a/Documentation/devicetree/bindings/net/snps,dwmac.yaml
++++ b/Documentation/devicetree/bindings/net/snps,dwmac.yaml
+@@ -72,6 +72,7 @@ properties:
+         - nuvoton,ma35d1-dwmac
+         - nxp,s32g2-dwmac
+         - qcom,qcs404-ethqos
++        - qcom,sa8255p-ethqos
+         - qcom,sa8775p-ethqos
+         - qcom,sc8280xp-ethqos
+         - qcom,sm8150-ethqos
+@@ -185,7 +186,8 @@ properties:
+           - const: ahb
+ 
+   power-domains:
+-    maxItems: 1
++    minItems: 1
++    maxItems: 2
+ 
+   mac-mode:
+     $ref: ethernet-controller.yaml#/properties/phy-connection-type
+@@ -630,6 +632,7 @@ allOf:
+                 - ingenic,x1830-mac
+                 - ingenic,x2000-mac
+                 - qcom,qcs404-ethqos
++                - qcom,sa8255p-ethqos
+                 - qcom,sa8775p-ethqos
+                 - qcom,sc8280xp-ethqos
+                 - qcom,sm8150-ethqos
+diff --git a/Documentation/devicetree/bindings/net/sophgo,cv1800b-dwmac.yaml b/Documentation/devicetree/bindings/net/sophgo,cv1800b-dwmac.yaml
+index b89456f0ef830991135bd17626da98661429596c..e78cbf594c695204040a53ab1e367daa9e12246b 100644
+--- a/Documentation/devicetree/bindings/net/sophgo,cv1800b-dwmac.yaml
++++ b/Documentation/devicetree/bindings/net/sophgo,cv1800b-dwmac.yaml
+@@ -49,6 +49,9 @@ properties:
+   reset-names:
+     const: stmmaceth
+ 
++  power-domains:
++    maxItems: 1
 +
-+MODULE_DESCRIPTION("Qualcomm DWMAC SGMII PHY driver (firmware managed)");
-+MODULE_AUTHOR("Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>");
-+MODULE_LICENSE("GPL");
+ required:
+   - compatible
+   - reg
+diff --git a/Documentation/devicetree/bindings/net/sophgo,sg2044-dwmac.yaml b/Documentation/devicetree/bindings/net/sophgo,sg2044-dwmac.yaml
+index e8d3814db0e94fdcd0f3ab2a9fa8bab972a97ab5..845e2c67d20037496bb1eec6eb73c99cde74e944 100644
+--- a/Documentation/devicetree/bindings/net/sophgo,sg2044-dwmac.yaml
++++ b/Documentation/devicetree/bindings/net/sophgo,sg2044-dwmac.yaml
+@@ -52,6 +52,9 @@ properties:
+   interrupt-names:
+     maxItems: 1
+ 
++  power-domains:
++    maxItems: 1
++
+   resets:
+     maxItems: 1
+ 
+diff --git a/Documentation/devicetree/bindings/net/starfive,jh7110-dwmac.yaml b/Documentation/devicetree/bindings/net/starfive,jh7110-dwmac.yaml
+index fdcc61c65f87d1dc15a17b9486cde032ffa7798b..c424e77973921e1f9f18135c3106f1c270c9ac87 100644
+--- a/Documentation/devicetree/bindings/net/starfive,jh7110-dwmac.yaml
++++ b/Documentation/devicetree/bindings/net/starfive,jh7110-dwmac.yaml
+@@ -75,6 +75,9 @@ properties:
+       The argument one is the offset of phy mode selection, the
+       argument two is the shift of phy mode selection.
+ 
++  power-domains:
++    maxItems: 1
++
+ required:
+   - compatible
+   - reg
+diff --git a/Documentation/devicetree/bindings/net/stm32-dwmac.yaml b/Documentation/devicetree/bindings/net/stm32-dwmac.yaml
+index 987254900d0da7aab81237f20b1540ad8a17bd21..29b878079ff0c1a0ef95fc63f2035f478ee039b2 100644
+--- a/Documentation/devicetree/bindings/net/stm32-dwmac.yaml
++++ b/Documentation/devicetree/bindings/net/stm32-dwmac.yaml
+@@ -121,6 +121,9 @@ properties:
+     minItems: 1
+     maxItems: 2
+ 
++  power-domains:
++    maxItems: 1
++
+ required:
+   - compatible
+   - clocks
+diff --git a/Documentation/devicetree/bindings/net/tesla,fsd-ethqos.yaml b/Documentation/devicetree/bindings/net/tesla,fsd-ethqos.yaml
+index dd7481bb16e59982c26c1a54ae82b8cff85fdfe0..ad635529d676ed6b752ab3bde5152d5cbddcb519 100644
+--- a/Documentation/devicetree/bindings/net/tesla,fsd-ethqos.yaml
++++ b/Documentation/devicetree/bindings/net/tesla,fsd-ethqos.yaml
+@@ -67,6 +67,9 @@ properties:
+       - rgmii-rxid
+       - rgmii-txid
+ 
++  power-domains:
++    maxItems: 1
++
+ required:
+   - compatible
+   - reg
+diff --git a/Documentation/devicetree/bindings/net/thead,th1520-gmac.yaml b/Documentation/devicetree/bindings/net/thead,th1520-gmac.yaml
+index b3492a9aa4effa73fadf92a63a76ba8bb65a8769..c859f8bb5d582af8b8782f2f89ab5e6ee3d7a46c 100644
+--- a/Documentation/devicetree/bindings/net/thead,th1520-gmac.yaml
++++ b/Documentation/devicetree/bindings/net/thead,th1520-gmac.yaml
+@@ -78,6 +78,9 @@ properties:
+     items:
+       - const: macirq
+ 
++  power-domains:
++    maxItems: 1
++
+ required:
+   - clocks
+   - clock-names
+diff --git a/Documentation/devicetree/bindings/net/toshiba,visconti-dwmac.yaml b/Documentation/devicetree/bindings/net/toshiba,visconti-dwmac.yaml
+index f0f32e18fc8550e6f63b87b60a095972453836c9..efa39eab0256a1102b01872bd848749788c9b4e8 100644
+--- a/Documentation/devicetree/bindings/net/toshiba,visconti-dwmac.yaml
++++ b/Documentation/devicetree/bindings/net/toshiba,visconti-dwmac.yaml
+@@ -48,6 +48,9 @@ properties:
+   interrupt-names:
+     const: macirq
+ 
++  power-domains:
++    maxItems: 1
++
+ required:
+   - compatible
+   - reg
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 4a8b0fd665ce2447c3e89784b142d998f7384b95..7d5877528df099d546929bc145ee9e7233391105 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -22184,6 +22184,7 @@ L:	netdev@vger.kernel.org
+ L:	linux-arm-msm@vger.kernel.org
+ S:	Maintained
+ F:	Documentation/devicetree/bindings/net/qcom,ethqos.yaml
++F:	Documentation/devicetree/bindings/net/qcom,sa8255p-ethqos.yaml
+ F:	drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+ 
+ QUALCOMM FASTRPC DRIVER
 
 -- 
 2.47.3
