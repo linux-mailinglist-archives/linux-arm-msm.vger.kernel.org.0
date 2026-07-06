@@ -1,250 +1,187 @@
-Return-Path: <linux-arm-msm+bounces-116943-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-116948-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id qSj4BGHXS2r6bAEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-116943-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Jul 2026 18:27:13 +0200
+	id t4cRCh/WS2qGbAEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-116948-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Jul 2026 18:21:51 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8D9617133FC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Jul 2026 18:27:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 85FA67132A3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Jul 2026 18:21:50 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=AXPU7Qu2;
-	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=bv8DGZtg;
-	dmarc=pass (policy=reject) header.from=qualcomm.com;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116943-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116943-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=intel.com header.s=Intel header.b=FVBVZkkO;
+	dmarc=pass (policy=none) header.from=intel.com;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116948-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116948-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id E3A4F30F3A69
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jul 2026 15:50:27 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 2DD4532EEAE4
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jul 2026 15:51:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C794E36C9F4;
-	Mon,  6 Jul 2026 15:50:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC65442379B;
+	Mon,  6 Jul 2026 15:50:34 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.10])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54444386C1C
-	for <linux-arm-msm@vger.kernel.org>; Mon,  6 Jul 2026 15:50:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 521AE309EE2;
+	Mon,  6 Jul 2026 15:50:33 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783353002; cv=none; b=YAoEUov9sSxxeAb5q+tBD2AVgS64swDLVvv8LeSyqD2jb3m7s88fChlD71Hnnl2ZyFrRr5aOWYonOKyKaA/ch4GP9cmCpV1vmGPWJ2BMGX4EmzY62yi2oxZpAveBL3XisanVBpEDh9a+hHKDHLZf39NzNLBBb6aXB92nrymiYo8=
+	t=1783353034; cv=none; b=SP564uf+QxMZssvFri+SoJ7uuDne+t/OmXVIwXiCZiqPO2WIpCu8WLeJBHWN6LEOQaN4Ao1Gs54oiS1/MlRwp4m4whSlouoYNK8J9bNV+ZYX5gA9xkr3cAM9psU+ChQfPeN1slmuTsVXZD6uDb27CAYLp4cWFp2cuz/+rJ4lyZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783353002; c=relaxed/simple;
-	bh=1bKQycjYVzCVtRQBRDEuo6LMeDTatNw65H0xzEmCMbc=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=MwiTzu2eY5449oOkSM6XZsbaBb9wzQQC5dHxJF89vbi0ojmOEcbkHW52roCqE0d7faWVRSoFyLI4Knl3JldvBhtacfiDV7VunQtPZOxJkjk7lJj7kkMNCAnbPnX4xq05v/mMC7LZKe+PHMqGDe1GX8hpcBA9/45uiBg+BlPSpOY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=AXPU7Qu2; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=bv8DGZtg; arc=none smtp.client-ip=205.220.168.131
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 666FFCLb762342
-	for <linux-arm-msm@vger.kernel.org>; Mon, 6 Jul 2026 15:50:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=kqFj5dY9U6iOMvAAlIXRKb
-	v7dLowaF3yIZAVqsjVVxQ=; b=AXPU7Qu2M6YxMWNTT4DoPyxml7N4HrIkqBIPeo
-	2NqAdX4Dk8v30oQZ8lIbSkQTnXLUE+/P8omLz7GqWGlsPbbtsn5b3Gsyc+h24Mb9
-	hzXUW51ruoCHLabGLxfsGhqT/CjZ/l7Scej62wBVFiT5MSPskWCWBQ2jXZGfSOSw
-	9WlsYvNDR2FJDO96ACCNDsd9qwXhQn+QFOUHnkihomMs6qGQZe4ler0C0xXxHQrx
-	rpmautuHVfgzSesZQT0mK5YMzCLhQWERdlL7Gqs3L+SW9/ga7x/ccqVpWU79TkpV
-	2Qqio9XFHDLUCZeOuefzIyNluIS/3EJezX/8toyijrCSMwUA==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f87rxt95u-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 06 Jul 2026 15:50:00 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-92da6f3cc81so389249085a.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Jul 2026 08:50:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1783353000; x=1783957800; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:content-type:mime-version
-         :message-id:date:subject:from:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=kqFj5dY9U6iOMvAAlIXRKbv7dLowaF3yIZAVqsjVVxQ=;
-        b=bv8DGZtgKJZZ2qlwHB0vi+80MLKWjLryppf9XqcYttXHhdAHULrXVooN5r0mB7h7wr
-         74YXKpjm1ars/5mjOsVTF4p//sHVmzf+h6/R+m+iIVy6Uqtmtk/3TH8UXuPY9TiLnEMh
-         RI15ZZtV+VjodRlnNJxbfggQf30IoO6hH7DtPB3XpKkk1lnLWcu/qpLyU8ZRprhKiRGV
-         uNgQ0qreOwj+aDAQpITzlImCtsTd+Eg9cu6pomMVxgfHo3fA7WCuq5LWDDp4cXjwUHOq
-         vIWj2T0NiaLZTSx63ts37HNEqRoOAAZ24+10982JS2dsBCFo6/Vbv+36h0Hk6dvwaW/t
-         EhhQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783353000; x=1783957800;
-        h=cc:to:content-transfer-encoding:content-type:mime-version
-         :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=kqFj5dY9U6iOMvAAlIXRKbv7dLowaF3yIZAVqsjVVxQ=;
-        b=b5TemHnEUqdAkNiqssZ+DJDjASCA3OVxxEc5FiN8sA1n26bgPHaa27zm5/oLhmU1Nn
-         XHu9Ol2ZjoBUxtYyTb5zfUnM+54BushrTFAtLXc5IKIB2mCXYiyWaagl2BHgURBGqzEN
-         RdhruTPyJB5EreflHFEYIB36d+QlOgwJy4u/XPyvZVOmBQf7hPgiAYxVm5NDbrwWUvHZ
-         mKy+KE/NcWQzexUBFXAPgqX/7IfYyreX1IPLIzkR3ykYcrrQ9+QqANc/IEn3RoybmDAZ
-         4iXQ0+iMt3Sol1KigcL5TsT1MeUwABhNehie+xkjLkRJtQpWwiKqh2wn/TkwZ2Fhnll/
-         M2RQ==
-X-Forwarded-Encrypted: i=1; AHgh+Rr5CdhSk0Sa8CJmRDYjFf9vzvv7n63dpo8h0qfoCljQwFM8Pxjynb4NqWyNUsgsNImrfvKCkMBjKubuhtOD@vger.kernel.org
-X-Gm-Message-State: AOJu0YxMMbWyoDAXN4e/xcdqqkEmDxKlR6XrtDWftn1svdnbCnNHMgUq
-	8ATCrPKj+ZOpUCICcfiG68/gB9tmES6QwbnQswyy6/VucxYitOiOgkgcq2vldDO+XaErvJfzdWg
-	K1Mi/ZjufCyMsS8qTLj9Sr/t5H+gaTKhUl6A85hioXyZiN1L/xBOarXnSmvFrS6IeGKfo
-X-Gm-Gg: AfdE7ckuSHBb3xVNnXpXqzgy+0X+55vJfcsAV82Tn6AHLby9SfThF4hDn5tAsfxaW7o
-	4xhZNwiOQYbZRsngUxVHiz5j3ZNq98CxwGHX7dV9A2LLpu6/l2b6tgmhCVbqWSkVnvRSml61ayq
-	d3N9vwwAMSSDAfrv/QEUnrwiI3+xg0lp8Npo1pCmfZ3vQJJ5UlF7LXvHDhJb+aQZ9ciq2kht/xv
-	A1Csvr6j0X7PLVgL/Q3zfp5r4l8ZGQlZk/QRULZsioUFndjVra7Zt0KNV5izXTe6xK7Xp/KgZ/6
-	+gE+Zh+S01kLF47PSk75GzJMqVqsbYt7Njf7N7cetnpTDenlipV2ta1F6POJXF8njeoJ7C6IEdP
-	5soiOUBn0LLd/t+q+T0olsZrBPM+5U/Bqpsg+ccQKF7gof57EJz0mKar/kWMkT8CJ2OmcIEsACV
-	xJuxeuw9SD9SydzR4q33FnjeejBgoYoFl75w6AQxssZpVm33Qu/izA4ChxKhheJvw=
-X-Received: by 2002:a05:620a:2995:b0:8ee:bae8:2bb8 with SMTP id af79cd13be357-92ebb553633mr152134885a.36.1783352999533;
-        Mon, 06 Jul 2026 08:49:59 -0700 (PDT)
-X-Received: by 2002:a05:620a:2995:b0:8ee:bae8:2bb8 with SMTP id af79cd13be357-92ebb553633mr152130385a.36.1783352998999;
-        Mon, 06 Jul 2026 08:49:58 -0700 (PDT)
-Received: from QCOM-eG0v1AUPpu.na.qualcomm.com ([2a01:e0a:830:450:809d:5d56:19d9:ff8b])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c12b628c16fsm801997066b.37.2026.07.06.08.49.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Jul 2026 08:49:58 -0700 (PDT)
-From: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Subject: [PATCH v3 0/4] leds: pca963x: Add multicolor support and enable
- Monza RGB LEDs
-Date: Mon, 06 Jul 2026 17:49:54 +0200
-Message-Id: <20260706-monza-leds-v3-0-37ea8c988363@oss.qualcomm.com>
+	s=arc-20240116; t=1783353034; c=relaxed/simple;
+	bh=of6d9n1ZVp2VvNBWbeQxrIvJaxz8Dqo4F/lZHKvIDzs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mC9Q5JKFMLaaEQt/Tw7REXPIGQUdtkcX5Xi/qGfjLHVj+d0S1IkkUHqeKS/Kv/ISPCpJCLMRjfsED3LO+Uw3hJOu0znZy6xP8pkMUeV718NAPVCTAU1LqdgHO/hTJxZgDc0lJcjd4IeFYlwxJNugG3IdwNKrjK8Q+LVw2KI0jDs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=FVBVZkkO; arc=none smtp.client-ip=198.175.65.10
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1783353034; x=1814889034;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:content-transfer-encoding:in-reply-to;
+  bh=of6d9n1ZVp2VvNBWbeQxrIvJaxz8Dqo4F/lZHKvIDzs=;
+  b=FVBVZkkO81v97qwqgXdQoZ5BtTEZSn8hptdpl5+zhp69DG8Wc7HTqCA0
+   Iua/lgzHUpOHNX2O5GBppmUYF1PiPf69sOaB8Ow4GlK1ag6lLh9zEg8pF
+   3VKtX/orEhXlCgZIM6AVkaFJHxZaFunveVf1rFI+fQqXnttQ54x0cVXY3
+   PlohclVweXpZXa4qC4hRMfljkSLzo1HoC+VphEFD4spHrYIS29LmWh30o
+   NBG1HLrivq2LD58UeKk3qVdcS1nUHVpnKz1s+8OtrxC2NoD4y3qJ8HZ/f
+   mX/u9zXsoPrcTEQjyYz7zOPXp9EpFEYt2ZjDbFgjEYiqZ9otPaMD0rKrP
+   Q==;
+X-CSE-ConnectionGUID: 8j/Cz05nRiy7iG5juUwfJg==
+X-CSE-MsgGUID: 6WJR7CnASM+iSX97cI0Y7Q==
+X-IronPort-AV: E=McAfee;i="6800,10657,11838"; a="101408853"
+X-IronPort-AV: E=Sophos;i="6.25,149,1779174000"; 
+   d="scan'208";a="101408853"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Jul 2026 08:50:32 -0700
+X-CSE-ConnectionGUID: NvB5N+KWQv+u1kUJ01a6bg==
+X-CSE-MsgGUID: ST8IrUj4Qs29+PTwG4IXGQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.25,149,1779174000"; 
+   d="scan'208";a="283836189"
+Received: from vpanait-mobl.ger.corp.intel.com (HELO localhost) ([10.245.244.48])
+  by orviesa002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Jul 2026 08:50:18 -0700
+Date: Mon, 6 Jul 2026 18:49:55 +0300
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: Manuel Ebner <manuelebner@mailbox.org>, Mark Brown <broonie@kernel.org>
+Cc: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Lee Jones <lee@kernel.org>,
+	Thierry Reding <thierry.reding@avionic-design.de>,
+	Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
+	Andrew Lunn <andrew+netdev@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Srinivas Kandagatla <srini@kernel.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Vinod Koul <vkoul@kernel.org>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Danilo Krummrich <dakr@kernel.org>, Rob Herring <robh@kernel.org>,
+	Saravana Kannan <saravanak@kernel.org>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
+	Andi Shyti <andi.shyti@kernel.org>, Joerg Roedel <joro@8bytes.org>,
+	Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+	Doug Berger <opendmb@gmail.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
+	Ulf Hansson <ulfh@kernel.org>, Frank Li <Frank.Li@nxp.com>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Thomas =?iso-8859-1?Q?Hellstr=F6m?= <thomas.hellstrom@linux.intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+	Peter Chen <peter.chen@kernel.org>,
+	Paul Cercueil <paul@crapouillou.net>, Bin Liu <b-liu@ti.com>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Maximilian Luz <luzmaximilian@gmail.com>,
+	Hans de Goede <hansg@kernel.org>,
+	Ilpo =?iso-8859-1?Q?J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Benjamin Herrenschmidt <benh@kernel.crashing.org>, brgl@kernel.org,
+	linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org,
+	driver-core@lists.linux.dev, devicetree@vger.kernel.org,
+	linuxppc-dev@lists.ozlabs.org, linux-i2c@vger.kernel.org,
+	iommu@lists.linux.dev, linux-pm@vger.kernel.org,
+	imx@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
+	intel-xe@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+	linux-usb@vger.kernel.org, linux-mips@vger.kernel.org,
+	platform-driver-x86@vger.kernel.org, mfd@lists.linux.dev
+Subject: Re: [PATCH v3 02/20] driver core: platform: provide
+ platform_device_set_of_node()
+Message-ID: <akvOo2EeERLYPh72@ashevche-desk.local>
+References: <20260706-pdev-fwnode-ref-v3-0-1ff028e33779@oss.qualcomm.com>
+ <20260706-pdev-fwnode-ref-v3-2-1ff028e33779@oss.qualcomm.com>
+ <fbc50f89e0c3bb148656a3b8d96974f591576dec.camel@mailbox.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-B4-Tracking: v=1; b=H4sIAKLOS2oC/23OwQrCMAyA4VcZPdvRxtFaT76HeOiyzBW2VVst6
- ti72+0iwi6BP5CPTCxScBTZsZhYoOSi82OO/a5g2NnxStw1uRkIUEKB4YMfP5b31ESOYIDUAY2
- tDMsHt0Cte63Y+ZK7c/Hhw3u1k1y2m0ySXHCBrUZhdYOyOvkYy/vT9uiHocyDLVqCn6CF/BMgC
- yhrEnWl81NqQ5jn+QuyeL3c7QAAAA==
-X-Change-ID: 20260629-monza-leds-c292e68c9a49
-To: Lee Jones <lee@kernel.org>, Pavel Machek <pavel@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Loic Poulain <loic.poulain@oss.qualcomm.com>,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-X-Mailer: b4 0.14.2
-X-Proofpoint-ORIG-GUID: 2HDovp5Hd9TotKnBpt3HDMGe3ZGCkcc4
-X-Authority-Analysis: v=2.4 cv=Hv1G3UTS c=1 sm=1 tr=0 ts=6a4bcea8 cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22 a=VwQbUJbxAAAA:8
- a=EUspDBNiAAAA:8 a=yzvYhh2-rlWI4r5pe9MA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=bTQJ7kPSJx9SKPbeHEYW:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA2MDE2MSBTYWx0ZWRfX3xUf1rL7LKx+
- 1oMdBCq7jojm/TRYywOVVVMUJn+JZAFMJGdH+zVuRB5Yyn6xdZA7s0Dofpap4/nYBeBv1h0i4IV
- ckfm75SZlkXttnEVXPQLX94xyp/Inek=
-X-Proofpoint-GUID: 2HDovp5Hd9TotKnBpt3HDMGe3ZGCkcc4
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA2MDE2MSBTYWx0ZWRfXz3KyDVDGN0s0
- zdJfU06Su0U+4Hbt626i2qdQJKYAvNF+cOc4HVWhYkbv37KWbLXLvWRyXJVaKZvMTCwp8RthE+4
- qldH7RedQH+2YrYLDGWw8oZUtG/y/ZCH6c8T1S6FDoKLA8z0KBclD+hAK8TqQVu5P6YH/RNVD3H
- 4uajl/4fKqDDenhlL6+9Epg6DMJ3AnCOrxBDaExtw1Iw8C7fSQEAkJ3Qn0Ekm4NDr+7uozzLPHD
- QiP1hhh7eW+cpPjMBTIKKV2j3m0XjfKiZ9utUyzHMN6jYHBwwSHa+2HFE9FwucUu4dZHZm1sp5U
- t8qIEcgppuYqrkYN9bN92KKktm4X/vVNw4Qa2xSaqVd+1y5+nBqMZAT11XdfLkXX8b5xlHQyFD/
- iQlrCOIhndM4/npbUSMQjh2RrHqZAecZx0Io5szzRlhk7gXElnoDuoIWH1KVOfS6W/0SeWz6cu+
- xdHjrlPkQheM32yEMzA==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-06_02,2026-07-06_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 suspectscore=0 malwarescore=0 adultscore=0 priorityscore=1501
- spamscore=0 bulkscore=0 clxscore=1015 lowpriorityscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607060161
+In-Reply-To: <fbc50f89e0c3bb148656a3b8d96974f591576dec.camel@mailbox.org>
+Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
+ krs, Bertel Jungin Aukio 5, 02600 Espoo
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-3.66 / 15.00];
+	WHITELIST_SPF_DKIM(-3.00)[intel.com:d:+,kernel.org:s:+];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	DMARC_POLICY_ALLOW(-0.50)[intel.com,none];
+	R_DKIM_ALLOW(-0.20)[intel.com:s=Intel];
 	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-116943-lists,linux-arm-msm=lfdr.de];
-	RCPT_COUNT_TWELVE(0.00)[15];
-	MIME_TRACE(0.00)[0:+];
-	RCVD_TLS_LAST(0.00)[];
-	FORWARDED(0.00)[lists@lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:lee@kernel.org,m:pavel@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:laurent.pinchart@ideasonboard.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:linux-leds@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:loic.poulain@oss.qualcomm.com,m:konrad.dybcio@oss.qualcomm.com,m:dmitry.baryshkov@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_SENDER(0.00)[loic.poulain@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:from_mime,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,vger.kernel.org:from_smtp,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,qualcomm.com:email,qualcomm.com:dkim];
+	TAGGED_FROM(0.00)[bounces-116948-lists,linux-arm-msm=lfdr.de];
 	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[loic.poulain@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	RCVD_TLS_LAST(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	FORWARDED(0.00)[lists@lfdr.de];
+	HAS_ORG_HEADER(0.00)[];
+	FORGED_SENDER(0.00)[andriy.shevchenko@linux.intel.com,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_CC(0.00)[oss.qualcomm.com,kernel.org,avionic-design.de,gmail.com,lunn.ch,davemloft.net,google.com,redhat.com,linuxfoundation.org,linux.ibm.com,ellerman.id.au,8bytes.org,arm.com,broadcom.com,nxp.com,pengutronix.de,intel.com,linux.intel.com,ffwll.ch,crapouillou.net,ti.com,kernel.crashing.org,vger.kernel.org,lists.linux.dev,lists.ozlabs.org,lists.infradead.org,lists.freedesktop.org];
+	FORGED_RECIPIENTS(0.00)[m:manuelebner@mailbox.org,m:broonie@kernel.org,m:bartosz.golaszewski@oss.qualcomm.com,m:lee@kernel.org,m:thierry.reding@avionic-design.de,m:sebastian.hesselbarth@gmail.com,m:andrew+netdev@lunn.ch,m:davem@davemloft.net,m:edumazet@google.com,m:kuba@kernel.org,m:pabeni@redhat.com,m:srini@kernel.org,m:gregkh@linuxfoundation.org,m:vkoul@kernel.org,m:rafael@kernel.org,m:dakr@kernel.org,m:robh@kernel.org,m:saravanak@kernel.org,m:maddy@linux.ibm.com,m:mpe@ellerman.id.au,m:npiggin@gmail.com,m:chleroy@kernel.org,m:andi.shyti@kernel.org,m:joro@8bytes.org,m:will@kernel.org,m:robin.murphy@arm.com,m:opendmb@gmail.com,m:florian.fainelli@broadcom.com,m:bcm-kernel-feedback-list@broadcom.com,m:ulfh@kernel.org,m:Frank.Li@nxp.com,m:s.hauer@pengutronix.de,m:kernel@pengutronix.de,m:festevam@gmail.com,m:matthew.brost@intel.com,m:thomas.hellstrom@linux.intel.com,m:rodrigo.vivi@intel.com,m:airlied@gmail.com,m:simona@ffwll.ch,m:peter.chen@kernel.org,m:paul@crapouillou.net,m:b-liu@ti.c
+ om,m:p.zabel@pengutronix.de,m:luzmaximilian@gmail.com,m:hansg@kernel.org,m:ilpo.jarvinen@linux.intel.com,m:krzk@kernel.org,m:benh@kernel.crashing.org,m:brgl@kernel.org,m:linux-kernel@vger.kernel.org,m:netdev@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-sound@vger.kernel.org,m:driver-core@lists.linux.dev,m:devicetree@vger.kernel.org,m:linuxppc-dev@lists.ozlabs.org,m:linux-i2c@vger.kernel.org,m:iommu@lists.linux.dev,m:linux-pm@vger.kernel.org,m:imx@lists.linux.dev,m:linux-arm-kernel@lists.infradead.org,m:intel-xe@lists.freedesktop.org,m:dri-devel@lists.freedesktop.org,m:linux-usb@vger.kernel.org,m:linux-mips@vger.kernel.org,m:platform-driver-x86@vger.kernel.org,m:mfd@lists.linux.dev,m:sebastianhesselbarth@gmail.com,m:andrew@lunn.ch,s:lists@lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	ALIAS_RESOLVED(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[andriy.shevchenko@linux.intel.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[intel.com:+];
+	RCPT_COUNT_GT_50(0.00)[67];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCVD_COUNT_SEVEN(0.00)[7]
+	MISSING_XM_UA(0.00)[];
+	ALIAS_RESOLVED(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm,netdev];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[intel.com:dkim,vger.kernel.org:from_smtp,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,linux.intel.com:from_mime,ashevche-desk.local:mid]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 8D9617133FC
+X-Rspamd-Queue-Id: 85FA67132A3
 
-Some devices use PCA963x controllers to drive RGB LEDs, where
-multiple PWM channels correspond to a single logical LED. Add
-support for grouping such channels into a multicolor LED device,
-using the LED multicolor class framework.
+On Mon, Jul 06, 2026 at 04:39:00PM +0200, Manuel Ebner wrote:
+> On Mon, 2026-07-06 at 14:44 +0200, Bartosz Golaszewski wrote:
 
-The DT bindings are extended to describe these groupings via a
-multi-led@N node with sub-nodes representing individual color
-channels. This follows conventions used by other multicolor LED
-drivers, while maintaining full backward compatibility with
-existing single-color LED definitions.
+> I removed Mark Brown <broonie@opensource.wolfsonmicro.com> from recipients because:
+> “RCPT TO <broonie@opensource.wolfsonmicro.com> failed:
+> <broonie@opensource.wolfsonmicro.com>: Recipient address rejected: Domain not found”.
 
-The PCA963x driver is updated accordingly to detect these grouped
-definitions and register multicolor LEDs.
+Perhaps he needs to send a patch to update .mailmap?
+Cc'ed to Mark.
 
-Finally, the Monaco Arduino Monza device tree is updated to expose
-the onboard MCU-controlled LEDs (compatible with PCA9635). The MCU
-manages four RGB LEDs mapped to channels 0–11, which are described
-using the new multicolor bindings.
-
-Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
----
-Changes in v3:
-- Add color to required multi-color leds (sashiko/Conor)
-- Bounded registers value for nested led subnodes (sashiko/Conor)
-- Add fix for PCA6535 reg limit (extend it to spec)
-- Link to v2: https://lore.kernel.org/r/20260701-monza-leds-v2-0-c1be0b472926@oss.qualcomm.com
-
-Changes in v2:
-Changes in v2:
-- bindings: Reworded commit message to explain the motivation (Krzysztof)
-- bindings: Kept the "^led@..." pattern and modeled multicolor groups
-  via a dedicated "^multi-led@..." subtree.
-- dts: Renamed node from "leds-controller@22" to "led-controller@22"
-  and dropped the unused label. (Konrad).
-- dts: Moved "reg" to directly follow "compatible" (Konrad).
-- dts: Fixed unit addresses to lowercase hex (sashiko).
-- Fixed checkpatch issues
-- Link to v1: https://lore.kernel.org/r/20260629-monza-leds-v1-0-0cf7c0a7dc14@oss.qualcomm.com
-
----
-Loic Poulain (4):
-      dt-bindings: leds: nxp,pca963x: fix reg maximum for pca9635
-      dt-bindings: leds: nxp,pca963x: add multicolor LED support
-      leds: pca963x: add multicolor LED class support
-      arm64: dts: monaco-arduino-monza: microcontroller LEDs
-
- .../devicetree/bindings/leds/nxp,pca963x.yaml      | 116 ++++++++++++++++++-
- arch/arm64/boot/dts/qcom/monaco-arduino-monza.dts  | 110 ++++++++++++++++++
- drivers/leds/Kconfig                               |   1 +
- drivers/leds/leds-pca963x.c                        | 126 ++++++++++++++++++---
- 4 files changed, 333 insertions(+), 20 deletions(-)
----
-base-commit: dc59e4fea9d83f03bad6bddf3fa2e52491777482
-change-id: 20260629-monza-leds-c292e68c9a49
-
-Best regards,
 -- 
-Loic Poulain <loic.poulain@oss.qualcomm.com>
+With Best Regards,
+Andy Shevchenko
+
 
 
