@@ -1,252 +1,208 @@
-Return-Path: <linux-arm-msm+bounces-116902-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-116903-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id KwR4KQvQS2rwagEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-116902-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Jul 2026 17:55:55 +0200
+	id 0ag2E5vLS2qpaQEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-116903-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Jul 2026 17:36:59 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 07FEE712E0A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Jul 2026 17:55:55 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 62DCA712AFF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Jul 2026 17:36:58 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=mailbox.org header.s=mail20150812 header.b=j5hgDtth;
-	dmarc=pass (policy=reject) header.from=mailbox.org;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116902-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116902-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=Ko24b0pF;
+	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=ZwYAsrkg;
+	dmarc=pass (policy=reject) header.from=qualcomm.com;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116903-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c15:e001:75::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116903-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 6A8E2395748E
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jul 2026 14:41:48 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 58CBB31B9439
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jul 2026 14:42:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 469FA432BE0;
-	Mon,  6 Jul 2026 14:39:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B76C340A953;
+	Mon,  6 Jul 2026 14:39:43 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mout-p-102.mailbox.org (mout-p-102.mailbox.org [80.241.56.152])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 465A13FE369;
-	Mon,  6 Jul 2026 14:39:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61AD4416132
+	for <linux-arm-msm@vger.kernel.org>; Mon,  6 Jul 2026 14:39:42 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783348776; cv=none; b=noxbZI1nrFuG780WPjI43f+AOHxt2wabmGYDWis5JA6mWxvGtO8yX3OhJTV6bMR7k09CE9x7SFTIAt1lhWScjG/9WLKlstD6aQdYxD1sQqoU5cH1Z6I90H6XZs9tx4qiSztflSoys0sdxp31S7yLpLsIBnAKAb5vbOuybcZ80Ho=
+	t=1783348783; cv=none; b=g5OMht7rLhsCWxeBAalFnRKxh6bRV05B/JEqNDWnV403pi1JUT8UuTeywGnvdsbtzjk0HHoZuoSyN7i0Dlt1lvY10D/mM+t5bXX9pcIPOwsRX32uykTEhkQ6l3Ug71J9/lu7pHj3HpReSzfr/9Nh4bNFfTuCNszu2Mxd+jrrwFw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783348776; c=relaxed/simple;
-	bh=XtbXxotRn4eonCuXI7S2La3x2DD6roUS8w7lR6Aocns=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=lMdJJ2Iu67n4dpWr9NIE68p82Jgj5lM61GKlchI1pRPAfNOLddcgdu6ZN+qnXc2JSMwfEaPfcMxDaHaYNtd+k5CQ8ld4AaHZgA3gQoi/5A6SRzK3EGVObmBEw3zHyYppObiewBwo9QwOiAdyE2Vo00MMvXAuihGfLhZ38iO3PaM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org; spf=pass smtp.mailfrom=mailbox.org; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=j5hgDtth; arc=none smtp.client-ip=80.241.56.152
-Received: from smtp102.mailbox.org (smtp102.mailbox.org [IPv6:2001:67c:2050:b231:465::102])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA512)
-	(No client certificate requested)
-	by mout-p-102.mailbox.org (Postfix) with ESMTPS id 4gv6Sc3JlwzKrrB;
-	Mon, 06 Jul 2026 16:39:28 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
-	t=1783348768;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=PTWGfLdwlWAV/LMkx8q6n+16+BLtwX+Uw6eFuSY1pwE=;
-	b=j5hgDtthz8XCNdelXgr2Njc2HaTruqIkCO//JWKxiT4W2gEybWyIlcK2aQ1bxIe+BwUJVp
-	sosZFgtgjTYiKegpajhDS7wAQRa5vbGhsdYsOBErEWcCcj6imJ3WhTyng3CLWaw/u/6S/u
-	Ia++ekOByRWNtL6C0p1KPkAMQ78opS9K6p4731SNIh3G/Gtr0smcjJ5LSbWseUhYMLmi5g
-	bSnkIEWLW+D0H8udCi/rtV6GiUxmmd3h/zBT1zxIEz9pUZOsZhePq4tVuE6vy2STKylPsN
-	pNYuSZntPPijS4W0+CuI8ZBjLVluSsSHTtbS9e6dlXfCM6eF2pFoZi1CDk9EnQ==
-Message-ID: <fbc50f89e0c3bb148656a3b8d96974f591576dec.camel@mailbox.org>
-Subject: Re: [PATCH v3 02/20] driver core: platform: provide
- platform_device_set_of_node()
-From: Manuel Ebner <manuelebner@mailbox.org>
-To: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>, Lee Jones	
- <lee@kernel.org>, Thierry Reding <thierry.reding@avionic-design.de>, 
- Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>, Andrew Lunn
- <andrew+netdev@lunn.ch>, "David S. Miller"	 <davem@davemloft.net>, Eric
- Dumazet <edumazet@google.com>, Jakub Kicinski	 <kuba@kernel.org>, Paolo
- Abeni <pabeni@redhat.com>, Srinivas Kandagatla	 <srini@kernel.org>, Greg
- Kroah-Hartman <gregkh@linuxfoundation.org>, Vinod Koul	 <vkoul@kernel.org>,
- "Rafael J. Wysocki" <rafael@kernel.org>, Danilo Krummrich	
- <dakr@kernel.org>, Rob Herring <robh@kernel.org>, Saravana Kannan	
- <saravanak@kernel.org>, Madhavan Srinivasan <maddy@linux.ibm.com>, Michael
- Ellerman <mpe@ellerman.id.au>, Nicholas Piggin <npiggin@gmail.com>,
- "Christophe Leroy (CS GROUP)"	 <chleroy@kernel.org>, Andi Shyti
- <andi.shyti@kernel.org>, Andy Shevchenko	
- <andriy.shevchenko@linux.intel.com>, Joerg Roedel <joro@8bytes.org>, Will
- Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>, Doug Berger
- <opendmb@gmail.com>,  Florian Fainelli <florian.fainelli@broadcom.com>,
- Broadcom internal kernel review list	
- <bcm-kernel-feedback-list@broadcom.com>, Ulf Hansson <ulfh@kernel.org>, 
- Frank Li <Frank.Li@nxp.com>, Sascha Hauer <s.hauer@pengutronix.de>,
- Pengutronix Kernel Team	 <kernel@pengutronix.de>, Fabio Estevam
- <festevam@gmail.com>, Matthew Brost	 <matthew.brost@intel.com>, Thomas
- =?ISO-8859-1?Q?Hellstr=F6m?=	 <thomas.hellstrom@linux.intel.com>, Rodrigo
- Vivi <rodrigo.vivi@intel.com>,  David Airlie <airlied@gmail.com>, Simona
- Vetter <simona@ffwll.ch>, Peter Chen <peter.chen@kernel.org>,  Paul
- Cercueil <paul@crapouillou.net>, Bin Liu <b-liu@ti.com>, Philipp Zabel
- <p.zabel@pengutronix.de>,  Maximilian Luz <luzmaximilian@gmail.com>, Hans
- de Goede <hansg@kernel.org>, Ilpo =?ISO-8859-1?Q?J=E4rvinen?=	
- <ilpo.jarvinen@linux.intel.com>, Krzysztof Kozlowski <krzk@kernel.org>, 
- Benjamin Herrenschmidt <benh@kernel.crashing.org>
-Cc: brgl@kernel.org, linux-kernel@vger.kernel.org, netdev@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org, 
-	driver-core@lists.linux.dev, devicetree@vger.kernel.org, 
-	linuxppc-dev@lists.ozlabs.org, linux-i2c@vger.kernel.org,
- iommu@lists.linux.dev, 	linux-pm@vger.kernel.org, imx@lists.linux.dev, 
-	linux-arm-kernel@lists.infradead.org, intel-xe@lists.freedesktop.org, 
-	dri-devel@lists.freedesktop.org, linux-usb@vger.kernel.org, 
-	linux-mips@vger.kernel.org, platform-driver-x86@vger.kernel.org, 
-	mfd@lists.linux.dev
-Date: Mon, 06 Jul 2026 16:39:00 +0200
-In-Reply-To: <20260706-pdev-fwnode-ref-v3-2-1ff028e33779@oss.qualcomm.com>
-References: <20260706-pdev-fwnode-ref-v3-0-1ff028e33779@oss.qualcomm.com>
-	 <20260706-pdev-fwnode-ref-v3-2-1ff028e33779@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+	s=arc-20240116; t=1783348783; c=relaxed/simple;
+	bh=v/r/WqLZEOFyAMYQx4rralUtoGfSDfJuZ6bjDMVoL/4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZY0v1g3SBKCh0Pi7BqevIYGr47QSeFbOJxT61fWXsjDm0L3pHOPBbXIYHDP2yCCYqgJh3AH2sDMVFVDaXc7jDedAtPO8z0bnk4Z+gq34QCygx5Oa6DfnKtXMVt1dSor/ylyeHR4yXDUBC3u7dc57wBjHSDWF2DEF3KlPMwDqlAE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Ko24b0pF; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=ZwYAsrkg; arc=none smtp.client-ip=205.220.168.131
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 666EDsfN810630
+	for <linux-arm-msm@vger.kernel.org>; Mon, 6 Jul 2026 14:39:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=VEz5SR4P6MGHr8FEm9V24BJ/
+	fL5kDCBLdYNsiYU+fAg=; b=Ko24b0pFQ71GsCvA+R8QJ7d8YA4SgN6xcO+NiAAz
+	ObmFn3kMSm9+C5gUOzLEChqAnS/JBdtAe+AIIdzdQzYBDzH4eDOByNVWEbLlvQLi
+	Bsqqp0BYH78cJKUaE+hLbO2tsrzdZMtAUBz/nap3o1TiL/+yAGv5UnY2T7ePl1Ic
+	iUi+ybm2xa/vE9uCOrNM1qdqJQ9OvSkVFTJyM6HY+nGu/FvDtJwoIfWhYHAImPTz
+	3HYze1uoUkqzuamD5UG3jLB91BOjcDwuN9et1HC8RHn7MsnbEFawix5TeqoLnv2v
+	bTTBdNrG0bZw/y7vvfS0kEmwVizQnoNZ0SN4IXighlFR0g==
+Received: from mail-vk1-f199.google.com (mail-vk1-f199.google.com [209.85.221.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f891usgmm-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 06 Jul 2026 14:39:41 +0000 (GMT)
+Received: by mail-vk1-f199.google.com with SMTP id 71dfb90a1353d-5bd7905b135so707011e0c.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Jul 2026 07:39:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1783348781; x=1783953581; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=VEz5SR4P6MGHr8FEm9V24BJ/fL5kDCBLdYNsiYU+fAg=;
+        b=ZwYAsrkgw6L8XfvJ72meKLXNelzntI/pi1/uBQ1usXkcZJEnmDNl7YA0U+zOs2IWCy
+         lbDMXYVLJmJkCP4dU482oJ/sHJPKGeX4GWwCdzKalZqa9D9YmBWQnnqAF4+i5oWvyg6I
+         yqBwJEMy3okl+a67OlFWSnLirqpvyYGpdPjobMzWrA4/JYyvKsBtyhUupBlDCIcje+MJ
+         +AV0uC/3Lf9z6KuyAMf1SnPT7ryu1ZD4X/Cj0TaDPfbzhNhvoZe2Pf9hobwP3uIpH8bS
+         4t0DY3xd53bU0cZlZtnwJAXSLGCHWOYsfrYadRWGqllOx0dFEgvHZAmeP7NB2NXXlIGQ
+         3zjg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783348781; x=1783953581;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=VEz5SR4P6MGHr8FEm9V24BJ/fL5kDCBLdYNsiYU+fAg=;
+        b=dtMvQYZf67bZTmie+LI+LYKTY3esjbLXXLqyikQCRluptAR4B/UUqdfBhLE6mODYVU
+         PYWvxyWHNWI5J6UWvj8+5gXNWzO9szExrtPoT764v0CBWyoHXJo46km/S44U17A14OYN
+         5eG+AvFzMz1wX2W49XnjqlpBTVYGQAKH01htpxRKl3tblHNALaVp43NnFgST318i7XK4
+         YnS/DOzYJZSV/Zp5gwG8vAbcK35o97N2nf08N/ILelHOJQjRW6taxlattY55AgXaJsgx
+         uwQKJNrKUQbdDkV0+HNqb3h3XdAS49o0WwBTNYgB0CcEUfGQhmrrx85hGrfWktIm/AmD
+         06Yw==
+X-Forwarded-Encrypted: i=1; AHgh+RqDiIOyKyiAqdFyQEl3yQg77HyyXmJgUMnprfgZ0NrOY1UjaObAjspM/Hn1DY3o36t7Eo5CDOj4g2Dnf8dX@vger.kernel.org
+X-Gm-Message-State: AOJu0YygCJB/pfKOHUGKTUXlCq6BaMAKnIwzXH/Km2RaovvWIdi+cUaP
+	3sPtP0iDMIbify3NIf2/z6Du5hyIvmiDlBaVjvMubcHsLiQmodWuTFHb24x8ZPl19ew6wNeO0Hg
+	WQjq/twoQCujc1n1SWpHWIx0O7UNiXHE1I7eYonAthWALxRGkZ51p8Gyn0cGwgM8vLPDU
+X-Gm-Gg: AfdE7ckOkBFzBIOVdFqrY8Xa4MrL6RjU/h2VR65/dR5CZGMQvU5qgmXkiNT2qSynHTm
+	XqB1uNr/VlE3/vUFdVzPZVAjIDnsVsLB5/BIQYb0Xl1KqL7p9k82OXMuEJ1bWnKuEwJ4wF/kJOv
+	m73k1bfGHMBOHvUBqCc+ckWLu/BvzZHq/pFuQTCWzA8kyVZMleg8/K8pq15U9n25Tr7GOPvUhYh
+	9fK9GmTwRdYSDLi5lutVs3avPi+njLVJLBVaQJo/FY70StZ0hj/svLR4nEa33zNJV5d2xJ3BVFT
+	iDKyJA/2xPZO0lQExjdUhYrg1e+V1ydfQzgJezS/YKJeUs5SEQUIG/EODaZBBAK2LwZISCEnZfD
+	LR3r9dbtG/LaQRCBnFhw6D5QrtRlW1jh3i19LXT9KCXmwRc+h3+bp3nZx6Mecz1zkTAjooxf6Vx
+	MxMwV9wdvwa6adMr477oMrAC0l
+X-Received: by 2002:a05:6122:8288:b0:5bd:9f23:a74b with SMTP id 71dfb90a1353d-5be9085aab6mr473113e0c.9.1783348780744;
+        Mon, 06 Jul 2026 07:39:40 -0700 (PDT)
+X-Received: by 2002:a05:6122:8288:b0:5bd:9f23:a74b with SMTP id 71dfb90a1353d-5be9085aab6mr473088e0c.9.1783348780248;
+        Mon, 06 Jul 2026 07:39:40 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5aed13bbbbbsm2906428e87.43.2026.07.06.07.39.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 06 Jul 2026 07:39:38 -0700 (PDT)
+Date: Mon, 6 Jul 2026 17:39:37 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Taniya Das <taniya.das@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Brian Masney <bmasney@redhat.com>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Jagadeesh Kona <quic_jkona@quicinc.com>,
+        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+        Ajit Pandey <ajit.pandey@oss.qualcomm.com>,
+        Imran Shaik <imran.shaik@oss.qualcomm.com>,
+        Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 3/4] clk: qcom: videocc-nord: Add video clock controller
+ driver for Nord
+Message-ID: <6pecwkpvl4inltqzy24hbhouuz3e4hss477xy3ce6zldk6qcvg@4vnvqxykmio5>
+References: <20260706-nord_videocc_camcc-v1-0-bae3be9e9770@oss.qualcomm.com>
+ <20260706-nord_videocc_camcc-v1-3-bae3be9e9770@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MBO-RS-ID: ca569d00ad7df478929
-X-MBO-RS-META: 1q71yutefcf1nyjzwoom4gu47fi8rss3
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260706-nord_videocc_camcc-v1-3-bae3be9e9770@oss.qualcomm.com>
+X-Proofpoint-GUID: zsMHQy_81xvh4H_pm09TBNkEwqrTNvLT
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA2MDE0OSBTYWx0ZWRfX9zGp2JHVvL82
+ 2WcMWD4pX5cfI4NKKVAZ6i1UtHQGh0Lp0cTrjbrrtljsazCmHID2rfjrSuCwjOeE8RlJGAwpcrY
+ YkTYHVtsNM2syb25QGDx0hMlKOjBhUE=
+X-Authority-Analysis: v=2.4 cv=Mo1iLWae c=1 sm=1 tr=0 ts=6a4bbe2d cx=c_pps
+ a=+D9SDfe9YZWTjADjLiQY5g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22 a=EUspDBNiAAAA:8
+ a=d7ClhsmVZ3m4v3ji_18A:9 a=CjuIK1q_8ugA:10 a=vmgOmaN-Xu0dpDh8OwbV:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA2MDE0OSBTYWx0ZWRfX1+UchOAEj+na
+ k+aABDyBqqol17MqurfXAsmWCl6BY4NXDZEgIthnDCD4hkdYYW+LZnDWJHe0cMZYJMdwawHQPP6
+ GFRQtbvzEzvs1tww0Y+CqpwFwnCgLzx/9AfwamGVbHILBeUvOjctzGMzU9+FdJiohcATiyLGFU0
+ BPyvyOhiQ6Ciqq286hMCaW6EdA0g/6hXoSXvKtTUBM2LxHxwbd13VsbbT5f+bFGr7d7syvXVs8q
+ MWY4KPgxWlrDRtxdQmnFqT59f2qCPKni50i9WshTjsP6Ehmo+XmVuFTD2hnWsq0H7O6l2Iz5JzA
+ aJUtKzlqxfDDR+Us5BWofK1s5U93HMx2JtWH8Ic2msPJWnB2adZBzah1E8BaPH7hAe7NmmVXRDZ
+ 0wSMC+OtD4ObaSUEH6/TeuqMOuNYpSQ7Fy1k9+PPQsgWyQvL6jV+ChKwFwUqUY/dBm5hzOPVMvX
+ zDoJuTJI9eUG9EFjkQg==
+X-Proofpoint-ORIG-GUID: zsMHQy_81xvh4H_pm09TBNkEwqrTNvLT
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-06_01,2026-07-06_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 impostorscore=0 bulkscore=0 adultscore=0 priorityscore=1501
+ suspectscore=0 spamscore=0 phishscore=0 lowpriorityscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607060149
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-0.66 / 15.00];
+X-Spamd-Result: default: False [-0.16 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[mailbox.org,reject];
-	R_DKIM_ALLOW(-0.20)[mailbox.org:s=mail20150812];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-116902-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FORWARDED(0.00)[lists@lfdr.de];
+	TAGGED_FROM(0.00)[bounces-116903-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[17];
+	FORGED_SENDER(0.00)[dmitry.baryshkov@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_SENDER(0.00)[manuelebner@mailbox.org,linux-arm-msm@vger.kernel.org];
-	FREEMAIL_TO(0.00)[oss.qualcomm.com,kernel.org,avionic-design.de,gmail.com,lunn.ch,davemloft.net,google.com,redhat.com,linuxfoundation.org,linux.ibm.com,ellerman.id.au,linux.intel.com,8bytes.org,arm.com,broadcom.com,nxp.com,pengutronix.de,intel.com,ffwll.ch,crapouillou.net,ti.com,kernel.crashing.org];
-	FORGED_RECIPIENTS(0.00)[m:bartosz.golaszewski@oss.qualcomm.com,m:lee@kernel.org,m:thierry.reding@avionic-design.de,m:sebastian.hesselbarth@gmail.com,m:andrew+netdev@lunn.ch,m:davem@davemloft.net,m:edumazet@google.com,m:kuba@kernel.org,m:pabeni@redhat.com,m:srini@kernel.org,m:gregkh@linuxfoundation.org,m:vkoul@kernel.org,m:rafael@kernel.org,m:dakr@kernel.org,m:robh@kernel.org,m:saravanak@kernel.org,m:maddy@linux.ibm.com,m:mpe@ellerman.id.au,m:npiggin@gmail.com,m:chleroy@kernel.org,m:andi.shyti@kernel.org,m:andriy.shevchenko@linux.intel.com,m:joro@8bytes.org,m:will@kernel.org,m:robin.murphy@arm.com,m:opendmb@gmail.com,m:florian.fainelli@broadcom.com,m:bcm-kernel-feedback-list@broadcom.com,m:ulfh@kernel.org,m:Frank.Li@nxp.com,m:s.hauer@pengutronix.de,m:kernel@pengutronix.de,m:festevam@gmail.com,m:matthew.brost@intel.com,m:thomas.hellstrom@linux.intel.com,m:rodrigo.vivi@intel.com,m:airlied@gmail.com,m:simona@ffwll.ch,m:peter.chen@kernel.org,m:paul@crapouillou.net,m:b-liu@ti.com,m:p.zabe
- l@pengutronix.de,m:luzmaximilian@gmail.com,m:hansg@kernel.org,m:ilpo.jarvinen@linux.intel.com,m:krzk@kernel.org,m:benh@kernel.crashing.org,m:brgl@kernel.org,m:linux-kernel@vger.kernel.org,m:netdev@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-sound@vger.kernel.org,m:driver-core@lists.linux.dev,m:devicetree@vger.kernel.org,m:linuxppc-dev@lists.ozlabs.org,m:linux-i2c@vger.kernel.org,m:iommu@lists.linux.dev,m:linux-pm@vger.kernel.org,m:imx@lists.linux.dev,m:linux-arm-kernel@lists.infradead.org,m:intel-xe@lists.freedesktop.org,m:dri-devel@lists.freedesktop.org,m:linux-usb@vger.kernel.org,m:linux-mips@vger.kernel.org,m:platform-driver-x86@vger.kernel.org,m:mfd@lists.linux.dev,m:sebastianhesselbarth@gmail.com,m:andrew@lunn.ch,s:lists@lfdr.de];
-	FROM_HAS_DN(0.00)[];
+	FORWARDED(0.00)[lists@lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:taniya.das@oss.qualcomm.com,m:andersson@kernel.org,m:mturquette@baylibre.com,m:sboyd@kernel.org,m:bmasney@redhat.com,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:quic_jkona@quicinc.com,m:vladimir.zapolskiy@linaro.org,m:ajit.pandey@oss.qualcomm.com,m:imran.shaik@oss.qualcomm.com,m:jagadeesh.kona@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:linux-clk@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,oss.qualcomm.com:from_mime,oss.qualcomm.com:dkim,qualcomm.com:email,qualcomm.com:dkim,vger.kernel.org:from_smtp,4vnvqxykmio5:mid];
 	MISSING_XM_UA(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	RCPT_COUNT_GT_50(0.00)[66];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[manuelebner@mailbox.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[mailbox.org:+];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[dmitry.baryshkov@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	ALIAS_RESOLVED(0.00)[];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	TO_DN_SOME(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	TAGGED_RCPT(0.00)[linux-arm-msm,netdev];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,intel.com:email,vger.kernel.org:from_smtp,mailbox.org:from_mime,mailbox.org:email,mailbox.org:mid,mailbox.org:dkim]
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 07FEE712E0A
+X-Rspamd-Queue-Id: 62DCA712AFF
 
-Hi Bartosz,
-
-On Mon, 2026-07-06 at 14:44 +0200, Bartosz Golaszewski wrote:
-> Encapsulate the reference counting logic for OF nodes assigned to
-> platform devices created with platform_device_alloc() in a helper
-> function. Make the kerneldoc state that this is the proper interface for
-> assigning OF nodes to dynamically allocated platform devices. This will
-> allow us to switch to counting the references of the device's firmware
-> nodes, not only the OF nodes.
->=20
-> Reviewed-by: Manuel Ebner <manuelebner@mailbox.org>
-> Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+On Mon, Jul 06, 2026 at 02:27:15PM +0530, Taniya Das wrote:
+> Add support for the video clock controller for video clients to be able
+> to request for videocc clocks on Nord platform.
+> 
+> Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
 > ---
-> =C2=A0drivers/base/platform.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0 | 18 ++++++++++++++++++
-> =C2=A0include/linux/platform_device.h |=C2=A0 4 ++++
-> =C2=A02 files changed, 22 insertions(+)
->=20
-> diff --git a/drivers/base/platform.c b/drivers/base/platform.c
-> index fb9120b0bcfe0e7dd9dfc0d29b91e0ad40a01440..3188d5aba5f90622f821c6950=
-49cacda030204fb
-> 100644
-> --- a/drivers/base/platform.c
-> +++ b/drivers/base/platform.c
-> @@ -693,6 +693,24 @@ int platform_device_add_data(struct platform_device =
-*pdev, const
-> void *data,
-> =C2=A0}
-> =C2=A0EXPORT_SYMBOL_GPL(platform_device_add_data);
-> =C2=A0
-> +/**
-> + * platform_device_set_of_node - assign an OF node to device
-> + * @pdev: platform device to add the node for
-> + * @np: new device node
-> + *
-> + * Assign an OF node to this platform device. Internally keep track of t=
-he
-> + * reference count. Devices created with platform_device_alloc() must us=
-e this
-> + * function instead of assigning the node manually.
+>  drivers/clk/qcom/Kconfig        |  11 +
+>  drivers/clk/qcom/Makefile       |   1 +
+>  drivers/clk/qcom/videocc-nord.c | 507 ++++++++++++++++++++++++++++++++++++++++
+>  3 files changed, 519 insertions(+)
+> 
 
-I did some more pondering about this patch and concluded the right place
-for a warning would be the lines been read right before or after assigning
-a node manually.=20
-I think this would be in platform_device_alloc() (as I suggested in v2).
+This is almost the same as the Glymur one. Should it be unified?
 
-BUT my knowledge in C isn't sound. So if it's good as is keep it. If it isn=
-'t
-add or move the remark.
-
-Either way Thanks and
- Reviewed-by Manuel Ebner.
-
----
-Note:
-I removed Mark Brown <broonie@opensource.wolfsonmicro.com> from recipients =
-because:
-=E2=80=9CRCPT TO <broonie@opensource.wolfsonmicro.com> failed:
-<broonie@opensource.wolfsonmicro.com>: Recipient address rejected: Domain n=
-ot found=E2=80=9D.
-
-
-> + */
-> +void platform_device_set_of_node(struct platform_device *pdev,
-> +				 struct device_node *np)
-> +{
-> +	of_node_put(pdev->dev.of_node);
-> +	pdev->dev.of_node =3D of_node_get(np);
-> +	pdev->dev.fwnode =3D of_fwnode_handle(np);
-> +}
-> +EXPORT_SYMBOL_GPL(platform_device_set_of_node);
-> +
-> =C2=A0/**
-> =C2=A0 * platform_device_add - add a platform device to device hierarchy
-> =C2=A0 * @pdev: platform device we're adding
-> diff --git a/include/linux/platform_device.h b/include/linux/platform_dev=
-ice.h
-> index 8c566f09d04efe420d85ffa046f92c44c6d08526..e9f7baceeb4c8269dbc0143c4=
-d8fc9d73ba024ca
-> 100644
-> --- a/include/linux/platform_device.h
-> +++ b/include/linux/platform_device.h
-> @@ -19,6 +19,8 @@
-> =C2=A0struct irq_affinity;
-> =C2=A0struct mfd_cell;
-> =C2=A0struct property_entry;
-> +struct platform_device_id;
-> +struct device_node;
-> =C2=A0
-> =C2=A0struct platform_device {
-> =C2=A0	const char	*name;
-> @@ -262,6 +264,8 @@ extern int platform_device_add_resources(struct platf=
-orm_device
-> *pdev,
-> =C2=A0					 unsigned int num);
-> =C2=A0extern int platform_device_add_data(struct platform_device *pdev,
-> =C2=A0				=C2=A0=C2=A0=C2=A0 const void *data, size_t size);
-> +void platform_device_set_of_node(struct platform_device *pdev,
-> +				 struct device_node *np);
-> =C2=A0extern int platform_device_add(struct platform_device *pdev);
-> =C2=A0extern void platform_device_del(struct platform_device *pdev);
-> =C2=A0extern void platform_device_put(struct platform_device *pdev);
+-- 
+With best wishes
+Dmitry
 
