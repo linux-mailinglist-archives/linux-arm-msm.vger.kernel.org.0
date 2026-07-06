@@ -1,86 +1,85 @@
-Return-Path: <linux-arm-msm+bounces-116922-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-116923-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id FcOVLbnfS2pjbwEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-116922-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Jul 2026 19:02:49 +0200
+	id KZrDN+PIS2rYaAEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-116923-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Jul 2026 17:25:23 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 14613713A43
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Jul 2026 19:02:49 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id B5EA97128B5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Jul 2026 17:25:23 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=linaro.org header.s=google header.b=DhPwOJ0z;
+	dkim=pass header.d=linaro.org header.s=google header.b=nVft5dIY;
 	dmarc=pass (policy=none) header.from=linaro.org;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116922-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116922-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116923-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.232.135.74 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116923-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 291AA3406E21
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jul 2026 15:04:33 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 6C131310823E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jul 2026 15:04:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 58B6939A04A;
-	Mon,  6 Jul 2026 15:03:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D89323A6B70;
+	Mon,  6 Jul 2026 15:03:04 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23FFC38AC8C
-	for <linux-arm-msm@vger.kernel.org>; Mon,  6 Jul 2026 15:03:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D29C38239D
+	for <linux-arm-msm@vger.kernel.org>; Mon,  6 Jul 2026 15:03:02 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783350183; cv=none; b=kLO7KZFqPMbo4jZq7DcOwVg1G+5ajLsu4h+okZIS18BYynxjWX47mGfsAgt61K/p8P02RbHiS7kXKyZYsYX3BA3Oj81MTdsmhgnAGV+hAg+SI0X4yXzgv405OezzRrtaAnp5wxFyRLAFPvYIxGV2VYXaCzb+l7MWqkUM9EGoKSw=
+	t=1783350184; cv=none; b=VK6zeMiJ9hHSnAVT1Vv7iWT090yDpJeVghl1pDXL8n9uF0gp7IS/uDOG2bbeFOl2khyZGZ3rEcrHO+YZlFpwwSYMUcL3ksQ5g7BAEeElxT7Q5/XFxVubR+OEjGjmA6s8FqmmbTC64EtJW0wnh1qqhCK0+PI2alGVWPZwvYwsmaI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783350183; c=relaxed/simple;
-	bh=l9Ym/I6LGIuY1NBqKLVkODWRGiyzG1V85fGPSTiYcco=;
+	s=arc-20240116; t=1783350184; c=relaxed/simple;
+	bh=oIr6Vm6uJCeF5fjiXKn75HDnWRdml/g8/xMcUJFwrx4=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=iXNumyre+e6yXqGU5rxxemRwep2VfRTHg4xgpfycZAM3XuFK6smXTN32mRxCbWw0q+LQ1GJExa4Q1+AuIZie1lEpsixWfHct1Ua8f/9eMZqVTCpYV0OXw2M0QQFa6HWd2OgaHNZIA+hgbbfQVbe+TfITk9sdPU+B1NBJYz74+Dc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DhPwOJ0z; arc=none smtp.client-ip=209.85.128.48
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-493b61b52b6so21816785e9.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Jul 2026 08:03:00 -0700 (PDT)
+	 In-Reply-To:To:Cc; b=bBA3U4gaCmkhYeXBbYAFqOWv+P2TZvT7p/ROAhl0U6r6U5KM+JggYRWatG6uvmMQzrfatgsi+eB2qOBGorRGy3vCGqFqsm626bx7dpDbXK9N7oPFroQGJ5M2t3qd0OSXzX8zdcHoFvjDMwGTcGsxw8YCzCW9CqlSNSLrgxRfZUs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=nVft5dIY; arc=none smtp.client-ip=209.85.128.48
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-493c7902f47so18988845e9.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Jul 2026 08:03:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1783350179; x=1783954979; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1783350180; x=1783954980; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :content-type:mime-version:subject:date:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=NFVOx30uAac950vvuoee7ZCsxXunq7hMY93R+H02rTI=;
-        b=DhPwOJ0z8MEJ7ATUM0bJbFelev4+u8f0pyPATLxjEGERmfkTuX25Ht1zo2xu0URLD0
-         Xbnm/pII11pS8kdmkvCSudPsZpzneYgloSApkoZw8ywb386IU/7GsOIO9ZnnA4vSkGQz
-         ga/CftZ9aVBrhpFxY0c+2GmUxPefCk15iyrf1q0PZeAqpQ/+4ZKVhwyyheX4cDEGx3tH
-         7Urvl7BckX8ygHhzclpiOCbANvgjM8p588aYubCS8JC5BL5oxF6dBqzCp68s1pLYDNsY
-         bGCbqFFc+l/AD81xTT1PwE6KSsgfKt4i1jg8X1pPxJkyMRPwWKh5gvCS0XZLHLx+X76r
-         42Kg==
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+L0VpsGhGY/o4A3yhDDb9FR13waT1cgBjZY/lBa48nA=;
+        b=nVft5dIYaGM2MXSU82w3rOa8XeVuLX2OPEogCQM9aRx2H1GX/2OlGCHMArh40tFgQG
+         UJQqsBnkZeQ6GJjC2tu1BfgW1GDBB1/CEHO2lFBC4wGFWqfB/wagvD0Rfn+Zky8Z2lsU
+         9aScVo4ByuUTzMCa/LsBtXnMWH5vEjxy5RfBWEcPywADv0fxUxNBtaskOPMPGEuAvamS
+         urWcTkWEW8D7cm6zPTM3+Lq5ZduH29YLptCXO2MVeZp+8PjEUUyaOtFumODdIfkO0BLD
+         NJbWpcQX/HCkdvpDklYiFQJgYALM4Qb36VrvQregkPLpVk3T252LhwlDtSUSCpBLp+VN
+         Hj4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783350179; x=1783954979;
+        d=1e100.net; s=20251104; t=1783350180; x=1783954980;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :content-type:mime-version:subject:date:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=NFVOx30uAac950vvuoee7ZCsxXunq7hMY93R+H02rTI=;
-        b=rtGXWtISINnRVdGUORAh9wAOyohcL7HJGJjt4s/yEs1U4DE38zMB1PsaaEQ1vF+T1I
-         6fd7it4ybZW12bpZlsTEcO37Kq/Gp8qUY/LAxiIYLq3VM9YyuHDlQ2nwe4wUk8D18Ps6
-         X69vtEhU8JSv3ORfqOAznHJqtEVSqGmB7FcvyYaG+9rPtmiOSVRHqNvncoS1RDf7hNIg
-         U5IE9Unc0d0h9haAw1F+AIekKNEkirjv62rOd8D+8WFtmFxchBFPrJQeXPcp1yssf54m
-         N8vt51d7zUMpG7x6trs7O3eUu0Z58uq1kFMZhN0cPuxFSeQzPat3RMAqrDeVmFNPTsr3
-         BiVg==
-X-Forwarded-Encrypted: i=1; AHgh+RqUk4c8tVQEojnodQPMhUTfcfzoeuy09/nZmw0prQQLs9mTlP7BqWX6rwkJl3vT+G6nCWWc/TRj2/M8UowW@vger.kernel.org
-X-Gm-Message-State: AOJu0YwQ3fedPnu+o9sv1grltvcRSCfarJ+WfjC8CJnCDa0fWQOoj0LU
-	g2a9SNyEtf2QFBKlOAj/dTmkjb2A6ANdcN22vmGZJK9QDO4/+UkLgB6WCKUqZusz0U4=
-X-Gm-Gg: AfdE7cnej+rsRvy9wEKq7GTAymCEyRPB0rUHjwDjELjT9cKanEA6n8gwXO9cwuy0hgL
-	hG2huGlOhrpgVYKeERH/pEM7jH2bVxHl4BZBsfXCP8VMEn8R1GRSBEr/61wqQI9mYk9EXoaRUwp
-	iJOYqsNdTSA84KSphTWUNgkJ8iDv4RxVKBOerH4WVbKvqMumx8N8x2/ZUTleuOOiFhBDRVhVJ6F
-	Mgz3VVJ9J4tr3xICW+qSVEJ9beL1ZvxjCw0xwzWjOLP51AjTHC0EgyBMO9/KASL6MWg3U6YTwE0
-	mTI6B0chwP+1sdZ10TgyYM7qyntw0JNRHgEzpv+7ZAzHMJWbHeHIC8pphpYRbZJteGK+pbwhE2p
-	jNK5G7wXYEZYGWPYaPgo/mxUhpsD0JQJsn3ApcHGO3On9xvBEcWQbuFcf0AQfG/xHcJe4otxOCG
-	ekCX7HgbOOAuXK3/KcenIzrwFxWQ==
-X-Received: by 2002:a05:600c:3514:b0:493:b7cb:c5f with SMTP id 5b1f17b1804b1-493df05f8d4mr9781945e9.11.1783350178912;
-        Mon, 06 Jul 2026 08:02:58 -0700 (PDT)
+         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=+L0VpsGhGY/o4A3yhDDb9FR13waT1cgBjZY/lBa48nA=;
+        b=NF6zwgWty/u07gCNVistBqscVz9ecF/asO9qHcR8FVyxn5DyaUBHhbWL5orgrTomq5
+         LEmpo9qXwoXZ2mT/kC1yrcIgP5TJUL7NcfA5OFma/BTODO+juE91qMFP2GvXqdBNY0mN
+         jaLoCYNUwTcd3PQtFTxL2fveX4LnyJ1QSmOzWfsPcllyEJrEMkYxDWIOxxyQoKiNSho7
+         fkFR8ztbruXG72K6ujVsqBanPZQSIcBOcn5JWc5ZH3lT7A4Al2jg9fM6XA2NK2FZQ3YU
+         7Rph4ZpNVQXqNMp1RJjus9TE41Oe8Vsg5P6f7rskWcq6OpKaq0mOm+irNelWtZ0fEJ36
+         B4/w==
+X-Forwarded-Encrypted: i=1; AHgh+Rqo4ZDaPzP+ngVY82MEdCiExq1tvz1OIgReK02khXaDR3qt6zHU0OoAUvZCheVoH0z0wcwF8Cf/QuAHixhh@vger.kernel.org
+X-Gm-Message-State: AOJu0YwpBfPDV9CGOTtQV7SC4dWDx1WYRqdlFj5hx8gxq5PdZUcBmd9O
+	5UAXm1UOMf3uOI2fOPXWcn4o8VC8on5kGOZoV5SnZ+3M75Ogbd8vl59UAQNy4Wrf08M=
+X-Gm-Gg: AfdE7cl/irNQQq62sKtepXLE+9nE0TshhUAL+BtdTvrjbrhxIxhoY4WuLDZHqYh3sz9
+	PoKrZwDjlSRGFIO9dw3q4auVawZW9SyY46qgBplIU1e2KGnWxtqVIfe9DW7kQrLtYs4yNSTq6AY
+	yaA/Cjn5sxh4kq0Vn52Hka/H6l6JageHEJP4htmi/JdZmySi2cLx1nff02gbjdK7IosxZb1+yWz
+	CdIutjjBR+MlTpGPrzrnzfv7z2+7PfDOg9Iss7h4HVe94gWcSUTHw/rhG5A7T8KQmBTVpoR5t8m
+	ijuo/eB++OijOqE6Us5A+k3bK7XILtvgYO87Xeo/0P1AA9n9NC8WtE1xJZP1HrWD91s5+acMSfs
+	AgYx+rFLGreR3xhSQqhGr+W4z97hw4gWRPHXtfJbVK64E0JV1oQZFqp+OVwbVysxLR0j/g6j79w
+	FrulFDDf7bX5p8Ozl6unaUSiE8aw==
+X-Received: by 2002:a05:600c:628d:b0:490:e5c1:b8bf with SMTP id 5b1f17b1804b1-493df04a9ddmr10784375e9.13.1783350180095;
+        Mon, 06 Jul 2026 08:03:00 -0700 (PDT)
 Received: from [127.0.0.2] ([2a02:2454:ff24:7210:1bb5:914d:5d25:d048])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-493c637568dsm397741625e9.4.2026.07.06.08.02.57
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-493c637568dsm397741625e9.4.2026.07.06.08.02.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Jul 2026 08:02:58 -0700 (PDT)
+        Mon, 06 Jul 2026 08:02:59 -0700 (PDT)
 From: Stephan Gerhold <stephan.gerhold@linaro.org>
-Date: Mon, 06 Jul 2026 17:02:14 +0200
-Subject: [PATCH v2 07/12] clk: qcom: gcc-mdm9607: Drop incorrect
- system_noc_bfdcd_clk_src
+Date: Mon, 06 Jul 2026 17:02:15 +0200
+Subject: [PATCH v2 08/12] clk: qcom: gcc-mdm9607: Drop incorrect BIMC PLL
+ and related clocks
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -89,7 +88,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260706-qcom-clk-mdm9607-fixes-v2-7-745565101869@linaro.org>
+Message-Id: <20260706-qcom-clk-mdm9607-fixes-v2-8-745565101869@linaro.org>
 References: <20260706-qcom-clk-mdm9607-fixes-v2-0-745565101869@linaro.org>
 In-Reply-To: <20260706-qcom-clk-mdm9607-fixes-v2-0-745565101869@linaro.org>
 To: Bjorn Andersson <andersson@kernel.org>
@@ -102,7 +101,7 @@ Cc: Michael Turquette <mturquette@baylibre.com>,
  Conor Dooley <conor+dt@kernel.org>, 
  Taniya Das <taniya.das@oss.qualcomm.com>, linux-arm-msm@vger.kernel.org, 
  linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, 
- devicetree@vger.kernel.org, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+ devicetree@vger.kernel.org
 X-Mailer: b4 0.15.2
 X-Rspamd-Action: no action
 X-Spamd-Result: default: False [-0.66 / 15.00];
@@ -110,21 +109,21 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
 	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-116922-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-116923-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER(0.00)[stephan.gerhold@linaro.org,linux-arm-msm@vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[16];
-	FORGED_RECIPIENTS(0.00)[m:andersson@kernel.org,m:mturquette@baylibre.com,m:sboyd@kernel.org,m:djakov@kernel.org,m:shengchao.guo@oss.qualcomm.com,m:bryan.odonoghue@linaro.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:taniya.das@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:linux-clk@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:devicetree@vger.kernel.org,m:konrad.dybcio@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[15];
+	FORGED_RECIPIENTS(0.00)[m:andersson@kernel.org,m:mturquette@baylibre.com,m:sboyd@kernel.org,m:djakov@kernel.org,m:shengchao.guo@oss.qualcomm.com,m:bryan.odonoghue@linaro.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:taniya.das@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:linux-clk@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:devicetree@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	FORWARDED(0.00)[lists@lfdr.de];
 	DKIM_TRACE(0.00)[linaro.org:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
 	TO_DN_SOME(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[5];
@@ -136,58 +135,312 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,vger.kernel.org:from_smtp,linaro.org:from_mime,linaro.org:dkim,linaro.org:mid,gerhold.net:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,vger.kernel.org:from_smtp,linaro.org:from_mime,linaro.org:email,linaro.org:mid,linaro.org:dkim]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 14613713A43
+X-Rspamd-Queue-Id: B5EA97128B5
 
-From: Stephan Gerhold <stephan@gerhold.net>
+The gcc-mdm9607 driver was originally based on gcc-msm8916, but a closer
+match nowadays is gcc-msm8909. Looking at the differences between
+gcc-mdm9607 and gcc-msm8909, there is quite some confusion around the
+definitions for the BIMC PLL.
 
-This clock does not exist on MDM9607. Reading/writing the registers always
-results in 0.
+It turns out the BIMC PLL on MDM9607 is actually an Alpha PLL just like on
+MSM8909. We can vote for it using BIT(2), which explains why BIT(3) was
+used for GPLL2.
 
-Presumably, this definition was mistakenly copied from gcc-msm8916. On
-MSM8916, this root clock is used for multimedia subsystems (camera,
-display, video). MDM9607 has none of that, so this clock was probably
-omitted in the hardware.
+In practice, the BIMC PLL is exclusively controlled by the RPM firmware and
+Linux should not touch it. So far, it was defined to model the full clock
+hierarchy, but even in read-only mode with CLK_GET_RATE_NOCACHE this is
+problematic since the RPM will silently change the clock parents without
+notifying Linux about it. The clock framework reads the clock parent only
+once during boot, so the resulting rates will still be often wrong.
 
-There are no users inside gcc-mdm9607, so we can just drop it.
+Follow the example of more recent SoCs and drop the BIMC PLL and all
+remaining related clocks to avoid reporting stale status data. This means
+we cannot determine the rate of these clocks anymore. This is not a big
+problem in practice, since these are NoC-related clocks that are
+independently managed through the interconnect subsystem.
 
 Cc: stable@vger.kernel.org
 Fixes: 48b7253264ea ("clk: qcom: Add MDM9607 GCC driver")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
 ---
- drivers/clk/qcom/gcc-mdm9607.c | 13 -------------
- 1 file changed, 13 deletions(-)
+ drivers/clk/qcom/gcc-mdm9607.c | 125 +----------------------------------------
+ 1 file changed, 1 insertion(+), 124 deletions(-)
 
 diff --git a/drivers/clk/qcom/gcc-mdm9607.c b/drivers/clk/qcom/gcc-mdm9607.c
-index f9ed655513ef..c6abe93ce2e8 100644
+index c6abe93ce2e8..4b749c99586b 100644
 --- a/drivers/clk/qcom/gcc-mdm9607.c
 +++ b/drivers/clk/qcom/gcc-mdm9607.c
-@@ -240,18 +240,6 @@ static struct clk_rcg2 pcnoc_bfdcd_clk_src = {
+@@ -26,7 +26,6 @@
+ 
+ enum {
+ 	P_XO,
+-	P_BIMC,
+ 	P_GPLL0,
+ 	P_GPLL1,
+ 	P_GPLL2,
+@@ -121,7 +120,7 @@ static struct clk_alpha_pll gpll2_early = {
+ 	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_DEFAULT],
+ 	.clkr = {
+ 		.enable_reg = 0x45000,
+-		.enable_mask = BIT(3), /* Yeah, apparently it's not 2 */
++		.enable_mask = BIT(3), /* BIT(2) is used for BIMC PLL */
+ 		.hw.init = &(struct clk_init_data)
+ 		{
+ 			.name = "gpll2_early",
+@@ -178,68 +177,6 @@ static struct clk_rcg2 apss_ahb_clk_src = {
  	},
  };
  
--static struct clk_rcg2 system_noc_bfdcd_clk_src = {
--	.cmd_rcgr = 0x26004,
+-static struct clk_pll bimc_pll = {
+-	.l_reg = 0x23004,
+-	.m_reg = 0x23008,
+-	.n_reg = 0x2300c,
+-	.config_reg = 0x23010,
+-	.mode_reg = 0x23000,
+-	.status_reg = 0x2301c,
+-	.status_bit = 17,
+-	.clkr.hw.init = &(struct clk_init_data){
+-		.name = "bimc_pll",
+-		.parent_data = &(const struct clk_parent_data){
+-			.fw_name = "xo",
+-		},
+-		.num_parents = 1,
+-		.ops = &clk_pll_ops,
+-	},
+-};
+-
+-static struct clk_regmap bimc_pll_vote = {
+-	.enable_reg = 0x45000,
+-	.enable_mask = BIT(3),
+-	.hw.init = &(struct clk_init_data){
+-		.name = "bimc_pll_vote",
+-		.parent_hws = (const struct clk_hw *[]){ &bimc_pll.clkr.hw },
+-		.num_parents = 1,
+-		.ops = &clk_pll_vote_ops,
+-	},
+-};
+-
+-static const struct parent_map gcc_xo_gpll0_bimc_map[] = {
+-	{ P_XO, 0 },
+-	{ P_GPLL0, 1 },
+-	{ P_BIMC, 2 },
+-};
+-
+-static const struct clk_parent_data gcc_xo_gpll0_bimc[] = {
+-	{ .fw_name = "xo" },
+-	{ .hw = &gpll0.clkr.hw },
+-	{ .hw = &bimc_pll_vote.hw },
+-};
+-
+-static const struct freq_tbl ftbl_pcnoc_bfdcd_clk_src[] = {
+-	F(19200000, P_XO, 1, 0, 0),
+-	F(50000000, P_GPLL0, 16, 0, 0),
+-	F(100000000, P_GPLL0, 8, 0, 0),
+-	{ }
+-};
+-
+-static struct clk_rcg2 pcnoc_bfdcd_clk_src = {
+-	.cmd_rcgr = 0x27000,
+-	.freq_tbl = ftbl_pcnoc_bfdcd_clk_src,
 -	.hid_width = 5,
 -	.parent_map = gcc_xo_gpll0_bimc_map,
 -	.clkr.hw.init = &(struct clk_init_data){
--		.name = "system_noc_bfdcd_clk_src",
+-		.name = "pcnoc_bfdcd_clk_src",
 -		.parent_data = gcc_xo_gpll0_bimc,
 -		.num_parents = ARRAY_SIZE(gcc_xo_gpll0_bimc),
 -		.ops = &clk_rcg2_ops,
+-		.flags = CLK_IS_CRITICAL,
 -	},
 -};
 -
  static const struct freq_tbl ftbl_gcc_blsp1_qup1_6_i2c_apps_clk[] = {
  	F(19200000, P_XO, 1, 0, 0),
  	F(50000000, P_GPLL0, 16, 0, 0),
-@@ -1451,7 +1439,6 @@ static struct clk_regmap *gcc_mdm9607_clocks[] = {
- 	[BIMC_PLL_VOTE] = &bimc_pll_vote,
- 	[BIMC_DDR_CLK_SRC] = &bimc_ddr_clk_src.clkr,
- 	[PCNOC_BFDCD_CLK_SRC] = &pcnoc_bfdcd_clk_src.clkr,
--	[SYSTEM_NOC_BFDCD_CLK_SRC] = &system_noc_bfdcd_clk_src.clkr,
+@@ -735,8 +672,6 @@ static struct clk_branch gcc_blsp1_ahb_clk = {
+ 		.enable_mask = BIT(10),
+ 		.hw.init = &(struct clk_init_data){
+ 			.name = "gcc_blsp1_ahb_clk",
+-			.parent_hws = (const struct clk_hw *[]){ &pcnoc_bfdcd_clk_src.clkr.hw },
+-			.num_parents = 1,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
+@@ -1038,8 +973,6 @@ static struct clk_branch gcc_boot_rom_ahb_clk = {
+ 		.enable_mask = BIT(7),
+ 		.hw.init = &(struct clk_init_data){
+ 			.name = "gcc_boot_rom_ahb_clk",
+-			.parent_hws = (const struct clk_hw *[]){ &pcnoc_bfdcd_clk_src.clkr.hw },
+-			.num_parents = 1,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
+@@ -1053,9 +986,6 @@ static struct clk_branch gcc_crypto_ahb_clk = {
+ 		.enable_mask = BIT(0),
+ 		.hw.init = &(struct clk_init_data){
+ 			.name = "gcc_crypto_ahb_clk",
+-			.parent_hws = (const struct clk_hw *[]){ &pcnoc_bfdcd_clk_src.clkr.hw },
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
+@@ -1069,9 +999,6 @@ static struct clk_branch gcc_crypto_axi_clk = {
+ 		.enable_mask = BIT(1),
+ 		.hw.init = &(struct clk_init_data){
+ 			.name = "gcc_crypto_axi_clk",
+-			.parent_hws = (const struct clk_hw *[]){ &pcnoc_bfdcd_clk_src.clkr.hw },
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
+@@ -1145,9 +1072,6 @@ static struct clk_branch gcc_mss_cfg_ahb_clk = {
+ 		.enable_mask = BIT(0),
+ 		.hw.init = &(struct clk_init_data){
+ 			.name = "gcc_mss_cfg_ahb_clk",
+-			.parent_hws = (const struct clk_hw *[]){ &pcnoc_bfdcd_clk_src.clkr.hw },
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
+@@ -1175,9 +1099,6 @@ static struct clk_branch gcc_pdm_ahb_clk = {
+ 		.enable_mask = BIT(0),
+ 		.hw.init = &(struct clk_init_data){
+ 			.name = "gcc_pdm_ahb_clk",
+-			.parent_hws = (const struct clk_hw *[]){ &pcnoc_bfdcd_clk_src.clkr.hw },
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
+@@ -1191,9 +1112,6 @@ static struct clk_branch gcc_prng_ahb_clk = {
+ 		.enable_mask = BIT(8),
+ 		.hw.init = &(struct clk_init_data){
+ 			.name = "gcc_prng_ahb_clk",
+-			.parent_hws = (const struct clk_hw *[]){ &pcnoc_bfdcd_clk_src.clkr.hw },
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
+@@ -1206,9 +1124,6 @@ static struct clk_branch gcc_sdcc1_ahb_clk = {
+ 		.enable_mask = BIT(0),
+ 		.hw.init = &(struct clk_init_data){
+ 			.name = "gcc_sdcc1_ahb_clk",
+-			.parent_hws = (const struct clk_hw *[]){ &pcnoc_bfdcd_clk_src.clkr.hw },
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
+@@ -1236,9 +1151,6 @@ static struct clk_branch gcc_sdcc2_ahb_clk = {
+ 		.enable_mask = BIT(0),
+ 		.hw.init = &(struct clk_init_data){
+ 			.name = "gcc_sdcc2_ahb_clk",
+-			.parent_hws = (const struct clk_hw *[]){ &pcnoc_bfdcd_clk_src.clkr.hw },
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
+@@ -1259,19 +1171,6 @@ static struct clk_branch gcc_sdcc2_apps_clk = {
+ 	},
+ };
+ 
+-static struct clk_rcg2 bimc_ddr_clk_src = {
+-	.cmd_rcgr = 0x32004,
+-	.hid_width = 5,
+-	.parent_map = gcc_xo_gpll0_bimc_map,
+-	.clkr.hw.init = &(struct clk_init_data){
+-		.name = "bimc_ddr_clk_src",
+-		.parent_data = gcc_xo_gpll0_bimc,
+-		.num_parents = 3,
+-		.ops = &clk_rcg2_ops,
+-		.flags = CLK_GET_RATE_NOCACHE,
+-	},
+-};
+-
+ static struct clk_branch gcc_mss_q6_bimc_axi_clk = {
+ 	.halt_reg = 0x49004,
+ 	.clkr = {
+@@ -1279,9 +1178,6 @@ static struct clk_branch gcc_mss_q6_bimc_axi_clk = {
+ 		.enable_mask = BIT(0),
+ 		.hw.init = &(struct clk_init_data){
+ 			.name = "gcc_mss_q6_bimc_axi_clk",
+-			.parent_hws = (const struct clk_hw *[]){ &bimc_ddr_clk_src.clkr.hw },
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
+@@ -1295,8 +1191,6 @@ static struct clk_branch gcc_apss_tcu_clk = {
+ 		.enable_mask = BIT(1),
+ 		.hw.init = &(struct clk_init_data){
+ 			.name = "gcc_apss_tcu_clk",
+-			.parent_hws = (const struct clk_hw *[]){ &bimc_ddr_clk_src.clkr.hw },
+-			.num_parents = 1,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
+@@ -1310,9 +1204,6 @@ static struct clk_branch gcc_smmu_cfg_clk = {
+ 		.enable_mask = BIT(12),
+ 		.hw.init = &(struct clk_init_data){
+ 			.name = "gcc_smmu_cfg_clk",
+-			.parent_hws = (const struct clk_hw *[]){ &pcnoc_bfdcd_clk_src.clkr.hw },
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
+@@ -1360,9 +1251,6 @@ static struct clk_branch gcc_usb_hs_phy_cfg_ahb_clk = {
+ 		.enable_mask = BIT(0),
+ 		.hw.init = &(struct clk_init_data){
+ 			.name = "gcc_usb_hs_phy_cfg_ahb_clk",
+-			.parent_hws = (const struct clk_hw *[]){ &pcnoc_bfdcd_clk_src.clkr.hw },
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
+@@ -1375,9 +1263,6 @@ static struct clk_branch gcc_usb_hs_ahb_clk = {
+ 		.enable_mask = BIT(0),
+ 		.hw.init = &(struct clk_init_data){
+ 			.name = "gcc_usb_hs_ahb_clk",
+-			.parent_hws = (const struct clk_hw *[]){ &pcnoc_bfdcd_clk_src.clkr.hw },
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
+@@ -1406,8 +1291,6 @@ static struct clk_branch gcc_apss_ahb_clk = {
+ 		.enable_mask = BIT(14),
+ 		.hw.init = &(struct clk_init_data){
+ 			.name = "gcc_apss_ahb_clk",
+-			.parent_hws = (const struct clk_hw *[]){ &pcnoc_bfdcd_clk_src.clkr.hw },
+-			.num_parents = 1,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
+@@ -1421,8 +1304,6 @@ static struct clk_branch gcc_apss_axi_clk = {
+ 		.enable_mask = BIT(13),
+ 		.hw.init = &(struct clk_init_data){
+ 			.name = "gcc_apss_axi_clk",
+-			.parent_hws = (const struct clk_hw *[]){ &pcnoc_bfdcd_clk_src.clkr.hw },
+-			.num_parents = 1,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
+@@ -1435,10 +1316,6 @@ static struct clk_regmap *gcc_mdm9607_clocks[] = {
+ 	[GPLL1_VOTE] = &gpll1_vote,
+ 	[GPLL2] = &gpll2.clkr,
+ 	[GPLL2_EARLY] = &gpll2_early.clkr,
+-	[BIMC_PLL] = &bimc_pll.clkr,
+-	[BIMC_PLL_VOTE] = &bimc_pll_vote,
+-	[BIMC_DDR_CLK_SRC] = &bimc_ddr_clk_src.clkr,
+-	[PCNOC_BFDCD_CLK_SRC] = &pcnoc_bfdcd_clk_src.clkr,
  	[APSS_AHB_CLK_SRC] = &apss_ahb_clk_src.clkr,
  	[BLSP1_QUP1_I2C_APPS_CLK_SRC] = &blsp1_qup1_i2c_apps_clk_src.clkr,
  	[BLSP1_QUP1_SPI_APPS_CLK_SRC] = &blsp1_qup1_spi_apps_clk_src.clkr,
