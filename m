@@ -1,178 +1,309 @@
-Return-Path: <linux-arm-msm+bounces-116909-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-116910-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id ZDIUOLzJS2oYaQEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-116909-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Jul 2026 17:29:00 +0200
+	id fHDfJU3KS2o1aQEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-116910-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Jul 2026 17:31:25 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 69B34712993
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Jul 2026 17:29:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 121197129EC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Jul 2026 17:31:25 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=linaro.org header.s=google header.b=BQqkMLNq;
-	dmarc=pass (policy=none) header.from=linaro.org;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116909-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116909-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
+	dkim=pass header.d=NXP1.onmicrosoft.com header.s=selector1-NXP1-onmicrosoft-com header.b=SaKpzDgg;
+	dmarc=fail reason="SPF not aligned (relaxed), DKIM not aligned (relaxed)" header.from=nxp.com (policy=none);
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116910-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116910-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	arc=reject ("cv is fail on i=2")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id F21D231643C7
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jul 2026 14:49:50 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id F38D9319C923
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jul 2026 14:52:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C96BD41A76F;
-	Mon,  6 Jul 2026 14:49:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D725B40D57C;
+	Mon,  6 Jul 2026 14:52:16 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from DB3PR0202CU003.outbound.protection.outlook.com (mail-northeuropeazon11010028.outbound.protection.outlook.com [52.101.84.28])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E22A73F484B
-	for <linux-arm-msm@vger.kernel.org>; Mon,  6 Jul 2026 14:49:21 +0000 (UTC)
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783349363; cv=none; b=SgkaRqBGRJpI5ZkKeNeev2jjKKkVd6mjKblyV5wMvA1Vleeah0McAu6+CYnmvocIbMLYxELD6ze+g/399QLMppOCkrqJ9NiEBxxFH+cyubGUdPz4gq3gDNfBzkbKUgShn/fsMy/wLvG/bRFQuygUXP6m99aASPCp1Lfj7u/33qA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783349363; c=relaxed/simple;
-	bh=Y/EJaKXUiPjtu9QsTiWTSVoWswUxIqzGEcw/GlNHd2w=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=bD2oIvri9TdLWOf24WKnnSRYUSqdVnZo5z1ILpVg75o/e7mx1M4eWmLpu/YcYG6WPX1stTF0oBfCJ2Xym23Ldi/cJF9Tz9Vh+O+z+4bfdRovCg47mBs52KAcURQ1rDfMH7RMrMAv8Kio0yLTbgg8lO5dUiBYpZ14xMeO8OWsEn8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=BQqkMLNq; arc=none smtp.client-ip=209.85.218.54
-Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-c126fe7d0f3so402112466b.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Jul 2026 07:49:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1783349360; x=1783954160; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=aktuCm4dzDRogmLQjOyUeMLfDpXuAbLPNIV0dLlhxik=;
-        b=BQqkMLNqTgpHJc4zSxFVhNzaVp6NFTut5WaQU5Ry9ge+m2itHkI73gWK/Du2Sx32H6
-         gZvNCxKqMf9gjhFhIUtGK/+YGP5D11WLV0YOlFxoIwkVEAKo7Je7TLNmVRvT+HeL3JmU
-         AAU6YnTQPc3KUoQwBC2l4HEZdp8n0qmpazgaXgxM4+XqFfLMcDQieovdkEqdOA1rjlYj
-         gC2xXSW213QbxueaKXgkOutQhCvCJ0Guq+Jle0ZbNAGyHJvIhan2fASc15VN6CTipmsR
-         MCYgHnJHDYJkEJID/SBiRNKF+yQWoqYl5czG6zLCD6LH43KwPpqSIedAB7BMG7q7viw7
-         aXTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783349360; x=1783954160;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=aktuCm4dzDRogmLQjOyUeMLfDpXuAbLPNIV0dLlhxik=;
-        b=UlslrJ9QJDxrX2sKQQBaDyAbLK7g0oJXjWl1XYs2FV7xYkOvTqRegF9LgH+Gm1j3vx
-         r3RhyukYnduKrd74S7xIaDpdADkqSoh6Mgz7DPI6AFt4YhyX+f0Z/A9jiMkEbyWtoq4i
-         5crJe45tnQCpPn7rq7YvhtAHu/vLISEySo3ftYohdKAoqgbPWFZfK+5DY4KKtvG2DyTI
-         SJggkCQ5ZNdtEr1GTlBPxkCkfLnSRlAQT7BVd/MO9KJwRLj6qH20f0x2MMu47Bh4gs4y
-         Kcbb6FdydUKqz3ey+uvDdNAwAH+rLonG8WmbStudmwYskyCHNctK+BQyDU9jDhjM6+A/
-         0yGA==
-X-Forwarded-Encrypted: i=1; AHgh+RoaSP0WffcTHF1pY8TY+fiflXk9avuH3/Sb15U9541D9FqVqufYYGB9VnM/zxghNQ/yDztwTq5tpqapEUnM@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyf5lQwOqsVmx1gtlPUjaFjPbq8auuCSAixfrXdyVicV9uWhkuP
-	5CmaVupqvfKogb1Et5tnTIyZM6Ir+XU61d0UbCp77DAc1L/Ye9ZOPNlWeEvPpGKlh4wN1oI0FNb
-	VS5kn
-X-Gm-Gg: AfdE7clOOVKs8tj2Iz9Uih9Kv1YVC6tMDk2CBlfO+K+lAI/ZmBuVbUxeU1peD6EDUdx
-	nwZhO0BdNnN5nkKbvmb0wuXAE0V1RbFcesv5dh0ISlTV3YFscE5EyWyT6upsIN3Ui2vQDP90zfo
-	0+PcgYOh5iujOBTDEihzJ9rfSV/c9tJw8Bf65oc3gNlyOs4xOP7Em7I4GjFmmSpiYMD2NOcFdLB
-	TVV7a8Eb3UF8rTRrcIBTfckUFlnTqbUzQmpJUA1fGg8jQLx9ZnrJuDQ4ye4uZGKN+F+O4I5CNRn
-	twbEcbJAMm/XJmwox5se1Qcv88HXH6E00odcaSoX8DsC0JL+VHh05OuwTIUBG8zgTxExlrSnQOd
-	Jdbch2BdViWl3ym36bM36WHXfIRAx6eQoKJ3zhcFkZIjW174D7a4arc7AEBKqzX0L1j8wjFqcCY
-	YzN1aJHjErcRGfy/DfwtC90H5R96kpl6IoQ/IB
-X-Received: by 2002:a17:907:742:b0:c12:8331:bd6d with SMTP id a640c23a62f3a-c15a6907332mr59088666b.44.1783349360298;
-        Mon, 06 Jul 2026 07:49:20 -0700 (PDT)
-Received: from [192.168.0.101] ([109.77.44.220])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c12b62f5c41sm768765266b.59.2026.07.06.07.49.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 06 Jul 2026 07:49:19 -0700 (PDT)
-Message-ID: <6e8ccebb-4eb8-479f-a589-6981b543fc2b@linaro.org>
-Date: Mon, 6 Jul 2026 15:49:18 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E184C36C9C2;
+	Mon,  6 Jul 2026 14:52:13 +0000 (UTC)
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783349536; cv=fail; b=WvphIxKKj1HWvCrbyiSlwC0lQrkvq0nAy/ydAwJjGA2VVnjdRBx342YzzwaEmO0JDhnM8rKpMWkRMnXzTpA1z9bIM6KqUnrHTHi3tnHC/UDGGVBuH6YTC+fjpyKwarY7L7JM4muvyTl8hbv1Y6RQmEd0b54NSXxhScvVhoDDDfs=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783349536; c=relaxed/simple;
+	bh=MZJ2JpPw4Bedk3ViqDcQqXWmp5KDcFOLv0TDa5l24Yk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=GkLTVwXmrE5yOwuQD85VAdDhgEA8wpufTQW8elRaZ7k+EJqZ6jC/j1WABWoCgkEv+0+QKbqL8q5vyYAvMZP+0q2LFaKuEc4y5XttmGKIe5+d7FhbqX2U2GERceZ8Y2jm9Oxihvj6a7UeJ2LBfGghisgoBLBQaUeSPRLTlt4vFJs=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=SaKpzDgg; arc=fail smtp.client-ip=52.101.84.28
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=d84dOjduQBNr6R3MQLtXTeWrMFoFzqcW/ebXq14oquL1PC3qxZ/rcZKowOa9ywjkBl/p86ksI4/uWrlaiOMJWhUG8bA58c/ekYodAFOM5Qdfuz3wdyHvrcz3+8C6HC/jI7oTyQS9CRYswWyumJ9O/N4V524jknl2NSNxXlfbJR/0lcIpsqHiqG5tWBsBeXrnAVrWUxASdmobIpeSEFuOTNCHj3jZ8qzVwas5P0rzumKbibh5uIXiTHqXfzqCPa5zW7/Lb2ACEW02gwx0/hTy7HhXf8NCsrFSDi6D3yoE35EK0UqUKlh/ky0IexKcn2y8Dco8x1lE3jtDufwylwh1Uw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=bmQ0Zr5S8SGkSfP6QoQE3EeZPaKf1seTjeiSYjfs+F4=;
+ b=Ofztn4bGE2wzojZkpi/ewuTHjhG8CxvhPRXaPs9pz0zXhPT/a+ggy3JVhsmCq6TCHhMdS0FzTpsoUwyrtja/22uZfM4PyCI6yIioMfL7wY7jYSRqxC/iZdqMpLvRUxn6UV0wmEBYZWtH2CpOEfOvfqRqA7+B3V/EGTa3kblHdJ0K46cb7HAWCCWB5C5NDWw4vL1itVafrS3k7pXp5xeoqbaa6V0LXykGobIaeNSsmFUxI+o58x4etrRC4X0kzO0II4GG78WManOe74ZHYJ6iWzhIuYrAVf7JkP44UgRdxC2ORaHbsGUG4m9q0cMz0od+TZUeWOoHXyaHmT7Q3ruP3A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=bmQ0Zr5S8SGkSfP6QoQE3EeZPaKf1seTjeiSYjfs+F4=;
+ b=SaKpzDggSumgOUZ4V/mNLvLE6qCdZTXw/Hs3X2uo8tNBOVBA+7AFm2d/hXFR+VAyU9PgxZQNFAhKaSiTeIPFsiX16HSW/BPiUIoB+1BFPg5vm4sdra4dziU0L7Kpad1IpOLp91KCog2TlvQE7+vCAgM7Rz0vI2Tjk9wkyndZqOUqcPAxgB1NVG+XOLyDOJO/OnmzYecj3gtsmcRCMHjatIvJVADkuEPHXvm8p19xjNmBJA/YeVPRxcKEetcpHwvCY8alqBfaAT6T8d+EIUcVDJGsb9mYiancH1HYUeK6nnlVx44Tr/MBqC6kgaWATFcJw6zRXdJv7Spkkk399n5YTw==
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
+ by PA1PR04MB10699.eurprd04.prod.outlook.com (2603:10a6:102:488::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.8; Mon, 6 Jul 2026
+ 14:52:10 +0000
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c%6]) with mapi id 15.21.0159.007; Mon, 6 Jul 2026
+ 14:52:10 +0000
+Date: Mon, 6 Jul 2026 09:51:47 -0500
+From: Frank Li <Frank.li@oss.nxp.com>
+To: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Cc: Lee Jones <lee@kernel.org>,
+	Mark Brown <broonie@opensource.wolfsonmicro.com>,
+	Thierry Reding <thierry.reding@avionic-design.de>,
+	Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
+	Andrew Lunn <andrew+netdev@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Srinivas Kandagatla <srini@kernel.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Vinod Koul <vkoul@kernel.org>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Danilo Krummrich <dakr@kernel.org>, Rob Herring <robh@kernel.org>,
+	Saravana Kannan <saravanak@kernel.org>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Doug Berger <opendmb@gmail.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
+	Ulf Hansson <ulfh@kernel.org>, Frank Li <Frank.Li@nxp.com>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Thomas =?iso-8859-1?Q?Hellstr=F6m?= <thomas.hellstrom@linux.intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+	Peter Chen <peter.chen@kernel.org>,
+	Paul Cercueil <paul@crapouillou.net>, Bin Liu <b-liu@ti.com>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Maximilian Luz <luzmaximilian@gmail.com>,
+	Hans de Goede <hansg@kernel.org>,
+	Ilpo =?iso-8859-1?Q?J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Benjamin Herrenschmidt <benh@kernel.crashing.org>, brgl@kernel.org,
+	linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org,
+	driver-core@lists.linux.dev, devicetree@vger.kernel.org,
+	linuxppc-dev@lists.ozlabs.org, linux-i2c@vger.kernel.org,
+	iommu@lists.linux.dev, linux-pm@vger.kernel.org,
+	imx@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
+	intel-xe@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+	linux-usb@vger.kernel.org, linux-mips@vger.kernel.org,
+	platform-driver-x86@vger.kernel.org, mfd@lists.linux.dev
+Subject: Re: [PATCH v3 09/20] iommu/fsl: use platform_device_set_of_node()
+Message-ID: <akvBA1ATCKKYgYkb@SMW015318>
+References: <20260706-pdev-fwnode-ref-v3-0-1ff028e33779@oss.qualcomm.com>
+ <20260706-pdev-fwnode-ref-v3-9-1ff028e33779@oss.qualcomm.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260706-pdev-fwnode-ref-v3-9-1ff028e33779@oss.qualcomm.com>
+X-ClientProxiedBy: PH8PR21CA0018.namprd21.prod.outlook.com
+ (2603:10b6:510:2ce::8) To GV2PR04MB11799.eurprd04.prod.outlook.com
+ (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 0/5] Add Qualcomm JPEG V4L2 encoder for SM8250
-To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Atanas Filipov <atanas.filipov@oss.qualcomm.com>, linux-media@vger.kernel.org
-Cc: loic.poulain@oss.qualcomm.com, mchehab@kernel.org, robh@kernel.org,
- krzk+dt@kernel.org, conor+dt@kernel.org, andersson@kernel.org,
- konradybcio@kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-References: <20260706071113.383215-1-atanas.filipov@oss.qualcomm.com>
- <68e59764-5a10-4abc-849c-14ea2d9ef76e@linaro.org>
- <d74d7839-d126-427a-b151-ca895a27a83e@linaro.org>
- <437d1eb0-4495-406a-9501-b0515cfa3151@linaro.org>
- <e04cb9dc-76dd-4fa8-92f4-be002bf7ee8b@linaro.org>
- <8116c54e-4050-4e9d-b236-59d74846bd57@linaro.org>
- <48c3ce6b-1e2a-457c-93b2-8fbc0912dc20@linaro.org>
- <f3d148cc-496d-4301-af45-51d8921d7798@linaro.org>
- <3b0f7a36-05d7-417f-8efe-d6ba06488406@linaro.org>
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Content-Language: en-US
-In-Reply-To: <3b0f7a36-05d7-417f-8efe-d6ba06488406@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|PA1PR04MB10699:EE_
+X-MS-Office365-Filtering-Correlation-Id: bc55ae94-b642-49b6-d6a0-08dedb6e27d6
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|7416014|19092799006|1800799024|23010399003|376014|366016|22082099003|18002099003|11063799006|4143699003|56012099006|3023799007;
+X-Microsoft-Antispam-Message-Info:
+	R50DnXEdYb7zS5J9XBIFE1bkQUV4giQH59J0GB+J14IWYEEMyq3Ud5DVvsLPiYgTFvT1vmHlS6p8UmJ8vQBd19MiZ4mja5DM34ahtWt9gDJg55ynfsj9Syuw/LXD1klMaQT7P0jvrz9B6raRStMjfl7LVUEhg4MvGp0Apv5vog3RZm5vxleF4EBUXGqUVTC9ng93D5U2/vX5tceGOsKP+GZImQ4Lpllq6/VS6YILhfqlOpkDd8EmvNFjI6huJNEY7XpRZHDKMN+PVaaagFnDLQQB/cqWkXK2H1K61xjjo6QfoXUIrk0kOHsXI6vfPv/+eKcRjzPnRX6Qx0LgLNBTF7osSck59vRFFsbQiZ8YKI98QU3Mfb1929EPen8i6lUXGSpF3QfT2wnrXUWYBypfregsP9XuvFr3NeKbbwcvu9MZdAJGUmkIPhaQ9Gqa17R+aC0hjKKLROntM809zhP3BA869251LsOJp/xa9mGB3//q8TIYcSURaWXJsx95RY7T25VXGAlGFpAtvjBdR9UpariflmlUAsNn3E+oUEYGqAQg2t0Zz+KZNzr2Ua5OtEvjXwFHqYSBq6pyChkuq+HzeIoJ9AH2oUgNs8sCzpXQu7sK237m7qoJdpSCsWlwiLSlialhzEvHQbbmZiI3gGN2+MDpOQTZ5w4ApB9TMiTTs6c=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(19092799006)(1800799024)(23010399003)(376014)(366016)(22082099003)(18002099003)(11063799006)(4143699003)(56012099006)(3023799007);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?HqKq3Wr99DnxteEC3svflGigikw3HshYAQEaScYwmybLtGuPzQyrDg2fzv8R?=
+ =?us-ascii?Q?3jpK6unUXT+6aB9iDHErg2CGKRQDHKbEIJwEq/Ic8nb9FSFkmMZOIP9h8Fud?=
+ =?us-ascii?Q?+zfhs5O0tp93UWXJoVFKNMvEAT7D9DyQOwPBkmzpn7m8dfMNeWRyFWKKeEE2?=
+ =?us-ascii?Q?zsFlOYvigQOQW3mrjhcUaG2JbUyz6oZp2ej1IT+7aqqrs8cWg/Kra52kwW63?=
+ =?us-ascii?Q?hqg/4Cn7gWe5dDWtPnGThQ3YSXToWKOCZ2/jeJAmSNmoUrIZ5aHxa4UIp/X1?=
+ =?us-ascii?Q?4JUvK+xTEIq9Ky3BZBaQVpAAk/0PzbtFZ6ITQt3Vt0BKmLk7LeojY7w1Yymt?=
+ =?us-ascii?Q?qHYr8zNVlZHrkPhdpNkrzIP1oBENe80GukGAz5miO1th81nY3dGkCKBDqRcf?=
+ =?us-ascii?Q?5UeVoJYSjnFhWSZcnojM3Cj/3uPdtitxi3Yj8mvWbuc8RhjfsGz3J93gfym1?=
+ =?us-ascii?Q?E6SGPX7axOSBwIgJg+9aeamxcKjW7LhS3CTSNdnUfIw/qU3xP2nyfLUVBSWc?=
+ =?us-ascii?Q?mD7011LJlIQGZFQWUClVx5/yIM52A+Zu57VuJ4ahdBRVqDPbvDPZ/q9vNVrH?=
+ =?us-ascii?Q?1rB67CD4NJZIb9ZJjHqEFQ4GvTMqFhVT7wzn/G5urBZWresYHw9EoBOSp77X?=
+ =?us-ascii?Q?KTwt99E4BpCtSAgy6Lm25I0BPT7gMp+7sj2QYW3qtlJXdcERbDLUlmxWPTFD?=
+ =?us-ascii?Q?WC8BEz7lkV/ggEixOX5VJ9x6bH3QJKzW00uyXUfvanFjpKcsBfWv6cU4Nwqa?=
+ =?us-ascii?Q?L4aTefU2GgGGyH6q5guPjmM7m2pH9xCzQKB7WJb1l6efopUNazvl99ydrdUZ?=
+ =?us-ascii?Q?HQAncBpvZyXVAjpZ2fCSNHGikzFUQ+YWh8OyelaR8alRZOUnjKGvnzdlFNu4?=
+ =?us-ascii?Q?jntg3SS0m3kDHqmXpeJ50ftN1ZquT69mAZ4n3EQPM6YqkddDDtHnvo35nAW6?=
+ =?us-ascii?Q?T4V7T6rLYPzFlnBsF3NCXtBSIYl4kQT7I9IbuuZr/Lpbn5bzewSHGPWyHb4b?=
+ =?us-ascii?Q?Kkzh4VE6JZSPGCTZspQwQt/UwoZzkAlOUzQ7OEMDffFKpzWwXse361UAXIM4?=
+ =?us-ascii?Q?/HyQEuz7z5e2jQNizRO+LWm5RjpF/MA1wzqGZmdTWJdFCvB1ySLwNyIyaOI3?=
+ =?us-ascii?Q?U7iMtsabAqRJBQsvfGUPV7KibumRq4UdTEz/JXFSpcwptR3HGNIrHVvkSduR?=
+ =?us-ascii?Q?aDmSIQihZu8hUJYbImTZZl7IMWie4LL3YXSy7N7GrNyGLMKPqUWFMDa/Dhwy?=
+ =?us-ascii?Q?1Iquem1G+zRhcx3zgfJ5wI4Mtr95JIJzAMLAfu92PLAlZi0j5b40TwWDb8H3?=
+ =?us-ascii?Q?kuNGiQ/T9GKOPhtOegHg/nUEka7U4Q9gay4c9Km8lRcXxziazXa4xct60dny?=
+ =?us-ascii?Q?C7wxisVS3O8tOUNQKreaPLo8Tab9zajGfLY2Ll2Cv0pF+GrE/CPZjTvdobDY?=
+ =?us-ascii?Q?UkyiTwvvk3MCVHyKT4ThCNgFIv/fg34Fy9N33mQpr03QFPANYL3VrORiXbpi?=
+ =?us-ascii?Q?RqYENQX0BKOmvmI7eehbWEZTFiUnkiIqKVRwUPoSEljc0Qx0S9i/DQBcJFd/?=
+ =?us-ascii?Q?t4S97cq4Sw0qLi4Zon4WoGO7jHQ2MfgzFnjqOkfoUNlGeNyRO6yQxo7nsDtG?=
+ =?us-ascii?Q?8HrAJzcIVx3yJ1OwaIVax4wKv63oC3m93Dwmvaz8C5AjIxv+AytQJ11qZRsq?=
+ =?us-ascii?Q?nDo2SorRG+gwaXEWlJ3pUC5BJeeDXioBEXlEnbFr2EUBf+M5RkE8pBDQ5RtN?=
+ =?us-ascii?Q?YEGsBVvqdZ88Gd1xbrcCG9jRmWtL1qEM+4jPL3ba4LLomQkhApOr?=
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: bc55ae94-b642-49b6-d6a0-08dedb6e27d6
+X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Jul 2026 14:52:09.8924
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: xIKtRlDx2pT3kbZXRTpAdCXKj5n0g0mxkPT5RRA07IPPy0IDauTXThljzjMgXT95pc4rkH5M8cHSJB6ncRAaCTVRnFYWQUakFUto5Xmgw4CWwjllLn8rnx4YQq5Cr6ev
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA1PR04MB10699
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-2.16 / 15.00];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
+X-Spamd-Result: default: False [2.44 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
+	ARC_REJECT(1.00)[cv is fail on i=2];
+	MID_RHS_NOT_FQDN(0.50)[];
+	R_DKIM_ALLOW(-0.20)[NXP1.onmicrosoft.com:s=selector1-NXP1-onmicrosoft-com];
 	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
-	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
 	MAILLIST(-0.15)[generic];
+	DMARC_POLICY_SOFTFAIL(0.10)[nxp.com : SPF not aligned (relaxed), DKIM not aligned (relaxed),none];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-116909-lists,linux-arm-msm=lfdr.de];
-	RCPT_COUNT_TWELVE(0.00)[13];
-	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-116910-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FORWARDED(0.00)[lists@lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:vladimir.zapolskiy@linaro.org,m:atanas.filipov@oss.qualcomm.com,m:linux-media@vger.kernel.org,m:loic.poulain@oss.qualcomm.com,m:mchehab@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:andersson@kernel.org,m:konradybcio@kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:devicetree@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_SENDER(0.00)[bryan.odonoghue@linaro.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[linaro.org:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS(0.00)[m:bartosz.golaszewski@oss.qualcomm.com,m:lee@kernel.org,m:broonie@opensource.wolfsonmicro.com,m:thierry.reding@avionic-design.de,m:sebastian.hesselbarth@gmail.com,m:andrew+netdev@lunn.ch,m:davem@davemloft.net,m:edumazet@google.com,m:kuba@kernel.org,m:pabeni@redhat.com,m:srini@kernel.org,m:gregkh@linuxfoundation.org,m:vkoul@kernel.org,m:rafael@kernel.org,m:dakr@kernel.org,m:robh@kernel.org,m:saravanak@kernel.org,m:maddy@linux.ibm.com,m:mpe@ellerman.id.au,m:npiggin@gmail.com,m:chleroy@kernel.org,m:andi.shyti@kernel.org,m:andriy.shevchenko@linux.intel.com,m:joro@8bytes.org,m:will@kernel.org,m:robin.murphy@arm.com,m:opendmb@gmail.com,m:florian.fainelli@broadcom.com,m:bcm-kernel-feedback-list@broadcom.com,m:ulfh@kernel.org,m:Frank.Li@nxp.com,m:s.hauer@pengutronix.de,m:kernel@pengutronix.de,m:festevam@gmail.com,m:matthew.brost@intel.com,m:thomas.hellstrom@linux.intel.com,m:rodrigo.vivi@intel.com,m:airlied@gmail.com,m:simona@ffwll.ch,m:peter.chen@kernel.org,m:paul@c
+ rapouillou.net,m:b-liu@ti.com,m:p.zabel@pengutronix.de,m:luzmaximilian@gmail.com,m:hansg@kernel.org,m:ilpo.jarvinen@linux.intel.com,m:krzk@kernel.org,m:benh@kernel.crashing.org,m:brgl@kernel.org,m:linux-kernel@vger.kernel.org,m:netdev@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-sound@vger.kernel.org,m:driver-core@lists.linux.dev,m:devicetree@vger.kernel.org,m:linuxppc-dev@lists.ozlabs.org,m:linux-i2c@vger.kernel.org,m:iommu@lists.linux.dev,m:linux-pm@vger.kernel.org,m:imx@lists.linux.dev,m:linux-arm-kernel@lists.infradead.org,m:intel-xe@lists.freedesktop.org,m:dri-devel@lists.freedesktop.org,m:linux-usb@vger.kernel.org,m:linux-mips@vger.kernel.org,m:platform-driver-x86@vger.kernel.org,m:mfd@lists.linux.dev,m:sebastianhesselbarth@gmail.com,m:andrew@lunn.ch,s:lists@lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FORGED_SENDER(0.00)[Frank.li@oss.nxp.com,linux-arm-msm@vger.kernel.org];
+	MIME_TRACE(0.00)[0:+];
+	FORWARDED(0.00)[lists@lfdr.de];
+	FREEMAIL_CC(0.00)[kernel.org,opensource.wolfsonmicro.com,avionic-design.de,gmail.com,lunn.ch,davemloft.net,google.com,redhat.com,linuxfoundation.org,linux.ibm.com,ellerman.id.au,linux.intel.com,8bytes.org,arm.com,broadcom.com,nxp.com,pengutronix.de,intel.com,ffwll.ch,crapouillou.net,ti.com,kernel.crashing.org,vger.kernel.org,lists.linux.dev,lists.ozlabs.org,lists.infradead.org,lists.freedesktop.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[bryan.odonoghue@linaro.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	ALIAS_RESOLVED(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[Frank.li@oss.nxp.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[NXP1.onmicrosoft.com:+];
+	RCPT_COUNT_GT_50(0.00)[67];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:from_mime,linaro.org:email,linaro.org:mid,linaro.org:dkim,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,vger.kernel.org:from_smtp]
+	MISSING_XM_UA(0.00)[];
+	ALIAS_RESOLVED(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm,netdev];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[NXP1.onmicrosoft.com:dkim,qualcomm.com:email,nxp.com:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,oss.nxp.com:from_mime]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 69B34712993
+X-Rspamd-Queue-Id: 121197129EC
 
-On 06/07/2026 15:35, Vladimir Zapolskiy wrote:
->> omitting power-domains for individual nodes is incorrect. Best practice
->> and in fact the _only_ practice that can work is to list power-domains,
-> 
-> Let's step back and discuss hardware description of CAMSS IPs, so far
-> there is no point to jump to the practice.
-> 
->> interconnects in the individual nodes themselves as - I've pointed out
->> multiple times now - those blocks have to ramp clocks and scale voltages
->> dependent on their particular use cases.
->>
-> 
-> Right, you've pointed it a few times, no surprise a straw man fallacy
-> argument resembles as is, because it does not address or debate the
-> initial point of concern [1], when the absolutely excessive complexity
-> is proposed to be implemented for "CAMSS power island" and its IPs.
-> 
-> [1] https://lore.kernel.org/linux-media/e04cb9dc-76dd-4fa8-92f4- 
-> be002bf7ee8b@linaro.org
+On Mon, Jul 06, 2026 at 02:44:21PM +0200, Bartosz Golaszewski wrote:
+> Ahead of reworking the reference counting logic for platform devices,
+> encapsulate the assignment of the OF node for dynamically allocated
+> platform devices with the provided helper.
+>
+> Acked-by: Robin Murphy <robin.murphy@arm.com>
+> Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+> ---
 
-You seem a little stuck on the term "CAMSS power island" the individual 
-blocks within the CAMSS "island" are individually collapsible.
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
 
-That is why they _must_ have their own power-domains.
-
-The CamNoc is shared between these components but not outside. Hence it 
-is more like a bus than a parent/child relationship.
-
-As to your argument about complexity. I think that's subjective.
-
----
-bod
+>  drivers/iommu/fsl_pamu.c | 16 ++++++----------
+>  1 file changed, 6 insertions(+), 10 deletions(-)
+>
+> diff --git a/drivers/iommu/fsl_pamu.c b/drivers/iommu/fsl_pamu.c
+> index 25aa477a95a95cb4fa4e132727cde0a936750ee2..c83bbc3faad56d6ee1c89b0a7f74028af02c81e9 100644
+> --- a/drivers/iommu/fsl_pamu.c
+> +++ b/drivers/iommu/fsl_pamu.c
+> @@ -8,6 +8,7 @@
+>
+>  #include "fsl_pamu.h"
+>
+> +#include <linux/cleanup.h>
+>  #include <linux/fsl/guts.h>
+>  #include <linux/interrupt.h>
+>  #include <linux/genalloc.h>
+> @@ -933,7 +934,6 @@ static struct platform_driver fsl_of_pamu_driver = {
+>  static __init int fsl_pamu_init(void)
+>  {
+>  	struct platform_device *pdev = NULL;
+> -	struct device_node *np;
+>  	int ret;
+>
+>  	/*
+> @@ -955,7 +955,8 @@ static __init int fsl_pamu_init(void)
+>  	 * PAMU node would require significant changes to a lot of code.
+>  	 */
+>
+> -	np = of_find_compatible_node(NULL, NULL, "fsl,pamu");
+> +	struct device_node *np __free(device_node) =
+> +			of_find_compatible_node(NULL, NULL, "fsl,pamu");
+>  	if (!np) {
+>  		pr_err("could not find a PAMU node\n");
+>  		return -ENODEV;
+> @@ -964,7 +965,7 @@ static __init int fsl_pamu_init(void)
+>  	ret = platform_driver_register(&fsl_of_pamu_driver);
+>  	if (ret) {
+>  		pr_err("could not register driver (err=%i)\n", ret);
+> -		goto error_driver_register;
+> +		return ret;
+>  	}
+>
+>  	pdev = platform_device_alloc("fsl-of-pamu", 0);
+> @@ -973,7 +974,8 @@ static __init int fsl_pamu_init(void)
+>  		ret = -ENOMEM;
+>  		goto error_device_alloc;
+>  	}
+> -	pdev->dev.of_node = of_node_get(np);
+> +
+> +	platform_device_set_of_node(pdev, np);
+>
+>  	ret = pamu_domain_init();
+>  	if (ret)
+> @@ -988,17 +990,11 @@ static __init int fsl_pamu_init(void)
+>  	return 0;
+>
+>  error_device_add:
+> -	of_node_put(pdev->dev.of_node);
+> -	pdev->dev.of_node = NULL;
+> -
+>  	platform_device_put(pdev);
+>
+>  error_device_alloc:
+>  	platform_driver_unregister(&fsl_of_pamu_driver);
+>
+> -error_driver_register:
+> -	of_node_put(np);
+> -
+>  	return ret;
+>  }
+>  arch_initcall(fsl_pamu_init);
+>
+> --
+> 2.47.3
+>
+>
 
