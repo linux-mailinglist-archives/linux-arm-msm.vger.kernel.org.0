@@ -1,165 +1,228 @@
-Return-Path: <linux-arm-msm+bounces-116856-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-116857-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id NkZjN0a1S2rUYwEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-116856-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Jul 2026 16:01:42 +0200
+	id fwwiMYm3S2p6ZAEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-116857-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Jul 2026 16:11:21 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 27433711A64
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Jul 2026 16:01:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id BBA72711C47
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Jul 2026 16:11:20 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=dlgvWu6d;
-	dmarc=pass (policy=quarantine) header.from=kernel.org;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116856-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c15:e001:75::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116856-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
+	dkim=pass header.d=gmail.com header.s=20251104 header.b=DbE8Vcui;
+	dmarc=pass (policy=none) header.from=gmail.com;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116857-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c15:e001:75::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116857-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	arc=pass ("subspace.kernel.org:s=arc-20240116:i=2")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 6652D319B85C
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jul 2026 13:24:43 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id CB532305CBFF
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jul 2026 13:25:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 835BA42CAFC;
-	Mon,  6 Jul 2026 13:21:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 28936367B9E;
+	Mon,  6 Jul 2026 13:22:02 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f49.google.com (mail-yx1-f49.google.com [74.125.224.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CAAB416109;
-	Mon,  6 Jul 2026 13:21:33 +0000 (UTC)
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783344094; cv=none; b=dqlGTFYuDOmd1BT9AJk7kv34Q0Jo4X8PBcgyXLqLQShy1KKpPwyzyhQ1HpszTqroL2agJi1wzX2J0K1PpqrOEq+fCN531c6u7tX03lCu2NTwMGMTCJsTmD6KrjjfR5DvNn5MICSl1IEnIusf5GY4Gn71uOro2rqqvcAKhhlO+ss=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783344094; c=relaxed/simple;
-	bh=l2Ms9idRFunWWcR8o+FwBgnkVacUWkwsC6lm9/hH2FY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SKl2mzZlvhK079Cjea1JyGSVefGdGCp52cnh3Vh67osr7yhrVCLCmKcSAnFYlFEXq1gp9I/WYiPSHDqaer0hS+tFIMgBiq714fq3h5rMaclGk1M6lxs/Ljv6Xx0dCgibKRqsGtXWoDjp6boDg/mMblquUWiQK6T9wni6LVJ4KRI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dlgvWu6d; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FCB51F00A3A;
-	Mon,  6 Jul 2026 13:21:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783344093;
-	bh=fJldbQStjOY9URihIgxJhtt0Q6WiLugt2TW9p49DC4U=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=dlgvWu6dX3bvYR/PzLzMrGcnLbLNzWpI0/c7viswlSFxP1uqN9AxFwJI+O/k+g7eC
-	 E2VZWgIpx5p+IJK/LxN0Q8BnTevM0IrhOqQUZZbZn4wxuPgMkEdjazZlq0nUPdIkTP
-	 hsBe6OrYMYRakwlrxsbAaZU1pNEsYLWizphE7rO/YsXOM6hwdnmiKc3nC8nOwW3XMz
-	 t0tjoUS3VXdTL9POWnLab1Bee/jDwlJW7E690iooC6Mu5XYjuZqjiJjZrM8iB0pLDj
-	 NvFn8dv5D+OBAL+BkX7GOsfSs4lGzhfnRqjrC/HLho6iOXBuSCWFUEnHd7Z+blXr5I
-	 /ChmOouv4pmEA==
-Date: Mon, 6 Jul 2026 14:21:26 +0100
-From: Mark Brown <broonie@kernel.org>
-To: "Rafael J. Wysocki (Intel)" <rafael@kernel.org>
-Cc: Praveen Talari <praveen.talari@oss.qualcomm.com>,
-	Dilip Kota <dkota@codeaurora.org>,
-	Stephen Boyd <swboyd@chromium.org>,
-	Girish Mahadevan <girishm@codeaurora.org>,
-	Alok Chauhan <alokc@codeaurora.org>,
-	bjorn.andersson@oss.qualcomm.com,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Len Brown <lenb@kernel.org>, Pavel Machek <pavel@kernel.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Danilo Krummrich <dakr@kernel.org>,
-	Douglas Anderson <dianders@chromium.org>, linux-spi@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>,
-	aniket.randive@oss.qualcomm.com,
-	chandana.chiluveru@oss.qualcomm.com,
-	jyothi.seerapu@oss.qualcomm.com, linux-pm@vger.kernel.org,
-	driver-core@lists.linux.dev
-Subject: Re: [PATCH v3 1/2] PM: runtime: Only set runtime_error on suspend
- callback failures
-Message-ID: <9d271393-c500-46a9-8795-f1371585445c@sirena.org.uk>
-References: <20260706-fix_sticky_-einval_after_pm_runtime_api_failure-v3-0-92feb5a7b926@oss.qualcomm.com>
- <20260706-fix_sticky_-einval_after_pm_runtime_api_failure-v3-1-92feb5a7b926@oss.qualcomm.com>
- <CAJZ5v0i4Zc4HNUdgJ_2=4=wv7vRDTugo71qsWnZxVRRqV+W8mw@mail.gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A338F41A760
+	for <linux-arm-msm@vger.kernel.org>; Mon,  6 Jul 2026 13:22:00 +0000 (UTC)
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783344122; cv=pass; b=f7tOOEBCNRjNAQzbDixdhYxlXyTb6UOzUe1i0qeoMoLEWRkbokaGDikSpsg63L6+UICNjdZ7Nb1SjAzY7mTpuv5NyTe/UQFMOCdRZn4bgqsGjiocMNrIwmy9AmB6fcliXbeB+Ofxttolkpl/IF4HbtQlXMbGp8W1T5VizgoRk68=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783344122; c=relaxed/simple;
+	bh=NRpkEVsrO11eq4CxBW/dXRw+VTRn2w7uSQ1EWJH5sLw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ZT7lMzuwK0oQLXDLjqfwryWBq2dLRqSY706U5fpd3oQBtt/1GsDoR4YBFRKMr6MgBIkLKZIhgkvPzyOd3hy26VlfdG7Uo+wXeTsHvloiqW25ibqKXAxSwa47E1g3/mBKAsre3SOTCsF6UpVY2+NNQhvjMhxAHE1IRXESFvWmHlQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DbE8Vcui; arc=pass smtp.client-ip=74.125.224.49
+Received: by mail-yx1-f49.google.com with SMTP id 956f58d0204a3-664d7863920so2218656d50.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Jul 2026 06:22:00 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783344120; cv=none;
+        d=google.com; s=arc-20260327;
+        b=CRIhmV6kmaSCjUcGxbm3/R/4BjHTI/mvZ2/QqRfGfquQGIKT4pUeq70TgzxJ694ZuY
+         aU1eEolNaiSoLZGyOcsAU/TghTahcRQT6UuD0bYCOURDKA7rpM6mzlia56ed/oqKSaPJ
+         sxVMi6M6zretPAbZGftjsF4w8P4quUSLjZSoFTQvJsCcLJxOzqI8ALM+h9dOuqSdZsxF
+         Njgc0LAHZOU+F3Azu6MOKXO88rwdqg+ne9MTSWix6Q+zS4++17fskWnj9rT6QNGTN+Vo
+         9gr3/Iek9cBCrXLfz9xguZvGCXAdy8j0W8eFugjUjtRNy8ks40q2QVvQdB7UZp9YSaHp
+         yfGg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=Crk8V3NFGTDCyc22U0OiJpfYC0BId6QVuYdAFk61QFs=;
+        fh=s5D1ynUGr//G150wPt1vZihXVVHb0guaMRG/GBOgo08=;
+        b=ijdUqhAufPZ4HzbtcJH/tO159rAZ9Hco/R5FtcFVPe9tBk5/xifI45lz2shT6N6gio
+         CzKe4wwrEb/g5l/jqirn8JDJ9sMU+CMIUMZcOTKIDraAfH+osxDc/8v7ORD0Ba9yFEHs
+         NHlJeIVbuQDDRFELxGaGqsPMgZu1ApIyefjKTok6WGSGsTNeJT15UeAMrc81wXeIOsM4
+         cw7c+IrWFEO3DMN8F5uI3pX3u07zjWpnt8hxlpEC5iRLabTkvvbLL49YdK4X23TRqTRT
+         XBY9HshRYPsj0RlOFEpTti11CJ42nwaswLZbYxGJvlANHbLR063hYlvpXuzkFR+JAnFE
+         ucsA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1783344120; x=1783948920; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=Crk8V3NFGTDCyc22U0OiJpfYC0BId6QVuYdAFk61QFs=;
+        b=DbE8VcuiydVfXlBkInQvRmwiawHbdxa/Ni2S5ZH30k1rcJ1LRWoAtD3wTUHGlJa18o
+         WLhPv6i1fF6p5mmOOyhcJNobnkqSNOTVCu8UkOFf154u7T2GoDyVDcUBKiuPESrzcV+f
+         jKJ8HzOL9d8M/syqO6CI1N5tjtrjck/uzo7IPXa884jDh9B5llR2r9Yj0mxZCHHH5of+
+         JhRjrJq5JF8jL+H7DJDR7hFK+kbk+sWSbyd1VfEGtR2sxE0rfZaoJOT4weNM1NzNEx46
+         Kv0r5fBNR9I+VF4u0mbaKeaS22m/EHhEoSDtWY3ti3MXXj3B4X0uzO5UdXlfebn4S2S7
+         NlwQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783344120; x=1783948920;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=Crk8V3NFGTDCyc22U0OiJpfYC0BId6QVuYdAFk61QFs=;
+        b=AKXyiXbYrbu+1QTHb8x9NO1UscNd493ZKui8uTg7fWvDW6mh/mx+zQkko/fxGX2BKG
+         fe95XyqPSFaq2k92gmLtQv9g/oSNEt8XiQCgtlyAImFLEO0oYSyJcFVwQruwYDk8FHis
+         P4xdCq4H/Ubyqiq72c9KR4amJkx9dcLiXo42U4XDQXcAQfqmDEWveS1rjd/YLyRGTS91
+         N7Mi9ddAk9x/AN29R61htw6qg99ThMPIDKO9FatpNU2konE6dYFma4Mwktu2XzgXFK4B
+         kiblFewmTSpHoLJkjBjsmHMSQCOj7tJn9+qumF20qoeaaAPD7ACqQo/x+rU6Nkw3K+8b
+         GXwQ==
+X-Forwarded-Encrypted: i=1; AHgh+Rrejr+RbdAHQlEqk0g80u6tDota1BBAjoxmc9EpLyQdEiBLHYLih77Qf/XAEc+NnTqYb2OZFm7rT7Jkfpu8@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw+3ftNxJyDzq+lhe9Zn+XgMfFcsaad24SBSWaeOaiAgPneiRsr
+	C31YTT7NdQD3TKIrri+4NWYZH5zTF+xVf3OOaJ697HbzFSsHOC6OARj+VVNBCzN8yJ9hb7KVji/
+	b5Idf+OBm6tYqyegke+tB9/3TfVFqhYI=
+X-Gm-Gg: AfdE7cmufDuDReAOH9crNKlUBjkCUZF2qrw/KRTqoWn/7J8YnZIRDO/4iIa1SEOcQys
+	FPreYwP2GzhkPXZ1sVlpBMMeQSxuDqeIgtIvPqEzAxsWsaR9Tv9NrvCdVwENh+F3ETaMkLlKu0T
+	wS2lLE8qtFCRA6PA08EVXU3riNvKHuTtqh9lGS05pEFEfY1q05xQf6KUG7rDrFFY01z0+Y0bX8z
+	nI/QrqHpmPUywM2fiHGUDPtvuOEpobrHnVskZ08LMKnHNlXNVYkZ8AwAj7nbEHUSJruFWe9S2WG
+	vXU9fZN22kR6h4qoc7+y3GxOVIJDLRF/T7g6ijZJW8MsJwDZmI22nJZD4j0=
+X-Received: by 2002:a05:690e:d4a:b0:664:ce2f:faaf with SMTP id
+ 956f58d0204a3-6677fadaca9mr563422d50.31.1783344119481; Mon, 06 Jul 2026
+ 06:21:59 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="26PrE7s8gGWJKuvD"
-Content-Disposition: inline
-In-Reply-To: <CAJZ5v0i4Zc4HNUdgJ_2=4=wv7vRDTugo71qsWnZxVRRqV+W8mw@mail.gmail.com>
-X-Cookie: Did I do an INCORRECT THING??
+References: <20260706121525.2717691-1-shuai.zhang@oss.qualcomm.com>
+In-Reply-To: <20260706121525.2717691-1-shuai.zhang@oss.qualcomm.com>
+From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Date: Mon, 6 Jul 2026 09:21:47 -0400
+X-Gm-Features: AVVi8Cf-YDNoL4XWaUnO0AcjXOX198k_S_3iGuDieL4X7Pj_zPzTnJZtt5mCgGQ
+Message-ID: <CABBYNZJTdONXJqKa5oR9EKAsZkLQBZ+w74GYQfKna79B4RCUMw@mail.gmail.com>
+Subject: Re: [PATCH v1] Bluetooth: Increase HCI_AUTO_OFF_TIMEOUT to 10 seconds
+To: Shuai Zhang <shuai.zhang@oss.qualcomm.com>
+Cc: Marcel Holtmann <marcel@holtmann.org>, linux-bluetooth@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	chejiang@qti.qualcomm.com, quic_chezhou@quicinc.com, 
+	wei.deng@oss.qualcomm.com, jinwang.li@oss.qualcomm.com, 
+	mengshi.wu@oss.qualcomm.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-7.26 / 15.00];
-	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
-	SIGNED_PGP(-2.00)[];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+X-Spamd-Result: default: False [-2.16 / 15.00];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
-	MIME_GOOD(-0.20)[multipart/signed,text/plain];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
 	MAILLIST(-0.15)[generic];
+	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_RECIPIENTS(0.00)[m:rafael@kernel.org,m:praveen.talari@oss.qualcomm.com,m:dkota@codeaurora.org,m:swboyd@chromium.org,m:girishm@codeaurora.org,m:alokc@codeaurora.org,m:bjorn.andersson@oss.qualcomm.com,m:konrad.dybcio@oss.qualcomm.com,m:lenb@kernel.org,m:pavel@kernel.org,m:gregkh@linuxfoundation.org,m:dakr@kernel.org,m:dianders@chromium.org,m:linux-spi@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:mukesh.savaliya@oss.qualcomm.com,m:aniket.randive@oss.qualcomm.com,m:chandana.chiluveru@oss.qualcomm.com,m:jyothi.seerapu@oss.qualcomm.com,m:linux-pm@vger.kernel.org,m:driver-core@lists.linux.dev,s:lists@lfdr.de];
 	FROM_HAS_DN(0.00)[];
+	TAGGED_FROM(0.00)[bounces-116857-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
+	FORGED_RECIPIENTS(0.00)[m:shuai.zhang@oss.qualcomm.com,m:marcel@holtmann.org,m:linux-bluetooth@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:chejiang@qti.qualcomm.com,m:quic_chezhou@quicinc.com,m:wei.deng@oss.qualcomm.com,m:jinwang.li@oss.qualcomm.com,m:mengshi.wu@oss.qualcomm.com,s:lists@lfdr.de];
+	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FORWARDED(0.00)[lists@lfdr.de];
-	RCPT_COUNT_TWELVE(0.00)[22];
-	FORGED_SENDER(0.00)[broonie@kernel.org,linux-arm-msm@vger.kernel.org];
-	ASN_FAIL(0.00)[1.2.3.5.c.f.2.1.0.0.0.0.0.0.0.0.5.7.0.0.1.0.0.e.5.1.c.3.0.0.6.2.asn6.rspamd.com:query timed out];
-	MIME_TRACE(0.00)[0:+,1:+,2:~];
-	TAGGED_FROM(0.00)[bounces-116856-lists,linux-arm-msm=lfdr.de];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
+	FORGED_SENDER(0.00)[luizdentz@gmail.com,linux-arm-msm@vger.kernel.org];
+	MIME_TRACE(0.00)[0:+];
+	FORWARDED(0.00)[lists@lfdr.de];
+	DKIM_TRACE(0.00)[gmail.com:+];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	FREEMAIL_FROM(0.00)[gmail.com];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[broonie@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[luizdentz@gmail.com,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	MID_RHS_MATCH_FROMTLD(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RSPAMD_EMAILBL_FAIL(0.00)[broonie@kernel.org:query timed out];
+	RCPT_COUNT_SEVEN(0.00)[10];
 	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sirena.org.uk:mid,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,vger.kernel.org:from_smtp]
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,vger.kernel.org:from_smtp,mail.gmail.com:mid,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 27433711A64
+X-Rspamd-Queue-Id: BBA72711C47
+
+Hi Shuai,
+
+On Mon, Jul 6, 2026 at 8:15=E2=80=AFAM Shuai Zhang <shuai.zhang@oss.qualcom=
+m.com> wrote:
+>
+> HCI_AUTO_OFF_TIMEOUT controls how long the kernel waits after an
+> adapter completes its initial setup before automatically powering
+> it off, in case userspace (bluetoothd) has not yet issued
+> MGMT_OP_SET_POWERED. This avoids leaving the controller powered
+> while unused.
+>
+> On platforms where other services are ordered ahead of it, the
+> actual time at which bluetooth.service starts and issues
+> SET_POWERED can be delayed past this 2 second window. For example,
+> cloud-init-local.service can perform a network metadata probe
+> during early boot, delaying bluetooth.service startup by several
+> seconds:
+>
+>     $ systemd-analyze critical-chain bluetooth.service
+>     bluetooth.service +594ms
+>      `-basic.target @9.342s
+>         `-sockets.target @9.335s
+>            `-snapd.socket @9.267s +58ms
+>               `-sysinit.target @9.025s
+>                  `-cloud-init.service @8.377s +604ms
+>                     `-cloud-init-local.service @7.000s +1.340s
+>                        `-systemd-remount-fs.service @3.257s +44ms
+>                           `-systemd-fsck-root.service @2.803s +394ms
+>                              `-systemd-journald.socket @2.223s
+>                                 `-system.slice @1.772s
+>                                    `--.slice @1.772s
+>
+> Once the 2 second window is exceeded, HCI_AUTO_OFF fires before
+> SET_POWERED is received, powering off the controller and losing
+> its firmware state. The SET_POWERED that bluetoothd eventually
+> sends then has to reopen the device, triggering an otherwise
+> avoidable repeat setup and firmware re-download, adding several
+> more seconds of delay.
+>
+> Increase the timeout from 2 to 10 seconds to give userspace on
+> systems with slower service ordering a more realistic window to
+> take over, avoiding this unnecessary repeat setup, while still
+> bounding how long an unclaimed controller stays powered on.
+
+Ok, but we have no idea if the system has Bluetooth enabled. Making it
+a 10 seconds timeout might leave Bluetooth powered unnecessarily.
+
+> Signed-off-by: Shuai Zhang <shuai.zhang@oss.qualcomm.com>
+> ---
+>  include/net/bluetooth/hci.h | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/include/net/bluetooth/hci.h b/include/net/bluetooth/hci.h
+> index 50f0eef71..ee3f295f9 100644
+> --- a/include/net/bluetooth/hci.h
+> +++ b/include/net/bluetooth/hci.h
+> @@ -483,7 +483,7 @@ enum {
+>  #define HCI_CMD_TIMEOUT                msecs_to_jiffies(2000)  /* 2 seco=
+nds */
+>  #define HCI_NCMD_TIMEOUT       msecs_to_jiffies(4000)  /* 4 seconds */
+>  #define HCI_ACL_TX_TIMEOUT     msecs_to_jiffies(45000) /* 45 seconds */
+> -#define HCI_AUTO_OFF_TIMEOUT   msecs_to_jiffies(2000)  /* 2 seconds */
+> +#define HCI_AUTO_OFF_TIMEOUT   msecs_to_jiffies(10000) /* 10 seconds */
+>  #define HCI_ACL_CONN_TIMEOUT   msecs_to_jiffies(20000) /* 20 seconds */
+>  #define HCI_LE_CONN_TIMEOUT    msecs_to_jiffies(20000) /* 20 seconds */
+>  #define HCI_ISO_TX_TIMEOUT     usecs_to_jiffies(0x7fffff) /* 8388607 use=
+cs */
+> --
+> 2.34.1
+>
 
 
---26PrE7s8gGWJKuvD
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Mon, Jul 06, 2026 at 01:49:07PM +0200, Rafael J. Wysocki (Intel) wrote:
-> On Mon, Jul 6, 2026 at 10:53=E2=80=AFAM Praveen Talari
-
-> >         /*
-> >          * On transient errors, if the callback routine failed an autos=
-uspend,
-> >          * and if the last_busy time has been updated so that there is =
-a new
-> >
-> > --
-
-> This is fine with me and I think that it's a quite significant change
-> for runtime PM, so I'd prefer it to go in through my tree.
-
-> I can take the other patch too if it gets ACKed for me.
-
-I've got a bunch of other stuff in flight for that driver - I'll need to
-check but just in case perhaps a tag I could pull in?
-
---26PrE7s8gGWJKuvD
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmpLq9UACgkQJNaLcl1U
-h9D4zgf9EYMicEtJ/deqUwzL8Y94faZjIRrNjzO1Pms6VFFvmNIrMtwtYwStR6k5
-IJAjbhfyNqoLy3KSk7DieQKJcOXbk/rThONhmTQ50GI1qX4eqg3W+44nB7+9tlFm
-YnmBPz3kOMZN9xJdlzkVCU456XiG7VGQlrlv1rgcFu9Tw47kqWjds0LYJTovkD7v
-Dm9mR4pHJhArtS0HppkG+S1Y4jkyauu+xqywkkwdD4yuhzUGZD7tc2SJAzZpqa+1
-4WCqO6O+eqx43nffuy76+54pOAvP6Dv3f8L6akTHYsQoTyGvpeldJSJYs9ncfxcJ
-xlEnUljuRFZflv++mmQ3JNUIJkMu7g==
-=8n3A
------END PGP SIGNATURE-----
-
---26PrE7s8gGWJKuvD--
+--=20
+Luiz Augusto von Dentz
 
