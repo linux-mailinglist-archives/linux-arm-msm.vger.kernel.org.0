@@ -1,53 +1,53 @@
-Return-Path: <linux-arm-msm+bounces-116643-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-116644-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id JPJ/IxxYS2oCPwEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-116643-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Jul 2026 09:24:12 +0200
+	id WnNQKA1TS2qHPQEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-116644-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Jul 2026 09:02:37 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id E302570D7CF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Jul 2026 09:24:11 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3EF6C70D42A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Jul 2026 09:02:37 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=cTN68ibj;
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b="O+E/Se9N";
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116643-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116643-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116644-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.232.135.74 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116644-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 7EA3431099D6
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jul 2026 06:57:06 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id CAC1D30B54CF
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jul 2026 06:57:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F32E23ED5A7;
-	Mon,  6 Jul 2026 06:33:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C10A93F0745;
+	Mon,  6 Jul 2026 06:34:55 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 304CE3E7BD1;
-	Mon,  6 Jul 2026 06:33:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDF423D75A1;
+	Mon,  6 Jul 2026 06:34:41 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783319638; cv=none; b=rIzoToEiQ5SAnn0GvXZOth20NZPkDMiShuYUfuf3KnV7YuljHuAiR2TvRKAbzk0mJmi5iToq9nJ3+ksTJR35X9gglcOp9h0Pgid6e1+QJbkzdpidCLNcJPf7ZhnlyWFxjhGTpQnezh3xaKeqRBIDH8mVnp6kQSxDX0EJi6IgdXo=
+	t=1783319693; cv=none; b=ddasY6g70vz6OT5McimOPkxxlTNmvsBdT8My2ZfiioKyYecR3Fhrbp7MJ0cIsmJa7KBi3ZLIWScqbjH7CDLKBJFK8MQx8yOqPCTZX1EXuqUZHCvuFW0a698TvGnEb6DiNMUUz3lQlHAEOW3kZ5MnzA3UfM/jLg2SUyr1AqwdjJY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783319638; c=relaxed/simple;
-	bh=JXOn9+h7mItQ1E+NCPkS7q2wae9cn4oyTTSdrSJqofA=;
+	s=arc-20240116; t=1783319693; c=relaxed/simple;
+	bh=43Q0PUU6e7gh9+IV2tEAPkjxbSA6I5+wzjAVg9QKBUs=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=QURbfCwHiws+3Ahgspx6zwyeTLWApGJELvapB9zz/upN2kY8Grxm0z2j0bTHPatnCopMGjddiKxzhfa/i7o0dg8QPdcyUPlQHkMQOZBJRrkAGNBbwyantQzgWcSWbV0+eEeHwNYVaLcCMq2yf5x9P5EP36wC/bB94qbInAQXCtw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cTN68ibj; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 559781F000E9;
-	Mon,  6 Jul 2026 06:33:33 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=O1ZVZ3WjMVWbrYtSd8p0hZMaPNFMQLtBVpFkN0BpJHOO2UwtWr3l77/h4gquV4BvYbWWQ/akzrkC9ISzN0zigF9T/lcbSjuYQJIc5+GlWREn1VksqTQTYvBXPbm9KB/6i0umxaUuZr1b+otBkovT16sts94s5wrU44G2li87kYI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=O+E/Se9N; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4B9E1F00A3A;
+	Mon,  6 Jul 2026 06:34:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783319618;
-	bh=TjpljZhcmgX/qkVyjNnr9DtlbSx/kcSLX6oIzJUbFng=;
+	s=k20260515; t=1783319677;
+	bh=UmzUADwd9d9u8sv+rvjGQDpsHQk/owmcrIigPJb44Dc=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=cTN68ibjRg8luJIg1RbtteQ4JN7OYWBxLveQaB9fxImvMgA7Bt3Nu5q9bh0c7zv4G
-	 UnvcS2MLoXF3eiEnfiKRZ7DURmBi0nLXJPU8x+4JUnamGUhTqUohF57V2LTrKDz9PK
-	 SdR1oAnqUpwyfWvdbQ3SjKDpAouH77VmyaoAKrVC3DtY0o8qExs0QbmmftXB5yyeHJ
-	 i+/mXfHgPl0PN7NZgWLhR45aUF4JeKtAlqbyhJjW1DVjDypCtJho0stozIxxOGJkJ1
-	 5K4fo5zemK2WWFUL5hIJFnmcG4dUJR3PRdP7A5wybSI1wZd8rihZaclwOvvu6On/5x
-	 LvI9ma7+u+b2g==
-Message-ID: <7815e3ac-30c7-4564-9a7a-6a1ecb9278c8@kernel.org>
-Date: Mon, 6 Jul 2026 08:33:32 +0200
+	b=O+E/Se9NqFgFF09E2s4BlWxMsuEpCJg3R6cvBxo0ek3i0jtNIEKHIYZI4AAN4/Fvf
+	 FSzLL9DjSspTHf1OSven3HACvQMxLMnm1WuqZS7DBFmbQpOJAexEgzybTlWHwE/y0+
+	 RXeW8jyg5zPSgnKz57IQOb4aelaficYVoJSK1GihnQ+gXG0Ou904ma1YH3FhEum5aS
+	 jx9ogjl9DRUIqtEz/4HR7oyr3J3iZD8OkqQIwG+l24SSo9+AA0/blBw360e9WMMdWV
+	 dPkr1O4mid7e/bB2H08qe4AXCqBy4GtwTFRyejWVyEJPId3KFYbDzPaLDpZkHhfFxb
+	 4EfARJaRR2g4Q==
+Message-ID: <67fa53b2-b412-40a5-8bf4-b47d370525d9@kernel.org>
+Date: Mon, 6 Jul 2026 08:34:30 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -55,7 +55,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/4] arm64: dts: qcom: shikra-cqm-evk: Enable display
+Subject: Re: [PATCH v2 4/4] arm64: dts: qcom: shikra-cqs-evk: Enable display
  and add ili7807s panel
 To: Nabige Aala <nabige.aala@oss.qualcomm.com>,
  Bjorn Andersson <andersson@kernel.org>,
@@ -65,7 +65,7 @@ Cc: Arpit Saini <arpit.saini@oss.qualcomm.com>,
  linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org
 References: <20260706-shikra-dt-changes-v2-0-56fcd1659ea4@oss.qualcomm.com>
- <20260706-shikra-dt-changes-v2-2-56fcd1659ea4@oss.qualcomm.com>
+ <20260706-shikra-dt-changes-v2-4-56fcd1659ea4@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -111,7 +111,7 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  K9bCVaboTA2T77QYkRcRJYSsO1alGX0ome/hMLD1daXlkrNUp1HWa3K4iytLRXjCSIorWiGs
  n+q3krnpXu3TFkA8qtOFZMdnIiFuiq1yLT8hptsV5xh1TA2nsVvSYiaCr3q4s4BKjS/KrLDb
  qoxzw8ISjdUp4pA85vb6YLCmb39NgidD+7PmAr65lBNveIFynTgsja1rRQ4=
-In-Reply-To: <20260706-shikra-dt-changes-v2-2-56fcd1659ea4@oss.qualcomm.com>
+In-Reply-To: <20260706-shikra-dt-changes-v2-4-56fcd1659ea4@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Rspamd-Action: no action
@@ -119,18 +119,18 @@ X-Spamd-Result: default: False [-5.16 / 15.00];
 	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-116643-lists,linux-arm-msm=lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:nabige.aala@oss.qualcomm.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:arpit.saini@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	TAGGED_FROM(0.00)[bounces-116644-lists,linux-arm-msm=lfdr.de];
+	RCVD_COUNT_THREE(0.00)[4];
 	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
 	MIME_TRACE(0.00)[0:+];
-	RCVD_COUNT_THREE(0.00)[4];
+	FORGED_RECIPIENTS(0.00)[m:nabige.aala@oss.qualcomm.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:arpit.saini@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	FORWARDED(0.00)[lists@lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	DKIM_TRACE(0.00)[kernel.org:+];
@@ -144,13 +144,32 @@ X-Spamd-Result: default: False [-5.16 / 15.00];
 	RCPT_COUNT_SEVEN(0.00)[10];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,vger.kernel.org:from_smtp,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: E302570D7CF
+X-Rspamd-Queue-Id: 3EF6C70D42A
 
 On 06/07/2026 08:04, Nabige Aala wrote:
+> From: Arpit Saini <arpit.saini@oss.qualcomm.com>
+> 
+> Enable the Qualcomm Shikra MDSS display subsystem on the Qualcomm Shikra
+> CQS EVK board and add the DLC0697 MIPI DSI display panel node.
+> 
+> Signed-off-by: Arpit Saini <arpit.saini@oss.qualcomm.com>
+> Signed-off-by: Nabige Aala <nabige.aala@oss.qualcomm.com>
+> ---
+>  arch/arm64/boot/dts/qcom/shikra-cqs-evk.dts | 126 ++++++++++++++++++++++++++++
+>  1 file changed, 126 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/shikra-cqs-evk.dts b/arch/arm64/boot/dts/qcom/shikra-cqs-evk.dts
+> index 26ff8007a819..8c4a8bc01595 100644
+> --- a/arch/arm64/boot/dts/qcom/shikra-cqs-evk.dts
+> +++ b/arch/arm64/boot/dts/qcom/shikra-cqs-evk.dts
+> @@ -23,6 +23,39 @@ chosen {
+>  		stdout-path = "serial0:115200n8";
+>  	};
+>  
 > +	lcd_bias: regulator-lcd-bias {
 > +		compatible = "regulator-fixed";
 > +		regulator-name = "lcd_bias";
@@ -163,16 +182,10 @@ On 06/07/2026 08:04, Nabige Aala wrote:
 > +
 > +	vph_pwr: vph-pwr-regulator {
 
-Why so inconsistent names?
+Same comments.
 
-Anyway, drop the node, not used and not controllable.
-
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "vph_pwr";
-> +		regulator-always-on;
-> +		regulator-boot-on;
-
-
+Also, please organize your patchset correctly, so some other work is not
+in the middle of DTS. Splitting your DTS changes suggests dependency.
 
 Best regards,
 Krzysztof
