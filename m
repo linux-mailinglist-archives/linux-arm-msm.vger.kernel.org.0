@@ -1,84 +1,84 @@
-Return-Path: <linux-arm-msm+bounces-116744-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-116745-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id 4C8OFk6NS2qSVQEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-116744-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Jul 2026 13:11:10 +0200
+	id 2TfIJfeLS2oLVQEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-116745-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Jul 2026 13:05:27 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id BA96D70FAF4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Jul 2026 13:11:09 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id F0BA770FA15
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Jul 2026 13:05:26 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=linaro.org header.s=google header.b=yeb9lfrm;
+	dkim=pass header.d=linaro.org header.s=google header.b=Tez11U9N;
 	dmarc=pass (policy=none) header.from=linaro.org;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116744-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116744-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-116745-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-116745-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id D0A3533E09C1
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jul 2026 10:21:02 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 275653601BF4
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Jul 2026 10:22:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D628C37BE72;
-	Mon,  6 Jul 2026 10:19:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6152A302140;
+	Mon,  6 Jul 2026 10:21:38 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01540370ACE
-	for <linux-arm-msm@vger.kernel.org>; Mon,  6 Jul 2026 10:19:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B75F636F91D
+	for <linux-arm-msm@vger.kernel.org>; Mon,  6 Jul 2026 10:21:36 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783333187; cv=none; b=iCTpWRGzhw3kDgxVDiuJ6czcxJLo3Qm3TN3wxWj0iNq30arbQisCOC/8PmF/fyEpI+02LvH8TXWmETuXUmcWXS6CJhAIF3hOmsWqD0n/ycI3gMn728H66VZFHIpBQEcYX3Zps5KDbkjFOPkXgLAuQg8G8evzuS8X0oIn30tKzpA=
+	t=1783333298; cv=none; b=eNN76nnuAO8VaNhXtnhJiQ96WkTZowWr6fJARG43F4E1OeX3DVy18UsUPD2UZugvMgKSFhUn9Oxj0SyRQDbrfh85JIR8sf9IiAMh5PMBUSZxGU9EP+ZQ56/3u7TGF2ldxIvt82oyRLYqpkqSDD9OaL+okufQV1bZa+63LowswBQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783333187; c=relaxed/simple;
-	bh=KmfR6yIAJ2fYTP1OLR4lLsR44XEMajPeyLYwK0BAJsA=;
+	s=arc-20240116; t=1783333298; c=relaxed/simple;
+	bh=6S2SgvezqyhABsae8XaEo3jxLGIxyVwk8lMJAuwNXbs=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=t1gqnEobjo+Ah53k9yA4KGmn4J7a2oVqdQq6GCGblcLhpNfLWnjaL8JJF842rEy4XtppqWSvzFUopJcQU+iLInBh1P6wwaibIph4VcURxn9dlWUi6TeTPNw9XCJ5bMDbooEkddlbbZieng7CqIor4x+MKMbSNJuMrErmCowDa0w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=yeb9lfrm; arc=none smtp.client-ip=209.85.208.48
-Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-698b899b4c8so2549825a12.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Jul 2026 03:19:45 -0700 (PDT)
+	 In-Reply-To:Content-Type; b=UABP68X9gjyFGU9hcmjKlk+uu0hAck9p7Hndn5EovdC4OzKmg2DB8IU2o7+UZY7t2RDTXv8iobHgRQxspybsUq2Ei3v45IUOP60kBgCex05hjkqwsWXPxSV+11T+yjuR09E1/p/kjVdYcioOzNdAQ8bJdHZXCMALvTBzkRNavyg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Tez11U9N; arc=none smtp.client-ip=209.85.218.48
+Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-c126fe7d0f3so362345666b.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Jul 2026 03:21:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1783333184; x=1783937984; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1783333295; x=1783938095; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=74gU3islGwdmxnesUaUsU+krAV2TXhAdAquxY2zrLBI=;
-        b=yeb9lfrmZAuSU5aFKe3IupMgjw07nos7Rv8UtZbGvLisy7Ro58Y+0jpSWOdYqIo0BF
-         wUNhy8sYQ91rTmSJoRAW5E/d9WnF7rL9dmu8vKPzS96gQ6laXocBkh9gNqlzorMgRq9s
-         rNHcjix65uBMdVovu3qADKyPDERvC3A7X5fQuPBI9zlSQPV/hjAMrMZQRrcb37X/roNK
-         8naPzIFoGve69cRcp1uR9D9FXK/aRpZXjHMmBQIkxUIFsoCDtK2OxBNrYFBIfZd5D4Jh
-         lHS5ozylSLhONajDHXrqHzlzAvMKB2K1khsWi+HYEnXLgqVHf0pxbuIZ5b+7KHfEFEjG
-         YKcw==
+        bh=0UD0HPClBBvfFssPeNFF6X+teF7h23w+B5z9TKSsVY8=;
+        b=Tez11U9NL8HXVswVPhA0+GXvfmqYQquQxZx/SN6yhub7TZE9oXfJ5z8kyKlvF+fLZf
+         m/u6s8oYaZT2FC9QhV47GD62KirlnXY7GiMeYwTY/UKBQ5x7gC+3n8v35nyw1y5FV+nL
+         sY5ejvxNL4vi+5Qv9rTMQ5wTE8TtOyCLJ1NrBqJDV+8r6QYGcm5UEiCNxoERFwk0JTs0
+         1swFoFPZyrYbdiV2lXFTIS3cOik9z80vilbq/Ch8IBgQB6mrFfy3NmQfxY8PZ+0jwAde
+         NmLF4mUvsv39qgqtp4YKeSqaASN/nhRwY3c/bpo48dYmas7GCkdqnav699NqSb+Af87Z
+         xkug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783333184; x=1783937984;
+        d=1e100.net; s=20251104; t=1783333295; x=1783938095;
         h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=74gU3islGwdmxnesUaUsU+krAV2TXhAdAquxY2zrLBI=;
-        b=f1l21VStQNcc4pa3rWzMTv2ReYN96OQCG7e1OfWXs9kDxhdrJDyQ/SNm57PMIqiNNL
-         5V+mEIHkeHh8uh74B4eMX+tzEzQLUAMdNmDhlyPxZWRl0NkpzZNsGnOqYLw445ANJzPp
-         /h7ZmbpESdmPlPRFEQ9BikVfnQrCjulnszsxniTKF/wX6GFVddX2FhaLIHl5zYrkEu+X
-         186HzjPeKeDMZoQoyScu0fOOw2P0ZyZitgb9Kvlh3tRsPfJ8iIflLcA9T+1gQ40ysZ4k
-         xKYfNMyA6nStMoyxxjPzdo3TRrAA3j/hpdO31NLyA9Q9BFYjHb1DvyZdLnFz1QxiGfvC
-         dBwQ==
-X-Forwarded-Encrypted: i=1; AHgh+RpfbszVypiLauKTavEymOfYzLY4lMMOvxGI5+B45pvyO3NtbpBRvCMpSpbvIQf5e5DGQ/2VIdo/V9ZapCGW@vger.kernel.org
-X-Gm-Message-State: AOJu0YwKfNpJaR7DqLafjD15tPWmwPZ9UR+CKqfLPaBVn39pyTaE7LO0
-	25u28vg2+gX1IscHtV2XiJwurxe3ikK7+I3Ut5hpzqJrTG30Zrnt6VkdzfYYmZ172Dk=
-X-Gm-Gg: AfdE7cn8JRSfQRZGRbbQ1J37KPzTxvn6+RZhLQd5oVeyr9UtbUqR5DEIYbZIJUC+JKc
-	GprQNq8c1gW3WyggHDJgG1kOlst4EkVwCgnOi8zH1bpcbCGRLX4qkRpZH/QNd1iX5y4VJfMKd/0
-	GlkMurgNqIuKzeyQ6yBNB3WpmC03oczuLzGBRbnyOdkdMZyJXeKw0EX8CTe4P9ZjSHHFT8uQbgN
-	1Mb9wYvjfXM/3ZpXxfaB04K125rOH6iaP8TiW9uO7aBvVCjwiUXm5w+l6Pv4cNt5znawlEMeqFD
-	qI281HYIt5L8grAJQIJ6Ba7QijAAcLrQgvv1fUlySkmbXzHYnC1n0P8ezsZ6jUhg7kDjM/8tS8g
-	jL/fyAFqUC/RjwnPvroG7hi69Nv/s0ki+RzvTvInocLSGRP8ElHFfxXgzpq89OaT6y7SZ+OQZi3
-	78SFOK419MFYS6fgSpfYFK9dftXqml0IzBfGYf
-X-Received: by 2002:a05:6402:a204:10b0:69a:11a3:ae82 with SMTP id 4fb4d7f45d1cf-69a85c0b975mr170a12.25.1783333184042;
-        Mon, 06 Jul 2026 03:19:44 -0700 (PDT)
+        bh=0UD0HPClBBvfFssPeNFF6X+teF7h23w+B5z9TKSsVY8=;
+        b=cXi5hWZbKgT9Wm46d3X9+HnbXiIMV1SZB6i4hBjP77ySacL/pjpPxXjZvuXOwFh2RN
+         PPzp3mHY9+fowitqBLKhl/TtOxACtoeBy7fXt3Qjw77zI65TOVZBQ2xPXp029bC3yinU
+         JSUofodLhE7sU/4+iFh10f/3CTzKQpW0FMyZNJWYPSnt1sVI13PAoaUIR86hJOYoOz9k
+         TinQ/sW1vYnUXgNymTJ0Z95wd1fCL2sK9HVFGCCmdbQjqi+IvteP7ct1e/SgNNJI3pqw
+         5B0RXYrpm+2CRKwfNFjhQ9K0sQqURwphs1C7LVXWNwQRbFG2Ze2U39BuZXf6LU1vfrBd
+         j1HA==
+X-Forwarded-Encrypted: i=1; AHgh+RrvtvWo4ueKxaqmwebXivlgHkZ3cr0hUBXVPlFEBzUKa5uc32nRyP6pP2QKIeUn0LVFkCh1WyiwI8DUihIT@vger.kernel.org
+X-Gm-Message-State: AOJu0YyscWsYbS12h2NCcd2YEKyltAQRYISdXPMugWUXqEOV3pwaAD4f
+	B78H69P29SggbZH1EYqDrjlTDUbwfkUCDPiEef4jMdtxRHjjCDuGYLgUFSbC1REy2sA=
+X-Gm-Gg: AfdE7clVSgg5duKRTXlx7yJMyLw9iYWsNIpX9bhcpdM3JHxFlm6McdLnH/IG6haZgpO
+	oiqugRABF9eQ4+en3aecRJDDd8nNpleUv5CW7sFyIp/H7GvUJYIZpMNgt2R5zPXdLs1bgCo2o3w
+	wwZFzgumzp8CkG6dTB1EcKO6SmDKlLVT9ndbznQ06yp9kWtpz9RGp8QLDnRXXM5bl7xu+cDkB2u
+	xPJAXSj4cVYyv+Tq1vtl7q1RCf2VOkYyGCc/7kfAR1enbbJeDvyHksmtRNUFQ5L1P6ezKJNR0Mj
+	XGWqGJkNyygFmCLcZJmVNJ7JmqCl2bRZGD4Gfe1cLr5RHPuZ7ZyjHiaYj55nYBp85Q3Me/D4QRx
+	o5wSwJYdsfao3gtcXHI++6QTK8ONhXZvCgNBZ9IcSuMN6UBZBrksEIeWqjuR46U88SrkuDaubT9
+	wHjdzvfzMyAT0jSTgDBj0WKr/PTQ==
+X-Received: by 2002:a17:907:9349:b0:c12:951a:48f1 with SMTP id a640c23a62f3a-c12e694c9bemr307424166b.22.1783333295018;
+        Mon, 06 Jul 2026 03:21:35 -0700 (PDT)
 Received: from [192.168.0.101] ([109.77.44.220])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-69a19d78a08sm3829915a12.18.2026.07.06.03.19.43
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c12b60f5ed2sm711731566b.28.2026.07.06.03.21.33
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 06 Jul 2026 03:19:43 -0700 (PDT)
-Message-ID: <ff2a7084-f343-4121-8e44-a0777856af09@linaro.org>
-Date: Mon, 6 Jul 2026 11:19:42 +0100
+        Mon, 06 Jul 2026 03:21:34 -0700 (PDT)
+Message-ID: <f5665b0c-bf9c-4937-a0fa-2b245e8093f4@linaro.org>
+Date: Mon, 6 Jul 2026 11:21:33 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -86,7 +86,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 3/5] dt-bindings: media: qcom: Add JPEG encoder binding
+Subject: Re: [PATCH v4 5/5] media: qcom: jpeg: Add Qualcomm JPEG V4L2 encoder
 To: Atanas Filipov <atanas.filipov@oss.qualcomm.com>,
  linux-media@vger.kernel.org
 Cc: vladimir.zapolskiy@linaro.org, loic.poulain@oss.qualcomm.com,
@@ -95,22 +95,22 @@ Cc: vladimir.zapolskiy@linaro.org, loic.poulain@oss.qualcomm.com,
  linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
  devicetree@vger.kernel.org
 References: <20260706071113.383215-1-atanas.filipov@oss.qualcomm.com>
- <20260706071113.383215-4-atanas.filipov@oss.qualcomm.com>
+ <20260706071113.383215-6-atanas.filipov@oss.qualcomm.com>
 From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260706071113.383215-4-atanas.filipov@oss.qualcomm.com>
+In-Reply-To: <20260706071113.383215-6-atanas.filipov@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Rspamd-Action: no action
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-116744-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-116745-lists,linux-arm-msm=lfdr.de];
 	RCPT_COUNT_TWELVE(0.00)[13];
 	MIME_TRACE(0.00)[0:+];
 	RCVD_TLS_LAST(0.00)[];
@@ -126,200 +126,32 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[bryan.odonoghue@linaro.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	ALIAS_RESOLVED(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:from_mime,linaro.org:dkim,linaro.org:mid,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,devicetree.org:url,vger.kernel.org:from_smtp,qualcomm.com:email]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,linaro.org:from_mime,linaro.org:dkim,linaro.org:mid]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: BA96D70FAF4
+X-Rspamd-Queue-Id: F0BA770FA15
 
 On 06/07/2026 08:11, Atanas Filipov wrote:
-> Add device-tree binding for the Qualcomm JPEG encoder hardware block
-> present in SM8250 (Kona) SoCs.
-> 
-> The JPEG encoder is a standalone hardware IP within the camera subsystem
-> that performs JPEG compression in memory-to-memory fashion.  It is
-> separate from the CAMSS ISP pipeline and has its own register space,
-> interrupt, clocks, power domain, IOMMU streams, and interconnect paths.
-> 
-> Signed-off-by: Atanas Filipov <atanas.filipov@oss.qualcomm.com>
-> ---
->   .../bindings/media/qcom,jpeg-encoder.yaml     | 151 ++++++++++++++++++
->   1 file changed, 151 insertions(+)
->   create mode 100644 Documentation/devicetree/bindings/media/qcom,jpeg-encoder.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/media/qcom,jpeg-encoder.yaml b/Documentation/devicetree/bindings/media/qcom,jpeg-encoder.yaml
-> new file mode 100644
-> index 000000000000..e4c16388ef07
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/media/qcom,jpeg-encoder.yaml
-> @@ -0,0 +1,151 @@
-> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/media/qcom,jpeg-encoder.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm JPEG Encoder
-> +
-> +maintainers:
-> +  - Atanas Filipov <atanas.filipov@oss.qualcomm.com>
-> +
-> +description:
-> +  Qualcomm JPEG Encoder is the JPEG encode hardware present in Qualcomm SoCs.
-> +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - qcom,sm8250-jenc
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  interrupts:
-> +    maxItems: 1
-> +
-> +  clocks:
-> +    maxItems: 6
-> +
-> +  clock-names:
-> +    items:
-> +      - const: hf_axi
-> +      - const: sf_axi
-> +      - const: core_ahb
-> +      - const: cpas_ahb
-> +      - const: cnoc_axi
-> +      - const: jpeg
-> +
-> +  interconnects:
-> +    maxItems: 3
-> +
-> +  interconnect-names:
-> +    items:
-> +      - const: cpu-cfg
-> +      - const: hf-mnoc
-> +      - const: sf-mnoc
-> +
-> +  iommus:
-> +    maxItems: 1
+> +------------+-----------------------------+-------------------+
+> | Resolution |    HW v4l2jpegenc (q100)    | SW jpegenc (q100) |
+> |            | Execution | avrFPS | maxFPS | Execution |  FPS  |
+> +------------+-----------+--------+--------+-----------+-------+
+> |   512x512  | 2.2332    | 1139.1 | 1195.4 | 7.1055    | 358.0 |
+> |  1280x720  | 1.7300    |  418.5 |  457.2 | 5.0585    | 143.1 |
+> | 1024x1024  | 1.6991    |  374.3 |  397.4 | 4.7304    | 134.4 |
+> | 1920x1088  | 1.6596    |  192.8 |  193.8 | 3.7913    |  84.4 |
+> | 2048x2048  | 1.7277    |   92.0 |   91.6 | 3.6343    |  43.7 |
+> | 4096x4096  | 1.5887    |   25.2 |   25.3 | 4.2163    |   9.5 |
+> | 8192x8192  | 1.3104    |    7.6 |    8.0 | 2.9987    |   3.3 |
+> +------------+-----------+--------+--------+-----------+-------+
 
-We've been asking people to name the IOMMU SID to ensure we are 
-including the right SID.
+Nice thank you this will really help me verify/test your work.
 
-My own view is we should have a header for these items with a meaningful 
-name - separate argument I'm not asking for that here but please do add 
-a comment naming the SID.
-
-> +
-> +  operating-points-v2: true
-> +
-> +  opp-table:
-> +    type: object
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - clocks
-> +  - clock-names
-> +  - interrupts
-> +  - interconnects
-> +  - interconnect-names
-> +  - iommus
-
-If we have clocks and interconnects, there is no reason to omit 
-power-domains.
-
-Otherwise looking pretty good to me, thanks for sticking with it.
-
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/clock/qcom,camcc-sm8250.h>
-> +    #include <dt-bindings/clock/qcom,gcc-sm8250.h>
-> +    #include <dt-bindings/interconnect/qcom,icc.h>
-> +    #include <dt-bindings/interconnect/qcom,sm8250.h>
-> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
-> +
-> +    jpeg-encoder@ac53000 {
-> +        compatible = "qcom,sm8250-jenc";
-> +        reg = <0xac53000 0x1000>;
-> +
-> +        interrupts = <GIC_SPI 474 IRQ_TYPE_EDGE_RISING>;
-> +
-> +        clocks = <&gcc GCC_CAMERA_HF_AXI_CLK>,
-> +                 <&gcc GCC_CAMERA_SF_AXI_CLK>,
-> +                 <&camcc CAM_CC_CORE_AHB_CLK>,
-> +                 <&camcc CAM_CC_CPAS_AHB_CLK>,
-> +                 <&camcc CAM_CC_CAMNOC_AXI_CLK>,
-> +                 <&camcc CAM_CC_JPEG_CLK>;
-> +        clock-names = "hf_axi",
-> +                      "sf_axi",
-> +                      "core_ahb",
-> +                      "cpas_ahb",
-> +                      "cnoc_axi",
-> +                      "jpeg";
-> +
-> +        interconnects = <&gem_noc MASTER_AMPSS_M0 QCOM_ICC_TAG_ACTIVE_ONLY
-> +                         &config_noc SLAVE_CAMERA_CFG QCOM_ICC_TAG_ACTIVE_ONLY>,
-> +                        <&mmss_noc MASTER_CAMNOC_HF QCOM_ICC_TAG_ALWAYS
-> +                         &mc_virt SLAVE_EBI_CH0 QCOM_ICC_TAG_ALWAYS>,
-> +                        <&mmss_noc MASTER_CAMNOC_SF QCOM_ICC_TAG_ALWAYS
-> +                         &mc_virt SLAVE_EBI_CH0 QCOM_ICC_TAG_ALWAYS>;
-> +        interconnect-names = "cpu-cfg",
-> +                             "hf-mnoc",
-> +                             "sf-mnoc";
-> +
-> +        iommus = <&apps_smmu 0x2040 0x400>;
-> +
-> +        operating-points-v2 = <&jpeg_opp_table>;
-> +
-> +        jpeg_opp_table: opp-table {
-> +            compatible = "operating-points-v2";
-> +
-> +            opp-100000000 {
-> +                opp-hz = /bits/ 64 <400000000>,
-> +                         /bits/ 64 <100000000>;
-> +                opp-peak-kBps = <76800 104166 104166>;
-> +                opp-avg-kBps = <38400 33569 33569>;
-> +                required-opps = <&rpmhpd_opp_min_svs>;
-> +            };
-> +
-> +            opp-200000000 {
-> +                opp-hz = /bits/ 64 <400000000>,
-> +                         /bits/ 64 <200000000>;
-> +                opp-peak-kBps = <76800 208333 208333>;
-> +                opp-avg-kBps = <38400 67138 67138>;
-> +                required-opps = <&rpmhpd_opp_low_svs>;
-> +            };
-> +
-> +            opp-400000000 {
-> +                opp-hz = /bits/ 64 <400000000>,
-> +                         /bits/ 64 <400000000>;
-> +                opp-peak-kBps = <76800 416666 416666>;
-> +                opp-avg-kBps = <38400 134277 134277>;
-> +                required-opps = <&rpmhpd_opp_svs>;
-> +            };
-> +
-> +            opp-480000000 {
-> +                opp-hz = /bits/ 64 <400000000>,
-> +                         /bits/ 64 <480000000>;
-> +                opp-peak-kBps = <76800 500000 500000>;
-> +                opp-avg-kBps = <38400 161132 161132>;
-> +                required-opps = <&rpmhpd_opp_svs_l1>;
-> +            };
-> +
-> +            opp-600000000 {
-> +                opp-hz = /bits/ 64 <400000000>,
-> +                         /bits/ 64 <600000000>;
-> +                opp-peak-kBps = <76800 625000 625000>;
-> +                opp-avg-kBps = <38400 201416 201416>;
-> +                required-opps = <&rpmhpd_opp_nom>;
-> +            };
-> +        };
-> +    };
-
+---
+bod
 
