@@ -1,68 +1,67 @@
-Return-Path: <linux-arm-msm+bounces-117069-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-117070-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id dr3PG2ZWTGpVjQEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-117069-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Jul 2026 03:29:10 +0200
+	id xLtXBX9WTGpejQEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-117070-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Jul 2026 03:29:35 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3B8D071696E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Jul 2026 03:29:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 85BAC71697E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Jul 2026 03:29:34 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=hR68eRHR;
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b="VVhezJT/";
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117069-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117069-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117070-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117070-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 21105305489B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jul 2026 01:27:44 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id B1EEE3026F08
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jul 2026 01:27:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 697C831280D;
-	Tue,  7 Jul 2026 01:27:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 587B73033E7;
+	Tue,  7 Jul 2026 01:27:41 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EF35306754;
-	Tue,  7 Jul 2026 01:27:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 375B430C35C;
+	Tue,  7 Jul 2026 01:27:40 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783387660; cv=none; b=pbMr/VlPsE4li3+m2XjzmoPPwfVfiQ3Qi32eQhkb4+tFX0b7uRQZgpIdgM7HUbRVguph/PkjGGvkyR9y0LOW0wjeNFsMEC4Y4kXGXSrIUBKIssFeltDpXNf9s+Bi7Jv/LrrRATjjs6BSStxJgndHkvlioXlB86XaXvaE+uoIsoU=
+	t=1783387661; cv=none; b=Zy6iQAGRIu/3+1viORL3xp6RO3Ez2+xoljNfhS9AFq80Pb78xO1b79A6mRLgnK3iCiWPlczEB3Ni37+zpkTfVvk9GKiorGpSm0fO7Ceb26GBmvK5zebCu8FzMW1aPpAGW1/GcBj+K9uQeB11ByNPNWBkHLgsMNQ6egLao9FiQlw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783387660; c=relaxed/simple;
-	bh=qQ//YgLqWkdgNTemrzuyrW8qhJcuPYPlkerL9S1lCqc=;
+	s=arc-20240116; t=1783387661; c=relaxed/simple;
+	bh=lKikNrtn2777NWOdi7L/a9lLw0ZwNS1KP78s50iyAn8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=f4Vneb0FWNDAPeA0DGYH1pwachR8+VTJ9P65+FQMiFrW7v+ntWEzarVRfph6l7BJ7jys0s/MnWokRbTCj6qyxbh1H2cMn0BdjiZYbD7TyjGbc/r7VOgrvSAeqqvCIlefNiVPpljWJdjJiPIB6mipePHe+6XNPPCdpcTHNd6dazE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hR68eRHR; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CEB71F00A3D;
-	Tue,  7 Jul 2026 01:27:38 +0000 (UTC)
+	 MIME-Version:Content-Type; b=QIwDHAyqk0PIheVY4LHIQiiooY70eH+cQ2C5osjqTlsIDHMtWY5mWj2py4AKN/E9sTM/G9h55jfnoONOrnyL+oEF2THeI7QHnJPy1G6L46PDl3geYmBA2NVFSTjXZEMUCKXNk38Lwrko3brOjpvO24WnDfBmWzOYfxrL0ePhG68=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VVhezJT/; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D3EF1F00A3E;
+	Tue,  7 Jul 2026 01:27:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783387659;
-	bh=4Hf7KqZHVlyxFiYu37JviDfthq6mPbb6NWioe0kIXso=;
+	s=k20260515; t=1783387660;
+	bh=8T7mAhMd2hZIAwS0kzUHwDM4YFKtP4qsdivwQ61CtYg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hR68eRHRe33+4XnCRKJgJOeFu/8U1OElWi4/ckH+g/g7urHoDwfptDqm2APUe1PPB
-	 DvnDItRSeigLzgTg9zhhje++A3rCkHfY5XOPcAOzo3MtJxZEcjtYeqWzOh5ZG8ctnS
-	 5VMLhq0L0RDPpe8UbJMj4NlfpNdpcwsSuMcmVEHR2Z9DSbLD///QbqZXfskkOsmjZB
-	 jEzFfY0caMvj/Kwzcn8hsi9hgBzhd7ILUMBfHzOxOD85y1GR3dvy1vBbEqUSmeDbzy
-	 YpGHn2AARkTB8BvztjUjIyTBzP+lQ1H6pUtR5g4g8S7byTSzHEZjt53Piwawo68f4E
-	 8cRoeiN5/C1Aw==
+	b=VVhezJT/gCAwKzjeyiVeMXaUaaAFWLII7V39YuVlLH97mC07jJDhrvyE0tWggS+jm
+	 lN86TgeNVcU+8RCEY7cptdZ0AgBMDS2PTbC/lnRHzWoll4J8UkE9w5TXd5isoQJA9q
+	 y+E7h/W/mLz29Z+Y95dLAXvM2cVOJfDqvtlqde55QtLP3fdxhRSsqihURYpwK4co2E
+	 ggEhsNIHuVcoA1odtukQEp/PFxD2xM6uAr2p2AE9baQycHwvVk1CGV/+IWYMkChNYr
+	 tsh8HLNHmxlLuRf5mcpNVGfmppmCdYSeYhUWPimKoaPt95MaFPpM9KErrXUOjbbCHQ
+	 AglGREOc0t9Hw==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
+To: Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Tingwei Zhang <tingwei.zhang@oss.qualcomm.com>,
-	Jie Gan <jie.gan@oss.qualcomm.com>
-Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	linux-arm-msm@vger.kernel.org,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] arm64: dts: qcom: monaco: fix wrong connection for the replicator
-Date: Mon,  6 Jul 2026 20:27:21 -0500
-Message-ID: <178338764561.1558388.5255029073758911485.b4-ty@kernel.org>
+Subject: Re: [PATCH] arm64: dts: qcom: kaanapali: Add missing properties to usb controller
+Date: Mon,  6 Jul 2026 20:27:22 -0500
+Message-ID: <178338764547.1558388.6699989052444946976.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260428-fix-monaco-coresight-dt-v2-1-2293259bbd10@oss.qualcomm.com>
-References: <20260428-fix-monaco-coresight-dt-v2-1-2293259bbd10@oss.qualcomm.com>
+In-Reply-To: <20260702184440.442037-1-krishna.kurapati@oss.qualcomm.com>
+References: <20260702184440.442037-1-krishna.kurapati@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,8 +81,8 @@ X-Spamd-Result: default: False [-5.16 / 15.00];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-117069-lists,linux-arm-msm=lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:tingwei.zhang@oss.qualcomm.com,m:jie.gan@oss.qualcomm.com,m:konrad.dybcio@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	TAGGED_FROM(0.00)[bounces-117070-lists,linux-arm-msm=lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:konrad.dybcio@oss.qualcomm.com,m:dmitry.baryshkov@oss.qualcomm.com,m:krishna.kurapati@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
 	MIME_TRACE(0.00)[0:+];
@@ -98,25 +97,27 @@ X-Spamd-Result: default: False [-5.16 / 15.00];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[10];
+	RCPT_COUNT_SEVEN(0.00)[9];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MID_RHS_MATCH_FROM(0.00)[];
 	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 3B8D071696E
+X-Rspamd-Queue-Id: 85BAC71697E
 
 
-On Tue, 28 Apr 2026 13:54:21 +0800, Jie Gan wrote:
-> Fix the wrong connection for the qdss replicator device.
+On Fri, 03 Jul 2026 00:14:40 +0530, Krishna Kurapati wrote:
+> USB controller on Kaanapali SoC is capable of switching role betwen device
+> and host and also is a wakeup capable device. Add usb-role-switch and
+> wakeup-source properties to the controller node accordingly.
 > 
 > 
 
 Applied, thanks!
 
-[1/1] arm64: dts: qcom: monaco: fix wrong connection for the replicator
-      commit: bf949e86fb5c3034b70b62c9ee31b3d88d5f7fb5
+[1/1] arm64: dts: qcom: kaanapali: Add missing properties to usb controller
+      commit: c09cd72be7fdfc348ceecfe414ff9698bc3561f3
 
 Best regards,
 -- 
