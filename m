@@ -1,53 +1,53 @@
-Return-Path: <linux-arm-msm+bounces-117133-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-117134-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id xgFbLyKVTGpBmgEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-117133-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Jul 2026 07:56:50 +0200
+	id Qk1BDSGWTGqamgEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-117134-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Jul 2026 08:01:05 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 43EAC717A47
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Jul 2026 07:56:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 90AE9717B23
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Jul 2026 08:01:04 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b="iU14A/dz";
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=ESK3C2RP;
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117133-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117133-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117134-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117134-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 27F953035F37
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jul 2026 05:55:58 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id E6AC73063CFB
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jul 2026 05:57:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6AFE2385D8B;
-	Tue,  7 Jul 2026 05:55:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 95921386C2C;
+	Tue,  7 Jul 2026 05:57:34 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42FAF5474E;
-	Tue,  7 Jul 2026 05:55:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85F0B386429;
+	Tue,  7 Jul 2026 05:57:33 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783403755; cv=none; b=h1rsTLxA9uMzV0U3gsRer3hA1nqI2uYc8Qs8XkfD0U1D29vdD8K+iGqNdn3yY4SnBxMWwvprbvzQrQtvw714+Mz2VyN4pPIRJAlCD+knEt+zQVgYBVZ6byUq0sXKNaOy/HA8O4xH8/ypbCqv4iTss6kpEDXpmPBowk/wWPcuRNg=
+	t=1783403854; cv=none; b=Yho6w9Ki6MwuM1YvY6C5Kr7YXKabHNIocBxVwEb4ciTp/A6NiuVytgzMRlWzaW2CgusFDfI/ouY82Z8pBnSGegrdGLPCLpVWNhixJzq3Wsbu4JHD4tnLwTKbPCWI3vzBcM84NNSUN1HUEeNIHwhHu00s7mRiXDZn6Pp3DSjPA30=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783403755; c=relaxed/simple;
-	bh=3B4t8ArQ8jIs1hUF+xDLARwSCSA4h5VcwukGSzTfl58=;
+	s=arc-20240116; t=1783403854; c=relaxed/simple;
+	bh=1Tyb0pgxOIKyn0I/HXZqXJD9sHWiln9rj47rcXQOfnI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=pXmDG1xL7Zb21cKbrRFk/rKJiCNBa8F1P16nbkj2vEP6SdJWK6p+rzriSNKfEpkZZFzHx5GBH9XsMeBq8JZFz9zysknPPgI+0RK2S6lsLO//9rXmY75DRUszZvAkuL1xGY6WIvDT3xTwybJEwW0b23UINQKSEZM5iUcVE4sjnEY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iU14A/dz; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 661851F000E9;
-	Tue,  7 Jul 2026 05:55:48 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=fjWW5r8BAA9CCAAWuKnpw+iJG2rvE0SgTrlG9SSV5OdMF8igvia8yaTpVnMrNVcSp/RpST0RcKlGMGx+Atos8tQJhRwWZ/W8xLxi0qZjhTN/YcKEpFsCUWNUvWdzTkrECmI7EV1steAKiUjXCC0TYdjjwegbozU21fWFhOdFG8Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ESK3C2RP; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA3681F000E9;
+	Tue,  7 Jul 2026 05:57:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783403753;
-	bh=6yOQtRBjpG4ODyPJdIImhpuVvVXrzH2wBIDASkCLe14=;
+	s=k20260515; t=1783403853;
+	bh=qI8AJ1NqMnPNdX2e1rDoySgU2UYCwxvcKuacR3dXL+g=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=iU14A/dzZcaPBy46j7EixNTJIHVUsCR9igNMqBtA29ACU+D6t8zvla6Ozd6mKyRlP
-	 /OTkNS5wLS2ZkHzdUpHVd9GAFYSitnz9kXfKUW/qvMO3y4im3LFZql+EVtjbp22LYi
-	 2vnfkTax9At1RvcgpKu4dEDxjqwodZW7i5oOrAgBa3bUOrhpEM29A5htqcoW83Zwzm
-	 wzbH2lRX4CPQY/uuEXLh38CWuaIowkg8Zno+LuFtdoQqQdeUjbTZrtMcSGMQm0QKIg
-	 ERaC5VDLqy9FhrTWAUpLQbFEitXSA2W7wNMoZwtKqy+H9kt9z/vvPCPxwkhAGaOIWn
-	 2fIcmPdLVWBNA==
-Message-ID: <92b7efac-32c3-4a89-9b08-55da294a6bc0@kernel.org>
-Date: Tue, 7 Jul 2026 07:55:45 +0200
+	b=ESK3C2RP2MApHqSxTY6qJ6PWDEIgJsBviyZv7vZkfIKRBpGiIZZkvkwMZXTgCu49v
+	 XHeluazhMQgRWNBjyt0yfsr0qiA0Gh0wvjModMsHHGeoHQE9KzL1jbmLAfEHywGOuy
+	 Qkf1iuaZwDIeGifKaJhzOWSApC+7LJt+HdZ8XcLa9EU8dNCseRY+NZLhtVrdLC4a2F
+	 zTF4sVAzSZRARzKPIpTEGWzoOapE2STlHGmsjAbIZxoP6PvS9oGXaszh5z0y0/o7/h
+	 ip5WsIXenNeHU8GXrcH9y8utj5Ii4L4llU3KBLBlPQJfdQNGvwEzxg7sZcLKSXxYIg
+	 n9q/c/x3h9Vhw==
+Message-ID: <b50912e0-b7cb-4986-9e62-63a15792a167@kernel.org>
+Date: Tue, 7 Jul 2026 07:57:22 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -55,25 +55,27 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] dt-bindings: pci: qcom,hawi-pcie: Add Maili PCIe
- compatible
-To: Manivannan Sadhasivam <mani@kernel.org>
-Cc: Vivek Pernamitta <vivek.pernamitta@oss.qualcomm.com>,
- Lorenzo Pieralisi <lpieralisi@kernel.org>,
- =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
- Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Vinod Koul <vkoul@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>,
- linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-phy@lists.infradead.org
-References: <20260703-vdev_maili_dt_bindings-v1-0-c9df0916cd5e@oss.qualcomm.com>
- <20260703-vdev_maili_dt_bindings-v1-1-c9df0916cd5e@oss.qualcomm.com>
- <20260706-pastoral-okapi-of-reading-e5bdb3@quoll>
- <yntj62kr7tixc7capwdr6xhv2zpisfrjg62bwftgiuujf4fzt5@cjdrkglo4dv5>
- <9967f1a0-a9e3-4d62-b5df-7f625610a89d@kernel.org>
- <43b5xhqvnapamfv4aomid647kaxrudgjcbnnca23t3vxitv67t@njdlthj2oisa>
+Subject: Re: (subset) [PATCH v2 0/8] qcom: display / dts: Few corrections of
+ address spaces.
+To: Bjorn Andersson <andersson@kernel.org>,
+ Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov
+ <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>,
+ Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Kuogee Hsieh <quic_khsieh@quicinc.com>,
+ Neil Armstrong <neil.armstrong@linaro.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org,
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+References: <20260405-dts-qcom-display-regs-v2-0-34f4024c65dc@oss.qualcomm.com>
+ <178339449937.1938770.7041355905157380217.b4-ty@kernel.org>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -119,7 +121,7 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  K9bCVaboTA2T77QYkRcRJYSsO1alGX0ome/hMLD1daXlkrNUp1HWa3K4iytLRXjCSIorWiGs
  n+q3krnpXu3TFkA8qtOFZMdnIiFuiq1yLT8hptsV5xh1TA2nsVvSYiaCr3q4s4BKjS/KrLDb
  qoxzw8ISjdUp4pA85vb6YLCmb39NgidD+7PmAr65lBNveIFynTgsja1rRQ4=
-In-Reply-To: <43b5xhqvnapamfv4aomid647kaxrudgjcbnnca23t3vxitv67t@njdlthj2oisa>
+In-Reply-To: <178339449937.1938770.7041355905157380217.b4-ty@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Rspamd-Action: no action
@@ -128,74 +130,58 @@ X-Spamd-Result: default: False [-3.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-117133-lists,linux-arm-msm=lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:andersson@kernel.org,m:robin.clark@oss.qualcomm.com,m:lumag@kernel.org,m:abhinav.kumar@linux.dev,m:jesszhan0024@gmail.com,m:sean@poorly.run,m:marijn.suijten@somainline.org,m:airlied@gmail.com,m:simona@ffwll.ch,m:maarten.lankhorst@linux.intel.com,m:mripard@kernel.org,m:tzimmermann@suse.de,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:quic_khsieh@quicinc.com,m:neil.armstrong@linaro.org,m:konradybcio@kernel.org,m:krzysztof.kozlowski@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:dri-devel@lists.freedesktop.org,m:freedreno@lists.freedesktop.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:dmitry.baryshkov@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_RECIPIENTS(0.00)[m:mani@kernel.org,m:vivek.pernamitta@oss.qualcomm.com,m:lpieralisi@kernel.org,m:kwilczynski@kernel.org,m:robh@kernel.org,m:bhelgaas@google.com,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:andersson@kernel.org,m:vkoul@kernel.org,m:neil.armstrong@linaro.org,m:linux-arm-msm@vger.kernel.org,m:linux-pci@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-phy@lists.infradead.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
-	FORGED_SENDER(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[16];
-	FORWARDED(0.00)[lists@lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	FROM_HAS_DN(0.00)[];
+	FORGED_SENDER(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[25];
+	FREEMAIL_TO(0.00)[kernel.org,oss.qualcomm.com,linux.dev,gmail.com,poorly.run,somainline.org,ffwll.ch,linux.intel.com,suse.de,quicinc.com,linaro.org];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FORWARDED(0.00)[lists@lfdr.de];
+	TAGGED_FROM(0.00)[bounces-117134-lists,linux-arm-msm=lfdr.de];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
+	TO_DN_SOME(0.00)[];
 	MID_RHS_MATCH_FROM(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,vger.kernel.org:from_smtp,qualcomm.com:email]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[msgid.link:url,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,vger.kernel.org:from_smtp]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 43EAC717A47
+X-Rspamd-Queue-Id: 90AE9717B23
 
-On 07/07/2026 06:53, Manivannan Sadhasivam wrote:
-> On Mon, Jul 06, 2026 at 07:35:52PM +0200, Krzysztof Kozlowski wrote:
->> On 06/07/2026 18:36, Manivannan Sadhasivam wrote:
->>> On Mon, Jul 06, 2026 at 08:46:41AM +0200, Krzysztof Kozlowski wrote:
->>>> On Fri, Jul 03, 2026 at 05:38:40PM +0530, Vivek Pernamitta wrote:
->>>>> Add qcom,maili-pcie as a compatible string that falls back to
->>>>> qcom,hawi-pcie, as the Maili SoC reuses the Hawi PCIe controller IP.
->>>>>
->>>>> The Maili SoC is a derivative of Hawi and shares the same PCIe
->>>>> controller architecture, allowing reuse of the existing Hawi PCIe
->>>>> DT bindings.
->>>>>
->>>>> Signed-off-by: Vivek Pernamitta <vivek.pernamitta@oss.qualcomm.com>
->>>>> ---
->>>>> Dependencies:
->>>>> - PCI: qcom: Add PCIe support for upcoming Hawi SoC
->>>>>   https://lore.kernel.org/all/20260625-hawi-pcie-v4-0-1a578603cd86@oss.qualcomm.com/
->>>>
->>>> Squash the patches then.
->>>>
->>>
->>> But these are two independent SoC additions, isn't it?
->>
->> It's adding a single compatible, no? If a patch adding a single
->> compatible cannot be done without multi-patchset dependencies making
->> testing by tooling impossible, then probably that work should not be
->> sent separately or even as separate patch. And I am not saying anything
->> new because half a year ago (around Kaanapali and Glymur) I voiced
->> strong opinion about that.
->>
->> But really, you do not need to add two compatibles in two separate patches.
->>
+On 07/07/2026 05:21, Bjorn Andersson wrote:
 > 
-> Ok then. I'll squash this patch with Hawi patch which already got applied.
+> On Sun, 05 Apr 2026 16:33:56 +0200, Krzysztof Kozlowski wrote:
+>> Changes in v2:
+>> - Patch #2: Add dai-common.yaml reference (Dmitry)
+>> - Correct subject
+>> - Rb tags
+>> - Re-order Eliza bindings patch
+>> - Link to v1: https://patch.msgid.link/20260402-dts-qcom-display-regs-v1-0-daa54ab448a3@oss.qualcomm.com
+>>
+>> [...]
+> 
+> Applied, thanks!
+> 
+> [8/8] arm64: dts: qcom: sm8750: Correct DPU VBIF address space size
+>       commit: 4fd832d6aed496c7111746d2c1e36b006659f89d
+> 
 
-Applied? That's not what I had in mind. This mentions external
-dependency, not something which was applied. Should be squashed there.
+
+Only this one? I guess I will rebase and resend.
 
 Best regards,
 Krzysztof
