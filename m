@@ -1,53 +1,53 @@
-Return-Path: <linux-arm-msm+bounces-117207-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-117208-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id B5icLoG/TGp+pAEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-117207-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Jul 2026 10:57:37 +0200
+	id JX6eA8S/TGqJpAEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-117208-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Jul 2026 10:58:44 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 212677196ED
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Jul 2026 10:57:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 66B4071971C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Jul 2026 10:58:43 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=CxP1yZmr;
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=X5IexEEq;
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117207-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117207-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117208-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117208-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 951B330D91CC
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jul 2026 08:49:35 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 4FFF33006B2E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jul 2026 08:52:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ABAA73803E7;
-	Tue,  7 Jul 2026 08:49:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 93205332906;
+	Tue,  7 Jul 2026 08:52:23 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C7B8348C5E;
-	Tue,  7 Jul 2026 08:49:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B62413D53C;
+	Tue,  7 Jul 2026 08:52:22 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783414143; cv=none; b=rmeuM4hMSnWUulcPO1z9OwEQHjqmkbWEx4rbUcxCrBkthUVJXKeN8lSyebzFqko50sftK5fae4GfUHz7dGMPOhdWIKzyoEczxxDq8quK6nxv30t2BLypkTTo4+c7DAYDJ4eqFo990NDQWa0jd0BFiTEsrlNPTgj9ad8/Zn5tqWg=
+	t=1783414343; cv=none; b=C4RuZ+tN/LUTikqPpkPmdC5YxSyYsp0LoBlgZdzrTs9/I4loEOrBm07R1NwfCz6LI/yx3NceWvCxLDH5JjGApAIrFPUuMAlH0llOx5b0SG9cjOyAWOwvLQR8MQtqv42BYA4+ebx9s8YcaXxm1dCJsYeJo6b6Z05ZElGmzJekO+Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783414143; c=relaxed/simple;
-	bh=iBAPdB9yQl3PTDBqfoavkR3ABrrjmdtqN9bMGi5686o=;
+	s=arc-20240116; t=1783414343; c=relaxed/simple;
+	bh=IQM0yFw29y1zX7AFnSRWY8LC5Qh84Zo1/20QJ5cglW8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=VQQVthjhhAGS/0a7XV7oVPo4WbcVoEnMLd7+guVuCmVZXbDDO2KZRW4Hlw7IK5bdS3B1Pog3MMDgBZAwaqVLQbuB+F3hWoZ0Qpq3PLe/j2hyFSOhcmXm7LcXCd1lEo8g5uERvcImOiYcFBllyYUA8/z102daiAiCCS2VdSEE2VM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CxP1yZmr; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B31FD1F000E9;
-	Tue,  7 Jul 2026 08:48:56 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=LmSjz/xm28IZgP0jegFUqxip/5KIW1SQ7etSChtGdgY/Fw4qqpY4gsQCixUEYcRecq22HE8M7HXe2ZObTc6Tit2YSbcyVVpv3Ll/mNMVU80E21M1QbwQVifpnlMfQlY3tj/J38YukcOkoqpQUszNtw1faj5NwZIjKxO5y3ksdns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X5IexEEq; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 292391F000E9;
+	Tue,  7 Jul 2026 08:52:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783414142;
-	bh=9Q5SqAg35FUuXGqe6JqAsxkqwI+Ls/eX7rCyPlL+vis=;
+	s=k20260515; t=1783414342;
+	bh=ymK0wioBTOkb/EPDtO3VLYIvTsMMZtxG8xmiU0g3aa0=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=CxP1yZmrzPIzFTEEMAq2dXkkGYrBgRIhIHA8L/fT0ITvQkKJ2gE7PUuGyHYSlduWG
-	 2fpbmq7aD3apgTALOdUwQXkeKOHiO0cCet212PZK54Vg07I5qhDlBFCg8PQeIltEiZ
-	 oeDFMv2/vEUhVzIYJZBzQzLVMRnHoygIbAkRR09il+6CGE/yQyEDUe/01Tnfp0/yfw
-	 ZO8/GJBp2SS4iAqu1PI427cJkt282Ml6Y+8zykxI6LzgNgdvsnVRWk64wa+Llqba70
-	 fOmpx3b6GSqGb+hWENp+//Fz8EW7ExRQdtQinmlI7/F5XxBeFmZ+0VAvDJuS827VN+
-	 QxPAIhwubxKPw==
-Message-ID: <f7ab5d7f-31f4-4e5d-a05f-7c0e4ad5afd5@kernel.org>
-Date: Tue, 7 Jul 2026 10:48:53 +0200
+	b=X5IexEEqJTN2eQDGZggUEV45IvZfZbl1TFuBA0MYVngVjdQDK4fSQR8WFiKOC5TLe
+	 9dsebwPgTLn+gfFYwCoU6xfaAGATzogs/LpFigQfxGtMxTsoTkvsrDztUdwuP8mQ9k
+	 7oSiZba1B8a4xTHfEFQkQ6dUkDbzx0A6Y42oGjrUJUOhC3ImM88z20uSftu2DC2tGj
+	 Pvt1kn8eqSyNT9EcYUGc7hUpAFUqk8uAIBVUGO8WyFy99s9r+PwTcnSWFu4wkfC9Hc
+	 OZnn4JOyPS7UYjiiaA9qGJvuMvAGxvXcyddF9K9emr12Z/d+2XPKlbGxeX6L/3fo6H
+	 MrjUfq3vmaRZg==
+Message-ID: <2bb76588-fa90-4920-935a-960acb60e5af@kernel.org>
+Date: Tue, 7 Jul 2026 10:52:12 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -55,20 +55,26 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 RESEND 3/5] arm64: dts: qcom: Add device tree for Nord
- SA8797P SoC
+Subject: Re: [PATCH v7 1/6] dt-bindings: i2c: Describe SA8255p
 To: Shawn Guo <shengchao.guo@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>,
- Dmitry Baryshkov <lumag@kernel.org>,
- Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
- Deepti Jaggi <deepti.jaggi@oss.qualcomm.com>,
- Harshal Dev <harshal.dev@oss.qualcomm.com>,
- Herbert Xu <herbert@gondor.apana.org.au>, devicetree@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20260526051300.1669201-1-shengchao.guo@oss.qualcomm.com>
- <20260526051300.1669201-4-shengchao.guo@oss.qualcomm.com>
+ Praveen Talari <praveen.talari@oss.qualcomm.com>
+Cc: Andi Shyti <andi.shyti@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>,
+ Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>,
+ Mattijs Korpershoek <mkorpershoek@kernel.org>,
+ linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ bjorn.andersson@oss.qualcomm.com, konrad.dybcio@oss.qualcomm.com,
+ aniket.randive@oss.qualcomm.com, chandana.chiluveru@oss.qualcomm.com,
+ prasad.sodagudi@oss.qualcomm.com,
+ Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+ Nikunj Kela <quic_nkela@quicinc.com>
+References: <20260617-enable-i2c-on-sa8255p-v7-0-ad736dbeab57@oss.qualcomm.com>
+ <20260617-enable-i2c-on-sa8255p-v7-1-ad736dbeab57@oss.qualcomm.com>
+ <akh9bzlP12sRM4Fw@QCOM-aGQu4IUr3Y>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -114,7 +120,7 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  K9bCVaboTA2T77QYkRcRJYSsO1alGX0ome/hMLD1daXlkrNUp1HWa3K4iytLRXjCSIorWiGs
  n+q3krnpXu3TFkA8qtOFZMdnIiFuiq1yLT8hptsV5xh1TA2nsVvSYiaCr3q4s4BKjS/KrLDb
  qoxzw8ISjdUp4pA85vb6YLCmb39NgidD+7PmAr65lBNveIFynTgsja1rRQ4=
-In-Reply-To: <20260526051300.1669201-4-shengchao.guo@oss.qualcomm.com>
+In-Reply-To: <akh9bzlP12sRM4Fw@QCOM-aGQu4IUr3Y>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Rspamd-Action: no action
@@ -127,13 +133,13 @@ X-Spamd-Result: default: False [-5.16 / 15.00];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_RECIPIENTS(0.00)[m:shengchao.guo@oss.qualcomm.com,m:andersson@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:konradybcio@kernel.org,m:lumag@kernel.org,m:bartosz.golaszewski@oss.qualcomm.com,m:deepti.jaggi@oss.qualcomm.com,m:harshal.dev@oss.qualcomm.com,m:herbert@gondor.apana.org.au,m:devicetree@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:shengchao.guo@oss.qualcomm.com,m:praveen.talari@oss.qualcomm.com,m:andi.shyti@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:konradybcio@kernel.org,m:andersson@kernel.org,m:mukesh.savaliya@oss.qualcomm.com,m:viken.dadhaniya@oss.qualcomm.com,m:mkorpershoek@kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-i2c@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:bjorn.andersson@oss.qualcomm.com,m:konrad.dybcio@oss.qualcomm.com,m:aniket.randive@oss.qualcomm.com,m:chandana.chiluveru@oss.qualcomm.com,m:prasad.sodagudi@oss.qualcomm.com,m:krzysztof.kozlowski@oss.qualcomm.com,m:quic_nkela@quicinc.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[14];
-	TAGGED_FROM(0.00)[bounces-117207-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[22];
+	TAGGED_FROM(0.00)[bounces-117208-lists,linux-arm-msm=lfdr.de];
 	MIME_TRACE(0.00)[0:+];
 	FORWARDED(0.00)[lists@lfdr.de];
 	FROM_HAS_DN(0.00)[];
@@ -149,41 +155,37 @@ X-Spamd-Result: default: False [-5.16 / 15.00];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,qualcomm.com:email,devicetree.org:url,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 212677196ED
+X-Rspamd-Queue-Id: 66B4071971C
 
-On 26/05/2026 07:12, Shawn Guo wrote:
-> From: Deepti Jaggi <deepti.jaggi@oss.qualcomm.com>
+On 04/07/2026 05:26, Shawn Guo wrote:
+> On Wed, Jun 17, 2026 at 10:20:15AM +0530, Praveen Talari wrote:
+> [...]
+>> diff --git a/Documentation/devicetree/bindings/i2c/qcom,sa8255p-geni-i2c.yaml b/Documentation/devicetree/bindings/i2c/qcom,sa8255p-geni-i2c.yaml
+>> new file mode 100644
+>> index 000000000000..a61e40b5cbc1
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/i2c/qcom,sa8255p-geni-i2c.yaml
+>> @@ -0,0 +1,64 @@
+>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/i2c/qcom,sa8255p-geni-i2c.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: Qualcomm SA8255p QUP GENI I2C Controller
+>> +
+>> +maintainers:
+>> +  - Praveen Talari <praveen.talari@oss.qualcomm.com>
+>> +
+>> +properties:
+>> +  compatible:
+>> +    const: qcom,sa8255p-geni-i2c
 > 
-> Add SoC-level device tree include for SA8797P, an automotive variant
-> of the Nord SoC family. The dtsi covers:
-> 
->  - 64 SCMI shared memory regions reserved at 0xd7600000-0xd763f000
->    for SMC-based firmware communication channels
->  - Three QUPV3 GENI SE QUP blocks (qupv3_0/1/2) with UART controllers
->    using SCMI power and performance domains via scmi11
->  - UFS host controller with SCMI power domain via scmi3
-> 
-> Also introduce scmi-common.dtsi providing the firmware-level SCMI
-> channel nodes shared across SCMI based SoCs.
-> 
-> Signed-off-by: Deepti Jaggi <deepti.jaggi@oss.qualcomm.com>
-> Signed-off-by: Shawn Guo <shengchao.guo@oss.qualcomm.com>
-> ---
->  arch/arm64/boot/dts/qcom/nord-sa8797p.dtsi |  937 ++++++++++
->  arch/arm64/boot/dts/qcom/scmi-common.dtsi  | 1918 ++++++++++++++++++++
->  2 files changed, 2855 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/nord-sa8797p.dtsi
->  create mode 100644 arch/arm64/boot/dts/qcom/scmi-common.dtsi
-> 
+> The compatible had already been defined by soc/qcom/qcom,sa8255p-geni-se-qup.yaml.
 
-
-This has incomplete ABI documentation and nothing in changelog or cover
-letter explains/documents the missing bits.
-
-Sorry, this cannot go and I am surprised why you do not follow standard
-process we described multiple times.
+No, it is not.
 
 Best regards,
 Krzysztof
