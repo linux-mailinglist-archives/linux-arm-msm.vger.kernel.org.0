@@ -1,171 +1,150 @@
-Return-Path: <linux-arm-msm+bounces-117086-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-117087-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id TACsAVBwTGovkgEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-117086-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Jul 2026 05:19:44 +0200
+	id kUFgEv9wTGpVkgEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-117087-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Jul 2026 05:22:39 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 973DE716FC8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Jul 2026 05:19:43 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 91625717015
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Jul 2026 05:22:38 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=proton.me header.s=protonmail header.b=DcqEiGqw;
-	dmarc=pass (policy=quarantine) header.from=proton.me;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117086-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117086-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=IkXGRVJd;
+	dmarc=pass (policy=quarantine) header.from=kernel.org;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117087-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117087-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 9E9A6301E3F0
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jul 2026 03:19:37 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id CE997301A731
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jul 2026 03:21:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E6072346AE3;
-	Tue,  7 Jul 2026 03:19:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DCCD9346E43;
+	Tue,  7 Jul 2026 03:21:47 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-106118.protonmail.ch (mail-106118.protonmail.ch [79.135.106.118])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6A3C27E07E;
-	Tue,  7 Jul 2026 03:19:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C55421B3925;
+	Tue,  7 Jul 2026 03:21:46 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783394375; cv=none; b=AFIDlUAFOKPH6d4fX1g9cEd+n4xbC9p3u8VyWitT1XUSO5KK3VXc3NuhmjG5SeirqZUxt0nTzEgsUVBsaG/DWunZxWG8GDlyl8zhy0fRfo/bwnzKaqXmiHG4fAyiMI2eteKxHChFsG1HKuiFGhMXRKb3y94QE66OMSHcVF0LXoo=
+	t=1783394507; cv=none; b=BL7ZoI8VooCKyOnc16wLf5pxI14ZpNVjUiU0QACJkas5p+MyXBpbKVNei0Hn2dthM0sWMcbpU+VTxujnBF6tjqu6aWmVWdS4by3aTjaHsrbS+kMcrc/f9bdvABgyUh7Nbh5flD73vU0Lkdf0J3uiDOj9qfg89oLbRYOcz7GbUHk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783394375; c=relaxed/simple;
-	bh=RJk2ew42x1OaFHgC10H3ItLiRiqgdw10zjzfWvDhk4w=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rQ63T6f+UiIrGcVk1+NqprC3RO/bEWa9TImhbiAWCMAHWhy+W02a4S4YCODyowbgY9gplroFkhUjIRp8/jKgGXQgIqIDseeCJjNLmtgO+tLfBAz/NiOnCLCH7OIElfDLKbKYyjoixwad3D+HHT5cbWPBMvlA4f+HFOHQtPQS+qE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=DcqEiGqw; arc=none smtp.client-ip=79.135.106.118
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
-	s=protonmail; t=1783394367; x=1783653567;
-	bh=w1WW+Rf6WB8PFdRwptz/r6ZcYQos2RZ0HVWaAzzGe6E=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=DcqEiGqwnDffW849Ke0oHoSASXiFHyxSPGSBoDRPf3AoHMJX3sFX6Pias03dc2HK1
-	 1JlCZOYHH2vYfe2M59WIyY7bocfkr83QQ10VOqckrDq+sN534l+fh7tr3IZ/HuLNaC
-	 r0xCZ8vIEkccxDCvWDYWig3aItBqrpImSWDoxG3spZHpfCbCBtiiAAQO1kb8On4V5o
-	 GW86fXwNbPYZ1ocx26EhShmIqqlYQ4Kt+joWExfvdXcrH/8/F6AfqsT3GXUvUFSrpd
-	 /zfoEyblg26Vmeuw7oTXFpSb9kGtmWwBf9lWRU1U9RlX0++cJ8E6NxM4f/R5GWmPVb
-	 kcifZz5w0+Ycg==
-Date: Tue, 07 Jul 2026 03:19:22 +0000
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-From: Esteban Urrutia <esteuwu@proton.me>
-Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, Bjorn Andersson <andersson@kernel.org>, Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, Brian Masney <bmasney@redhat.com>, Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Rob Clark <robin.clark@oss.qualcomm.com>, Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>, "Joerg Roedel (AMD)" <joro@8bytes.org>, Vinod Koul <vkoul@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>, linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, iommu@lists.linux.dev, linux-arm-kernel@lists.infradead.org, linux-phy@lists.infradead.org
-Subject: Re: [PATCH 2/8] arm64: dts: qcom: sm8450: Remove unneeded reserved memory nodes
-Message-ID: <c11f9ddd-8533-426c-8a88-0ed461f6a30e@proton.me>
-In-Reply-To: <4g6y4q2udludhwmoqc34afwj5svra4a4j5bmpqza7h3av2oov7@6k5r7a4meruk>
-References: <20260622-sm8450-qol-v1-0-37e2ee8df9da@proton.me> <20260622-sm8450-qol-v1-2-37e2ee8df9da@proton.me> <e1e492ab-884e-442b-8410-cc100c54fd5f@oss.qualcomm.com> <6123a923-21dd-4f69-9ac5-02165963027c@oss.qualcomm.com> <b3541802-3035-40ee-8327-a65bd5d2dfee@proton.me> <4g6y4q2udludhwmoqc34afwj5svra4a4j5bmpqza7h3av2oov7@6k5r7a4meruk>
-Feedback-ID: 147889766:user:proton
-X-Pm-Message-ID: f44e9ea796ae9a36b6ac3c3fb88470b5693b7329
+	s=arc-20240116; t=1783394507; c=relaxed/simple;
+	bh=SACH1iT5zxIbInPsb/B4IL5zPsUjX9g0oxe8DXBmoyg=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=PDAL60WR51Vz/t9YYRPvAlOrsGCFrO4Tx8yNSe0rdrGF0MH8shtlUSnDpji9mMhNmftW5bTyTIO6geGtOMyhphlCNKQQlzl0y1f9PFJAiajc3WSa8L4aryvPjB/lZteD4mdOru5Jybv0GP4fhymLMe+7O0ec1jZWKn15CCq8y3I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IkXGRVJd; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 345B31F000E9;
+	Tue,  7 Jul 2026 03:21:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1783394506;
+	bh=z/+ZF3g9h+Uvae25foKta8fTkAbMBje+j4tPX6IArmU=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=IkXGRVJd01W7u8JyKyUzrElA9gDeLg1gEmyY5hUez4Vs64bWo/SjceqA99/wj1/uP
+	 2NfjwHNjY0Je/W6M8mBnQXMNqp/q1TXrLYb8rJo/DSQ3k+kxkJmgfXu1Rclu63aiql
+	 wFlanhjJS+zmkBReFkz50JnwscrU4yFsw0Guy0VebXoz+1qK/tUcRlYO5++rClsNng
+	 fk/NlpV7ZQiYO6bGjDj4csqP4tpNuznuc2p1MYHMcL4JCmfkpwSjbMQXp8uI4Y+O5L
+	 tvo4zEuztvSkSCtj+lorp+SWJufP8T9TV8iALMAiwKNIdnN0nJjkRXGmwyMW4Mb9b3
+	 nuIkOEsaei/aA==
+From: Bjorn Andersson <andersson@kernel.org>
+To: Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
+	Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+	Bryan O'Donoghue <bod@kernel.org>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Abhinav Kumar <abhinav.kumar@linux.dev>,
+	David Heidelberg <david@ixit.cz>,
+	Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: linux-media@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Subject: Re: (subset) [PATCH v7 0/6] media: iris: enable SM8350 and SC8280XP support
+Date: Mon,  6 Jul 2026 22:21:22 -0500
+Message-ID: <178339449932.1938770.18155527921257532285.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260515-iris-sc8280xp-v7-0-2e21f6db1897@oss.qualcomm.com>
+References: <20260515-iris-sc8280xp-v7-0-2e21f6db1897@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-0.66 / 15.00];
+X-Spamd-Result: default: False [-3.66 / 15.00];
+	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[proton.me,quarantine];
-	R_DKIM_ALLOW(-0.20)[proton.me:s=protonmail];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-117086-lists,linux-arm-msm=lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:dmitry.baryshkov@oss.qualcomm.com,m:konrad.dybcio@oss.qualcomm.com,m:andersson@kernel.org,m:mturquette@baylibre.com,m:sboyd@kernel.org,m:bmasney@redhat.com,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:robin.clark@oss.qualcomm.com,m:will@kernel.org,m:robin.murphy@arm.com,m:joro@8bytes.org,m:vkoul@kernel.org,m:neil.armstrong@linaro.org,m:linux-arm-msm@vger.kernel.org,m:linux-clk@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:devicetree@vger.kernel.org,m:iommu@lists.linux.dev,m:linux-arm-kernel@lists.infradead.org,m:linux-phy@lists.infradead.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
-	FORGED_SENDER(0.00)[esteuwu@proton.me,linux-arm-msm@vger.kernel.org];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[23];
-	RCVD_COUNT_THREE(0.00)[3];
 	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-117087-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
+	FORGED_RECIPIENTS(0.00)[m:vikash.garodia@oss.qualcomm.com,m:dikshita.agarwal@oss.qualcomm.com,m:bod@kernel.org,m:mchehab@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:konradybcio@kernel.org,m:abhinav.kumar@linux.dev,m:david@ixit.cz,m:stanimir.varbanov@linaro.org,m:dmitry.baryshkov@oss.qualcomm.com,m:linux-media@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:konrad.dybcio@oss.qualcomm.com,m:johan+linaro@kernel.org,m:bryan.odonoghue@linaro.org,m:krzk@kernel.org,m:conor@kernel.org,m:johan@kernel.org,s:lists@lfdr.de];
+	RCVD_COUNT_THREE(0.00)[4];
+	FORGED_SENDER(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[19];
 	FORWARDED(0.00)[lists@lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[esteuwu@proton.me,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[proton.me:+];
+	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt,linaro];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,proton.me:from_mime,proton.me:dkim,proton.me:mid,vger.kernel.org:from_smtp]
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,vger.kernel.org:from_smtp]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 973DE716FC8
+X-Rspamd-Queue-Id: 91625717015
 
-On 7/6/26 2:24 PM, Dmitry Baryshkov wrote:
-> Please verify that you can actually access those areas (boot with
-> memtest=3D1)
 
-Thanks for the suggestion!
+On Fri, 15 May 2026 13:56:34 +0300, Dmitry Baryshkov wrote:
+> In order to enable wider testing of the Iris driver on the HFI Gen1
+> platforms enable support for Qualcomm SM8350 and SC8280XP platforms.
+> 
+> Note, this has been tested only with the Iris driver. Venus driver fails
+> to boot the Iris core on SM8350 pointing out the UC_REGION error.
+> 
+> Note, the firmware for SM8250 isn't compatible with SM8350 (nor with
+> SC8280XP). Please use corresponding firmware, extracted from the Windows
+> / Android data.
+> 
+> [...]
 
-I actually did boot an SM8475 based device I'm mainlining (motorola-bronco)
-with this parameter.
-Deleted regions in DT are as follows:
+Applied, thanks!
 
-/delete-node/ &mte_mem;
-/delete-node/ &oem_vm_mem; (seems to not exist in SM8475?)
-/delete-node/ &qheebsp_reserved_mem;
-/delete-node/ &trust_ui_vm_mem;
-/delete-node/ &trust_ui_vm_qrtr;
-/delete-node/ &trust_ui_vm_swiotlb;
-/delete-node/ &trust_ui_vm_vblk0_ring;
-/delete-node/ &trusted_apps_ext_mem;
-/delete-node/ &trusted_apps_mem;
+[2/6] arm64: dts: qcom: sc8280xp: sort reserved memory regions
+      commit: 53275adfb07d416a32004612227265939d0df00d
+[3/6] arm64: dts: qcom: sc8280xp: Add Iris core
+      commit: 3a52eef16b979617156fa6e2ead24ca4d1336f0b
+[4/6] arm64: dts: qcom: sc8280xp-x13s: Enable Iris
+      commit: 595eb4144f2ecc58e8e56e07ae94407b5a696031
+[5/6] arm64: dts: qcom: sm8350: add Iris device
+      commit: a2b0c5eba7431e914c85ce9b2c14a4f23e577874
+[6/6] arm64: dts: qcom: sm8350-hdk: enable Iris core
+      commit: 4a59255c6318881fdad69f8ba62a6003cc2a989f
 
-Here are the results:
-
-[    0.000000] early_memtest: # of tests: 1
-[    0.000000]   0x00000000808f4000 - 0x0000000080900000 pattern 0000000000=
-000000
-[    0.000000]   0x0000000085200000 - 0x0000000085700000 pattern 0000000000=
-000000
-[    0.000000]   0x0000000087f00000 - 0x0000000088000000 pattern 0000000000=
-000000
-[    0.000000]   0x000000008b91c000 - 0x000000008ba00000 pattern 0000000000=
-000000
-[    0.000000]   0x000000009ff80000 - 0x00000000a6e00000 pattern 0000000000=
-000000
-[    0.000000]   0x00000000a6e40000 - 0x00000000a6f00000 pattern 0000000000=
-000000
-[    0.000000]   0x00000000a7000000 - 0x00000000a8000000 pattern 0000000000=
-000000
-[    0.000000]   0x00000000ab350000 - 0x00000000b70cd000 pattern 0000000000=
-000000
-[    0.000000]   0x00000000b70ebdd1 - 0x00000000b72ce000 pattern 0000000000=
-000000
-[    0.000000]   0x00000000b7fff000 - 0x00000000b8000000 pattern 0000000000=
-000000
-[    0.000000]   0x00000000b89e3400 - 0x00000000e0600000 pattern 0000000000=
-000000
-[    0.000000]   0x00000000e0b00000 - 0x00000000e8800000 pattern 0000000000=
-000000
-[    0.000000]   0x00000000f1400000 - 0x0000000100000000 pattern 0000000000=
-000000
-[    0.000000]   0x0000000800000000 - 0x000000083af00000 pattern 0000000000=
-000000
-[    0.000000]   0x000000083b500000 - 0x000000083d300000 pattern 0000000000=
-000000
-[    0.000000]   0x0000000840000000 - 0x000000097f089d40 pattern 0000000000=
-000000
-[    0.000000]   0x000000097f089d6f - 0x000000097f089d70 pattern 0000000000=
-000000
-[    0.000000]   0x000000097f153ff8 - 0x000000097f154000 pattern 0000000000=
-000000
-
-The device didn't crash at boot, and everything works as expected.
-For the record, the manufacturer has made changes in downstream device
-trees that state TVM is not used, so it's expected that the device works
-without QHEE and TVM regions.
-
-Regards,
-Esteban
-
+Best regards,
+-- 
+Bjorn Andersson <andersson@kernel.org>
 
