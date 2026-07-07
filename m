@@ -1,397 +1,317 @@
-Return-Path: <linux-arm-msm+bounces-117297-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-117298-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id WNKvDaHiTGo0rgEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-117297-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Jul 2026 13:27:29 +0200
+	id XUvrEkPjTGpPrgEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-117298-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Jul 2026 13:30:11 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 59C5E71AECD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Jul 2026 13:27:28 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 913EE71AF1C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Jul 2026 13:30:10 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=collabora.com header.s=mail header.b="Nhil/dPB";
-	dmarc=pass (policy=none) header.from=collabora.com;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117297-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117297-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=cIUj0nlc;
+	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=W4X9ISlB;
+	dmarc=pass (policy=reject) header.from=qualcomm.com;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117298-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117298-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id CF01A30F87E3
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jul 2026 11:20:23 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 6044C31383EA
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jul 2026 11:20:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 493C9417376;
-	Tue,  7 Jul 2026 11:18:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 65D433FA5F0;
+	Tue,  7 Jul 2026 11:20:33 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8681B3F8257;
-	Tue,  7 Jul 2026 11:18:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E6F43F8892
+	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Jul 2026 11:20:31 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783423130; cv=none; b=RWB4UoJ1KeVqFBEGaywaba7G1aThF391B0TnX+s1nW5NvhtrHJ7rBZg9OhPjZ19fDfgUY5Lq7Ilzyd8RnMUW/3wIj4en1nhoVmv9QCwOXfzKYbpTUASGeMH/SkwEiBDJv37czVjxRFSfCT2BgEuFqVC3SShuwC8dCfGTxA1WYT4=
+	t=1783423233; cv=none; b=ZoinnnBv9CeEiA+2PT45VtXeHvrMcU69Xdr3vQWVj9WkCQsBJc0Jzk2b/1zl7xTYlDqJRr5J/92wBtW5WgpBC+CbcR+al9bc4wVUM5eafgy8u+D75jHWKN+DpB8WTW4zOOwRE7WOaxFjFMNbkiMq1ibX7g1pNovyXMqK/yIUfO0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783423130; c=relaxed/simple;
-	bh=nSks/w7lu/kfUus9HwyDIAlsfUY9aYe0Qj1YNG4JANg=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kYW7JyJ/bs1BcNnXUlDSdMuNXGWgXwE59RJh/BAvcuIM1gru30r6CxitWFeKcxwn9eN5DGQ6Fxjpv8vLc4T+Z0AUx6AJK1BNXX3ZhXIkhN9qBLxWldOs4sZgyAK5m3agZxy9ErzAnbFfEXZxFcnaP+yO/B+XfFywlRB0glpsNQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=Nhil/dPB; arc=none smtp.client-ip=148.251.105.195
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1783423127;
-	bh=nSks/w7lu/kfUus9HwyDIAlsfUY9aYe0Qj1YNG4JANg=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nhil/dPBIXg5JZzePyTrhit87QuwPv64fYBUCUkJL+apC+4Z4gqcY9BN+Pru68bKJ
-	 +RADyMwsN3bhU6NZN9smBwHi3LyIjL1g8fM2Y//r5fo3i1ndbr0Yn3RVEF+Fq38l0o
-	 8FI5wVKPdoY6/vnRA7mij4BVkosqhfb9ykiqkGc6TWAqk8jt/Vj/W4JFg3X1W+vapK
-	 RBZLKPkEvvuuI1qH00PzSzlgeQsKHsAoUQ+IJqF9PswVG5Y5otvIsDvXU/T0Bh1A0X
-	 CYtsKmIh8n0vMaozvQwiITDk/vciOIAQIuXHSx9fHha+RLrbnLwRBOLnpti51HnyVD
-	 6igxQL7fwRdUQ==
-Received: from IcarusMOD.eternityproject.eu (unknown [100.64.1.21])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: kholk11)
-	by bali.collaboradmins.com (Postfix) with ESMTPSA id E747717E013E;
-	Tue, 07 Jul 2026 13:18:45 +0200 (CEST)
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-To: jic23@kernel.org,
-	sboyd@kernel.org
-Cc: dlechner@baylibre.com,
-	nuno.sa@analog.com,
-	andy@kernel.org,
-	arnd@arndb.de,
-	gregkh@linuxfoundation.org,
-	srini@kernel.org,
-	vkoul@kernel.org,
-	neil.armstrong@linaro.org,
-	sre@kernel.org,
-	angelogioacchino.delregno@collabora.com,
-	krzk@kernel.org,
-	dmitry.baryshkov@oss.qualcomm.com,
-	quic_wcheng@quicinc.com,
-	melody.olvera@oss.qualcomm.com,
-	quic_nsekar@quicinc.com,
-	ivo.ivanov.ivanov1@gmail.com,
-	abelvesa@kernel.org,
-	luca.weiss@fairphone.com,
-	konrad.dybcio@oss.qualcomm.com,
-	mitltlatltl@gmail.com,
-	krishna.kurapati@oss.qualcomm.com,
-	linux-arm-msm@vger.kernel.org,
-	linux-iio@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-phy@lists.infradead.org,
-	linux-pm@vger.kernel.org,
-	kernel@collabora.com,
-	Jonathan Cameron <jonathan.cameron@huawei.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>
-Subject: [PATCH v12 12/12] iio: adc: qcom-spmi-iadc: Remove regmap R/W wrapper functions
-Date: Tue,  7 Jul 2026 13:18:29 +0200
-Message-ID: <20260707111829.180158-13-angelogioacchino.delregno@collabora.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260707111829.180158-1-angelogioacchino.delregno@collabora.com>
-References: <20260707111829.180158-1-angelogioacchino.delregno@collabora.com>
+	s=arc-20240116; t=1783423233; c=relaxed/simple;
+	bh=9JF5HwykZ2AmRNb+eHzU8Lff4gCdca3zI5sJWYFn3Gs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=NKQjHgT1YeklLP7MyII83lY427MAlLAjXiAZgl9SCjkIckOgwQcJjk2dj8pNAHTiy1Ky3GzY2bwVC9/tERp3EkRkrhc1M/nynjh4efdZiYAt3NZ06uWFqxHv3WLCj0B2HQDC0UIrN6RM+Kpkw7Fs9vHT8zt8iCMPwxN1jP3lY+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=cIUj0nlc; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=W4X9ISlB; arc=none smtp.client-ip=205.220.168.131
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6678E2uS3070519
+	for <linux-arm-msm@vger.kernel.org>; Tue, 7 Jul 2026 11:20:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	ozhkHGrtbGn2tsUAvP7G2WOvGFBIMdlw1yv9mdDL8IE=; b=cIUj0nlcnv6d9nH1
+	AguUkjqucMzGKOaEs8Q0Q9lHHBacaIqkTlDmmt6pPK6ue/fvmmkmm4TLOFV6nz2h
+	hbEzRBb/d7tCncrtdMm4I4fZWVDyt1aukWRNjk/4Ap9YCW2jLPP3+z4Og78Vd5cz
+	gAFbPoEJ/axOaeJtehRCbGytjm40KEIesbV/4rlXOduJpuXYM+cH1tKv7qPUXrSM
+	MCK6ywHH3iOVuid+eHx5ZofJfDbPgQfta8ZQxHPlS256S4n0Hwwv5ZPC+lWPHmSX
+	iNldsNKFroo/HK/iCRIhwVG6BeyA4Mu9eGCaA9lP9na44QM3l3f2CIA3wjVMH/2/
+	CZZvkQ==
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com [209.85.160.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f8sm8hqc2-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jul 2026 11:20:31 +0000 (GMT)
+Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-51c26012cd0so51549381cf.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jul 2026 04:20:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1783423230; x=1784028030; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ozhkHGrtbGn2tsUAvP7G2WOvGFBIMdlw1yv9mdDL8IE=;
+        b=W4X9ISlBW3HIFAaRyZGvhRKy9eJKiK6sAHhVvzjwE9jHai7G8HCszn6ggX8U38y8zK
+         FvaHOEM6iwvHS0UL5Z8REm8hLxVF9rec+1s3s5ZBD1MA286qwE8MgVQ81/tbc3GulzIL
+         2EMEr4WtzGl1Je+TrWc9wLMxmaqHkDHRvM+6qhVypuatYo608q/plSLzas8t75Wfw+Kx
+         I9zVoE9C7SFJdebooAtCZNKA78mq+K48M+Q4+DxOLleAYl/46o61ILwz1bmDqPctZPaN
+         wafH+w1aSX16Z45vzgedk8l/cSIsTyDOw7ipDYtIwH/JAfUb9XsF1i/04dSfmAtXQWQV
+         bVNA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783423230; x=1784028030;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ozhkHGrtbGn2tsUAvP7G2WOvGFBIMdlw1yv9mdDL8IE=;
+        b=Y1UEXN8/6z3vjOm4tU3PAjl0h9U+ne/CemHAWOqSKx8B+V2L9ltqxkK+NDz8Vf2czN
+         1YMgeuCAdrbig/UFO7/0lC9kcr3CKq2nMY+MVa+rEl1DPqQUeRm3qA+2r3iqkUPNsRY9
+         kwqAcnLXTmBu4/NWp2y6kfU34T9wlvRvL/eFOpqWzz0nKZucolsZGCPsweE34J/lLQgN
+         XJoHwJ1JRdh7vuDVGJw3gDFHnv7WMJsxRBHwzRMeipTl/HHFIuh1dHXSzzj4MEwwPJUE
+         4PF0Vi/r7COd/or1LHVV0WB35vsZtx+2MwRLdSXH6L7qYNohAPR7r9sKQNdJS4ETmR4F
+         qAUQ==
+X-Forwarded-Encrypted: i=1; AHgh+RotXM37aiT46RQLYYNfKhV1A+6JBFTO56gcN5i5+reK4sgfiHM7fiXLZkKk7ddbqRXsECKMu72UG2++nEp2@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx8zkEYLUToIIGUSB/ij6kOEapg0F96kU3zurWkkyj6Ir9RoU7x
+	W7cH4EOYlypUvuXkCcTliNtErJeKgYVWTqD38rikVo550ytdBIVa0PZf4Esi/kWgJ7ZJ9nXsB8I
+	sTd6e8/cMjpwGurdVD73AQxTU672nTczb5Hl8msdJVg7znHdoKxjCkwn2okqQgrn1THss
+X-Gm-Gg: AfdE7ck68fv25FrWXTNN3W4t5cTMEowT3CLAwOmiZXqkjSDpQeNsav5kG03wGsaP8v3
+	BY3UolGn8wOlIvePgaZ9mMwRNoBzNu+4HbujCL8mKOA5X052TSRd68rHrgDGW+UREQgIMSc/kVS
+	Se0fMlqVzj4/TP8HE4akI2NL8ZQyymANiIwCHfpN4uhghEkfPFDSUvCE9MsR8rQZqX+OUR2CWSa
+	McDb2FWRQbbQGFVXLR3PlkLIKCYSLAByS8C3Z1ytZ0bCdRRbKf4C7Dbd8tqB0VF/PVYRgEmUMfF
+	c6TzQD/GQuBfdj5bq7da2EL7NlOtnEv8GmDIytnEHmeMSJ6ZUq4DBatlFmzqIzW4vCF26eZ3zqH
+	BmcDV9RSCitTNFqhdjWnzcGIe1xgfwFFxTkI5lMY0NZIhRk5UCHcuFAS6Wzp+SvNIegaNrlz31s
+	hopNZN48A=
+X-Received: by 2002:a05:622a:130a:b0:51b:ec34:292 with SMTP id d75a77b69052e-51c748c4b5fmr49468591cf.53.1783423230060;
+        Tue, 07 Jul 2026 04:20:30 -0700 (PDT)
+X-Received: by 2002:a05:622a:130a:b0:51b:ec34:292 with SMTP id d75a77b69052e-51c748c4b5fmr49467731cf.53.1783423228842;
+        Tue, 07 Jul 2026 04:20:28 -0700 (PDT)
+Received: from [192.168.1.31] ([85.196.172.179])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c15ada023cesm109077066b.44.2026.07.07.04.20.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 07 Jul 2026 04:20:28 -0700 (PDT)
+Message-ID: <0426b129-5d03-467c-a61f-055e7dcf5654@oss.qualcomm.com>
+Date: Tue, 7 Jul 2026 14:20:25 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 0/5] Add Qualcomm JPEG V4L2 encoder for SM8250
+To: Bryan O'Donoghue <bod.linux@nxsw.ie>,
+        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Atanas Filipov <atanas.filipov@oss.qualcomm.com>,
+        linux-media@vger.kernel.org
+Cc: loic.poulain@oss.qualcomm.com, mchehab@kernel.org, robh@kernel.org,
+        krzk+dt@kernel.org, conor+dt@kernel.org, andersson@kernel.org,
+        konradybcio@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+References: <20260706071113.383215-1-atanas.filipov@oss.qualcomm.com>
+ <68e59764-5a10-4abc-849c-14ea2d9ef76e@linaro.org>
+ <d74d7839-d126-427a-b151-ca895a27a83e@linaro.org>
+ <bqRcqVTcU8Jl1ClRlFeaaigWdG8pICB20xCQDPVqOB5QHXdtjWu1UYXWqhvyAuj30sim2P91BHvVLHLYgdD7vw==@protonmail.internalid>
+ <7e36238b-96ac-4269-a6e5-0a6763e437e7@oss.qualcomm.com>
+ <6b5e573a-c13d-418c-af5b-759deb40bfab@nxsw.ie>
+Content-Language: en-US
+From: "Gjorgji Rosikopulos (Consultant)"
+ <gjorgji.rosikopulos@oss.qualcomm.com>
+In-Reply-To: <6b5e573a-c13d-418c-af5b-759deb40bfab@nxsw.ie>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA3MDEwOSBTYWx0ZWRfX+TtKrkLUaK/r
+ t2Z89aAA5W7EMYB4mYSxsw4mvb3Yx28NKLLg5BPDI0T498BpmRmdiyKL/8MXTtDyqqcXan39mDo
+ Se1iNJ2IfyzqnyXzV8uzPA5/mgLVyMGxGDj9A0IzI9v/SZ03u8xyDObhvbTDLpOC9iQCL+aOdgS
+ l1cham83Vdd7D8XcEWbRiWQ0BEHqbXfJk4lDAGiQGxueKsY34LFsewr7YPlZPy377HG9DzkDbbd
+ iTJzBdh9hMchTRQibgoG03mo4ps5wgCx+ul90BwlOC16LHcWHwQtmG2xHscEI7I1y6nGYkUvG7O
+ 8NmStZ2iNJ/G8/3R/UcddLOcy1rjo2xv8BVBcOniaLToAiaf3Wcj5Ia9ol1SdJAeZusAed5qYo/
+ vEedSGdinPG053iqPEoYA1RF7K04DPAj5ADXLkAO81009nZiqA4dW71fTQYcVg4+Mtb9Hu5UHwV
+ aYGC8x7Qkok0QoyORpA==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA3MDEwOSBTYWx0ZWRfX+LfJjlfeM3cX
+ wkoraEUfM4ZKCm/ZdJv299vl1481MA/6ubI2UcxpBNp8o9BzXiB2wXtJF3tP0TQfxyfbC5U9S00
+ TxZYeuqQ5PcLyNtReX97YFiUk/D16pk=
+X-Proofpoint-GUID: X2idwKsw7rHQts_bGdwlOBFFSZa6pdwr
+X-Authority-Analysis: v=2.4 cv=UvdT8ewB c=1 sm=1 tr=0 ts=6a4ce0ff cx=c_pps
+ a=JbAStetqSzwMeJznSMzCyw==:117 a=Q/e3f29T3Hw2hnAEzBPF7w==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
+ a=VwQbUJbxAAAA:8 a=J2XvcvT0q4wf4MKS_j8A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=uxP6HrT_eTzRwkO_Te1X:22
+X-Proofpoint-ORIG-GUID: X2idwKsw7rHQts_bGdwlOBFFSZa6pdwr
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-07_02,2026-07-06_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 phishscore=0 malwarescore=0 bulkscore=0 suspectscore=0
+ priorityscore=1501 lowpriorityscore=0 impostorscore=0 adultscore=0
+ spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607070109
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [0.84 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
-	MID_CONTAINS_FROM(1.00)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_MISSING_CHARSET(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[collabora.com,none];
-	R_DKIM_ALLOW(-0.20)[collabora.com:s=mail];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-117297-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_SENDER(0.00)[angelogioacchino.delregno@collabora.com,linux-arm-msm@vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[31];
-	FORGED_RECIPIENTS(0.00)[m:jic23@kernel.org,m:sboyd@kernel.org,m:dlechner@baylibre.com,m:nuno.sa@analog.com,m:andy@kernel.org,m:arnd@arndb.de,m:gregkh@linuxfoundation.org,m:srini@kernel.org,m:vkoul@kernel.org,m:neil.armstrong@linaro.org,m:sre@kernel.org,m:angelogioacchino.delregno@collabora.com,m:krzk@kernel.org,m:dmitry.baryshkov@oss.qualcomm.com,m:quic_wcheng@quicinc.com,m:melody.olvera@oss.qualcomm.com,m:quic_nsekar@quicinc.com,m:ivo.ivanov.ivanov1@gmail.com,m:abelvesa@kernel.org,m:luca.weiss@fairphone.com,m:konrad.dybcio@oss.qualcomm.com,m:mitltlatltl@gmail.com,m:krishna.kurapati@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:linux-iio@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-phy@lists.infradead.org,m:linux-pm@vger.kernel.org,m:kernel@collabora.com,m:jonathan.cameron@huawei.com,m:andriy.shevchenko@intel.com,m:ivoivanovivanov1@gmail.com,s:lists@lfdr.de];
+	TAGGED_FROM(0.00)[bounces-117298-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[15];
 	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
 	FORWARDED(0.00)[lists@lfdr.de];
-	FREEMAIL_CC(0.00)[baylibre.com,analog.com,kernel.org,arndb.de,linuxfoundation.org,linaro.org,collabora.com,oss.qualcomm.com,quicinc.com,gmail.com,fairphone.com,vger.kernel.org,lists.infradead.org,huawei.com,intel.com];
-	DKIM_TRACE(0.00)[collabora.com:+];
+	FORGED_RECIPIENTS(0.00)[m:bod.linux@nxsw.ie,m:vladimir.zapolskiy@linaro.org,m:bryan.odonoghue@linaro.org,m:atanas.filipov@oss.qualcomm.com,m:linux-media@vger.kernel.org,m:loic.poulain@oss.qualcomm.com,m:mchehab@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:andersson@kernel.org,m:konradybcio@kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:devicetree@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FORGED_SENDER(0.00)[gjorgji.rosikopulos@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:dkim,oss.qualcomm.com:from_mime,oss.qualcomm.com:dkim,oss.qualcomm.com:mid];
+	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[angelogioacchino.delregno@collabora.com,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[gjorgji.rosikopulos@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	ALIAS_RESOLVED(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,linaro.org:email,collabora.com:from_mime,collabora.com:email,collabora.com:mid,collabora.com:dkim,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,huawei.com:email,intel.com:email]
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 59C5E71AECD
+X-Rspamd-Queue-Id: 913EE71AF1C
 
-This driver doesn't need to add any register base address to any
-regmap call anymore since it was migrated to register as a SPMI
-subdevice with its own regmap reg_base, which makes the regmap
-API to automatically add such base address internally.
 
-Since the iadc_{read,write,read_result}() functions now only do
-call regmap_{read,write,bulk_read}() and nothing else, simplify
-the driver by removing them and by calling regmap APIs directly.
+On 7/7/2026 2:13 PM, Bryan O'Donoghue wrote:
+> On 07/07/2026 11:55, Gjorgji Rosikopulos (Consultant) wrote:
+>> Hi Vladimir, Bryan,
+>>
+>> On 7/6/2026 3:00 PM, Vladimir Zapolskiy wrote:
+>>> On 7/6/26 13:12, Bryan O'Donoghue wrote:
+>>>> On 06/07/2026 08:11, Atanas Filipov wrote:
+>>>>> Note: The handling of shared camera subsystem resources (power 
+>>>>> domains,
+>>>>> interconnects) for child IP blocks is still an open design question.
+>>>>
+>>>> Why ?
+>>>>
+>>>> A device needs to vote on its own interconnect and power-domains on 
+>>>> any
+>>>> bus. A sub-device of another device may wish to ramp a clock for
+>>>> whatever reason.
+>>>
+>>> Certainly a CAMSS device will vote on all needed to it resources, 
+>>> some of
+>>> which are shared and got their description under CAMSS device tree 
+>>> node.
+>>>
+>>>> There is no "master" device in this block of devices - save perhaps 
+>>>> for
+>>>> the CSID mux / wrappers on some of these parts.
+>>>>
+>>>> We have shared resources like camera noc, system noc and external
+>>>> clocks.
+>>>>
+>>>> Please include power-domains and interconnects.
+>>>>
+>>>
+>>> Why? The common power domain and interconnects have already been
+>>> described as resources of the parent CAMSS device, there is no need
+>>> to duplicate descriptions in every child device tree node of CAMSS.
+>>>
+>> The initial patch and work for JPEG was as independent driver. I agree
+>> from hw perspective it is
+>>
+>> part of CAMSS subsystem and maybe from design perspective proper way is
+>> to be child node not of the CAMSS.
+>>
+>> However the resources shared by both can be abstracted in other
+>> frameworks, example ICC voting allows to have shared
+>>
+>> clocks which can have policy to keep the higher rate and satisfy both of
+>> the HW's.
+>>
+>> So maybe it need to be decided:
+>>
+>> Do we want really additional logic for handling CAMSS resource of the
+>> CAMMS sub-devices by the CAMSS driver and create separate CAMSS API,s
+>
+> No, agreed.
+>
+>> or we can use existing fw's for that. ICC, clock, OPP which all allow
+>> sharing of the resources. Also there are cases where CAMSS and
+>>
+>> is not needed but JPEG encoder is: Example RTSP streaming or UVC
+>> streaming which require jpeg encoder.
+>
+> Yes.
+>
+>>
+>> Anyways my opinion:
+>>
+>> 1. CAMSS is not prepared and not ready to handle child devices, only the
+>> populate child nodes is not enough. I think it is little bit mess,
+>>
+>> some of the HW;s CSID, IFE etc are instantiated directly from CAMSS and
+>> jpeg and Ope are described as child nodes.
+>
+> That's not the strategy.
+>
+> The strategy is gradual transition from monolith to bus.
+>
+> https://lore.kernel.org/all/d5407ab1-1af7-4678-ae67-5cf30ce8fa4b@kernel.org/ 
+>
+Sorry i have missed that. I understand now the direction which has been 
+agreed on.
+>
+>
+>> 2. Jpeg on its own currently does not have any dependency with CAMSS
+>> driver code. It can use shared resources without issue and leave
+>>
+>> the ICC, clock and other frameworks to do the job.
+>
+> Yes as a fully self-described sub-node so that we can do 
+> compat="camss-bus" with the minimal amount of additional churn on top.
+>
+> Make JPEG a distinct standlone node now, and you preclude the bus - 
+> you have to make the argument to Krzysztof, Rob and Conor that "the 
+> old binding was wrong but let me away with a change to it now"
+>
+> Not an argument I will be making ;)
+>
+> We should put the JPEG, OPE, ICP as sub-nodes of compat=camss so that 
+> we can make
+>
+> camera-bus {
+>     compat=camss
+>     power-domains=<whatever is common>
+>     csid {
+>         compat=csid;
+>     }
+>     jpeg {
+>         compat=jpeg;
+>     }
+> }
+>
+> a reality.
+>
+> Put jpeg at the same level as camera-bus and you basically preclude 
+> that model.
 
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-QRD
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
----
- drivers/iio/adc/qcom-spmi-iadc.c | 89 ++++++++++++--------------------
- 1 file changed, 33 insertions(+), 56 deletions(-)
+Ok understood, lets wait for more review comments, and move to this 
+model for the next patchset. Thanks for the clarification :-)
 
-diff --git a/drivers/iio/adc/qcom-spmi-iadc.c b/drivers/iio/adc/qcom-spmi-iadc.c
-index 21e35df82193..196525ba0b4b 100644
---- a/drivers/iio/adc/qcom-spmi-iadc.c
-+++ b/drivers/iio/adc/qcom-spmi-iadc.c
-@@ -113,77 +113,59 @@ struct iadc_chip {
- 	struct completion complete;
- };
- 
--static int iadc_read(struct iadc_chip *iadc, u16 offset, u8 *data)
--{
--	unsigned int val;
--	int ret;
--
--	ret = regmap_read(iadc->regmap, offset, &val);
--	if (ret < 0)
--		return ret;
--
--	*data = val;
--	return 0;
--}
--
--static int iadc_write(struct iadc_chip *iadc, u16 offset, u8 data)
--{
--	return regmap_write(iadc->regmap, offset, data);
--}
--
- static int iadc_reset(struct iadc_chip *iadc)
- {
--	u8 data;
-+	u32 data;
- 	int ret;
- 
--	ret = iadc_write(iadc, IADC_SEC_ACCESS, IADC_SEC_ACCESS_DATA);
-+	ret = regmap_write(iadc->regmap, IADC_SEC_ACCESS, IADC_SEC_ACCESS_DATA);
- 	if (ret < 0)
- 		return ret;
- 
--	ret = iadc_read(iadc, IADC_PERH_RESET_CTL3, &data);
-+	ret = regmap_read(iadc->regmap, IADC_PERH_RESET_CTL3, &data);
- 	if (ret < 0)
- 		return ret;
- 
--	ret = iadc_write(iadc, IADC_SEC_ACCESS, IADC_SEC_ACCESS_DATA);
-+	ret = regmap_write(iadc->regmap, IADC_SEC_ACCESS, IADC_SEC_ACCESS_DATA);
- 	if (ret < 0)
- 		return ret;
- 
- 	data |= IADC_FOLLOW_WARM_RB;
- 
--	return iadc_write(iadc, IADC_PERH_RESET_CTL3, data);
-+	return regmap_write(iadc->regmap, IADC_PERH_RESET_CTL3, data);
- }
- 
- static int iadc_set_state(struct iadc_chip *iadc, bool state)
- {
--	return iadc_write(iadc, IADC_EN_CTL1, state ? IADC_EN_CTL1_SET : 0);
-+	return regmap_write(iadc->regmap, IADC_EN_CTL1, state ? IADC_EN_CTL1_SET : 0);
- }
- 
- static void iadc_status_show(struct iadc_chip *iadc)
- {
--	u8 mode, sta1, chan, dig, en, req;
-+	u32 mode, sta1, chan, dig, en, req;
- 	int ret;
- 
--	ret = iadc_read(iadc, IADC_MODE_CTL, &mode);
-+	ret = regmap_read(iadc->regmap, IADC_MODE_CTL, &mode);
- 	if (ret < 0)
- 		return;
- 
--	ret = iadc_read(iadc, IADC_DIG_PARAM, &dig);
-+	ret = regmap_read(iadc->regmap, IADC_DIG_PARAM, &dig);
- 	if (ret < 0)
- 		return;
- 
--	ret = iadc_read(iadc, IADC_CH_SEL_CTL, &chan);
-+	ret = regmap_read(iadc->regmap, IADC_CH_SEL_CTL, &chan);
- 	if (ret < 0)
- 		return;
- 
--	ret = iadc_read(iadc, IADC_CONV_REQ, &req);
-+	ret = regmap_read(iadc->regmap, IADC_CONV_REQ, &req);
- 	if (ret < 0)
- 		return;
- 
--	ret = iadc_read(iadc, IADC_STATUS1, &sta1);
-+	ret = regmap_read(iadc->regmap, IADC_STATUS1, &sta1);
- 	if (ret < 0)
- 		return;
- 
--	ret = iadc_read(iadc, IADC_EN_CTL1, &en);
-+	ret = regmap_read(iadc->regmap, IADC_EN_CTL1, &en);
- 	if (ret < 0)
- 		return;
- 
-@@ -199,34 +181,34 @@ static int iadc_configure(struct iadc_chip *iadc, int channel)
- 
- 	/* Mode selection */
- 	mode = (IADC_OP_MODE_NORMAL << IADC_OP_MODE_SHIFT) | IADC_TRIM_EN;
--	ret = iadc_write(iadc, IADC_MODE_CTL, mode);
-+	ret = regmap_write(iadc->regmap, IADC_MODE_CTL, mode);
- 	if (ret < 0)
- 		return ret;
- 
- 	/* Channel selection */
--	ret = iadc_write(iadc, IADC_CH_SEL_CTL, channel);
-+	ret = regmap_write(iadc->regmap, IADC_CH_SEL_CTL, channel);
- 	if (ret < 0)
- 		return ret;
- 
- 	/* Digital parameter setup */
- 	decim = IADC_DEF_DECIMATION << IADC_DIG_DEC_RATIO_SEL_SHIFT;
--	ret = iadc_write(iadc, IADC_DIG_PARAM, decim);
-+	ret = regmap_write(iadc->regmap, IADC_DIG_PARAM, decim);
- 	if (ret < 0)
- 		return ret;
- 
- 	/* HW settle time delay */
--	ret = iadc_write(iadc, IADC_HW_SETTLE_DELAY, IADC_DEF_HW_SETTLE_TIME);
-+	ret = regmap_write(iadc->regmap, IADC_HW_SETTLE_DELAY, IADC_DEF_HW_SETTLE_TIME);
- 	if (ret < 0)
- 		return ret;
- 
--	ret = iadc_write(iadc, IADC_FAST_AVG_CTL, IADC_DEF_AVG_SAMPLES);
-+	ret = regmap_write(iadc->regmap, IADC_FAST_AVG_CTL, IADC_DEF_AVG_SAMPLES);
- 	if (ret < 0)
- 		return ret;
- 
- 	if (IADC_DEF_AVG_SAMPLES)
--		ret = iadc_write(iadc, IADC_FAST_AVG_EN, IADC_FAST_AVG_EN_SET);
-+		ret = regmap_write(iadc->regmap, IADC_FAST_AVG_EN, IADC_FAST_AVG_EN_SET);
- 	else
--		ret = iadc_write(iadc, IADC_FAST_AVG_EN, 0);
-+		ret = regmap_write(iadc->regmap, IADC_FAST_AVG_EN, 0);
- 
- 	if (ret < 0)
- 		return ret;
-@@ -239,19 +221,19 @@ static int iadc_configure(struct iadc_chip *iadc, int channel)
- 		return ret;
- 
- 	/* Request conversion */
--	return iadc_write(iadc, IADC_CONV_REQ, IADC_CONV_REQ_SET);
-+	return regmap_write(iadc->regmap, IADC_CONV_REQ, IADC_CONV_REQ_SET);
- }
- 
- static int iadc_poll_wait_eoc(struct iadc_chip *iadc, unsigned int interval_us)
- {
- 	unsigned int count, retry;
-+	u32 sta1;
- 	int ret;
--	u8 sta1;
- 
- 	retry = interval_us / IADC_CONV_TIME_MIN_US;
- 
- 	for (count = 0; count < retry; count++) {
--		ret = iadc_read(iadc, IADC_STATUS1, &sta1);
-+		ret = regmap_read(iadc->regmap, IADC_STATUS1, &sta1);
- 		if (ret < 0)
- 			return ret;
- 
-@@ -267,11 +249,6 @@ static int iadc_poll_wait_eoc(struct iadc_chip *iadc, unsigned int interval_us)
- 	return -ETIMEDOUT;
- }
- 
--static int iadc_read_result(struct iadc_chip *iadc, u16 *data)
--{
--	return regmap_bulk_read(iadc->regmap, IADC_DATA, data, 2);
--}
--
- static int iadc_do_conversion(struct iadc_chip *iadc, int chan, u16 *data)
- {
- 	unsigned int wait;
-@@ -296,7 +273,7 @@ static int iadc_do_conversion(struct iadc_chip *iadc, int chan, u16 *data)
- 	}
- 
- 	if (!ret)
--		ret = iadc_read_result(iadc, data);
-+		ret = regmap_bulk_read(iadc->regmap, IADC_DATA, data, sizeof(*data));
- exit:
- 	iadc_set_state(iadc, false);
- 	if (ret < 0)
-@@ -392,33 +369,33 @@ static int iadc_update_offset(struct iadc_chip *iadc)
- 
- static int iadc_version_check(struct iadc_chip *iadc)
- {
--	u8 val;
-+	u32 val;
- 	int ret;
- 
--	ret = iadc_read(iadc, IADC_PERPH_TYPE, &val);
-+	ret = regmap_read(iadc->regmap, IADC_PERPH_TYPE, &val);
- 	if (ret < 0)
- 		return ret;
- 
- 	if (val < IADC_PERPH_TYPE_ADC) {
--		dev_err(iadc->dev, "%d is not ADC\n", val);
-+		dev_err(iadc->dev, "%u is not ADC\n", val);
- 		return -EINVAL;
- 	}
- 
--	ret = iadc_read(iadc, IADC_PERPH_SUBTYPE, &val);
-+	ret = regmap_read(iadc->regmap, IADC_PERPH_SUBTYPE, &val);
- 	if (ret < 0)
- 		return ret;
- 
- 	if (val < IADC_PERPH_SUBTYPE_IADC) {
--		dev_err(iadc->dev, "%d is not IADC\n", val);
-+		dev_err(iadc->dev, "%u is not IADC\n", val);
- 		return -EINVAL;
- 	}
- 
--	ret = iadc_read(iadc, IADC_REVISION2, &val);
-+	ret = regmap_read(iadc->regmap, IADC_REVISION2, &val);
- 	if (ret < 0)
- 		return ret;
- 
- 	if (val < IADC_REVISION2_SUPPORTED_IADC) {
--		dev_err(iadc->dev, "revision %d not supported\n", val);
-+		dev_err(iadc->dev, "revision %u not supported\n", val);
- 		return -EINVAL;
- 	}
- 
-@@ -428,7 +405,7 @@ static int iadc_version_check(struct iadc_chip *iadc)
- static int iadc_rsense_read(struct iadc_chip *iadc, struct device_node *node)
- {
- 	int ret, sign, int_sense;
--	u8 deviation;
-+	u32 deviation;
- 
- 	ret = of_property_read_u32(node, "qcom,external-resistor-micro-ohms",
- 				   &iadc->rsense[IADC_EXT_RSENSE]);
-@@ -440,7 +417,7 @@ static int iadc_rsense_read(struct iadc_chip *iadc, struct device_node *node)
- 		return -EINVAL;
- 	}
- 
--	ret = iadc_read(iadc, IADC_NOMINAL_RSENSE, &deviation);
-+	ret = regmap_read(iadc->regmap, IADC_NOMINAL_RSENSE, &deviation);
- 	if (ret < 0)
- 		return ret;
- 
--- 
-2.54.0
+~Gjorgji
 
 
