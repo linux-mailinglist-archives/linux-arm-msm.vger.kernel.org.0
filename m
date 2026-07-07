@@ -1,296 +1,206 @@
-Return-Path: <linux-arm-msm+bounces-117270-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-117271-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id sRYcCizYTGr2qgEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-117270-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Jul 2026 12:42:52 +0200
+	id md27NLDUTGr5qQEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-117271-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Jul 2026 12:28:00 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1620271A8AE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Jul 2026 12:42:51 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6CF3771A5B9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Jul 2026 12:28:00 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=MwBekEDD;
-	dmarc=pass (policy=quarantine) header.from=kernel.org;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117270-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c15:e001:75::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117270-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=kDYQnoVY;
+	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=LAeorjhH;
+	dmarc=pass (policy=reject) header.from=qualcomm.com;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117271-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c09:e001:a7::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117271-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 161DD303E67E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jul 2026 10:23:59 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 3DFDC3084E18
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jul 2026 10:24:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2F1EA3E3156;
-	Tue,  7 Jul 2026 10:23:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 59CE33E00A9;
+	Tue,  7 Jul 2026 10:23:56 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6E5A3DC861;
-	Tue,  7 Jul 2026 10:23:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CC243DF016
+	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Jul 2026 10:23:53 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783419787; cv=none; b=ppULIfLNeoOZXdly94D2vzSbEPZB3Ow0TR0HY7fb/C3zHQx0Z58kcRHXn4+OeLRINLpFvVaKGMS/q2Lhj5thIYNmUo6ud0nchG93lGlVYJNNfCM0DAbTfhSyrnJQvCd7HxEoimeWgHf/ghsXvNnOkl+aVuYobU55bqPM1djcL5o=
+	t=1783419836; cv=none; b=uDu/51wPOorqEf5XRoLaBt4cHGhZc2zaFVC1/MtNF0tr4ypw+/WtRwzGfcBaa05UbpVDLXS4nJ+iXz2x57BYBE83lsR9RRsBwVFwFRfwWNT5gVMFtNrcfuYAJLw6qDWQJ5CuwSogpTpVZvd91b4iE5eGn8N0cxMbmPsL84zh73Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783419787; c=relaxed/simple;
-	bh=v8FgcP/f2W7m0pP7PolC2zvUEFXbUmBTndmaaqJYyAc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aAXMpzC5WKcqXD26GA2xTX55f8lcbFHNtTbxSaUAVnNahROOdQo1aBjgIj0REOdLH8psXry71AEg1ZYw20SqCq1UIqmKaY2+7vg+v5/dmXyqbOVwpUzCZC/g1CxzfR+DUGpFb9KxFbMlv7v9uCLLQei7AcTdY5UI/AcJ9S5EgKQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MwBekEDD; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3940D1F000E9;
-	Tue,  7 Jul 2026 10:22:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783419785;
-	bh=uO9n1BXbcFKpE0ytmifaDUpJQYF7fOJjd6hhXMsbhnw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=MwBekEDDrqDWUBl7OB2GiRJo9KVaANF531LqDSCiYXdCwUfPfgV15P9ZY/fY6CVA6
-	 F8ic/FjF/V4shqvt1ft98lkWSY+mj6ovzE4pr5gR635QrF0JPDro+njddQUcumSdQh
-	 kZ2VtL+NJM1IHpwBv5iKE1Mc7Oizq03fbEHOGyZREuLCbOunsQHWCjKQPfsYIeYhTn
-	 nkzNe0/N0Uo+DMFOtkRTMhjaVVt0gFL67IW/5ZfXccVzW25bfqi117JnWf+/k8p1+/
-	 tBKgrRhHBxTqzBMhkUG4DH3unKVaBJ/A7PbihSPTdfDg8mw0xEEWq1UREm34Vk39Dl
-	 CNZCNxZb4WFjQ==
-Date: Tue, 7 Jul 2026 11:22:41 +0100
-From: Lorenzo Stoakes <ljs@kernel.org>
-To: Pedro Falcato <pfalcato@suse.de>
-Cc: Andrew Morton <akpm@linux-foundation.org>, 
-	Russell King <linux@armlinux.org.uk>, Dinh Nguyen <dinguyen@kernel.org>, 
-	Simon Schuster <schuster.simon@siemens-energy.com>, 
-	"James E . J . Bottomley" <James.Bottomley@hansenpartnership.com>, Helge Deller <deller@gmx.de>, 
-	Jarkko Sakkinen <jarkko@kernel.org>, Thomas Gleixner <tglx@kernel.org>, 
-	Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>, 
-	Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org, Ian Abbott <abbotti@mev.co.uk>, 
-	H Hartley Sweeten <hsweeten@visionengravers.com>, Lucas Stach <l.stach@pengutronix.de>, 
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
-	Patrik Jakobsson <patrik.r.jakobsson@gmail.com>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
-	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
-	Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>, 
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>, Thierry Reding <thierry.reding@kernel.org>, 
-	Mikko Perttunen <mperttunen@nvidia.com>, Jonathan Hunter <jonathanh@nvidia.com>, 
-	Christian Koenig <christian.koenig@amd.com>, Huang Rui <ray.huang@amd.com>, Ankit Agrawal <ankita@nvidia.com>, 
-	Alex Williamson <alex@shazbot.org>, Alexander Viro <viro@zeniv.linux.org.uk>, 
-	Christian Brauner <brauner@kernel.org>, Dan Williams <djbw@kernel.org>, 
-	Muchun Song <muchun.song@linux.dev>, Oscar Salvador <osalvador@suse.de>, 
-	David Hildenbrand <david@kernel.org>, Suren Baghdasaryan <surenb@google.com>, 
-	"Liam R . Howlett" <liam@infradead.org>, Matthew Wilcox <willy@infradead.org>, 
-	Marek Szyprowski <m.szyprowski@samsung.com>, Peter Zijlstra <peterz@infradead.org>, 
-	Arnaldo Carvalho de Melo <acme@kernel.org>, Namhyung Kim <namhyung@kernel.org>, 
-	Masami Hiramatsu <mhiramat@kernel.org>, Oleg Nesterov <oleg@redhat.com>, 
-	Steven Rostedt <rostedt@goodmis.org>, SeongJae Park <sj@kernel.org>, Miaohe Lin <linmiaohe@huawei.com>, 
-	Hugh Dickins <hughd@google.com>, Mike Rapoport <rppt@kernel.org>, Kees Cook <kees@kernel.org>, 
-	Paolo Bonzini <pbonzini@redhat.com>, linux-kernel@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-parisc@vger.kernel.org, linux-sgx@vger.kernel.org, 
-	etnaviv@lists.freedesktop.org, dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
-	freedreno@lists.freedesktop.org, linux-tegra@vger.kernel.org, kvm@vger.kernel.org, 
-	linux-fsdevel@vger.kernel.org, nvdimm@lists.linux.dev, linux-mm@kvack.org, 
-	iommu@lists.linux.dev, linux-perf-users@vger.kernel.org, 
-	linux-trace-kernel@vger.kernel.org, kasan-dev@googlegroups.com, damon@lists.linux.dev, 
-	Rik van Riel <riel@surriel.com>, Harry Yoo <harry@kernel.org>, Jann Horn <jannh@google.com>
-Subject: Re: [PATCH 21/30] mm/vma: add and use vma_[add/sub]_pgoff()
-Message-ID: <akzTTCgF1_d7DDZZ@lucifer>
-References: <cover.1782735110.git.ljs@kernel.org>
- <794044881e454fd8ac13e59d5ff5fc86fca08b03.1782735110.git.ljs@kernel.org>
- <akZI0n1U32Ptd0ye@pedro-suse.lan>
+	s=arc-20240116; t=1783419836; c=relaxed/simple;
+	bh=4ql2aTLdhYhZ6orCH6CMUqpfN4KwBk6Tludnd5w6p4w=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=fZYs8wJndvI62M5ytSl1Xn3TJxRn6fvxJ0GXCP3YbnfvMGo43VvHB/OPQXDCOiigCQR1CVEFWLJNYGKCJ6t+GKyAe/tUdbu+Ntk5NAfvc8JwKDsUiyD2po2/ZlXsQeIRGQmR8mzq1I2WIq58wHFPv+bHfRkqoDL1Z/2NBizZfV8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=kDYQnoVY; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=LAeorjhH; arc=none smtp.client-ip=205.220.180.131
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6678DlAv3182160
+	for <linux-arm-msm@vger.kernel.org>; Tue, 7 Jul 2026 10:23:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	W4dfETx7wy6dus264yK6oxX9SFN/B4VI6pXBXwK5j9A=; b=kDYQnoVYJCYORkLD
+	oOr9oWCBUhxhXctLUKSFd4wJcPASPUehnrDi+eoAkArR6lcErMEQO3vOAsvOpoBL
+	GeGYB0P9YOc58EHCvfM0En/EfJxd2b59pJ5e83eYUIH3IOhovvUWBF5Lt3wWO70l
+	V0OX6ADD46av2Q0AFmPMZSL+IATsyaiYKImemLniSCeCCeabRBhtWDw9jNgIltlR
+	cjXWFFJj/F5CsR3dZbZiIOWjxQtXLAJEMbsLdQ5TaeEEMI82dcMJO5J7bARbLmzh
+	H1SdZwl6erbiMm/2LI5BsUWLFXVM853drP0XG6jEoM+Z/vM2DqffAq3E5sXuIgMT
+	V2eU2g==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f8v3t8ywa-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jul 2026 10:23:52 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-92ebcbb818bso2077885a.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jul 2026 03:23:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1783419832; x=1784024632; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=W4dfETx7wy6dus264yK6oxX9SFN/B4VI6pXBXwK5j9A=;
+        b=LAeorjhHpcZos78+5tpsanY84YjdsMvlMCuKqPkS5gRgl1oqYAQRCJxSBgqiJr7HNs
+         Mn+bn2XQr/0LQKan1zQdFgV6WJKM8/1Fsle2VpBojNPAAy7J59eTPYWNKgUi0SqoFKp+
+         psTRjx2ftqxrgF2Qpz7ECHx3sfoEAczMR9yBtnlSwMGF8/bgJ+7SOO/xMzPJ/jf1UVZz
+         +4mXFBJ014KjggiXVfpmnTmZLhwDs3Sn+aPuHN8PdsmrfPHS2/vySda0GpiGbEGB5GJz
+         oGNs1QtaG0zBxNBgDzZyQiUBVrzOIi/zfp2aK062AtVYL0r0+fB4kF2+E+v3olkYRdlY
+         t3tQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783419832; x=1784024632;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=W4dfETx7wy6dus264yK6oxX9SFN/B4VI6pXBXwK5j9A=;
+        b=rqVe0QyjiNXusT5cxoj6BG66UeHxtnFuNvjGO0jtke5HPcSsZLzY5h3pg/10OLlnMS
+         vAGCWNLjReI+ZyT/0+94Y2VaL/kL/eEdM42jHhG57xk6ZYLrvSpRhoDeAsIxrs4ZSkxd
+         D0EAFTwIU4d3KTHS14vDUszcF6EYWHU8AJT7SsFYdlgLzf/hJ5UGPuZwAWJ0wFu9yTHH
+         6qrM41gg6g73H8b7RbnEOq1iZBOyncCWqaXN06FlgHe3krNYynIelxTudtiUB17cKVNm
+         OmxvM1MXplKU8Lk/+ai9GQaEvFW5VCjCNOB8+8SX1s+bJ2zVsL0mF3khWYdJjx58po5u
+         eaRg==
+X-Gm-Message-State: AOJu0Yz8Ye2SwQo1YaWyhNXJqDIB4HFKF0zwi7qjE60nzhb6pCeaynMY
+	WoWNzxOmPSSv9srkGHnupYe9XD/9x5kV5dyDCb7STbE7eCvqtDATu3+BhVAY0oIDtFosa9hZWv+
+	W94nxcKvV+XZcyruGqbhz97Oz2VAgVO5PlimuQyWNjdFEcw3aS2agGtMz2BKCGmFj5WaAfHf2Ov
+	/a
+X-Gm-Gg: AfdE7cn0Z7Q3oqUd/h/IDLmy3py0FgESwgoo9K4TomJRYigUuWd0c4qw1dcfc9/e+Dw
+	5WhpbFS3ifkWlqga8jqhel/URqFnlc2D5vg6lc6/U8jbInsOTRrlZ2jRPkjf5Db5pkzrdFEBENy
+	4N6QJjGAsLTmFP4TBT1+hWAOIibT8Fo09mcmm9gdAJu7v7t1YogOrpa2vRYCDjJ2GhEsN8OcY2a
+	C8r05XR7jbhX1ePOrI6AjKLfAnOELyJQQRWyebIQuabqRTBhfWVthmt6ZdWSpZxVAh8isMsjFCp
+	UXsa4qymxR2SeLKVi+gCdwOFcnSFTTeE48XiY1pxpQN7wnwRxEyvjH3BfHpl9+G1TC+c/96QQly
+	05gBYcMnnxktxWz1r6W59iIK8U4M3SQkyMQ0=
+X-Received: by 2002:a05:620a:6486:b0:920:798b:e28e with SMTP id af79cd13be357-92ec052b554mr164194085a.3.1783419832461;
+        Tue, 07 Jul 2026 03:23:52 -0700 (PDT)
+X-Received: by 2002:a05:620a:6486:b0:920:798b:e28e with SMTP id af79cd13be357-92ec052b554mr164193085a.3.1783419832032;
+        Tue, 07 Jul 2026 03:23:52 -0700 (PDT)
+Received: from [192.168.120.193] ([178.235.128.140])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c15ad9be41esm101778966b.39.2026.07.07.03.23.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 07 Jul 2026 03:23:51 -0700 (PDT)
+Message-ID: <605e256d-711a-4b47-a8ab-002ae8cda1bd@oss.qualcomm.com>
+Date: Tue, 7 Jul 2026 12:23:49 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <akZI0n1U32Ptd0ye@pedro-suse.lan>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] arm64: dts: qcom: eliza-evk: Add support for USB and SD
+ card
+To: Abel Vesa <abel.vesa@oss.qualcomm.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20260630-dts-qcom-eliza-cqs-evk-enable-usb-sdcard-v1-1-146264625095@oss.qualcomm.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20260630-dts-qcom-eliza-cqs-evk-enable-usb-sdcard-v1-1-146264625095@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: vsmCtLv7EEJM7DYC8-uqOgGWBc6Qp61i
+X-Proofpoint-ORIG-GUID: vsmCtLv7EEJM7DYC8-uqOgGWBc6Qp61i
+X-Authority-Analysis: v=2.4 cv=HqVG3UTS c=1 sm=1 tr=0 ts=6a4cd3b8 cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=PRfkaYvzSr8QmIIGAkY2Sg==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=EUspDBNiAAAA:8 a=3552hqOxyuVABoCTLpMA:9 a=QEXdDO2ut3YA:10 a=zgiPjhLxNE0A:10
+ a=NFOGd7dJGGMPyQGDc5-O:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA3MDEwMCBTYWx0ZWRfX6ecxaOnBVgBL
+ wBg9IIau9ZiljVpK4iDRO6A0fUz5hq0bpSWhfyBUsN9Wa3vheqdJq2j7fsae+encNsgpxtNzCMg
+ fNLPlWpra4TP2Ud3Eg7efS53psIqlaCTpjiuMWDJJMoYLZ5CtQHVsPILihed8wnrtqn/LPCGedl
+ 1TQApq5EhV0DoZqKMSEkTBYmTZhc8ul6zWE1hMBy3MdQOfNMZs+6/1ahAuH1w2dbxQppZPdhsys
+ 7zEN0bPG3iWjzo67OSyxdE7vXBvo8LB7D7Lv+a5o3ptziXdveUldhRbQXCocFDCd7fGQ8VzkkRa
+ 8HARC3h+WtsKpr7r+hk65OOWn+LJrCrJ/dC5qLOOONNMq7/3cNSypFTjnG8ewuVC4yh88hkH5qm
+ 6gOZAnNU33UNbYmNrweJragr9RJyWfYBE3dETaUCVTJQRb0an29Cp7F/YpSIZVOrmAqvtwrUGJl
+ lP+k1FKi9R3MUeqmMSw==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA3MDEwMCBTYWx0ZWRfX9z0cYOx7X0cl
+ pPcaQHziIehXunKsNMemIRVCMgPkDA8Cn8zkdX9CszXd43Oi27lwP2BXS0BR/E57CWXKW4BIkp4
+ UPybphOUB4SoU0l3FKvdIFp6J8WP+fQ=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-07_02,2026-07-06_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 impostorscore=0 adultscore=0 suspectscore=0 malwarescore=0
+ bulkscore=0 lowpriorityscore=0 phishscore=0 priorityscore=1501 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607070100
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-3.16 / 15.00];
-	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-117270-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:pfalcato@suse.de,m:akpm@linux-foundation.org,m:linux@armlinux.org.uk,m:dinguyen@kernel.org,m:schuster.simon@siemens-energy.com,m:James.Bottomley@hansenpartnership.com,m:deller@gmx.de,m:jarkko@kernel.org,m:tglx@kernel.org,m:mingo@redhat.com,m:bp@alien8.de,m:dave.hansen@linux.intel.com,m:x86@kernel.org,m:abbotti@mev.co.uk,m:hsweeten@visionengravers.com,m:l.stach@pengutronix.de,m:airlied@gmail.com,m:simona@ffwll.ch,m:patrik.r.jakobsson@gmail.com,m:maarten.lankhorst@linux.intel.com,m:mripard@kernel.org,m:tzimmermann@suse.de,m:robin.clark@oss.qualcomm.com,m:lumag@kernel.org,m:tomi.valkeinen@ideasonboard.com,m:thierry.reding@kernel.org,m:mperttunen@nvidia.com,m:jonathanh@nvidia.com,m:christian.koenig@amd.com,m:ray.huang@amd.com,m:ankita@nvidia.com,m:alex@shazbot.org,m:viro@zeniv.linux.org.uk,m:brauner@kernel.org,m:djbw@kernel.org,m:muchun.song@linux.dev,m:osalvador@suse.de,m:david@kernel.org,m:surenb@google.com,m:liam@infradead.org,m:willy@infradead.org,m:m.szypr
- owski@samsung.com,m:peterz@infradead.org,m:acme@kernel.org,m:namhyung@kernel.org,m:mhiramat@kernel.org,m:oleg@redhat.com,m:rostedt@goodmis.org,m:sj@kernel.org,m:linmiaohe@huawei.com,m:hughd@google.com,m:rppt@kernel.org,m:kees@kernel.org,m:pbonzini@redhat.com,m:linux-kernel@vger.kernel.org,m:linux-arm-kernel@lists.infradead.org,m:linux-parisc@vger.kernel.org,m:linux-sgx@vger.kernel.org,m:etnaviv@lists.freedesktop.org,m:dri-devel@lists.freedesktop.org,m:linux-arm-msm@vger.kernel.org,m:freedreno@lists.freedesktop.org,m:linux-tegra@vger.kernel.org,m:kvm@vger.kernel.org,m:linux-fsdevel@vger.kernel.org,m:nvdimm@lists.linux.dev,m:linux-mm@kvack.org,m:iommu@lists.linux.dev,m:linux-perf-users@vger.kernel.org,m:linux-trace-kernel@vger.kernel.org,m:kasan-dev@googlegroups.com,m:damon@lists.linux.dev,m:riel@surriel.com,m:harry@kernel.org,m:jannh@google.com,m:patrikrjakobsson@gmail.com,s:lists@lfdr.de];
-	FORGED_SENDER(0.00)[ljs@kernel.org,linux-arm-msm@vger.kernel.org];
 	MIME_TRACE(0.00)[0:+];
-	RCVD_COUNT_THREE(0.00)[4];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	FORWARDED(0.00)[lists@lfdr.de];
+	TAGGED_FROM(0.00)[bounces-117271-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_CC(0.00)[linux-foundation.org,armlinux.org.uk,kernel.org,siemens-energy.com,hansenpartnership.com,gmx.de,redhat.com,alien8.de,linux.intel.com,mev.co.uk,visionengravers.com,pengutronix.de,gmail.com,ffwll.ch,suse.de,oss.qualcomm.com,ideasonboard.com,nvidia.com,amd.com,shazbot.org,zeniv.linux.org.uk,linux.dev,google.com,infradead.org,samsung.com,goodmis.org,huawei.com,vger.kernel.org,lists.infradead.org,lists.freedesktop.org,lists.linux.dev,kvack.org,googlegroups.com,surriel.com];
+	FORGED_SENDER(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS(0.00)[m:abel.vesa@oss.qualcomm.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	RCPT_COUNT_GT_50(0.00)[75];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[ljs@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	ALIAS_RESOLVED(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	MISSING_XM_UA(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,qualcomm.com:dkim,vger.kernel.org:from_smtp,oss.qualcomm.com:from_mime,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns];
+	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	ALIAS_RESOLVED(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[9];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,suse.de:email,lucifer:mid]
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 1620271A8AE
+X-Rspamd-Queue-Id: 6CF3771A5B9
 
-On Thu, Jul 02, 2026 at 12:20:10PM +0100, Pedro Falcato wrote:
-> On Mon, Jun 29, 2026 at 01:23:32PM +0100, Lorenzo Stoakes wrote:
-> > Add helpers for adding or subtracting to a VMA's page offset, exposed
-> > internally for VMA users within mm in mm/vma.h.
-> >
-> > This is to lay the foundations for tracking anonymous page offset for
-> > MAP_PRIVATE file-backed mappings, where adding and subtracting from this
-> > value must be reflected in both the file and anonymous offsets.
-> >
-> > These are used on VMA split and downward stack expansion.
-> >
-> > No functional change intended.
-> >
-> > Signed-off-by: Lorenzo Stoakes <ljs@kernel.org>
-> > ---
-> >  mm/nommu.c                      |  6 ++++--
-> >  mm/vma.c                        |  6 +++---
-> >  mm/vma.h                        | 12 ++++++++++++
-> >  tools/testing/vma/include/dup.h | 13 ++++++++++++-
-> >  4 files changed, 31 insertions(+), 6 deletions(-)
-> >
-> > diff --git a/mm/nommu.c b/mm/nommu.c
-> > index 7333d855e974..c7fafcd87c14 100644
-> > --- a/mm/nommu.c
-> > +++ b/mm/nommu.c
-> > @@ -41,6 +41,7 @@
-> >  #include <asm/tlbflush.h>
-> >  #include <asm/mmu_context.h>
-> >  #include "internal.h"
-> > +#include "vma.h"
-> >
-> >  unsigned long highest_memmap_pfn;
-> >  int heap_stack_gap = 0;
-> > @@ -1338,7 +1339,8 @@ static int split_vma(struct vma_iterator *vmi, struct vm_area_struct *vma,
-> >  		region->vm_top = region->vm_end = new->vm_end = addr;
-> >  	} else {
-> >  		region->vm_start = new->vm_start = addr;
-> > -		region->vm_pgoff = new->vm_pgoff += npages;
-> > +		vma_add_pgoff(new, npages);
-> > +		region->vm_pgoff = vma_start_pgoff(new);
-> >  	}
-> >
-> >  	vma_iter_config(vmi, new->vm_start, new->vm_end);
-> > @@ -1355,7 +1357,7 @@ static int split_vma(struct vma_iterator *vmi, struct vm_area_struct *vma,
-> >  	delete_nommu_region(vma->vm_region);
-> >  	if (new_below) {
-> >  		vma->vm_region->vm_start = vma->vm_start = addr;
-> > -		vma->vm_pgoff += npages;
-> > +		vma_add_pgoff(vma, npages);
-> >  		vma->vm_region->vm_pgoff = vma_start_pgoff(vma);
-> >  	} else {
-> >  		vma->vm_region->vm_end = vma->vm_end = addr;
-> > diff --git a/mm/vma.c b/mm/vma.c
-> > index 185d07397ca6..cb7222e20c93 100644
-> > --- a/mm/vma.c
-> > +++ b/mm/vma.c
-> > @@ -517,7 +517,7 @@ __split_vma(struct vma_iterator *vmi, struct vm_area_struct *vma,
-> >  		new->vm_end = addr;
-> >  	} else {
-> >  		new->vm_start = addr;
-> > -		new->vm_pgoff += linear_page_delta(vma, addr);
-> > +		vma_add_pgoff(new, linear_page_delta(vma, addr));
-> >  	}
-> >
-> >  	err = -ENOMEM;
-> > @@ -556,7 +556,7 @@ __split_vma(struct vma_iterator *vmi, struct vm_area_struct *vma,
-> >
-> >  	if (new_below) {
-> >  		vma->vm_start = addr;
-> > -		vma->vm_pgoff += (addr - new->vm_start) >> PAGE_SHIFT;
-> > +		vma_add_pgoff(vma, (addr - new->vm_start) >> PAGE_SHIFT);
-> >  	} else {
-> >  		vma->vm_end = addr;
-> >  	}
-> > @@ -3305,7 +3305,7 @@ int expand_downwards(struct vm_area_struct *vma, unsigned long address)
-> >  				vm_stat_account(mm, vma->vm_flags, grow);
-> >  				anon_vma_interval_tree_pre_update_vma(vma);
-> >  				vma->vm_start = address;
-> > -				vma->vm_pgoff -= grow;
-> > +				vma_sub_pgoff(vma, grow);
-> >  				/* Overwrite old entry in mtree. */
-> >  				vma_iter_store_overwrite(&vmi, vma);
-> >  				anon_vma_interval_tree_post_update_vma(vma);
-> > diff --git a/mm/vma.h b/mm/vma.h
-> > index 2342516ce00e..47fe35e5307e 100644
-> > --- a/mm/vma.h
-> > +++ b/mm/vma.h
-> > @@ -247,6 +247,18 @@ static inline pgoff_t vmg_end_pgoff(const struct vma_merge_struct *vmg)
-> >  	return vmg_start_pgoff(vmg) + vmg_pages(vmg);
-> >  }
-> >
-> > +static inline void vma_add_pgoff(struct vm_area_struct *vma, pgoff_t delta)
-> > +{
-> > +	vma_assert_can_modify(vma);
-> > +	vma->vm_pgoff += delta;
-> > +}
-> > +
-> > +static inline void vma_sub_pgoff(struct vm_area_struct *vma, pgoff_t delta)
-> > +{
-> > +	vma_assert_can_modify(vma);
-> > +	vma->vm_pgoff -= delta;
-> > +}
-> > +
-> >  #define VMG_STATE(name, mm_, vmi_, start_, end_, vma_flags_, pgoff_)	\
-> >  	struct vma_merge_struct name = {				\
-> >  		.mm = mm_,						\
-> > diff --git a/tools/testing/vma/include/dup.h b/tools/testing/vma/include/dup.h
-> > index 7ed165c8d9bc..41fea90a344d 100644
-> > --- a/tools/testing/vma/include/dup.h
-> > +++ b/tools/testing/vma/include/dup.h
-> > @@ -1163,6 +1163,11 @@ static inline struct vm_area_struct *vma_next(struct vma_iterator *vmi)
-> >  	return mas_find(&vmi->mas, ULONG_MAX);
-> >  }
-> >
-> > +static inline bool vma_is_attached(struct vm_area_struct *vma)
-> > +{
-> > +	return refcount_read(&vma->vm_refcnt);
-> > +}
-> > +
-> >  /*
-> >   * WARNING: to avoid racing with vma_mark_attached()/vma_mark_detached(), these
-> >   * assertions should be made either under mmap_write_lock or when the object
-> > @@ -1170,7 +1175,13 @@ static inline struct vm_area_struct *vma_next(struct vma_iterator *vmi)
-> >   */
-> >  static inline void vma_assert_attached(struct vm_area_struct *vma)
-> >  {
-> > -	WARN_ON_ONCE(!refcount_read(&vma->vm_refcnt));
-> > +	WARN_ON_ONCE(!vma_is_attached(vma));
-> > +}
-> > +
-> > +static inline void vma_assert_can_modify(struct vm_area_struct *vma)
-> > +{
-> > +	if (vma_is_attached(vma))
-> > +		vma_assert_write_locked(vma);
-> >  }
->
-> These hunks in dup.h look lost. Should perhaps be on the previous patch
-> (adding the helpers).
+On 6/30/26 1:04 PM, Abel Vesa wrote:
+> Even though the EVK comes with 3 Type-C ports, the Eliza EVK only has
+> one USB controller and a single set of PHYs, which are connected to
+> the port marked as JUSB.
+> 
+> Also, the EVK comes with an SD card slot.
+> 
+> So describe the PMIC GLINK node, the connector graph, the PHYs and repeater
+> supplies and enable the USB controller.
+> 
+> Also enable the second SD host controller, describe the card detect GPIO
+> and the board specific supplies.
+> 
+> Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+> ---
 
-Yeah, it's because the VMA code starts actually using them in a way that
-otherwise breaks the tests at this point, but you're right, functionally it'd be
-nicer to add them at the point they're introduced.
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-Will fix that up on respin!
-
->
-> Anyway, Obviously Correct(tm).
->
-> Reviewed-by: Pedro Falcato <pfalcato@suse.de>
-
-Thanks!
-
->
-> --
-> Pedro
-
-Cheers, Lorenzo
+Konrad
 
