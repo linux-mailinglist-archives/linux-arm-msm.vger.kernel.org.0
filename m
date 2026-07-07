@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-117341-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-117340-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id 0tIfEx0JTWq+twEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-117341-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Jul 2026 16:11:41 +0200
+	id xo+1F5QLTWqLuAEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-117340-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Jul 2026 16:22:12 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id E75F771C60F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Jul 2026 16:11:40 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8EA7771C880
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Jul 2026 16:22:11 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=VvxWs1OS;
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=ncZwAu75;
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117341-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.232.135.74 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117341-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117340-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117340-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 9EA5E3155636
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jul 2026 14:03:12 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id A651231E503B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jul 2026 14:02:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 870533148D9;
-	Tue,  7 Jul 2026 14:03:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4AAA0331222;
+	Tue,  7 Jul 2026 14:02:40 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2435133372A
-	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Jul 2026 14:03:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA66231717E
+	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Jul 2026 14:02:38 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783432982; cv=none; b=dfgyatqbmQD/rSDobZ1is7zHncxo8iq38qC1VocNOkTiiEsig3OLBsJacGzIlyrTEleihykC29SFjQFirT7qln6hBIlgdhATMBoUUCjc8dNSrLlML+hN4fQpmWMq1umGqq4U07X5NGj36GTfsVtYmexOE9dLY2ulLedy0TwBp74=
+	t=1783432960; cv=none; b=Fu/f1IY/4LwOsOqrAfCgBcjGiaXg1sm/oa5YHkC7YXqBLic+5nma/R4/lvNj5cc6v6APxN+nHO5sM4j2VG4/qJYxkLs3NV2EQAGRpLyi8SbVotZl6/TQkC0kn2LxC2AiHzPlXkMjrbEQ0ocSVlIlcD8zzTNkiR0mI8NzF9FWYGg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783432982; c=relaxed/simple;
+	s=arc-20240116; t=1783432960; c=relaxed/simple;
 	bh=T7XOeMmDi5PEuS29Icsd6gEKz1v4I9eNID1RE8K+gjc=;
 	h=From:In-Reply-To:MIME-Version:References:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=RvkkqyUdMyUZSo9RB3OT4nTmKMEQSr7TGN+l92H9KrMLf4lC9gpbACi/X50j7DY6BbPFbLc6zPgNooTajGJNRM36gcTdzfF1Zwe4dw0JTQOf2wXAY5vRuLbiECKg1Dg7TJ7YP7+1bxWZ1nziOG4WIA1C6+RLii3zjQxbIp9t5qs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VvxWs1OS; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C18691F000E9
-	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Jul 2026 14:03:00 +0000 (UTC)
+	 To:Cc:Content-Type; b=i9Xd0EaCiR84YLPzX/ryLgnxx4XOxV7Sxwtc0qtVhT3xqKEHA6CCFvddyYuvcgdOKoJb1FqOPuTq9MghPhXkasckX9/6OnqxOOpixqBBF1U5GYiK3SY0fHcXSS1EATwsVdhp0mxmfZc/3Lzpgr0bReSV5mOwdMKn9dIasMM6P50=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ncZwAu75; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F7CF1F00ADB
+	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Jul 2026 14:02:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783432980;
+	s=k20260515; t=1783432958;
 	bh=3G29P2M20+AzJKzYQgpzohO583/nH/Yg8BUiARXkN/c=;
 	h=From:In-Reply-To:References:Date:Subject:To:Cc;
-	b=VvxWs1OSSXAq1eriB2BUsfRvR2VArgseicI8iJsYs8ZPIuMuwKq5AdLQBRWz5TnUw
-	 EJYyDDPGlk+YqHMGma+2z72HzyN58SCpXBAQ9CUKP0VQ9iJzQj3DqP05W36M7RyDV/
-	 SdE0TTrml/MTP3+coJksj8ILb+J6a6Cy3uyPOqOiHpqCxkBw9Au+rc2+8jdAoK+hTk
-	 ensPp544Dg3C7BUzXJ4twBcBOug8K7YshF+/D/3tZjhVLYqATUsOy/E7OmP37JXdwy
-	 HsCRX2oY6aMZUmTfUBkCUDjQwyK4hNbX0IiyJtzLUoT+gIqoQM7uxyvjrUyD18ODVl
-	 4cR7VU9aMUGMQ==
-Received: by mail-pj1-f49.google.com with SMTP id 98e67ed59e1d1-3811074a8c5so3131241a91.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jul 2026 07:03:00 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AHgh+RryjErpOutuaUPaUtDjy6F4rbBHXJixU1bpiH9kPZiER3M8MFKZfaei7ZbHsTltvinNolm5z1toua7qFoxl@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy8Ww1caQVNLm/LPoufGJbUpPEzG7Vx/1iKxCyoUZ7SlcSpflo3
-	/hfj/RaQ64Eco6XqwJFvua7GzOKA3P9QHlJygPinTZOo9PfMd8BjCBMNjp9X5JtxI+WJ3+3GQs7
-	iP/PNjGzlLQqY30EiLAAsedhchCiJfCbrjCStsXDLeA==
-X-Received: by 2002:a17:90b:3dc5:b0:381:2811:e8ad with SMTP id
- 98e67ed59e1d1-387574a8b14mr5358372a91.23.1783432976460; Tue, 07 Jul 2026
- 07:02:56 -0700 (PDT)
+	b=ncZwAu75yHlsPWm+aquFCt4VPef4k5QUBnLMPBsv3b+eaHl+ePR8yhewHYi0qBbP8
+	 J+81xoTGGAzZLpnRAStRdZqAvPknqoV02XF5854WdH/UGseOJjNWi35EaeA2eu+3yL
+	 QWDeaR9bJt6E2b2UmI/a2pn7DM2elLmq0PSEpciAH60jQOjKJoOiDm4wMEInWKWHWL
+	 XBMarxYcEcqPZHQCQZMAEqV33+r27vdIQKQweLwVl5uNplF4UoMaoo/4ongABKgJz/
+	 Um1am1/MALxX7qlCBoPs8UadtvJ1hwH7PGY40PFG8M2FbDnkOT+CZPgBJAQPanYGM1
+	 +xIPyCYc7DD9w==
+Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-39b38d3c929so35061861fa.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jul 2026 07:02:38 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AHgh+RrAtGqY1XbgH99J2bw+RAk4EPIShUxYwczN2jRERqMUfesxEWnxnQmXx/DzWvY0vkK3aBWv8VoJw/pnWTDx@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw1XAs7ONV1cy5y9YW7sTJywJoIm4/qnZbG51NuAuqDOprXeAKm
+	pDfKfqCpp0idvyyOXcPltZvnovzQh3qiQM4YQoLFxA73MrO/SB5B2x90CFgNFiQ92V79hG2jEhU
+	bMBrNr4f3R5oA/fN+g0qID3LnJmQdL2Xp/jrwuSOFag==
+X-Received: by 2002:a05:651c:f:b0:39b:bc9:90ac with SMTP id
+ 38308e7fff4ca-39c60035948mr8638371fa.30.1783432957101; Tue, 07 Jul 2026
+ 07:02:37 -0700 (PDT)
 Received: from 969154062570 named unknown by gmailapi.google.com with
  HTTPREST; Tue, 7 Jul 2026 07:02:35 -0700
 Received: from 969154062570 named unknown by gmailapi.google.com with
@@ -78,7 +78,7 @@ References: <20260702-monza-wireless-v2-0-7b56e2a6a6d4@oss.qualcomm.com>
  <CAFEp6-0AA-hTy=3KaRNEJ+kF0otGLTGTujvWJqhT2dHDj94E4w@mail.gmail.com> <b4myznfs5kkochdhzm2ypcfiolk2l2a7nvjbhkkcqueumkyvpe@nyvvhhcslk7e>
 Date: Tue, 7 Jul 2026 07:02:35 -0700
 X-Gmail-Original-Message-ID: <CAMRc=Mf6q5s6UgSRCOeHq=9CKeO_91k59T8Yr3kZ8N7OifyBRw@mail.gmail.com>
-X-Gm-Features: AVVi8Cc6E3UUqhw5QJ9lUwxNpG8IO8rtASIItE8p1iMgeeZGtn6ObvLJcizoSBo
+X-Gm-Features: AVVi8CdomZKaOaY4QiMrsZCCt-GUEYJD7tlypMd4eAMjuWUCA-oEYhkx6wXXzs8
 Message-ID: <CAMRc=Mf6q5s6UgSRCOeHq=9CKeO_91k59T8Yr3kZ8N7OifyBRw@mail.gmail.com>
 Subject: Re: [PATCH v2 3/4] Bluetooth: hci_qca: Support QCA2066 on M.2
  connector via pwrseq
@@ -100,13 +100,13 @@ X-Spamd-Result: default: False [-5.16 / 15.00];
 	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-117341-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-117340-lists,linux-arm-msm=lfdr.de];
 	RCPT_COUNT_TWELVE(0.00)[18];
 	RCVD_TLS_LAST(0.00)[];
 	FORWARDED(0.00)[lists@lfdr.de];
@@ -114,7 +114,7 @@ X-Spamd-Result: default: False [-5.16 / 15.00];
 	FORGED_RECIPIENTS(0.00)[m:mani@kernel.org,m:dmitry.baryshkov@oss.qualcomm.com,m:brgl@kernel.org,m:marcel@holtmann.org,m:luiz.dentz@gmail.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linux-pci@vger.kernel.org,m:linux-pm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-bluetooth@vger.kernel.org,m:devicetree@vger.kernel.org,m:manivannan.sadhasivam@oss.qualcomm.com,m:loic.poulain@oss.qualcomm.com,m:luizdentz@gmail.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	FORGED_SENDER(0.00)[brgl@kernel.org,linux-arm-msm@vger.kernel.org];
 	FREEMAIL_CC(0.00)[oss.qualcomm.com,kernel.org,holtmann.org,gmail.com,vger.kernel.org];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[mail.gmail.com:mid,qualcomm.com:email,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,vger.kernel.org:from_smtp];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[mail.gmail.com:mid,qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,vger.kernel.org:from_smtp];
 	MISSING_XM_UA(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
@@ -126,11 +126,11 @@ X-Spamd-Result: default: False [-5.16 / 15.00];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	TO_DN_SOME(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: E75F771C60F
+X-Rspamd-Queue-Id: 8EA7771C880
 
 On Tue, 7 Jul 2026 14:56:14 +0200, Manivannan Sadhasivam <mani@kernel.org> =
 said:
