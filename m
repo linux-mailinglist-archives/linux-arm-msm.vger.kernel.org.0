@@ -1,66 +1,66 @@
-Return-Path: <linux-arm-msm+bounces-117103-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-117102-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id vEsgBTRxTGpzkgEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-117103-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Jul 2026 05:23:32 +0200
+	id jS2oLglyTGrEkgEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-117102-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Jul 2026 05:27:05 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id B6D83717063
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Jul 2026 05:23:31 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0C93B717127
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Jul 2026 05:27:05 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=A5WPserH;
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b="g/bHQFaK";
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117103-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117103-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117102-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117102-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 06118302770A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jul 2026 03:22:26 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id B669130B803D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jul 2026 03:22:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6D82B3A1696;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6CBA13A1693;
 	Tue,  7 Jul 2026 03:22:11 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E802437C932;
-	Tue,  7 Jul 2026 03:22:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E986D37E2FC;
+	Tue,  7 Jul 2026 03:22:04 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783394530; cv=none; b=dB7OkJYECXFEKT0IlKuj3fdPnj9SlxI5MNqAE9M9EyhYmheRKjrQBMjRMK25MG9d4SlppEFYKl3KUYPbVjS1ttSOkXjPCKjSCTvqLv3lMEryG2PjgqDtVGhDHijLbxrLXtGYLdRKuGC2kzPy7NwvwgATtfQZUDL2liNBNlrit6g=
+	t=1783394530; cv=none; b=p4Ll20kqtlxpwafeaCqIk+GMKJRuH+UcnlN5qknAtPXS52PGtH9dFlqdONL/0xKPukWQMntd1/1HOWQwDx4wUJbXuDPK4ta0I6idKQcpYW+v3eAVmTtTyNFjp06Hi3ubjg5hwAAu1A3y6XI6dVaBktg9LZtOL2iNa2OU656QvrI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1783394530; c=relaxed/simple;
-	bh=AzISUhyU8ls8tWJIuvglVArxyb0Iz1Q8GmdDSUYdfgk=;
+	bh=+Mz0lDHZM65euwCClVEV3/3hhwjkMaLotwxVttV40Wk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ASJLD11fvksrXubXaUimOpW+CfnSvtRrlem+0RNEuGMa89qtWfCJ6y6sCiM0b+N3Iyya0ndCLhXahh6CJZvq9wNcT40DnR1f8XZRwCYTgC0EVfhIT7pyvxDalaIaAKY9swzwSuERvxjMxCemi9v5xROXB3ePlqLZOI2Oh0QmKvw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=A5WPserH; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 267921F00ACF;
+	 MIME-Version:Content-Type; b=P9djEsC8dlJfFns6jKdOcclp8UZyZtCqaCfaTGMUpTtGhdpuhTUXKyooYb5TyKFiHWLN+95tsco89jBl9puyTWS8UWhm1GTOpn92F1dKEalojqPwcBzhRJqCHX2IAX2wEADqqPoxCCIhis12tM9RWEDurNzRBqLXDJFIuGYgXck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=g/bHQFaK; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECC891F000E9;
 	Tue,  7 Jul 2026 03:22:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783394523;
-	bh=r2m81evNFFaSA8QGN8H8zohHgVNrqJF2vk7UbAR8rP8=;
+	s=k20260515; t=1783394524;
+	bh=OgvqtIjbsw64Xp7HW1oDCHPeVc6N8rH0/c/9s9fdfEY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A5WPserHDtGF6cBsrpSqkDSlsRcdxocukw8n+zBPp+GeKPooaN+cefqXLsaHo+WY0
-	 9ZaxxbXVHLEiA3+LwTSoIe8IaO/OlSN72FGKD6QbieRQKZNzZT6TiQ3w2VpTfNKvB4
-	 dZed19aCwMX81J+wj/iyYLnnkkZPy3o5FMF9avqTxAlwjqi8bxIEripAd6MHW1FT4x
-	 hmENYT8zcGJpDxVN0l6LYAbbFJnWWXUhdlsCG09B5rwcX0A1CCtcveA9b7J94U65PR
-	 5oX3gOChR8vOyx9BkFntlJ7x8LkLunHNx4xAj5WIKPIrkkjkgg3URx62/aClSMapFF
-	 6woyo+le7nn9Q==
+	b=g/bHQFaKTzZaKFYIpBVkCyiOwyZLj5BY8GbDcF8qFNvjQLf5JgpnyvpF3324Ve+2x
+	 PgJXu0Fcsh+vdoN8a5oRdywjx5/yNLwdrITqo2qfLD1gSLPabx9LHNokAXAzqjWCpI
+	 8Yx8By15CvfN5pAaTH+j6zMg+jwM2jbjvYw4FlqdNX6HQ1w+kBxefphsvLs7STOw+f
+	 BC1PWAs0D9ivRDyLIHmKl3xcMC1ATgL4dRUCwGEkVOh+7Mz9rRIiNC6VTIkt8jmjNN
+	 DLsICo42rqwTOtWv53H8cKv6nzzZoAPynCZDhnhSn0d9JIQAPtx0X+iPNKPF71KHAD
+	 9ODppOMc/B2JQ==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Xilin Wu <sophon@radxa.com>
-Cc: linux-arm-msm@vger.kernel.org,
+To: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Cc: konradybcio@kernel.org,
+	robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org,
+	linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: sc8280xp: Move PHY, PERST, and Wake GPIOs to PCIe port nodes
-Date: Mon,  6 Jul 2026 22:21:37 -0500
-Message-ID: <178339449890.1938770.7066889850779071034.b4-ty@kernel.org>
+Subject: Re: [PATCH v11 0/2] Enable ADSP and CDSP for Glymur SoC
+Date: Mon,  6 Jul 2026 22:21:38 -0500
+Message-ID: <178339449923.1938770.8689835038217690542.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260507-8280-move-perst-wake-v1-1-5b33cef2d807@radxa.com>
-References: <20260507-8280-move-perst-wake-v1-1-5b33cef2d807@radxa.com>
+In-Reply-To: <20260706064224.1328576-1-srinivas.kandagatla@oss.qualcomm.com>
+References: <20260706064224.1328576-1-srinivas.kandagatla@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -74,14 +74,14 @@ X-Spamd-Result: default: False [-5.16 / 15.00];
 	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-117103-lists,linux-arm-msm=lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:sophon@radxa.com,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	TAGGED_FROM(0.00)[bounces-117102-lists,linux-arm-msm=lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:srinivas.kandagatla@oss.qualcomm.com,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
 	MIME_TRACE(0.00)[0:+];
@@ -99,34 +99,30 @@ X-Spamd-Result: default: False [-5.16 / 15.00];
 	RCPT_COUNT_SEVEN(0.00)[8];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: B6D83717063
+X-Rspamd-Queue-Id: 0C93B717127
 
 
-On Thu, 07 May 2026 22:16:07 +0800, Xilin Wu wrote:
-> Since describing the PCIe PHY directly under the RC node is now
-> deprecated, move the references to the respective PCIe port nodes.
-> 
-> And also move the PCIe PERST and wake GPIOs from the controller nodes to
-> the corresponding PCIe port nodes on sc8280xp-based platforms:
-> 
->  - sa8295p-adp
->  - sa8540p-ride
->  - sc8280xp-crd
->  - sc8280xp-huawei-gaokun3
->  - sc8280xp-lenovo-thinkpad-x13s
->  - sc8280xp-microsoft-arcata
->  - sc8280xp-microsoft-blackrock
+On Mon, 06 Jul 2026 07:42:22 +0100, Srinivas Kandagatla wrote:
+> Qualcomm Glymur SoC variants predominantly boot Linux at EL2. This means
+> that the firmware streams of the remote processors are managed in kernel
+> and not in Gunyah hypervisor. Given that the Peripheral Image Loader for
+> Qualcomm SoCs now support running Linux Host at EL2 [1], this series
+> documents and enables ADSP and CDSP on Qualcomm Glymur SoCs with its
+> fastrpc nodes. A few variants of the SoC are expected to run Linux at EL1
+> hence the iommus properties are left optional.
 > 
 > [...]
 
 Applied, thanks!
 
-[1/1] arm64: dts: qcom: sc8280xp: Move PHY, PERST, and Wake GPIOs to PCIe port nodes
-      commit: a8fd72fcf305534f0a8da095de2cce467b73e66c
+[1/2] arm64: dts: glymur: Add LPASS macro codecs and pinctrl
+      commit: 859c3b73d40f961c4d1a5459effea6d9a947f879
+[2/2] arm64: dts: qcom: glymur-crd: add Audio sound card node
+      commit: 67be5d3da3455db75684344aab871c68701b6094
 
 Best regards,
 -- 
