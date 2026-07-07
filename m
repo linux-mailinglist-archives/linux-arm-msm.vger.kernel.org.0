@@ -1,397 +1,410 @@
-Return-Path: <linux-arm-msm+bounces-117264-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-117265-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id ZX63CfHTTGrHqQEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-117264-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Jul 2026 12:24:49 +0200
+	id WwpfKX3UTGreqQEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-117265-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Jul 2026 12:27:09 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id A0ACF71A542
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Jul 2026 12:24:48 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2A9B871A589
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Jul 2026 12:27:09 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=collabora.com header.s=mail header.b=iPCljxGj;
-	dmarc=pass (policy=none) header.from=collabora.com;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117264-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117264-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=samsung.com header.s=mail20170921 header.b=vJW3jw9F;
+	dmarc=pass (policy=none) header.from=samsung.com;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117265-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117265-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 0FF7230C3C57
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jul 2026 10:19:45 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 156553079C4A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jul 2026 10:20:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 702663E7160;
-	Tue,  7 Jul 2026 10:18:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3F24D3E00BC;
+	Tue,  7 Jul 2026 10:20:44 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
+Received: from mailout1.w1.samsung.com (mailout1.w1.samsung.com [210.118.77.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66DB63E5EF7;
-	Tue,  7 Jul 2026 10:18:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 873943E0C70
+	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Jul 2026 10:20:38 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783419524; cv=none; b=CEl+C7f+prhCxPWJS2Loju3ftqz2RXxu5ymyZwYla+dd0DoqPC3HyCq9KZO5a3Oojn6GMF+Iwz4sSnlJ9V3pMUkKnNd8CZHcjzHFeAmU7Cn3vT4ruyNyahG8tBcxic4ObT5iENl8SX6G4Y1XpUBafJ1gk2cueFs/dgaZeQFWnwQ=
+	t=1783419644; cv=none; b=cX3Up7cq9Gq2MrzRU6LFhCMeEBBc54+swXVjYgg5NFEkCUqH9y1oozHwhGy+vcLnhU2Zoh0V2m+qb61nUM8WIYuOhor2hqiJyopTUixIOrz7UQaSybzu4HYBEb30lb1/9xE7Lz/nHr0vVfwHhsei4SqgC/qfuwCGP/mFDYNC7hs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783419524; c=relaxed/simple;
-	bh=rN5cO27Z+Vgzw6e0TYdRDp7g5zASFKfeaDG26p8WB7I=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BgMqoqXlB+BKCc1Xs5F7EfvjM0RE+8VvjuBf1QoHkiHaJg8KYoGXetszLAH/ky6GMXczOdPMRAbqPRrQuHxvE7tYhVS7VDSPe29OhEw0Nyhjnf95THMXog6uJK2DeimlQH+YiDx4kkbj0bzRg5YoX1e1G2KWQcF0zoSdCF5raOo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=iPCljxGj; arc=none smtp.client-ip=148.251.105.195
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1783419520;
-	bh=rN5cO27Z+Vgzw6e0TYdRDp7g5zASFKfeaDG26p8WB7I=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iPCljxGj6xr8l5keNpOW4QemGUi6PWB0xo88xYTZ12h3vK34x1IS5dJFlQbwxqPHY
-	 cAqkwx8eJkiznVROfnfibARhbjWiltWB9c/K9Ua1JH07587IR6eI++A492gLNfnhMQ
-	 xbUjnEpL4QRsKttcZS3w93wQlRwEjkjqaEStyYuuPis8uzLx9zeKSzxAWwrz5zJf8g
-	 B8QZj8KeCSayiAWJD61F9U9OdK3zn/osIUKmD2798Kkllm6mBx88NPXGswZMu+gYhx
-	 sa6mmhXPiOXKZX+CIUn1B8IaoPbvXbAo8DIhw9Q4lBsOzQqan60a6VvxJHdqLcVrtA
-	 PgW0BW7ITK1jg==
-Received: from IcarusMOD.eternityproject.eu (unknown [100.64.1.21])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: kholk11)
-	by bali.collaboradmins.com (Postfix) with ESMTPSA id B208317E05D3;
-	Tue, 07 Jul 2026 12:18:39 +0200 (CEST)
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-To: jic23@kernel.org,
-	sboyd@kernel.org
-Cc: dlechner@baylibre.com,
-	nuno.sa@analog.com,
-	andy@kernel.org,
-	arnd@arndb.de,
-	gregkh@linuxfoundation.org,
-	srini@kernel.org,
-	vkoul@kernel.org,
-	neil.armstrong@linaro.org,
-	sre@kernel.org,
-	angelogioacchino.delregno@collabora.com,
-	krzk@kernel.org,
-	dmitry.baryshkov@oss.qualcomm.com,
-	quic_wcheng@quicinc.com,
-	melody.olvera@oss.qualcomm.com,
-	quic_nsekar@quicinc.com,
-	ivo.ivanov.ivanov1@gmail.com,
-	abelvesa@kernel.org,
-	luca.weiss@fairphone.com,
-	konrad.dybcio@oss.qualcomm.com,
-	mitltlatltl@gmail.com,
-	krishna.kurapati@oss.qualcomm.com,
-	linux-arm-msm@vger.kernel.org,
-	linux-iio@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-phy@lists.infradead.org,
-	linux-pm@vger.kernel.org,
-	kernel@collabora.com,
-	Jonathan Cameron <jonathan.cameron@huawei.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>
-Subject: [PATCH v11 12/12] iio: adc: qcom-spmi-iadc: Remove regmap R/W wrapper functions
-Date: Tue,  7 Jul 2026 12:18:21 +0200
-Message-ID: <20260707101821.173319-13-angelogioacchino.delregno@collabora.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260707101821.173319-1-angelogioacchino.delregno@collabora.com>
-References: <20260707101821.173319-1-angelogioacchino.delregno@collabora.com>
+	s=arc-20240116; t=1783419644; c=relaxed/simple;
+	bh=VCE9WS4zG0XYGDT6yveV9PjHBy3Cmcgk0yB8h8VkIU4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:From:In-Reply-To:
+	 Content-Type:References; b=rB+/k3ADkmzpL7Sz6KBTFIjxz9mNzm6xqqOnSsSbFdbD33VOL1FBrI08RZFFVUT3r7TFXAjESWeNBEG+NXltAuR/vCCM8dMGn0vK+24OskO9/cJ0eSizrisVsw5LP8J9Bx6OKqhn39lUyL6dwpQ1Yyv4ewKX40tNdNzmcrQL+yU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=vJW3jw9F; arc=none smtp.client-ip=210.118.77.11
+Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
+	by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20260707102035euoutp01d9470435bbe03893f82bf61124a29f47~-_rWxf_tA0069500695euoutp01b
+	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Jul 2026 10:20:35 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20260707102035euoutp01d9470435bbe03893f82bf61124a29f47~-_rWxf_tA0069500695euoutp01b
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+	s=mail20170921; t=1783419635;
+	bh=lmb/5Y9eqdFEyGZnoKkjY5KUURxdOJiW/7gAlorWsrg=;
+	h=Date:Subject:To:Cc:From:In-Reply-To:References:From;
+	b=vJW3jw9FiZcG7/UHGkwH5JaAnf6ymNATTIxiifa8jlb3yOBOH89Uxh08+r7oDerxK
+	 EsZlhcXiTTGBxrPKV9jqlCOxkEOVuGH7hnN2EzBNjFuPApcWvDHEmCGtwJRVBF100F
+	 URSllvY91M4pWP+UFs1gKAqGZkVKvNvgkBMmLRYg=
+Received: from eusmtip1.samsung.com (unknown [203.254.199.221]) by
+	eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
+	20260707102035eucas1p1c2fe59754f05ce2ac4d33a261d491e9f~-_rWYpPrG2875828758eucas1p16;
+	Tue,  7 Jul 2026 10:20:35 +0000 (GMT)
+Received: from [106.210.134.192] (unknown [106.210.134.192]) by
+	eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
+	20260707102034eusmtip12c241a5a2db256b2323ea93fdaf0bc36~-_rVbfelg1926719267eusmtip14;
+	Tue,  7 Jul 2026 10:20:34 +0000 (GMT)
+Message-ID: <54596eee-191d-4370-a0e1-44b5b7387c3a@samsung.com>
+Date: Tue, 7 Jul 2026 12:20:33 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Betterbird (Windows)
+Subject: Re: [PATCH 17/30] mm: prefer vma_[start,end]_pgoff() to
+ vma->vm_pgoff in kernel/
+To: Lorenzo Stoakes <ljs@kernel.org>, Andrew Morton
+	<akpm@linux-foundation.org>
+Cc: linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	linux-parisc@vger.kernel.org, linux-sgx@vger.kernel.org,
+	etnaviv@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+	linux-tegra@vger.kernel.org, kvm@vger.kernel.org,
+	linux-fsdevel@vger.kernel.org, nvdimm@lists.linux.dev, linux-mm@kvack.org,
+	iommu@lists.linux.dev, linux-perf-users@vger.kernel.org,
+	linux-trace-kernel@vger.kernel.org, kasan-dev@googlegroups.com,
+	damon@lists.linux.dev
+Content-Language: en-US
+From: Marek Szyprowski <m.szyprowski@samsung.com>
+In-Reply-To: <ea87349d63205bf4c26ea79854f179a9bf8cfb0b.1782735110.git.ljs@kernel.org>
+Content-Transfer-Encoding: 7bit
+X-CMS-MailID: 20260707102035eucas1p1c2fe59754f05ce2ac4d33a261d491e9f
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20260629122451eucas1p29aab6e559201e31a45e7051d4a700347
+X-EPHeader: CA
+X-CMS-RootMailID: 20260629122451eucas1p29aab6e559201e31a45e7051d4a700347
+References: <cover.1782735110.git.ljs@kernel.org>
+	<CGME20260629122451eucas1p29aab6e559201e31a45e7051d4a700347@eucas1p2.samsung.com>
+	<ea87349d63205bf4c26ea79854f179a9bf8cfb0b.1782735110.git.ljs@kernel.org>
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [0.84 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
-	MID_CONTAINS_FROM(1.00)[];
+X-Spamd-Result: default: False [-5.15 / 15.00];
+	WHITELIST_SPF_DKIM(-3.00)[samsung.com:d:+,kernel.org:s:+];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_MISSING_CHARSET(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[collabora.com,none];
-	R_DKIM_ALLOW(-0.20)[collabora.com:s=mail];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[samsung.com,none];
+	R_DKIM_ALLOW(-0.20)[samsung.com:s=mail20170921];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
+	XM_UA_NO_VERSION(0.01)[];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-117264-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_SENDER(0.00)[angelogioacchino.delregno@collabora.com,linux-arm-msm@vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[31];
-	FORGED_RECIPIENTS(0.00)[m:jic23@kernel.org,m:sboyd@kernel.org,m:dlechner@baylibre.com,m:nuno.sa@analog.com,m:andy@kernel.org,m:arnd@arndb.de,m:gregkh@linuxfoundation.org,m:srini@kernel.org,m:vkoul@kernel.org,m:neil.armstrong@linaro.org,m:sre@kernel.org,m:angelogioacchino.delregno@collabora.com,m:krzk@kernel.org,m:dmitry.baryshkov@oss.qualcomm.com,m:quic_wcheng@quicinc.com,m:melody.olvera@oss.qualcomm.com,m:quic_nsekar@quicinc.com,m:ivo.ivanov.ivanov1@gmail.com,m:abelvesa@kernel.org,m:luca.weiss@fairphone.com,m:konrad.dybcio@oss.qualcomm.com,m:mitltlatltl@gmail.com,m:krishna.kurapati@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:linux-iio@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-phy@lists.infradead.org,m:linux-pm@vger.kernel.org,m:kernel@collabora.com,m:jonathan.cameron@huawei.com,m:andriy.shevchenko@intel.com,m:ivoivanovivanov1@gmail.com,s:lists@lfdr.de];
 	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[20];
 	FORWARDED(0.00)[lists@lfdr.de];
-	FREEMAIL_CC(0.00)[baylibre.com,analog.com,kernel.org,arndb.de,linuxfoundation.org,linaro.org,collabora.com,oss.qualcomm.com,quicinc.com,gmail.com,fairphone.com,vger.kernel.org,lists.infradead.org,huawei.com,intel.com];
-	DKIM_TRACE(0.00)[collabora.com:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[angelogioacchino.delregno@collabora.com,linux-arm-msm@vger.kernel.org];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FORGED_RECIPIENTS(0.00)[m:ljs@kernel.org,m:akpm@linux-foundation.org,m:linux-kernel@vger.kernel.org,m:linux-arm-kernel@lists.infradead.org,m:linux-parisc@vger.kernel.org,m:linux-sgx@vger.kernel.org,m:etnaviv@lists.freedesktop.org,m:dri-devel@lists.freedesktop.org,m:linux-arm-msm@vger.kernel.org,m:freedreno@lists.freedesktop.org,m:linux-tegra@vger.kernel.org,m:kvm@vger.kernel.org,m:linux-fsdevel@vger.kernel.org,m:nvdimm@lists.linux.dev,m:linux-mm@kvack.org,m:iommu@lists.linux.dev,m:linux-perf-users@vger.kernel.org,m:linux-trace-kernel@vger.kernel.org,m:kasan-dev@googlegroups.com,m:damon@lists.linux.dev,s:lists@lfdr.de];
+	FORGED_SENDER(0.00)[m.szyprowski@samsung.com,linux-arm-msm@vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-117265-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[6];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[m.szyprowski@samsung.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[samsung.com:+];
 	ALIAS_RESOLVED(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	TO_DN_SOME(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:email,intel.com:email,huawei.com:email,collabora.com:from_mime,collabora.com:email,collabora.com:mid,collabora.com:dkim,vger.kernel.org:from_smtp,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,samsung.com:from_mime,samsung.com:email,samsung.com:mid,samsung.com:dkim,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: A0ACF71A542
+X-Rspamd-Queue-Id: 2A9B871A589
 
-This driver doesn't need to add any register base address to any
-regmap call anymore since it was migrated to register as a SPMI
-subdevice with its own regmap reg_base, which makes the regmap
-API to automatically add such base address internally.
+On 29.06.2026 14:23, Lorenzo Stoakes wrote:
+> Be consistent in using vma_start_pgoff() and vma_end_pgoff(), which clearly
+> indicates which part of the VMA the page offset refers to and aids
+> greppability.
+>
+> This is part of a broader series laying the ground to provide a virtual
+> page offset for MAP_PRIVATE-file backed anon folios.
+>
+> No functional change intended.
+>
+> Signed-off-by: Lorenzo Stoakes <ljs@kernel.org>
+> ---
+>  kernel/dma/coherent.c      |  7 ++++---
+>  kernel/dma/direct.c        |  6 ++++--
+>  kernel/dma/mapping.c       |  8 +++++---
+>  kernel/dma/ops_helpers.c   |  4 ++--
 
-Since the iadc_{read,write,read_result}() functions now only do
-call regmap_{read,write,bulk_read}() and nothing else, simplify
-the driver by removing them and by calling regmap APIs directly.
 
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-QRD
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
----
- drivers/iio/adc/qcom-spmi-iadc.c | 89 ++++++++++++--------------------
- 1 file changed, 33 insertions(+), 56 deletions(-)
+Acked-by: Marek Szyprowski <m.szyprowski@samsung.com> # for kernel/dma
 
-diff --git a/drivers/iio/adc/qcom-spmi-iadc.c b/drivers/iio/adc/qcom-spmi-iadc.c
-index 71049cdc2765..aacf570eadca 100644
---- a/drivers/iio/adc/qcom-spmi-iadc.c
-+++ b/drivers/iio/adc/qcom-spmi-iadc.c
-@@ -113,77 +113,59 @@ struct iadc_chip {
- 	struct completion complete;
- };
- 
--static int iadc_read(struct iadc_chip *iadc, u16 offset, u8 *data)
--{
--	unsigned int val;
--	int ret;
--
--	ret = regmap_read(iadc->regmap, offset, &val);
--	if (ret < 0)
--		return ret;
--
--	*data = val;
--	return 0;
--}
--
--static int iadc_write(struct iadc_chip *iadc, u16 offset, u8 data)
--{
--	return regmap_write(iadc->regmap, offset, data);
--}
--
- static int iadc_reset(struct iadc_chip *iadc)
- {
--	u8 data;
-+	u32 data;
- 	int ret;
- 
--	ret = iadc_write(iadc, IADC_SEC_ACCESS, IADC_SEC_ACCESS_DATA);
-+	ret = regmap_write(iadc->regmap, IADC_SEC_ACCESS, IADC_SEC_ACCESS_DATA);
- 	if (ret < 0)
- 		return ret;
- 
--	ret = iadc_read(iadc, IADC_PERH_RESET_CTL3, &data);
-+	ret = regmap_read(iadc->regmap, IADC_PERH_RESET_CTL3, &data);
- 	if (ret < 0)
- 		return ret;
- 
--	ret = iadc_write(iadc, IADC_SEC_ACCESS, IADC_SEC_ACCESS_DATA);
-+	ret = regmap_write(iadc->regmap, IADC_SEC_ACCESS, IADC_SEC_ACCESS_DATA);
- 	if (ret < 0)
- 		return ret;
- 
- 	data |= IADC_FOLLOW_WARM_RB;
- 
--	return iadc_write(iadc, IADC_PERH_RESET_CTL3, data);
-+	return regmap_write(iadc->regmap, IADC_PERH_RESET_CTL3, data);
- }
- 
- static int iadc_set_state(struct iadc_chip *iadc, bool state)
- {
--	return iadc_write(iadc, IADC_EN_CTL1, state ? IADC_EN_CTL1_SET : 0);
-+	return regmap_write(iadc->regmap, IADC_EN_CTL1, state ? IADC_EN_CTL1_SET : 0);
- }
- 
- static void iadc_status_show(struct iadc_chip *iadc)
- {
--	u8 mode, sta1, chan, dig, en, req;
-+	u32 mode, sta1, chan, dig, en, req;
- 	int ret;
- 
--	ret = iadc_read(iadc, IADC_MODE_CTL, &mode);
-+	ret = regmap_read(iadc->regmap, IADC_MODE_CTL, &mode);
- 	if (ret < 0)
- 		return;
- 
--	ret = iadc_read(iadc, IADC_DIG_PARAM, &dig);
-+	ret = regmap_read(iadc->regmap, IADC_DIG_PARAM, &dig);
- 	if (ret < 0)
- 		return;
- 
--	ret = iadc_read(iadc, IADC_CH_SEL_CTL, &chan);
-+	ret = regmap_read(iadc->regmap, IADC_CH_SEL_CTL, &chan);
- 	if (ret < 0)
- 		return;
- 
--	ret = iadc_read(iadc, IADC_CONV_REQ, &req);
-+	ret = regmap_read(iadc->regmap, IADC_CONV_REQ, &req);
- 	if (ret < 0)
- 		return;
- 
--	ret = iadc_read(iadc, IADC_STATUS1, &sta1);
-+	ret = regmap_read(iadc->regmap, IADC_STATUS1, &sta1);
- 	if (ret < 0)
- 		return;
- 
--	ret = iadc_read(iadc, IADC_EN_CTL1, &en);
-+	ret = regmap_read(iadc->regmap, IADC_EN_CTL1, &en);
- 	if (ret < 0)
- 		return;
- 
-@@ -199,34 +181,34 @@ static int iadc_configure(struct iadc_chip *iadc, int channel)
- 
- 	/* Mode selection */
- 	mode = (IADC_OP_MODE_NORMAL << IADC_OP_MODE_SHIFT) | IADC_TRIM_EN;
--	ret = iadc_write(iadc, IADC_MODE_CTL, mode);
-+	ret = regmap_write(iadc->regmap, IADC_MODE_CTL, mode);
- 	if (ret < 0)
- 		return ret;
- 
- 	/* Channel selection */
--	ret = iadc_write(iadc, IADC_CH_SEL_CTL, channel);
-+	ret = regmap_write(iadc->regmap, IADC_CH_SEL_CTL, channel);
- 	if (ret < 0)
- 		return ret;
- 
- 	/* Digital parameter setup */
- 	decim = IADC_DEF_DECIMATION << IADC_DIG_DEC_RATIO_SEL_SHIFT;
--	ret = iadc_write(iadc, IADC_DIG_PARAM, decim);
-+	ret = regmap_write(iadc->regmap, IADC_DIG_PARAM, decim);
- 	if (ret < 0)
- 		return ret;
- 
- 	/* HW settle time delay */
--	ret = iadc_write(iadc, IADC_HW_SETTLE_DELAY, IADC_DEF_HW_SETTLE_TIME);
-+	ret = regmap_write(iadc->regmap, IADC_HW_SETTLE_DELAY, IADC_DEF_HW_SETTLE_TIME);
- 	if (ret < 0)
- 		return ret;
- 
--	ret = iadc_write(iadc, IADC_FAST_AVG_CTL, IADC_DEF_AVG_SAMPLES);
-+	ret = regmap_write(iadc->regmap, IADC_FAST_AVG_CTL, IADC_DEF_AVG_SAMPLES);
- 	if (ret < 0)
- 		return ret;
- 
- 	if (IADC_DEF_AVG_SAMPLES)
--		ret = iadc_write(iadc, IADC_FAST_AVG_EN, IADC_FAST_AVG_EN_SET);
-+		ret = regmap_write(iadc->regmap, IADC_FAST_AVG_EN, IADC_FAST_AVG_EN_SET);
- 	else
--		ret = iadc_write(iadc, IADC_FAST_AVG_EN, 0);
-+		ret = regmap_write(iadc->regmap, IADC_FAST_AVG_EN, 0);
- 
- 	if (ret < 0)
- 		return ret;
-@@ -239,19 +221,19 @@ static int iadc_configure(struct iadc_chip *iadc, int channel)
- 		return ret;
- 
- 	/* Request conversion */
--	return iadc_write(iadc, IADC_CONV_REQ, IADC_CONV_REQ_SET);
-+	return regmap_write(iadc->regmap, IADC_CONV_REQ, IADC_CONV_REQ_SET);
- }
- 
- static int iadc_poll_wait_eoc(struct iadc_chip *iadc, unsigned int interval_us)
- {
- 	unsigned int count, retry;
-+	u32 sta1;
- 	int ret;
--	u8 sta1;
- 
- 	retry = interval_us / IADC_CONV_TIME_MIN_US;
- 
- 	for (count = 0; count < retry; count++) {
--		ret = iadc_read(iadc, IADC_STATUS1, &sta1);
-+		ret = regmap_read(iadc->regmap, IADC_STATUS1, &sta1);
- 		if (ret < 0)
- 			return ret;
- 
-@@ -267,11 +249,6 @@ static int iadc_poll_wait_eoc(struct iadc_chip *iadc, unsigned int interval_us)
- 	return -ETIMEDOUT;
- }
- 
--static int iadc_read_result(struct iadc_chip *iadc, u16 *data)
--{
--	return regmap_bulk_read(iadc->regmap, IADC_DATA, data, 2);
--}
--
- static int iadc_do_conversion(struct iadc_chip *iadc, int chan, u16 *data)
- {
- 	unsigned int wait;
-@@ -296,7 +273,7 @@ static int iadc_do_conversion(struct iadc_chip *iadc, int chan, u16 *data)
- 	}
- 
- 	if (!ret)
--		ret = iadc_read_result(iadc, data);
-+		ret = regmap_bulk_read(iadc->regmap, IADC_DATA, data, sizeof(*data));
- exit:
- 	iadc_set_state(iadc, false);
- 	if (ret < 0)
-@@ -392,33 +369,33 @@ static int iadc_update_offset(struct iadc_chip *iadc)
- 
- static int iadc_version_check(struct iadc_chip *iadc)
- {
--	u8 val;
-+	u32 val;
- 	int ret;
- 
--	ret = iadc_read(iadc, IADC_PERPH_TYPE, &val);
-+	ret = regmap_read(iadc->regmap, IADC_PERPH_TYPE, &val);
- 	if (ret < 0)
- 		return ret;
- 
- 	if (val < IADC_PERPH_TYPE_ADC) {
--		dev_err(iadc->dev, "%d is not ADC\n", val);
-+		dev_err(iadc->dev, "%u is not ADC\n", val);
- 		return -EINVAL;
- 	}
- 
--	ret = iadc_read(iadc, IADC_PERPH_SUBTYPE, &val);
-+	ret = regmap_read(iadc->regmap, IADC_PERPH_SUBTYPE, &val);
- 	if (ret < 0)
- 		return ret;
- 
- 	if (val < IADC_PERPH_SUBTYPE_IADC) {
--		dev_err(iadc->dev, "%d is not IADC\n", val);
-+		dev_err(iadc->dev, "%u is not IADC\n", val);
- 		return -EINVAL;
- 	}
- 
--	ret = iadc_read(iadc, IADC_REVISION2, &val);
-+	ret = regmap_read(iadc->regmap, IADC_REVISION2, &val);
- 	if (ret < 0)
- 		return ret;
- 
- 	if (val < IADC_REVISION2_SUPPORTED_IADC) {
--		dev_err(iadc->dev, "revision %d not supported\n", val);
-+		dev_err(iadc->dev, "revision %u not supported\n", val);
- 		return -EINVAL;
- 	}
- 
-@@ -428,7 +405,7 @@ static int iadc_version_check(struct iadc_chip *iadc)
- static int iadc_rsense_read(struct iadc_chip *iadc, struct device_node *node)
- {
- 	int ret, sign, int_sense;
--	u8 deviation;
-+	u32 deviation;
- 
- 	ret = of_property_read_u32(node, "qcom,external-resistor-micro-ohms",
- 				   &iadc->rsense[IADC_EXT_RSENSE]);
-@@ -440,7 +417,7 @@ static int iadc_rsense_read(struct iadc_chip *iadc, struct device_node *node)
- 		return -EINVAL;
- 	}
- 
--	ret = iadc_read(iadc, IADC_NOMINAL_RSENSE, &deviation);
-+	ret = regmap_read(iadc->regmap, IADC_NOMINAL_RSENSE, &deviation);
- 	if (ret < 0)
- 		return ret;
- 
+
+>  kernel/events/core.c       | 20 +++++++++++---------
+>  kernel/events/uprobes.c    | 11 +++++++----
+>  kernel/kcov.c              |  2 +-
+>  kernel/trace/ring_buffer.c |  3 ++-
+>  8 files changed, 36 insertions(+), 25 deletions(-)
+>
+> diff --git a/kernel/dma/coherent.c b/kernel/dma/coherent.c
+> index bcdc0f76d2e8..2d3195eb7e83 100644
+> --- a/kernel/dma/coherent.c
+> +++ b/kernel/dma/coherent.c
+> @@ -236,14 +236,15 @@ static int __dma_mmap_from_coherent(struct dma_coherent_mem *mem,
+>  {
+>  	if (mem && vaddr >= mem->virt_base && vaddr + size <=
+>  		   (mem->virt_base + ((dma_addr_t)mem->size << PAGE_SHIFT))) {
+> -		unsigned long off = vma->vm_pgoff;
+> +		const pgoff_t pgoff_start = vma_start_pgoff(vma);
+> +		const pgoff_t pgoff_end = vma_end_pgoff(vma);
+>  		int start = (vaddr - mem->virt_base) >> PAGE_SHIFT;
+>  		unsigned long user_count = vma_pages(vma);
+>  		int count = PAGE_ALIGN(size) >> PAGE_SHIFT;
+>  
+>  		*ret = -ENXIO;
+> -		if (off < count && user_count <= count - off) {
+> -			unsigned long pfn = mem->pfn_base + start + off;
+> +		if (pgoff_start < count && pgoff_end <= count) {
+> +			unsigned long pfn = mem->pfn_base + start + pgoff_start;
+>  			*ret = remap_pfn_range(vma, vma->vm_start, pfn,
+>  					       user_count << PAGE_SHIFT,
+>  					       vma->vm_page_prot);
+> diff --git a/kernel/dma/direct.c b/kernel/dma/direct.c
+> index 4391b797d4db..436310d6e4a2 100644
+> --- a/kernel/dma/direct.c
+> +++ b/kernel/dma/direct.c
+> @@ -534,6 +534,8 @@ int dma_direct_mmap(struct device *dev, struct vm_area_struct *vma,
+>  	unsigned long user_count = vma_pages(vma);
+>  	unsigned long count = PAGE_ALIGN(size) >> PAGE_SHIFT;
+>  	unsigned long pfn = PHYS_PFN(dma_to_phys(dev, dma_addr));
+> +	const pgoff_t pgoff_start = vma_start_pgoff(vma);
+> +	const pgoff_t pgoff_end = vma_end_pgoff(vma);
+>  	int ret = -ENXIO;
+>  
+>  	vma->vm_page_prot = dma_pgprot(dev, vma->vm_page_prot, attrs);
+> @@ -545,9 +547,9 @@ int dma_direct_mmap(struct device *dev, struct vm_area_struct *vma,
+>  	if (dma_mmap_from_global_coherent(vma, cpu_addr, size, &ret))
+>  		return ret;
+>  
+> -	if (vma->vm_pgoff >= count || user_count > count - vma->vm_pgoff)
+> +	if (pgoff_start >= count || pgoff_end > count)
+>  		return -ENXIO;
+> -	return remap_pfn_range(vma, vma->vm_start, pfn + vma->vm_pgoff,
+> +	return remap_pfn_range(vma, vma->vm_start, pfn + pgoff_start,
+>  			user_count << PAGE_SHIFT, vma->vm_page_prot);
+>  }
+>  
+> diff --git a/kernel/dma/mapping.c b/kernel/dma/mapping.c
+> index 4fe04669e5e6..c986639044e9 100644
+> --- a/kernel/dma/mapping.c
+> +++ b/kernel/dma/mapping.c
+> @@ -761,12 +761,14 @@ EXPORT_SYMBOL_GPL(dma_free_pages);
+>  int dma_mmap_pages(struct device *dev, struct vm_area_struct *vma,
+>  		size_t size, struct page *page)
+>  {
+> -	unsigned long count = PAGE_ALIGN(size) >> PAGE_SHIFT;
+> +	const pgoff_t pgoff_start = vma_start_pgoff(vma);
+> +	const pgoff_t pgoff_end = vma_end_pgoff(vma);
+> +	const unsigned long count = PAGE_ALIGN(size) >> PAGE_SHIFT;
+>  
+> -	if (vma->vm_pgoff >= count || vma_pages(vma) > count - vma->vm_pgoff)
+> +	if (pgoff_start >= count || pgoff_end > count)
+>  		return -ENXIO;
+>  	return remap_pfn_range(vma, vma->vm_start,
+> -			       page_to_pfn(page) + vma->vm_pgoff,
+> +			       page_to_pfn(page) + pgoff_start,
+>  			       vma_pages(vma) << PAGE_SHIFT, vma->vm_page_prot);
+>  }
+>  EXPORT_SYMBOL_GPL(dma_mmap_pages);
+> diff --git a/kernel/dma/ops_helpers.c b/kernel/dma/ops_helpers.c
+> index 20caf9cabf69..6b5f9208d31c 100644
+> --- a/kernel/dma/ops_helpers.c
+> +++ b/kernel/dma/ops_helpers.c
+> @@ -39,7 +39,7 @@ int dma_common_mmap(struct device *dev, struct vm_area_struct *vma,
+>  #ifdef CONFIG_MMU
+>  	unsigned long user_count = vma_pages(vma);
+>  	unsigned long count = PAGE_ALIGN(size) >> PAGE_SHIFT;
+> -	unsigned long off = vma->vm_pgoff;
+> +	unsigned long off = vma_start_pgoff(vma);
+>  	struct page *page = dma_common_vaddr_to_page(cpu_addr);
+>  	int ret = -ENXIO;
+>  
+> @@ -52,7 +52,7 @@ int dma_common_mmap(struct device *dev, struct vm_area_struct *vma,
+>  		return -ENXIO;
+>  
+>  	return remap_pfn_range(vma, vma->vm_start,
+> -			page_to_pfn(page) + vma->vm_pgoff,
+> +			page_to_pfn(page) + vma_start_pgoff(vma),
+>  			user_count << PAGE_SHIFT, vma->vm_page_prot);
+>  #else
+>  	return -ENXIO;
+> diff --git a/kernel/events/core.c b/kernel/events/core.c
+> index 954c36e28101..d6d2d557ccb8 100644
+> --- a/kernel/events/core.c
+> +++ b/kernel/events/core.c
+> @@ -6998,7 +6998,7 @@ static void perf_mmap_open(struct vm_area_struct *vma)
+>  	refcount_inc(&event->mmap_count);
+>  	refcount_inc(&event->rb->mmap_count);
+>  
+> -	if (vma->vm_pgoff)
+> +	if (vma_start_pgoff(vma))
+>  		refcount_inc(&event->rb->aux_mmap_count);
+>  
+>  	if (mapped)
+> @@ -7032,7 +7032,7 @@ static void perf_mmap_close(struct vm_area_struct *vma)
+>  	 * The AUX buffer is strictly a sub-buffer, serialize using aux_mutex
+>  	 * to avoid complications.
+>  	 */
+> -	if (rb_has_aux(rb) && vma->vm_pgoff == rb->aux_pgoff &&
+> +	if (rb_has_aux(rb) && vma_start_pgoff(vma) == rb->aux_pgoff &&
+>  	    refcount_dec_and_mutex_lock(&rb->aux_mmap_count, &rb->aux_mutex)) {
+>  		/*
+>  		 * Stop all AUX events that are writing to this buffer,
+> @@ -7190,7 +7190,8 @@ static int map_range(struct perf_buffer *rb, struct vm_area_struct *vma)
+>  	 */
+>  	for (pagenum = 0; pagenum < nr_pages; pagenum++) {
+>  		unsigned long va = vma->vm_start + PAGE_SIZE * pagenum;
+> -		struct page *page = perf_mmap_to_page(rb, vma->vm_pgoff + pagenum);
+> +		struct page *page = perf_mmap_to_page(rb,
+> +				vma_start_pgoff(vma) + pagenum);
+>  
+>  		if (page == NULL) {
+>  			err = -EINVAL;
+> @@ -7348,6 +7349,7 @@ static int perf_mmap_aux(struct vm_area_struct *vma, struct perf_event *event,
+>  	u64 aux_offset, aux_size;
+>  	struct perf_buffer *rb;
+>  	int ret, rb_flags = 0;
+> +	const pgoff_t pgoff_start = vma_start_pgoff(vma);
+>  
+>  	rb = event->rb;
+>  	if (!rb)
+> @@ -7366,11 +7368,11 @@ static int perf_mmap_aux(struct vm_area_struct *vma, struct perf_event *event,
+>  	if (aux_offset < perf_data_size(rb) + PAGE_SIZE)
+>  		return -EINVAL;
+>  
+> -	if (aux_offset != vma->vm_pgoff << PAGE_SHIFT)
+> +	if (aux_offset != pgoff_start << PAGE_SHIFT)
+>  		return -EINVAL;
+>  
+>  	/* already mapped with a different offset */
+> -	if (rb_has_aux(rb) && rb->aux_pgoff != vma->vm_pgoff)
+> +	if (rb_has_aux(rb) && rb->aux_pgoff != pgoff_start)
+>  		return -EINVAL;
+>  
+>  	if (aux_size != nr_pages * PAGE_SIZE)
+> @@ -7400,7 +7402,7 @@ static int perf_mmap_aux(struct vm_area_struct *vma, struct perf_event *event,
+>  		if (vma->vm_flags & VM_WRITE)
+>  			rb_flags |= RING_BUFFER_WRITABLE;
+>  
+> -		ret = rb_alloc_aux(rb, event, vma->vm_pgoff, nr_pages,
+> +		ret = rb_alloc_aux(rb, event, pgoff_start, nr_pages,
+>  				   event->attr.aux_watermark, rb_flags);
+>  		if (ret) {
+>  			refcount_dec(&rb->mmap_count);
+> @@ -7457,7 +7459,7 @@ static int perf_mmap(struct file *file, struct vm_area_struct *vma)
+>  		if (event->state <= PERF_EVENT_STATE_REVOKED)
+>  			return -ENODEV;
+>  
+> -		if (vma->vm_pgoff == 0)
+> +		if (!vma_start_pgoff(vma))
+>  			ret = perf_mmap_rb(vma, event, nr_pages);
+>  		else
+>  			ret = perf_mmap_aux(vma, event, nr_pages);
+> @@ -9884,7 +9886,7 @@ static bool perf_addr_filter_vma_adjust(struct perf_addr_filter *filter,
+>  					struct perf_addr_filter_range *fr)
+>  {
+>  	unsigned long vma_size = vma->vm_end - vma->vm_start;
+> -	unsigned long off = vma->vm_pgoff << PAGE_SHIFT;
+> +	unsigned long off = vma_start_pgoff(vma) << PAGE_SHIFT;
+>  	struct file *file = vma->vm_file;
+>  
+>  	if (!perf_addr_filter_match(filter, file, off, vma_size))
+> @@ -9974,7 +9976,7 @@ void perf_event_mmap(struct vm_area_struct *vma)
+>  			/* .tid */
+>  			.start  = vma->vm_start,
+>  			.len    = vma->vm_end - vma->vm_start,
+> -			.pgoff  = (u64)vma->vm_pgoff << PAGE_SHIFT,
+> +			.pgoff  = (u64)vma_start_pgoff(vma) << PAGE_SHIFT,
+>  		},
+>  		/* .maj (attr_mmap2 only) */
+>  		/* .min (attr_mmap2 only) */
+> diff --git a/kernel/events/uprobes.c b/kernel/events/uprobes.c
+> index f23cebacbc6d..244651380ca1 100644
+> --- a/kernel/events/uprobes.c
+> +++ b/kernel/events/uprobes.c
+> @@ -144,12 +144,14 @@ static bool valid_vma(struct vm_area_struct *vma, bool is_register)
+>  
+>  static unsigned long offset_to_vaddr(struct vm_area_struct *vma, loff_t offset)
+>  {
+> -	return vma->vm_start + offset - ((loff_t)vma->vm_pgoff << PAGE_SHIFT);
+> +	return vma->vm_start + offset -
+> +		((loff_t)vma_start_pgoff(vma) << PAGE_SHIFT);
+>  }
+>  
+>  static loff_t vaddr_to_offset(struct vm_area_struct *vma, unsigned long vaddr)
+>  {
+> -	return ((loff_t)vma->vm_pgoff << PAGE_SHIFT) + (vaddr - vma->vm_start);
+> +	return ((loff_t)vma_start_pgoff(vma) << PAGE_SHIFT) +
+> +		(vaddr - vma->vm_start);
+>  }
+>  
+>  /**
+> @@ -1482,7 +1484,7 @@ static int unapply_uprobe(struct uprobe *uprobe, struct mm_struct *mm)
+>  		    file_inode(vma->vm_file) != uprobe->inode)
+>  			continue;
+>  
+> -		offset = (loff_t)vma->vm_pgoff << PAGE_SHIFT;
+> +		offset = (loff_t)vma_start_pgoff(vma) << PAGE_SHIFT;
+>  		if (uprobe->offset <  offset ||
+>  		    uprobe->offset >= offset + vma->vm_end - vma->vm_start)
+>  			continue;
+> @@ -2453,7 +2455,8 @@ static struct uprobe *find_active_uprobe_speculative(unsigned long bp_vaddr)
+>  	if (!vm_file)
+>  		return NULL;
+>  
+> -	offset = (loff_t)(vma->vm_pgoff << PAGE_SHIFT) + (bp_vaddr - vma->vm_start);
+> +	offset = (loff_t)(vma_start_pgoff(vma) << PAGE_SHIFT) +
+> +		(bp_vaddr - vma->vm_start);
+>  	uprobe = find_uprobe_rcu(vm_file->f_inode, offset);
+>  	if (!uprobe)
+>  		return NULL;
+> diff --git a/kernel/kcov.c b/kernel/kcov.c
+> index 1df373fb562b..b19b473c366a 100644
+> --- a/kernel/kcov.c
+> +++ b/kernel/kcov.c
+> @@ -512,7 +512,7 @@ static int kcov_mmap(struct file *filep, struct vm_area_struct *vma)
+>  
+>  	spin_lock_irqsave(&kcov->lock, flags);
+>  	size = kcov->size * sizeof(unsigned long);
+> -	if (kcov->area == NULL || vma->vm_pgoff != 0 ||
+> +	if (kcov->area == NULL || vma_start_pgoff(vma) ||
+>  	    vma->vm_end - vma->vm_start != size) {
+>  		res = -EINVAL;
+>  		goto exit;
+> diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
+> index 56a328e94395..dfa493d54ef9 100644
+> --- a/kernel/trace/ring_buffer.c
+> +++ b/kernel/trace/ring_buffer.c
+> @@ -7613,7 +7613,8 @@ static int __rb_inc_dec_mapped(struct ring_buffer_per_cpu *cpu_buffer,
+>  static int __rb_map_vma(struct ring_buffer_per_cpu *cpu_buffer,
+>  			struct vm_area_struct *vma)
+>  {
+> -	unsigned long nr_subbufs, nr_pages, nr_vma_pages, pgoff = vma->vm_pgoff;
+> +	unsigned long nr_subbufs, nr_pages, nr_vma_pages;
+> +	pgoff_t pgoff = vma_start_pgoff(vma);
+>  	unsigned int subbuf_pages, subbuf_order;
+>  	struct page **pages __free(kfree) = NULL;
+>  	int p = 0, s = 0;
+
+Best regards
 -- 
-2.54.0
+Marek Szyprowski, PhD
+Samsung R&D Institute Poland
 
 
