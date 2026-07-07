@@ -1,80 +1,70 @@
-Return-Path: <linux-arm-msm+bounces-117100-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-117099-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id h/XWNxJxTGpZkgEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-117100-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Jul 2026 05:22:58 +0200
+	id i4SyIBdyTGrNkgEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-117099-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Jul 2026 05:27:19 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1013971701E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Jul 2026 05:22:58 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id D16D7717135
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Jul 2026 05:27:18 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=GkGBTtwg;
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=PexVkn9L;
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117100-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c15:e001:75::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117100-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117099-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117099-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 00EA33010C8A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jul 2026 03:22:17 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 7089F3030116
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jul 2026 03:22:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8B36D38E5DA;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6C97B3890F1;
 	Tue,  7 Jul 2026 03:22:10 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6E4B37266D;
-	Tue,  7 Jul 2026 03:22:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E8FC3939DA;
+	Tue,  7 Jul 2026 03:22:01 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783394530; cv=none; b=MbATW9+i0lD8MxJeY0EbNoeGKN0xme0gYpPMsgn2hPu+6fSD2QDAVs+Vqwdgx+aLQGN9PwAxzISECb8yyJnyIn4ZXYpJcfqD8YSBO8z3+aQeA3G+6KUi/6zy0Sx+guCLBI5VQKuoQtdb67HEwRD4QHRBjrTLARW5PTsokUvO3m8=
+	t=1783394530; cv=none; b=WOZrHptP2atVe6bUBVAw0di/8pO9a7vQIL1Hng96qvZWKqcI4sGO34K7c8wM9VxPm6go6S3Kid/b1AlbAYOOF8MSyfRtJcClg4arDh62FeEfMvvH08cMOsDHXClzJ9PdVs9XV0OcNizv44dc+ZXrVmdfCWPG+F8iPhp+2gj+L54=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1783394530; c=relaxed/simple;
-	bh=uifYgKU3HWleDJ1V51l/6/3x0LKaVLQJVdYJHTT2Nk8=;
+	bh=jH2KSoGlwnb+2n2hXpgwLcEBCQpuWsL/KznpRqaCsW8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RHHqrIhvUCat7whvIXYwexeG+0GzRhCVRv0rSq/DFxXwwpGdbVdD3UaGNOIBfSmfQ/yBvZmLSbOCYqkT4xrnq/L4D7kDX/g6ZuIMGCzF7tVYZv5yg4GHVMSBvQqxwkKVTVt4UL34B3j919IPOwxSbbzrABFej78qQuVwk1NFa74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GkGBTtwg; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3B901F00A3A;
-	Tue,  7 Jul 2026 03:21:58 +0000 (UTC)
+	 MIME-Version:Content-Type; b=VF0acUGssFi9otXHCASCcPtj3u+xOHkiIqcIDZiFmSXzF8KpEb0W6hEADDFf3R6u0cjIbguk/CT5acUT8jrnrs2+NRmigiTweyN4gNikCsPngq7xxxCyN1zVsU/higxODE69BPIrKOJjYSkyMFka5AaXLgpbpn1PGpooULCPi9Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PexVkn9L; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AE651F00AC4;
+	Tue,  7 Jul 2026 03:22:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783394520;
-	bh=Pp3QGx4MI0wMm1/tu5AIhwHgnRl0wO+oCUAfozdxYPU=;
+	s=k20260515; t=1783394521;
+	bh=PLTsJsluPqWdcVZWiqxxM8b99Qw43iYIQdSbcCGV9/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GkGBTtwg3fkvelnnB9ePsx319TKYpkyY120ukz7J9mXwDL3F2SzlhOQXOykAPNXSt
-	 T9hTCoVaRJNePFrs/NDXVp9wnzqatoW7OMOdbknTQe4P2M33cfbuNxRW1tDwUvEfYl
-	 nBCh0bG1DBfJOf5Xg7RmIxDkxQUIeZnxvrZQsCAOCC2QNoSqb067N2oG8Yl7LQIwer
-	 usfq7vYi3tzceYNHbKDJblKy4Z9Q7q2t3rW9isJVflPWzWU90TN5g6OHh4KHeiQe1O
-	 FB814nrxxka8MCU/ItGGi5evHQqyZLk7NJMLo5TpplcLD+OcCau2vm+UB1jehnriqH
-	 5OBWbiPk5xgew==
+	b=PexVkn9LzZ6W7oUC+bG7w3LRtevbFq9jIt5u8Qb6gz7rAEIk6KPSR2HMqmv9UrLSX
+	 f2CMcYDfA17v5gIXTuwBAsIZwmIa5cwUwbQE02vnEXxpfcXOniJKAHr7Kkogr+KCpy
+	 DdzrQGOsNkoRc0chm5e4eNInn9nebn2jV/1xpw99+NMONkf95KTkqi7lRxDNwpTHNa
+	 NPGCUlrUs+TLxlZYuhRq6v3aBC2CekP0ozkAfJcNzwQY2Ot4lA1lYnYw9d7TDbDiKX
+	 0P5T98k2/CQO6yrPYXE9eHjSoegerpu0iD4v/d7VImaL81fMlBB/vBW/5+9Iq3US+v
+	 RSiw+vOqxxVKA==
 From: Bjorn Andersson <andersson@kernel.org>
 To: Konrad Dybcio <konradybcio@kernel.org>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Lee Jones <lee@kernel.org>,
-	Pavel Machek <pavel@kernel.org>,
-	Sean Young <sean@mess.org>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Martin Botka <martin.botka@somainline.org>,
-	Biswapriyo Nath <nathbappai@gmail.com>
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Pradyot Kumar Nayak <pradyot.nayak@oss.qualcomm.com>
 Cc: linux-arm-msm@vger.kernel.org,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	linux-leds@vger.kernel.org,
-	linux-clk@vger.kernel.org,
-	~postmarketos/upstreaming@lists.sr.ht,
-	phone-devel@vger.kernel.org,
-	kernel test robot <lkp@intel.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Subject: Re: (subset) [PATCH v3 0/7] Add vibrator, IR transmitter and USB-C handling in xiaomi-ginkgo
-Date: Mon,  6 Jul 2026 22:21:33 -0500
-Message-ID: <178339449904.1938770.3052050232768803324.b4-ty@kernel.org>
+	20260519-glymur-mahua-common-nodes-v2-1-9f1b89a3f398@oss.qualcomm.com
+Subject: Re: [PATCH] arm64: dts: glymur-crd: Add reset GPIO to touchscreen node
+Date: Mon,  6 Jul 2026 22:21:34 -0500
+Message-ID: <178339449920.1938770.17492438555652133562.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260330-ginkgo-add-usb-ir-vib-v3-0-c4b778b0d7f8@gmail.com>
-References: <20260330-ginkgo-add-usb-ir-vib-v3-0-c4b778b0d7f8@gmail.com>
+In-Reply-To: <20260522-arm64-dts-glymur-crd-add-reset-gpio-to-touchscreen-v1-1-c7653924acdc@oss.qualcomm.com>
+References: <20260522-arm64-dts-glymur-crd-add-reset-gpio-to-touchscreen-v1-1-c7653924acdc@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -84,67 +74,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-3.66 / 15.00];
+X-Spamd-Result: default: False [-5.16 / 15.00];
 	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
-	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_RECIPIENTS(0.00)[m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:lee@kernel.org,m:pavel@kernel.org,m:sean@mess.org,m:mturquette@baylibre.com,m:sboyd@kernel.org,m:martin.botka@somainline.org,m:nathbappai@gmail.com,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-leds@vger.kernel.org,m:linux-clk@vger.kernel.org,m:~postmarketos/upstreaming@lists.sr.ht,m:phone-devel@vger.kernel.org,m:lkp@intel.com,m:konrad.dybcio@oss.qualcomm.com,m:dmitry.baryshkov@oss.qualcomm.com,m:krzysztof.kozlowski@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:abel.vesa@oss.qualcomm.com,m:dmitry.baryshkov@oss.qualcomm.com,m:pradyot.nayak@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:konrad.dybcio@oss.qualcomm.com,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:20260519-glymur-mahua-common-nodes-v2-1-9f1b89a3f398@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
-	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[22];
-	FREEMAIL_TO(0.00)[kernel.org,mess.org,baylibre.com,somainline.org,gmail.com];
-	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[12];
+	TAGGED_FROM(0.00)[bounces-117099-lists,linux-arm-msm=lfdr.de];
+	MIME_TRACE(0.00)[0:+];
 	FORWARDED(0.00)[lists@lfdr.de];
-	TAGGED_FROM(0.00)[bounces-117100-lists,linux-arm-msm=lfdr.de];
-	DKIM_TRACE(0.00)[kernel.org:+];
+	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
-	TO_DN_SOME(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	MID_RHS_MATCH_FROM(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 1013971701E
+X-Rspamd-Queue-Id: D16D7717135
 
 
-On Mon, 30 Mar 2026 10:13:47 +0000, Biswapriyo Nath wrote:
-> This patch series add support for various components in Xiaomi Redmi
-> Note 8.
+On Fri, 22 May 2026 15:26:39 +0530, Pradyot Kumar Nayak wrote:
+> The touchscreen module on Glymur/Mahua CRDs is different from the one
+> used on Hamoa CRDs and requires the reset-gpios to be wired to the device.
+> Without this in place the reset line will remain permanently asserted
+> during resume leaving the device offline and causing all I2C transactions
+> to fail with -ENXIO.
 > 
-> Most notably:
-> - IR transmitter
-> - USB-C OTG
-> - Vibrator
+> Error Logs:
+> i2c_hid_of 3-0038: failed to change power setting.
+> i2c_hid_of 3-0038: PM: dpm_run_callback(): i2c_hid_core_pm_resume [i2c_hid] returns -6
+> i2c_hid_of 3-0038: PM: failed to resume async: error -6
 > 
 > [...]
 
 Applied, thanks!
 
-[1/7] arm64: dts: qcom: sm6125: Use 64 bit addressing
-      commit: 88f8e2ca76ee9999c1f21d020362e6588a6d5ef5
-[3/7] arm64: dts: qcom: sm6125-xiaomi-ginkgo: Enable vibrator
-      commit: 222f161a873f198301497f22ae0dd089f30e9b75
-[4/7] arm64: dts: qcom: sm6125: Enable USB-C port handling
-      commit: 3df39679bfcb46a3475b0e8d0b31cfcb07def9c4
-[5/7] arm64: dts: qcom: sm6125-xiaomi-ginkgo: Add PMI632 Type-C property
-      commit: c1da9374c3e08c6eb06106256cac3875fb5c467f
-[7/7] arm64: dts: qcom: sm6125-xiaomi-ginkgo: Add IR transmitter
-      commit: 474dedd7f653be26ce5385f46ff2b7a3282a359f
+[1/1] arm64: dts: glymur-crd: Add reset GPIO to touchscreen node
+      commit: f64ef325f1d9ca9d005b7124c2bf065bb0b99c3d
 
 Best regards,
 -- 
