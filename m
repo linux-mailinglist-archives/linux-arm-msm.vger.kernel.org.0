@@ -1,56 +1,56 @@
-Return-Path: <linux-arm-msm+bounces-117255-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-117256-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id X37rONfSTGpcqQEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-117255-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Jul 2026 12:20:07 +0200
+	id uyI1IJDTTGqZqQEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-117256-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Jul 2026 12:23:12 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 13D8071A400
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Jul 2026 12:20:07 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id BBCDE71A4B4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Jul 2026 12:23:11 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=collabora.com header.s=mail header.b=nr0uAH4Q;
+	dkim=pass header.d=collabora.com header.s=mail header.b=BX5yBliu;
 	dmarc=pass (policy=none) header.from=collabora.com;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117255-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117255-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117256-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 104.64.211.4 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117256-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 6B9103062833
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jul 2026 10:18:51 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 684C5302FDA3
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jul 2026 10:18:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C15973E00BC;
-	Tue,  7 Jul 2026 10:18:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EB7CF3E0C70;
+	Tue,  7 Jul 2026 10:18:33 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 493E43DD52F;
-	Tue,  7 Jul 2026 10:18:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BBF33E008A;
+	Tue,  7 Jul 2026 10:18:32 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783419512; cv=none; b=od0wDdYzVzb+Kn8pGmEObGhfqTT/v/sNG8VMpL9h5FA8/MVBwyJmrisC2LGTYSGFGeU5pFXIp874OXzlcLcmaeekzqs+6pjk/DXVpVLtLSPbMAx7pvxX55EMq1wMsYFIcgSR9UHWSrFJEW0PveMnFmLRXphhcWYNDQURGHnjKBo=
+	t=1783419513; cv=none; b=qIxyEN6j1vxYsX6lHijb6+rvJZM2IBN7N7Bjspzc7jC80G96PO31VBijJ7qRZrYvM6D7TWNcutedbJLOO1nd4Uat8494MezOQ5XWL+H+vMzLTg2165TUBjZMzRgSWNERinSWXqeW4ZsUcVUShHRMMgMEka19PAWJvqwJZWPAYYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783419512; c=relaxed/simple;
-	bh=karO6HmYztmpgPiJLMQ4vW+o2ogQy55ZxbCv8+28n9k=;
+	s=arc-20240116; t=1783419513; c=relaxed/simple;
+	bh=AHJNieF6HG6J9UQ0hylmlT5QBWV431DgXxdXyhQu8ow=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h34RJ7+MuvTnJeN3cBcZ6kGPJbmq4L4JN23IcpZXC50LgS3JGxkROoHweGk8ayzRVjXzSQmAHnYajDelM5AaAuOC04JfEMKy3N8tpcGhmSc44jSRpOINSn9hRcShtqkEbjObIz2g9/lur0LBunRs2/W8xQNlqx5UsYcIVSvSzio=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=nr0uAH4Q; arc=none smtp.client-ip=148.251.105.195
+	 MIME-Version; b=ZzB2MFjWbxrYNoiQoBLg6zV8n8bLnLB80ylAgPHIDVsyjIpqr66YPd6N93HjQVbXEEY29aiWU3Toy6UmFfe2de8Ilvan4j8QLSxGcibukzsdnwgDmkel2bTlCALc3eX85nk1df92eVez47JAUElVPkhokiZDp5bSAnfSDiZC2Wc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=BX5yBliu; arc=none smtp.client-ip=148.251.105.195
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1783419509;
-	bh=karO6HmYztmpgPiJLMQ4vW+o2ogQy55ZxbCv8+28n9k=;
+	s=mail; t=1783419511;
+	bh=AHJNieF6HG6J9UQ0hylmlT5QBWV431DgXxdXyhQu8ow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nr0uAH4Qf/hjXjB33AmnyLwYLyec0/iOQZfpI9gdjsOneZQOrIKToTzF/Qhl2P8ue
-	 cwj+qxS9suYO30CJevqVbeCj9tW6HorUWXkEMSyyzHbQZFhpLB3dihwA3ZVIArJ9X9
-	 uOGboOVRkH9LfxRmuklt9ffl7UUXgdnAX8O1t0s5b6eg+7Tup05Br06F5EPBsbp6hE
-	 rQLSSOdoy5wUZ+EYUlqH0DaKBtcYRMLzVWYoMEoJ9DYDuJiIN6jE0X8xhjsNL5UlDD
-	 rEp0NBMZTwjWh3VEJrRPfS3BQwSyfvF8OP1AbBTvMiAxBYLtdwiV4n/ngKTgICqaUi
-	 pCcDTc9Su9zBw==
+	b=BX5yBliupns8QYvgLSOOsarTvLlVJ9SGoqZ3kpXqvtu8LKdj9WZ2UzLAHa3xthE8Q
+	 lM/2jP/agBmW8xtUliLEG1GWz8SyYX6rpK1boV/juABtVOdMwJKDdF+cnwgg/0rTXg
+	 OnRxMNjGmEGwhCAGcK3LTuUIfmlc90EmCBogRJyfXVB1rzoY1N6uJil5DWgu4dAU5C
+	 7VthHKtUvRkKvd8njUcGAdsRCy6g8Z6dciiKPRW9p1VKDUhWo6qHf1ydRpVKCuJHdx
+	 2n6Areh7EKwBWHDwyNyIZzdjBjg6W+HohUnysVGDiSpXYxifC8l0wQqftjueOHlF2c
+	 9N9mMLT16UwRw==
 Received: from IcarusMOD.eternityproject.eu (unknown [100.64.1.21])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: kholk11)
-	by bali.collaboradmins.com (Postfix) with ESMTPSA id B781917E0D56;
-	Tue, 07 Jul 2026 12:18:28 +0200 (CEST)
+	by bali.collaboradmins.com (Postfix) with ESMTPSA id EA16217E0DE6;
+	Tue, 07 Jul 2026 12:18:29 +0200 (CEST)
 From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 To: jic23@kernel.org,
 	sboyd@kernel.org
@@ -82,9 +82,9 @@ Cc: dlechner@baylibre.com,
 	linux-pm@vger.kernel.org,
 	kernel@collabora.com,
 	Andy Shevchenko <andriy.shevchenko@intel.com>
-Subject: [PATCH v11 03/12] spmi: Print error status with %pe format
-Date: Tue,  7 Jul 2026 12:18:12 +0200
-Message-ID: <20260707101821.173319-4-angelogioacchino.delregno@collabora.com>
+Subject: [PATCH v11 04/12] spmi: Remove unneeded goto in spmi_device_add() error path
+Date: Tue,  7 Jul 2026 12:18:13 +0200
+Message-ID: <20260707101821.173319-5-angelogioacchino.delregno@collabora.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260707101821.173319-1-angelogioacchino.delregno@collabora.com>
 References: <20260707101821.173319-1-angelogioacchino.delregno@collabora.com>
@@ -103,11 +103,11 @@ X-Spamd-Result: default: False [0.84 / 15.00];
 	R_MISSING_CHARSET(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[collabora.com,none];
 	R_DKIM_ALLOW(-0.20)[collabora.com:s=mail];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-117255-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-117256-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER(0.00)[angelogioacchino.delregno@collabora.com,linux-arm-msm@vger.kernel.org];
@@ -127,55 +127,46 @@ X-Spamd-Result: default: False [0.84 / 15.00];
 	ALIAS_RESOLVED(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,intel.com:email,collabora.com:from_mime,collabora.com:email,collabora.com:mid,collabora.com:dkim,vger.kernel.org:from_smtp]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,intel.com:email,vger.kernel.org:from_smtp,collabora.com:from_mime,collabora.com:email,collabora.com:mid,collabora.com:dkim]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 13D8071A400
+X-Rspamd-Queue-Id: BBCDE71A4B4
 
-Instead of printing just a number, use the %pe format for error
-status, increasing readability of error prints.
+If any error happens during device_add() just return inside of the
+conditional, as the goto path doesn't do anything else if not just
+returning.
+
+While at it, to improve readability, also change this function to
+explicitly return 0 (for success) at the end.
 
 Acked-by: Stephen Boyd <sboyd@kernel.org>
 Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
 Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 ---
- drivers/spmi/spmi.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/spmi/spmi.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/spmi/spmi.c b/drivers/spmi/spmi.c
-index 9bee0cb3d9dc..2cf5fd5e1ba9 100644
+index 2cf5fd5e1ba9..14ec9de58467 100644
 --- a/drivers/spmi/spmi.c
 +++ b/drivers/spmi/spmi.c
-@@ -71,7 +71,7 @@ int spmi_device_add(struct spmi_device *sdev)
- 
+@@ -72,13 +72,11 @@ int spmi_device_add(struct spmi_device *sdev)
  	err = device_add(&sdev->dev);
  	if (err < 0) {
--		dev_err(&sdev->dev, "Can't add device, status %d\n", err);
-+		dev_err(&sdev->dev, "Can't add device, status %pe\n", ERR_PTR(err));
- 		goto err_device_add;
+ 		dev_err(&sdev->dev, "Can't add device, status %pe\n", ERR_PTR(err));
+-		goto err_device_add;
++		return err;
  	}
  
-@@ -496,8 +496,8 @@ static void of_spmi_register_devices(struct spmi_controller *ctrl)
- 		err = of_property_read_u32_array(node, "reg", reg, 2);
- 		if (err) {
- 			dev_err(&ctrl->dev,
--				"node %pOF err (%d) does not have 'reg' property\n",
--				node, err);
-+				"node %pOF err (%pe) does not have 'reg' property\n",
-+				node, ERR_PTR(err));
- 			continue;
- 		}
+ 	dev_dbg(&sdev->dev, "device registered\n");
+-
+-err_device_add:
+-	return err;
++	return 0;
+ }
+ EXPORT_SYMBOL_GPL(spmi_device_add);
  
-@@ -525,7 +525,7 @@ static void of_spmi_register_devices(struct spmi_controller *ctrl)
- 		err = spmi_device_add(sdev);
- 		if (err) {
- 			dev_err(&sdev->dev,
--				"failure adding device. status %d\n", err);
-+				"failure adding device. status %pe\n", ERR_PTR(err));
- 			of_node_put(node);
- 			spmi_device_put(sdev);
- 		}
 -- 
 2.54.0
 
