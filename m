@@ -1,105 +1,104 @@
-Return-Path: <linux-arm-msm+bounces-117224-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-117225-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id /bQ+MAHHTGpupgEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-117224-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Jul 2026 11:29:37 +0200
+	id SkOECg7HTGp2pgEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-117225-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Jul 2026 11:29:50 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6933B719C89
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Jul 2026 11:29:37 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9A7C2719CA0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Jul 2026 11:29:49 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=aktum5A8;
-	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=C4+oYQdm;
+	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=Eaw0Xrkr;
+	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=V6Ag0dal;
 	dmarc=pass (policy=reject) header.from=qualcomm.com;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117224-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117224-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117225-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117225-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id A8B7D30F0AAC
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jul 2026 09:22:32 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id D9AF030FF28E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jul 2026 09:22:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E05E833A9C1;
-	Tue,  7 Jul 2026 09:22:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 011153911CD;
+	Tue,  7 Jul 2026 09:22:16 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 335423955D1
-	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Jul 2026 09:22:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BF2C390C9F
+	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Jul 2026 09:22:14 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783416130; cv=none; b=ZkS+yqhTpDEH0dq1yeAgPzwPudgDhLRQ/mq09P4+V9y6KBIu+vMJVL4svFPGtmopS34jRyGp4ZL+e6na7HtNaAPabvNfvrstufszeuJozEGiTrHEs4lLR8cjmZqLEEkJRk5Ivo2Y3yj4IjcuyUYjq2inj7RqG7OkjXRD0BZStmY=
+	t=1783416136; cv=none; b=XRLuTWvtaWsOetneU2OVSmDvD0MeNeUuyNXi3Q0kcM9vHnFdHxKNmfwqnvbtxQrhSqcuGb6Dp58R197unpt664UuZMi/QFvhrC+0roQEoZ+eDy0lUJD8GiJYjYCMK0uFwRA1mtrNaKVdLaPA8mkDpm36wGHMDEVqSbAsdUEE/Wo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783416130; c=relaxed/simple;
-	bh=iIypVGyuS304ik55LC/+1+p4PpbCAO8l2ge6+Qt/0Oo=;
+	s=arc-20240116; t=1783416136; c=relaxed/simple;
+	bh=D0sOlcjYWpVb4KW1woV12cTMyxTCQuYuBDIGFgr0z8Q=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=rNNJdB3Xp6H032xmpbrwUGhKD8lhJ8eB842zhLbenhmRSE3l7i0jrgjdHxxWO/hBraHje4/Ox3jmSsgRewPKObp8ZDgrkilUbhyUjdgduE3Z2/DqZi3AJej0+nJ9qUb7pCSAUiX9sJkRJM//iJ3caMleVgj+5/xefziGimXc7mA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=aktum5A8; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=C4+oYQdm; arc=none smtp.client-ip=205.220.168.131
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6678Denh3243155
-	for <linux-arm-msm@vger.kernel.org>; Tue, 7 Jul 2026 09:22:08 GMT
+	 In-Reply-To:To:Cc; b=DZ8me1E3bOYdlvlbI2UF2rcam89ThJc6AmApfQgJ1zdbXFCJHrxYtRicBOADLmM7/jFA6VQ7HEQZGGVHHM/s9gIzXZEXR1kDFy25yg9Zfqo52o2sSm8AI0acmt84wS2e7K0BlTcW5J0SEYIxxL2oYct7fhpyFXwX8fXODa3kIWU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Eaw0Xrkr; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=V6Ag0dal; arc=none smtp.client-ip=205.220.168.131
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6678DoI93205913
+	for <linux-arm-msm@vger.kernel.org>; Tue, 7 Jul 2026 09:22:13 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	FDlAkrCqT9NozHhkbpvjYoApBdb1EPmLolFbdYGcZHI=; b=aktum5A8CXa2eEzt
-	sN1AhgFA4xp6GfyrRpIDdwTSdh+iaFXNcEzfEQHr4oDhnGrbq91rKs52BfXfNk3G
-	0elW2PwYBw/Y7Wbf3WOIn3R/7uY9Lm74Kmy4p4MNT5itis54ANw2wrnr9Km1vnpz
-	bd98eI7oLjpQnzXnsj2izI8ghwKQ+XnplTghkTZaz9zZqDK5NKO8O97NirY7AmwP
-	xvdC5fY6QV4gHPgQwvoMlPuc/reJxQ7XC/6pqzKVWpLiQGbSqAWozFMUF3GGR6NM
-	qX4O1jBCHxHnFxZ8aPZVdCqPLjXIWugBQnY8uNC3kyRRQ+MTOPlHG5vjEMvl7vI0
-	KKi4UA==
+	2InzJMBKoHl7JVhFO+rX+aFvUpIrUtHbvFpQlkWzNFk=; b=Eaw0XrkrHQM1IAz7
+	pTYq7uvQ0D+ytlDUJz3ndv+Pau+PujnS6wZWjkQ+T1ZU1EbzzYAhhIb9f1mqK3le
+	oRNzAvPOAG6XrV/AzRZUxQ0Mudjx1B58wINdCfj/XYETN/K4gAHId4EIscc1bXP3
+	OX7VyGNkQQDR/g9Qj/QP11q6TrGJkR31H3fC3grgWJL+imgUTAT89BdjRZLrk5Q3
+	yg8ZonPk+zM8tLhxgUFvUmfYqoN8K/nphVdSQuh8VzMd8K/mRdxOtKzSAGbDpDFy
+	7LilAdO4GFrAb4DFcyB4WGhQtb8/YacVBaWk1G+QHl8wmUMgZvhxY4W51VnPKc6n
+	BpxThw==
 Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com [209.85.215.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f8w11rf61-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f8fdw3kdw-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jul 2026 09:22:08 +0000 (GMT)
-Received: by mail-pg1-f198.google.com with SMTP id 41be03b00d2f7-c890bac374eso6205900a12.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jul 2026 02:22:08 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jul 2026 09:22:13 +0000 (GMT)
+Received: by mail-pg1-f198.google.com with SMTP id 41be03b00d2f7-c9151bf6ce7so4602552a12.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jul 2026 02:22:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1783416128; x=1784020928; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1783416133; x=1784020933; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :content-type:mime-version:subject:date:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=FDlAkrCqT9NozHhkbpvjYoApBdb1EPmLolFbdYGcZHI=;
-        b=C4+oYQdmqDrZBDe3KhttfM6NX89a+37mF2U4nGH8mS1+Axm0H29YHRLFQKUaAYznPu
-         Q+oI1/XMOyTwjmntvG1rwLf+hldO/4xlAF1ssPMPDpQxDB5highRn3sZkbGdnWIcUwrn
-         cfMMBcaxpXU5jjnFL2pNLWigMKrGpBvYuefvHMeBcRx7wQ8HCw5Pws74ekNfyUYFw00L
-         10IUV8I8xn7Dzpj7MvbBkUHmDdzZ3u6YzfYd2LI3iX3AOCbm/FhGU8BC5Ha76cWiCAO0
-         eJbnfzOTgl1FYzXdaQbjjETMpj2vc81qMAufaWay4Ueunp3pS3HXPPpzp/Q5Ad923fjP
-         6hSA==
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=2InzJMBKoHl7JVhFO+rX+aFvUpIrUtHbvFpQlkWzNFk=;
+        b=V6Ag0dal0jtOskiiSUlLiTGgMeouQiNhFmL+t0U/5qstFPjchvO775N5VbrFPslqOS
+         jhGc9OeYDu4tKkJ03ZQPTKfMtJdigCt9Qz7eQo1MckKVvPOEryfvRuDl0ujl1AEpTKSY
+         58U4Bf/jy0wFE9jtyTqUckoJ1wvR30lW4A+QNP3vbHBd0SGnnvsraHZPL79Sp9ZL5LS6
+         a6qbmAINxV1MBTepALX6biKCJ5SlYZXiCiBq7bH8v9K1M2mJbVsyS/306+oIcWMo59rS
+         aX1bJevgLixNlJYrb+r4nhiBcNvzLapPQ3+KfNFEtIm4jsr0cJOv3PfWQgpmSoOnYrHL
+         K7BA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783416128; x=1784020928;
+        d=1e100.net; s=20251104; t=1783416133; x=1784020933;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :content-type:mime-version:subject:date:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=FDlAkrCqT9NozHhkbpvjYoApBdb1EPmLolFbdYGcZHI=;
-        b=X9o9XTGgE+f4PC2En7UnCVC2sS4j02wVqyoaa/pWWrlBsDSSUebqpxgeyiUA82s3mD
-         j7q3G/NnWmfeKWpa/QjkaGNLxRL8mg7OqDYw/fyfE3fz6mmlMgkWih0XDxQXK68bkin+
-         3EM0rXN6QuBaPdq9M6LIe9+0cdfa9yebuUuXTknu9ah+8/24wS5aYEvh2FdpWc6Y6bmj
-         kLH+dJAPuC353bq2KKNafvHgchNYkCj6Q30vQtFabg+NvuFDU2mgwNfSZIYM/lQLwVJx
-         SGRFq6EAK7+VgH0KHZHzqGjNcP0en88FAa9BlzNW9K4WYcMGITa73YGLSVdGhSt7E0TU
-         DZKA==
-X-Gm-Message-State: AOJu0YyGy/BrLB7MQcgVbEye32sWqlYOY+LMKr8YAk6u98MnQoJXjcEq
-	j3wXj0uCM6AvNdjWIeVDgWQGB1OrYvyKPAhGt9Jy1k9qRCzumy05wagdXqdvNsscZX9t1iPHuK5
-	u1wItTbECWenTSPJB8BKm1JFmpkmclNO/IbV/54tPTY56z+KTsdA1ni9Bb9lLWZDwaNHG
-X-Gm-Gg: AfdE7cnEUx9GV9c9QRf5JG+GVX7fk1vvhHbcuogSkgHmDksaOU761NJiE3hFmD2xeJk
-	dk52o57U4ox1lhDBQT47hKx0XcM/xipodm5wFRP29zoSfp36HBfnvtwxvR6NhnrlkWyc07AxDXO
-	iAh2gL872se1wDNXUUhF4Np4Dru/JU7VTmBzv4VC7O7YuNetQuNMTNgi6VHOfZgyub0cOG0zps1
-	aJt+2e/tKGUHa+KzAMDeQGsi+VrBvxU4cfZ6tUfzBOjRzyJpVzvApNALVJco0T5FxIo6HUpZ9hi
-	lF3N+DzF4Svz8ojUtZlZEKEK1HTHsf/enyBGBQOIiHjt3XIfIU9VM6ZlJOxploKMgXyMPLPEvWm
-	UQXZbpa0iBRzNMkGq9LUCe4FeGud1fxCR1n5hztU=
-X-Received: by 2002:a05:6a21:69a:b0:3a0:b781:4c78 with SMTP id adf61e73a8af0-3c08ecaff36mr5511311637.15.1783416127886;
-        Tue, 07 Jul 2026 02:22:07 -0700 (PDT)
-X-Received: by 2002:a05:6a21:69a:b0:3a0:b781:4c78 with SMTP id adf61e73a8af0-3c08ecaff36mr5511268637.15.1783416127374;
-        Tue, 07 Jul 2026 02:22:07 -0700 (PDT)
+         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=2InzJMBKoHl7JVhFO+rX+aFvUpIrUtHbvFpQlkWzNFk=;
+        b=NPiIRakE5SQOONxa0sd/2epMJNxxQEIEWSWp1eq0BBPNrauaiB9pXfilHPL91gVnVF
+         59Wv/tB2XQCET9bPSG9ulRiijiJZ+n/V9RQRnK2x+u6wIPV6GxZMcaW/Bqf8iQBGCgiW
+         0nRXvch0e4H6u/tmfJB3/li+Ro/2k1o4cTu6f2U/EqrfL75FH2glxZI2kw3heWJbPUzu
+         bCWA2DpN6py49VYemBN6q0CGj9v1PpTjG3m02HnshGfE1YZybRWsoZTC6QrSMXkxzLy1
+         jEvT+8xqe6Gc+1Ox18ye1+luToL8ORG6Q67asV5XkvyKt84Sv/LDODlJcMuGrdCAWRzV
+         RYaw==
+X-Gm-Message-State: AOJu0YxjkP/kUMnELMGfUGNF7sphIf3L+RtDexYt9K5MfjRqEZPwWSko
+	sguCDgkuqXJX6CF724WLu11mEZLrn2PwLg5iM0Ert/tACZJVJdlDNISUoPRSsyn/kW31cFxZKk0
+	jVHCdUGWTnCU/dHW77l7+1zLCUVbM/By7m6jGnDOkhAbnM7p3jBflQ19oKsAn44xGrS+g
+X-Gm-Gg: AfdE7cmrWi7xQ8Kps/sL0SSPNQ07u11afJ5xT3SWweeF1doN2cmJJl7bozGfPFiRXUT
+	8Q7u2CcKIdOrMvCx5NYpbsGVOhD6qlocBLcftKTF9nOZTbtcOhGrsQV/fyF/VfzCNT3AGQggEtq
+	iPf2BTaUYUxy4vW73wuE47bJ10hC3MwsvJIwkVYjED2ir73Cm+mBmoZCBdNIDMdEU5Ah608+Dwh
+	Wk1Vrh29yONYFr01ZdKQuPgHCRrgGQ3jU1HlYjcW0N2+nM1GdqNVkidxcajPmg6mW0/xg6mOV1v
+	5B6qIlmyXnamLx9UDICrw7msrxJ/rOFWwkXxXOlRBBjmmZxW5yrIfI0cc6WUmoylFxMPpEDwBa/
+	AVWtngy2/lXwu5ZfznCYL5Kqh26ufvtSWX/78/xg=
+X-Received: by 2002:a05:6a21:1b85:b0:3bf:d487:4b42 with SMTP id adf61e73a8af0-3c08ef051a0mr5861202637.35.1783416132726;
+        Tue, 07 Jul 2026 02:22:12 -0700 (PDT)
+X-Received: by 2002:a05:6a21:1b85:b0:3bf:d487:4b42 with SMTP id adf61e73a8af0-3c08ef051a0mr5861153637.35.1783416132179;
+        Tue, 07 Jul 2026 02:22:12 -0700 (PDT)
 Received: from hu-mkshah-hyd.qualcomm.com ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-ca5afdb7534sm658864a12.12.2026.07.07.02.22.02
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-ca5afdb7534sm658864a12.12.2026.07.07.02.22.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Jul 2026 02:22:07 -0700 (PDT)
+        Tue, 07 Jul 2026 02:22:11 -0700 (PDT)
 From: Maulik Shah <maulik.shah@oss.qualcomm.com>
-Date: Tue, 07 Jul 2026 14:51:34 +0530
-Subject: [PATCH v4 2/7] irqchip/qcom-pdc: Move all statics to struct
- pdc_desc
+Date: Tue, 07 Jul 2026 14:51:35 +0530
+Subject: [PATCH v4 3/7] irqchip/qcom-pdc: Differentiate between direct SPI
+ and GPIO as SPI
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -108,7 +107,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260707-hamoa_pdc_v3-v4-2-dfd1f4a3ae89@oss.qualcomm.com>
+Message-Id: <20260707-hamoa_pdc_v3-v4-3-dfd1f4a3ae89@oss.qualcomm.com>
 References: <20260707-hamoa_pdc_v3-v4-0-dfd1f4a3ae89@oss.qualcomm.com>
 In-Reply-To: <20260707-hamoa_pdc_v3-v4-0-dfd1f4a3ae89@oss.qualcomm.com>
 To: Bjorn Andersson <andersson@kernel.org>,
@@ -122,50 +121,50 @@ Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         Sneh Mankad <sneh.mankad@oss.qualcomm.com>,
         Maulik Shah <maulik.shah@oss.qualcomm.com>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1783416112; l=6947;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1783416112; l=4238;
  i=maulik.shah@oss.qualcomm.com; s=20240109; h=from:subject:message-id;
- bh=iIypVGyuS304ik55LC/+1+p4PpbCAO8l2ge6+Qt/0Oo=;
- b=Duti58sKIKBLcJgTZzIo+9dlwZ4chpw+7PO5YKQrrxBkl8sdmIEPe2kzra3hmhPM82rnFhkPS
- UShW35X/+u+BXNTJRpXa/O79LPIA8XwDY6I/vcdTRT/gdDPI3ojqcXt
+ bh=D0sOlcjYWpVb4KW1woV12cTMyxTCQuYuBDIGFgr0z8Q=;
+ b=1pX9sNDj1Pci8+qfn41oZdkQXZRGfcZizRvaXxJLxdF+NyAL7KnT9upuPoV1wdOnWugMNhjlC
+ 7SUuYKr16nMAnatdA8xm4avp5jkcwU14z6qcfSqQXA5nWw/lqlw7WFo
 X-Developer-Key: i=maulik.shah@oss.qualcomm.com; a=ed25519;
  pk=bd9h5FIIliUddIk8p3BlQWBlzKEQ/YW5V+fe759hTWQ=
-X-Authority-Analysis: v=2.4 cv=DMe/JSNb c=1 sm=1 tr=0 ts=6a4cc540 cx=c_pps
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA3MDA5MCBTYWx0ZWRfX+aqTXGy1TLoE
+ kCiAwsLZqA4UaWuIc/7dGehBZaoCjz71NRwS27+p+qU33U+fbo+3NyS+SZ3o//VvLU7r9F7TtD3
+ x0WV3U3a3fzr0Pg+qNrsdh3Sk6cwaLs=
+X-Proofpoint-ORIG-GUID: j0_SkLGRJdi4nNEkk3MsOI6Ju-tKyXx2
+X-Authority-Analysis: v=2.4 cv=EtziaycA c=1 sm=1 tr=0 ts=6a4cc545 cx=c_pps
  a=Qgeoaf8Lrialg5Z894R3/Q==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=EUspDBNiAAAA:8 a=VSgcN4lfnCTbbQGmJlYA:9 a=QEXdDO2ut3YA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=EUspDBNiAAAA:8 a=l_4bIUA77Uey-hlc_bsA:9 a=QEXdDO2ut3YA:10
  a=x9snwWr2DeNwDh03kgHS:22
-X-Proofpoint-GUID: Bga_hqaR9_utwze0cqn0bM-q4iCAFmfc
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA3MDA5MCBTYWx0ZWRfX1955Al/p2jye
- ZeZAULjrPX4GtzqYoSq7PToJLqX255YXmocExu58wuPfOW5VoVynABIIVdDc9moMMen6Lr6XFpy
- QuC0E3UPQgUfYeFJAJtEo2WMC8pMX+M=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA3MDA5MCBTYWx0ZWRfX8U2f7UTCDV5p
- pdUv36JwL+egwtZI9+mk9UqdTFvMFUZg+MomfXF+0UFT6fbnyjQecO/BQIkF0AONXIgTZV97+Nz
- CFqLl2IT3YFAfbtpvXZX9qHxms14+YMZbw1Z6IOYYnphFjNMa1Pg0gmFZASqAKI02C+31wXWtjD
- ecbnMpYIdmglGdupS/APcNfNA/xYltZkAEyb+3YpJJJEuuaTl9K31EW5l+kshCRaX6MfW6oOS9j
- rgMm2p44XLouTA8XLtfB/2T8v6grNiwSrj1ll1SzwB9OdZYFCbqrOCiU1RY9yqxqJLWDkSjKHxg
- ZP3JDSYpvus4lIpTv1p7NORrPbnU5JqlV5PjJj+uUavAkKVrEl5qENRLnk0rU01Z1SlBtwIkc1Y
- 4/rI4fdIIxGquGJR4fUyaRsX/rW+R7IENZC/z6W460SUh2h5Vs6CSu7Hg/f+s/4mYQvmm0r6ZrV
- OO2psChAn4JutwHzpXw==
-X-Proofpoint-ORIG-GUID: Bga_hqaR9_utwze0cqn0bM-q4iCAFmfc
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA3MDA5MCBTYWx0ZWRfX6kP9ATD5cErz
+ 6E2cHwQxQTcZ0H9Daur9c708v0NjhRfj/crgWNrcoLI1h1yhl9reAbDXVSk8c9+fpwRcss0X0EJ
+ lZPh/I4WUggToiW+Hvg3jvbrylvf6RHkRY9z/r53YACG6CtZceGL4xPtxeNvHnHI3WAy99p9IXx
+ AR8BlqbDkW88PPR6mK4d1pe4vuhr0hNtwD2ZjbnP1mCtyggrC9O/Y1mjLetlTi22h94KouGCF1w
+ f1OTPsEwo0S/Px6VxVWu0QMrua8ikZQEBi1+GPi8fe6W4tw3B880aocLxCbYwKZfEPV/0luzRG8
+ zqPE3Pe10XxAWbg1IlzPGjYNdmOFXZ0erIKWWHB2RBOiQsuVkzg+3egAlsx+/TYNtZ5ZTX2AKJq
+ DEHI5rG1BjTZmrrY7SpZYvwv7qb1x+5ziF59OLdcjQt/+10QCkL9cxrLQoiItF6X1YFse68uJD/
+ xwJFZXDcpt8z5MNkoog==
+X-Proofpoint-GUID: j0_SkLGRJdi4nNEkk3MsOI6Ju-tKyXx2
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-07_02,2026-07-06_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 impostorscore=0 suspectscore=0 phishscore=0 clxscore=1015
- spamscore=0 priorityscore=1501 bulkscore=0 adultscore=0 lowpriorityscore=0
+ priorityscore=1501 suspectscore=0 clxscore=1015 adultscore=0 phishscore=0
+ spamscore=0 lowpriorityscore=0 bulkscore=0 impostorscore=0 malwarescore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607070090
 X-Rspamd-Action: no action
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-117224-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-117225-lists,linux-arm-msm=lfdr.de];
 	RCPT_COUNT_TWELVE(0.00)[14];
 	MIME_TRACE(0.00)[0:+];
 	RCVD_TLS_LAST(0.00)[];
@@ -181,7 +180,7 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[maulik.shah@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	ALIAS_RESOLVED(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	MID_RHS_MATCH_FROM(0.00)[];
@@ -189,224 +188,119 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 6933B719C89
+X-Rspamd-Queue-Id: 9A7C2719CA0
 
-There are multiple statics used. Move all to struct pdc_desc to better
-align with versioning support. Document them.
+Before commit 4dc70713dc24 ("irqchip/qcom-pdc: Kill non-wakeup irqdomain")
+there were separate domains for direct SPIs and GPIOs used as SPIs.
+Separate domains can be useful in case the irqchip wants to differentiate
+both of them. Since the commit unified both the domains there is no way to
+differentiate.
 
-Add pdc->enable_intr() function to point to respective version specific
-enable function. Remove pdc_enable_intr() and __pdc_enable_intr() and
-invoke pdc->enable_intr() from caller.
+In preparation to add the second level interrupt controller support where
+GPIO interrupts get latched at PDC (but not direct SPIs) there is a need to
+differentiate between SPIs and GPIOs as SPIs. Reverting above commit does
+not seem a good option which leads to waste of resources.
 
-Locking in pdc_enable_intr() applies lock to all version specific
-pdc->enable_intr() however lock is needed only for pdc_enable_intr_bank()
-which uses a shared bank across on PDC v2.7 and PDC v3.0.
+PDC HW have the IRQ_PARAM register telling number of direct SPIs and number
+of GPIOs as SPIs. Further PDC allocates direct SPIs at the beginning and
+all GPIOs as SPIs are allocated at the end. This information can be used in
+driver to differentiate them.
 
-pdc_enable_intr_cfg() do not require locking as IRQ_CFG registers are one
-per interrupt. Move the locking to only pdc_enable_intr_bank().
-
-No functional impact.
+Add the support to read this register and keep this information in
+struct pdc_desc. Later change utilizes same.
 
 Signed-off-by: Maulik Shah <maulik.shah@oss.qualcomm.com>
 ---
- drivers/irqchip/qcom-pdc.c | 84 ++++++++++++++++++++++------------------------
- 1 file changed, 41 insertions(+), 43 deletions(-)
+ drivers/irqchip/qcom-pdc.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
 diff --git a/drivers/irqchip/qcom-pdc.c b/drivers/irqchip/qcom-pdc.c
-index a77d1d334062..764f7965cfb8 100644
+index 764f7965cfb8..53a477aa9765 100644
 --- a/drivers/irqchip/qcom-pdc.c
 +++ b/drivers/irqchip/qcom-pdc.c
-@@ -92,15 +92,30 @@ struct pdc_irq_cfg {
+@@ -61,6 +61,11 @@
+  * |                   |    [4] GPIO_STATUS|    [4] GPIO_MASK      |
+  * |   [31:3] Unused   |    [3] GPIO_MASK  |    [3] IRQ_ENABLE     |
+  * |    [0:2] Type     |  [0:2] Type       |  [0:2] Type           |
++ * |---------------------------------------------------------------|
++ * |   IRQ_PARAM       | IRQ_PARAM         | IRQ_PARAM             |
++ * |                   |                                           |
++ * |   [15:8] NUM_GPIO | [15:8] NUM_GPIO   | [15:8] NUM_GPIO       |
++ * |    [7:0] NUM_SPI  |  [7:0] NUM_SPI    |  [7:0] NUM_SPI        |
+  * +---------------------------------------------------------------+
+  */
+ 
+@@ -69,10 +74,12 @@
+  *
+  * @irq_en_reg:     IRQ_ENABLE_BANK register location
+  * @irq_cfg_reg:    IRQ_CFG register location
++ * @irq_param_reg:  IRQ_PARAM register location
+  */
+ struct pdc_regs {
+ 	u32 irq_en_reg;
+ 	u32 irq_cfg_reg;
++	u32 irq_param_reg;
+ };
+ 
+ /**
+@@ -92,6 +99,7 @@ struct pdc_irq_cfg {
   * @base:           PDC base register for DRV2 / HLOS
   * @prev_base:      PDC DRV1 base, applicable only for x1e RTL bug.
   * @version:        PDC version
-+ * @region:         PDC interrupt continuous range
-+ * @region_cnt:     Total PDC ranges
-+ * @x1e_quirk:      x1e H/W Bug handling
-+ * @lock:           lock for IRQ_ENABLE_BANK protection
-  * @regs:           PDC regs (IRQ_ENABLE_BANK and IRQ_CFG)
-  * @cfg_fields:     Fields of IRQ_CFG reg
-+ * @enable_intr:    pointer to enable function based on PDC version
-  */
- struct pdc_desc {
++ * @num_spis:       Total number of direct SPI interrupts
+  * @region:         PDC interrupt continuous range
+  * @region_cnt:     Total PDC ranges
+  * @x1e_quirk:      x1e H/W Bug handling
+@@ -104,6 +112,7 @@ struct pdc_desc {
  	void __iomem			*base;
  	void __iomem			*prev_base;
  	u32				version;
-+
-+	struct pdc_pin_region		*region;
-+	int				region_cnt;
-+
-+	bool				x1e_quirk;
-+
-+	raw_spinlock_t			lock;
-+
- 	const struct pdc_regs		*regs;
- 	const struct pdc_irq_cfg	*cfg_fields;
-+
-+	void (*enable_intr)(int pin_out, bool on);
- };
++	u32				num_spis;
+ 
+ 	struct pdc_pin_region		*region;
+ 	int				region_cnt;
+@@ -120,6 +129,7 @@ struct pdc_desc {
  
  static const struct pdc_regs pdc_v3_2 = {
-@@ -138,11 +153,6 @@ struct pdc_pin_region {
+ 	.irq_cfg_reg	= 0x110,
++	.irq_param_reg	= 0x100c,
+ };
  
- #define pin_to_hwirq(r, p)	((r)->parent_base + (p) - (r)->pin_base)
+ static const struct pdc_irq_cfg pdc_cfg_v3_2 = {
+@@ -130,6 +140,7 @@ static const struct pdc_irq_cfg pdc_cfg_v3_2 = {
+ static const struct pdc_regs pdc_v3_0 = {
+ 	.irq_en_reg	= 0x10,
+ 	.irq_cfg_reg	= 0x110,
++	.irq_param_reg	= 0x100c,
+ };
  
--static DEFINE_RAW_SPINLOCK(pdc_lock);
--static struct pdc_pin_region *pdc_region;
--static int pdc_region_cnt;
--static unsigned int pdc_version;
--static bool pdc_x1e_quirk;
- static struct pdc_desc *pdc;
+ static const struct pdc_irq_cfg pdc_cfg_v3_0 = {
+@@ -139,6 +150,7 @@ static const struct pdc_irq_cfg pdc_cfg_v3_0 = {
+ static const struct pdc_regs pdc_v2_7 = {
+ 	.irq_en_reg	= 0x10,
+ 	.irq_cfg_reg	= 0x110,
++	.irq_param_reg	= 0x100c,
+ };
  
- static void pdc_base_reg_write(void __iomem *base, int reg, u32 i, u32 val)
-@@ -196,10 +206,12 @@ static void pdc_enable_intr_bank(int pin_out, bool on)
- 	index = FIELD_GET(IRQ_ENABLE_BANK_INDEX_MASK, pin_out);
- 	mask = FIELD_GET(IRQ_ENABLE_BANK_BIT_MASK, pin_out);
+ static const struct pdc_irq_cfg pdc_cfg_v2_7 = {
+@@ -445,6 +457,7 @@ static int qcom_pdc_probe(struct platform_device *pdev, struct device_node *pare
+ 	struct device *dev = &pdev->dev;
+ 	resource_size_t res_size;
+ 	struct resource res;
++	u32 irq_param;
+ 	int ret;
  
-+	guard(raw_spinlock_irqsave)(&pdc->lock);
+ 	/* compat with old sm8150 DT which had very small region for PDC */
+@@ -501,6 +514,9 @@ static int qcom_pdc_probe(struct platform_device *pdev, struct device_node *pare
+ 		pdc->x1e_quirk = true;
+ 	}
+ 
++	irq_param = pdc_reg_read(pdc->regs->irq_param_reg, 0);
++	pdc->num_spis = FIELD_GET(GENMASK(7, 0), irq_param);
 +
- 	enable = pdc_reg_read(pdc->regs->irq_en_reg, index);
- 	__assign_bit(mask, &enable, on);
- 
--	if (pdc_x1e_quirk)
-+	if (pdc->x1e_quirk)
- 		pdc_x1e_irq_enable_write(index, enable);
- 	else
- 		pdc_reg_write(pdc->regs->irq_en_reg, index, enable);
-@@ -213,32 +225,15 @@ static void pdc_enable_intr_cfg(int pin_out, bool on)
- 	pdc_reg_write(pdc->regs->irq_cfg_reg, pin_out, enable);
- }
- 
--static void __pdc_enable_intr(int pin_out, bool on)
--{
--	if (pdc_version < PDC_VERSION_3_2)
--		pdc_enable_intr_bank(pin_out, on);
--	else
--		pdc_enable_intr_cfg(pin_out, on);
--}
--
--static void pdc_enable_intr(struct irq_data *d, bool on)
--{
--	unsigned long flags;
--
--	raw_spin_lock_irqsave(&pdc_lock, flags);
--	__pdc_enable_intr(d->hwirq, on);
--	raw_spin_unlock_irqrestore(&pdc_lock, flags);
--}
--
- static void qcom_pdc_gic_disable(struct irq_data *d)
- {
--	pdc_enable_intr(d, false);
-+	pdc->enable_intr(d->hwirq, false);
- 	irq_chip_disable_parent(d);
- }
- 
- static void qcom_pdc_gic_enable(struct irq_data *d)
- {
--	pdc_enable_intr(d, true);
-+	pdc->enable_intr(d->hwirq, true);
- 	irq_chip_enable_parent(d);
- }
- 
-@@ -350,12 +345,10 @@ static struct irq_chip qcom_pdc_gic_chip = {
- 
- static struct pdc_pin_region *get_pin_region(int pin)
- {
--	int i;
--
--	for (i = 0; i < pdc_region_cnt; i++) {
--		if (pin >= pdc_region[i].pin_base &&
--		    pin < pdc_region[i].pin_base + pdc_region[i].cnt)
--			return &pdc_region[i];
-+	for (int i = 0; i < pdc->region_cnt; i++) {
-+		if (pin >= pdc->region[i].pin_base &&
-+		    pin < pdc->region[i].pin_base + pdc->region[i].cnt)
-+			return &pdc->region[i];
- 	}
- 
- 	return NULL;
-@@ -411,35 +404,35 @@ static const struct irq_domain_ops qcom_pdc_ops = {
- static int pdc_setup_pin_mapping(struct device *dev)
- {
- 	struct device_node *np = dev->of_node;
--	int ret, n, i;
-+	int ret, n;
- 
- 	n = of_property_count_elems_of_size(np, "qcom,pdc-ranges", sizeof(u32));
- 	if (n <= 0 || n % 3)
- 		return -EINVAL;
- 
--	pdc_region_cnt = n / 3;
--	pdc_region = devm_kcalloc(dev, pdc_region_cnt, sizeof(*pdc_region), GFP_KERNEL);
--	if (!pdc_region) {
--		pdc_region_cnt = 0;
-+	pdc->region_cnt = n / 3;
-+	pdc->region = devm_kcalloc(dev, pdc->region_cnt, sizeof(*pdc->region), GFP_KERNEL);
-+	if (!pdc->region) {
-+		pdc->region_cnt = 0;
- 		return -ENOMEM;
- 	}
- 
--	for (n = 0; n < pdc_region_cnt; n++) {
-+	for (n = 0; n < pdc->region_cnt; n++) {
- 		ret = of_property_read_u32_index(np, "qcom,pdc-ranges", n * 3 + 0,
--						 &pdc_region[n].pin_base);
-+						 &pdc->region[n].pin_base);
- 		if (ret)
- 			return ret;
- 		ret = of_property_read_u32_index(np, "qcom,pdc-ranges", n * 3 + 1,
--						 &pdc_region[n].parent_base);
-+						 &pdc->region[n].parent_base);
- 		if (ret)
- 			return ret;
- 		ret = of_property_read_u32_index(np, "qcom,pdc-ranges", n * 3 + 2,
--						 &pdc_region[n].cnt);
-+						 &pdc->region[n].cnt);
- 		if (ret)
- 			return ret;
- 
--		for (i = 0; i < pdc_region[n].cnt; i++)
--			__pdc_enable_intr(i + pdc_region[n].pin_base, 0);
-+		for (int i = 0; i < pdc->region[n].cnt; i++)
-+			pdc->enable_intr(i + pdc->region[n].pin_base, 0);
- 	}
- 
- 	return 0;
-@@ -477,13 +470,16 @@ static int qcom_pdc_probe(struct platform_device *pdev, struct device_node *pare
- 	if (pdc->version >= PDC_VERSION_3_2) {
- 		pdc->cfg_fields = &pdc_cfg_v3_2;
- 		pdc->regs = &pdc_v3_2;
-+		pdc->enable_intr = pdc_enable_intr_cfg;
- 	} else if (pdc->version < PDC_VERSION_3_2 &&
- 		   pdc->version >= PDC_VERSION_3_0) {
- 		pdc->cfg_fields = &pdc_cfg_v3_0;
- 		pdc->regs = &pdc_v3_0;
-+		pdc->enable_intr = pdc_enable_intr_bank;
- 	} else {
- 		pdc->cfg_fields = &pdc_cfg_v2_7;
- 		pdc->regs = &pdc_v2_7;
-+		pdc->enable_intr = pdc_enable_intr_bank;
- 	}
- 
- 	/*
-@@ -502,7 +498,7 @@ static int qcom_pdc_probe(struct platform_device *pdev, struct device_node *pare
- 			return -ENXIO;
- 		}
- 
--		pdc_x1e_quirk = true;
-+		pdc->x1e_quirk = true;
- 	}
- 
  	parent_domain = irq_find_host(parent);
-@@ -511,6 +507,8 @@ static int qcom_pdc_probe(struct platform_device *pdev, struct device_node *pare
- 		return -ENXIO;
- 	}
- 
-+	raw_spin_lock_init(&pdc->lock);
-+
- 	ret = pdc_setup_pin_mapping(dev);
- 	if (ret) {
- 		pr_err("%pOF: failed to init PDC pin-hwirq mapping\n", node);
+ 	if (!parent_domain) {
+ 		pr_err("%pOF: unable to find PDC's parent domain\n", node);
 
 -- 
 2.43.0
