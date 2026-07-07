@@ -1,264 +1,238 @@
-Return-Path: <linux-arm-msm+bounces-117316-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-117317-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id /dnQJwn2TGqGsgEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-117316-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Jul 2026 14:50:17 +0200
+	id DZf8HHz3TGresgEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-117317-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Jul 2026 14:56:28 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id E027571B87D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Jul 2026 14:50:16 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0255971B94C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Jul 2026 14:56:28 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=Hcg+VJfV;
-	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=DTfF6cN7;
-	dmarc=pass (policy=reject) header.from=qualcomm.com;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117316-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117316-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=IVIYphd3;
+	dmarc=pass (policy=quarantine) header.from=kernel.org;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117317-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c09:e001:a7::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117317-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 9C4A8308D499
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jul 2026 12:45:00 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 77598305D479
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jul 2026 12:56:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2063340D57F;
-	Tue,  7 Jul 2026 12:45:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B9CA40FDA5;
+	Tue,  7 Jul 2026 12:56:26 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B764B40B6DF
-	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Jul 2026 12:44:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDDE93F86E0;
+	Tue,  7 Jul 2026 12:56:24 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783428300; cv=none; b=G6VjO+QeWR777Q3DEbNAX9vDEXTwMcB/yhA5A6aoy2CaolgqE06bmozpsq4HfbyKzBnGVUVyZLdpAhS/OYL1m4WHbFrcVTTd1BkTKadXYThK+sbDszXWLLuR9bxQlzZrjGs4J1woFuOGdq1W4GmaJHPYQNEG6+csokYPUVBqwFw=
+	t=1783428986; cv=none; b=PuVUlb30NdZtKtPg+1HLlF35/NQ9BIFR416RMpuntqGKnkpAOnfYtYzFquKwbhIfV1qRgHKQk1nEFE7xOupQltnP2xXfwqwGbmidRkBKgWwXRnphpzUsjku8QvUhiPh+68zEFNBr2LcKqW0MK+E2Ur7tP4TdtPFRdXog2Ac87F8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783428300; c=relaxed/simple;
-	bh=N3r1vlxocOsnMg4V9tZ7lxxdf2qdmVHvLKewCnnGWls=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=btG9kV0NTUruCrbzXB8owE6ilWPaINfvHyIToYG9aPkwswSXD5d8CEB3SzeQyXjf/a3UGbl9GItM3Jh+V+k3lHDE/Wud8239t9OjKWC4hxTmPaUMiGBRohz2VH+qtsRElhh4PAllv9YDhYbDu4/dWgltniGQK+O7jNIYUCwrgfY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Hcg+VJfV; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=DTfF6cN7; arc=none smtp.client-ip=205.220.180.131
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 667C8xSj3676802
-	for <linux-arm-msm@vger.kernel.org>; Tue, 7 Jul 2026 12:44:57 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Jg0+oAQk4LyIeyzIsoDDXs+dbCZNcdg74MGiSubIQb8=; b=Hcg+VJfVpkV8lEXz
-	pRhbVpUE8euP4tGUSgH7y0uwY0o8T98qcBAwNUqlSmHeAcCGIqzto7y7CgDKT6CQ
-	u0zKisU3b2IX+nBkeD6smRdHndkGbS7l4JuEx6FyNQBiriDdguugdQAPsds03Hk/
-	bKehufyn6v5iOXE4p+GAxj99cS2RwOJddWnp7J3JuoL+q9xxUfWs1eoYS8T/7vus
-	aRNaYEMBH563hlaARQJFKTomGo7x93l/z3FteHVgkIwahDTsGAiN8P/v4Sz9/7fj
-	DsD7e3WhCEcovpkm2v3oP+rTaCZM6XuF07TZj2enPZ0muY/F2C1bcqSWK9JpTuaI
-	aBWHuA==
-Received: from mail-oo1-f69.google.com (mail-oo1-f69.google.com [209.85.161.69])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f8t15a0cy-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jul 2026 12:44:57 +0000 (GMT)
-Received: by mail-oo1-f69.google.com with SMTP id 006d021491bc7-6a153a05578so5332770eaf.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jul 2026 05:44:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1783428297; x=1784033097; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=Jg0+oAQk4LyIeyzIsoDDXs+dbCZNcdg74MGiSubIQb8=;
-        b=DTfF6cN7RJGqzGwZzyNQJwcn9MMh/7bHAnj+Uje3dEdaL1bYbDSEo5yCa68pMqKTDS
-         nPjIQfTqqawlzW/nw6yaRw3E5TU1Vmziuzdhp8WpKZ5xLzAVnpXaqTtgKYbWe76MGqNl
-         rbVAKOy80BpP4Fp4ti0D1rv2dw2DEV3IrMMJYnpVx23IQlaaZiaI+IINPBo8mxAOpfhZ
-         ac5SAg/4ZHNnkoC7uxGnvx3srSVja6eQux5VLn4UHelisWNSTUG8d5ZgAr8CHipJMhEY
-         mzY+d2F946/WqPt3TBVvUJhMLlv6krYSWD47hRCqiYhZzxvzhhyzL6LM6ylixijU9sF5
-         +ocg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783428297; x=1784033097;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=Jg0+oAQk4LyIeyzIsoDDXs+dbCZNcdg74MGiSubIQb8=;
-        b=m9oHnKjk7oCyLlCAStB7M7VPxmJOeoB9tRaqcgAfCfVUQtVfotUKGCpEChvMFQYPkx
-         ZwjvQ3/SSVRh6Pm2B3RKpW8m7MM2oIFBca9KWTL+EtpPEusK/0BjcfHQMGDATkrYWL1g
-         wsX3t9R4G9i3Ermm1LV6/1TFWiXnqhsQ6TiOSEbmZW70FltAj1UEvUhxK6a0Rp5Y2/ER
-         uSW+NQeOCEX8jZjv+1d19VDRfgSvZY98m1Zdg2bZDhdbEzmKVmaUWdmanCNYu3GG9RKu
-         6/DmxIJQXfcQL4a/BX8az9DUVJ6FkWIvvnWU8LfWutcZ5z6B94/nJmHkBzM4Pd2nblMN
-         p3QA==
-X-Forwarded-Encrypted: i=1; AFNElJ9+ILQx5m/FkQtGX4/ZeeoOHsWBN/XsdHpPqvgU79UdqHoDMgAKSCslDPZl4noKmRiY0MiMDwZyg0PN62TT@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw8SouwNymd3qxiKs7pB1PyYAXmziuo8i+tnbP2olRlehgR2xWQ
-	v8qYWBc6d48NHQora6rexgzS6+f42H8x5dbr+RqvHGqPJDXQGuYQKShMxW6H4dXieEDV8Q05GlN
-	OImq7U/tF0spO+9Z1viuig/gu8Sk96HI6Yp2JNLPFeHDkfCfMAFL16Sl1pO0xAUwd7PW3
-X-Gm-Gg: AfdE7cm1WSHMmc1wDW5tCIQaLMPTE2h9linXOalLQbB9qnsaZGY2zsKRbpzs535Gb6J
-	miPLjuNzV6uSsv0X408+KA1Pp4XtjzPQu//2lgrnogHw1JzFL5aPzbEez+SH+W8wSPnIHlofVYq
-	tbmX0Cy1UQAIgF1D1vykh+ZPNr0Jpqmkg8Ag5Lo3qq5zi/0A2SAamt7+pS4SjKirk2tzqChgS3W
-	22ibKeHDfF6fqgslknPum+M/90h6oNdHtwqGDTooHRaMpgR+6O1YzmBoGvefdqF0MovKHJXcLTC
-	urYCfwrsBRrFQhGIer74tQKQeO/2WfAuUeZhCp09zXfjW4leVZXRMI8YRCi8i6aOqWHfEOgH6ax
-	U/895eP1mUqd8odmuMmle2r0jwf2tZfH9toLvcG65F+Ml
-X-Received: by 2002:a05:6820:4b09:b0:6a1:5ca0:d52d with SMTP id 006d021491bc7-6a35536af6cmr3143973eaf.17.1783428296927;
-        Tue, 07 Jul 2026 05:44:56 -0700 (PDT)
-X-Received: by 2002:a05:6820:4b09:b0:6a1:5ca0:d52d with SMTP id 006d021491bc7-6a35536af6cmr3143964eaf.17.1783428296510;
-        Tue, 07 Jul 2026 05:44:56 -0700 (PDT)
-Received: from [10.219.49.166] ([202.46.23.19])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-44cfb13e15esm14448014fac.3.2026.07.07.05.44.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 07 Jul 2026 05:44:55 -0700 (PDT)
-Message-ID: <afc1fb30-1b9f-4124-b939-30600921de0b@oss.qualcomm.com>
-Date: Tue, 7 Jul 2026 18:14:49 +0530
+	s=arc-20240116; t=1783428986; c=relaxed/simple;
+	bh=wzQzJCG4MlDwdxc62SzKy3GIfbDOqwiBHtGk1LTQx/A=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=nU/R55ER4saamRgoyoM5keIL5dPGqLJbYQIDvopbhbrfI6ZZS1FSw2rpz8aELrdgYsg1EciqesgfcovKOMTz1qeYPZffPVrervrtyYR1rj3ieFrJ9NIlTofAGtS2RJ7hDM5Z0SF5LzPLqFHpBgrByp+eePsxChjFgQK43CwLfI0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IVIYphd3; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 624371F000E9;
+	Tue,  7 Jul 2026 12:56:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1783428984;
+	bh=kKWSyw13IWntJBR8YfJfes2vxwrE1EZhmmSxrr/jofM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=IVIYphd37jrdtezzejaHoaOJshB8TI4/62ds7cKQBfQ1bewL8ODuEoUq2XyuVwcGG
+	 mFWVDKCa/SX7is8wQSqUGLT4viw7Ib0LH1M8Enh5tWnZ8vVr7vietTAiZLBnUoTHud
+	 tiyGZFTXn7KJ1hM0k0n2ykvhumev8TfhonVUdqhKl1kHtxcZcpPag12gI/IpgO7OE+
+	 urweBYxj/LexP+WUc41uRVzcnGHSNIfD6XNGQxmw0BpMmdek2emScnPGlh7i6Luwll
+	 mj5S1l5H/c8YLTgrcCjOn0v2eAzIl+3VrVh/yTfHPeVM8WhwOaX7Ug1wRuU9hg6vr8
+	 dmFRlDnxxA18w==
+Date: Tue, 7 Jul 2026 14:56:14 +0200
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Loic Poulain <loic.poulain@oss.qualcomm.com>, 
+	Bartosz Golaszewski <brgl@kernel.org>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
+	Bartosz Golaszewski <brgl@kernel.org>, Marcel Holtmann <marcel@holtmann.org>, 
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, linux-pci@vger.kernel.org, 
+	linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-bluetooth@vger.kernel.org, devicetree@vger.kernel.org, 
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Subject: Re: [PATCH v2 3/4] Bluetooth: hci_qca: Support QCA2066 on M.2
+ connector via pwrseq
+Message-ID: <b4myznfs5kkochdhzm2ypcfiolk2l2a7nvjbhkkcqueumkyvpe@nyvvhhcslk7e>
+References: <20260702-monza-wireless-v2-0-7b56e2a6a6d4@oss.qualcomm.com>
+ <20260702-monza-wireless-v2-3-7b56e2a6a6d4@oss.qualcomm.com>
+ <43re752djujsh2kiyvjlkpmztxsh4atg6472qhir4lgay24zbo@mtlkn2xc2ors>
+ <rxt4n6vuscu33mrw24af72lb3s6urqfpkhtia44yfo4j7wtu6o@3xp57owekrgj>
+ <u5ieok3hgjcf74sxjdzv6xurmlbve46xa3imgfnom4hpjarmxa@fna5daqpyk3r>
+ <zat6uuvh7jwfxajvqtif6d67osf6h5b2vxig3bmuch76btpdkj@bfxjj7kk5fjk>
+ <ynhos7h4x3kbqbio2gkigoo5rqbwogrzihkylxv5pqjtqpqmnq@rlyjaiopx74a>
+ <l4qycbmz2zaroe5rreuop4dx7ugfcx37hfaketvn43trdpaept@jyx65agqznq4>
+ <CAFEp6-0AA-hTy=3KaRNEJ+kF0otGLTGTujvWJqhT2dHDj94E4w@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] ASoC: codecs: add Qualcomm WSA885X codec driver
-To: Mark Brown <broonie@kernel.org>
-Cc: Srinivas Kandagatla <srini@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
-        Takashi Iwai <tiwai@suse.com>,
-        Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
-        linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20260701135913.1641328-1-prasad.kumpatla@oss.qualcomm.com>
- <20260701135913.1641328-3-prasad.kumpatla@oss.qualcomm.com>
- <317be447-316f-4120-9008-2a1593328c68@sirena.org.uk>
-Content-Language: en-US
-From: Prasad Kumpatla <prasad.kumpatla@oss.qualcomm.com>
-In-Reply-To: <317be447-316f-4120-9008-2a1593328c68@sirena.org.uk>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: STt7bd_VR9A2TacBpkbwCOxtNc8yaXbj
-X-Authority-Analysis: v=2.4 cv=HstG3UTS c=1 sm=1 tr=0 ts=6a4cf4c9 cx=c_pps
- a=lVi5GcDxkcJcfCmEjVJoaw==:117 a=j4ogTh8yFefVWWEFDRgCtg==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=zFzosQrJfojMdPK_vqAA:9 a=QEXdDO2ut3YA:10 a=rBiNkAWo9uy_4UTK5NWh:22
-X-Proofpoint-ORIG-GUID: STt7bd_VR9A2TacBpkbwCOxtNc8yaXbj
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA3MDEyMyBTYWx0ZWRfX0ZYzb7IIhz02
- mmeHL2/qJNh7wJ1Fa4B8eDqJDnhsNvjtRz3toHeZGbyctnRtzcWEZr7XDiPSMAIoOSKp2KEYsvn
- XD6ej2f3eGvCZzQAgZwBnPn8ex2GwTc=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA3MDEyMyBTYWx0ZWRfX9pP1Wuuo7U7u
- i2IQny83hmHt1nfGxq16ysKPyrUFDEJnVsR8U3QOZDQ/C5yDa2v6V4cpC7McnIQ0wR9LUuGma4/
- k5ajsUB3LGqoSJDMVWqrNgZBT+xtlrp8uFCFM37Kju4KsJpSj0hbnvgc9H01glWBHAat3hmFqsF
- T2lBFNt0y4WRz8Dc6KVefHmLjWiWkDGtgN0BomK8ZWISHCiOUzTS4rJfk/aMPIbkj7wtqUKrsWe
- 6tZzBB3BcJLPaeT6fpIgj9mtmZ848b+CdYQ01+w971XhOGXnjdHZEz1pxTmkSbUCjDntTScerQA
- 0UaBf13fQJYHkaHU++nFlv/DP+TSzflGF8gfGeciBW/dm3VHb3fViD5hpNemwXNNRCFTYWYWknL
- UCzyin0zAU6tKeDocztFX6JRfYuKhtrVwrXNgawYxluQKuC8aqRjmW67gxmuDymCyo9kLW5eBtB
- 62zK0iDn4k8g2/lEvXw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-07_03,2026-07-06_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 impostorscore=0 suspectscore=0 malwarescore=0 bulkscore=0
- clxscore=1015 spamscore=0 adultscore=0 lowpriorityscore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607070123
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAFEp6-0AA-hTy=3KaRNEJ+kF0otGLTGTujvWJqhT2dHDj94E4w@mail.gmail.com>
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-0.66 / 15.00];
+X-Spamd-Result: default: False [-3.16 / 15.00];
+	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	MID_RHS_NOT_FQDN(0.50)[];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORWARDED(0.00)[lists@lfdr.de];
-	RCPT_COUNT_TWELVE(0.00)[13];
-	TAGGED_FROM(0.00)[bounces-117316-lists,linux-arm-msm=lfdr.de];
-	MIME_TRACE(0.00)[0:+];
+	RCVD_COUNT_THREE(0.00)[4];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:broonie@kernel.org,m:srini@kernel.org,m:lgirdwood@gmail.com,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:perex@perex.cz,m:tiwai@suse.com,m:srinivas.kandagatla@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:linux-sound@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	MIME_TRACE(0.00)[0:+];
+	RCPT_COUNT_TWELVE(0.00)[18];
+	FORWARDED(0.00)[lists@lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:loic.poulain@oss.qualcomm.com,m:brgl@kernel.org,m:dmitry.baryshkov@oss.qualcomm.com,m:marcel@holtmann.org,m:luiz.dentz@gmail.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linux-pci@vger.kernel.org,m:linux-pm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-bluetooth@vger.kernel.org,m:devicetree@vger.kernel.org,m:manivannan.sadhasivam@oss.qualcomm.com,m:luizdentz@gmail.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_SENDER(0.00)[prasad.kumpatla@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FREEMAIL_CC(0.00)[kernel.org,gmail.com,perex.cz,suse.com,oss.qualcomm.com,vger.kernel.org];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:from_mime,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,vger.kernel.org:from_smtp,qualcomm.com:dkim,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[prasad.kumpatla@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-117317-lists,linux-arm-msm=lfdr.de];
+	FORGED_SENDER(0.00)[mani@kernel.org,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	ALIAS_RESOLVED(0.00)[];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	TO_DN_SOME(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	ALIAS_RESOLVED(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[mani@kernel.org,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_CC(0.00)[oss.qualcomm.com,kernel.org,holtmann.org,gmail.com,vger.kernel.org];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCVD_COUNT_SEVEN(0.00)[7]
+	MISSING_XM_UA(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,vger.kernel.org:from_smtp,qualcomm.com:email,nyvvhhcslk7e:mid]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: E027571B87D
+X-Rspamd-Queue-Id: 0255971B94C
 
+On Tue, Jul 07, 2026 at 11:14:10AM +0200, Loic Poulain wrote:
+> On Mon, Jul 6, 2026 at 8:44 AM Manivannan Sadhasivam <mani@kernel.org> wrote:
+> >
+> > On Sat, Jul 04, 2026 at 03:11:13AM +0300, Dmitry Baryshkov wrote:
+> > > On Thu, Jul 02, 2026 at 05:08:56PM +0200, Manivannan Sadhasivam wrote:
+> > > > On Thu, Jul 02, 2026 at 05:34:31PM +0300, Dmitry Baryshkov wrote:
+> > > > > On Thu, Jul 02, 2026 at 04:17:43PM +0200, Manivannan Sadhasivam wrote:
+> > > > > > On Thu, Jul 02, 2026 at 03:14:49PM +0300, Dmitry Baryshkov wrote:
+> > > > > > > On Thu, Jul 02, 2026 at 12:46:15PM +0200, Loic Poulain wrote:
+> > > > > > > > For QCA2066 (and other QCA chips) on M.2 connectors, the UART enable
+> > > > > > > > is controlled by the W_DISABLE2# signal managed by the pcie-m2 power
+> > > > > > > > sequencer rather than a dedicated BT enable GPIO.
+> > > > > > > >
+> > > > > > > > When the serdev controller has an OF graph (indicating it is connected
+> > > > > > > > to an M.2 connector), acquire the 'uart' pwrseq target from the
+> > > > > > > > connector's power sequencer and use it to control BT power instead of
+> > > > > > > > the bt-enable GPIO.
+> > > > > > > >
+> > > > > > > > Also allocate bt_power unconditionally for all SOC types since the
+> > > > > > >
+> > > > > > > Can we just fold it into the main struct?
+> > > > > > >
+> > > > > > > > pwrseq path is independent of the SOC type switch.
+> > > > > > > >
+> > > > > > > > Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+> > > > > > > > ---
+> > > > > > > >  drivers/bluetooth/hci_qca.c | 81 ++++++++++++++++++++++++---------------------
+> > > > > > > >  1 file changed, 43 insertions(+), 38 deletions(-)
+> > > > > > > > @@ -2387,6 +2390,35 @@ static int qca_init_regulators(struct qca_power *qca,
+> > > > > > > >     return 0;
+> > > > > > > >  }
+> > > > > > > >
+> > > > > > > > +/*
+> > > > > > > > + * Acquire the M.2 connector power sequencer.
+> > > > > > > > + *
+> > > > > > > > + * An OF graph link on the serdev controller is only present when the BT
+> > > > > > > > + * device is attached through an M.2 Key E connector. In that case the UART
+> > > > > > > > + * enable (W_DISABLE2#) is driven by the pcie-m2 power sequencer instead of a
+> > > > > > > > + * dedicated BT enable GPIO, so grab the "uart" pwrseq target from it.
+> > > > > > > > + *
+> > > > > > > > + * Returns 0 if no M.2 connector is present (nothing to do), a negative errno
+> > > > > > > > + * on error, otherwise 0 with qcadev->bt_power->pwrseq populated.
+> > > > > > > > + */
+> > > > > > > > +static int qca_serdev_get_m2_pwrseq(struct qca_serdev *qcadev, bool *bt_en_available)
+> > > > > > > > +{
+> > > > > > > > +   struct serdev_device *serdev = qcadev->serdev_hu.serdev;
+> > > > > > > > +   struct device *dev;
+> > > > > > > > +
+> > > > > > > > +   if (!of_graph_is_present(dev_of_node(&serdev->ctrl->dev)))
+> > > > > > > > +           return 0;
+> > > > > > > > +
+> > > > > > > > +   qcadev->bt_power->pwrseq = devm_pwrseq_get(&serdev->ctrl->dev, "uart");
+> > > > > > > > +   if (IS_ERR(qcadev->bt_power->pwrseq))
+> > > > > > > > +           return PTR_ERR(qcadev->bt_power->pwrseq);
+> > > > > > > > +
+> > > > > > > > +   dev = pwrseq_to_device(qcadev->bt_power->pwrseq);
+> > > > > > > > +   *bt_en_available = device_property_present(dev, "w-disable2-gpios");
+> > > > > > >
+> > > > > > > I think here you are looking into the exact details of the other of the
+> > > > > > > graph. There might be other devices on that side, while the code now
+> > > > > > > assumes M.2. Or, consider having an M.2 controller which handles
+> > > > > > > W_DISABLE2# internally rather than through the GPIO.
+> > > > > > >
+> > > > > >
+> > > > > > This code only deals with M.2 connector in specific, so I'm not sure why we need
+> > > > > > to worry about *other* kind of devices. Let's worry about them when they show up
+> > > > > > (with graph interface ofc).
+> > > > >
+> > > > > I don't think we want to go through the drivers using M.2 connectors in
+> > > > > such a case. In the end, the contract should be that there is a power
+> > > > > sequencer on the other side of the graph, but the specifics of the
+> > > > > connector should be abstracted out. Do you know, if in the x86 world the
+> > > > > W_DISABLE2# is a GPIO or is controleed by the hub.
+> > > > >
+> > > >
+> > > > I tried to abstract out, but Bartosz didn't want pwrctrl APIs to do that level
+> > > > of abstraction as pwrctrl APIs should be generic and should not be bind to a
+> > > > specific connector and exposing its internals.
+> > > >
+> > > > That's why we ended up having pwrctrl core exposing the 'struct dev' using
+> > > > pwrseq_to_device() and letting the consumer extracting whatever information it
+> > > > needs.
+> > >
+> > > Do we have other ways to control M.2? For example on the x86 systems,
+> > > are those signals controlled via GPIOs (or GPIO-like registers) or are
+> > > they controlled separately by something like M.2 controller? Or do you
+> > > have an idea about other non-x86 systems?
+> > >
+> >
+> > Thre is no OS-visible M.2 power control in ACPI systems. ACPI defines PRx
+> > objects to control power to the PCI devices based on the D-state and the OS just
+> > evaluates the _ON/_OFF methods of the respective objects.
+> >
+> > So this API is not going to be useful on non-DT systems where the BT_EN GPIO
+> > handling is abstracted away. And also on platforms where BT_EN is not controlled
+> > by GPIOs. But I haven't seen DT platforms handling BT_EN (or W_DISABLE2#)
+> > signal in a non-GPIO way.
+> >
+> > I too prefer an API to query whether the connector supports BT_EN or not, but
+> > I'm not sure how to come up with a generic pwrseq API which also satisfies the
+> > requirement. If you have any suggestions, please let me know!
+> >
+> > FWIW, I tried adding pwrseq_is_fixed() API [1] earlier, which was turned down by
+> > Bartosz.
+> 
+> So, I'll submit a new version incorporating Dmitry's request to fold
+> bt_power into the main structure.
+> However, what should we do about the powerseq point? Should we keep it as it is?
+> 
 
-On 7/3/2026 8:37 PM, Mark Brown wrote:
-> On Wed, Jul 01, 2026 at 07:29:13PM +0530, Prasad Kumpatla wrote:
->> Add an ASoC codec driver for the Qualcomm WSA885X stereo smart speaker
->> amplifier controlled over I2C.
+@Bartosz: Thoughts?
 
-Hi Mark,
+- Mani
 
-Thanks for reviewing patch and feedback.
-
->> +static struct snd_soc_dai_driver wsa885x_dai[] = {
->> +	{
->> +		.name = "wsa885x_dai_drv",
->> +		.playback = {
->> +			.stream_name = "WSA885X TDM Playback",
->> +			.channels_min = 1,
->> +			.channels_max = 2,
->> +				.rates = SNDRV_PCM_RATE_8000_192000 |
->> +					 SNDRV_PCM_RATE_352800 |
->> +					 SNDRV_PCM_RATE_384000,
->> +			.formats = SNDRV_PCM_FMTBIT_S16_LE | SNDRV_PCM_FMTBIT_S24_LE |
->> +					   SNDRV_PCM_FMTBIT_S32_LE,
->> +		},
->> +		.ops = &wsa885x_dai_ops,
->> +	},
->> +};
-> Does the device actually support all the rates advertised, 11.025kHz for
-> example?
-Thanks for pointing this out. I have only validated a subset of the 
-advertised sample rates and
-have not specifically verified all rates within the range (e.g. 11.025 
-kHz).
-I'll restrict the supported rates to those that have been explicitly 
-tested and validated.
->
->> +static int wsa885x_rx_slot_mask_put(struct snd_kcontrol *kcontrol,
->> +				    struct snd_ctl_elem_value *ucontrol)
->> +{
->> +	struct snd_soc_component *component = snd_kcontrol_chip(kcontrol);
->> +	struct wsa885x_priv *wsa885x = snd_soc_component_get_drvdata(component);
->> +	u32 mask = ucontrol->value.integer.value[0];
->> +
->> +	if (!wsa885x_is_valid_rx_slot_mask(mask))
->> +		return -EINVAL;
->> +
->> +	if (wsa885x->rx_slot_mask == mask)
->> +		return 0;
->> +
->> +	wsa885x->rx_slot_mask = mask;
->> +
->> +	return 1;
->> +}
-> This looks like you're trying to put TDM configuration in the control
-> API, it should be done via set_tdm_slot() - the driver does have one,
-> but it only configures mono vs stereo with no control over slot
-> placement.
-The slot mask is use-case dependent and needs to be switched dynamically 
-at runtime
-(e.g. stereo speaker playback versus mono voice-call scenarios). The 
-mixer control was
-introduced to allow userspace to select the appropriate slot assignment 
-when the active
-use case changes. Given that `set_tdm_slot()` is generally used for DAI 
-slot configuration,
-could you please advise if there is any preferred ASoC approach for 
-supporting runtime slot-mask
-changes driven by use-case transitions?
-
-Thanks,
-
-Prasad
-
+-- 
+மணிவண்ணன் சதாசிவம்
 
