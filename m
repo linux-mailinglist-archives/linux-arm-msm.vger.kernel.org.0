@@ -1,166 +1,288 @@
-Return-Path: <linux-arm-msm+bounces-117211-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-117213-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id Gdm1MpDCTGompQEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-117211-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Jul 2026 11:10:40 +0200
+	id PoC3HqXFTGr1pQEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-117213-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Jul 2026 11:23:49 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5BA4B7198BD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Jul 2026 11:10:40 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 02AC4719B49
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Jul 2026 11:23:49 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=intel.com header.s=Intel header.b=Y0o00ujl;
-	dmarc=pass (policy=none) header.from=intel.com;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117211-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.232.135.74 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117211-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=H3CNG3FU;
+	dkim=pass header.d=oss.qualcomm.com header.s=google header.b="Bjo/KsWq";
+	dmarc=pass (policy=reject) header.from=qualcomm.com;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117213-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117213-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 9BEFA308992C
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jul 2026 09:07:13 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id E9DC930825DC
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Jul 2026 09:09:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 253E738F247;
-	Tue,  7 Jul 2026 09:07:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EDBFD390C81;
+	Tue,  7 Jul 2026 09:09:37 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.15])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D101E37AA9F;
-	Tue,  7 Jul 2026 09:07:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C7FF390229
+	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Jul 2026 09:09:36 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783415232; cv=none; b=lX5RBg9jsAZRNIv9da29JaA38Xg7IDmiJMW3iKtQYkiQOpMcnUtRw7k/7IrXoxAaq+bITaUf4c3dKAlcCJLVmpRRfXc8nltArUMtnbI9mgg5Yp64neSiwaaoRusqAmZwDuLbFqItoAoGCgwHQUirCZ+RUfWcRzegSzyL00YOM/U=
+	t=1783415377; cv=none; b=R7J8Q5Tu84+EjrxwO3DVviXGC4TJrZtpkCbn2c57fDlRrQVqE1nDqPRS10+yoU+s9uc1rLTZ/c/mXWui61yyzTgl8aSoop3sPLg8q9mmZTYBFHDMqUgUW/YnYaSO27L2eyJUskRz/v2Ll+NlQM/NIsv9NxQhnudLdppprhE9gx0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783415232; c=relaxed/simple;
-	bh=gVY3iRWoJPje433nYucl93kbMIGsxUeX/697NT+uj6w=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=p++CxF8nDLbBRujq1/MuRT9Unfs0l2roDrl8LD+iVkZyWvcydryfT+IOM1ufD5DcfbKLLoCty8HDH5hrLWXGmeWt+glZTcVurlZx0fOVF05EBsM0MxHdbqdlmZ8uLKpxxG9O40qELzfIDXF/YXGDEwJBBZUfxaxxhkDe2/yFv9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Y0o00ujl; arc=none smtp.client-ip=198.175.65.15
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1783415231; x=1814951231;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=gVY3iRWoJPje433nYucl93kbMIGsxUeX/697NT+uj6w=;
-  b=Y0o00ujlsdweZAQQOcLnr/0V/G/zOaRCbbRnGvmOqv2L6cy7Lu0+CFrE
-   6L2PXgLDBRbL1QQLXx9dlIHKCmRzq8TcRW9qQWsRVQJR4LNB1SuV5O02r
-   +mNLdFH+goNZAhGv4klK99UAlEo0KgzmNa21C+MAqz3hfymAQoGSPryAb
-   BtZ/I08iQXR73N8fiLmjWJHUb0taTqkzHGtd5MeLxnK3AIgmdpEuqKodd
-   s/gscvkzkmuXBO1qHCoutmtgmGqFtB5g9yW4zQU7qbREFz99zlpq6/I+N
-   DNkPjKWoTN81R5s8HqOvIhWvNLQj7wz0RfRWKN8/WbNMycaHoJHjYSB/q
-   Q==;
-X-CSE-ConnectionGUID: F+eiPi34Qg6EM0C75cOITw==
-X-CSE-MsgGUID: sEL7zRZcTHebAS0qh5djuw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11839"; a="87740981"
-X-IronPort-AV: E=Sophos;i="6.25,153,1779174000"; 
-   d="scan'208";a="87740981"
-Received: from orviesa008.jf.intel.com ([10.64.159.148])
-  by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Jul 2026 02:07:11 -0700
-X-CSE-ConnectionGUID: CIM2WCXfQH6G4eHBrtF8Bw==
-X-CSE-MsgGUID: s6S0Sy4+TAelQsVBP8aVYA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,153,1779174000"; 
-   d="scan'208";a="253474346"
-Received: from abityuts-desk.ger.corp.intel.com (HELO localhost) ([10.245.244.178])
-  by orviesa008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Jul 2026 02:07:03 -0700
-Date: Tue, 7 Jul 2026 12:07:00 +0300
-From: Andy Shevchenko <andriy.shevchenko@intel.com>
-To: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Cc: jic23@kernel.org, sboyd@kernel.org, dlechner@baylibre.com,
-	nuno.sa@analog.com, andy@kernel.org, arnd@arndb.de,
-	gregkh@linuxfoundation.org, srini@kernel.org, vkoul@kernel.org,
-	neil.armstrong@linaro.org, sre@kernel.org, krzk@kernel.org,
-	dmitry.baryshkov@oss.qualcomm.com, quic_wcheng@quicinc.com,
-	melody.olvera@oss.qualcomm.com, quic_nsekar@quicinc.com,
-	ivo.ivanov.ivanov1@gmail.com, abelvesa@kernel.org,
-	luca.weiss@fairphone.com, konrad.dybcio@oss.qualcomm.com,
-	mitltlatltl@gmail.com, krishna.kurapati@oss.qualcomm.com,
-	linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
-	linux-pm@vger.kernel.org, kernel@collabora.com,
-	stable@vger.kernel.org, Sashiko Bot <sashiko-bot@kernel.org>
-Subject: Re: [PATCH v10 01/11] spmi: Fix potential use-after-free by grabbing
- of_node reference
-Message-ID: <akzBtOjs0Blb1pnF@ashevche-desk.local>
-References: <20260707083730.33977-1-angelogioacchino.delregno@collabora.com>
- <20260707083730.33977-2-angelogioacchino.delregno@collabora.com>
+	s=arc-20240116; t=1783415377; c=relaxed/simple;
+	bh=Glg9tGvwRHTm4aaAWYZK2xSaJDmf9qc/Es2Fhj0kHBU=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=qf/fHB2fN6B6pcymiQuxnOqcxvxDGt3wiqZzJOBMmyd+qGXVQYDTqQCBM/T/+mhCz96fEBStHQnWkhKUwfHwiaeU0GwErGUwjF9AGCr6lHlirEPq0bKIx06a27pTtzCDb8z8Ni6IqpiOy17+IRwq3fur/Q0pm2U+ltS6+utBfQc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=H3CNG3FU; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Bjo/KsWq; arc=none smtp.client-ip=205.220.168.131
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6678DnHo3076952
+	for <linux-arm-msm@vger.kernel.org>; Tue, 7 Jul 2026 09:09:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=P/NAFwP16MMpi8dk+6Qh9Q
+	W68OCZTPeTA8N4GMACQKQ=; b=H3CNG3FUlwlw1pexLbmP5mnOkaUzBe0dyAv0HX
+	HH7RXIVZ1nlR07U6ihuMRTkTVvg7okIWWOB0N7RM30Q3tf6Ir0DAgRjeB+tvwGN3
+	l0abiI5Xj0ITSzze5lKL7NTf7Pp300oFO4vnOJmTZPwMMvkXT+XkGeoZLKNOYzk1
+	n2c5nhluBBcUhT5NkuRd2U3jRnnJ2MgSZQ0zPPs8u/rk0JLN7ZYsI1cqJxTLYMgi
+	pZb3md61Vycbco4rAG3kVByCSImiWXqsZ1uwb1+zVZnzn/2hnbCsR/j/S4Pe9mGX
+	Fpv14qosps356Zw3VtOq6UhPyrW8Y/ylpg7svUBa7ODH3mQQ==
+Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com [209.85.210.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f8vun0f2b-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jul 2026 09:09:35 +0000 (GMT)
+Received: by mail-pf1-f198.google.com with SMTP id d2e1a72fcca58-845ea8fd3easo9321627b3a.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Jul 2026 02:09:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1783415375; x=1784020175; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:content-type:mime-version
+         :message-id:date:subject:from:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=P/NAFwP16MMpi8dk+6Qh9QW68OCZTPeTA8N4GMACQKQ=;
+        b=Bjo/KsWqmmkkH8aN8iT/o/I1zTlwV4OWiynrcE2o6F6ZDc/pAUGRXlxpXGvrq875Q0
+         Hw55gqEWQ8f1FfsDxDJ7j/ejdzcZl21hqmRxZzU9dNe6Q65gJZXiE8ZA18mmL82qUIue
+         WbBH/5XlII4/83DQ+UxYqtGWrqMYHOvs3zR7SbQ1DVydtMngw4yTXuy43Tl/izc/LhhA
+         3JGr23Hm4zZmImye3kdvkmF0ePQFjxZWDr4d5DqehSp3Tz1T3oE0ezRQIyWt1ABnuHHR
+         SxuBzNVJn+aLosvlA5sC/iLmFSa9KQRiqlbuKwBMspj3SJlSpw80zqc9EtqcGbYF9oo3
+         vkCw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783415375; x=1784020175;
+        h=cc:to:content-transfer-encoding:content-type:mime-version
+         :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=P/NAFwP16MMpi8dk+6Qh9QW68OCZTPeTA8N4GMACQKQ=;
+        b=Nw+gRsZHpwKkD5aR2Lx5MUuh75KVkCjYZzsDjVHZii+xWBRMXBndyW3WuSr89lb9wM
+         QeYOJy/QZtM1glKPDP9RFCdaQzsyxaE3uR/mGGrT6cqxhmlvuw8VdAsqACJhfs/oYw7l
+         gwW2qlCSPMKywCpvzWd6hfXWGjGSzEzFym+CWH3eFc4vKOGPkPleTIf3wZqBwouwVNyl
+         5AsK+u9HYzKkqAhBx1soLyihjbD54tiRt3uAr8CY3WvRo3ncJAAdpAvNrNJdXm+jtqB1
+         ut34Vr9fRHe+y9vCLimx9ykSeLJkoPkib/hey6HqhSoAGICteUo0Wf2Nc/jjvcJXQBs8
+         f+Sg==
+X-Forwarded-Encrypted: i=1; AHgh+RrOzK6tf9avXYWPoAL3Bkmtvs6VUFlxbZRjbNMgsNFFcNN3JDE+saEMwAgjMb8I0nlCjaX4a4Uit8ebUUeO@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxjhh3srclACCM70sVr1WggAKXEj9XQ/EArCiFnVyIBhPFse850
+	nK7p1uFFdnGYIBMb5xBItQAZpithFNnXhz5do36fUZ39Ntcb30HcN4+8X9M6pi0HhN9IJ4SwEUm
+	CwMEWdY0JGSheSaydsmOnK32kyVzhrAAvqvwKE66FscxnA3miV5y/fBuVJz+vW+QJNqa3
+X-Gm-Gg: AfdE7cmIbhkkFwHKRaMGEO0NEZJOm/r3JGWv/hP4FxrBc1OPWZfWfR0vN81v/Rc/ORp
+	+CFdsI8O6hjb5veyTZ6lUTst3CorK4p6h5hxt5FhJh5H9EyK16kJFnG2gt/1PrK7ua/T76kVNDC
+	lTmb1QRVG99bPcFbREjRAWKxC2pthDXO11u8rYBOEKW2oCi8M4Y8/FCo+srGlMXmOdlUHB/RI1E
+	gisT1QuItUka5IYIA8DKeRxGZKF5UqOeeeDO6jbiqfyAC+mwtKKNW0o2nodUTYlRlMsiRkR1XmI
+	dqWQR8tUT5xWvnHamx1XYSz2cGQns8s44NsS+K2E1al3B3CE3bHVlt711mjnSKQ7EgQiuWlv+RE
+	pYZ7maFwE9kVdfEjkW8wdouhnICMNLgcSzkOT1H/dYqncoUACG/fBioAmrfrY89URvp0Rlo3Azg
+	==
+X-Received: by 2002:a05:6a00:4b0b:b0:842:55b6:f5a1 with SMTP id d2e1a72fcca58-84826c1e0bbmr4186007b3a.6.1783415374752;
+        Tue, 07 Jul 2026 02:09:34 -0700 (PDT)
+X-Received: by 2002:a05:6a00:4b0b:b0:842:55b6:f5a1 with SMTP id d2e1a72fcca58-84826c1e0bbmr4185953b3a.6.1783415374126;
+        Tue, 07 Jul 2026 02:09:34 -0700 (PDT)
+Received: from jiegan-gv.ap.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-847f6b975a0sm5140582b3a.14.2026.07.07.02.09.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 07 Jul 2026 02:09:33 -0700 (PDT)
+From: Jie Gan <jie.gan@oss.qualcomm.com>
+Subject: [PATCH v5 0/5] Fix traceNoC probe issue on multiple QCOM platforms
+Date: Tue, 07 Jul 2026 17:08:48 +0800
+Message-Id: <20260707-fix-tracenoc-probe-issue-v5-0-bf733ed9ebd0@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260707083730.33977-2-angelogioacchino.delregno@collabora.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
- krs, Bertel Jungin Aukio 5, 02600 Espoo
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIACLCTGoC/43NwW7CMAwG4FdBOc8odt003WnvMXFIU2dEGg1Lo
+ GJCffelXLbDQFws/dbvz1dVJEcp6nVzVVnmWGKaamhfNsrv3fQhEMeaFWky2hBDiBc4ZedlSh6
+ OOQ21UcpZwBumfnRkx8Cqnh+z1O6Nft/VvI/llPL37dOM6/YJdEZAGLzvbIu9Db59S6Vsv87u0
+ 6fDYVuHWu2ZnvUINHTWtKSDoUB4x2v+eI1+4DWrRxoFLaP0fMfjX6/T+MDj6jkJbmDuHXf6H29
+ Zlh8cpymrtwEAAA==
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Tingwei Zhang <tingwei.zhang@oss.qualcomm.com>,
+        Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
+        Jie Gan <jie.gan@oss.qualcomm.com>,
+        Abel Vesa <abel.vesa@oss.qualcomm.com>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mike Leach <mike.leach@arm.com>, James Clark <james.clark@linaro.org>,
+        Leo Yan <leo.yan@arm.com>,
+        Yuanfang Zhang <yuanfang.zhang@oss.qualcomm.com>,
+        Abel Vesa <abelvesa@kernel.org>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, coresight@lists.linaro.org,
+        linux-arm-kernel@lists.infradead.org
+X-Mailer: b4 0.14.0
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1783415365; l=4279;
+ i=jie.gan@oss.qualcomm.com; s=20250909; h=from:subject:message-id;
+ bh=Glg9tGvwRHTm4aaAWYZK2xSaJDmf9qc/Es2Fhj0kHBU=;
+ b=KhMUCBqaORwT26jbahQIaOf9vDYgsqZarWJ/WMGkwL/eXAfvjxQjvnnMecG5zH/BPmcqy5Kh/
+ Av1ph3z2bvVDiEYYNHBOByZVTCiUhj7PjZLJpCNZIsndyzj/evkv4yY
+X-Developer-Key: i=jie.gan@oss.qualcomm.com; a=ed25519;
+ pk=3LxxUZRPCNkvPDlWOvXfJNqNO4SfGdy3eghMb8puHuk=
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA3MDA4OCBTYWx0ZWRfXyzQC5TGRnPog
+ kgnBn80AvXcL6z6lgKi2nNwV73V1iKQArplQMn+2049YeLE4oTLVvbTi+1kSFhsSeLYQH4Tlgtx
+ dYeSI3dOmXAd17Fb6Hdh3gAO3IYmmMs=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA3MDA4OCBTYWx0ZWRfXzfNQN8z1hOz9
+ klS97V8kB9RI6emJdFwr/XgUTOJeFu9sgdJTLbIdoC+JTY2W3AxfppRvs4u9IHHK0GnfBGxBvWZ
+ Ys8mL9T7ndA0J9OPr7XzEwgBvd4J/kl88kg4XvLVhCTUgVxDXSfWAPBF6FIkbD9GobaiXVsD+em
+ S33XUPKURSKVXovqJlziaXesdE7lWf79M7tVDpIngpOa+b2Sl8DXUcHlwS6QthYxarhkYOH7aTc
+ okZLruPofDWW2q0Rvs3li5LzUvPWMPL1ry82SSXeIt6MuA8v8WSLWWGqsNT1MGdsPZ+PHHL51lE
+ NsgClcOQq7RZ9eW/LYE8XhMNAKFTWL3xMk0tZWbYQSiJ2/x+E7y0u8vnXJ0kHYbT4L8OgTL3EWr
+ u/o7P85S+NVza2/e0BRmdx+IEDtEr7gMq+GuX/jbSZwpEh+nCJogsDv5jvzHc4cPYS+7YV2ouFE
+ 4pNu+1uP9Zf5SY7dkkA==
+X-Proofpoint-GUID: P7j4wKtyTLOUlddyzblqAGDbBwYFFtKW
+X-Authority-Analysis: v=2.4 cv=N+IZ0W9B c=1 sm=1 tr=0 ts=6a4cc24f cx=c_pps
+ a=m5Vt/hrsBiPMCU0y4gIsQw==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=eJfGDJWfQcjy8rMVS6kA:9 a=QEXdDO2ut3YA:10
+ a=IoOABgeZipijB_acs4fv:22
+X-Proofpoint-ORIG-GUID: P7j4wKtyTLOUlddyzblqAGDbBwYFFtKW
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-07_02,2026-07-06_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 phishscore=0 priorityscore=1501 clxscore=1015 adultscore=0
+ bulkscore=0 suspectscore=0 impostorscore=0 malwarescore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607070088
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-3.66 / 15.00];
-	WHITELIST_SPF_DKIM(-3.00)[intel.com:d:+,kernel.org:s:+];
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[intel.com,none];
-	R_DKIM_ALLOW(-0.20)[intel.com:s=Intel];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	RCPT_COUNT_TWELVE(0.00)[31];
+	TAGGED_FROM(0.00)[bounces-117213-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-117211-lists,linux-arm-msm=lfdr.de];
-	FORWARDED(0.00)[lists@lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:angelogioacchino.delregno@collabora.com,m:jic23@kernel.org,m:sboyd@kernel.org,m:dlechner@baylibre.com,m:nuno.sa@analog.com,m:andy@kernel.org,m:arnd@arndb.de,m:gregkh@linuxfoundation.org,m:srini@kernel.org,m:vkoul@kernel.org,m:neil.armstrong@linaro.org,m:sre@kernel.org,m:krzk@kernel.org,m:dmitry.baryshkov@oss.qualcomm.com,m:quic_wcheng@quicinc.com,m:melody.olvera@oss.qualcomm.com,m:quic_nsekar@quicinc.com,m:ivo.ivanov.ivanov1@gmail.com,m:abelvesa@kernel.org,m:luca.weiss@fairphone.com,m:konrad.dybcio@oss.qualcomm.com,m:mitltlatltl@gmail.com,m:krishna.kurapati@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:linux-iio@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-phy@lists.infradead.org,m:linux-pm@vger.kernel.org,m:kernel@collabora.com,m:stable@vger.kernel.org,m:sashiko-bot@kernel.org,m:ivoivanovivanov1@gmail.com,s:lists@lfdr.de];
-	HAS_ORG_HEADER(0.00)[];
-	FORGED_SENDER(0.00)[andriy.shevchenko@intel.com,linux-arm-msm@vger.kernel.org];
-	FREEMAIL_CC(0.00)[kernel.org,baylibre.com,analog.com,arndb.de,linuxfoundation.org,linaro.org,oss.qualcomm.com,quicinc.com,gmail.com,fairphone.com,vger.kernel.org,lists.infradead.org,collabora.com];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,qualcomm.com:dkim,oss.qualcomm.com:from_mime,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,vger.kernel.org:from_smtp,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns];
+	FORGED_SENDER(0.00)[jie.gan@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[22];
+	FORGED_RECIPIENTS(0.00)[m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:tingwei.zhang@oss.qualcomm.com,m:jingyi.wang@oss.qualcomm.com,m:jie.gan@oss.qualcomm.com,m:abel.vesa@oss.qualcomm.com,m:suzuki.poulose@arm.com,m:mike.leach@arm.com,m:james.clark@linaro.org,m:leo.yan@arm.com,m:yuanfang.zhang@oss.qualcomm.com,m:abelvesa@kernel.org,m:alexander.shishkin@linux.intel.com,m:konrad.dybcio@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:coresight@lists.linaro.org,m:linux-arm-kernel@lists.infradead.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FORWARDED(0.00)[lists@lfdr.de];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[andriy.shevchenko@intel.com,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[jie.gan@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[intel.com:+];
-	RCVD_COUNT_FIVE(0.00)[5];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	MISSING_XM_UA(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[intel.com:from_mime,intel.com:dkim,vger.kernel.org:from_smtp,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 5BA4B7198BD
+X-Rspamd-Queue-Id: 02AC4719B49
 
-On Tue, Jul 07, 2026 at 10:37:20AM +0200, AngeloGioacchino Del Regno wrote:
-> As noticed by Sashiko during a review run of an unrelated patch,
-> in of_spmi_register_devices(), for_each_available_child_of_node()
-> is used to loop through children, and to also assign a node to a
-> newly created SPMI child device.
-> 
-> Problem is that the refcount is dropped at every iteration so, in
-> the specific case of DT overlays, a use-after-free may occur when
-> an overlay is dynamically unloaded!
-> 
-> To resolve this, increase the of_node refcount when assigning (in
-> function of_spmi_register_devices) and release the reference in
-> spmi_device_remove().
+The CoreSight TNOC (Trace Network-On-Chip) binding so far only allowed the
+two-string AMBA form "qcom,coresight-tnoc", "arm,primecell". That form
+forces the device onto the AMBA bus, where the driver must read the
+peripheral ID from the device registers during probe. On several QCOM
+platforms this AMBA peripheral-ID probing fails, so the traceNoC device
+never probes and its trace path is unavailable.
 
-...
+This series drops the "arm,primecell" entry and turns "qcom,coresight-tnoc"
+into a standalone platform compatible. Without "arm,primecell" the device
+is created on the platform bus and probes through the platform driver by
+compatible string, bypassing the AMBA peripheral-ID read while remaining a
+fully functional Aggregator TNOC that allocates a system trace ID (ATID).
 
->  void spmi_device_remove(struct spmi_device *sdev)
->  {
-> +	if (IS_ENABLED(CONFIG_OF))
+The series is organized as: binding first, then the driver support for the
+platform-bus compatible, followed by the per-platform DT fixes that switch
+the affected nodes over to it.
 
-Unneeded check.
+- Patch 1 (dt-bindings) drops "arm,primecell" and makes
+"qcom,coresight-tnoc" a single standalone compatible, and updates the
+example node accordingly.
+- Patch 2 (driver) adds "qcom,coresight-tnoc" to the platform driver's
+match table and renames the itnoc-specific names to generic tnoc names,
+since the platform driver now serves both the Interconnect and Aggregator
+TNOC. It also restricts the ATID-unsupported handling to
+"qcom,coresight-itnoc" only, so the Aggregator TNOC on the platform bus is
+no longer wrongly covered and correctly allocates a trace ID.
+- Patches 3-4 (kaanapali, sm8750) drop the "arm,primecell" entry on the
+traceNoC nodes and use the standalone "qcom,coresight-tnoc" compatible,
+fixing the probe failure on those platforms.
+- Patch 5 (glymur) switches the node from "qcom,coresight-itnoc" to
+"qcom,coresight-tnoc". This node is actually an Aggregator TNOC (its
+tn_ag_* endpoints show aggregation), so it should expose a system trace
+ID rather than being treated as an Interconnect TNOC.
 
-> +		of_node_put(sdev->dev.of_node);
-> +
->  	device_unregister(&sdev->dev);
->  }
+Signed-off-by: Jie Gan <jie.gan@oss.qualcomm.com>
+---
+Changes in v5:
+- Drop the separate "qcom,coresight-agtnoc" compatible. Instead drop the
+  "arm,primecell" entry and reuse the existing "qcom,coresight-tnoc" as a
+  standalone platform compatible.
+- Update the binding, driver match table, and per-platform DT nodes to the
+  standalone "qcom,coresight-tnoc" compatible accordingly.
+- Rewrite the commit messages to describe dropping "arm,primecell" and
+  binding on the platform bus.
+- Link to v4: https://lore.kernel.org/r/20260701-fix-tracenoc-probe-issue-v4-0-aefab449a470@oss.qualcomm.com
 
+Changes in v4:
+- rewrite the commit message for the patch 3 - patch 5.
+- free the allocated ATID in remove path.
+- Link to v3: https://lore.kernel.org/r/20260630-fix-tracenoc-probe-issue-v3-0-7201e1841e94@oss.qualcomm.com
+
+Changes in v3:
+- add standalone compatible for AG traceNoC device, allow it to be
+  probed with platform driver.
+- add fix patches for sm8750 and Glymur platforms
+- Link to v2: https://lore.kernel.org/r/20260624-fix-tracenoc-probe-issue-v2-0-786520f62f21@oss.qualcomm.com
+
+Changes in v2:
+- address the ATID issue reported by Sashiko.
+- update binding to accept arm,primecell-periphid property.
+- Link to v1: https://lore.kernel.org/r/20260624-fix-tracenoc-probe-issue-v1-1-bcc785198fc5@oss.qualcomm.com
+
+---
+Jie Gan (5):
+      dt-bindings: arm: coresight-tnoc: Drop arm,primecell to bind on platform bus
+      coresight: tnoc: Bind Aggregator TNOC on the platform bus
+      arm64: dts: qcom: kaanapali: fix traceNoC probe issue
+      arm64: dts: qcom: sm8750: fix traceNoC probe issue
+      arm64: dts: qcom: glymur: use Aggregator TNOC compatible
+
+ .../bindings/arm/qcom,coresight-tnoc.yaml          | 16 ++--------
+ arch/arm64/boot/dts/qcom/glymur.dtsi               |  6 ++--
+ arch/arm64/boot/dts/qcom/kaanapali.dtsi            |  2 +-
+ arch/arm64/boot/dts/qcom/sm8750.dtsi               |  2 +-
+ drivers/hwtracing/coresight/coresight-tnoc.c       | 37 ++++++++++++----------
+ 5 files changed, 27 insertions(+), 36 deletions(-)
+---
+base-commit: 4e5dfb7c84012007c3c7061126491bbc92d71bf1
+change-id: 20260624-fix-tracenoc-probe-issue-c6429da28df4
+
+Best regards,
 -- 
-With Best Regards,
-Andy Shevchenko
-
+Jie Gan <jie.gan@oss.qualcomm.com>
 
 
