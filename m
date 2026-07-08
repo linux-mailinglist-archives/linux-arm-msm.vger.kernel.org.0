@@ -1,243 +1,191 @@
-Return-Path: <linux-arm-msm+bounces-117757-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-117758-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id aKnnBQZuTmpJMgIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-117757-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Jul 2026 17:34:30 +0200
+	id jHEFBl1uTmplMgIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-117758-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Jul 2026 17:35:57 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9ED2B72816F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Jul 2026 17:34:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id AC23C7281A0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Jul 2026 17:35:56 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=KKQOtHgt;
-	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=fIItZw5w;
-	dmarc=pass (policy=reject) header.from=qualcomm.com;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117757-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c09:e001:a7::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117757-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=GFEfWq56;
+	dmarc=pass (policy=quarantine) header.from=kernel.org;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117758-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c09:e001:a7::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117758-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 160CF300C038
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jul 2026 15:34:29 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id A1D34301F8F9
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jul 2026 15:35:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 580C33839A8;
-	Wed,  8 Jul 2026 15:34:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 00EA2439354;
+	Wed,  8 Jul 2026 15:35:13 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A1A936B048
-	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jul 2026 15:34:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98CAF3F12CA;
+	Wed,  8 Jul 2026 15:35:11 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783524866; cv=none; b=jpxgRcFTpH5JI8wibbxgKogBIEhqEUKa/qW3y3FUEb8YqnG0WgpScVFkDc8AdrlwqZwA23FjLAW0bdWqbz/AE4VhPDUGhwaqB7Jwfpf8HRwN7dUQbO0iGC8kFwLfoetRVAQnaqfsP9yDUyv6Bcqgq4Ey7MCL4u/JXjX4xdrUo0U=
+	t=1783524912; cv=none; b=nf0EuHrrzATOVVAF6F5aJherS73SgvNgf4QSLBExKX8w8y7UNXUtl3yWZIsAR0SCdVi7ogA0rVC9Ws1XcwFKGRzcHHF8H+i7jZ46xywiaS4xGDotliLR/QLyeVA1HqfKwDUTMhdRThn6eihRwSyeNyhVqhqrupp5KbS/qBtC9D8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783524866; c=relaxed/simple;
-	bh=1aU5rl/DZoeNB1kalHh4r28Mbus6zXBZW8ufrRmXANk=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=Vu4XNRoBeLy6q9ctGcco5zQSAwl/7vvRwvufgXfnM48yWotCLZoxXQ01Idbg+z/XS7YT1w4Iacu0Vqm2D0+hjsAJjQuwTUMX6Xx7Fhj8J2hXpr4om91Dx5f6h+uXOLFPUvVCtqGICctmsbUkgjCMYL/5PhwQ4skCmKWMwxW6dl0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=KKQOtHgt; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=fIItZw5w; arc=none smtp.client-ip=205.220.168.131
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 668C3BjB2751092
-	for <linux-arm-msm@vger.kernel.org>; Wed, 8 Jul 2026 15:34:24 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=I254CLogHhLoGGno/xy1XO
-	lBa511Yl81T69kJWHEPTo=; b=KKQOtHgtQCvLqluuFabTTzxr5HksGu4F6TcvcH
-	Dmm67lZidD1wETZ0CjInylzR7JFf3fHsXT2swWlgztveTL8MDRAwps0kUPVKvHlm
-	7qIezMbNCvDYdtzgZipgjyhpv1b0ONLdz8CMSTUQPZ7jvuGMyqtiSl+uqiNnhnUx
-	QD+fmz+4rCqpwSIn9ht05FCsrWR1YMMNpB/fglR0DwWe3dAeyi/WJiiFg5wulPyD
-	/wWMckH3WPpbB8ONmJZ3WexGjQHFS1qRhfkZLhEdEfp5j+QLSDzltbqrCXmpUHIC
-	4hHQkHX6rgYCs8FFlqjSx67WBisw+WNqOOPPp0z5Lx+bN1yw==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com [209.85.160.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f9g7hjfwt-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jul 2026 15:34:24 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-51c20762d21so9400731cf.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jul 2026 08:34:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1783524863; x=1784129663; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:content-type
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=I254CLogHhLoGGno/xy1XOlBa511Yl81T69kJWHEPTo=;
-        b=fIItZw5wby4uGWLS7Ku8HLsrUZ7Bn395yRVopvFLHuTzir2ssqbLFOaY0Z0tjHTINC
-         da99766wOCp5kD18TawePZHqZ7+6Fj3Zw4KNCy+gbOrtXufGjY5/Q4a2+6V94zsGILii
-         sJi6Q9Gkadat94rbdFJtLHa1vdyWD/gLuOeBbvG48843awBgLymU+4aMn+M+H3YkxQg8
-         73deFdeXW3TvAwCmRpjcGBMJuriFqG3Z29Hgri5Lk2uD7qxnBjt5T5NZhWGbh4VJfeu5
-         JNvJYBvvQ611pKNHMyGlAv3J7eLfMFIJWzpebq4x0Wibcq22AKOQLHX3lLMl/88qeaB6
-         +HCA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783524863; x=1784129663;
-        h=cc:to:message-id:content-transfer-encoding:content-type
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to:content-type;
-        bh=I254CLogHhLoGGno/xy1XOlBa511Yl81T69kJWHEPTo=;
-        b=MoTXOKhi3CnO82bGEgYmCE1ahjcaN8Jz7m4DJ/rZaM94kB11HYrAoDcN8Fc2821e+o
-         NRjb4jfQFewd1EP4whSnSbjzeiLm1EMm3PvrggkiV3M+kkVAaA1Ty39RPrQUSe88rKlU
-         a0QX65zzp/KFl5/HOKgp2IuokTG0v4OEoyG8wlMb62TwKHkMVDfxZKwBQCLZjWODSY7+
-         EEUjD8GvoF+DqnenSijFR4RyLqTr7IbLTwwIf7D203lwB34y/XEAAGenf8PDa4h3Clgr
-         RRWEoDMM62ExOarx/GwcMYEKxeacLk83rQCZEUhvzgxqIH53dHLFo5pYH3xUG/YbyuBm
-         ryog==
-X-Gm-Message-State: AOJu0YxWLjrVO0uoti9hrGAnEOFAijSw8/mXIih8hg98JhcG9w1f3903
-	VRwHNrXzkQmyenR56UM+p3B3CphA0wPE2yfOhw/ZQTRbmTKi5EXhN3t41T/PkN3fTUF0w6E45ZU
-	DTmFX66YIJohSSobo/FaGLZIob7FaFeh24oTy8qBfDzWoKnxjQDtdZzBE3gR87isUaxQs
-X-Gm-Gg: AfdE7cmmciGs/+JctXmzJSG5hzqODY+wAVL55Y070H7uE6MaeejrBCK/jsChpr1fi/d
-	y+C3W3Beoe22ojsSTpebKlXb9eDTtPGnoLElEEZJpxojHjzOiNf9Q5B5Q2tinpSIZe7Prfr9nWJ
-	H5JxOqRp2nn1nOnQSDUM72mMOSXzss5L+TASu/yTBkIRue0sRqeANtHljppQRdSjwMLnWZ15jzH
-	EJyuBomoJ3xSVzqjo2BYqvoWCiW24DuAI3jobIHDWPJeQY/E2vE4rqXUBPC7/Ngr+AmWlYSbAwF
-	Z7Lu/mGWtfI6ng7Y6wQeffXRpl5iReI//sAu1PljyZN0o3YKeGt8jt1x5wZVXYsWvEL13UOv+vH
-	2vXe2CMVUkzIyigQwyrNCpguJ9nIBaxKHLFKWRzyTL47iJfGbp6B5cE9OcKZ+ma4btaqxvm6jAm
-	LAyWQ+hcJCkVm9tuRRFjlTvWrLn4B3xnKG63A/JmEOQXmvMhz5WDx1uwKYT0to4ZgWQItHnFlfL
-	67a82HWYc9Y26ZAj33R
-X-Received: by 2002:a05:622a:1804:b0:51c:555:7dea with SMTP id d75a77b69052e-51c8b30323amr34858791cf.30.1783524863134;
-        Wed, 08 Jul 2026 08:34:23 -0700 (PDT)
-X-Received: by 2002:a05:622a:1804:b0:51c:555:7dea with SMTP id d75a77b69052e-51c8b30323amr34858191cf.30.1783524862553;
-        Wed, 08 Jul 2026 08:34:22 -0700 (PDT)
-Received: from QCOM-eG0v1AUPpu.na.qualcomm.com (82-64-236-198.subs.proxad.net. [82.64.236.198])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c15d4bffdbesm111607166b.45.2026.07.08.08.34.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Jul 2026 08:34:21 -0700 (PDT)
-From: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Date: Wed, 08 Jul 2026 17:34:21 +0200
-Subject: [PATCH] arm64: dts: qcom: monaco-arduino-monza: Add GPIO line
- names
+	s=arc-20240116; t=1783524912; c=relaxed/simple;
+	bh=F8FzxmDbQnJT3S3eLejXFlR+nREK0IwYMuvQdmG/i3A=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=bpV4MHFTdZdHXBa6ML/Tvjg2wGuQodvaRTYAXdjhPf1/JBLSnWX6DOnLzNJPrXlE2a65KzZkBvKlGF/YuRJwnCRZrJIct2RIOdz5nt3UrA2hHkHqQpxlgkyn+yW3i7KfxN4S6ZwQ9kFu5xmKUJj831niDg7xOMCGLTkzQCs+v5A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GFEfWq56; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5568C1F000E9;
+	Wed,  8 Jul 2026 15:35:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1783524911;
+	bh=TIhd5QGHHUH29LQnzEnCvrF+ZQHuAr9wGStJF7y8ltE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=GFEfWq56iIsrg049quekywIWXYbcbmVhtKMHr4wPLUG9XA4AEuR9c9v2tx+uce6Lu
+	 f2gEw9XMdbiYfZfIyO48tMp4gqnCU9MS8/VU99gdm+A18RUyAgx+T3WWf5k48ymWQE
+	 NmaQsvnMIuNMVp5Yunm5v552kngUVGxqyfZLABzaaChawmyKGKQv73NhlHTHyvMslY
+	 DsHcIbYlFxCfuMPI5u1+FtQkHZDtUubHA/CNPjaVTIkCR3Ptafslbh9IfGoudPBxd0
+	 neIlEUPOhNIw9ZcBw2JnOmtM/fFtypxT1cPNS8TRxAOOIMJG62jOPE0JsdOyD5B8ld
+	 0YsYLbiF90wQQ==
+Date: Wed, 8 Jul 2026 10:35:07 -0500
+From: Bjorn Andersson <andersson@kernel.org>
+To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Cc: Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Manivannan Sadhasivam <mani@kernel.org>, Bartosz Golaszewski <brgl@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-pci@vger.kernel.org, linux-pm@vger.kernel.org, 
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH v2 0/2] arm64: dts: qcom: eliza-evk: Enable PCIe0 and
+ PCIe1 with M.2 and TC9563 switch
+Message-ID: <ak5sfkmrhorCY6lf@baldur>
+References: <20260708-eliza_evk-v2-0-c599246ceba1@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260708-gpio-names-v1-1-9162105b9971@oss.qualcomm.com>
-X-B4-Tracking: v=1; b=H4sIAPxtTmoC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIzMDcwML3fSCzHzdvMTc1GJdU4PUJONEkzRDsxRzJaCGgqLUtMwKsGHRsbW
- 1AMldCT5cAAAA
-X-Change-ID: 20260708-gpio-names-50eb3a4f16d7
-To: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Loic Poulain <loic.poulain@oss.qualcomm.com>
-X-Mailer: b4 0.14.2
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA4MDE1MyBTYWx0ZWRfXwejbW2SXeTix
- VCphEFSboyLe3udoJyrXMxM6dIgDGStgu2xBGL1z2L7LKyQqJZ4KVdUcchtCQEZ2rkxDawKBCy5
- aQ/SmSPGE9zVExSlP3VbcD8PUCuPvTP8uQJPsGEExHGitOHo8lcKofzGjkHJ1pD4SlzFf+f1vFx
- XL7qrrd/5XHpuDNX7MXbhanQfwOC2dZHKanNv/NJMLPDFFA8nlmN6zlkl3r8/RJc/48f3980m+6
- jBJIP2zf1cTA8MmT3ji44rNwAmfNEb3W7lPJlCaxEo8NmzLz8ORxrIxDtjQ2jq96jP8x/6bMvde
- 1BWtnRqGgyUR/2HCOMCvCGQxK2eHYAb/VsCjcWQX6T+wblEBIKTnV9jU8CYHQzkGPyUfQBlmJZk
- mBUQ3/Dwwlex7G3OUx3XhmHoc+RsxIfX/gKgR3AsMxyL8RFO42b/71dEmF0vseTZbSuZoimn47i
- OXBcLAJ9R+O9RqTnf4A==
-X-Proofpoint-GUID: bd0wzZdUWYnUif_47V-OUsE3rBHb3fS3
-X-Authority-Analysis: v=2.4 cv=TMp1jVla c=1 sm=1 tr=0 ts=6a4e6e00 cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=MDeckJw97qnk8wCBExTehA==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=EUspDBNiAAAA:8 a=1BEw5LmG3YzgyHxDt7YA:9 a=QEXdDO2ut3YA:10
- a=uxP6HrT_eTzRwkO_Te1X:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA4MDE1MyBTYWx0ZWRfX82YbtiYQ7KU+
- tsmsFenVa7W6MHd43xH1sVBg5MulANqwFFr4S2EzyXonQgrUuKD43f8I63OTCISdVRRLHgNKSz1
- V0GLjjlNwFVYzXOc3mK9jFgZJ1XYXpk=
-X-Proofpoint-ORIG-GUID: bd0wzZdUWYnUif_47V-OUsE3rBHb3fS3
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-08_02,2026-07-08_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 priorityscore=1501 suspectscore=0 adultscore=0
- lowpriorityscore=0 bulkscore=0 malwarescore=0 phishscore=0 spamscore=0
- clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607080153
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260708-eliza_evk-v2-0-c599246ceba1@oss.qualcomm.com>
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-4.66 / 15.00];
+	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	FORWARDED(0.00)[lists@lfdr.de];
-	TAGGED_FROM(0.00)[bounces-117757-lists,linux-arm-msm=lfdr.de];
+	RCVD_COUNT_THREE(0.00)[4];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_SENDER(0.00)[loic.poulain@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS(0.00)[m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:loic.poulain@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:from_mime,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,vger.kernel.org:from_smtp,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[loic.poulain@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS(0.00)[m:krishna.chundru@oss.qualcomm.com,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:mani@kernel.org,m:brgl@kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-pci@vger.kernel.org,m:linux-pm@vger.kernel.org,m:konrad.dybcio@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[13];
+	FORGED_SENDER(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
+	MIME_TRACE(0.00)[0:+];
+	FORWARDED(0.00)[lists@lfdr.de];
+	TAGGED_FROM(0.00)[bounces-117758-lists,linux-arm-msm=lfdr.de];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[9];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCVD_COUNT_SEVEN(0.00)[7]
+	MISSING_XM_UA(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[baldur:mid,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,qualcomm.com:email]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 9ED2B72816F
+X-Rspamd-Queue-Id: AC23C7281A0
 
-Add gpio-line-names to the tlmm node to document the PIN functions on
-on the VENTUNO Q board. This covers the different headers (JMISC, JHAT,
-JOMEGA and JCTL), the flat connectors, and the SoC-to-MCU interface.
+On Wed, Jul 08, 2026 at 11:47:15AM +0530, Krishna Chaitanya Chundru wrote:
+> This series enables PCIe for the Eliza EVK board (CQS SoM on EVK carrier).
+> 
+> The Eliza EVK exposes two PCIe ports:
+> 
+> - PCIe0 drives an M.2 E key connector. The 3.3V supply is GPIO-controlled
+>   via a TCA9538 I/O expander on I2C4. The slot hosts a WLAN module
+>   (connected over PCIe) and a Bluetooth device (connected over UART5),
+>   modelled with the pcie-m2-e-connector binding.
+> 
+> - PCIe1 (8GT/s x2) connects to a Toshiba TC9563 PCIe switch, whose
+>   management interface sits on I2C4 (address 0x77). The TC9563 RESX# and
+>   PERST# lines are OR-ed internally; reset is driven via a TLMM GPIO on
+>   the RESX# pin. The iommu-map covers all downstream switch ports
+>   (SID range 0x1400-0x1408).
+> 
+> The M.2 WLAN module carries a Qualcomm QCC2072 Bluetooth chip. A device-ID
+> entry is added to the M.2 power sequencer so the serdev node for the BT
+> UART interface is created on PCI enumeration.
+> 
+> Bluetooth is enabled with this patch https://lore.kernel.org/all/20260529175822.3366535-1-yepuri.siddu@oss.qualcomm.com/
+> 
+> This seris Depends-on:
+>   https://lore.kernel.org/all/20260610-eliza_dt-v1-1-7bb72b75fc5b@oss.qualcomm.com/
 
-Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
----
- arch/arm64/boot/dts/qcom/monaco-arduino-monza.dts | 28 +++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
+Why send this patch, when this dependency is known bad - when would I
+ever be able to merge this patch?
 
-diff --git a/arch/arm64/boot/dts/qcom/monaco-arduino-monza.dts b/arch/arm64/boot/dts/qcom/monaco-arduino-monza.dts
-index 8b3ed73feb6eca6578382beca588baf42b8c9bb6..24d27046667450bf3aea7646d352fe27f0a64867 100644
---- a/arch/arm64/boot/dts/qcom/monaco-arduino-monza.dts
-+++ b/arch/arm64/boot/dts/qcom/monaco-arduino-monza.dts
-@@ -426,6 +426,34 @@ &pcieport1 {
- };
- 
- &tlmm {
-+	gpio-line-names = "", "", "", "", "",
-+			  "", "", "", "", "",
-+			  "JMISC_SPI_MISO", "JMISC_SPI_MOSI", "JMISC_SPI_SCK", "JMISC_SPI_CS0", "JMISC_SPI_CS1",
-+			  "JMISC_CS2", "", "JHAT_P03_I2C_SDA", "JHAT_P05_I2C_SCL", "JHAT_P27_EEPROM_SDA",
-+			  "JHAT_P28_EEPROM_SDL", "", "", "", "",
-+			  "JHAT_P21_SPI_MISO", "JHAT_P19_SPI_MOSI", "JHAT_P23_SPI_SCLK", "JHAT_P24_SPI_CE0", "",
-+			  "", "MCU_I2C1_SDA", "MCU_I2C1_SDL", "", "",
-+			  "", "", "JOMEGA_SPI_SCK", "JOMEGA_SPI_CS", "JOMEGA_SPI_MISO",
-+			  "JOMEGA_SPI_MOSI", "", "MCU_PG11", "JCTL_UART_DBG_TX", "JCTL_UART_DBG_RX",
-+			  "", "", "MCU_BOOT0", "CYPD_SWCLK", "",
-+			  "", "", "FORCE_USB_BOOT", "", "",
-+			  "", "", "JMEDIA_SOC_CC0_SDA", "JMEDIA_SOC_CC0_SCL", "JMEDIA_SOC_CC1_SDA",
-+			  "JMEDIA_SOC_CC1_SCL", "", "", "MCU_PG12", "",
-+			  "FLAT0_P17_GPIO", "", "JMEDIA_SOC_CAM_MCLK0", "JMEDIA_SOC_CAM_MCLK1", "MCU_PG9",
-+			  "MCU_PA13_SWDIO", "MCU_PA14_SWCLK", "", "JMISC_SOC_GPIO_0", "JMISC_SOC_GPIO_1",
-+			  "FLAT1_P17_GPIO", "", "JHAT_P32_PWM0", "MCU_NRST", "USER_BUTTON",
-+			  "JHAT_P31_GPIO", "JHAT_P33_GPIO",  "FLAT2_P17_GPIO", "JHAT_P07_GPCLK0", "JHAT_P36_UART_CTS",
-+			  "JHAT_P11_UART_RFR", "JHAT_P08_UART_TX", "JHAT_P10_UART_RX", "JHAT_P26_SPI_CE1", "JHAT_P29_GPIO",
-+			  "JHAT_P15_GPIO", "", "MCU_PG10", "", "CYPD_SWDIO",
-+			  "MCU_PG13", "MCU_PG14", "", "", "",
-+			  "", "", "", "", "CYPD_NRES",
-+			  "JHAT_P16_GPIO", "JHAT_P18_GPIO", "JHAT_P22_GPIO", "JHAT_P37_GPIO", "JHAT_P13_GPIO",
-+			  "", "", "", "", "",
-+			  "", "JHAT_P12_PCM_CLK", "JHAT_P35_PCM_FS", "JHAT_P38_PCM_DIN", "JHAT_P40_PCM_DOUT",
-+			  "", "", "", "", "",
-+			  "", "", "", "", "",
-+			  "", "", "";
-+
- 	pcie0_default_state: pcie0-default-state {
- 		wake-pins {
- 			pins = "gpio0";
+And why are you sending separate series concurrently with dependencies
+between them!? It's one thing to send patches saying "I depend on
+someone else's completely unrelated work", but saying "here's a random
+bunch of tangled patches, good luck everyone!" is not okay.
 
----
-base-commit: f86573e68e56a7df7d54eb58101ac413ba731996
-change-id: 20260708-gpio-names-50eb3a4f16d7
+I expect all three patches to be rebased and send in one series that I
+can just click "Submit" on next time.
 
-Best regards,
--- 
-Loic Poulain <loic.poulain@oss.qualcomm.com>
+Thanks,
+Bjorn
 
+>   https://lore.kernel.org/all/20260630-eliza-dts-qcs-evk-v4-3-18cbbdba6e7e@oss.qualcomm.com/
+>   https://lore.kernel.org/all/20260630-dts-qcom-eliza-mtp-evk-add-pmics-v1-1-f4f320f7c88b@oss.qualcomm.com/
+> 
+> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+> ---
+> Changes in v2:
+> - Drop patch 3, as this is already applied
+> - Rebase on top of https://lore.kernel.org/all/20260708055017.A90C91F000E9@smtp.kernel.org/
+>   and remove pincntrl as pincntrl is added in the eliza.dtsi patch and also remove
+>   pinctrl for resx as this is covered in pcie1_default_state as perst gpio.
+> - Link to v1: https://patch.msgid.link/20260703-eliza_evk-v1-0-7624440bd76d@oss.qualcomm.com
+> 
+> To: Bjorn Andersson <andersson@kernel.org>
+> To: Konrad Dybcio <konradybcio@kernel.org>
+> To: Rob Herring <robh@kernel.org>
+> To: Krzysztof Kozlowski <krzk+dt@kernel.org>
+> To: Conor Dooley <conor+dt@kernel.org>
+> Cc: linux-arm-msm@vger.kernel.org
+> Cc: devicetree@vger.kernel.org
+> Cc: linux-kernel@vger.kernel.org
+> 
+> ---
+> Krishna Chaitanya Chundru (2):
+>       arm64: dts: qcom: eliza-evk: Add PCIe0 with M.2 E key connector
+>       arm64: dts: qcom: eliza-evk: Add PCIe1 with TC9563 PCIe switch
+> 
+>  arch/arm64/boot/dts/qcom/eliza-evk.dtsi | 228 ++++++++++++++++++++++++++++++++
+>  arch/arm64/boot/dts/qcom/eliza.dtsi     |   2 +
+>  2 files changed, 230 insertions(+)
+> ---
+> base-commit: dc59e4fea9d83f03bad6bddf3fa2e52491777482
+> change-id: 20260629-eliza_evk-6f30686b161f
+> prerequisite-message-id: <20260708-eliza_dt-v2-1-e6281da26408@oss.qualcomm.com>
+> prerequisite-patch-id: 7654ff4f899ac0094a2e791e7f208998fcc7d5fa
+> prerequisite-patch-id: 9e10dfbe360941cdac0300aaf163149755952f9f
+> prerequisite-patch-id: fecce0170351baf00cbe8f6b302d1def4d99bbfc
+> prerequisite-patch-id: 97cd6cb495fdd198f6de7fbe45ef32e4a638ec9c
+> prerequisite-message-id: <20260630-dts-qcom-eliza-mtp-evk-add-pmics-v1-1-f4f320f7c88b@oss.qualcomm.com>
+> prerequisite-patch-id: f3615b5c1e2222a2491f862a7fba3994058ecc53
+> 
+> Best regards,
+> --  
+> Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+> 
 
