@@ -1,404 +1,323 @@
-Return-Path: <linux-arm-msm+bounces-117772-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-117773-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id 1UyLO+h6TmpwNgIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-117772-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Jul 2026 18:29:29 +0200
+	id Sw+bFjV+TmpYNwIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-117773-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Jul 2026 18:43:33 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id D9899728B64
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Jul 2026 18:29:27 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id A7369728D4F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Jul 2026 18:43:32 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=Kkj1aPCZ;
-	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=EFmsMO8z;
-	dmarc=pass (policy=reject) header.from=qualcomm.com;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117772-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 104.64.211.4 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117772-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=linaro.org header.s=google header.b=UB3gY70u;
+	dmarc=pass (policy=none) header.from=linaro.org;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117773-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117773-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 6933A3008622
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jul 2026 16:12:38 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 81A843147243
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jul 2026 16:25:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 98F8541CB33;
-	Wed,  8 Jul 2026 16:12:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EAE4D42DA49;
+	Wed,  8 Jul 2026 16:25:12 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14B6B30DECB
-	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jul 2026 16:12:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C090A42DA33
+	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jul 2026 16:25:10 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783527156; cv=none; b=s1pBWM7MSCyGv7lEpw/adNt8h4ezKikCaqVIRo0aN4R/XwX35GDP7+jBjbKEh6oa5j3x1v+qpA0MwI15ao1Prx56/SYaalWwOHFOe0nORKJkyVAgCiHSh8/bvIc3NCbAk+pF4fvaBG0IWKF3mRV7QkJGzNXAjCBHc7VWTRUkM1c=
+	t=1783527912; cv=none; b=sDc2xNKZh63kTZjtrpn0Migk6td7H0aPvRi+elScbgAkDD3NicnRkLQ6/dorM4WH9JecmcGfxXXn8luquL/ubLnP1xdYz9CGE08ehjWzQX6RBFRuH3V1LLUiAeJbC4Ol5opBsVhnJGtEOpnCvDDZqQfruso14xkc7WOLGo2zWjc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783527156; c=relaxed/simple;
-	bh=1nXpRUx2WWpgGmhHch6VcfLTC3FPp9+Reb/7wOr0BA0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HMfYbI2+X6pRLoBkx7EVUYzZ/m/g/2GCZooHfynOr73/gX6YDF9TcpfHQ++xG9FiFwCjvyk+MbM5pDhHC/HFnrAeDSKubuW0brKkbJHGcmi2ACc0Eguh9LW+wrcmv2FSSPrtsRZwShZvsrMPIYg4JE6qVZ/vaZzt8io7hXuJ8zY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Kkj1aPCZ; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=EFmsMO8z; arc=none smtp.client-ip=205.220.180.131
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 668C3TQk2579680
-	for <linux-arm-msm@vger.kernel.org>; Wed, 8 Jul 2026 16:12:34 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=H+jdjbqbC/3
-	QB1jJM1Y8Kku/Fjlf4I53sMsIIiLwjXo=; b=Kkj1aPCZrFn9LEE1771IBWNaWkf
-	69RS3USFY0LHD/m0LtcWt+b+1OHtRwSQrGc4PPi7eMyjiDbdJK34eq8fGlYP0htS
-	bg7RgjYN69eBLGfonZqbuEkqX6AbTMhY0fFu0Hu7qTokLKwT20MhfU0wtW9Xc/af
-	s4MrEnzU1bk44iqRTznV2KHgDkhPJ+syIhbz52KcIItLh3r+Vf7DTZmEvBEGi7RX
-	mAcxs/m5SoTJZSs4ovB5nVu5Wx/4cOQ9XhStR1Ju1CvAW0pMU/YPF5XkBYKPgskG
-	FGQeTja6i9vfYWo70xWqsgDsAo+Ejgx416qYBBhfaAjZNdUMyAs7E6VlTHQ==
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f9b5gbq8w-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jul 2026 16:12:34 +0000 (GMT)
-Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-2cacd6d37edso16904415ad.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jul 2026 09:12:33 -0700 (PDT)
+	s=arc-20240116; t=1783527912; c=relaxed/simple;
+	bh=Y9gAqWT8nIFFmj8ROh62A1gTksGLsatZQYucfa6/WeA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=c1IsnD0mAptaEjG3jNrqhP1t/QLGmOpd8G/yj3ZhMG9dmrDmighhdfMMqVLfyQjIKR2YnTsT84o2qcYDIOTFa25OjH0eZU2bXOAsATYbpf0Ic5UTM1iR+DI6ACD6kH9T0RwqdodeXHBbIjTdIf2QJbDn4fKGPMl3g+ou6ZWsHAs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=UB3gY70u; arc=none smtp.client-ip=209.85.167.41
+Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-5aeb40ebefbso239411e87.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jul 2026 09:25:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1783527153; x=1784131953; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=H+jdjbqbC/3QB1jJM1Y8Kku/Fjlf4I53sMsIIiLwjXo=;
-        b=EFmsMO8zMnG9ZzXqzVZNIQOE1AmDb6sq6oqyypQSWdqZqR/SHaJHJhVUaTLOOp9lNB
-         LDH9Vx02+GgFHrWBEhS/WqroTWnBEviIHUnplEUAzr8kuqcTtKvcnvEKl03MtvXObjWl
-         Q3BKh3BaKOIyHux9OcOyR5f9EJYVesqvloBE4HuhL/TqLdo0xoQxRDHMB5ANbZ9igTOi
-         fISrS131DGQkAudYIK4lMSfuwLMURr9ML/ZSjmRpFM7rN7NgHzykPTMZ4f9Myo/IKrXx
-         ouYul3yPLXEyi6HG8mNajCUPZlho9rMwOoecTYEXVU3+zws4Kp/r2XW4CVotLpqCQFEz
-         FGpw==
+        d=linaro.org; s=google; t=1783527909; x=1784132709; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from:references
+         :cc:to:subject:user-agent:mime-version:date:message-id:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=bI8bxULPVuuKF+NUa/BzsFjIzfQczSe5b/Q97O2fZ7A=;
+        b=UB3gY70uk9ZjUH4FiwDjQsMlA58EQjAGZ6qIRj828FHRVlNFpcr1r9kLNtTibMzKvW
+         ktZsy9sMIUmFFnM/PucPZoR2A4RIXwy7WRe2iNPKKGZNdpEJ2zgWzdmW45IWUVB9z6Xl
+         8z5ssKXJ84udw67U2oB5mB1d1jfg9sZDFGKspNHw59nZLDxVVpDjByaxN6H7dyTrOQ6p
+         +GcOoc+v7+yROvREMcs3h7AQZ+lxD8yTynGTFnkx4Naqsp6B872HPQ1tj5QiEhzzZJol
+         j4x4vZsz7zQ2QVU0E8vHtXG07eap5wehHYLwygxm4vYzqM0lRgUMuT0Qqsg1GkK9ozV5
+         ot2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783527153; x=1784131953;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=H+jdjbqbC/3QB1jJM1Y8Kku/Fjlf4I53sMsIIiLwjXo=;
-        b=scLHe8z8QIz3ILL6sgLotJkbE0JOAypbJtVD+4GZjEZaedNtcHn+DYF6n1OABAeBbS
-         X+5NxPYDG6tRYtAYcALnS8jatYkx2QtY/T61WFiQImqciWnkds8brYliMGgl0lnl+G1M
-         YG+siAEniEAUEpUP6KnwsnPGpNNkX3OZfynWnY8xJDIBaKVGl2IAj2r60Rin9Vyn1N1z
-         KE0fjaxhTY8Hu+N0AkqvVyQ7z8ofjHskS7/ySE2/jjvoLj7mnO0jWHTpfX88PvBJLeib
-         nWeS8XqLyN411a1dBFjynpB8ofi1p5Da+lOziKmsxlo9tRTOgVcNPxmoyMBaB8UZfwJw
-         hrXQ==
-X-Forwarded-Encrypted: i=1; AHgh+RqmM4cpYpDmrCp5tHKHNuwy4dp3y8a6l/nqRutfPHq4dn++agc9dvM9NkVgS+SGSbajKb0osDVnFA3nI78I@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzy+Way7Q++qnNYc87k8tTBIfy9JuNBLv4TJeyY3+UiVwh4UEi6
-	0hePBHF0Pa2fCi1xbrdjfPrTVs0Qx17Vwa+HJcN9iak7we+AJqmIM28UBIMkHeMz/3GelMVxmny
-	OGya6ASm9YlsT4zBa+3Ok3r2tp2bV/SBqxXAEPacNniAKMlU3uv6YiewvZ54nv3Ho7x7H
-X-Gm-Gg: AfdE7clBYBX56qpeq073nE+nKP/VGdqAfYG2+IFgNIdjHBfe7x2f17ybJvQ1iznpyCJ
-	u8OMJDwuGyy4iCau4b4AYUDdh5+1xWDyfRXqHk5OWShxwuc8cybpb67BynOqOrcELQ0oB/5eieJ
-	EGF3rnaThLvagtewqlJzfr4dmzKZVh/8YjkRTLNNZMVZIpxo36yHGlo8dX0+FFF1pJrWopOW+Hq
-	/eu3GumPNpMAgJOhQcyI/XDBAwCstQVVBFKBlYgujh80q3XXasmIDPgeYZVNVjvrVHddG+ldiC7
-	nfNL5uhOl9pJvHbD9IVUui2juSilIM8/5VngPQhL9s1Q6eAhrnjBTwlXHuFKXEGFsANNr5ilfhg
-	3yN6sNiragXGhiQd3wy0CNz7zouUiGrGtrxkcFBJPm2Ba88iHVoyWfA/FRw==
-X-Received: by 2002:a17:903:4b4c:b0:2ca:6c8:abd8 with SMTP id d9443c01a7336-2ccea2f919dmr31469055ad.12.1783527152939;
-        Wed, 08 Jul 2026 09:12:32 -0700 (PDT)
-X-Received: by 2002:a17:903:4b4c:b0:2ca:6c8:abd8 with SMTP id d9443c01a7336-2ccea2f919dmr31468805ad.12.1783527152422;
-        Wed, 08 Jul 2026 09:12:32 -0700 (PDT)
-Received: from localhost (c-73-37-105-206.hsd1.or.comcast.net. [73.37.105.206])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ccc9bf8c12sm30438155ad.26.2026.07.08.09.12.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Jul 2026 09:12:31 -0700 (PDT)
-From: Rob Clark <rob.clark@oss.qualcomm.com>
-To: igt-dev@lists.freedesktop.org
-Cc: freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Rob Clark <rob.clark@oss.qualcomm.com>
-Subject: [PATCH v2 2/2] tests/msm: Add perfcntrs test
-Date: Wed,  8 Jul 2026 09:12:24 -0700
-Message-ID: <20260708161224.507091-3-rob.clark@oss.qualcomm.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260708161224.507091-1-rob.clark@oss.qualcomm.com>
-References: <20260708161224.507091-1-rob.clark@oss.qualcomm.com>
+        d=1e100.net; s=20251104; t=1783527909; x=1784132709;
+        h=content-transfer-encoding:content-type:in-reply-to:from:references
+         :cc:to:subject:user-agent:mime-version:date:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=bI8bxULPVuuKF+NUa/BzsFjIzfQczSe5b/Q97O2fZ7A=;
+        b=r6MvaQR7JS+rpBO+oPF0s3rnI/6qTkiymMlQF/2zGQEY9nySb3SdcgAtGEe0BEYky2
+         1KDSj+7SjS5ocBtAKeY7eG9kIJYDLcrtTXT0k+WsEhTBQFO8/vlqsx7xFfwCWCjOJTBz
+         X+mcJ3mcYT4RgQ8SUwBqazK6NtjJhRpFFYDHlgy+HMl6cg8qnCFWuD1nPFfPaLEZnXGx
+         c/gurWdTYYgAQcpPobcUKXo+sRiteFGmg2nZQxde4RC+L+X9jMRsUImdKym4W1AsD30G
+         SngJzezR/KDZeGcrpoKim4NuBtCHnrJGvCCjO0GODIw8bvmNgG/OUZSsgtHIGOhB66iB
+         AP5w==
+X-Forwarded-Encrypted: i=1; AHgh+Ro6CEfa8n/EsQAv2d4/hMmMA+YtDhdlQ5wUgZaz17Xfx9cIgazDVyIsY4C1v/YOdwuckQFMqpEEmtK63X56@vger.kernel.org
+X-Gm-Message-State: AOJu0YzjayrcnaA4UEZ4bBFt7WMWv+U5OttAym3iVGfTgHmo1ALd6bMM
+	OQxC26KEaxYC2/Z+3o/1ng/671+2MaRiHGeop7l6ckJ9OnQTFDPvviTDmEkPOj+ujL8=
+X-Gm-Gg: AfdE7cls+vZHk/UDBXpSxbuwyr1sCp0FyfEWUztdf1vU2jPWcSX4EDe3SXO4TO8O/Yf
+	xStCVaDG/CizaIeGx4HS5haIOAtlWigRNLNuIUO9cJmhdbGqSp/dljqPcFLGf1ljK/yWo5bW66T
+	fwpon2LYKCAkNacvbM9s11bApR3axRWHnKlJEddMY3htha7hKAJNxvz2js6dpVSo62FAiaQUwf5
+	icTPXaJM452I0uixKvmtpWhySGMXI+93+ep73Jog/20UK892LhRhHoyrzDJzVqSw3CHMezJwg9t
+	Q63eV5frxsmo3IsX/SWObx10RdkLQhJ3ovrCmD5XZ0Z9v3oTa32qhlkA8V1WvDf5EpRPpdos3Ic
+	eXu1MhKK/k9oeR4dhWDXDZkks9P6rrMA3uSUYQj6XB2y0J25htfbGklyNP/EwbXLrezKWr4Xg6R
+	IjDF/1F23uHjSbB1hbgRf6VaqULUv4DDsc3hAghRcZody69r4W/9SfT7vPSn5kDIi6hVA=
+X-Received: by 2002:a05:6512:1292:b0:5ae:cfd3:4753 with SMTP id 2adb3069b0e04-5b01145a409mr457052e87.3.1783527908746;
+        Wed, 08 Jul 2026 09:25:08 -0700 (PDT)
+Received: from [192.168.1.100] (91-159-24-186.elisa-laajakaista.fi. [91.159.24.186])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5aed1377096sm4537514e87.25.2026.07.08.09.25.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 08 Jul 2026 09:25:08 -0700 (PDT)
+Message-ID: <9af2a2b7-1aa2-49b9-bdd1-1ab37cce91ea@linaro.org>
+Date: Wed, 8 Jul 2026 19:25:07 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 5/5] media: qcom: jpeg: Add Qualcomm JPEG V4L2 encoder
+To: "Gjorgji Rosikopulos (Consultant)"
+ <gjorgji.rosikopulos@oss.qualcomm.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Atanas Filipov <atanas.filipov@oss.qualcomm.com>,
+ linux-media@vger.kernel.org, bryan.odonoghue@linaro.org,
+ loic.poulain@oss.qualcomm.com, mchehab@kernel.org, robh@kernel.org,
+ krzk+dt@kernel.org, conor+dt@kernel.org, andersson@kernel.org,
+ konradybcio@kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+References: <20260706071113.383215-1-atanas.filipov@oss.qualcomm.com>
+ <20260706071113.383215-6-atanas.filipov@oss.qualcomm.com>
+ <51a0abf2-2a72-4551-894b-2c2de91ba0c2@linaro.org>
+ <74a5b549-987c-4dac-a1a0-ff81150cd6ab@oss.qualcomm.com>
+ <56f1fd7e-42bc-4034-81dc-302cb7c22951@linaro.org>
+ <dd34b44d-396e-4267-b383-e4f8d20f8ef4@oss.qualcomm.com>
+ <fffc51f1-9137-4951-b9b8-9f7f263c7878@linaro.org>
+ <wwk4nyczcecnllwivqd2lgnbpzboumtwigk3vmundsvgqtqpy7@duq6zdulc7sc>
+ <74608907-dc8a-42c5-b188-0bdb08d6be77@linaro.org>
+ <0e9de1c7-2e39-463f-b4db-f228f37a8a13@oss.qualcomm.com>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+In-Reply-To: <0e9de1c7-2e39-463f-b4db-f228f37a8a13@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA4MDE1OCBTYWx0ZWRfX446TOHyaZuGo
- Eym2/2C1sqG43ee37hHUH9suWD2FyeXcqtOoLJbdcY+euB+E9JRJDkVuzooQaf7PrbBnCxxMYcR
- Dl+dkbHDzG5EGGB/WG/kA1uJHjEGdu8=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA4MDE1OCBTYWx0ZWRfX7aSkmxC5dxq8
- wUggpakFA932zzHN2b2W3xyuPOZnAhMS9X7ndbiw1Mq3wiuz2ijAgrajfhVvtdz00cbD0GPjrUF
- EWxPuYEUAbjO087QARQPofR9asc2pEFATfI/4TtSyFNO7JX1FOrlPiW5o3xlZBpt1ZWO9cOeFmm
- pjdHV/9wcUFYtkNpXYpkfj51z8HFHfADnfbre1NJas4JXK4V2Cqkay4xu8I+4pNimLvPu6mMKcL
- EvDRcDUOzMwJW+jkCl3HWrRzromzQgzNp65rS8+xJV8PU42Nyn76AgzRCSQVtIx9YB9/LndEjmg
- 3pWfWXVM+Whh+/9FRgt20/oNpinmyEXmwwjh3UyQr+PdiTBSOGt69OpnyctdLi0/guu5OHe+EO+
- SnHvcmEQfchPbraCak/9+s1b8LpazfWHvxg2vEBAPhxRPNaKaiTNGZkVm5/o3jYEJIUaT+jZgq3
- yzz3F3yuUOa4YwVVq4Q==
-X-Proofpoint-ORIG-GUID: _7_9rFIOirwuCD_KD41AtbFeXpFlCe6S
-X-Authority-Analysis: v=2.4 cv=JLULdcKb c=1 sm=1 tr=0 ts=6a4e76f2 cx=c_pps
- a=cmESyDAEBpBGqyK7t0alAg==:117 a=19Wyn7e3V/0aNffMjNCMQw==:17
- a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22 a=EUspDBNiAAAA:8
- a=Hi4UILjZCzWCtySGamAA:9 a=1OuFwYUASf3TG4hYMiVC:22
-X-Proofpoint-GUID: _7_9rFIOirwuCD_KD41AtbFeXpFlCe6S
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-08_02,2026-07-08_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 phishscore=0 lowpriorityscore=0 malwarescore=0 adultscore=0
- suspectscore=0 spamscore=0 impostorscore=0 bulkscore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607080158
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	MID_CONTAINS_FROM(1.00)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_MISSING_CHARSET(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
+	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-117772-lists,linux-arm-msm=lfdr.de];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-117773-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[15];
 	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER(0.00)[rob.clark@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:igt-dev@lists.freedesktop.org,m:freedreno@lists.freedesktop.org,m:linux-arm-msm@vger.kernel.org,m:rob.clark@oss.qualcomm.com,s:lists@lfdr.de];
 	FORWARDED(0.00)[lists@lfdr.de];
-	RECEIVED_HELO_LOCALHOST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
-	RCPT_COUNT_THREE(0.00)[4];
-	PRECEDENCE_BULK(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[rob.clark@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS(0.00)[m:gjorgji.rosikopulos@oss.qualcomm.com,m:dmitry.baryshkov@oss.qualcomm.com,m:atanas.filipov@oss.qualcomm.com,m:linux-media@vger.kernel.org,m:bryan.odonoghue@linaro.org,m:loic.poulain@oss.qualcomm.com,m:mchehab@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:andersson@kernel.org,m:konradybcio@kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:devicetree@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FORGED_SENDER(0.00)[vladimir.zapolskiy@linaro.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[linaro.org:+];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,qualcomm.com:email,qualcomm.com:dkim,oss.qualcomm.com:from_mime,oss.qualcomm.com:dkim,oss.qualcomm.com:mid];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	TO_DN_SOME(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[vladimir.zapolskiy@linaro.org,linux-arm-msm@vger.kernel.org];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	ALIAS_RESOLVED(0.00)[];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCVD_COUNT_SEVEN(0.00)[7]
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,vger.kernel.org:from_smtp,linaro.org:from_mime,linaro.org:dkim,linaro.org:mid]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: D9899728B64
+X-Rspamd-Queue-Id: A7369728D4F
 
-Add tests for new PERFCNTR_CONFIG ioctl.
+On 7/8/26 18:44, Gjorgji Rosikopulos (Consultant) wrote:
+> Hi Vlad, Dmitry
+> 
+> On 7/8/2026 3:01 PM, Vladimir Zapolskiy wrote:
+>> On 7/8/26 14:35, Dmitry Baryshkov wrote:
+>>> On Wed, Jul 08, 2026 at 01:28:46PM +0300, Vladimir Zapolskiy wrote:
+>>>> Hi Gjorgji.
+>>>>
+>>>> On 7/8/26 12:32, Gjorgji Rosikopulos (Consultant) wrote:
+>>>>> Hi Vlad,
+>>>>>
+>>>>> On 7/8/2026 11:47 AM, Vladimir Zapolskiy wrote:
+>>>>>> Hi Gjorgji.
+>>>>>>
+>>>>>> On 7/7/26 16:24, Gjorgji Rosikopulos (Consultant) wrote:
+>>>>>>> Hi Vlad,
+>>>>>>>
+>>>>>>> On 7/6/2026 10:46 AM, Vladimir Zapolskiy wrote:
+>>>>>>> <snip>
+>>>>>>>>>
+>>>>>>>>> +            interconnects = <&gem_noc MASTER_AMPSS_M0
+>>>>>>>>> QCOM_ICC_TAG_ACTIVE_ONLY
+>>>>>>>>> +                             &config_noc SLAVE_CAMERA_CFG
+>>>>>>>>> QCOM_ICC_TAG_ACTIVE_ONLY>,
+>>>>>>>>> +                            <&mmss_noc MASTER_CAMNOC_HF
+>>>>>>>>> QCOM_ICC_TAG_ALWAYS
+>>>>>>>>> +                             &mc_virt SLAVE_EBI_CH0
+>>>>>>>>> QCOM_ICC_TAG_ALWAYS>,
+>>>>>>>>> +                            <&mmss_noc MASTER_CAMNOC_SF
+>>>>>>>>> QCOM_ICC_TAG_ALWAYS
+>>>>>>>>> +                             &mc_virt SLAVE_EBI_CH0
+>>>>>>>>> QCOM_ICC_TAG_ALWAYS>;
+>>>>>>>>> +            interconnect-names = "cpu-cfg",
+>>>>>>>>> +                                 "hf-mnoc",
+>>>>>>>>> +                                 "sf-mnoc";
+>>>>>>>>
+>>>>>>>> This is the topic, which may raise a disagreement, but I'll repeat my
+>>>>>>>> position about the need to remove all "CAMSS bus" specific resources from
+>>>>>>>> the device node, they are found and should be allocated on parent's side.
+>>>>>>>
+>>>>>>> The interconnect has functionality to handle bw requests from different
+>>>>>>> clients.
+>>>>>>>
+>>>>>>> Yes the best will be to have camss interconnect, so jpeg and other hw's
+>>>>>>> to vote
+>>>>>>>
+>>>>>>> on that (actually it is possible in icc framework) but what is the
+>>>>>>> benefit of moving
+>>>>>>>
+>>>>>>> those to camss? Is it not better to create camss icc. I understand
+>>>>>>> you want them to be on parent side. But how to vote on bw? Most of the
+>>>>>>> time it
+>>>>>>
+>>>>>> Let's concentrate on hardware bindings description, no APIs, votes etc.
+>>>>>> at this point of discussion.
+>>>>> I agree but there should be an API for icc voting which Jpeg need to use,
+>>>>> currently it is fixed to some values, but voting need to become dynamic
+>>>>> at some point of time, because it depends on runtime parameters, resolution
+>>>>> format etc.>
+>>>>
+>>>> Sure, but I believe it's quite clear that any software implementation
+>>>> should be discussed only when the hardware description is fixed.
+>>>>
+>>>>>> There is SM8250 CAMSS device, which serves as a hierarchical parent (or
+>>>>>> could be considered as a "bus" device) to this new JPEG encoder device
+>>>>>> and probably to a number of future IPs under CAMSS. All CAMSS sub-devices
+>>>>>> get hardware descriptions as children device tree nodes of CAMSS parent
+>>>>>> device tree node naturally.
+>>>>> I agree the device tree is best to represent real hw topology. >
+>>>>
+>>>> Well, it's not just the best, it's the only possible way.
+>>>>
+>>>>>> Copying of the same identical information about clocks, interconnects
+>>>>>> and power domains from the hierarchical parent device to children devices
+>>>>>> is not needed, and practically it only lowers signal-to-noise ratio.
+>>>>> Here also i tend to agree.>
+>>>>>> Since information about the actual defect in hardware description is
+>>>>>> reported, the problem can and should be avoided, the handling of a better
+>>>>>> hardware description and dealing with any kind of complexity will be done
+>>>>>> in the CAMSS and/or CAMSS children drivers.
+>>>>>>
+>>>>>> If you need to get a bit more formal point of view on the matter, I'd
+>>>>>> prefer to see descriptions of hardware properties organised in a tree
+>>>>>> topology rather than in the originally proposed star topology. By doing
+>>>>>> it the system complexity is reduced from N to 1.
+>>>>>
+>>>>> Maybe I'm missing the whole picture of your proposal, but I want to add my
+>>>>> point of view on this matter.
+>>>>>
+>>>>> The JPEG encoder HW block has no dependency on the other processing HW
+>>>>> blocks in the camera subsystem
+>>>>>
+>>>>> It shares resources like camnoc, clocks, GDSC, etc.,
+>>>>> but does not share anything with the other HW processing blocks. For me,
+>>>>> the JPEG driver should not have SW architectural dependencies on CAMSS.
+>>>>
+>>>> To move forward there should be a clear answer to a simple question,
+>>>> does Qualcomm JPEG encoder IP belong to CAMSS group of devices or not?
+>>>>
+>>>> If no, then JPEG encoder device tree node shall be located outside of
+>>>> CAMSS device tree node, all resources needed for JPEG encoder device
+>>>> operation get their descrition in this stand-alone device tree node.
+>>>>
+>>>> If yes, then JPEG encoder device tree node is a child of CAMSS "bus"
+>>>> device tree node, and only resources specific to JPEG encoder device
+>>>> are described in its device tree node, because other resources are
+>>>> already described in the parent device tree node.
+>>>
+>>> 2c from my side (for both sides of the discussion). Please keep it
+>>> separate, if the block simply uses the resource which is also used by
+>>> the parent (e.g. there are no special requirements on the AHB or sleep
+>>> clocks) or if the device needs to actuall cast a vote on a particular
+>>> resource (e.g. for this to function at this performance level, the MMCX
+>>> needs to be at the turbo level OR for this to function at this
+>>> performance level it will use 123 MHz of the AXI clock). In the latter
+>>> case the resources must be described as a part of the device.
+>>>
+>>
+>> Even this "description as a part of the device" might be not quite
+>> necessary in whole, let me try to explain.
+>>
+>> No doubts resource usage policies specific to a child device should
+>> be naturally described in child device tree node, and it's applicable
+>> to any kind of hardware policies (like opp tables etc.), but a list
+>> of needed hardware resources still can be obtained (also by a driver)
+>> from the parent, whenever it is found applicable and unambiguous.
+> 
+> If that is the intention than that can be done without significant
+> changes in the jpeg driver.
+>
 
-Signed-off-by: Rob Clark <rob.clark@oss.qualcomm.com>
----
- tests/msm/meson.build     |   1 +
- tests/msm/msm_perfcntrs.c | 196 ++++++++++++++++++++++++++++++++++++++
- 2 files changed, 197 insertions(+)
- create mode 100644 tests/msm/msm_perfcntrs.c
+I won't expect any complexity on driver's side, but firstly it would make
+sense to get to the agreement how to describe hardware in a proper way.
 
-diff --git a/tests/msm/meson.build b/tests/msm/meson.build
-index 2ba5b4db2279..0a7f35662c03 100644
---- a/tests/msm/meson.build
-+++ b/tests/msm/meson.build
-@@ -1,6 +1,7 @@
- msm_progs = [
- 	'msm_bo',
- 	'msm_mapping',
-+	'msm_perfcntrs',
- 	'msm_recovery',
- 	'msm_shrink',
- 	'msm_submit',
-diff --git a/tests/msm/msm_perfcntrs.c b/tests/msm/msm_perfcntrs.c
-new file mode 100644
-index 000000000000..42f77456939e
---- /dev/null
-+++ b/tests/msm/msm_perfcntrs.c
-@@ -0,0 +1,196 @@
-+// SPDX-License-Identifier: MIT
-+/*
-+ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-+ */
-+
-+#include <errno.h>
-+
-+#include "igt.h"
-+#include "igt_core.h"
-+#include "igt_msm.h"
-+#include "msm_drm.h"
-+
-+static int
-+__configure_counters(struct msm_device *dev, bool global, unsigned nr_groups,
-+		     const char **groups, unsigned count)
-+{
-+	uint32_t countables[count];
-+	struct drm_msm_perfcntr_group group[nr_groups];
-+	struct drm_msm_perfcntr_config req = {
-+		.flags = global ? MSM_PERFCNTR_STREAM : 0,
-+		.nr_groups = nr_groups,
-+		.groups = VOID2U64(group),
-+		.period = global ? NSEC_PER_SEC : 0,
-+		.bufsz_shift = global ? 10 : 0,
-+		.group_stride = sizeof(struct drm_msm_perfcntr_group),
-+	};
-+
-+	memset(group, 0, sizeof(group));
-+	/* selecting countable 0 for each counter is fine: */
-+	memset(countables, 0, sizeof(countables));
-+
-+	for (unsigned i = 0; i < nr_groups; i++) {
-+		strcpy(group[i].group_name, groups[i]);
-+		group[i].nr_countables = count;
-+		group[i].countables = global ? VOID2U64(countables) : 0;
-+	}
-+
-+	return drmIoctl(dev->fd, DRM_IOCTL_MSM_PERFCNTR_CONFIG, &req);
-+}
-+
-+static int
-+configure_counters(struct msm_device *dev, bool global, unsigned count)
-+{
-+	/* CP group is present on all gens.. SP would be another good candidate */
-+	const char *groups[] = {"CP"};
-+	return __configure_counters(dev, global, 1, groups, count);
-+}
-+
-+static unsigned
-+get_available_counters(struct msm_device *dev, bool global)
-+{
-+	for (unsigned i = 0; ; i++) {
-+		int ret = configure_counters(dev, global, i + 1);
-+		igt_warn("%u: ret=%d\n", i, ret);
-+		if (ret < 0)
-+			return i;
-+		if (global)
-+			close(ret);
-+	}
-+}
-+
-+
-+int igt_main()
-+{
-+	/* device instance for global counter collection: */
-+	struct msm_device *dev_global = NULL;
-+	/* device instances for local counter reservation: */
-+	struct msm_device *dev_local_1 = NULL;
-+	struct msm_device *dev_local_2 = NULL;
-+	unsigned num_counters;
-+
-+	igt_fixture() {
-+		dev_global = igt_msm_dev_open();
-+		dev_local_1 = igt_msm_dev_open();
-+		dev_local_2 = igt_msm_dev_open();
-+
-+		num_counters = get_available_counters(dev_global, true);
-+		igt_info("num_counters=%u\n", num_counters);
-+	}
-+
-+	igt_describe("Multiple process should be able to reserve the same "
-+		     "counters for local counter collection");
-+	igt_subtest("perfcntrs-local-coexist") {
-+		igt_require(num_counters > 0);
-+
-+		igt_assert_eq(0, configure_counters(dev_local_1, false, num_counters));
-+		igt_assert_eq(0, configure_counters(dev_local_2, false, num_counters));
-+
-+		/* release the reservations: */
-+		configure_counters(dev_local_1, false, 0);
-+		configure_counters(dev_local_2, false, 0);
-+	}
-+
-+	igt_describe("non-conflict global and local counters");
-+	igt_subtest("perfcntrs-non-conflict-global-local") {
-+		int num_local = num_counters - 2;
-+		int stream_fd;
-+
-+		igt_require(num_counters > 2);
-+
-+		igt_assert_eq(0, configure_counters(dev_local_1, false, num_local));
-+		igt_assert_eq(0, configure_counters(dev_local_2, false, num_local));
-+
-+		stream_fd = configure_counters(dev_global, true, 2);
-+		igt_assert_lte(0, stream_fd);
-+		close(stream_fd);
-+
-+		/* release the reservations: */
-+		configure_counters(dev_local_1, false, 0);
-+		configure_counters(dev_local_2, false, 0);
-+	}
-+
-+	igt_describe("conflict, local first");
-+	igt_subtest("conflict-local-first") {
-+		int num_local = num_counters - 1;
-+		int stream_fd;
-+
-+		igt_require(num_counters > 2);
-+
-+		igt_assert_eq(0, configure_counters(dev_local_1, false, num_local));
-+		igt_assert_eq(0, configure_counters(dev_local_2, false, num_local));
-+
-+		stream_fd = configure_counters(dev_global, true, 2);
-+		igt_assert_lt(stream_fd, 0);
-+
-+		/* release the reservation for dev_local_1: */
-+		configure_counters(dev_local_1, false, 0);
-+
-+		/* should still fail: */
-+		stream_fd = configure_counters(dev_global, true, 2);
-+		igt_assert_lt(stream_fd, 0);
-+
-+		/* release the reservation for dev_local_2: */
-+		configure_counters(dev_local_2, false, 0);
-+
-+		/* now should succeed: */
-+		stream_fd = configure_counters(dev_global, true, 2);
-+		igt_assert_lte(0, stream_fd);
-+		close(stream_fd);
-+	}
-+
-+	igt_describe("conflict, global first");
-+	igt_subtest("conflict-global-first") {
-+		int num_local = num_counters - 1;
-+		int stream_fd;
-+
-+		igt_require(num_counters > 2);
-+
-+		stream_fd = configure_counters(dev_global, true, 2);
-+		igt_assert_lte(0, stream_fd);
-+
-+		/* Should fail because two counters already allocated for global collection: */
-+		igt_assert_neq(0, configure_counters(dev_local_1, false, num_local));
-+
-+		/* release global counters: */
-+		close(stream_fd);
-+
-+		/* Now reservation should succeed: */
-+		igt_assert_eq(0, configure_counters(dev_local_1, false, num_local));
-+
-+		/* release the reservations: */
-+		configure_counters(dev_local_1, false, 0);
-+	}
-+
-+	igt_describe("multiple groups");
-+	igt_subtest("multiple-groups") {
-+		const char *groups[] = {"CP", "SP"};
-+
-+		igt_require(num_counters > 0);
-+
-+		igt_assert_eq(0,
-+			__configure_counters(dev_local_1, false, ARRAY_SIZE(groups), groups, 1));
-+
-+		/* release the reservations: */
-+		configure_counters(dev_local_1, false, 0);
-+	}
-+
-+	igt_describe("duplicate groups");
-+	igt_subtest("duplicate-groups") {
-+		const char *groups[] = {"CP", "CP"};
-+
-+		igt_require(num_counters > 0);
-+
-+		igt_assert_neq(0,
-+			__configure_counters(dev_local_1, false, ARRAY_SIZE(groups), groups, 1));
-+
-+		/* release the reservations: */
-+		configure_counters(dev_local_1, false, 0);
-+	}
-+
-+	igt_fixture() {
-+		igt_msm_dev_close(dev_global);
-+		igt_msm_dev_close(dev_local_1);
-+		igt_msm_dev_close(dev_local_2);
-+	}
-+}
+So far I haven't seen any technical objections to the approach I promote,
+and since it gives complete and simpler hardware description, it might be
+preferred over anything else, it's still under discussion though.
+
+>> This is to separate planes of hardware dependencies and policies/controls
+>> needed for hardware usage.
+> 
+> Currently JPEG is part of the "camera peripheral block and support" (CPAS) in
+> the "camera subsystem" (CAMSS), CCI is there as well. Then maybe we should move
+> i2c-qcom-cci into CAMSS. Note that CCI can be used without CAMSS, and it can be
+> used for some I2C peripheral devices which are not camera-related.
+
+Pracical usage of CCI does not define its exact placement (grouping)
+on the SoC.
+
+> Also, to reflect the exact HW configuration, maybe we need a CPAS sub-node.
+> 
+> One point of view: in the hardware configuration there are no dedicated
+> camera subsystem block (CAMSS) registers (based on my knowledge).
+> Those are a group of HW blocks belonging to the camera subsystem which share
+> some resources, including camnoc, clocks, GDSC, etc.
+
+There is a number of dt bindings which introduce "Camera Subsystem" term,
+see qcom,x1e80100-camss.yaml or qcom,sm8250-camss.yaml etc. Whatever it
+is, and if there is a justification for such device tree binding to exist,
+it sounds it should be rationally and prudently exploited, for instance
+this node already holds phandles to "shared resources", this cannot be
+removed, but fortunately it can be reused.
+
+> So, based on Vlad's proposal, the changes in the different drivers will just
+> be about where they take some resources from (parent device) or the current
+> device — so the changes in the drivers will not be significant.
+> 
+
+I hope so, and my anticipation is that dt bindings will become simpler.
+If one day it becomes obvious that the properties I vote for removal are
+utterly needed, they can be added without breaking dtb to kernel ABI.
+
 -- 
-2.55.0
-
+Best wishes,
+Vladimir
 
