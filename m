@@ -1,112 +1,112 @@
-Return-Path: <linux-arm-msm+bounces-117780-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-117781-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id k4L0BPmKTmpiPAIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-117780-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Jul 2026 19:38:01 +0200
+	id At19E0iLTmp8PAIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-117781-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Jul 2026 19:39:20 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 647C9729490
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Jul 2026 19:38:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E2CA272949E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Jul 2026 19:39:19 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=S6xaUCnT;
-	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=T+Qis4Fe;
+	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=MQascg2Z;
+	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=OO6oVCpx;
 	dmarc=pass (policy=reject) header.from=qualcomm.com;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117780-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117780-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117781-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117781-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 6AEBA30A29BB
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jul 2026 17:34:37 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 5A52130D6647
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jul 2026 17:34:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2F9764A13A0;
-	Wed,  8 Jul 2026 17:34:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0B4124C0427;
+	Wed,  8 Jul 2026 17:34:42 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDAD8301471
-	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jul 2026 17:34:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 070CB4C040F
+	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jul 2026 17:34:37 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783532077; cv=none; b=KG+4YsLLzJtAK/WWTQCvm6u3iK8y2RaQ6Awx/ETQnLYjqlcJBon99TPMybBTcEiCqo3ZVTIMIS1waakpTz4goGKpqg/VddtTXHwA/yuhDAq27dOAtrEbW0I9EVtyKYqXqOW0Uld+JzIANo3gojYsPEo6fBgepXQGWGTDCI8ADoY=
+	t=1783532081; cv=none; b=O84LMJ9qAc/FBNMcQNp/p/IfqkWiICbSkOYWqeNmT2HnIXffTArJkQLfsBJNS2nz8HXvYj9gY+EQ4EgSVnW/Xp0FTIRs4kMgBCmykYPn98ZbpaR9N/KviQMFFPdil4oNdx/3RYUzchE5ipbQyq4EeABSUuNDaA8W5fshMxMRm9U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783532077; c=relaxed/simple;
-	bh=OkUH3ciOjWFg60h81ovKGMQgQf7pTQ48VJSsIXSetmU=;
+	s=arc-20240116; t=1783532081; c=relaxed/simple;
+	bh=2p5x9/agcrww/2CnFOxfT2Jfqi0IRk/KULI//snGIzk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AZvW930lvvRaVOZ2cr6GacKLAqKz8OXIquAKJ8anzv9vw3YssYkWfVdH89qoCzLRrMMYOOekHLCUbGj/6dx2wfPtUFVGL1dKQf7INrhi0YiZ1qsSJSBWAdVMHVuLOv8BBphNIrFBbnJldRfOOvh2TBhn69kULY1yDG6RHiqLEnU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=S6xaUCnT; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=T+Qis4Fe; arc=none smtp.client-ip=205.220.168.131
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 668GL5Bm3125741
-	for <linux-arm-msm@vger.kernel.org>; Wed, 8 Jul 2026 17:34:35 GMT
+	 MIME-Version; b=dWv2b2VNmGdx7DS0hNjfW1+G00z6uEM7skwcM63Hq9D3se8JLYWuzB3einJOVOg4cdzJf6vqk9L5G/2MZ+E8JlJ+TIi8Y5vQgwUKyBdsmXRzJvuyUcXoYew34lThWD1OUqKzzT7D1AYpHfnTv6UnBzqMRUgd0UsVxKQ9PsOoWNk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=MQascg2Z; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=OO6oVCpx; arc=none smtp.client-ip=205.220.180.131
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 668GL4Nr3347340
+	for <linux-arm-msm@vger.kernel.org>; Wed, 8 Jul 2026 17:34:36 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=vOFiS3gWQCJ
-	aLhFgxBelkuMdy2oPlvu9rT+AQ3nGeTg=; b=S6xaUCnTQnFBBaVo/g2/kFoTUia
-	+Wdp8+ZznsOU9ZoACXIvPFMZlSbGyVVAmeeEzEL42RKkxSqR4cNE3MrqUGZvVUku
-	B/TS1/UIQ51DIWbkwbTqzNe4VqoUUo3Xj/Ksj1DFDw3t+PMAGb2qN35T/2GOqCII
-	UxTfZvDvQnWqKnpID33AmWJHqoWo9P106iqWFnfW4gAR89Pu65Z69SRxLDQjOQGq
-	CWCQ28OF6bLaxBy2T+eRgo9SVJ4UOD2DuTl80i4WgqCae+d8CjEJ8SRsLFBPi+Nk
-	Ys/62emyyIfvmT5/K94JC89aRAnv6u6YcNTfj42R0rcw5EFlqaZeTZ46FkA==
-Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com [209.85.210.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f9q5s9a0a-1
+	:mime-version:references:subject:to; s=qcppdkim1; bh=F2lLFVQBkCP
+	nTnJ/UWIANHD/oq/CxWFvXtTUGL+m60Q=; b=MQascg2ZVBCkz2MZGg7FtMDgJ1B
+	87BiOgr3V9ujZIsNHjPQsRyI4LMd+VdMBgTzr8YKwc8sw+SNY3bljU5pMzKKtbIv
+	63JOTk7xaS+3XmregnEGcwOaoekNMPUE4hYVI4G/DTNUsTY4GQ3BCI+bywDvSDjR
+	rLbMVsuo2XYZcKRHo/mSImoyZTWpSwChzHQ25q0wznPaMu7CHhydZOvENwqRBHop
+	boYK1blOVuw4VtHkRtbNd5XarWswMf0hOXsVxpG/jdKAyzXY3tsMWFx2XMGG7GAh
+	yP+izT2eiYnRvIf/DoZ5T8i/926wCgyVxv5evere+pu/J5VzT2mz1m/tvhw==
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f9sqs8d51-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jul 2026 17:34:35 +0000 (GMT)
-Received: by mail-pf1-f199.google.com with SMTP id d2e1a72fcca58-848452dd146so2368830b3a.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jul 2026 10:34:34 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jul 2026 17:34:36 +0000 (GMT)
+Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-2ccafc5e82cso12925235ad.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jul 2026 10:34:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1783532074; x=1784136874; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1783532076; x=1784136876; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=vOFiS3gWQCJaLhFgxBelkuMdy2oPlvu9rT+AQ3nGeTg=;
-        b=T+Qis4Fe6O0oT1Bq0DxUivnkn/JAV2zhnL0yTBuG21L6Q52A/1DhHIiUeHaw2DDA7h
-         J/bLbcJP34Q5DG/d18eguwrelK2sH29YJfJ1pXUplDZEICghjcUswyW04wV9IILp277q
-         jhb/qShJb3rqZThu7paP6MpSR7yTzrzMu8brl+/ffAylQwMjE2KrNxrTOLRBrvSAklNW
-         qrMuiepTWALfX1qct+32rRMdf9+WuKiErRxLh+zQn6X9unJh0NEPYV8YVmg7gyTS/rWi
-         0QqRNHtLPKJsgFszbzqIh3y3819aqeQtF2DFwLdRwJzf4k4W+x5dDQ1LEz/piAloYnNL
-         kU4Q==
+        bh=F2lLFVQBkCPnTnJ/UWIANHD/oq/CxWFvXtTUGL+m60Q=;
+        b=OO6oVCpxXylIegoDB2ZCq3G99AjYKoGWY/mWPJ3mbZmJ4htpGC67zOCiB4t95bkBtu
+         KLLvNtrmrQu6PEuFVfwHfXgE+uoV5WSMEcavojk0QYvwqzNks1Atms3h9wxHNFMlXdjt
+         N0VkXq727VWT0NEbJrvIc8c3+zxiEiZPfnN3Vhmu8MuHf8LMpudaHZP7jquvhUVrspsC
+         7LrdZdeX90Kk0PODs76WJyI6dlNpigoNGBqXbdl5QF1DxVbh+b6Fbx53PSIplVA7eCci
+         NDUr/mPz8dPpsNtmgkTUCkNlV5F1UfUQd/8FcW+uA81A0mx3LkFmdjqe3o6WOnCJZ1JG
+         eUAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783532074; x=1784136874;
+        d=1e100.net; s=20251104; t=1783532076; x=1784136876;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=vOFiS3gWQCJaLhFgxBelkuMdy2oPlvu9rT+AQ3nGeTg=;
-        b=OCcrd5VAqvVV0yQVc/fqtvDTW6i4FseDCh5y5i3+zTLdNY0uvkKRwILXhtNVgjm4a8
-         vhptl2lcez1cDNxtktc3EwMeXZ8TGf0zH5WjXgmpfY0R/MSjXAF0V+Vk1NAm0u2ePZg1
-         WbE7r1cfyfCpKW1I/CmALR3cma0tr3HmeLieclxt4uxbjnq0IhE1WLCX6D1MOuFxx88N
-         IOOd6DmwY5URtuJIhOdz0OI4/xwiOVhzAWDYcgbnekfba4fj8Oy307ZyWqGbcnNYRV2l
-         pxNrZ83EUnMcKeSQJ2xzuauEJ+hjf0+R8v0AvWAhtWUuvAkmketUcp7FRTSPlx24PQdX
-         9wqQ==
-X-Gm-Message-State: AOJu0YwTcvb4QP/vfsKgL4TF719zLbXd/peuO6lmJLwYw+oDPj84yHwv
-	aQ+p/sSyiEe/k9Q9N1ZWSn9S7NC5qVEQ0g54nnspYpElPsHx4NwQ1csmkQsmbEG1bFQEoYy2o7f
-	xvOZRb35WoRthscfs5IjS9DR4euDhhrAn+nxOx9b/u2AnSZsHM4WPk0M03QfD2VUUUHdK
-X-Gm-Gg: AfdE7ckUqGxQjQLv7EhyAlNlDSoSLFXIZE3rDqVnLOlw7M5/auRU+xFnBhsHNN5frTn
-	QafPhvEDANTXEqzj9fbooF0fn/mTNiH1gDq0gq/0B0glvXuZCUdKFCaxoldtoLd09bAI9bMjSdh
-	jgCoLIEyjU5DumBDELDtg64v3BZO4Sl505kVduK2BJcPG1jewlqmtGLS6erXVk3n5YTwXRovrfO
-	CEqQKP7GLuZ6NRSnP6bCGeZDgPlB6+fKJpCNewHIf2XuXTtqVYHA9RzK/0BBxdLX6y9aHxSnH2M
-	upIFJ4uE9ghewPzAGVpzlKmAKHaM5IcGMr3RWH4/AomAE+NN5OFRRDxJFmBzVfohYHcCZeJuZKZ
-	Nghp7AqN93pK4Aw07rpRt1GbwRVpnIAh+L6EshPtJKE0WCi6p8YukPM9liQ==
-X-Received: by 2002:a05:6a00:17a0:b0:848:55d3:c890 with SMTP id d2e1a72fcca58-84855d3c8cfmr187827b3a.30.1783532074379;
-        Wed, 08 Jul 2026 10:34:34 -0700 (PDT)
-X-Received: by 2002:a05:6a00:17a0:b0:848:55d3:c890 with SMTP id d2e1a72fcca58-84855d3c8cfmr187797b3a.30.1783532073913;
-        Wed, 08 Jul 2026 10:34:33 -0700 (PDT)
+        bh=F2lLFVQBkCPnTnJ/UWIANHD/oq/CxWFvXtTUGL+m60Q=;
+        b=USaPXc2lbJgdzlWizMn1mFFxxnhsB14eceFxeaWgyqU1Y/AvPjUH2Fsx3H5ubxEBwz
+         sYHyW6ITlsESFe4NCXMBGcJKuoyr81zEUfMOo/+M6sXISZ2H5UyXwHx9siBkb2E1g4v7
+         T2B4TvNhpEhFxM5QDCvBRUNP4Jdpc+tPd+CeycHd1IDVwe61XfoYVFb+sPqAiSe9Vjph
+         qCOPQaR/BFtNRutKBEsNALL2PAPlUTIrwFYne4WdDYh5lpI63qIJTMxB1XDaXe38be5R
+         5jArPhnuHKKp6VTI5mQBKcw3+s3ZDB/X84cUrQA+q5AZf/ycHzbIgNjoiPdbYtOsE33p
+         /uOQ==
+X-Gm-Message-State: AOJu0YwGM0hvKqJnB6kLbzkYY3mpF3k1COaQ58vhC9tD0t/DGvAak3CC
+	SAqSFeAVbPWYPZEoxW6gge656xXFAhmo2MxydCTw+wFObzon1rWep9OSLhJN6lxfFybotEXB/cy
+	eJ9VKPaYZe4+QrW/jqsqS0HMnxVUeRw13mCz/kLrrmDzYb+8MZE5C4aNDUBbNEhUVOZsQ
+X-Gm-Gg: AfdE7ckxla6s26+Afr89DbmZxu0t08Lbb9eKgvzVTlNh1CpVl5D+yi91rFe3es6Xdkk
+	IlIm/ceStiVvq0Bfk+3ZAg0YztodpenkZQLjm97Lb/nX83ipWOkCXeA3FYS65vzB/kpHZk5Y4mJ
+	paTHpL9pWkKdlYui7pkpGX8O19eYPXyNJYH5W+58+wN4ZIE9GcuQY5rwb1+XFdr8RXHH4vFWCJs
+	RaHw2EsGz0mreV5Us9uqnhpBGyQ/U+2A40JH5E8Pk6rC/t4wJtGDBQfF5ePte5tGoDDAXZCB9HU
+	25CbpAAoTfys1q6jB1kfRe6tUj6ul7aD2Xuh+2m/mBOhqOXrlF/114xdTraN1T/qr8NmLf5MpVW
+	snzDrhhVT3sDOPvBP5fi9bDSh1tzwlnfLnqAFAs/uk6WLdqw3DFut+RwvQQ==
+X-Received: by 2002:a17:902:f685:b0:2c9:e2c1:4fb5 with SMTP id d9443c01a7336-2ccea40b669mr33698075ad.22.1783532075697;
+        Wed, 08 Jul 2026 10:34:35 -0700 (PDT)
+X-Received: by 2002:a17:902:f685:b0:2c9:e2c1:4fb5 with SMTP id d9443c01a7336-2ccea40b669mr33697755ad.22.1783532075114;
+        Wed, 08 Jul 2026 10:34:35 -0700 (PDT)
 Received: from localhost (c-73-37-105-206.hsd1.or.comcast.net. [73.37.105.206])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-848414a34f7sm1423977b3a.44.2026.07.08.10.34.33
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ccc9bfb7aesm31438345ad.29.2026.07.08.10.34.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Jul 2026 10:34:33 -0700 (PDT)
+        Wed, 08 Jul 2026 10:34:34 -0700 (PDT)
 From: Rob Clark <robin.clark@oss.qualcomm.com>
 To: dri-devel@lists.freedesktop.org
 Cc: linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
         Rob Clark <robin.clark@oss.qualcomm.com>,
-        Dmitry Baryshkov <lumag@kernel.org>,
+        Sashiko <sashiko-bot@kernel.org>, Dmitry Baryshkov <lumag@kernel.org>,
         Abhinav Kumar <abhinav.kumar@linux.dev>,
         Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
         Marijn Suijten <marijn.suijten@somainline.org>,
         David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
         linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v4 2/6] drm/msm: Block VM_BIND for shared VMs
-Date: Wed,  8 Jul 2026 10:33:50 -0700
-Message-ID: <20260708173356.578713-3-robin.clark@oss.qualcomm.com>
+Subject: [PATCH v4 3/6] drm/msm: Validate lazy VM is created in GEM_SUBMIT
+Date: Wed,  8 Jul 2026 10:33:51 -0700
+Message-ID: <20260708173356.578713-4-robin.clark@oss.qualcomm.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260708173356.578713-1-robin.clark@oss.qualcomm.com>
 References: <20260708173356.578713-1-robin.clark@oss.qualcomm.com>
@@ -117,33 +117,32 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA4MDE3MiBTYWx0ZWRfXzpj37aVETlnI
- Y9vZOhR93CoIRjun+w4XWMWnKNkFBA2dEOPtocOnxM5U5zVs27gxL4jhA+ctgXPykiUGdc1hOGq
- nZdQzJH5KIcdiadLRyAl0hpfHP+qmRKU+ap9WBYRu626PKU3owNWL8+k36eirelL3dbCl3g0y9x
- ztMjLboQpkHMqu3K/absGlVWjEUz+yNg08CnRg5e14qHrooch7CFRdnwBkijpOwOvvYY7WI6eSq
- BlAszcHH0GkAxtMyOPK+c2s2QVg1CnEe66hVW4mXdsLnV8snbuYRBbXWCATV26hhBoCtDd3C0AO
- W7qU5CEdPZrbJ8YRBElQcci3nyB3DACMM0Iz3fvB5ayAux/kVa+NQtdJ8phesi8x5cAwcVt6V0R
- FyY9bK8tcXg/etiX9ZSO0B0QP0ocmAIA4lqTeVo7K8SeoQb9hVXH72IJae/CqWxHs2Pv7IweJD9
- WMNGwc9YyLE/j6yU2jg==
-X-Proofpoint-ORIG-GUID: PnMgSDwEhf6vZHoLDk1cmMsfno5sARgh
-X-Authority-Analysis: v=2.4 cv=NfTWEWD4 c=1 sm=1 tr=0 ts=6a4e8a2b cx=c_pps
- a=WW5sKcV1LcKqjgzy2JUPuA==:117 a=19Wyn7e3V/0aNffMjNCMQw==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA4MDE3MiBTYWx0ZWRfX4sErqE33LpYf
+ rUNu5J7TMqAiABZthMMnCryNHFrEu89UeemFnit7iVCNqa5AxPviCr6Z3DijAgyrYlxt+Ny1MOQ
+ HcORnTNCx6vK+SChgdtQVUvnnZzNKt4=
+X-Proofpoint-GUID: vjYFDE3qdNXTr9UbfIiEC51-y8uLNf9s
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA4MDE3MiBTYWx0ZWRfX3ILoSGQNqjyj
+ 6X3lkXWjnE1E+/josHsfjjMBG8Hy3T4CqDjzG0bVHvPBJ7WANcTVT/B96pz8UmNCr6vhx10mpfk
+ MfkHiYotxPfssC6CTWbj7HHaF24a4S+oOs6f4Vk53EQx/JD5s3HR4OqEfrsGKjS4KsiF+F/Q3yN
+ 1s1WEWh3dJr8/8H3Zr8O4R0Z5sgZaV5viZ3b5Zu0y/WBfHY6N9mdp0J0+o5LlSBdewv679uelAv
+ IcN6byaSKN/LmWMw03MWSiy02b7cO5U/vUo4IsKP+5DzaYKQPD0/9w7qwB5OBsFPikobP3KFtDN
+ 7aXrXY5W5nbk0CgJUMUk9x0/EftJ0CXWhSJFwuaGlXwK9hAEG5BDLlQNDzUpijtKkPXxQn1IQSo
+ WQ/O7wRQBw8kvug143XwrSA8LOOvZVBAGoB1fRvYiBp1GvHlA3m9leQtpOlaPWyK9kQIH2aQH6l
+ Sg98T+xPrZ2yte8ZI/Q==
+X-Authority-Analysis: v=2.4 cv=Sv2gLvO0 c=1 sm=1 tr=0 ts=6a4e8a2c cx=c_pps
+ a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=19Wyn7e3V/0aNffMjNCMQw==:17
  a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22 a=EUspDBNiAAAA:8
- a=GoQzj6LmqzT0DKjVJ_UA:9 a=OpyuDcXvxspvyRM73sMx:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA4MDE3MiBTYWx0ZWRfX6oCHTuVehj3M
- e1MZWVBOYaWMzhwpgmDISt78iu808925gNbjQkSswFBvw3NIu7P0mjoW4zd2Lp1gusJ1Gj3vJ+v
- TLc1dDWVHIIicrjOLt47V0s0Sn4ztzc=
-X-Proofpoint-GUID: PnMgSDwEhf6vZHoLDk1cmMsfno5sARgh
+ a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22 a=VwQbUJbxAAAA:8
+ a=EUspDBNiAAAA:8 a=ZH_LIYEqPuu6AAuj7cUA:9 a=GvdueXVYPmCkWapjIL-Q:22
+X-Proofpoint-ORIG-GUID: vjYFDE3qdNXTr9UbfIiEC51-y8uLNf9s
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-08_03,2026-07-08_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 suspectscore=0 phishscore=0 bulkscore=0 clxscore=1015
- priorityscore=1501 impostorscore=0 malwarescore=0 adultscore=0
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607080172
+ spamscore=0 adultscore=0 priorityscore=1501 suspectscore=0 malwarescore=0
+ impostorscore=0 lowpriorityscore=0 clxscore=1015 bulkscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607080172
 X-Rspamd-Action: no action
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	MID_CONTAINS_FROM(1.00)[];
@@ -157,12 +156,12 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
 	FREEMAIL_CC(0.00)[vger.kernel.org,lists.freedesktop.org,oss.qualcomm.com,kernel.org,linux.dev,gmail.com,poorly.run,somainline.org,ffwll.ch];
-	RCPT_COUNT_TWELVE(0.00)[12];
-	TAGGED_FROM(0.00)[bounces-117780-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[13];
+	TAGGED_FROM(0.00)[bounces-117781-lists,linux-arm-msm=lfdr.de];
 	FORGED_SENDER(0.00)[robin.clark@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	RECEIVED_HELO_LOCALHOST(0.00)[];
 	FORWARDED(0.00)[lists@lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:dri-devel@lists.freedesktop.org,m:linux-arm-msm@vger.kernel.org,m:freedreno@lists.freedesktop.org,m:robin.clark@oss.qualcomm.com,m:lumag@kernel.org,m:abhinav.kumar@linux.dev,m:jesszhan0024@gmail.com,m:sean@poorly.run,m:marijn.suijten@somainline.org,m:airlied@gmail.com,m:simona@ffwll.ch,m:linux-kernel@vger.kernel.org,s:lists@lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:dri-devel@lists.freedesktop.org,m:linux-arm-msm@vger.kernel.org,m:freedreno@lists.freedesktop.org,m:robin.clark@oss.qualcomm.com,m:sashiko-bot@kernel.org,m:lumag@kernel.org,m:abhinav.kumar@linux.dev,m:jesszhan0024@gmail.com,m:sean@poorly.run,m:marijn.suijten@somainline.org,m:airlied@gmail.com,m:simona@ffwll.ch,m:linux-kernel@vger.kernel.org,s:lists@lfdr.de];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
@@ -180,79 +179,66 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
 	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 647C9729490
+X-Rspamd-Queue-Id: E2CA272949E
 
-We already block MSM_PARAM_EN_VM_BIND where per-process VMs are not
-supported.  But in error paths when we actually try to create the VM
-(allocation failures, etc) we could still end up with a shared-VM.
+Otherwise a GEM_SUBMIT ioctl before any BOs are mapped could cause a
+NPE.
 
-Since we need to create the VM lazily, for backwards compat, there
-isn't really a better place to return an error.  But this isn't to
-happen in practice.  Just block VM_BIND ioctls in this case so we
-aren't giving userspace a way to manage the shared VM.
-
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Fixes: 6a4d287a1ae6 ("drm/msm: Mark VM as unusable on GPU hangs")
 Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 ---
- drivers/gpu/drm/msm/msm_gem_vma.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/msm/msm_gem_submit.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/msm_gem_vma.c b/drivers/gpu/drm/msm/msm_gem_vma.c
-index 3ed05ab0eeef..06a3f2aa3ef0 100644
---- a/drivers/gpu/drm/msm/msm_gem_vma.c
-+++ b/drivers/gpu/drm/msm/msm_gem_vma.c
-@@ -954,7 +954,7 @@ msm_gem_vm_close(struct drm_gpuvm *gpuvm)
+diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
+index 3c6bc90c3d48..56929e821200 100644
+--- a/drivers/gpu/drm/msm/msm_gem_submit.c
++++ b/drivers/gpu/drm/msm/msm_gem_submit.c
+@@ -30,7 +30,7 @@
+  */
  
- 
- static struct msm_vm_bind_job *
--vm_bind_job_create(struct drm_device *dev, struct drm_file *file,
-+vm_bind_job_create(struct drm_device *dev, struct drm_file *file, struct drm_gpuvm *vm,
- 		   struct msm_gpu_submitqueue *queue, uint32_t nr_ops)
+ static struct msm_gem_submit *submit_create(struct drm_device *dev,
+-		struct msm_gpu *gpu,
++		struct msm_gpu *gpu, struct drm_gpuvm *vm,
+ 		struct msm_gpu_submitqueue *queue, uint32_t nr_bos,
+ 		uint32_t nr_cmds, u64 drm_client_id)
  {
- 	struct msm_vm_bind_job *job;
-@@ -971,7 +971,7 @@ vm_bind_job_create(struct drm_device *dev, struct drm_file *file,
- 		return ERR_PTR(ret);
- 	}
+@@ -66,7 +66,7 @@ static struct msm_gem_submit *submit_create(struct drm_device *dev,
  
--	job->vm = msm_context_vm(dev, queue->ctx);
-+	job->vm = vm;
- 	job->queue = queue;
- 	INIT_LIST_HEAD(&job->vm_ops);
- 
-@@ -1430,6 +1430,7 @@ msm_ioctl_vm_bind(struct drm_device *dev, void *data, struct drm_file *file)
+ 	kref_init(&submit->ref);
+ 	submit->dev = dev;
+-	submit->vm = msm_context_vm(dev, queue->ctx);
++	submit->vm = vm;
+ 	submit->gpu = gpu;
+ 	submit->cmd = (void *)&submit->bos[nr_bos];
+ 	submit->queue = queue;
+@@ -554,6 +554,7 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
  	struct msm_drm_private *priv = dev->dev_private;
- 	struct drm_msm_vm_bind *args = data;
+ 	struct drm_msm_gem_submit *args = data;
  	struct msm_context *ctx = file->driver_priv;
 +	struct drm_gpuvm *vm = msm_context_vm(dev, ctx);
- 	struct msm_vm_bind_job *job = NULL;
+ 	struct msm_gem_submit *submit = NULL;
  	struct msm_gpu *gpu = priv->gpu;
  	struct msm_gpu_submitqueue *queue;
-@@ -1448,7 +1449,7 @@ msm_ioctl_vm_bind(struct drm_device *dev, void *data, struct drm_file *file)
- 	 * Maybe we could allow just UNMAP ops?  OTOH userspace should just
- 	 * immediately close the device file and all will be torn down.
- 	 */
--	if (to_msm_vm(msm_context_vm(dev, ctx))->unusable)
-+	if (to_msm_vm(vm)->unusable)
+@@ -572,7 +573,7 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
+ 	if (args->pad)
+ 		return -EINVAL;
+ 
+-	if (to_msm_vm(ctx->vm)->unusable)
++	if (vm && to_msm_vm(vm)->unusable)
  		return UERR(EPIPE, dev, "context is unusable");
  
- 	/*
-@@ -1456,7 +1457,7 @@ msm_ioctl_vm_bind(struct drm_device *dev, void *data, struct drm_file *file)
- 	 * place, if you haven't opted in to VM_BIND context.  But it is
- 	 * cleaner / less confusing, to check this case directly.
- 	 */
--	if (!msm_context_is_vmbind(ctx))
-+	if (to_msm_vm(vm)->managed)
- 		return UERR(EINVAL, dev, "context does not support vmbind");
- 
- 	if (args->flags & ~MSM_VM_BIND_FLAGS)
-@@ -1479,7 +1480,7 @@ msm_ioctl_vm_bind(struct drm_device *dev, void *data, struct drm_file *file)
+ 	/* for now, we just have 3d pipe.. eventually this would need to
+@@ -609,7 +610,7 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
  		}
  	}
  
--	job = vm_bind_job_create(dev, file, queue, args->nr_ops);
-+	job = vm_bind_job_create(dev, file, vm, queue, args->nr_ops);
- 	if (IS_ERR(job)) {
- 		ret = PTR_ERR(job);
- 		goto out_post_unlock;
+-	submit = submit_create(dev, gpu, queue, args->nr_bos, args->nr_cmds,
++	submit = submit_create(dev, gpu, vm, queue, args->nr_bos, args->nr_cmds,
+ 			       file->client_id);
+ 	if (IS_ERR(submit)) {
+ 		ret = PTR_ERR(submit);
 -- 
 2.55.0
 
