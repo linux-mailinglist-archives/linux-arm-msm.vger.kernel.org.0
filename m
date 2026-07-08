@@ -1,67 +1,68 @@
-Return-Path: <linux-arm-msm+bounces-117701-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-117702-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id MWI/G2poTmp8MAIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-117701-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Jul 2026 17:10:34 +0200
+	id XAYSFnFoTmp/MAIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-117702-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Jul 2026 17:10:41 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id C5660727C96
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Jul 2026 17:10:33 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 70EB4727CA2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Jul 2026 17:10:40 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=lUqI4lvo;
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=lTdnqPoR;
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117701-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117701-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117702-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117702-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 1C86431135C8
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jul 2026 14:58:07 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id E77EB3179334
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jul 2026 14:58:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E2F694ADD8E;
-	Wed,  8 Jul 2026 14:57:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CB1F04C6F08;
+	Wed,  8 Jul 2026 14:57:14 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CC7B48AE3D;
-	Wed,  8 Jul 2026 14:57:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FD4F449EB8;
+	Wed,  8 Jul 2026 14:57:13 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783522633; cv=none; b=cMt9wlJN5yqhqzWY/TxGEmlRwpUYstFvmBqLl/Go0N9+0gmx2RfdyDYrmxUdqp4lWnzOqr43nlNR3t1D17Kh+mWwJ0Q5slhi1mfVMBqk4mVtfb/Q2EmTZEI9PH0XIol0LGzyGSHpevTNmMltpE2UaGi8HX3+DahwJezQf/5y+2w=
+	t=1783522634; cv=none; b=Gp4rNYplVpadXSrD4q+kG0alwhgcEZzpbgGjheGWOFmE2Z3MsGRfYHlQyv8se1JhELGr40r3rbberbvY1zwxc7QrzWlszmDHMOvHc/cIDyFs2ByS2c8kCJOsCbCDnEnjEfPQbZvVbWjqvUbHITWWOslTFc4kGvWM4dUFiPGWIx8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783522633; c=relaxed/simple;
-	bh=KHvpPBJ9g9Gg1lCuGqlfBAlVJKW1ZkacfwGZx5h7TqQ=;
+	s=arc-20240116; t=1783522634; c=relaxed/simple;
+	bh=pIGSnfnIYwLJBEI78MzuESZyh91XSirlEed4svHdw0E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=X7cCo+i7U2WK8iW+t3ojmtgFl/8+KsZXKnyPgXrbNreKQYgbT346rpZuJiZyx1/nnpZBM27TVIe7szu+8vgJqOhhQC0WUsfe4AhisWNQgTTcZJTNFS0Ps9S2Ofu05eE8Ov4YYxC2JI0L/77ROKD43rXtkn4P8tMh+4zcgIP5lTU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lUqI4lvo; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1FC41F00A3A;
-	Wed,  8 Jul 2026 14:57:11 +0000 (UTC)
+	 MIME-Version:Content-Type; b=jMDcLoHDDSKHxoUegzkwNfYy/Rbb+e68EnEHMJcbxJC5CzRcYJVVZjrljffRJIonXA5KngeRtxMTqRCTawpHlx6YFjMhgfbmHnDMAvI2Lr2N7WfpJciqePsP6LfjejlmtG1NdFBuz1yiTeOR30cBFurTxTa4KRc2jwrv7CYnaXo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lTdnqPoR; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B824E1F000E9;
+	Wed,  8 Jul 2026 14:57:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783522632;
-	bh=htW2xuaAsxZUmNWQEg3/DdzPn68br+nF6JQkk4jdEXM=;
+	s=k20260515; t=1783522633;
+	bh=4uQ508Bd0bc7mLaC8m4/5Bx9glijirQQhS/Y3+JS85M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lUqI4lvo4WxTi0dplNHvINUnRx9nowpL4ZVYBr4u+HLSvYluWlCMBfvBPJp5FVROn
-	 bL4aj5PFzDt2ch9fKK3yQMDfTaqmdEQ/fcbjNCexlPKKnYcxAWrUUm0NGe/Ri747+A
-	 ZDha3fe0DpATLSBfkmrkjKe1rUcHxGp12/VMAXLpU0L4gwSJowz6pjnVtv58NRli6v
-	 S482eXJag3yKM1p2DVPGXfKaDR4OA/GGw9LYXQGTLxfho9g/ddkMOS6S1TPHr69D13
-	 QFoeL/qh0FjMP9fvPBojmi8+YzRMBnRA1KzOx10pNGA3CQv869egk+BGFWxUs3D9to
-	 QvDnZ67PSbs0g==
+	b=lTdnqPoRR2/WAo6YbJXwb3q9OuIrrTONc1Euw681gfZgUVeOEHhDfWn4bD2QMO2qn
+	 gueOmOS40Em6j28bhSYYjitFMaAZ1ww5NPg6RKqh3PBYwx2VNsJIMpdW3NVbh9XGnM
+	 MLxbGd8QUcu67uuQDdwsLmkQ2ZulJ5J2fWLN2tKyCz4GDAe5/7hrkZWTXsNdm3uEhu
+	 0ucloBjzgGuKiPcePpzD7OeXX57ljiE9tL9KE4zCbHE//U8dsF5i72V3VxB51ezt7t
+	 GFOuWRQWQRuBFHptqVgUSy/3NJvW+ePZpOkWY/jJCeJ+nFa/P+qmCPb1IypNj2V3w6
+	 BJgyDdG/M7pLQ==
 From: Bjorn Andersson <andersson@kernel.org>
 To: Konrad Dybcio <konradybcio@kernel.org>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	David Heidelberg <david@ixit.cz>
+	David Wales <daviewales@disroot.org>
 Cc: linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	phone-devel@vger.kernel.org
-Subject: Re: [PATCH 0/2] Convert qcm6490 framebuffers to use memory-region
-Date: Wed,  8 Jul 2026 09:56:13 -0500
-Message-ID: <178352261578.2235436.1819010224401346759.b4-ty@kernel.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: (subset) [PATCH v4 0/2] Add initial device tree for Motorola Moto G (2014)
+Date: Wed,  8 Jul 2026 09:56:14 -0500
+Message-ID: <178352261576.2235436.17200055989994996286.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260607-shift8-fb-v1-0-72b9dac25f4a@ixit.cz>
-References: <20260607-shift8-fb-v1-0-72b9dac25f4a@ixit.cz>
+In-Reply-To: <20260605-device-motorola-titan-mainline-v4-0-08a7be31f05c@disroot.org>
+References: <20260605-device-motorola-titan-mainline-v4-0-08a7be31f05c@disroot.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -75,14 +76,14 @@ X-Spamd-Result: default: False [-5.16 / 15.00];
 	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-117701-lists,linux-arm-msm=lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:david@ixit.cz,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:phone-devel@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	TAGGED_FROM(0.00)[bounces-117702-lists,linux-arm-msm=lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:daviewales@disroot.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:krzysztof.kozlowski@oss.qualcomm.com,m:konrad.dybcio@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
 	MIME_TRACE(0.00)[0:+];
@@ -97,27 +98,33 @@ X-Spamd-Result: default: False [-5.16 / 15.00];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[9];
+	RCPT_COUNT_SEVEN(0.00)[10];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,vger.kernel.org:from_smtp]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,vger.kernel.org:from_smtp]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: C5660727C96
+X-Rspamd-Queue-Id: 70EB4727CA2
 
 
-On Sun, 07 Jun 2026 16:12:17 +0200, David Heidelberg wrote:
-> Now that upstream u-boot recognize it, no reason to not do.
+On Fri, 05 Jun 2026 23:19:10 +1000, David Wales wrote:
+> The Motorola Moto G (2014) is the second device in the Moto G series,
+> with codename motorola-titan.
 > 
+> This series documents the motorola-titan, and adds an initial device
+> tree.
 > 
+> These patches have been previously discussed and merged into the
+> downstream msm8226-mainline fork:
+> https://github.com/msm8226-mainline/linux/pull/18
+> 
+> [...]
 
 Applied, thanks!
 
-[1/2] arm64: dts: qcom: qcm6490-shift-otter: Convert fb to use memory-region
-      commit: 97c5fe2c932bfb1857f0f29e2f1389a20264c304
-[2/2] arm64: dts: qcom: qcm6490-fairphone-fp5: Convert fb to use memory-region
-      commit: dcef71a03f5bb375a5da48b666ad47c6c8855278
+[2/2] ARM: dts: qcom: Support Motorola Moto G2 (2014)
+      commit: 28236bb8f50216fe98f895b31d593e8d8ddb8a27
 
 Best regards,
 -- 
