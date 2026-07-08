@@ -1,69 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-117743-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-117744-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id w5hfOzpqTmr6MAIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-117743-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Jul 2026 17:18:18 +0200
+	id O2/xJVlqTmoLMQIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-117744-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Jul 2026 17:18:49 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 34805727E1D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Jul 2026 17:18:18 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 23069727E47
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Jul 2026 17:18:49 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=XMriGhP8;
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=KsnO1C7T;
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117743-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117743-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117744-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117744-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 9D79A305BEDE
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jul 2026 15:06:00 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 7D00D30734CB
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jul 2026 15:06:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6AA88435EF1;
-	Wed,  8 Jul 2026 14:57:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 21BE0437106;
+	Wed,  8 Jul 2026 14:57:56 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D83D435EC7;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE80A435EDF;
 	Wed,  8 Jul 2026 14:57:54 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783522675; cv=none; b=nGemE/+xgwaUQYpztAHlByXetvA3q1sAZhAsQIX/8PbsizTcOuUB+sh0z4n9ALfIcTVfSpaSB/0Z7UQZPj2mjEtgzNQ+SP9rZDcymwzxtEavuKWOZtLMGn5LpwkhYSNkR4WM706CWz6ACsyerT+B3iyxFQRj5oC74Jp/bAjvYM0=
+	t=1783522676; cv=none; b=O6H7IngZmsPglEuauJCNEzpxUlUUVHRuc0JneozPkVRywP7FHSfeoBbhqNBnuN4xoIT5uWapFpuDJlieFFeUc1gOoAgSHWG0ILYzSaBYEcj2WGkNksXK/i2EK0lYDRuth5bkN5MD5JOhrE6eERAN+tpYaifCnPLwuI4uFL+zvuc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783522675; c=relaxed/simple;
-	bh=uuMSw6Dk4iYoG20x2JY3IpRhdtK5oRn6nHPTzzAdjRM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=d43vKOg6oTie8C+kxQ8Ho+lBVn8wZhfCbt+DXgVLR29XXOIjXUhjlSBqna6PFdupVaE6T6fq5NmsJ7MCTvX3DgWdUSLxwYNY/srm5CqgUTU/PNskktUWI0ZRr18Z4LYVroNgTZeQgNIH1boAFgQiSTy18xYqDDEk7YDo09amYzw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XMriGhP8; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69FD91F00A3D;
-	Wed,  8 Jul 2026 14:57:53 +0000 (UTC)
+	s=arc-20240116; t=1783522676; c=relaxed/simple;
+	bh=tp52LrfSImDGSo+JlQyXbjMZIj+DCt3H9EfnuYSW88g=;
+	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=IdMJip3yetKaGhkBkvpCkdwvW1R7a9XiVHSufoOqFHRkuwBCPULKE8AFSoeJ3+OEbuycE4uagEu7SATt0isskjHLYRrZcCr97ouWbGI9MiNAGhKLelvT0C38UOHEdO9jjJG74ZMp26GLAKNmM7jVS/uFG2x9WeKmJmmlo6HeBBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KsnO1C7T; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AA161F00A3E;
+	Wed,  8 Jul 2026 14:57:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
 	s=k20260515; t=1783522674;
-	bh=vyfyghuXYCD3LhgDfkXl0FNzl+5sEqekPde3hzUTV1w=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XMriGhP8oDWf5DLwqlbyhz7vY2SzRaxFJa9zhXsVxYWySGErP7O+Zwpv/4QJP0nbC
-	 dTI+nPylrtwI6VyzLrC+PxxVMnJP/59TUlmbc0QTXnr9+91blHN2bLBF9IBOIPrJ2B
-	 vN3JAMuqhf4OHwqTbu7XALdYxPpXzn8pWAy1+WMRBMNzgKMn14NiHcsoW1Tje5M7AV
-	 adT7e1G7bpCRZ0E152jpl1J7wRBv7iZdg6gO16PhsffVXm2sgA1OhkIbhKF+2kUBaU
-	 0lTj8wLrYNOYmXWRxmq/1rrTohzMbmcCivINxS+w8MqQpBkiYbEf9szb7WHf69uCkd
-	 AO4MznzyWstcw==
+	bh=nOSag16RGbDVov1huGGhdnX22kBaj9opib/mHTetd/o=;
+	h=From:To:Subject:Date:In-Reply-To:References;
+	b=KsnO1C7TSW0ApOpwgtPr0c1cVeHFREu6Vw3bUiXZWNFCZrDEb1s5OfHdbe6m0F3Q/
+	 3k1MTCjsfO//yohbCkCuYeWINsBmiCfjZPN/Zj4oOk2I02HPEz518bvjNLeYYzqiP0
+	 EGlAWmo9DGljACi2zP3Xk6NsTC9AEKRVxuXwqkADOXcF9KPQGj9lR2AQTuI0x4wkAN
+	 eUUdHDD1XJO8GwfxARrOovDh8rGzW2htlFExD/OXM2eKT0UWa4euGhdIxs0t+OU0z2
+	 NxgGdXqH2DOpTK8QRFwa8XXfIM9jwRTnZnjeWdwV67ygbtdxGhWQxmRS46ietTCe5+
+	 ehdn0g0qDwoTA==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Vinayak Katoch <vinayak.katoch@oss.qualcomm.com>
-Cc: Bharath Kumar <bkumar@qti.qualcomm.com>,
-	Chenna Kesava Raju <chennak@qti.qualcomm.com>,
-	Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>,
+To: linux-kernel@vger.kernel.org,
+	bjorn.andersson@oss.qualcomm.com,
+	chris.lew@oss.qualcomm.com,
 	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: sm8250: Add memory-region for audio PD
-Date: Wed,  8 Jul 2026 09:56:55 -0500
-Message-ID: <178352261636.2235436.10420459601272958947.b4-ty@kernel.org>
+	Vishnu Santhosh <vishnu.santhosh@oss.qualcomm.com>
+Subject: Re: [PATCH] arm64: defconfig: Enable Qualcomm BAM-DMUX WWAN driver
+Date: Wed,  8 Jul 2026 09:56:56 -0500
+Message-ID: <178352261616.2235436.8120334079218318332.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260619-sm8250-audio-v1-1-8a76e033e209@oss.qualcomm.com>
-References: <20260619-sm8250-audio-v1-1-8a76e033e209@oss.qualcomm.com>
+In-Reply-To: <20260611-qcom-arm64-defconfig-bam-dmux-v1-1-599190f17fc9@oss.qualcomm.com>
+References: <20260611-qcom-arm64-defconfig-bam-dmux-v1-1-599190f17fc9@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,49 +71,49 @@ X-Spamd-Result: default: False [-5.16 / 15.00];
 	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	FORGED_RECIPIENTS(0.00)[m:linux-kernel@vger.kernel.org,m:bjorn.andersson@oss.qualcomm.com,m:chris.lew@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:vishnu.santhosh@oss.qualcomm.com,s:lists@lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-117743-lists,linux-arm-msm=lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:vinayak.katoch@oss.qualcomm.com,m:bkumar@qti.qualcomm.com,m:chennak@qti.qualcomm.com,m:ekansh.gupta@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
-	MIME_TRACE(0.00)[0:+];
 	RCVD_COUNT_THREE(0.00)[4];
-	FORWARDED(0.00)[lists@lfdr.de];
+	FORGED_SENDER(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	TO_DN_SOME(0.00)[];
+	TAGGED_FROM(0.00)[bounces-117744-lists,linux-arm-msm=lfdr.de];
+	MIME_TRACE(0.00)[0:+];
+	FORWARDED(0.00)[lists@lfdr.de];
+	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCPT_COUNT_FIVE(0.00)[5];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[11];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,vger.kernel.org:from_smtp]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 34805727E1D
+X-Rspamd-Queue-Id: 23069727E47
 
 
-On Fri, 19 Jun 2026 15:20:08 +0530, Vinayak Katoch wrote:
-> Reserve memory region for audio PD dynamic loading and remote heap
-> requirements. Add the required VMID list for memory ownership
-> transfers.
+On Thu, 11 Jun 2026 12:10:10 +0530, Vishnu Santhosh wrote:
+> Enable the BAM Data Multiplexer WWAN driver as a module to support
+> modem data channels on Qualcomm Shikra SoC. The driver is also used
+> by other platforms with A2 BAM hardware such as MSM8916 and MSM8939.
 > 
 > 
 
 Applied, thanks!
 
-[1/1] arm64: dts: qcom: sm8250: Add memory-region for audio PD
-      commit: 531ce288b6dd43c1ce90e0b501c209783f0e0ab2
+[1/1] arm64: defconfig: Enable Qualcomm BAM-DMUX WWAN driver
+      commit: 9c1bb154d40b36434e919865cbb2b23da58a963b
 
 Best regards,
 -- 
