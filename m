@@ -1,195 +1,363 @@
-Return-Path: <linux-arm-msm+bounces-117803-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-117804-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id qcWvByDCTmo9TgIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-117803-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Jul 2026 23:33:20 +0200
+	id ObwAD7bDTmqZTgIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-117804-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Jul 2026 23:40:06 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6CA3372A8D0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Jul 2026 23:33:19 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9527A72A971
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Jul 2026 23:40:05 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=linaro.org header.s=google header.b=uFgQeYeF;
-	dmarc=pass (policy=none) header.from=linaro.org;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117803-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c09:e001:a7::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117803-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=proton.me header.s=protonmail header.b=JBsx2lPo;
+	dmarc=pass (policy=quarantine) header.from=proton.me;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117804-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117804-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id C19E6301C419
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jul 2026 21:33:18 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id C4D5B30AA16B
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jul 2026 21:36:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5EC943F6C21;
-	Wed,  8 Jul 2026 21:33:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2D2ED3C3448;
+	Wed,  8 Jul 2026 21:36:08 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-05.mail-europe.com (mail-05.mail-europe.com [85.9.206.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8BA03E1CF4
-	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jul 2026 21:33:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85AD93F6C5A
+	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jul 2026 21:36:05 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783546397; cv=none; b=hFw5B2PmbqLxKMFXtGFxtVsRiPv4hIT7HjUQrzart/Sy6IGcWH1z/WKeMB+2DyE3Nm/8lgPd388FfHt1sH3cTucaSBCdTzVpkQZiA3q79M5l7fNva3oCS0ATEcjY5h+h8M27VeynlEBZM056Qaq+fTbSAC4+QLkPgRyvpAlmv0w=
+	t=1783546568; cv=none; b=RRnJMBDhSD8TxcIwRGupFlz4MGWjdnhffKQikH0Lm5geJOOqDD1JUJv8AqXayZSjCRsv49bj4vrgm0i5ZmmCXkDcPd1fiHk+DdtYUZO5G+ytwUpZz8baI2pwlZiFmm4q8PQ8dRfdAKnuTAPUMQKru38YuH5vRR56Bf+VGnaDWwU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783546397; c=relaxed/simple;
-	bh=NXwOCg+eFKxCNu/u5zqiZjTXNblVDIV1fQBBNSYRkhE=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=THJILDnR7a0PuT7LFKJX6OCJvPNSB9aU8nd/f+mS5ZE7bZawrrHCsUFgUrgw1d61dsWkda6OMwOyqKFZy/cJoSvhNFsD6xvhFWfwxjSg8WTeG20XPudLTSymlxBqgORcs1VtClwi01K1BkloE/APk2w4SWOa+IBvMKeO1iuwGoM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=uFgQeYeF; arc=none smtp.client-ip=209.85.128.47
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-493b7612475so10409585e9.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jul 2026 14:33:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1783546394; x=1784151194; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :references:cc:to:from:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=9rrOWcnkCxSDr8uiZZdnumYL6A9xsmstIl9Ie1VxD/4=;
-        b=uFgQeYeFbmPZBYb1bJ3QhS0jVqOR21bi0MQnAXZEIOFUShghP23iCglmG8dYTllUnP
-         SHKKWm09rf5Y5dKOZxhdDVM5KJTZEcwwS1Zf0GPbB00rz58eFoO79/L8I9kPTjUhaEXQ
-         oOfDXa8kwBUUbZew0/YSuejrKFRl2K+MqMqqjw5pwGhdCCYMBCB0lDaoOiqbMGKZk/t4
-         3oGKpfJI0v2CL09ulc+memKFK1MI64QE7KR5L832NIikWflehAwXZTu18HyGyjEZVbYn
-         XKBXWqfFXJeoFQf+ilOCq4OK6I7z1MHY0YtiFQwZLbSVbkOgL7uwlH/3ske26uKiHn/m
-         KQcg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783546394; x=1784151194;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :references:cc:to:from:subject:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=9rrOWcnkCxSDr8uiZZdnumYL6A9xsmstIl9Ie1VxD/4=;
-        b=g6KeHIiVOoePs/I9z91d/wgbz8fHMc6U5V14uXuQ3Nhoe/VCl6F2dRPHuxqawWdkNf
-         tDnndKTyZ/LYZE/1QwO6ojxnhWyEsFfBsFCQg1RkIWMNSbWF2LCGBDdh7wO+s3D+bA2P
-         sOnsrVXgJUPGwYRZ9rNHxXuLR/0xDISnT3WdZ99ywm1J5FP3xCHMhaRoVHoQ/mizMUwh
-         HNIPrprd8/RELamuOLa5TQqPYFS0xpnCEQFwsiiBcxsYTjGdidnYDn0jVIYwIFsqP7Cp
-         aoBmFkWhYb8wcy3+TEgbmP59Nqwdp98ZV48Q4f+ayVHpWUZCGtVhiO420opqidaNFbHF
-         7sRw==
-X-Gm-Message-State: AOJu0YzRCecoTayON+yjEG4yW3ivDI+y+K+3ltGbLPmyO5cIbZFPorW3
-	yHFq1gnhuFcsRSw204ASz5784nTZZTbZMGNat2BaSmpEtuf1SGSmGUkIfluRwAItPnEFkg3clSN
-	K9dS0
-X-Gm-Gg: AfdE7clLC0UF08+ftZ0GcoVas16p9E8dKNMV5J7GuVPFMAp4lG6OISrSBfD5CbqI/1t
-	ujzJPTYGIpYPhi0WzmfB7r8ippvX1jTqRRb18VlOnKeUOOWRBLIpG5lxktIMx8hOSowDWa6vt0R
-	k70W3/kaz8aSNYNrq191tR3lFvieppBGX16JYI2bOKATDEqdizfBrzKloWGjoJrnHu9XK7gB/Oo
-	U746qLbxRsh/Zh0n0Id69EyN4rMYoKgnQ1Kz4YrCM+mE1ZazG+bsD02lkLCTcS2cYV65+wiegOZ
-	zpskGCZcett8FLXZ92pHLPaFHO39F4/Sf9RL99SsZNEI+sQkEbTRZ0uZuP3Oz+h0Eo5meBsR/Z0
-	XxhCBVASgQAOFnwrap5tPFAbbufkXg0eqs++MNYYldgKP2IBKBI5L476duZwIqRq0vZFYbouPp8
-	B69I6dPgr0zf0ZcbwnTpNYu54cGHE=
-X-Received: by 2002:a05:600c:4455:b0:493:bb0e:2832 with SMTP id 5b1f17b1804b1-493e687fb61mr40754675e9.37.1783546393918;
-        Wed, 08 Jul 2026 14:33:13 -0700 (PDT)
-Received: from [192.168.0.101] ([109.76.204.255])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47a9e4d8410sm46531519f8f.15.2026.07.08.14.33.12
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Jul 2026 14:33:13 -0700 (PDT)
-Message-ID: <e1b25b3c-ff3a-48f6-92f6-a81f7df24e54@linaro.org>
-Date: Wed, 8 Jul 2026 22:33:12 +0100
+	s=arc-20240116; t=1783546568; c=relaxed/simple;
+	bh=uW3KpuuRhONSI4WnwH7ciiMe9KKhWTDUZaNxZJWu9ts=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=HU5+m8VhNzcgNebsrDDvpryNSQTIsEoFadRDHklSbk4Gd2+gHmsItPqkIMuIoHT3Uc1mbCrRrMY/d9ZLJPQ+iVdorZPSDdC+V5+oYNGd/gRDEzZK+yoxXShb9l1qGyqN3pNIh2rqdtBzY+EfSvCO0hGPccaJiKo7Ukl9iX+f/TU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=JBsx2lPo; arc=none smtp.client-ip=85.9.206.169
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
+	s=protonmail; t=1783546555; x=1783805755;
+	bh=OaFK8xchxZpdcSqUAlwbyjWiLLlhU4uj9zauzAG6mTM=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=JBsx2lPoXe0XnnsfV7iz1fLtcAxOvIzUT5rz3EklYgZFTRxMnULH/axoylwiMmuzg
+	 XtnV7eewtqFFQHPhsmaNTZlvXu9NQWs7abX7HNm27R7HTphTiq/Rvi71d2F3wtQUpV
+	 d8/CIBPtzp42Ec9ZswoC0mLOKZ98GLY6Tong1397mTKCNqqUJxUCQROqG2K/bvZ1jo
+	 EJWqCTpvW1fdx43LrFuGkN9gyNKukcIgeo5BZR0nGYygvqyisQySJZdz/8q5+/UbmV
+	 Vo5riulTp/uK8YF2/lWlnJSJPlgUQK6t3ni1HldwTZ7TNTmG4Q44EKKI1rH3ZvvSyQ
+	 X7gEegdqacWfg==
+Date: Wed, 08 Jul 2026 21:35:51 +0000
+To: Alex Elder <elder@ieee.org>, Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Andrew Lunn <andrew+netdev@lunn.ch>, "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Alex Elder <elder@kernel.org>
+From: Esteban Urrutia <esteuwu@proton.me>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, netdev@vger.kernel.org
+Subject: Re: [PATCH 3/3] net: ipa: Add IPA v5.1 data
+Message-ID: <e89985ff-adf2-4014-95c1-27fc32f774dc@proton.me>
+In-Reply-To: <b810c574-0f60-4d3d-ad5a-4205a119fe00@ieee.org>
+References: <20260622-sm8450-ipa-v1-0-532f0299f96e@proton.me> <20260622-sm8450-ipa-v1-3-532f0299f96e@proton.me> <b810c574-0f60-4d3d-ad5a-4205a119fe00@ieee.org>
+Feedback-ID: 147889766:user:proton
+X-Pm-Message-ID: 7c235c73f6aaaa99f540929f35efc5c8c9a7c78d
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 00/11] arm64: dts: qcom: Add x1e/Hamoa camera DTSI
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org,
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
-References: <20260326-x1e-camss-csi2-phy-dtsi-v3-0-1d5a9306116a@linaro.org>
- <178352261564.2235436.11540452339147753406.b4-ty@kernel.org>
- <5aa5487b-67ef-448f-8975-0c46ca1d3451@linaro.org>
-Content-Language: en-US
-In-Reply-To: <5aa5487b-67ef-448f-8975-0c46ca1d3451@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 X-Rspamd-Action: no action
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
-	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[proton.me,quarantine];
+	R_DKIM_ALLOW(-0.20)[proton.me:s=protonmail];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[vger.kernel.org,linaro.org,oss.qualcomm.com,gmail.com];
-	TAGGED_FROM(0.00)[bounces-117803-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER(0.00)[bryan.odonoghue@linaro.org,linux-arm-msm@vger.kernel.org];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_RECIPIENTS(0.00)[m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:vladimir.zapolskiy@linaro.org,m:konrad.dybcio@oss.qualcomm.com,m:alex.vinarskis@gmail.com,m:krzk@kernel.org,m:conor@kernel.org,m:alexvinarskis@gmail.com,s:lists@lfdr.de];
-	FORWARDED(0.00)[lists@lfdr.de];
+	TAGGED_FROM(0.00)[bounces-117804-lists,linux-arm-msm=lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:elder@ieee.org,m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:andrew+netdev@lunn.ch,m:davem@davemloft.net,m:edumazet@google.com,m:kuba@kernel.org,m:pabeni@redhat.com,m:elder@kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:netdev@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,m:andrew@lunn.ch,s:lists@lfdr.de];
+	FORGED_SENDER(0.00)[esteuwu@proton.me,linux-arm-msm@vger.kernel.org];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[linaro.org:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[bryan.odonoghue@linaro.org,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[16];
+	RCVD_COUNT_THREE(0.00)[3];
+	MIME_TRACE(0.00)[0:+];
+	FORWARDED(0.00)[lists@lfdr.de];
+	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ALIAS_RESOLVED(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
 	TO_DN_SOME(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[11];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,linaro.org:from_mime,linaro.org:dkim,linaro.org:mid]
+	FORGED_SENDER_FORWARDING(0.00)[];
+	ALIAS_RESOLVED(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[esteuwu@proton.me,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[proton.me:+];
+	MID_RHS_MATCH_FROM(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt,netdev];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,codelinaro.org:url,vger.kernel.org:from_smtp,proton.me:from_mime,proton.me:dkim,proton.me:mid]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 6CA3372A8D0
+X-Rspamd-Queue-Id: 9527A72A971
 
-On 08/07/2026 22:11, Bryan O'Donoghue wrote:
-> On 08/07/2026 15:56, Bjorn Andersson wrote:
->> Applied, thanks!
->>
->> [01/11] arm64: dts: qcom: x1e80100: Add CAMCC block definition
->>          commit: 6a3568f938c9ff2cb493f82dc595b4dc2760f517
->> [02/11] arm64: dts: qcom: x1e80100: Add CCI definitions
->>          (no commit info)
->> [03/11] arm64: dts: qcom: x1e80100: Add CAMSS block definition
->>          (no commit info)
->> [04/11] arm64: dts: qcom: x1e80100-crd: Add pm8010 CRD pmic,id=m 
->> regulators
->>          (no commit info)
->> [05/11] arm64: dts: qcom: x1e80100-crd: Add ov08x40 RGB sensor on CSIPHY4
->>          (no commit info)
->> [06/11] arm64: dts: qcom: x1e80100-t14s: Add pm8010 camera PMIC with 
->> voltage levels for IR and RGB camera
->>          (no commit info)
->> [07/11] arm64: dts: qcom: x1e80100-t14s: Add on ov02c10 RGB sensor on 
->> CSIPHY4
->>          (no commit info)
->> [08/11] arm64: dts: qcom: x1e80100-lenovo-yoga-slim7x: Add pm8010 
->> camera PMIC with voltage levels for IR and RGB camera
->>          (no commit info)
->> [09/11] arm64: dts: qcom: x1e80100-lenovo-yoga-slim7x: Add l7b_2p8 
->> voltage regulator for RGB camera
->>          (no commit info)
->> [10/11] arm64: dts: qcom: x1e80100-lenovo-yoga-slim7x: Add ov02c10 RGB 
->> sensor on CSIPHY4
->>          (no commit info)
->> [11/11] arm64: dts: qcom: x1e80100-dell-inspiron14-7441: Switch on 
->> CAMSS RGB sensor
->>          (no commit info)
->>
->> Best regards,
->> -- Bjorn Andersson <andersson@kernel.org>
-> 
-> Bjorn.
-> 
-> This is v3 from March. We are on v12. I don't think you meant to apply 
-> this.
-> 
-> ---
-> bod
+On 7/8/26 4:06 PM, Alex Elder wrote:
+> I think the DDR values might be wrong, but it's difficult to be
+> sure.  In some cases, in arrays like this in the downstream code,
+> if there is no entry found in an array, the *earlier* version
+> values should be used.  (Unless someone better informed states
+> that this is wrong, I think it's fine as-is.)
+>=20
+> This information is found in the ipa3_qmb_outstanding[IPA_5_1][]
+> array in the downstream code.  However there is no entry for that
+> version.  Given that, all zeroes (as you have it) makes sense.
+> But it's possible this applies instead:
+>=20
+>          [IPA_5_0][IPA_QMB_INSTANCE_DDR]         =3D {12, 12, 0},
+>          [IPA_5_0][IPA_QMB_INSTANCE_PCIE]        =3D {0, 0, 0},
+>=20
+> I have no way of knowing; perhaps someone from Qualcomm can
+> get confirmation that all zeroes is correct.
+>=20
+> (Note the order of values presented in the downstream code
+> differs from upstream.)
 
-For example: compatible = "qcom,x1e80100-csi2-phy"; is not a valid binding
+In downstream ipa_utils.c there's a function called ipa3_cfg_qsb() which
+is in charge of reading these values from ipa3_qmb_outstanding.
+Since these values are not present for IPA v5.1, one would assume
+they're not set and that, since this is the first time such behavior is
+found, additional changes would need to be made to the IPA driver.
+However, looking at this function, which I'll leave as a snippet below
+given its shortness:
 
-Please revert.
+static void ipa3_cfg_qsb(void)
+{
+=09u8 hw_type_idx;
+=09const struct ipa_qmb_outstanding *qmb_ot;
+=09struct ipahal_reg_qsb_max_reads max_reads =3D { 0 };
+=09struct ipahal_reg_qsb_max_writes max_writes =3D { 0 };
 
----
-bod
+=09hw_type_idx =3D ipa3_ctx->hw_type_index;
+
+=09/*
+=09 * Read the register values before writing to them to ensure
+=09 * other values are not overwritten
+=09 */
+=09ipahal_read_reg_fields(IPA_QSB_MAX_WRITES, &max_writes);
+=09ipahal_read_reg_fields(IPA_QSB_MAX_READS, &max_reads);
+
+=09qmb_ot =3D &(ipa3_qmb_outstanding[hw_type_idx][IPA_QMB_INSTANCE_DDR]);
+=09max_reads.qmb_0_max_reads =3D qmb_ot->ot_reads;
+=09max_writes.qmb_0_max_writes =3D qmb_ot->ot_writes;
+=09max_reads.qmb_0_max_read_beats =3D qmb_ot->ot_read_beats;
+
+=09qmb_ot =3D &(ipa3_qmb_outstanding[hw_type_idx][IPA_QMB_INSTANCE_PCIE]);
+=09max_reads.qmb_1_max_reads =3D qmb_ot->ot_reads;
+=09max_writes.qmb_1_max_writes =3D qmb_ot->ot_writes;
+
+=09ipahal_write_reg_fields(IPA_QSB_MAX_WRITES, &max_writes);
+=09ipahal_write_reg_fields(IPA_QSB_MAX_READS, &max_reads);
+}
+
+There are no conditions for writing ot_reads, ot_writes and
+ot_read_beats, which would correspond to max_reads, max_writes and
+max_reads_beats in upstream.
+Since hw_type_idx is set to IPA_5_1, this should give a null pointer.
+With this info, there are two possibilities:
+
+1. Null pointer dereference, resulting in a kernel oops downstream.
+2. qmb_ot is set with all values to 0.
+
+I have never seen a null pointer dereference downstream, so I'm more
+inclined to believe option 2 is what's actually happening.
+IPA v5.0 also zeroes these values, but I wasn't able to actually confirm
+this.
+This because in downstream, IPA versions are split into subversions,
+which are:
+
+1. Normal IPA (IPA_X_Y)
+2. MHI IPA (IPA_X_Y_MHI)
+3. APQ IPA (IPA_X_Y_APQ)
+
+Data for IPA v5.0 seems to be of the MHI type, since it's only used in
+the SDX65 SoC, which I believe is mostly used in 5G modems.
+I realized this while cross-checking since some values didn't really
+match, so I had to cross-check with different ipa_data-vX.Y.c files
+because of this.
+
+> And although ipa_gsi_ep_config is not defined in this code
+> base, here is what it looks like:
+>=20
+> struct ipa_gsi_ep_config {
+>          int ipa_ep_num;
+>          int ipa_gsi_chan_num;
+>          int ipa_if_tlv;
+>          int ipa_if_aos;
+>          int ee;
+>          enum gsi_prefetch_mode prefetch_mode;
+>          uint8_t prefetch_threshold;
+> };
+>=20
+> This might not be current; I'm using code found here:
+>    https://git.codelinaro.org/clo/la/kernel/msm-5.15.git
+
+Many thanks for providing the declaration for this struct.
+
+> In the downstream code--confusingly--ipa_gsi_setup_channel()
+> doubles the desc_fifo_sz value (for GSI, versus the older BAM
+> interface).  So the ring size becomes 4096 bytes, and that
+> works out to 256 16-byte GSI TRE entries.  I'm not sure why
+> 512 is used for IPA v3.5.1, but it probably just means it's
+> bigger than it needs to be.
+>=20
+> The event_count should be the same as the tre_count.  Again
+> I no longer know why that's not the case for IPA v3.5.1.
+
+For the record (since this is off-topic). I tried to get the modem up in
+a device whose SoC was using IPA v3.5.1 and I was experimenting weird
+behavior, such as IPA crashing the SoC when removing the module or when
+it automatically loaded at boot.
+The reason I mention this is because a warning similar to "channel 4
+limited to 256 TREs" appeared whenever IPA was loaded. That may be the
+reason I was experimenting those issues.
+
+>> +static const struct ipa_mem ipa_mem_local_data[] =3D {
+>=20
+> IPA has local memory that is partitioned as defined by this
+> array.  The regions are used by IPA/GSI firmware and/or
+> hardware.  The configuration defined here is sent to
+> the modem in an ipa_init_modem_driver_req QMI message
+> so both the modem and AP have a consistent view of
+> how the memory is used.
+>=20
+> Many memory regions are preceded by 0-2 "canaries", which
+> are 32-byte values initialized to IPA_MEM_CANARY_VAL.
+>=20
+> In the downstream code there is structure ipa3_mem_partition
+> that defines these things, and structures of this type are
+> defined in "ipa_utils.c".  For IPA v5.1, ipa_5_1_mem_part
+> defines them all.  The mapping between downstream and
+> upstream is not trivial and direct, but it should be
+> obvious how they get translated.
+>=20
+>=20
+> With two exceptions, what I see here looks like you
+> correctly transferred everything.  (The two exceptions
+> are entries that from what I can tell, should not be
+> present.)
+
+[...]
+
+> The next two entries look wrong to me.  Can you explain where
+> you got these offsets and sizes?  Is it from "ipa_data-v5.0.c"?
+>=20
+> Here are the relevant entries I see in ipa_5_1_mem_part
+> in the downstream code:
+>          .stats_flt_v4_ofst =3D 0,
+>          .stats_flt_v4_size =3D 0,
+>          .stats_flt_v6_ofst =3D 0,
+>          .stats_flt_v6_size =3D 0,
+>          .stats_rt_v4_ofst =3D 0,
+>          .stats_rt_v4_size =3D 0,
+>          .stats_rt_v6_ofst =3D 0,
+>          .stats_rt_v6_size =3D 0,
+> (Since their size is zero, their entries can be omitted.)
+>=20
+>> +=09{
+>> +=09=09.id=09=09=3D IPA_MEM_AP_V4_FILTER,
+>> +=09=09.offset=09=09=3D 0x29b8,
+>> +=09=09.size=09=09=3D 0x0188,
+>> +=09=09.canary_count=09=3D 2,
+>> +=09},
+>> +=09{
+>> +=09=09.id=09=09=3D IPA_MEM_AP_V6_FILTER,
+>> +=09=09.offset=09=09=3D 0x2b40,
+>> +=09=09.size=09=09=3D 0x0228,
+>> +=09=09.canary_count=09=3D 0,
+>> +=09},
+>=20
+> The remaining entries (below) look good.
+
+While cross-referencing IPA data files upstream, I found these two
+regions to be present in data for IPA v5.5, even though they aren't
+defined in ipa_5_5_mem_part. At the start I assumed these were correct
+since they were present upstream, but I took a closer look at that file
+and I believe data for this version was directly added without going
+through a proper review process.
+
+The reason why I used IPA v5.5 memory regions in IPA v5.1 is because
+their memory partitions are identical.
+
+Now, with this information, I would like to ask whether both of these
+memory regions are correct for both IPA v5.1 and v5.5 data files.
+
+>> +/* Memory configuration data for an SoC having IPA v5.1 */
+>> +static const struct ipa_mem_data ipa_mem_data =3D {
+>> +=09.local_count=09=3D ARRAY_SIZE(ipa_mem_local_data),
+>> +=09.local=09=09=3D ipa_mem_local_data,
+>> +=09.imem_addr=09=3D 0x146a8000,
+>=20
+> I think I needed to look up the imem offset value
+> in Qualcomm documentation I no longer have access
+> to.  Perhaps someone from there could confirm you
+> are using the right values here.
+
+After cross-checking I believe this may be the qcom,additional-mapping
+property downstream, which specifies the IMEM starting address and size.
+I'll leave (2) and (3) for reference.
+(2) corresponds to SM8450, while (3) corresponds to SM8475.
+
+>=20
+>> +=09.imem_size=09=3D 0x00002000,
+>> +=09/*
+>> +=09 * While this value is 0xb000 on SM8450 and 0x9000 on SM8475,
+>> +=09 * it has been left set to 0x9000 for compatibility with SM8475
+>> +=09 */
+>=20
+> As I said earlier, I'm not completely sure this will still
+> work on the SM8450.  Someone should confirm this, and it
+> really ought to be tested somehow.
+
+I have clarified this in my previous email (4), so I'll skip this part.
+
+>=20
+>> +=09.smem_size=09=3D 0x00009000,
+>> +};
+>> +
+>> +/* Interconnect rates are in 1000 byte/second units */
+>> +static const struct ipa_interconnect_data ipa_interconnect_data[] =3D {
+>> +=09{
+>> +=09=09.name=09=09=09=3D "memory",
+>> +=09=09.peak_bandwidth=09=09=3D 1900000,=09/* 1.9 GBps */
+>> +=09=09.average_bandwidth=09=3D 590000,=09/* 590 MBps */
+>=20
+> I no longer recall where to get these bandwidth values
+> for the interconnects.  Perhaps someone from Qualcomm
+> can find this out/confirm what you have.
+
+This was a tricky part. These seem to come from the qcom,svs2 property
+which seems to be mapped to the interconnects specified downstream.
+Since the IPA interconnects declared in device trees are different in
+both downstream and upstream I had to make some adjustments, such as
+using the minimum value between both ipa_to_llcc and llcc_to_ebi1
+interconnects.
+An example of this can be seen in (5), which corresponds to the SM8350
+SoC using IPA v4.9.
+
+Again, thanks for taking the time to properly explain things.
+
+(1) https://github.com/LineageOS/android_kernel_qcom_sm8450-modules/blob/li=
+neage-20/qcom/opensource/dataipa/drivers/platform/msm/ipa/ipa_v3/ipa_utils.=
+c#L7881
+https://github.com/LineageOS/android_kernel_qcom_sm8450-devicetrees/blob/li=
+neage-20/qcom/waipio.dtsi#L3404
+https://github.com/LineageOS/android_kernel_qcom_sm8450-devicetrees/blob/li=
+neage-20/qcom/cape.dtsi#L2723
+(4) https://lore.kernel.org/all/3e70d77e-6bec-4e16-ae88-a4f5161f182e@proton=
+.me/
+(5) https://github.com/LineageOS/android_kernel_motorola_sm7325/blob/lineag=
+e-23.2/arch/arm64/boot/dts/vendor/qcom/lahaina.dtsi#L4683
+
+Regards,
+Esteban
 
 
