@@ -1,84 +1,83 @@
-Return-Path: <linux-arm-msm+bounces-117811-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-117813-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id Acv2E5DPTmo8UgIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-117811-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Jul 2026 00:30:40 +0200
+	id U0kQERjQTmpqUgIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-117813-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Jul 2026 00:32:56 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id C1F8072AE2C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Jul 2026 00:30:39 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9109072AE55
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Jul 2026 00:32:55 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=linaro.org header.s=google header.b=Lqi1o7+w;
+	dkim=pass header.d=linaro.org header.s=google header.b=XutKY883;
 	dmarc=pass (policy=none) header.from=linaro.org;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117811-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117811-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117813-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117813-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 465D530292F2
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jul 2026 22:30:26 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id DE9CD3037161
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jul 2026 22:32:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D5639400E18;
-	Wed,  8 Jul 2026 22:30:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6466D3FE369;
+	Wed,  8 Jul 2026 22:32:43 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D82EB3F5BE5
-	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jul 2026 22:30:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C853C3EF673
+	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jul 2026 22:32:41 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783549820; cv=none; b=NwAH3lWTUtc8E40U3yBhYHB+wR27OQINI38zl1Kg68fAhk5b8/Lz3g3kXPxQYEBIvTp7K0UU/cDeIYI6oAEo3sgetHMcslogLEVgQchRSNJz0z1eDp4QV5l801IgkuJmlAtTWHYPHIhqf9zCQ7ysGO2fIpQ+BK/NmS2tfO4xKFQ=
+	t=1783549963; cv=none; b=mHezhFLFHAH6vCEU34Xg/RHrt0OR9+IrqvVpV/OI0PPcE2S8ISkXsn7GmITEk4Ie5Nba4kp0PLQyh6I6rfOWQZu9XmWQ0OAmn4OVfCM2rqwEOU5TDhJuqaTRw3m5cJc8005KC6tbYGTYDZUB2IRSLNcuMgB/yULhHFmadYijLzI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783549820; c=relaxed/simple;
-	bh=Ucy2b3MPSEnBCBhKVkHMWhghZFra35xFFNj5Qb50XsQ=;
+	s=arc-20240116; t=1783549963; c=relaxed/simple;
+	bh=uuYZPObikWl41A/sQeNw5cQ+pi/Ngp7w32Vw4hpEnd8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=HV293V/lsaU5MqPAvhyQmr89+EeFqBXoB9PikjKFSZvG+J8WwysFNTsFJZ3XYTYOi3BqhBK5H9DW3apf8g9sxBYWNROMH1zL3MLDGBm1clnajRB+9eODU6xYRiATN724wGY+BdbJus5YI8/qG8CkavRqA4+JDg1ZUg5RqYdxVHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Lqi1o7+w; arc=none smtp.client-ip=209.85.221.52
-Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-47640541585so663564f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jul 2026 15:30:17 -0700 (PDT)
+	 In-Reply-To:Content-Type; b=K0RTTGjmeU28F4j2wb6clFo0gr92no7BY50Wa+e/6bFuarsGdtKWs9dtDxtcqWrxtnYIzPFeb9oveyl9UyyBHuzmE6ANTk3KJGYrfclh/kq55yqfcyqoffnkmBkvWSyUMA67vz1qYXQqvZA/CgvhE77mwsc7Wmo6EQQ7B2+vMN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=XutKY883; arc=none smtp.client-ip=209.85.128.48
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-493ba701891so8411075e9.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jul 2026 15:32:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1783549816; x=1784154616; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1783549960; x=1784154760; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:in-reply-to:content-language
          :from:references:cc:to:subject:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=90IOI9EUyLOw2eSiEVVHF1LKd1Sg9MHQdR1C6WQNJ10=;
-        b=Lqi1o7+wVIWB3ifqgsn6xdp6t1KqFZUP2XjUycj/9SQqPoQyi7tZLKo+a9JxKQ8nE9
-         116s3PnM7+hBDGuQBggD3Wl5NUaISy++kYlfeg7TysKuENF+6gJMh6m6lzX3EDRsdkc1
-         g2NPTSLcja1Y4bA7pJytWr0d0g3AZdDecJl5fHZDSNkwMmLdHWJeSoPs6u8UFtrsz+yW
-         zaspY21tFQdqgD0nZG1vAJRNcYuQodKA+jTPqkLfISKsK2EVgM22nOHD//qvP0wuR20O
-         nE4ymz1SMwv37kJdeWZQ9Fw9ArOvqMfFAVoZgHAbOnPUxwDpBffAUxKO53V2zSKjmiH5
-         o6BA==
+        bh=uuYZPObikWl41A/sQeNw5cQ+pi/Ngp7w32Vw4hpEnd8=;
+        b=XutKY8831PWAz4OdW+oHhI2Q0lbiSDAIBIGxTu4iIHpgQcR2/wAkuVDcp9qC0BiA3e
+         IGoL+YrO3FLdDPPes9smBxNHLWHRJyjpYcAcpgnnG7GUVdKhC/RbsLEGqlb0HeyoNi6s
+         E93m0GQRPcJhGNqMaVRqjGDZdvK+Fx+8EZthktAHXie/lJZE9wMeQpgwypOQAeqUGoub
+         ql1O5xgKTr51pHUci4ogAQk8l4eeFep30vmaDtjzVsn9CmQytCUL4fDk9+N3Der3/Eep
+         gzC4hRD8EHN9BU2nxRtOLwGMii6kc2q2qUxI3WrZLx14znosRQQXute5X2vxqgALri5V
+         kloQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783549816; x=1784154616;
+        d=1e100.net; s=20251104; t=1783549960; x=1784154760;
         h=content-transfer-encoding:content-type:in-reply-to:content-language
          :from:references:cc:to:subject:user-agent:mime-version:date
          :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=90IOI9EUyLOw2eSiEVVHF1LKd1Sg9MHQdR1C6WQNJ10=;
-        b=YTfwvRz6UlmjT8WsLB1B3JMNwj1BVvTbR//6qn04bnyftbWu6c8i6CKpiGhj/oBOgS
-         oT4s02489xR9X3OEd6XdDl0RtlreBDmuKzWpogn72WOfq4KzncBY5JG2Xp0M8HEmLoh+
-         lNkZted1UvhdieYWjMMF6E17QfvaboeuZCmcCx9l4VIazSKh+wrkYAtIKly2CBqDR3GF
-         LURhDcjHrxjMsXTt8ITpU5nTVjbZQS8OApKO4xaFwU3GRVSMKbTJOzHOrPT0Wm5ozi+0
-         vh50mHy0kj+LuuIcyOVVnExhnolwOZNFQseyDzmEeH5Hh/qwWiJDBf0tY54J66DFMWW0
-         hpzg==
-X-Forwarded-Encrypted: i=1; AHgh+RoECLrwgOAHqekLr1nKBGvd1uG6tW03zysM5x347v1AFrK6pmYpoMGD2jrcbMq6jNwT7Sfd915rA4si446z@vger.kernel.org
-X-Gm-Message-State: AOJu0YxbXRYojbzip41t8OB3TlOYLoJ46wxTOkyErurigoioSMdoghdn
-	3Y5ESYbjgAahxeLd+egZZZPTki47a1x1f/gzrEqKUHDZbwCaisgSit6CZm+g4bYgQJM=
-X-Gm-Gg: AfdE7cndN1n7ZIC1KyqnP+ASrSuo23ccUtlDKx9feMiIPSbXd8ZzOFa7ee9OuTuKvLg
-	/P7twNsDngzgJcBtEy63ezd6SWT0sa+7zJ65YM/mH30YUywz+KzWW8T2Vy3KN+kGV1Xr18mCSYt
-	6Ki0fvodk94OYV/rXC5WEVE20RH9oExORC3V5VrC2NOvLZuh/9MpjX8xUaIZFvjuq5z2KSKeAHZ
-	invSJnkIKbeZJavPRYL1wz24nICBOh8lHGytU93lgauqJjWVs+bDwiVgX5IitCrecVIrkHh6I7g
-	3N/PmcNTY+q/YPBf2Sl2QbIXEZP3Q4f2Sypgufp9I4trXqIsoM+tOzDncFwAleOPYOdEsglmpqo
-	l7VJSjlPjurrE9UI2eQpow5KNIUDYSMiAYusXbrY+/PP2+H84vycK3GTD3X4Ur1/wbtovgVt0FX
-	0tw6YoFouWjW7lxXRst2IaVR6etn2ztbACEq+Luw==
-X-Received: by 2002:a05:6000:2013:b0:46e:624e:3c2f with SMTP id ffacd0b85a97d-47df077b2e6mr4491121f8f.47.1783549816190;
-        Wed, 08 Jul 2026 15:30:16 -0700 (PDT)
+        bh=uuYZPObikWl41A/sQeNw5cQ+pi/Ngp7w32Vw4hpEnd8=;
+        b=aAuSMDSm4uNNASMj7u5QyVaQoSTzyVWujrl4zm36hRpkbiR+P5HV4ebQS78XMBa59s
+         pQbm6vN2BSK/JJ6Qpw5gSJUp7WhYBHDOIbtMHB3svPNuK1oQSJZaoYnAaMvcXqEvVKlQ
+         3DjW1k0AYqcGaxzSX3uNL2rsqmpZHDPLWTmAqssLvgFj1O5DtrKpq+CZeySeK0keo2Dg
+         K3yXASD4/vGcWaeqfeY9q9iC6RL93tPx4xp39JmXDmyIAwsFy5KrBWWRgfvCPakla+N2
+         KwyVUFV+6cFl92PQ7f9T//Xh/dn8WRBbblXSoBU8t/2gyj1GFWto04XEIVHNdQrdhVVp
+         h69w==
+X-Gm-Message-State: AOJu0YxqWAtMubt78Ee7FNDUcnDkIWIWdn6LY3x40SfniLc0mWMCW3XD
+	a6EI6pRQI/379GGTJTwgnAhnoQEDFINXOBd00y5If1QTSEqHDnx0wC848WYCq1qd5+E=
+X-Gm-Gg: AfdE7ckwbDcANd0UDzvSe2sZUioFUAtQ3jAb5rY6CknuRspX4cpjIcArkQUiolkphjC
+	UivT7NkcbK73DHXH352wnofe1ouWtUEke3GwB0vwV3wqUe31H6ZQrdIZyy7AcAK423iRgtntEel
+	bZWT6ZWNBe5ZK/0uUaMxKx7mWJPWm6pUt7a4FdR6leO9ET96We3QyfN4tf5vSIxgLMz/Wi+zodX
+	Ps9YfpJbKRh253mjO46vthvCG60je1T773nFnz1XbakG5whpss2OR5fc096v8ANq9bwMPHQSCRd
+	U62xk0zCelRXO6j7pY10+LiIBp9rksoiP8025RGPgF3gOzlQ3J3aMH9+ywUDTE1HacoqmJLiCvJ
+	CvqwStBlzH5VOZ3zf3BFViaIXpuJnRRAWd8KIOTc+EJkFjRr7LxXjVo0/hEvFiccUAZK3MB6iUa
+	8O+w/NG2wnQofbKyqDTlFjhdnc4nJnCRPN0GjEVw==
+X-Received: by 2002:a05:600c:1d1e:b0:492:7084:32af with SMTP id 5b1f17b1804b1-493e68bf03amr41768295e9.23.1783549960120;
+        Wed, 08 Jul 2026 15:32:40 -0700 (PDT)
 Received: from [192.168.0.101] ([109.76.204.255])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47aa0960634sm46711271f8f.26.2026.07.08.15.30.13
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-493eb6f3c42sm11268875e9.1.2026.07.08.15.32.39
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Jul 2026 15:30:14 -0700 (PDT)
-Message-ID: <d579ffd2-b99e-4e8d-b2b7-e7e896b2d71d@linaro.org>
-Date: Wed, 8 Jul 2026 23:30:12 +0100
+        Wed, 08 Jul 2026 15:32:39 -0700 (PDT)
+Message-ID: <2d1c56a7-ed93-4fb8-9748-0d4e35cf46cd@linaro.org>
+Date: Wed, 8 Jul 2026 23:32:38 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -86,116 +85,58 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/5] media: qcom: camss: Populate CAMSS child devices
- via DT
-To: Atanas Filipov <atanas.filipov@oss.qualcomm.com>,
- linux-media@vger.kernel.org
-Cc: vladimir.zapolskiy@linaro.org, loic.poulain@oss.qualcomm.com,
- mchehab@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, andersson@kernel.org, konradybcio@kernel.org,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
- devicetree@vger.kernel.org
-References: <20260706071113.383215-1-atanas.filipov@oss.qualcomm.com>
- <20260706071113.383215-2-atanas.filipov@oss.qualcomm.com>
+Subject: Re: [PATCH] clk: qcom: camcc-sc8280xp: unregister CAMCC_GDSC_CLK
+To: Brian Masney <bmasney@redhat.com>, Bjorn Andersson
+ <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ linux-kernel@vger.kernel.org,
+ Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>
+References: <20260708-camcc-sc8280xp-remove-gdsc-v1-1-dfaab98a3bf5@redhat.com>
 From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260706071113.383215-2-atanas.filipov@oss.qualcomm.com>
+In-Reply-To: <20260708-camcc-sc8280xp-remove-gdsc-v1-1-dfaab98a3bf5@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Rspamd-Action: no action
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-117811-lists,linux-arm-msm=lfdr.de];
-	RCPT_COUNT_TWELVE(0.00)[13];
 	MIME_TRACE(0.00)[0:+];
-	RCVD_TLS_LAST(0.00)[];
+	DKIM_TRACE(0.00)[linaro.org:+];
 	FORWARDED(0.00)[lists@lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:atanas.filipov@oss.qualcomm.com,m:linux-media@vger.kernel.org,m:vladimir.zapolskiy@linaro.org,m:loic.poulain@oss.qualcomm.com,m:mchehab@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:andersson@kernel.org,m:konradybcio@kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:devicetree@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	TAGGED_FROM(0.00)[bounces-117813-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	FORGED_SENDER(0.00)[bryan.odonoghue@linaro.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[linaro.org:+];
+	FORGED_RECIPIENTS(0.00)[m:bmasney@redhat.com,m:andersson@kernel.org,m:konrad.dybcio@oss.qualcomm.com,m:mturquette@baylibre.com,m:sboyd@kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-clk@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:jagadeesh.kona@oss.qualcomm.com,s:lists@lfdr.de];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	FROM_HAS_DN(0.00)[];
 	TO_DN_SOME(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[bryan.odonoghue@linaro.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	ALIAS_RESOLVED(0.00)[];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	MID_RHS_MATCH_FROM(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[9];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,qualcomm.com:email,linaro.org:from_mime,linaro.org:email,linaro.org:mid,linaro.org:dkim,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,linaro.org:from_mime,linaro.org:email,linaro.org:mid,linaro.org:dkim,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: C1F8072AE2C
+X-Rspamd-Queue-Id: 9109072AE55
 
-On 06/07/2026 08:11, Atanas Filipov wrote:
-> From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> 
-> Use devm_of_platform_populate() so that child nodes declared under the
-> CAMSS device tree node (e.g. OPE) are automatically instantiated as
-> platform devices. This is required now that CAMSS is modelled as a
-> simple-bus and ISP blocks such as OPE are described as child nodes.
-> 
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-> Signed-off-by: Atanas Filipov <atanas.filipov@oss.qualcomm.com>
+On 08/07/2026 23:30, Brian Masney wrote:
+> With the introduction of sync_state support in the clk and pmdomain
+> subsystems, the following warning happens when the unused clocks are
+> shutdown in camcc-sc8280xp:
 
-Looking at my commit logs I see this isn't my commit message ..
-
-Anyway.
-
-> ---
->   drivers/media/platform/qcom/camss/camss.c | 3 +++
->   1 file changed, 3 insertions(+)
-> 
-> diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
-> index 2123f6388e3d..95e655a8b6aa 100644
-> --- a/drivers/media/platform/qcom/camss/camss.c
-> +++ b/drivers/media/platform/qcom/camss/camss.c
-> @@ -16,6 +16,7 @@
->   #include <linux/of.h>
->   #include <linux/of_device.h>
->   #include <linux/of_graph.h>
-> +#include <linux/of_platform.h>
->   #include <linux/pm_runtime.h>
->   #include <linux/pm_domain.h>
->   #include <linux/slab.h>
-> @@ -5362,6 +5363,8 @@ static int camss_probe(struct platform_device *pdev)
->   	if (!camss)
->   		return -ENOMEM;
->   
-> +	devm_of_platform_populate(dev);
-> +
->   	camss->res = of_device_get_match_data(dev);
->   
->   	atomic_set(&camss->ref_count, 0);
-
-Just drop this patch entirely and model JPEG as a peer of CAMSS. I'll do 
-the same with the CSIPHY and Loic the OPE.
-
-Modelling for subnodes is nice if you have the idea the camera block 
-should be a bus.
-
-But for what reason ? As you pointed out it should be possible to both 
-compile and run JPEG without the compat=camss node on sm8250.
-
-Making the camera block a bus is a nice idea for "reasons" as this 
-thread has shown, its a problem to implement with an upside we struggle 
-to define.
-
-When the facts change, I change my mind.
-
-You were right to argue to have this as a peer node. Lets do that.
-
----
-bod
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
