@@ -1,276 +1,217 @@
-Return-Path: <linux-arm-msm+bounces-117796-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-117797-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id PYWgD6qfTmrGQwIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-117796-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Jul 2026 21:06:18 +0200
+	id 7UEeK0OqTmrbRgIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-117797-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Jul 2026 21:51:31 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7837E729C85
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Jul 2026 21:06:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 163B5729FFE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Jul 2026 21:51:31 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b="C/Z3O8TS";
-	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=TaVdRaOB;
-	dmarc=pass (policy=reject) header.from=qualcomm.com;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117796-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117796-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=riscstar-com.20251104.gappssmtp.com header.s=20251104 header.b=R7bg9A51;
+	dmarc=fail reason="SPF not aligned (relaxed), DKIM not aligned (relaxed)" header.from=riscstar.com (policy=none);
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117797-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117797-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 356F530086C1
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jul 2026 19:06:01 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 7681330BAD57
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jul 2026 19:49:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 34EDC3D16FB;
-	Wed,  8 Jul 2026 19:06:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5DE793BF677;
+	Wed,  8 Jul 2026 19:49:17 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A79523CA4A0
-	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jul 2026 19:05:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30B273CE4B1
+	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jul 2026 19:49:13 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783537559; cv=none; b=ULhLruchzrCssIE047CIj7UBsbjePTSO6BLAn3HpahiHIBwGqT35PYyBFJzItrY15f26OYPVVT/NVCbtiApORDqtgPlq4cyy2oYoa/ZK5LbmXPtuHsPnEG5U5t9nFQ8YD1gBwLhD0ZjEzhWN3ZJYY4V7hwEZYLaXasc7O8CbgXs=
+	t=1783540156; cv=none; b=EHOiOqaUdZeA6Cap84SKNHqiqwDGiMUlpjgys9AXPcP0kDRsXDBluHOUEyuGjLTFMske5dwn7LMTbLanXd+fcUzuCgLuJVFu8SXf1D26M40HypgP3XMLQh/kUR0DG/4vtWyjlKWZmw8k5wpudDTotLQIB5/SCK3MJET9I87XcA4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783537559; c=relaxed/simple;
-	bh=YItqT8T7it2rqu0Ag40WP8xbh00oL0oNgmOzd217gSY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=czzDZe6WzWNs3lzWnEyDwNaEdFEu66U66b6NgOFKxU9te0KwaKMdBXGOz0bs22NjkitFKau99eqozvRkzb1Cr/ZCfhGV+9epy8ssLlhuPdSrp2cc78qDK1XqQkVYYeH2+r0DKQhy1TQNPx5qgsNAFceYJQr8vXvNNIPOxFzU8GQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=C/Z3O8TS; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=TaVdRaOB; arc=none smtp.client-ip=205.220.168.131
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 668GLT263208921
-	for <linux-arm-msm@vger.kernel.org>; Wed, 8 Jul 2026 19:05:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=CeHf8ZnOmdDt8+90mSP4wYI2
-	u2NYKjn3Be4iJ272f5Q=; b=C/Z3O8TSU/K6ST7I/5NLvaXUbyaBPKdv0+DgP40l
-	nQUMyIiRO9eb0HkYDoQACetPWHg33l4B4SndJBK78czyFY2O72YHuNe0IwlvvEDO
-	e3Y5cvI4c3FPt59an/wepDFFpz+Z03T8w+4iB0iNKikofEJk+NSkHJqWjAuBGuDu
-	AtCF25xZE9fajt5L8vuDM1kN1dXUr3yeqChMyf4fl6dNiYLugaM5q29YztM8AH9s
-	XpjSoOZW0vNUVP2e+nShpv9KxBXbZv+Ku+p0c6/+UfEDrWTF5ZEDyfUzfYbgBzid
-	ORzfs/9zn+9EvdTrpupSEOicov9omFUig51PTAzYEyTiVA==
-Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com [209.85.215.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f9gqwb8td-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jul 2026 19:05:56 +0000 (GMT)
-Received: by mail-pg1-f200.google.com with SMTP id 41be03b00d2f7-c88fc985a65so1501885a12.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jul 2026 12:05:56 -0700 (PDT)
+	s=arc-20240116; t=1783540156; c=relaxed/simple;
+	bh=8FitnCOIzymqmh2SJdD2U8RGsIUomwearn9KBz4ki5Y=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=UteeEx0JF1nXAdinF/b7r4ySd5RP7WgRQALpm0hTUGf/zcAqUfowKjH0iglR+FvEyYNCBJtBxRskIXdQNEeCMpL2jNIuyZ2gtomp/CMG4YAGwXxZZ8s9SxJW+b32n0bZB97MP7DEICMa5wV9D4gQeghXffssOxhy2NsY9w4aI6Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b=R7bg9A51; arc=none smtp.client-ip=209.85.219.47
+Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-8ef1dc934d1so2169426d6.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jul 2026 12:49:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1783537555; x=1784142355; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=CeHf8ZnOmdDt8+90mSP4wYI2u2NYKjn3Be4iJ272f5Q=;
-        b=TaVdRaOBpzvB3sQFBAEcWmcDx/oLzP0IrwweH/DQly4YNfb7bLluGOkH4f1e0ugFbx
-         7D8Oz5PvtAfizYXfXJReHdylvgLKwS/72bPb/+nKhmOxA0rw4RZh8GpHfG1QsyhhAfs0
-         LRY4AnHCrtUfwi1tOOk1XN6vt0c7XFjJud2Yn31KcQojtpTOqfewVFEvDjfKdwgm2ln/
-         uxUP0AozutmPGMBpF7a/oIcbPJunJuML5IgueBPTHDv566YUWrCCBWQr38wQslEe43Er
-         pEoLSczQAXe1n8ZDDpdUD6RSR/djvXl8LL/KFsGpbGm12Wrimwt5mzMxT9L9KzzxQ/cf
-         Kxcw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783537555; x=1784142355;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=riscstar-com.20251104.gappssmtp.com; s=20251104; t=1783540152; x=1784144952; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=CeHf8ZnOmdDt8+90mSP4wYI2u2NYKjn3Be4iJ272f5Q=;
-        b=NNnDInbRSGjLy1jA4TwJ7Se8Ph8+G14eJoSG0S/cO2768pexJDB0dya7QoxKIIoS7U
-         IemEN5R3wxxbOlNxVNxqwkrf98MaGF992QFM874H6YvA5D+WHkZwA1HlgP/uZdO5s+gB
-         1kmJtAlbXAohNz5EIOuBuVvFuToTZJLGvLocnz5DJaX17ObvRLgIb6BzTvwtVrZhFOod
-         l15bKotQwwsitdfdB93C0grSR2Q9ETctG67oWcQjjRNQkVnn4Xd/rR6L3yJGPJNCE4PW
-         uGyTZkzaQjopm8S9+jZZuSztM+xoqYppfaOBKAgG2HtQYp7Oy6vbJqRjiuqd58NhpaQ7
-         tXRg==
-X-Forwarded-Encrypted: i=1; AHgh+RpBMyhzWplHxfLsZx6Pua9XskoChAf3oq6BsPiK9ZjrngOPZEIOoqY/A0Tf5ZkzMr8KrplzmQ4s0tthgYAP@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw6z5qmZlKAgIPeYJFlzPUEO12g3FvnhW6qqKOFyG1UpyoVHV6E
-	fTFjsZV71RfU5hYomPKpmyc8cIRoGE+yXSTR8gFkCl999hjyocDbfBDk9YW1Xo0pAc+8iKTBTA3
-	YTXbnq5qer8uNLdgVSeHRYEDhtcOv46iV9yHr9JFWtX/hci1h6AbABU11jG4ynQ1Rq7Dz
-X-Gm-Gg: AfdE7ckoK+eUV2tLRMCHtBXPQLwwj98JDDqZstXll63L4xcxUO88gHP1U7GcOQMT1Vf
-	OIUaRxoiXfWkzKuJWhLJLrRdWx8MkQzbULZ+/MSgfiRsrzxIv0gfg4cmuR5Knt+gLP6CFy7tjnP
-	YcfxlZKZly7envKIbeQLUdzpoFEO7wwNl8aWfOjQ1ZClhPqZBdQ9gh3BoJfA1nUpNStTVvxamC6
-	DWgAun2Mr3KaFOLoRhM2d1O3QGrbbuJ2qFcV1te6hPz989st0w7Gumsx0zm92tVGDZ0PUm31NoP
-	iGjItqw2SFAeq/QTlw0yKuE7RnyMpjBwRQChqw1gDefV6ag7iy4/mZUZr5H4s6i/SESvw+CUtNt
-	kGOj1ejC0F/vkhvTV7EDo9woa+A5hVTTQqG6yBg==
-X-Received: by 2002:a17:90b:4d8d:b0:37f:db06:229c with SMTP id 98e67ed59e1d1-38942f7105cmr3621963a91.22.1783537555376;
-        Wed, 08 Jul 2026 12:05:55 -0700 (PDT)
-X-Received: by 2002:a17:90b:4d8d:b0:37f:db06:229c with SMTP id 98e67ed59e1d1-38942f7105cmr3621916a91.22.1783537554731;
-        Wed, 08 Jul 2026 12:05:54 -0700 (PDT)
-Received: from hu-mojha-hyd.qualcomm.com ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-31174ae6cd9sm24772373eec.31.2026.07.08.12.05.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Jul 2026 12:05:54 -0700 (PDT)
-Date: Thu, 9 Jul 2026 00:35:35 +0530
-From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-To: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Jonathan Corbet <corbet@lwn.net>, Shuah Khan <skhan@linuxfoundation.org>,
-        Eugen Hristev <ehristev@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
-        Dennis Zhou <dennis@kernel.org>, Tejun Heo <tj@kernel.org>,
-        Christoph Lameter <cl@gentwo.org>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Thomas Gleixner <tglx@kernel.org>,
-        Peter Zijlstra <peterz@infradead.org>,
-        Anna-Maria Behnsen <anna-maria@linutronix.de>,
-        Frederic Weisbecker <frederic@kernel.org>,
-        John Stultz <jstultz@google.com>, Stephen Boyd <sboyd@kernel.org>,
-        Kees Cook <kees@kernel.org>, Ingo Molnar <mingo@redhat.com>,
-        Juri Lelli <juri.lelli@redhat.com>,
-        Vincent Guittot <vincent.guittot@linaro.org>,
-        Dietmar Eggemann <dietmar.eggemann@arm.com>,
-        Steven Rostedt <rostedt@goodmis.org>, Ben Segall <bsegall@google.com>,
-        Mel Gorman <mgorman@suse.de>, Valentin Schneider <vschneid@redhat.com>,
-        K Prateek Nayak <kprateek.nayak@amd.com>,
-        David Hildenbrand <david@kernel.org>,
-        "Liam R. Howlett" <liam@infradead.org>,
-        Vlastimil Babka <vbabka@kernel.org>, Mike Rapoport <rppt@kernel.org>,
-        Suren Baghdasaryan <surenb@google.com>, Michal Hocko <mhocko@suse.com>,
-        Brendan Jackman <jackmanb@google.com>,
-        Johannes Weiner <hannes@cmpxchg.org>, Zi Yan <ziy@nvidia.com>,
-        Chris Li <chrisl@kernel.org>, Kairui Song <kasong@tencent.com>,
-        Kemeng Shi <shikemeng@huaweicloud.com>, Nhat Pham <nphamcs@gmail.com>,
-        Baoquan He <baoquan.he@linux.dev>, Barry Song <baohua@kernel.org>,
-        Youngjun Park <youngjun.park@lge.com>, Petr Mladek <pmladek@suse.com>,
-        John Ogness <john.ogness@linutronix.de>,
-        Sergey Senozhatsky <senozhatsky@chromium.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Saravana Kannan <saravanak@kernel.org>, workflows@vger.kernel.org,
-        linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arch@vger.kernel.org, linux-mm@kvack.org,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH v3 11/26] mm/swapfile: Annotate static information into
- meminspect
-Message-ID: <20260708190535.fhqaddicljho44eq@hu-mojha-hyd.qualcomm.com>
-References: <20260708-meminspect-v3-v3-0-7aa5a0a74d5c@oss.qualcomm.com>
- <20260708-meminspect-v3-v3-11-7aa5a0a74d5c@oss.qualcomm.com>
- <ak4AgXqMnkn8rVGE@lucifer>
+        bh=COlIbGYEylMlg+08j+MrlBTktSUlvEsQ0xCdXam5qLY=;
+        b=R7bg9A51U2YEVq96hR0rQnFcFnePpmgs57hHYELToqG26iKAaKYzzryl7w/TTKf2CC
+         +lGxw+QEA9jAjDWuJn8o89jmSiM3in+PWfOWE9KLcsBGhWY2ChCF0mDU/sjTsZbur2Zf
+         ogpg+pkh7VIirM2H6zajzbuFunp9cbVfshGIliWJAJhqPYiJLh9kOTUzf2C7BaxOH/ah
+         wFgrmuPXqEJkxBbUjbsthpspMBb6yTB4Q7opegffUhodST78YirtVyvZuDyYD78A2Koi
+         v7fHCLfLDRHflzsnPdLx/b44MM/2+Fq0b1Mp/SxN+A8d2S1dSVc2uLtjsNP260VozBDP
+         mYvw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783540152; x=1784144952;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=COlIbGYEylMlg+08j+MrlBTktSUlvEsQ0xCdXam5qLY=;
+        b=B9oJRofRSdcOJJeSF6mGncbM922Guf3a4W7Cj8qTI9Sc+78zOc6aYVrRqmhWyXn+u7
+         iY91w6V919l5dORwPZCArc0QfzKGCl28Q5Amr5XaZBfp94dosFE2aFBGj+toIOTVXdts
+         UmADOeX5MV28WjQXc8b2UfuCO5NROxPUKB/9WF+8ZbNhF3Gry3LYac5BXP3zMcnvATd0
+         urOI1upvU8to1Z+Boa+7u0F9e9AABkjeQBQ67tle4EvsMkRG5QEbcLAyu8z6GrIPdKDq
+         Yx/TzjIYMvVibE10DHiJQQTiD4MovreghBNZgZdJc3Q/qlJ/fhhiq4SsqUJvuSLzSrmT
+         WRuQ==
+X-Gm-Message-State: AOJu0YzvDxmlvfo/+2b1yeXqe4XQzgqhfaD2Zcd/YazRGTVfND8bKhax
+	wUaPXhL15t1JaMXhhdBurhdQVFi3cjzA25NzWJ2UqauRzQXk2fCOA2U+ZrhHSasfPEk=
+X-Gm-Gg: AfdE7clNP90lk9d2wNYBFHKFYbjGqN0dxkoCA/8/AlpPIcp0hmU14kQmahftFFgy4AX
+	/+CagWHNXS86Qm3GyJL6d6PGycktZnSmitEnhdthd26tbxEh69AwPTl6ahR2tC7E9UuueNUa2I+
+	i697ISMmKJ8HbtSiqThSyBxsuGhCqt1m8UN62WedI//19aG+THobVAHNkrq0iXeX5zh1j2GP6H2
+	HB+kxXaG5k4eIciXCZac70q1QkVwfN9zdb6SKZTHLmIPFp4WqLlfbC3jdyipBHuMzNjTo1l1lz9
+	C/VM8TetIpjeAIhLbBqCHB6ybQ1H5GBgGzeWjM77QlXAb+LEiyZO75vjn/C88CLMqfD1VCJz4ex
+	LTC1nQu7leYOP/Jdqav121/QbBtluXUN2pCZMEC/l3g3um2r53F+Ktr+9lEJk1iVsyEWEqCw84g
+	iAedWHSx337RkG
+X-Received: by 2002:a05:6214:5293:b0:8ea:c243:84e0 with SMTP id 6a1803df08f44-8fd38f9b4bamr95685346d6.1.1783540152153;
+        Wed, 08 Jul 2026 12:49:12 -0700 (PDT)
+Received: from [172.22.22.28] ([73.62.185.64])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8f472a9b1c4sm193173066d6.48.2026.07.08.12.49.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 08 Jul 2026 12:49:11 -0700 (PDT)
+Message-ID: <8309e9c7-a110-478b-8cd4-c002070d2b4c@riscstar.com>
+Date: Wed, 8 Jul 2026 14:49:09 -0500
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ak4AgXqMnkn8rVGE@lucifer>
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA4MDE4NyBTYWx0ZWRfXydT/54S5F0Mi
- V0og/QLCgTxwhHHMDuTdoJsbgLjhqc18uqWFyBcsTvMWKFonvYNNzduI5vD6EZfARHwfgi/BxDG
- N/wGzi0M6HG6DIcE+wXGjK4FP5JT1clZhZgAvbjj1rgNVQnGvG9B4H1LkMLxt9mVv+LtymD0OcP
- tI3j4gWVHbMoOC/eiHnWpJxLela7Mwq/tFRGTHqbcOHStHTCnk/RxezadM6ZRH1pvSGQYlg6B1z
- NPZXcNWJwel4LHtXNMCfZzULbhOcCFTS7xeJqYJXtBqHizTiHCutvEFHkZmR79xuaTvGfvaIIVp
- WoAtSOK4DSCFKXMEnZP1iHD3yb8Ro+SjOQ4XEWZNW97XxqmPVmo215myyBqjTfCzwvcHEGD219+
- Q7lvcZZRj3Q3xE27ZMdho3E9KlTPSHbH97FzkUxIOjRJyTyeL++agXktfySIJjsK24apwNtvQ12
- fsDFt68z0KyeZWOzgOQ==
-X-Proofpoint-GUID: ehJJlJkHYshgqPEu8zGDqK5nbMCUx3Gj
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA4MDE4NyBTYWx0ZWRfXwflc/5+MAxas
- Fva6xrdxcZawUNCz+8epD8EcJlkhE2D1aI3ODWTAqGnmJuMAtJ5Ocux2Dzi5jZN7nVvZcu2OnRm
- w6/CB/yo6TQYmgfzRBG5mEVBQWNvFl0=
-X-Proofpoint-ORIG-GUID: ehJJlJkHYshgqPEu8zGDqK5nbMCUx3Gj
-X-Authority-Analysis: v=2.4 cv=Wf88rUhX c=1 sm=1 tr=0 ts=6a4e9f94 cx=c_pps
- a=oF/VQ+ItUULfLr/lQ2/icg==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
- a=kj9zAlcOel0A:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
- a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=cq8IU3OeMPPiwu34qS0A:9
- a=CjuIK1q_8ugA:10 a=3WC7DwWrALyhR5TkjVHa:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-08_03,2026-07-08_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 clxscore=1015 bulkscore=0 impostorscore=0 malwarescore=0
- spamscore=0 priorityscore=1501 adultscore=0 lowpriorityscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607080187
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/3] SM8450 IPA support
+To: Esteban Urrutia <esteuwu@proton.me>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Andrew Lunn <andrew+netdev@lunn.ch>,
+ "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
+ Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+ Alex Elder <elder@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, netdev@vger.kernel.org
+References: <20260622-sm8450-ipa-v1-0-532f0299f96e@proton.me>
+ <959db395-ae71-4a50-bd46-ac5add545a52@riscstar.com>
+ <48c624c3-5408-4862-b4ec-9321ad279bf9@proton.me>
+Content-Language: en-US
+From: Alex Elder <elder@riscstar.com>
+In-Reply-To: <48c624c3-5408-4862-b4ec-9321ad279bf9@proton.me>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-0.66 / 15.00];
+X-Spamd-Result: default: False [-0.06 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_DKIM_ALLOW(-0.20)[riscstar-com.20251104.gappssmtp.com:s=20251104];
 	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
+	DMARC_POLICY_SOFTFAIL(0.10)[riscstar.com : SPF not aligned (relaxed), DKIM not aligned (relaxed),none];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-117796-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_CC(0.00)[lwn.net,linuxfoundation.org,kernel.org,arndb.de,gentwo.org,linux-foundation.org,infradead.org,linutronix.de,google.com,redhat.com,linaro.org,arm.com,goodmis.org,suse.de,amd.com,suse.com,cmpxchg.org,nvidia.com,tencent.com,huaweicloud.com,gmail.com,linux.dev,lge.com,chromium.org,vger.kernel.org,kvack.org];
+	TAGGED_FROM(0.00)[bounces-117797-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
+	FORGED_RECIPIENTS(0.00)[m:esteuwu@proton.me,m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:andrew+netdev@lunn.ch,m:davem@davemloft.net,m:edumazet@google.com,m:kuba@kernel.org,m:pabeni@redhat.com,m:elder@kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:netdev@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,m:andrew@lunn.ch,s:lists@lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER(0.00)[mukesh.ojha@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_RECIPIENTS(0.00)[m:ljs@kernel.org,m:corbet@lwn.net,m:skhan@linuxfoundation.org,m:ehristev@kernel.org,m:arnd@arndb.de,m:dennis@kernel.org,m:tj@kernel.org,m:cl@gentwo.org,m:akpm@linux-foundation.org,m:tglx@kernel.org,m:peterz@infradead.org,m:anna-maria@linutronix.de,m:frederic@kernel.org,m:jstultz@google.com,m:sboyd@kernel.org,m:kees@kernel.org,m:mingo@redhat.com,m:juri.lelli@redhat.com,m:vincent.guittot@linaro.org,m:dietmar.eggemann@arm.com,m:rostedt@goodmis.org,m:bsegall@google.com,m:mgorman@suse.de,m:vschneid@redhat.com,m:kprateek.nayak@amd.com,m:david@kernel.org,m:liam@infradead.org,m:vbabka@kernel.org,m:rppt@kernel.org,m:surenb@google.com,m:mhocko@suse.com,m:jackmanb@google.com,m:hannes@cmpxchg.org,m:ziy@nvidia.com,m:chrisl@kernel.org,m:kasong@tencent.com,m:shikemeng@huaweicloud.com,m:nphamcs@gmail.com,m:baoquan.he@linux.dev,m:baohua@kernel.org,m:youngjun.park@lge.com,m:pmladek@suse.com,m:john.ogness@linutronix.de,m:senozhatsky@chromium.org,m:andersson@kernel.org,m:mathieu
- .poirier@linaro.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:saravanak@kernel.org,m:workflows@vger.kernel.org,m:linux-doc@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-arch@vger.kernel.org,m:linux-mm@kvack.org,m:linux-arm-msm@vger.kernel.org,m:linux-remoteproc@vger.kernel.org,m:devicetree@vger.kernel.org,s:lists@lfdr.de];
-	FORWARDED(0.00)[lists@lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	MISSING_XM_UA(0.00)[];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[16];
+	FORGED_SENDER(0.00)[elder@riscstar.com,linux-arm-msm@vger.kernel.org];
+	MIME_TRACE(0.00)[0:+];
+	FORWARDED(0.00)[lists@lfdr.de];
+	DKIM_TRACE(0.00)[riscstar-com.20251104.gappssmtp.com:+];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	TO_DN_SOME(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	RCPT_COUNT_GT_50(0.00)[59];
+	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[mukesh.ojha@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[elder@riscstar.com,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	TO_DN_SOME(0.00)[];
-	MID_RHS_MATCH_FROMTLD(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[7]
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt,netdev];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,riscstar-com.20251104.gappssmtp.com:dkim,riscstar.com:mid,riscstar.com:from_mime,vger.kernel.org:from_smtp]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 7837E729C85
+X-Rspamd-Queue-Id: 163B5729FFE
 
-On Wed, Jul 08, 2026 at 08:47:51AM +0100, Lorenzo Stoakes wrote:
-> On Wed, Jul 08, 2026 at 11:01:50AM +0530, Mukesh Ojha wrote:
-> > From: Eugen Hristev <ehristev@kernel.org>
-> >
-> > Annotate vital static information into inspection table:
-> >  - nr_swapfiles
-> >
-> > Information on these variables is stored in a dedicated meminspect
-> > section.
-> >
-> > Signed-off-by: Eugen Hristev <eugen.hristev@linaro.org>
-> > Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-> > ---
-> >  mm/swapfile.c | 2 ++
-> >  1 file changed, 2 insertions(+)
-> >
-> > diff --git a/mm/swapfile.c b/mm/swapfile.c
-> > index a602e5820513..d480727e4987 100644
-> > --- a/mm/swapfile.c
-> > +++ b/mm/swapfile.c
-> > @@ -42,6 +42,7 @@
-> >  #include <linux/suspend.h>
-> >  #include <linux/zswap.h>
-> >  #include <linux/plist.h>
-> > +#include <linux/meminspect.h>
-> >
-> >  #include <asm/tlbflush.h>
-> >  #include <linux/leafops.h>
-> > @@ -65,6 +66,7 @@ static void move_cluster(struct swap_info_struct *si,
-> >   */
-> >  static DEFINE_SPINLOCK(swap_lock);
-> >  static unsigned int nr_swapfiles;
-> > +MEMINSPECT_SIMPLE_ENTRY(nr_swapfiles);
+On 6/23/26 8:57 PM, Esteban Urrutia wrote:
+> On 6/23/26 11:56 AM, Alex Elder wrote:
+>> I assume you have implemented this based on what you found in
+>> some downstream code.  And if so, could you please indicate
+>> where to find that (so I can do some cross-referencing myself).
+>> I no longer have access to any Qualcomm internal documentation.
 > 
-> Now the EXPORT_SYMBOL_GPL() is an EXPORT_SYMBOL() in effect no?
+> Hello. Yes, that would be the case. What I used goes as follows.
 
-The whole reason we had to tag most of the MM symbols is that
-the crash tool looks for this information while launching itself.
+Thank you very much for sharing this information.
 
-e.g.,
+> 1. My personal findings regarding IPA:
+> https://gist.github.com/esteuwu/bd49ed67ed9290f41612bdae1cacb5bc
 
-./crash --no_modules --no_panic --no_kmem_cache --zero_excluded ./vmlinux  ./minidump.elf
+This was interesting to see.  It's something I should probably
+document better.  Most everything maps to the downstream code,
+but it's not always completely obvious how, because the upstream
+driver has evolved substantially.
 
+> Note that these may be subject to errors since I mostly cross-checked
+> values to get here.
+> 
+> 2. SM8450 downstream device tree:
+> https://github.com/LineageOS/android_kernel_qcom_sm8450-devicetrees/blob/lineage-20/qcom/waipio.dtsi#L3304
+> 
+> 3. SM8475 downstream device tree:
+> https://github.com/LineageOS/android_kernel_qcom_sm8450-devicetrees/blob/lineage-20/qcom/cape.dtsi#L2624
+> 
+> It's worth mentioning that between SM8450 and SM8475, IPA SRAM size is
+> different, so I used the smaller SRAM size to support SM8475 as well. Hence
+> the reason why I included SM8475's downstream device tree as well.
+
+This means that the SRAM size (ipa_mem_data->smem_size) should
+possibly be defined in devicetree (as the IMEM address and size
+now are).
+
+The SMEM region is used for "IPA filter tables", and access to
+it is shared between the AP and the modem.  Unlike the other
+(host) memory regions, the size used is *not* included in the
+ipa_init_modem_driver_req message that communicates from the
+AP to the modem where the regions are, and their sizes.
+
+So it's possible that the size used must actually match what
+is expected by both the AP and modem.  If that is the case,
+using the smaller size might have problems on whichever
+platform (SM8450?) expects the larger one.
+
+So I'm not sure whether using the smaller size for both
+platforms is OK; someone from Qualcomm might be able to
+answer that question.
+
+> 4. SM8450/SM8475 downstream IPA driver:
+> https://github.com/LineageOS/android_kernel_qcom_sm8450-modules/tree/lineage-20/qcom/opensource/dataipa
+> 
+> Most of my cross-checking came from the source code in this folder.
+
+Yes, "ipa_utils.c" contains a great deal of the information
+needed.
 
 > 
-> >  atomic_long_t nr_swap_pages;
-> >  /*
-> >   * Some modules use swappable objects and may try to swap them out under
-> >
-> > --
-> > 2.53.0
-> >
+> Finally, for some values such as qmap, aggregation, tre_count and
+> event_count, I had to cross-check on the same folder that all
+> ipa_data-vX.Y.c files reside, since I couldn't find any reference to these
+> values in downstream code.
 
--- 
--Mukesh Ojha
+I'll try to explain those things separately.
+
+					-Alex
+
+> Regards,
+> Esteban
+> 
+
 
