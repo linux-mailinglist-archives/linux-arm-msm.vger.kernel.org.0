@@ -1,67 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-117729-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-117730-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id exY1JstpTmrbMAIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-117729-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Jul 2026 17:16:27 +0200
+	id r6+iEtZsTmr1MQIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-117730-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Jul 2026 17:29:26 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0A97A727DB9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Jul 2026 17:16:27 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 90BC8728081
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Jul 2026 17:29:25 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=infOIpIb;
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=XdezOzaW;
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117729-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117729-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117730-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117730-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id A383232730C6
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jul 2026 15:03:40 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 67F823173007
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jul 2026 15:03:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 34CFF409289;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC4A73F12EC;
 	Wed,  8 Jul 2026 14:57:42 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD19E4E3790;
-	Wed,  8 Jul 2026 14:57:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A29FB409277;
+	Wed,  8 Jul 2026 14:57:41 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783522661; cv=none; b=cKZ4abLOuYyuYV696sVVW4HgXvAgoSYRkpt91DrIDHlGzb4PgjLLFSdaXr4OPK6w6XtD4PCaLlVwR5qc786YunWZng9WVVsSJ+iMjblxNiKZHroJVtgcfbFR/tEQ+bpBk9cAQLVpZGwB08ZKrpj7zAVJ627Df8tMwp2EF8g+BQQ=
+	t=1783522662; cv=none; b=Z5z3XYHmQ8fe66OZCSUe2ecj4+GDqH+nf6hj+ApM6Oh8yBq1dCJpzl0v/+u4FFpgU7pA7lHoP13VAvafoBRvX4VJT83XPUACl6h2ndEUQksAuvOtPut/B+66Bg8ILTGvGeUUQS1yIPUq0Gi8huSuZfc8py+Iw/TKQ6WZ9zViQRU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783522661; c=relaxed/simple;
-	bh=LkcKDECXTCZSbHjnRB6IprW2BrEBJbQwx3aVyO1domg=;
+	s=arc-20240116; t=1783522662; c=relaxed/simple;
+	bh=vwqGU/T15mmo6PbTDneM2EdEf1IaneXg2hCnQjbTik4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RfMWldfx9QTZZJTsdnENtynBFMvCACbJw5vW9a/d1ZYAPbZT2rbaQf7dhiZ+lWC9HH/iS555A1l3wQ5k+2MuElxYXk0U+1PwMyvVZ/Gj01QjJeHSHcV8yVgmK4AxDSHh1NvmRsYPEXWwTdBC56yq8q/QOmeyhEmZXmG09qo0Sno=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=infOIpIb; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26C991F00A3D;
+	 MIME-Version:Content-Type; b=WhrKpE+2zlG1Zz5cxJbJAcMXCfRk7gcZ2OyRgE19YDVvvlxM9+xv3fp+E+EY+LrdaCdROAMAIsst0H1HwTS/Gqz+87oc58rHsbO/0zH5Mj5py8HzvnKbfPFfctPlXGctW+5+Nl5EsOF7pi/NdCHYgtSU3CfilAPrFZah/sQuZiI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XdezOzaW; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 073311F00A3E;
 	Wed,  8 Jul 2026 14:57:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783522660;
-	bh=TiO3JiFNPaOT+bDTB9B7bXbx2y5X++jlYTO2tic01PU=;
+	s=k20260515; t=1783522661;
+	bh=mGbQTLNsdqA2GH3o4N6Hc0dQr6ltnVnSxzUAfMQ8sgI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=infOIpIb7RFNcoyVol6WYaT5ce6TX6vg2fAQvAJ12E0yHNMw8aOXzs3VHgfrU1SwN
-	 7L1cjNrw+v0EAK93wL3h+p9ESuKQsvoHG0Z6f4A2Xsvi+UzICJyZnw3crOaW9McW6u
-	 Z5PAZi2ww8rOshgBbmSFc1gA6+TxOyxPiIDlnY9Biq+JCdVQrjDAFJst2I+VtB6osg
-	 slwtmd0+BAV6Uzxd1rFMWaBkHP8RuKiKJ9/OlMkq2uv9mZ5Rjm4eo3ttDrnV1uirk9
-	 VoFbi3pWLxprj1hw2evFXOw3WSNBrp37XCXBtJ0BoHaM638bDdFxb+oQ6+AG2hg9z3
-	 IXeq28uzDdfZg==
+	b=XdezOzaWH/AGlEoByr46JpAXqgc1biqJ7UePDNLTaC2eCz7Hc8+zrSAtPwcPi0LKI
+	 RIjpnzU6M7EW66+3bIqUW3p4u6N7Dw+n99njMEboSld1x67xk+ZRZ67GzEqnAG6C/x
+	 BG2LOyanLFOIGAZ5S6YSTMgqYjVefPqZZrnrgzwilYMLvEPTT5lnwDH5RMEDSIkbOY
+	 diLYdhAcrjygkH7xxgoMN/6OQoRWzlPMDdOYnqIuXvN3X31lSgnJJwce7NnB5aCjzz
+	 joDGqk6Oyzq3O1yf00kpPrgXchvNSEpskiKMhVAyBVl66Oihj5wuWnSXKKSBTWGAbS
+	 +CWb4EHPrA1sw==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Brian Masney <bmasney@redhat.com>,
-	Imran Shaik <quic_imrashai@quicinc.com>,
-	Taniya Das <quic_tdas@quicinc.com>,
+To: konradybcio@kernel.org,
 	Loic Poulain <loic.poulain@oss.qualcomm.com>
 Cc: linux-arm-msm@vger.kernel.org,
-	linux-clk@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 0/2] clk: qcom: gcc-qcs8300: Fix suspend/resume issues for USB and PCIe
-Date: Wed,  8 Jul 2026 09:56:41 -0500
-Message-ID: <178352261649.2235436.12630128388941493118.b4-ty@kernel.org>
+	devicetree@vger.kernel.org,
+	krzk+dt@kernel.org,
+	robh@kernel.org,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH v2] arm64: dts: qcom: monaco-arduino-monza: Add fan controller and thermal cooling
+Date: Wed,  8 Jul 2026 09:56:42 -0500
+Message-ID: <178352261594.2235436.7436176077831520820.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260629-monza-suspend-v1-0-b601d8a2f2f8@oss.qualcomm.com>
-References: <20260629-monza-suspend-v1-0-b601d8a2f2f8@oss.qualcomm.com>
+In-Reply-To: <20260609091206.522331-1-loic.poulain@oss.qualcomm.com>
+References: <20260609091206.522331-1-loic.poulain@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -75,14 +73,14 @@ X-Spamd-Result: default: False [-5.16 / 15.00];
 	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-117729-lists,linux-arm-msm=lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:mturquette@baylibre.com,m:sboyd@kernel.org,m:bmasney@redhat.com,m:quic_imrashai@quicinc.com,m:quic_tdas@quicinc.com,m:loic.poulain@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:linux-clk@vger.kernel.org,m:linux-kernel@vger.kernel.org,s:lists@lfdr.de];
+	TAGGED_FROM(0.00)[bounces-117730-lists,linux-arm-msm=lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:konradybcio@kernel.org,m:loic.poulain@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:krzk+dt@kernel.org,m:robh@kernel.org,m:konrad.dybcio@oss.qualcomm.com,m:krzk@kernel.org,s:lists@lfdr.de];
 	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
 	MIME_TRACE(0.00)[0:+];
@@ -97,30 +95,32 @@ X-Spamd-Result: default: False [-5.16 / 15.00];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[9];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
+	RCPT_COUNT_SEVEN(0.00)[7];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,vger.kernel.org:from_smtp]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,vger.kernel.org:from_smtp]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 0A97A727DB9
+X-Rspamd-Queue-Id: 90BC8728081
 
 
-On Mon, 29 Jun 2026 21:22:54 +0200, Loic Poulain wrote:
-> Neither the USB nor PCIe host controller drivers currently handle
-> state loss across suspend on this platform. To address this, switch the
-> corresponding GDSCs to retention mode (PWRSTS_RET_ON), matching the
-> behavior already used on similar Qualcomm SoCs.
+On Tue, 09 Jun 2026 11:12:06 +0200, Loic Poulain wrote:
+> Enable the CCI1 bus and add support for the Microchip EMC2305 fan
+> controller on the Monaco Arduino Monza board. The controller is
+> virtually implemented by the onboard MCU.
 > 
+> Add a new active trip point to the cpuss0 thermal zone and
+> associate it with onboard fan cooling. The CPU subsystem sensor is
+> used as the thermal reference until support for a more appropriate
+> onboard/skin sensor becomes available (via spmi-adc5-gen3).
 > 
+> [...]
 
 Applied, thanks!
 
-[1/2] clk: qcom: gcc-qcs8300: Use retention for PCIe power domains
-      commit: 11b170abe4d324cac0d15a410282d1ec2b6bafa0
-[2/2] clk: qcom: gcc-qcs8300: Use retention for USB power domains
-      commit: d8638610e0c9ebab2800b7ad6c2c2a3737090da9
+[1/1] arm64: dts: qcom: monaco-arduino-monza: Add fan controller and thermal cooling
+      commit: 07d76600a3c59e01430c9a793dc646941be423b9
 
 Best regards,
 -- 
