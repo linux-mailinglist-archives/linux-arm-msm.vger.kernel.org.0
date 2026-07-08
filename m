@@ -1,203 +1,462 @@
-Return-Path: <linux-arm-msm+bounces-117806-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-117805-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id y2rZOUHITmrhTwIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-117806-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Jul 2026 23:59:29 +0200
+	id u8bGOWzHTmqLTwIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-117805-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Jul 2026 23:55:56 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4431C72ABD2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Jul 2026 23:59:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5E06372AAF9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Jul 2026 23:55:56 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=none;
-	dmarc=none;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117806-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117806-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b="T4pVv/DP";
+	dmarc=pass (policy=quarantine) header.from=kernel.org;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117805-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117805-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id CB7E331599EF
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jul 2026 21:56:10 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id EE6A930470E5
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jul 2026 21:55:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2ECE73FC5A1;
-	Wed,  8 Jul 2026 21:56:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4C8D83F54D2;
+	Wed,  8 Jul 2026 21:55:54 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from MTA-05-3.privateemail.com (mta-05-3.privateemail.com [198.54.118.212])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94A8F3FCB0B;
-	Wed,  8 Jul 2026 21:56:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D394D3A6B81;
+	Wed,  8 Jul 2026 21:55:52 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783547769; cv=none; b=B9R5GxsNOh/BgidxihrfcEJWskQTg9An3yIfrini/cod3eMGyBG+Cr5wzsrxt0yXROH5z7l35kVEuupkG5j2f6u5X4DqaKxbge3XsEEALaehnpKsPoJP0ehIoGMqlnVrsir6mVlWiI5uIS6at1n3qMsnDJdl8+ERorZQvsEQcNo=
+	t=1783547754; cv=none; b=Uz5n9jS9UyY5T6ZWD6Wwwsf05EYtF17pH8A7C932GML2oSgdmfpIHoZSO8LURCEm8Tv60w7uUha1NU9cYb+i6C+DGHS6p2oOJeWeGXo+hPIBadzj/I8EIaVDJyez9fUq+UNxnZiOzXygE8ynUu1GJiup+fBUKh4KTmOzVAPjcnw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783547769; c=relaxed/simple;
-	bh=18XMXZp+NlcdPc+iodk+kNU707d273VfROluoD3EKg4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aWrawB8hdtGAGfMYi6L7y5PVTqN2gZiuRzyDGRWVGJCya3tMV0YrJovXkchRCMJY+y3GHxrestGa/3EwVrjcCrHkaXPordKUsJNC3ODAkJJr0lui0DfUxTML/l2wiIfjqmOmgql008PA0oINo3xfMlI8NxKt/RvOUAMSuwX8HDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=catcrafts.net; spf=pass smtp.mailfrom=catcrafts.net; arc=none smtp.client-ip=198.54.118.212
-Received: from mail.privateemail.com (unknown [87.215.145.39])
-	by mta-05.privateemail.com (Postfix) with ESMTPA id 4gwX350cNvz3hhTG;
-	Wed,  8 Jul 2026 17:55:44 -0400 (EDT)
-From: Jorijn van der Graaf <jorijnvdgraaf@catcrafts.net>
-To: Mark Brown <broonie@kernel.org>,
-	Srinivas Kandagatla <srini@kernel.org>
-Cc: Jorijn van der Graaf <jorijnvdgraaf@catcrafts.net>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>,
-	Val Packett <val@packett.cool>,
-	Luca Weiss <luca.weiss@fairphone.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Jianfeng Liu <liujianfeng1994@gmail.com>,
-	Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>,
-	linux-sound@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [RFC PATCH] ASoC: qcom: q6apm-lpass-dais: start the graph at prepare
-Date: Wed,  8 Jul 2026 23:55:39 +0200
-Message-ID: <20260708215539.150590-1-jorijnvdgraaf@catcrafts.net>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <dee62f9f-1df3-4f57-a072-12b0b4b8a1a3@sirena.org.uk>
-References: <20260705033830.305907-1-jorijnvdgraaf@catcrafts.net> <dee62f9f-1df3-4f57-a072-12b0b4b8a1a3@sirena.org.uk>
+	s=arc-20240116; t=1783547754; c=relaxed/simple;
+	bh=mQONm8E+JkVSZWfARwyuTio0dPnEF5IwNfcfzS9UkFw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=g+MX9qOe+WS2nDAKsaBPO0y/tj3F+fcYsIQ3jPZhulvn2t/gtmzhS7ag1ebTUTINykJ/MhUuxFkaEPogYGyBx5hefjMz45eOwEJikAloAkP0xW6+NrnExyagF9dNBGrzGdAz7vQPOaYwwjdlJ5xjdKJELx8J7TxwYpjEIUItThI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=T4pVv/DP; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E81091F000E9;
+	Wed,  8 Jul 2026 21:55:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1783547752;
+	bh=18M0o3bms/FWqXkbeCx1DIT7uNO8cNtKfuRe5v9zuL4=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=T4pVv/DPQZeN1DflmRgh80MUtzF9ZIXol+CG7beLlbMqWe2yB0eeM23vHt6LrhzUP
+	 Kw2eAK9UensxbWIL3lmtHLMQaM+CgXE6N5jQsCwx4FcvBzJTqXzQglWYFJDAjXV8bD
+	 nnq/ckAfCDP50jZiHUcpG/Mzvupi+1WXoEYmPLEVWgBclB4GLDg/WkxJ7dagh8gIoj
+	 pcI8MdPYvWTJcPKC8NuNJRtynSVzH7MDXmIV2N6Bg9ktXYCJE5co0CMjyEMsrC8U7b
+	 aICTMh5iAcwZn2IJ73teHp1ATvjqvWmY9we+rhZpTgEHReWJEkNEupbSEytVjQ6cfg
+	 uRg1qhZhatayA==
+Message-ID: <3ab676ac-919b-4a80-8dd6-71dd7f6fe06c@kernel.org>
+Date: Wed, 8 Jul 2026 22:55:48 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v9 1/2] dt-bindings: phy: qcom: Add CSI2 C-PHY/DPHY schema
+To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>, Vinod Koul
+ <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>,
+ Neil Armstrong <neil.armstrong@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+ linux-media@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20260708-x1e-csi2-phy-v9-0-0210b90c04cf@linaro.org>
+ <20260708-x1e-csi2-phy-v9-1-0210b90c04cf@linaro.org>
+ <YSunV_lNJ8xW_y-Aa2psZavniF6mcHJlJipuj1RYWMB8Zb8yLC-gb7eEnk0XMjfwQOneMGsZM5foFKutCNhYqw==@protonmail.internalid>
+ <b7baffda-b97c-4b83-8d9e-e381d0289682@linaro.org>
+From: Bryan O'Donoghue <bod@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=bod@kernel.org; keydata=
+ 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
+In-Reply-To: <b7baffda-b97c-4b83-8d9e-e381d0289682@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [0.04 / 15.00];
-	MID_CONTAINS_FROM(1.00)[];
+X-Spamd-Result: default: False [-5.16 / 15.00];
+	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_MISSING_CHARSET(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCPT_COUNT_TWELVE(0.00)[14];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-117806-lists,linux-arm-msm=lfdr.de];
-	DMARC_NA(0.00)[catcrafts.net];
-	FORWARDED(0.00)[lists@lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:broonie@kernel.org,m:srini@kernel.org,m:jorijnvdgraaf@catcrafts.net,m:lgirdwood@gmail.com,m:perex@perex.cz,m:tiwai@suse.com,m:val@packett.cool,m:luca.weiss@fairphone.com,m:dmitry.baryshkov@oss.qualcomm.com,m:liujianfeng1994@gmail.com,m:mohammad.rafi.shaik@oss.qualcomm.com,m:linux-sound@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,s:lists@lfdr.de];
-	FREEMAIL_CC(0.00)[catcrafts.net,gmail.com,perex.cz,suse.com,packett.cool,fairphone.com,oss.qualcomm.com,vger.kernel.org];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_SENDER(0.00)[jorijnvdgraaf@catcrafts.net,linux-arm-msm@vger.kernel.org];
 	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[jorijnvdgraaf@catcrafts.net,linux-arm-msm@vger.kernel.org];
+	RCVD_TLS_LAST(0.00)[];
+	FORGED_RECIPIENTS(0.00)[m:vladimir.zapolskiy@linaro.org,m:bryan.odonoghue@linaro.org,m:vkoul@kernel.org,m:kishon@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:neil.armstrong@linaro.org,m:linux-arm-msm@vger.kernel.org,m:linux-phy@lists.infradead.org,m:linux-media@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	FORGED_SENDER(0.00)[bod@kernel.org,linux-arm-msm@vger.kernel.org];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[13];
+	TAGGED_FROM(0.00)[bounces-117805-lists,linux-arm-msm=lfdr.de];
+	MIME_TRACE(0.00)[0:+];
+	FORWARDED(0.00)[lists@lfdr.de];
 	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	R_DKIM_NA(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[bod@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	MID_RHS_MATCH_FROM(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,linaro.org:email]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 4431C72ABD2
+X-Rspamd-Queue-Id: 5E06372AAF9
 
-[ +Cc Dmitry Baryshkov and Jianfeng Liu for the drm/msm/dp DP-audio
-  context, and Mohammad Rafi Shaik for the MI2S clock series test
-  report below ]
+On 08/07/2026 08:44, Vladimir Zapolskiy wrote:
+> On 7/8/26 02:39, Bryan O'Donoghue wrote:
+>> Add a base schema initially compatible with x1e80100 to describe MIPI CSI2
+>> PHY devices.
+>>
+>> The hardware can support both CPHY, DPHY and a special split-mode DPHY.
+>>
+>> The schema here defines two ports with three endpoints:
+>>
+>> port@0: Sensor input.
+>>             endpoint@0: primary sensor
+>>             endpoint@1: optional second sensor, implies DPHY split-mode
+>>
+>> port@1: Controller output.
+>>
+>> The CSIPHY devices have their own pinouts on the SoC as well as their own
+>> individual voltage rails.
+>>
+>> The need to model voltage rails on a per-PHY basis leads us to define
+>> CSIPHY devices as individual nodes.
+>>
+>> Two nice outcomes in terms of schema and DT arise from this change.
+>>
+>> 1. The ability to define on a per-PHY basis voltage rails.
+>> 2. The ability to require those voltage.
+>>
+>> We have had a complete bodge upstream for this where a single set of
+>> voltage rail for all CSIPHYs has been buried inside of CAMSS.
+>>
+>> Much like the I2C bus which is dedicated to Camera sensors - the CCI bus in
+>> CAMSS parlance, the CSIPHY devices should be individually modelled.
+>>
+>> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+>> ---
+>>    .../bindings/phy/qcom,x1e80100-csi2-phy.yaml       | 202 +++++++++++++++++++++
+>>    1 file changed, 202 insertions(+)
+>>
+>> diff --git a/Documentation/devicetree/bindings/phy/qcom,x1e80100-csi2-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,x1e80100-csi2-phy.yaml
+>> new file mode 100644
+>> index 0000000000000..a7fbf6804cd9e
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/phy/qcom,x1e80100-csi2-phy.yaml
+>> @@ -0,0 +1,202 @@
+>> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/phy/qcom,x1e80100-csi2-phy.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: Qualcomm SoC CSI2 PHY
+>> +
+>> +maintainers:
+>> +  - Bryan O'Donoghue <bod@kernel.org>
+>> +
+>> +description:
+>> +  Qualcomm MIPI CSI2 C-PHY/D-PHY combination PHY. Connects MIPI CSI2 sensors
+>> +  to Qualcomm's Camera CSI Decoder. The PHY supports both C-PHY and D-PHY
+>> +  modes.
+>> +
+>> +properties:
+>> +  compatible:
+>> +    const: qcom,x1e80100-csi2-phy
+>> +
+>> +  reg:
+>> +    maxItems: 1
+>> +
+>> +  "#phy-cells":
+>> +    const: 1
+>> +    description:
+>> +      The single cell specifies the PHY operating mode.
+> 
+> Unfortunately my review comment given before was ignored before publishing
+> this version, thus I will repeat.
+> 
+> There is a clash between the proposed phy cells value and 'bus-type' property
+> of the media endpoint, the proposed value of phy cells brings no information,
+> and therefore the whole proposed '#phy-cells' prorperty shall be removed.
+> 
+> There shall be no third link introduced between CAMSS and CAMSS CSIPHYs.
 
-On Wed, Jul 08, 2026 at 03:05:39PM +0100, Mark Brown wrote:
-> On Sun, Jul 05, 2026 at 05:38:30AM +0200, Jorijn van der Graaf wrote:
->
-> > Sending as RFC because this changes when the port starts clocking for
-> > every AudioReach platform, and I may be missing the reason the start
-> > was placed in trigger rather than prepare in the first place:
->
-> > - Is there a downside to starting the graph at prepare on AudioReach
-> >   (power, pop/click, or DSP-side constraints)? The legacy q6afe stack
-> >   has started its ports at the end of prepare all along, and the FE
-> >   side of AudioReach already starts its graph in q6apm_dai_prepare().
->
-> There was previously a move in the opposite direction in b54a38af7138
-> (ASoC: qcom: q6apm-lpass-dai: move graph start to trigger) - the commit
-> there mentions some issues with PipeWire?
+As explained in the cover letter: I'm following guidance from Rob on that.
 
-Thanks, that's exactly the context I was missing - I had checked the
-state of the file on the submission base but not the history of the
-lines I was moving. Having read up on it now: b54a38af7138 fixes a real
-problem, and this patch as-is would reintroduce it for the DisplayPort
-DAIs. Here is what I found.
+20260708-x1e-csi2-phy-v9-0-0210b90c04cf@linaro.org
 
-Since 98a8920e7b07 ("drm/msm/dp: reuse generic HDMI codec
-implementation", v6.16) the msm DP audio configuration runs from
-hdmi-codec's .prepare (drm_hdmi_audio_helper wires .prepare but not
-.hw_params). Within a BE link the CPU DAI prepares before the codec
-DAI, so a prepare-time q6apm_graph_start() asks the DSP to start
-DISPLAY_PORT_RX before the DP controller's audio engine is configured,
-and the DSP rejects it. DP audio on AudioReach platforms was reported
-broken this way from v6.16 until b54a38af7138 went in:
+Old guidance granted, so let me see if I can get his attention to this 
+matter. Perhaps your suggestion is fine by him if so then fine, if not I 
+will stick to his original nudge, either way its up to him as the 
+original reviewer and senior schema maintainer to call this one.
+>> +
+>> +  clocks:
+>> +    maxItems: 3
+>> +
+>> +  clock-names:
+>> +    items:
+>> +      - const: core
+>> +      - const: timer
+>> +      - const: ahb
+>> +
+>> +  interrupts:
+>> +    maxItems: 1
+>> +
+>> +  operating-points-v2: true
+>> +
+>> +  power-domains:
+>> +    items:
+>> +      - description: Titan Top GDSC - Titan ISP Block, Global Distributed Switch Controller.
+>> +      - description: MMCX voltage rail
+>> +      - description: MXC or MXA voltage rail
+>> +
+>> +  power-domain-names:
+>> +    items:
+>> +      - const: top
+>> +      - const: mmcx
+>> +      - const: mx
+> 
+> None of the power domains finds its place in this device tree node, the
+> child device belongs to CAMSS, which already enables these power domains.
 
-https://lore.kernel.org/all/20250925040530.20731-1-liujianfeng1994@gmail.com/
+Right, I think the whole subnode debate has run its course. Its a 
+problem for JPEG and a bit of a fake debate, there is no real "bus" here 
+so what is the point of mutating DT to look like a bus ? We are forever 
+lecturing people about "making fake DT stuff for convenience".
 
-That thread also has Jianfeng Liu's proposed DRM-side fix (wiring
-.hw_params to the same helper), which Srinivas was fine with but Dmitry
-argued is incorrect since the IEC 958 channel status isn't known at
-hw_params time; as far as I can see it never landed, and the thread
-ends with Dmitry noting his understanding that the issue should be
-fixed by what became b54a38af7138. The legacy q6afe stack, which starts
-its port at prepare, hit the same ordering problem on
-qcm6490-fairphone-fp5:
+Peer nodes with TITAN_TOP_GDSC will perfectly adequately describe this 
+hardware and the JPEG too.
 
-https://lore.kernel.org/all/DD8PK8AI24P7.YK0OGVYC0QFM@fairphone.com/
+> 
+>> +
+>> +  vdda-0p8-supply:
+>> +    description: Phandle to a 0.8V regulator supply to a PHY.
+> 
+> The property name shall be vdda-0p9-supply, the description shall be
+> changed accordingly
 
-b54a38af7138's commit message itself also cites PipeWire being unhappy
-when the DP is not connected during start - presumably because with the
-start at trigger, an open-but-idle DP PCM never attempts it.
+Hmm what ? I'll have to look back through my notes, I thought the opposite.
 
-I cannot exercise the DP path on my hardware - the FP6 has no DP audio
-DAI link, so my testing (PipeWire, playback and capture) only covers
-MI2S and codec DMA.
+Let me follow up in v10 after grepping for this again.
 
-I also tested whether the in-flight "ASoC: qcom: qdsp6: Add MI2S clock
-control" series can solve the aw88261 case without touching the graph
-start:
+> 
+>> +
+>> +  vdda-1p2-supply:
+>> +    description: Phandle to 1.2V regulator supply to a PHY.
+>> +
+>> +  ports:
+>> +    $ref: /schemas/graph.yaml#/properties/ports
+>> +
+>> +    properties:
+>> +      port@0:
+>> +        $ref: /schemas/graph.yaml#/$defs/port-base
+>> +        description:
+>> +          Sensor input. Always present. A single sensor is described by a
+>> +          single endpoint with one to four data lanes. DPHY split mode,
+>> +          where two independent sensors share the same PHY, is described
+>> +          by two endpoints; endpoint@0 with exactly two-data lanes and
+>> +          endpoint@1 with exactly one data-lane.
+>> +        unevaluatedProperties: false
+>> +
+>> +        patternProperties:
+>> +          "^endpoint(@[0-9a-f]+)?$":
+> 
+> This is too wide regexp mask for one or two endpoints only.
 
-https://lore.kernel.org/all/20260706132009.1496321-1-mohammad.rafi.shaik@oss.qualcomm.com/
+Yeah you're right, this is just fluff.
 
-I carried it onto the v7.1.2-based tree my board runs, wired the
-FP6's Senary MI2S DAI to the q6prm SEN_MI2S_IBIT clock ("bclk" in the
-new dai@ subnode) and enabled the machine-level bclk vote. The
-plumbing works as intended - during the stream clk_summary shows the
-clock enabled at the right rate (1536000 for 48 kHz 2ch S16) - but
-the amplifiers still report "no clocks" (SYSST) through their
-power-up check at prepare and fail to start. On this platform, at
-least for Senary MI2S, the interface only drives the pads once the
-graph has started, so the clock vote alone does not help a codec
-that needs the bit clock before APM_CMD_GRAPH_START; conversely,
-with the graph started at prepare the same codec powers up with no
-clock vote at all. Happy to share the details in that series' thread
-if useful (its patch 3/3 also overlaps the Senary set_fmt one-liner
-I sent for sc8280xp, which I would coordinate there).
+> 
+>> +            $ref: /schemas/media/video-interfaces.yaml#
+>> +            unevaluatedProperties: false
+>> +            properties:
+>> +              data-lanes:
+>> +                minItems: 1
+>> +                maxItems: 4
+>> +              remote-endpoint: true
+>> +            required:
+>> +              - data-lanes
+>> +              - remote-endpoint
+>> +
+>> +        allOf:
+>> +          - if:
+>> +              required:
+>> +                - endpoint@1
+>> +            then:
+>> +              properties:
+>> +                endpoint@0:
+>> +                  properties:
+>> +                    data-lanes:
+>> +                      minItems: 2
+>> +                      maxItems: 2
+>> +                endpoint@1:
+>> +                  properties:
+>> +                    data-lanes:
+>> +                      maxItems: 1
+>> +              required:
+>> +                - endpoint@0
+>> +
+>> +      port@1:
+>> +        $ref: /schemas/graph.yaml#/$defs/port-base
+>> +        description: Output to the CAMSS CSID controller.
+>> +        unevaluatedProperties: false
+>> +
+>> +        patternProperties:
+>> +          "^endpoint(@[0-9a-f]+)?$":
+>> +            $ref: /schemas/graph.yaml#/$defs/endpoint-base
+>> +            unevaluatedProperties: false
+>> +            properties:
+>> +              remote-endpoint: true
+>> +            required:
+>> +              - remote-endpoint
+>> +
+>> +    required:
+>> +      - port@0
+>> +      - port@1
+>> +
+>> +required:
+>> +  - compatible
+>> +  - reg
+>> +  - "#phy-cells"
+>> +  - clocks
+>> +  - clock-names
+>> +  - interrupts
+>> +  - operating-points-v2
+>> +  - power-domains
+>> +  - power-domain-names
+>> +  - vdda-0p8-supply
+>> +  - vdda-1p2-supply
+>> +  - ports
+>> +
+>> +additionalProperties: false
+>> +
+>> +examples:
+>> +  - |
+>> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+>> +    #include <dt-bindings/clock/qcom,x1e80100-camcc.h>
+>> +    #include <dt-bindings/clock/qcom,x1e80100-gcc.h>
+>> +    #include <dt-bindings/power/qcom,rpmhpd.h>
+>> +
+>> +    phy@ace4000 {
+>> +        compatible = "qcom,x1e80100-csi2-phy";
+>> +        reg = <0x0ace4000 0x2000>;
+>> +        #phy-cells = <1>;
+>> +
+>> +        clocks = <&camcc CAM_CC_CSIPHY0_CLK>,
+>> +                 <&camcc CAM_CC_CSI0PHYTIMER_CLK>,
+>> +                 <&camcc CAM_CC_CORE_AHB_CLK>;
+>> +        clock-names = "core",
+>> +                      "timer",
+>> +                      "ahb";
+>> +
+>> +        interrupts = <GIC_SPI 477 IRQ_TYPE_EDGE_RISING>;
+>> +
+>> +        operating-points-v2 = <&csiphy_opp_table>;
+>> +
+>> +        power-domains = <&camcc CAM_CC_TITAN_TOP_GDSC>,
+>> +                        <&rpmhpd RPMHPD_MMCX>,
+>> +                        <&rpmhpd RPMHPD_MX>;
+>> +        power-domain-names = "top",
+>> +                             "mmcx",
+>> +                             "mx";
+>> +
+>> +        vdda-0p8-supply = <&vreg_l2c_0p8>;
+>> +        vdda-1p2-supply = <&vreg_l1c_1p2>;
+>> +
+>> +        ports {
+>> +            #address-cells = <1>;
+>> +            #size-cells = <0>;
+>> +
+>> +            port@0 {
+>> +                reg = <0>;
+>> +                csiphy0_in: endpoint {
+>> +                    data-lanes = <0 1 2 3>;
+> 
+> The previously given review comment about numeration of lanes was
+> not implemented.
 
-So for v2 I would keep the two behaviours apart per interface type:
-start the graph at the end of prepare only for the MI2S DAIs
-(q6i2s_ops), where an external codec like aw88261 needs the bit clock
-running before the DAPM power-up sequence and where q6afe has always
-started the port at prepare. b54a38af7138's other point - that there is
-no data transfer yet at prepare - still holds there, but for these
-interfaces the early start is about the clocking, not the data. The
-trigger-time start stays unchanged for the DP/HDMI DAIs (q6hdmi_ops,
-where the prepare-time start is exactly what broke) and the codec DMA
-DAIs (q6dma_ops - codecs clocked from the LPASS macros or SoundWire,
-not from the port). That also supersedes my note under the fold about
-dropping the trigger callback in a respin: it stays, as the only start
-path for the DP/HDMI and codec DMA DAIs.
+I understand your comment but as Nihal pointed out - CAMSS has an 
+established pattern for this - and I think his argument is convincing - 
+we should stick to that pattern.
 
-Srinivas, since b54a38af7138 is yours: does that split sound
-reasonable, or is there a DSP-side reason the MI2S ports should not
-start at prepare either? And since I cannot test the DP side, it would
-be great if someone with DP-capable AudioReach hardware (an X Elite
-laptop or a QCS6490 board) could give v2 a spin there.
+> 
+>> +                    remote-endpoint = <&sensor_out>;
+>> +                };
+>> +            };
+>> +
+>> +            port@1 {
+>> +                reg = <1>;
+>> +                csiphy0_out: endpoint {
+>> +                    remote-endpoint = <&csid_in>;
+>> +                };
+>> +            };
+>> +        };
+>> +    };
+>> +
+>> +    csiphy_opp_table: opp-table {
+>> +        compatible = "operating-points-v2";
+>> +
+>> +        opp-300000000 {
+>> +            opp-hz = /bits/ 64 <300000000>;
+>> +            required-opps = <&rpmhpd_opp_low_svs_d1>,
+>> +                            <&rpmhpd_opp_low_svs_d1>;
+>> +        };
+>> +    };
+>>
+> 
+> --
+> Best wishes,
+> Vladimir
 
-Thanks,
-Jorijn
 
