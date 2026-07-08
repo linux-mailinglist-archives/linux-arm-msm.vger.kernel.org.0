@@ -1,152 +1,111 @@
-Return-Path: <linux-arm-msm+bounces-117559-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-117560-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id EqIwDTkaTmowDQIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-117559-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Jul 2026 11:36:57 +0200
+	id 1PqNEg8bTmqFDQIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-117560-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Jul 2026 11:40:31 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2AEF1723CD0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Jul 2026 11:36:56 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9444B723D5B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Jul 2026 11:40:30 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=K2hn9CrK;
-	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=IftStQ3+;
+	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=ggl30tgC;
 	dmarc=pass (policy=reject) header.from=qualcomm.com;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117559-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 104.64.211.4 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117559-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117560-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117560-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 92309300B8E7
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jul 2026 09:32:31 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id F2FEF30057B3
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jul 2026 09:38:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 971E03F44EA;
-	Wed,  8 Jul 2026 09:32:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6854741A77F;
+	Wed,  8 Jul 2026 09:38:38 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FF263FFAB0
-	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jul 2026 09:32:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B1883FCB3A;
+	Wed,  8 Jul 2026 09:38:34 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783503149; cv=none; b=T55YdINQoGak9HVRNU0z1LJrBB/R1OPDaokvjYVe7Q59VuUuBmAkXrvcgw+xTK8sO4DYTYrPI8SsZSSOoWZvhSncAm2hkww9oC1KMlA9hLyB1KC2QiEnlDNu+ONcmldTzzt7KVlSbbvo+WUYalu0RWTqi3eKqw0xQqfps5gBfNk=
+	t=1783503518; cv=none; b=AGW7Dg/4AZGDon6+DhJVvhobs53/nVLsnx8cnX5rvT6uRLPoiOzB6Uoj8VkwzgyJbMXQvUgTNgJ0YOZmiyXUglQHrPzLq+5pBldoQilAcs4YAcqn/0MANjSQt8TCKKlKAp9pu44oe5nVarr+n1es9qSRj2H6wMCqBaM0yc2rRF0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783503149; c=relaxed/simple;
-	bh=HpvpQU54Un1Qaf41SoPs991kafvyRNbO+FyHycN/Xcc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=FLlGArBAs3GiRQ3pazYnWqfjtLeImHfsDkTdmMJmVqhaHP0cBoYS2xWwNY5+3CyE/gYRh5zKdhtwEcgnKL+glOvTPMofYQ4RwRY4FdWh54cKRzCl511MTAqlHrsgreDg88LCT6mjU7DP6T8a72/0uIAWrdgj+qfbWwC6dBiCiIY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=K2hn9CrK; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=IftStQ3+; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1783503518; c=relaxed/simple;
+	bh=W2X38RxrK6z8gTbPaiYB58uVC1Gbs/0MHxfcy2zYm7s=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=kvQbAfHTZRUu1BEsZLYl1Pdiz546BQeYJbojI40BbBMZuORfN4wngy8VW+OyIJGPOwzI5U6GF2CAHTmkq8+amL6UCunnj1EP5ty+kdUk8okvBbkg4/H4FH+X07orSa1VCHKVS/2M2IIcSpUbiNUPgfEqVVCJoK9mmD52MBorroo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ggl30tgC; arc=none smtp.client-ip=205.220.168.131
 Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6688970c2258496
-	for <linux-arm-msm@vger.kernel.org>; Wed, 8 Jul 2026 09:32:22 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 668896qw2258453;
+	Wed, 8 Jul 2026 09:38:28 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	50cC+lOjwWBBzURdhgiGe83iDGJQETCnagLzadfseh4=; b=K2hn9CrKuH4OIFYN
-	Pw2po+0uWxDCmtVqJ6dRlKCw00jCXJKDE9Dhl7X4sAO0jXOf7xYAm7RBkNKp5pYJ
-	tltOANfZcoccFJN06FbE8AwEtiEzao3LrV7l5a/Rqn7b4XjgNyqz6zAfse+IZV3C
-	nqWyDygB3bJxdAp5J7xHX3LiXINDa1PKy67WE3cNyFgqXmzVCiFRiOnsFiIHKGHf
-	yIT7QLvISSINSYnKo6o137426tvANHwNoyJOBq7TLMk+iDCaBcmExkuujBPdjwpZ
-	6U8KkPniPm/TKDcMDSFbSscaNOOpsFypFSuJVinoYsieFYq85WdqPKHVYWSXoGJi
-	4VXxDg==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f9csw9qwx-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jul 2026 09:32:21 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-51c0408254aso18382211cf.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jul 2026 02:32:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1783503141; x=1784107941; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=50cC+lOjwWBBzURdhgiGe83iDGJQETCnagLzadfseh4=;
-        b=IftStQ3+yoD+rlRMn598ZDbe8qaNTs2npF2C+yV4tOt1S9ipaHqASOVhj1SF0sHM37
-         QF8xUy5QuxsMqzaw+a9Q/xBC/6qrJYg7E8cNL8njcZstTg8s7iQEadS94V3LXtDFsg22
-         UONN0hTV5xS+nAa2zqYopPeYXO8j+sOSOi12wHcuNoyEu/57fDr99cR6Vbwx0VhsuxM/
-         DGqjvqqAbjCTuG+Ll7JbdEIKfs7n7hSU/zVFiEjw4/kLTwRA19UYWKomxKYN7gLgfhRP
-         GVPpfc+s/sO+7aSUiSEPxmO8xfhfcOJzRQG4Z6U/11I6K05m2TsUQ/h+5sMxnhw4ZtEj
-         xvPA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783503141; x=1784107941;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=50cC+lOjwWBBzURdhgiGe83iDGJQETCnagLzadfseh4=;
-        b=RMMis8eyKSJxHaa+Z3bZjcCDvEVC3f7LzXu+AJiEiRozvpW2xJdWK9Wm9cBfmiJwOj
-         d1kLbmVv+3GIC+ZXDiXMi4dkia8swgnniGsHIQBZHPPt+xaTAVfn3d7kR332HNB85lVC
-         xynROvh0eEDvK0BaVdQ2U+K9N6S13gMJRMSAMqVMne9mJZMGQdIw58DGQ0PIOiVLhFsc
-         bp+BFqAdwo0hnQ7ggyf9A4EJM1QCSw5Hr1xkIjg7q0elE1vvLqzM1RrnoxqCKVsFcouc
-         NvGBPuximEWknaC2n2+CtDSn+xEMAC3TjKq3XOG81r3qlKqfUUN2eRUWPy+Z9LplCFr6
-         +IRg==
-X-Forwarded-Encrypted: i=1; AHgh+Rp/zM8+lz8uSv0JdR7DqkXhvjgnD/WJCSdsDchehgsw5l8EDc8O4Hb3kraNPPHfZsgUnR2nX5DyxJeDlZxV@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx6861gILIZ0g9wNi9DejOgokGrXJvS5jPWWpcp/0ZCyx64UB5Z
-	IjGZzXFip16HPttYHAC9TmBMsVN+/XK+NvVi8YuhNjQJmjB7k7kHW5h0fpdlTvXWaEZzCVNZaoi
-	apA6gDOeMmt7Bq48lpUOFZagAQzwCWumMlhLPDUGvddJJykiUFibEAUQloT+irzOmQXJI
-X-Gm-Gg: AfdE7cn/b1iY3oVI9hyaVkBv58bbgZtG64BQeLtJHj2eCf2TLsiYz1uyxr+0TEy1BSg
-	dYprkR1Yv8TicvuShJSJIoYQ4gCL7pLDLd7enRWFtYb1DbPtHK2iqjNgtiIklER2T2RcxWA+sfc
-	RgRDP95FkkgE+bXjP/FfQQyS3D0rvPXqwPF0BKwE9jq5QfbGltlY7ANU2ffQLJqf3Mfs+SOh4Lu
-	npsrjLNWq12z4uD7Ghz0cUIo6dumChfjGPJ5tm+Ew0+kC24rrUtbMfco+vX5oDqHGQg1O+whhUM
-	Ya2VigD+9eDVyr2Uv7kE19W7SXQsUSOYEvbYVAVkC94q4DYZ5dxOlyeMbwuoYZ2mJp0adgBIlCn
-	NPr7pAnlUjTggSwQN2IOLNse+NPDajwNnKaOaUsupr6WymgRUeWTYCpxgeWmmns4lgf82bfgW6X
-	TLH9aLfxsV
-X-Received: by 2002:a05:622a:5599:b0:51c:291:82eb with SMTP id d75a77b69052e-51c7a4a9933mr65537651cf.14.1783503140781;
-        Wed, 08 Jul 2026 02:32:20 -0700 (PDT)
-X-Received: by 2002:a05:622a:5599:b0:51c:291:82eb with SMTP id d75a77b69052e-51c7a4a9933mr65537311cf.14.1783503140245;
-        Wed, 08 Jul 2026 02:32:20 -0700 (PDT)
-Received: from [192.168.25.64] ([94.155.124.210])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c15ce1b374asm82248066b.60.2026.07.08.02.32.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Jul 2026 02:32:19 -0700 (PDT)
-Message-ID: <dd34b44d-396e-4267-b383-e4f8d20f8ef4@oss.qualcomm.com>
-Date: Wed, 8 Jul 2026 12:32:17 +0300
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=PSbhnpT2EsgFpellWB8hQNA6bxIqRBh/+FM
+	gwdS0y5k=; b=ggl30tgCXb9pPXvrdYfWv4FehJ7CPA2kCINrZAg3dBdKSoku7wl
+	yYCyXBWiDWN4qjaEMgQ+pMM5gzl7aYjFRSETLrZ5NgC5YzNXtGNvvLAAMtnQNHMR
+	x4YlR4GHesr5UeOlWzBvR3kMHW48p5H5BYU6v8Qyij4WKuLKk/uD+hXLcX1winkY
+	TyxOHd5NEzy6lHdJYL/IKGyXAB95UM7eMAIuha1EaTot6Rl9Z7vIKb42vHMts/6L
+	/CJf6j8Y9PrZQXHGELLR91MhG/xsZ0HO80tTI7xfW34hUDa6CsCjhdyvgM+gMW/M
+	BizoHfU3i7UHryR960RpgYUHUBgkHqyYMvQ==
+Received: from aptaippmta01.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f9csw9rmq-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 08 Jul 2026 09:38:27 +0000 (GMT)
+Received: from pps.filterd (APTAIPPMTA01.qualcomm.com [127.0.0.1])
+	by APTAIPPMTA01.qualcomm.com (8.18.1.7/8.18.1.7) with ESMTP id 6689cPtu014712;
+	Wed, 8 Jul 2026 09:38:25 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APTAIPPMTA01.qualcomm.com (PPS) with ESMTPS id 4f6u8j5wpj-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 08 Jul 2026 09:38:25 +0000 (GMT)
+Received: from APTAIPPMTA01.qualcomm.com (APTAIPPMTA01.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.18.1.12/8.18.1.12) with ESMTP id 6689cPmm014703;
+	Wed, 8 Jul 2026 09:38:25 GMT
+Received: from bt-iot-sh03-lnx.qualcomm.com (smtphost-taiwan.qualcomm.com [10.249.136.33])
+	by APTAIPPMTA01.qualcomm.com (PPS) with ESMTPS id 6689cP2E014701
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 08 Jul 2026 09:38:25 +0000 (GMT)
+Received: by bt-iot-sh03-lnx.qualcomm.com (Postfix, from userid 2385805)
+	id 88A0243A5E; Wed,  8 Jul 2026 17:38:24 +0800 (CST)
+From: Xiuzhuo Shang <xiuzhuo.shang@oss.qualcomm.com>
+To: Bartosz Golaszewski <brgl@kernel.org>,
+        Marcel Holtmann <marcel@holtmann.org>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+        linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        linux-kernel@vger.kernel.org, cheng.jiang@oss.qualcomm.com,
+        quic_chezhou@quicinc.com, wei.deng@oss.qualcomm.com,
+        shuai.zhang@oss.qualcomm.com, mengshi.wu@oss.qualcomm.com,
+        jinwang.li@oss.qualcomm.com, xiuzhuo.shang@oss.qualcomm.com
+Subject: [PATCH v3] Bluetooth: MGMT: Fix discovery state race against cmd_sync worker
+Date: Wed,  8 Jul 2026 17:38:22 +0800
+Message-ID: <20260708093822.3495633-1-xiuzhuo.shang@oss.qualcomm.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 5/5] media: qcom: jpeg: Add Qualcomm JPEG V4L2 encoder
-To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        Atanas Filipov <atanas.filipov@oss.qualcomm.com>,
-        linux-media@vger.kernel.org
-Cc: bryan.odonoghue@linaro.org, loic.poulain@oss.qualcomm.com,
-        mchehab@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
-        conor+dt@kernel.org, andersson@kernel.org, konradybcio@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20260706071113.383215-1-atanas.filipov@oss.qualcomm.com>
- <20260706071113.383215-6-atanas.filipov@oss.qualcomm.com>
- <51a0abf2-2a72-4551-894b-2c2de91ba0c2@linaro.org>
- <74a5b549-987c-4dac-a1a0-ff81150cd6ab@oss.qualcomm.com>
- <56f1fd7e-42bc-4034-81dc-302cb7c22951@linaro.org>
-Content-Language: en-US
-From: "Gjorgji Rosikopulos (Consultant)"
- <gjorgji.rosikopulos@oss.qualcomm.com>
-In-Reply-To: <56f1fd7e-42bc-4034-81dc-302cb7c22951@linaro.org>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: jKXC6jP-i8ihmNSpT0R-ZjhQwUmEko3x
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA4MDA5MSBTYWx0ZWRfX/qhC1EdORdGS
- aDtRCt9WhRt/jW5RueRsZIzFKroHh1ghJg4euvi9R/86H85RusE+GDInZ0rwpoe57fEupXCaa2D
- 636I5/iZTbm8+3VytO8lIqXIwhhT+HA=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA4MDA5MSBTYWx0ZWRfX9dYiHTJpaWAO
- T2LbASXWd3veDoDWsJolAa6Qo1u9pV25dJIoWatSp+6lkdJ6PUeh/CTuzWAqhnv6PdKv37cn9cf
- K0jNtNVtmpabXMxGAtLmrFcChJoMWbF0gIxLnG3OMiGFterJjcKsTM52WjKbI0uA/rPm2FcnAyw
- SxLKyq7RuOBM7+dZ5yu7mohYQaDBoyU4obZL3gkE1NiY3F93ZYXibAMhnjzA8fvU1/ffBZKV/5e
- 5gcwUMuftA0LSv+plZqVjlGQPndh+l3urS+YkRFHLB/z7fj4svveGIasoB8dd86su8UIxerzaFB
- Sa8wFBYNporrBD8Y0BYudUw28g2gwC37KOeT6zAKyhl+P8PGIHmJqptYp7eQwV7RbuWMWFf7ja6
- jhjujJoHgba3ayAgj2BbgzAVnWEbCdTyflwaXts5eujku14uRYWNuKPXEusixBwAT+bhTpK6m53
- ILyYg80d0FXlk2NzLMQ==
-X-Authority-Analysis: v=2.4 cv=HaYkiCE8 c=1 sm=1 tr=0 ts=6a4e1925 cx=c_pps
- a=WeENfcodrlLV9YRTxbY/uA==:117 a=eGCDHFSXubCXFTSSGhjuOA==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=WedJO_QhFF0jeLZjxQ4A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=kacYvNCVWA4VmyqE58fU:22
-X-Proofpoint-GUID: jKXC6jP-i8ihmNSpT0R-ZjhQwUmEko3x
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-ORIG-GUID: hZP3d6K1ZQNSAeTcIN_X7QJ5HJJEiBoW
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA4MDA5MyBTYWx0ZWRfXwJHFYliqP2cc
+ ogfmLbs4BWHRf74QACI3m151genhJMKr2pBeCcSmc5CnxwTC2DW7GihAjsoyAJWX+6uohqNFsCo
+ 2F3hH3+xGDMbV3eMGiRIPiU3rynSWMI=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA4MDA5MyBTYWx0ZWRfX8MwItlPGnjv/
+ akLTe8D4+Jx4V29fMWcL2Xqecc+NI6grnQOvMf9YV6Rrh9GyZTmnVMXbKf1t7LZaDfuuqSCP/7f
+ SItsUE69U/Rms+AN0XGv5Mcrg1u9KzGKh6kg79AidA5fIOR9WLpJbLZLleXNarCGLxzjlr7ykrd
+ thPyhargODx1F+5zISczm/bYrHGT+nr9FNFeeyLzqHqzFYcbPSkwL7h4PB6inxRv5sNIe+iNlh2
+ nF6xH3OcF0bQZ8C3f1cby10lYE+2iPIsIQ28QEz4hfH07pRKpFXIEmwW1p29Z0ZwA1LbOgWl6Jw
+ 9r8l5NKKCnj/greKqjlClTUc6pisxQHTWInAE0oBoqxQ4kTarsCJBIFlSh9kbXkiMfJka/mXPD0
+ rrFwSzrZ7xeNmj/GLsXfIhYWItlvRzL6+pxdqw7iDN1Ww02JARQQdNdrOoFzX8S3i8sVuoM5fmP
+ jDrdgQ4UHd5kllYkoCg==
+X-Authority-Analysis: v=2.4 cv=HaYkiCE8 c=1 sm=1 tr=0 ts=6a4e1a94 cx=c_pps
+ a=nuhDOHQX5FNHPW3J6Bj6AA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+ a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
+ a=Um2Pa8k9VHT-vaBCBUpS:22 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
+ a=jhnaBEV427HRP_O-JTIA:9
+X-Proofpoint-GUID: hZP3d6K1ZQNSAeTcIN_X7QJ5HJJEiBoW
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-08_01,2026-07-06_02,2025-10-01_01
@@ -154,146 +113,273 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  phishscore=0 impostorscore=0 lowpriorityscore=0 clxscore=1015 adultscore=0
  malwarescore=0 suspectscore=0 priorityscore=1501 spamscore=0 bulkscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607080091
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607080093
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [0.84 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	MID_CONTAINS_FROM(1.00)[];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_MISSING_CHARSET(0.50)[];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-117559-lists,linux-arm-msm=lfdr.de];
-	RCPT_COUNT_TWELVE(0.00)[14];
-	MIME_TRACE(0.00)[0:+];
 	RCVD_TLS_LAST(0.00)[];
-	FORWARDED(0.00)[lists@lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:vladimir.zapolskiy@linaro.org,m:atanas.filipov@oss.qualcomm.com,m:linux-media@vger.kernel.org,m:bryan.odonoghue@linaro.org,m:loic.poulain@oss.qualcomm.com,m:mchehab@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:andersson@kernel.org,m:konradybcio@kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:devicetree@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	TAGGED_FROM(0.00)[bounces-117560-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[14];
+	FREEMAIL_TO(0.00)[kernel.org,holtmann.org,gmail.com];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_RECIPIENTS(0.00)[m:brgl@kernel.org,m:marcel@holtmann.org,m:luiz.dentz@gmail.com,m:luiz.von.dentz@intel.com,m:linux-arm-msm@vger.kernel.org,m:linux-bluetooth@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:cheng.jiang@oss.qualcomm.com,m:quic_chezhou@quicinc.com,m:wei.deng@oss.qualcomm.com,m:shuai.zhang@oss.qualcomm.com,m:mengshi.wu@oss.qualcomm.com,m:jinwang.li@oss.qualcomm.com,m:xiuzhuo.shang@oss.qualcomm.com,m:luizdentz@gmail.com,s:lists@lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_SENDER(0.00)[gjorgji.rosikopulos@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	FORWARDED(0.00)[lists@lfdr.de];
+	FORGED_SENDER(0.00)[xiuzhuo.shang@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,vger.kernel.org:from_smtp,oss.qualcomm.com:from_mime,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[gjorgji.rosikopulos@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[xiuzhuo.shang@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
-	ALIAS_RESOLVED(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email,qualcomm.com:dkim,vger.kernel.org:from_smtp,oss.qualcomm.com:mid,oss.qualcomm.com:from_mime];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCVD_COUNT_SEVEN(0.00)[7]
+	ALIAS_RESOLVED(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	RCVD_COUNT_SEVEN(0.00)[10]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 2AEF1723CD0
+X-Rspamd-Queue-Id: 9444B723D5B
 
-Hi Vlad,
+start_discovery_internal(), start_service_discovery() and stop_discovery()
+queue a cmd_sync work item and only then move the discovery state machine
+into its transient value (DISCOVERY_STARTING / DISCOVERY_STOPPING):
 
-On 7/8/2026 11:47 AM, Vladimir Zapolskiy wrote:
-> Hi Gjorgji.
-> 
-> On 7/7/26 16:24, Gjorgji Rosikopulos (Consultant) wrote:
->> Hi Vlad,
->>
->> On 7/6/2026 10:46 AM, Vladimir Zapolskiy wrote:
->> <snip>
->>>>
->>>> +            interconnects = <&gem_noc MASTER_AMPSS_M0
->>>> QCOM_ICC_TAG_ACTIVE_ONLY
->>>> +                             &config_noc SLAVE_CAMERA_CFG
->>>> QCOM_ICC_TAG_ACTIVE_ONLY>,
->>>> +                            <&mmss_noc MASTER_CAMNOC_HF
->>>> QCOM_ICC_TAG_ALWAYS
->>>> +                             &mc_virt SLAVE_EBI_CH0
->>>> QCOM_ICC_TAG_ALWAYS>,
->>>> +                            <&mmss_noc MASTER_CAMNOC_SF
->>>> QCOM_ICC_TAG_ALWAYS
->>>> +                             &mc_virt SLAVE_EBI_CH0
->>>> QCOM_ICC_TAG_ALWAYS>;
->>>> +            interconnect-names = "cpu-cfg",
->>>> +                                 "hf-mnoc",
->>>> +                                 "sf-mnoc";
->>>
->>> This is the topic, which may raise a disagreement, but I'll repeat my
->>> position about the need to remove all "CAMSS bus" specific resources from
->>> the device node, they are found and should be allocated on parent's side.
->>
->> The interconnect has functionality to handle bw requests from different
->> clients.
->>
->> Yes the best will be to have camss interconnect, so jpeg and other hw's
->> to vote
->>
->> on that (actually it is possible in icc framework) but what is the
->> benefit of moving
->>
->> those to camss? Is it not better to create camss icc. I understand
->> you want them to be on parent side. But how to vote on bw? Most of the
->> time it
-> 
-> Let's concentrate on hardware bindings description, no APIs, votes etc.
-> at this point of discussion.
-I agree but there should be an API for icc voting which Jpeg need to use,
-currently it is fixed to some values, but voting need to become dynamic
-at some point of time, because it depends on runtime parameters, resolution
-format etc.> 
-> There is SM8250 CAMSS device, which serves as a hierarchical parent (or
-> could be considered as a "bus" device) to this new JPEG encoder device
-> and probably to a number of future IPs under CAMSS. All CAMSS sub-devices
-> get hardware descriptions as children device tree nodes of CAMSS parent
-> device tree node naturally.
-I agree the device tree is best to represent real hw topology. > 
-> Copying of the same identical information about clocks, interconnects
-> and power domains from the hierarchical parent device to children devices
-> is not needed, and practically it only lowers signal-to-noise ratio.
-Here also i tend to agree.> 
-> Since information about the actual defect in hardware description is
-> reported, the problem can and should be avoided, the handling of a better
-> hardware description and dealing with any kind of complexity will be done
-> in the CAMSS and/or CAMSS children drivers.
-> 
-> If you need to get a bit more formal point of view on the matter, I'd
-> prefer to see descriptions of hardware properties organised in a tree
-> topology rather than in the originally proposed star topology. By doing
-> it the system complexity is reduced from N to 1.
+  err = hci_cmd_sync_queue(hdev, ..._sync, cmd, ..._complete);
+  if (err < 0) { ... }
+  hci_discovery_set_state(hdev, DISCOVERY_STARTING /* or STOPPING */);
 
-Maybe I'm missing the whole picture of your proposal, but I want to add my
-point of view on this matter.
+The matching completion callbacks run on hdev->req_workqueue serialised
+by hci_req_sync_lock, which is independent of hdev->lock. So once the
+work has been queued, the worker can be scheduled, run the sync function
+and invoke the completion before the caller has executed the trailing
+hci_discovery_set_state(). The completion's success path writes the
+terminal state (DISCOVERY_STOPPED for stop, DISCOVERY_FINDING for start);
+the caller then overwrites it with the transient value, and the state
+machine is wedged: every subsequent Start (Service) Discovery is
+rejected by the DISCOVERY_STOPPED gate with MGMT_STATUS_BUSY (0x0a),
+with no HCI traffic generated, until bluetoothd or the adapter is
+restarted.
 
-The JPEG encoder HW block has no dependency on the other processing HW
-blocks in the camera subsystem
+Fix it in three parts:
 
-It shares resources like camnoc, clocks, GDSC, etc.,
-but does not share anything with the other HW processing blocks. For me, 
-the JPEG driver should not have SW architectural dependencies on CAMSS.
+  1. In all three call sites move hci_discovery_set_state(STARTING /
+     STOPPING) to before hci_cmd_sync_queue(). The transient state is
+     therefore always published before any worker can run the
+     completion. On queue-submit failure, roll back to
+     DISCOVERY_STOPPED.
 
-The shared resources within the camera subsystem are reference-counted,
-the only exception is clock rates, which are set based on the last set_rate
-call — but I think that could be handled by migrating the clocks to be
-represented as an icc-clk provider, to keep the higher clock and maintain
-the needed policy.
+  2. In start_discovery_complete() and stop_discovery_complete(), wrap
+     the terminal hci_discovery_set_state() call with
+     hci_dev_lock() / hci_dev_unlock(). These callbacks run without
+     hdev->lock; serialising the state write matches the pattern used
+     by mgmt_set_powered_complete() and removes any residual ordering
+     hazard against a concurrent mgmt path holding hdev->lock.
 
-What I think would be best (just a proposal) is to introduce a new camera-icc
-provider that handles all these resources — camera operates on bandwidth
-anyway, and rate calculations should be done in icc, since the  infrastructure
-for that already exists in the icc framework. But I think this has already been
-discussed with Atanas, so maybe there's no need to go over it again.
+  3. Generalise the "ignore -ECANCELED" early return in both completion
+     callbacks to "on any non-zero err, also reset the transient state
+     to STOPPED". With (1) in place the state observed at completion
+     time is always known.
 
-I'm not sure how to move forward with the JPEG encoder changes.
+     For the stop path this also fixes a pre-existing wedge: when any
+     sub-command issued from hci_stop_discovery_sync() returns an
+     error, stop_discovery_complete() is invoked with err != 0. The
+     existing "if (!err) set_state(STOPPED)" tail then skips the reset
+     and the state machine sits in DISCOVERY_STOPPING forever.
 
-I see two different proposals:
-1. Independent sub-nodes (Bryan's direction) — I honestly like this one more.
-2. CAMSS handling the resources currently managed by the other frameworks.
-There are good arguments for this too.
+Fixes: abfeea476c68 ("Bluetooth: hci_sync: Convert MGMT_OP_START_DISCOVERY")
+Signed-off-by: Xiuzhuo Shang <xiuzhuo.shang@oss.qualcomm.com>
+---
+Changes in v3:
+ - Replace inline patch title with lore.kernel.org URL in v2 link
+   reference to fix GitLint B1 line-length check.
+ - Link to v2:
+   https://lore.kernel.org/all/20260708062009.3047447-1-xiuzhuo.shang@oss.qualcomm.com/
 
-Bryan, as maintainer, can you say which direction to post next? :-)
+Changes in v2:
+ - Fix if (err < 0) to if (err) in both start_discovery_complete() and
+   stop_discovery_complete() to also catch positive HCI status codes,
+   flagged by Sashiko.
+ - Add Fixes: tag for commit abfeea476c68 as requested.
+ - Update commit message wording from "err < 0" to "non-zero err" to
+   match the code change.
+ - Link to v1:
+   https://lore.kernel.org/all/20260707093426.372897-1-xiuzhuo.shang@oss.qualcomm.com/
 
-Apart from t
+ net/bluetooth/mgmt.c | 86 +++++++++++++++++++++++++++++++++++++-------
+ 1 file changed, 74 insertions(+), 12 deletions(-)
 
+diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
+index 733a4b70e10c..81c09c24a14b 100644
+--- a/net/bluetooth/mgmt.c
++++ b/net/bluetooth/mgmt.c
+@@ -5975,15 +5975,38 @@ static void start_discovery_complete(struct hci_dev *hdev, void *data, int err)
+ 
+ 	bt_dev_dbg(hdev, "err %d", err);
+ 
+-	if (err == -ECANCELED || !mgmt_pending_valid(hdev, cmd))
++	if (err) {
++		/* The queued start-discovery work failed before the normal
++		 * completion path could advance the state machine. The
++		 * caller already moved the state to DISCOVERY_STARTING
++		 * (under hdev->lock, before queueing). Reset it here so the
++		 * gate in start_discovery_internal()/start_service_discovery()
++		 * does not wedge in STARTING and reject every future Start
++		 * (Service) Discovery with MGMT_STATUS_BUSY.
++		 */
++		hci_dev_lock(hdev);
++		if (hdev->discovery.state == DISCOVERY_STARTING)
++			hci_discovery_set_state(hdev, DISCOVERY_STOPPED);
++		hci_dev_unlock(hdev);
++
++		if (err == -ECANCELED)
++			return;
++	}
++
++	if (!mgmt_pending_valid(hdev, cmd))
+ 		return;
+ 
+ 	mgmt_cmd_complete(cmd->sk, cmd->hdev->id, cmd->opcode, mgmt_status(err),
+ 			  cmd->param, 1);
+ 	mgmt_pending_free(cmd);
+ 
+-	hci_discovery_set_state(hdev, err ? DISCOVERY_STOPPED:
++	/* Serialise discovery.state writes against any concurrent mgmt path
++	 * holding hdev->lock; this callback runs on req_workqueue without it.
++	 */
++	hci_dev_lock(hdev);
++	hci_discovery_set_state(hdev, err ? DISCOVERY_STOPPED :
+ 				DISCOVERY_FINDING);
++	hci_dev_unlock(hdev);
+ }
+ 
+ static int start_discovery_sync(struct hci_dev *hdev, void *data)
+@@ -6051,15 +6074,23 @@ static int start_discovery_internal(struct sock *sk, struct hci_dev *hdev,
+ 		goto failed;
+ 	}
+ 
++	/* Publish the transient state BEFORE queueing the work. The
++	 * completion callback runs on hdev->req_workqueue serialised by
++	 * hci_req_sync_lock, which is independent of hdev->lock; setting
++	 * the state after the queue allowed the worker to win the race
++	 * and have its terminal STOPPED/FINDING write overwritten by this
++	 * trailing STARTING write, wedging discovery in STARTING.
++	 */
++	hci_discovery_set_state(hdev, DISCOVERY_STARTING);
++
+ 	err = hci_cmd_sync_queue(hdev, start_discovery_sync, cmd,
+ 				 start_discovery_complete);
+ 	if (err < 0) {
++		hci_discovery_set_state(hdev, DISCOVERY_STOPPED);
+ 		mgmt_pending_remove(cmd);
+ 		goto failed;
+ 	}
+ 
+-	hci_discovery_set_state(hdev, DISCOVERY_STARTING);
+-
+ failed:
+ 	hci_dev_unlock(hdev);
+ 	return err;
+@@ -6178,15 +6209,19 @@ static int start_service_discovery(struct sock *sk, struct hci_dev *hdev,
+ 		}
+ 	}
+ 
++	/* Publish the transient state BEFORE queueing; see the comment in
++	 * start_discovery_internal() for the race details.
++	 */
++	hci_discovery_set_state(hdev, DISCOVERY_STARTING);
++
+ 	err = hci_cmd_sync_queue(hdev, start_discovery_sync, cmd,
+ 				 start_discovery_complete);
+ 	if (err < 0) {
++		hci_discovery_set_state(hdev, DISCOVERY_STOPPED);
+ 		mgmt_pending_remove(cmd);
+ 		goto failed;
+ 	}
+ 
+-	hci_discovery_set_state(hdev, DISCOVERY_STARTING);
+-
+ failed:
+ 	hci_dev_unlock(hdev);
+ 	return err;
+@@ -6196,17 +6231,40 @@ static void stop_discovery_complete(struct hci_dev *hdev, void *data, int err)
+ {
+ 	struct mgmt_pending_cmd *cmd = data;
+ 
+-	if (err == -ECANCELED || !mgmt_pending_valid(hdev, cmd))
+-		return;
+-
+ 	bt_dev_dbg(hdev, "err %d", err);
+ 
++	if (err) {
++		/* The queued stop-discovery work failed before the normal
++		 * completion path could advance the state machine. The
++		 * caller already moved the state to DISCOVERY_STOPPING
++		 * (under hdev->lock, before queueing). Reset it here so
++		 * the gate does not wedge in STOPPING.
++		 */
++		hci_dev_lock(hdev);
++		if (hdev->discovery.state == DISCOVERY_STOPPING)
++			hci_discovery_set_state(hdev, DISCOVERY_STOPPED);
++		hci_dev_unlock(hdev);
++
++		if (err == -ECANCELED)
++			return;
++	}
++
++	if (!mgmt_pending_valid(hdev, cmd))
++		return;
++
+ 	mgmt_cmd_complete(cmd->sk, cmd->hdev->id, cmd->opcode, mgmt_status(err),
+ 			  cmd->param, 1);
+ 	mgmt_pending_free(cmd);
+ 
+-	if (!err)
++	if (!err) {
++		/* Serialise discovery.state writes against any concurrent
++		 * mgmt path holding hdev->lock; this callback runs on
++		 * req_workqueue without it.
++		 */
++		hci_dev_lock(hdev);
+ 		hci_discovery_set_state(hdev, DISCOVERY_STOPPED);
++		hci_dev_unlock(hdev);
++	}
+ }
+ 
+ static int stop_discovery_sync(struct hci_dev *hdev, void *data)
+@@ -6248,15 +6306,19 @@ static int stop_discovery(struct sock *sk, struct hci_dev *hdev, void *data,
+ 		goto unlock;
+ 	}
+ 
++	/* Publish the transient state BEFORE queueing; see the comment in
++	 * start_discovery_internal() for the race details.
++	 */
++	hci_discovery_set_state(hdev, DISCOVERY_STOPPING);
++
+ 	err = hci_cmd_sync_queue(hdev, stop_discovery_sync, cmd,
+ 				 stop_discovery_complete);
+ 	if (err < 0) {
++		hci_discovery_set_state(hdev, DISCOVERY_STOPPED);
+ 		mgmt_pending_remove(cmd);
+ 		goto unlock;
+ 	}
+ 
+-	hci_discovery_set_state(hdev, DISCOVERY_STOPPING);
+-
+ unlock:
+ 	hci_dev_unlock(hdev);
+ 	return err;
+-- 
+2.43.0
 
-Regards,
-~Gjorgji
 
