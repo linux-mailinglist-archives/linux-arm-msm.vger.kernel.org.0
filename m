@@ -1,104 +1,106 @@
-Return-Path: <linux-arm-msm+bounces-117558-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-117559-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id kecfHugYTmqlDAIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-117558-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Jul 2026 11:31:20 +0200
+	id EqIwDTkaTmowDQIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-117559-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Jul 2026 11:36:57 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id C5A4E723C1A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Jul 2026 11:31:19 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2AEF1723CD0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Jul 2026 11:36:56 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=alZFlZxT;
-	dkim=pass header.d=oss.qualcomm.com header.s=google header.b="UmVk/758";
+	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=K2hn9CrK;
+	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=IftStQ3+;
 	dmarc=pass (policy=reject) header.from=qualcomm.com;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117558-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117558-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117559-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 104.64.211.4 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117559-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 7A27D3051DC1
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jul 2026 09:24:02 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 92309300B8E7
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jul 2026 09:32:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2DE2C409600;
-	Wed,  8 Jul 2026 09:24:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 971E03F44EA;
+	Wed,  8 Jul 2026 09:32:30 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B948E40680C
-	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jul 2026 09:23:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FF263FFAB0
+	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Jul 2026 09:32:25 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783502641; cv=none; b=iQ7JuTUyp8sRGgTyH65kxjxYvE+5kfFsFq0ztC6V94P92neAZVMm2HLDcGl04mJEOc4Ogrk0vYrybsu7iKEbCATlQjzRKkUgEJwv2wscRrA7GPsJsZa0Lm/zx/iJi9vABnI0IZGaiOcawcuAG6RIZo0ZRJHmMa5rwwarVZa8Q4Y=
+	t=1783503149; cv=none; b=T55YdINQoGak9HVRNU0z1LJrBB/R1OPDaokvjYVe7Q59VuUuBmAkXrvcgw+xTK8sO4DYTYrPI8SsZSSOoWZvhSncAm2hkww9oC1KMlA9hLyB1KC2QiEnlDNu+ONcmldTzzt7KVlSbbvo+WUYalu0RWTqi3eKqw0xQqfps5gBfNk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783502641; c=relaxed/simple;
-	bh=ONkwmV6ub6lfKBz26viIu7l0+ueDxgeYreLvBi5E8/0=;
+	s=arc-20240116; t=1783503149; c=relaxed/simple;
+	bh=HpvpQU54Un1Qaf41SoPs991kafvyRNbO+FyHycN/Xcc=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=WwsGpPQyQDtyn3Te4fCRXh7Ag07hhCxR1NduTu+WY9CYQqyioBT84dVbJs7XDrEk090+3x7HOv8neRmNnKCQjHzjv2QOFZ/sPoXm1y45gJFBgFNvN/ey6cDo+glSPef2TKk/itEBUJv9QHMwI/Q3rA3mvf6W9wvSXyQ7j9HvPFs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=alZFlZxT; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=UmVk/758; arc=none smtp.client-ip=205.220.180.131
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66889Uw02197689
-	for <linux-arm-msm@vger.kernel.org>; Wed, 8 Jul 2026 09:23:58 GMT
+	 In-Reply-To:Content-Type; b=FLlGArBAs3GiRQ3pazYnWqfjtLeImHfsDkTdmMJmVqhaHP0cBoYS2xWwNY5+3CyE/gYRh5zKdhtwEcgnKL+glOvTPMofYQ4RwRY4FdWh54cKRzCl511MTAqlHrsgreDg88LCT6mjU7DP6T8a72/0uIAWrdgj+qfbWwC6dBiCiIY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=K2hn9CrK; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=IftStQ3+; arc=none smtp.client-ip=205.220.168.131
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6688970c2258496
+	for <linux-arm-msm@vger.kernel.org>; Wed, 8 Jul 2026 09:32:22 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Rp/FhuP3BSFOGIgr5F8osPYl1guJ7ugYOygLj83qoRo=; b=alZFlZxToy5Nazbs
-	r9pfAq9z/ycoKCy275cQjs7Kkx+W7Gl+/lIMM+Y3vMC8cLUdqDp/0+pqMKwM1zI6
-	e/3NiKmnOPMGhhq5ETS9jx7DwFMi5JUmMwbUIrPmaDWBDaJZhoh1wwzdE+GM4r2s
-	NyeJbzOIVX8r6imCUMcxh94H4bi/BiB0UGfHsPd2WZYqU2ZkwzZ67JMYaS/1AnCl
-	e9H9DyjuxgAarkMsYnmlRbGmSFvaa/2RbnylNTxuh7Qe3fhkrrgsj4mMNmncuyZJ
-	GoTaZB8nYO+n9kwqNufQjVfuswUAcO2544L5d1igsSjcYvL5koMUXVr2TsckoM2v
-	hmrjmw==
-Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com [209.85.210.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f9c6a9v55-1
+	50cC+lOjwWBBzURdhgiGe83iDGJQETCnagLzadfseh4=; b=K2hn9CrKuH4OIFYN
+	Pw2po+0uWxDCmtVqJ6dRlKCw00jCXJKDE9Dhl7X4sAO0jXOf7xYAm7RBkNKp5pYJ
+	tltOANfZcoccFJN06FbE8AwEtiEzao3LrV7l5a/Rqn7b4XjgNyqz6zAfse+IZV3C
+	nqWyDygB3bJxdAp5J7xHX3LiXINDa1PKy67WE3cNyFgqXmzVCiFRiOnsFiIHKGHf
+	yIT7QLvISSINSYnKo6o137426tvANHwNoyJOBq7TLMk+iDCaBcmExkuujBPdjwpZ
+	6U8KkPniPm/TKDcMDSFbSscaNOOpsFypFSuJVinoYsieFYq85WdqPKHVYWSXoGJi
+	4VXxDg==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f9csw9qwx-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jul 2026 09:23:58 +0000 (GMT)
-Received: by mail-pf1-f200.google.com with SMTP id d2e1a72fcca58-84842381150so789867b3a.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jul 2026 02:23:58 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jul 2026 09:32:21 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-51c0408254aso18382211cf.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jul 2026 02:32:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1783502638; x=1784107438; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1783503141; x=1784107941; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:in-reply-to:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=Rp/FhuP3BSFOGIgr5F8osPYl1guJ7ugYOygLj83qoRo=;
-        b=UmVk/7588SWXNr1AmyVw2NUtmMXddzWy11nK4/AyrhxLeMm1MIGhm6n/2YjnLDNRY/
-         hHPg05bgnT/OdfA18zqaNSa7tvqbQKNUlm/55WOEpOf5GAJXblpGhK1bybkCkZoNPXeZ
-         WPkM5wmdmOLy0ZRoAwllvCvvAgtk9VZM7OcSy0r4rUwkXVdqppBpc3bwoDE+npVSf2zN
-         ewRPZrgWym3+hZPY8zp8j2XB9Lx2wI0ALSkNOjap0Ay7hJa5GgZ11cucdEVL0QGoGhUx
-         HvmG5oI0CDmzlXpCK9QEUd6n/3/JJvalaF5mfz/hl/ZUrWY45YCNoLShE0jUA6JpVsLy
-         +ECg==
+        bh=50cC+lOjwWBBzURdhgiGe83iDGJQETCnagLzadfseh4=;
+        b=IftStQ3+yoD+rlRMn598ZDbe8qaNTs2npF2C+yV4tOt1S9ipaHqASOVhj1SF0sHM37
+         QF8xUy5QuxsMqzaw+a9Q/xBC/6qrJYg7E8cNL8njcZstTg8s7iQEadS94V3LXtDFsg22
+         UONN0hTV5xS+nAa2zqYopPeYXO8j+sOSOi12wHcuNoyEu/57fDr99cR6Vbwx0VhsuxM/
+         DGqjvqqAbjCTuG+Ll7JbdEIKfs7n7hSU/zVFiEjw4/kLTwRA19UYWKomxKYN7gLgfhRP
+         GVPpfc+s/sO+7aSUiSEPxmO8xfhfcOJzRQG4Z6U/11I6K05m2TsUQ/h+5sMxnhw4ZtEj
+         xvPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783502638; x=1784107438;
+        d=1e100.net; s=20251104; t=1783503141; x=1784107941;
         h=content-transfer-encoding:content-type:in-reply-to:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=Rp/FhuP3BSFOGIgr5F8osPYl1guJ7ugYOygLj83qoRo=;
-        b=mwmBx1axOg+QIkHTaxf+T1WGuHJbewC6ZxiW7aJuZyHyhh1XVh4XtrX0r0Y5d2KQyk
-         1MAWZGmF1WHcuft6uSN1MWOVadDa24+faWQ5xQrXxb5iP5cDyrmVVZZQcofN5sUBKhuW
-         hO4JeIsXKbZNEagEUuYJq6j0vqU3+0CiWq3629epj+3jcVUhjyS87Kg3SunIM1vIaYzO
-         NXm5BM3Tcah9bnUTqtvE6f7EaNHGgiaIFK3GPVaDIBGuekhC1xlTAXfTeyDcy3P3Y8op
-         9A83a78WU2dTsEUAXERnUjxnDr7rS91mYC8uIwqobjZ2zXED7gPlWWxwa2vQkYp2ik6J
-         IiSw==
-X-Gm-Message-State: AOJu0Ywg2IyrofWQC6qT8S7CeNRWKHDUWaPQ1bBbDhTioZgJhKNNoter
-	ETz/42z0ojlrXyCPOLcmufHqj/TTikNJAeJZgkHmjKt5mkFcsFOkxXNxLDq31qwBgtgD8DNyTrr
-	IGQhecC7mvxxcAzuPyilqii8kZNXy3QGdkuTaooxJ05aafG0kwowPsnvWWBTYHzO0UA6E
-X-Gm-Gg: AfdE7cnix2UhMnLK3A/HDFmMU9/lyyXJBSSAb48PtLNyYU1gqUeZYOSgw3Pm5dGcTU9
-	JAsqCaA0PBx39PHiSE6TeZ8KGCJ0gkep1B4c/JFYY9b7MHNXVDwRxGxLgFBQQva9g54VR+AijIG
-	jcsdT9Y2wY9edCG+Tgb6KRWkHvGn+CcYuH9DOwS7pU9AMOfs94jyiaiWgWRYD0t22i3IBIfZDA1
-	zkrsiEn2513A0G3MIqMwoRl1dtuTBHO3N/NqIAM8WM85HiPxmD5u+8Gfj/FtmhOc+VzEjLx6+Sm
-	r+kENne40T+ZltMC4Xhgwp3Fh5PXvxESmtFFnAk/V3jXwt4duZeqjJEcztUZUgMeL5O0eEPHi/u
-	vy6HuR01AtZT5aNMTSxfdylraud5iQ2aA/lABHOoBEA==
-X-Received: by 2002:a05:6a00:6f0f:b0:848:4d1a:9554 with SMTP id d2e1a72fcca58-8484d1a9805mr155969b3a.38.1783502637634;
-        Wed, 08 Jul 2026 02:23:57 -0700 (PDT)
-X-Received: by 2002:a05:6a00:6f0f:b0:848:4d1a:9554 with SMTP id d2e1a72fcca58-8484d1a9805mr155938b3a.38.1783502637009;
-        Wed, 08 Jul 2026 02:23:57 -0700 (PDT)
-Received: from [10.218.14.97] ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-847f6ddc974sm6870170b3a.60.2026.07.08.02.23.54
+        bh=50cC+lOjwWBBzURdhgiGe83iDGJQETCnagLzadfseh4=;
+        b=RMMis8eyKSJxHaa+Z3bZjcCDvEVC3f7LzXu+AJiEiRozvpW2xJdWK9Wm9cBfmiJwOj
+         d1kLbmVv+3GIC+ZXDiXMi4dkia8swgnniGsHIQBZHPPt+xaTAVfn3d7kR332HNB85lVC
+         xynROvh0eEDvK0BaVdQ2U+K9N6S13gMJRMSAMqVMne9mJZMGQdIw58DGQ0PIOiVLhFsc
+         bp+BFqAdwo0hnQ7ggyf9A4EJM1QCSw5Hr1xkIjg7q0elE1vvLqzM1RrnoxqCKVsFcouc
+         NvGBPuximEWknaC2n2+CtDSn+xEMAC3TjKq3XOG81r3qlKqfUUN2eRUWPy+Z9LplCFr6
+         +IRg==
+X-Forwarded-Encrypted: i=1; AHgh+Rp/zM8+lz8uSv0JdR7DqkXhvjgnD/WJCSdsDchehgsw5l8EDc8O4Hb3kraNPPHfZsgUnR2nX5DyxJeDlZxV@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx6861gILIZ0g9wNi9DejOgokGrXJvS5jPWWpcp/0ZCyx64UB5Z
+	IjGZzXFip16HPttYHAC9TmBMsVN+/XK+NvVi8YuhNjQJmjB7k7kHW5h0fpdlTvXWaEZzCVNZaoi
+	apA6gDOeMmt7Bq48lpUOFZagAQzwCWumMlhLPDUGvddJJykiUFibEAUQloT+irzOmQXJI
+X-Gm-Gg: AfdE7cn/b1iY3oVI9hyaVkBv58bbgZtG64BQeLtJHj2eCf2TLsiYz1uyxr+0TEy1BSg
+	dYprkR1Yv8TicvuShJSJIoYQ4gCL7pLDLd7enRWFtYb1DbPtHK2iqjNgtiIklER2T2RcxWA+sfc
+	RgRDP95FkkgE+bXjP/FfQQyS3D0rvPXqwPF0BKwE9jq5QfbGltlY7ANU2ffQLJqf3Mfs+SOh4Lu
+	npsrjLNWq12z4uD7Ghz0cUIo6dumChfjGPJ5tm+Ew0+kC24rrUtbMfco+vX5oDqHGQg1O+whhUM
+	Ya2VigD+9eDVyr2Uv7kE19W7SXQsUSOYEvbYVAVkC94q4DYZ5dxOlyeMbwuoYZ2mJp0adgBIlCn
+	NPr7pAnlUjTggSwQN2IOLNse+NPDajwNnKaOaUsupr6WymgRUeWTYCpxgeWmmns4lgf82bfgW6X
+	TLH9aLfxsV
+X-Received: by 2002:a05:622a:5599:b0:51c:291:82eb with SMTP id d75a77b69052e-51c7a4a9933mr65537651cf.14.1783503140781;
+        Wed, 08 Jul 2026 02:32:20 -0700 (PDT)
+X-Received: by 2002:a05:622a:5599:b0:51c:291:82eb with SMTP id d75a77b69052e-51c7a4a9933mr65537311cf.14.1783503140245;
+        Wed, 08 Jul 2026 02:32:20 -0700 (PDT)
+Received: from [192.168.25.64] ([94.155.124.210])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c15ce1b374asm82248066b.60.2026.07.08.02.32.18
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Jul 2026 02:23:56 -0700 (PDT)
-Message-ID: <5d206010-a35e-460d-9b11-7dbaa8a56add@oss.qualcomm.com>
-Date: Wed, 8 Jul 2026 14:53:52 +0530
+        Wed, 08 Jul 2026 02:32:19 -0700 (PDT)
+Message-ID: <dd34b44d-396e-4267-b383-e4f8d20f8ef4@oss.qualcomm.com>
+Date: Wed, 8 Jul 2026 12:32:17 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -106,144 +108,192 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] i2c: qcom-geni: use dedicated completions for abort
- and reset events
-To: Mukesh Savaliya <mukesh.savaliya@oss.qualcomm.com>,
-        Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>,
-        Andi Shyti <andi.shyti@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Naresh Maramaina <naresh.maramaina@oss.qualcomm.com>
-References: <20260708-fix_cancel_sequence_on_failure_for_i2c-v1-0-dd8f841f36a2@oss.qualcomm.com>
- <20260708-fix_cancel_sequence_on_failure_for_i2c-v1-2-dd8f841f36a2@oss.qualcomm.com>
- <6167cdea-50d0-4319-9f4d-1f1b349600df@oss.qualcomm.com>
+Subject: Re: [PATCH v4 5/5] media: qcom: jpeg: Add Qualcomm JPEG V4L2 encoder
+To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+        Atanas Filipov <atanas.filipov@oss.qualcomm.com>,
+        linux-media@vger.kernel.org
+Cc: bryan.odonoghue@linaro.org, loic.poulain@oss.qualcomm.com,
+        mchehab@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
+        conor+dt@kernel.org, andersson@kernel.org, konradybcio@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20260706071113.383215-1-atanas.filipov@oss.qualcomm.com>
+ <20260706071113.383215-6-atanas.filipov@oss.qualcomm.com>
+ <51a0abf2-2a72-4551-894b-2c2de91ba0c2@linaro.org>
+ <74a5b549-987c-4dac-a1a0-ff81150cd6ab@oss.qualcomm.com>
+ <56f1fd7e-42bc-4034-81dc-302cb7c22951@linaro.org>
 Content-Language: en-US
-From: Praveen Talari <praveen.talari@oss.qualcomm.com>
-In-Reply-To: <6167cdea-50d0-4319-9f4d-1f1b349600df@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: "Gjorgji Rosikopulos (Consultant)"
+ <gjorgji.rosikopulos@oss.qualcomm.com>
+In-Reply-To: <56f1fd7e-42bc-4034-81dc-302cb7c22951@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA4MDA5MCBTYWx0ZWRfXyl1bkdNfpszX
- Ye6gATSglLWgnYkya1q1P9KSU+z8SH344/rZffUNVcu6UaJErpnW9+1vzxZCPD80hAL0TjROOqH
- VD49iJ2nPP9hcVa/+BHyU6+kdurnywxas1i3oBzKUd4XI3QuHtx6AwB7BihtL2oWlVIni4K+8lA
- TqZv3VL3vAQqpjtvz+ifMTx0T0wGpoISDilqqG8v6HxIugUfDTLioRECySThN6i4fGIwynTiMVr
- DDG3dwS2IJ4QGHNIm6Y+N5VVvcV1xwxRY2vuCTVEqVP4cGYHfLCDUJnmvWn6S06+JLb0PPLMILw
- WTXnwzJ3qMRrHVHld33MoI5vyPjmsgL6zdFDIIOS0dXm3BNVtO96JGvFJe0ZU+oMXOU+p+rjlfi
- 1HIcV0pfqVkFND1VpJsEbDnEKpdeBfLRaJd1HDhs6xLNmr4Xel80OqMZuws303BCBDyD+KtetMP
- 2aTgp1DJRI2oFFpQfbw==
-X-Proofpoint-ORIG-GUID: GqYT7RT1JYWYlYmJ7fjCg-_eQ8OKQxw9
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA4MDA5MCBTYWx0ZWRfX1V7bitaBGwrD
- mxakfd+g05NNwZpxlJYdMZDl7Z/Cc4LUm2eRy/rs6T/+Spn+Yo/jq6gLw6jmqL1h2AV5FFHpIJe
- mH6CoagQSGUCqrM0aZ4nMXaJZKnGAIk=
-X-Authority-Analysis: v=2.4 cv=UehhjqSN c=1 sm=1 tr=0 ts=6a4e172e cx=c_pps
- a=mDZGXZTwRPZaeRUbqKGCBw==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+X-Proofpoint-ORIG-GUID: jKXC6jP-i8ihmNSpT0R-ZjhQwUmEko3x
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA4MDA5MSBTYWx0ZWRfX/qhC1EdORdGS
+ aDtRCt9WhRt/jW5RueRsZIzFKroHh1ghJg4euvi9R/86H85RusE+GDInZ0rwpoe57fEupXCaa2D
+ 636I5/iZTbm8+3VytO8lIqXIwhhT+HA=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA4MDA5MSBTYWx0ZWRfX9dYiHTJpaWAO
+ T2LbASXWd3veDoDWsJolAa6Qo1u9pV25dJIoWatSp+6lkdJ6PUeh/CTuzWAqhnv6PdKv37cn9cf
+ K0jNtNVtmpabXMxGAtLmrFcChJoMWbF0gIxLnG3OMiGFterJjcKsTM52WjKbI0uA/rPm2FcnAyw
+ SxLKyq7RuOBM7+dZ5yu7mohYQaDBoyU4obZL3gkE1NiY3F93ZYXibAMhnjzA8fvU1/ffBZKV/5e
+ 5gcwUMuftA0LSv+plZqVjlGQPndh+l3urS+YkRFHLB/z7fj4svveGIasoB8dd86su8UIxerzaFB
+ Sa8wFBYNporrBD8Y0BYudUw28g2gwC37KOeT6zAKyhl+P8PGIHmJqptYp7eQwV7RbuWMWFf7ja6
+ jhjujJoHgba3ayAgj2BbgzAVnWEbCdTyflwaXts5eujku14uRYWNuKPXEusixBwAT+bhTpK6m53
+ ILyYg80d0FXlk2NzLMQ==
+X-Authority-Analysis: v=2.4 cv=HaYkiCE8 c=1 sm=1 tr=0 ts=6a4e1925 cx=c_pps
+ a=WeENfcodrlLV9YRTxbY/uA==:117 a=eGCDHFSXubCXFTSSGhjuOA==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=EUspDBNiAAAA:8 a=KqGaXZP3fpkHBQvqf4kA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=zc0IvFSfCIW2DFIPzwfm:22
-X-Proofpoint-GUID: GqYT7RT1JYWYlYmJ7fjCg-_eQ8OKQxw9
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=WedJO_QhFF0jeLZjxQ4A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=kacYvNCVWA4VmyqE58fU:22
+X-Proofpoint-GUID: jKXC6jP-i8ihmNSpT0R-ZjhQwUmEko3x
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-08_01,2026-07-06_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 suspectscore=0 spamscore=0 phishscore=0 adultscore=0
- lowpriorityscore=0 clxscore=1015 priorityscore=1501 bulkscore=0
- impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607080090
+ phishscore=0 impostorscore=0 lowpriorityscore=0 clxscore=1015 adultscore=0
+ malwarescore=0 suspectscore=0 priorityscore=1501 spamscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607080091
 X-Rspamd-Action: no action
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-117559-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[14];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	FORWARDED(0.00)[lists@lfdr.de];
-	TAGGED_FROM(0.00)[bounces-117558-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
+	FORWARDED(0.00)[lists@lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:vladimir.zapolskiy@linaro.org,m:atanas.filipov@oss.qualcomm.com,m:linux-media@vger.kernel.org,m:bryan.odonoghue@linaro.org,m:loic.poulain@oss.qualcomm.com,m:mchehab@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:andersson@kernel.org,m:konradybcio@kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:devicetree@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_SENDER(0.00)[praveen.talari@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS(0.00)[m:mukesh.savaliya@oss.qualcomm.com,m:viken.dadhaniya@oss.qualcomm.com,m:andi.shyti@kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-i2c@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:naresh.maramaina@oss.qualcomm.com,s:lists@lfdr.de];
+	FORGED_SENDER(0.00)[gjorgji.rosikopulos@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,oss.qualcomm.com:from_mime,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,qualcomm.com:email,qualcomm.com:dkim,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,vger.kernel.org:from_smtp,oss.qualcomm.com:from_mime,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[praveen.talari@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[gjorgji.rosikopulos@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
 	ALIAS_RESOLVED(0.00)[];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	MID_RHS_MATCH_FROM(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[7];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: C5A4E723C1A
+X-Rspamd-Queue-Id: 2AEF1723CD0
 
-Hi Mukesh,
+Hi Vlad,
 
-On 08-07-2026 13:05, Mukesh Savaliya wrote:
->
->
-> On 7/8/2026 11:45 AM, Praveen Talari wrote:
->> The driver uses the shared gi2c->done completion for transfer, abort,
-> shared => common completion event for transfer, abort and DMA reset
-Sure.
->> and DMA reset operations. This allows unrelated completion events to
->> prematurely wake abort and reset waiters, leading to incorrect
->> synchronization.
-> Aren't they in sequence i.e. one after another ?
-
-If the IRQ is triggered late, it can impact the subsequent transfer 
-because gi2c->done may be cleared before the delayed interrupt is handled.
-
+On 7/8/2026 11:47 AM, Vladimir Zapolskiy wrote:
+> Hi Gjorgji.
+> 
+> On 7/7/26 16:24, Gjorgji Rosikopulos (Consultant) wrote:
+>> Hi Vlad,
 >>
->> Introduce dedicated completions for abort, TX reset, and RX reset
->> operations, and signal them only from their respective interrupt
->> events. This removes the dependency on shared completion state and
->> eliminates the abort_done flag-based synchronization.
+>> On 7/6/2026 10:46 AM, Vladimir Zapolskiy wrote:
+>> <snip>
+>>>>
+>>>> +            interconnects = <&gem_noc MASTER_AMPSS_M0
+>>>> QCOM_ICC_TAG_ACTIVE_ONLY
+>>>> +                             &config_noc SLAVE_CAMERA_CFG
+>>>> QCOM_ICC_TAG_ACTIVE_ONLY>,
+>>>> +                            <&mmss_noc MASTER_CAMNOC_HF
+>>>> QCOM_ICC_TAG_ALWAYS
+>>>> +                             &mc_virt SLAVE_EBI_CH0
+>>>> QCOM_ICC_TAG_ALWAYS>,
+>>>> +                            <&mmss_noc MASTER_CAMNOC_SF
+>>>> QCOM_ICC_TAG_ALWAYS
+>>>> +                             &mc_virt SLAVE_EBI_CH0
+>>>> QCOM_ICC_TAG_ALWAYS>;
+>>>> +            interconnect-names = "cpu-cfg",
+>>>> +                                 "hf-mnoc",
+>>>> +                                 "sf-mnoc";
+>>>
+>>> This is the topic, which may raise a disagreement, but I'll repeat my
+>>> position about the need to remove all "CAMSS bus" specific resources from
+>>> the device node, they are found and should be allocated on parent's side.
 >>
->> Co-developed-by: Naresh Maramaina <naresh.maramaina@oss.qualcomm.com>
->> Signed-off-by: Naresh Maramaina <naresh.maramaina@oss.qualcomm.com>
->> Signed-off-by: Praveen Talari <praveen.talari@oss.qualcomm.com>
->> ---
->>   drivers/i2c/busses/i2c-qcom-geni.c | 54 
->> +++++++++++++++++++-------------------
->>   1 file changed, 27 insertions(+), 27 deletions(-)
+>> The interconnect has functionality to handle bw requests from different
+>> clients.
 >>
->> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c 
->> b/drivers/i2c/busses/i2c-qcom-geni.c
->> index 15403edb355a..9490aee4928c 100644
->> --- a/drivers/i2c/busses/i2c-qcom-geni.c
->> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
->> @@ -113,7 +113,10 @@ struct geni_i2c_dev {
->>       int err;
->>       struct i2c_adapter adap;
->>       struct completion done;
->> +    struct completion abort_done;
->>       struct completion cancel_done;
->> +    struct completion tx_reset_done;
->> +    struct completion rx_reset_done;
-> tx or rx, any one would be running. Not both right ?
-> if so, i suggest to keep common dma_reset_done.
+>> Yes the best will be to have camss interconnect, so jpeg and other hw's
+>> to vote
+>>
+>> on that (actually it is possible in icc framework) but what is the
+>> benefit of moving
+>>
+>> those to camss? Is it not better to create camss icc. I understand
+>> you want them to be on parent side. But how to vote on bw? Most of the
+>> time it
+> 
+> Let's concentrate on hardware bindings description, no APIs, votes etc.
+> at this point of discussion.
+I agree but there should be an API for icc voting which Jpeg need to use,
+currently it is fixed to some values, but voting need to become dynamic
+at some point of time, because it depends on runtime parameters, resolution
+format etc.> 
+> There is SM8250 CAMSS device, which serves as a hierarchical parent (or
+> could be considered as a "bus" device) to this new JPEG encoder device
+> and probably to a number of future IPs under CAMSS. All CAMSS sub-devices
+> get hardware descriptions as children device tree nodes of CAMSS parent
+> device tree node naturally.
+I agree the device tree is best to represent real hw topology. > 
+> Copying of the same identical information about clocks, interconnects
+> and power domains from the hierarchical parent device to children devices
+> is not needed, and practically it only lowers signal-to-noise ratio.
+Here also i tend to agree.> 
+> Since information about the actual defect in hardware description is
+> reported, the problem can and should be avoided, the handling of a better
+> hardware description and dealing with any kind of complexity will be done
+> in the CAMSS and/or CAMSS children drivers.
+> 
+> If you need to get a bit more formal point of view on the matter, I'd
+> prefer to see descriptions of hardware properties organised in a tree
+> topology rather than in the originally proposed star topology. By doing
+> it the system complexity is reduced from N to 1.
 
-As explained above, there is a possibility that a delayed IRQ may occur 
-while another reset operation is still in progress, potentially 
-affecting the reset sequence.
+Maybe I'm missing the whole picture of your proposal, but I want to add my
+point of view on this matter.
 
-Thanks,
+The JPEG encoder HW block has no dependency on the other processing HW
+blocks in the camera subsystem
 
-Praveen Talari
+It shares resources like camnoc, clocks, GDSC, etc.,
+but does not share anything with the other HW processing blocks. For me, 
+the JPEG driver should not have SW architectural dependencies on CAMSS.
 
->>       struct i2c_msg *cur;
->>       int cur_wr;
->>       int cur_rd;
->> @@ -127,7 +130,6 @@ struct geni_i2c_dev {
-> [..]
->
+The shared resources within the camera subsystem are reference-counted,
+the only exception is clock rates, which are set based on the last set_rate
+call — but I think that could be handled by migrating the clocks to be
+represented as an icc-clk provider, to keep the higher clock and maintain
+the needed policy.
+
+What I think would be best (just a proposal) is to introduce a new camera-icc
+provider that handles all these resources — camera operates on bandwidth
+anyway, and rate calculations should be done in icc, since the  infrastructure
+for that already exists in the icc framework. But I think this has already been
+discussed with Atanas, so maybe there's no need to go over it again.
+
+I'm not sure how to move forward with the JPEG encoder changes.
+
+I see two different proposals:
+1. Independent sub-nodes (Bryan's direction) — I honestly like this one more.
+2. CAMSS handling the resources currently managed by the other frameworks.
+There are good arguments for this too.
+
+Bryan, as maintainer, can you say which direction to post next? :-)
+
+Apart from t
+
+
+Regards,
+~Gjorgji
 
