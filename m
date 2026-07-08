@@ -1,67 +1,66 @@
-Return-Path: <linux-arm-msm+bounces-117707-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-117708-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id 4sHWKLBoTmqKMAIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-117707-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Jul 2026 17:11:44 +0200
+	id Yj9jF7dsTmrtMQIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-117708-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Jul 2026 17:28:55 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 19065727CD4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Jul 2026 17:11:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id C681D72806E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Jul 2026 17:28:54 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=fPjkldQS;
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=Cl+BmRHC;
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117707-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117707-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117708-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117708-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 4E84E309FC4D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jul 2026 14:59:09 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id F3DE3321B15E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jul 2026 14:59:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C82594CA270;
-	Wed,  8 Jul 2026 14:57:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7E5FE4CA29C;
+	Wed,  8 Jul 2026 14:57:20 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92DBC4C8FEA;
-	Wed,  8 Jul 2026 14:57:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60C174C957E;
+	Wed,  8 Jul 2026 14:57:19 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783522639; cv=none; b=aB8z5C2mez48MAQrLP0G4JIhnRHHiqkLy7fpKFCWJrYd9QOsfcLmgy4ZvQ9NDl42MnpYSdlGcvxFbTDzwfxffxAJhPzlmO9bTT6klHVoeVZR7JWB8hflM1eirr6mdMP/JPBNxgPQ2Mzo3obN/v1Nu6egDETIID98YzKoKmTa6EA=
+	t=1783522640; cv=none; b=UgBOUa5ru+QbU8ECuwc37mc/t9ZHNKxarbdXzTUCyYfxXa1zCM2JZjufM6Zc7zJ3xgHb9CWq/YYssYdL+tjgqC3Wo1pcUpr20rynBzS5Bah2Il8jmP9TXhB6Vphx3A5GKjbUkCugXwbmMT6mbADgNVA8R0mFbCXnAgvJrUIRE7U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783522639; c=relaxed/simple;
-	bh=5kQi5NTnSGX/j5auue0b/PIKjVbuV9kP9Mi68KtrQOA=;
+	s=arc-20240116; t=1783522640; c=relaxed/simple;
+	bh=/yhqUWVrWo6o42m8OKjkHk9oxXxqB6oLWj+aLPNLqOI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VYlh+88HjZP98QCL1t3mSvF0VMMyV/c6Z7wSyFgl3wPKtxOuiXvliMm5xoEAQt9mrf8O79Qcu7a63++MJ8LljkFoMZgkIcMNCmqU0eU8uBwL+SIDjJ8gImeLiptAJNvCIUwyfZ6l0C3Uc43WE0j62EhLaQmqexpDjOmOCnkbr1o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fPjkldQS; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB3EB1F00A3D;
-	Wed,  8 Jul 2026 14:57:17 +0000 (UTC)
+	 MIME-Version:Content-Type; b=byGnBG2ru9Hsi9SmOcHKOxAWRXjcVtS35nEVvo8vzAzZuoAGDwqZ92xfjhznZBmvQQcVxNv6EvkGGjHdBgXuRh+b2WptyJoLcMvOUvEmP3+a8WVz7iqoEquVCTS/MIp42uY/ZaLUqVnvNP5qUeGYh4jyiYAmOZBwI5Vjzd+iKz4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Cl+BmRHC; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B21401F00A3A;
+	Wed,  8 Jul 2026 14:57:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783522638;
-	bh=GFised6SOyOQAidEm8yAUitbjqRQiuOOtYkwkhPGTDA=;
+	s=k20260515; t=1783522639;
+	bh=F3Mu3/C5sMzl9AzcLpJV6sCgtG4I4Try0Vq3cQJlKHg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fPjkldQSwvN/mSSKl6lS40/mRLhi4VrWgESr1/ZMZEuLJH9omg5xUahd75mFWfNZt
-	 pYXFnKcvN0QseyjTP5DPrFpvkYv/RPpmftT6NvKmrN0Mg3XccjSnAdAYD/j4dVMGid
-	 QyVNgHMMyIQS4nPMJU2Y6dmfaYkXiTH+t2pO/8q2eFCg1e7/dFD4dft/ZCEX+ihuhn
-	 CYEo4cNiZqCxTEDahKKhtuo9sdiKO2REQ4E3UC1qVOeP2MvhW1kaP0F9RLKRMY1970
-	 Rxq1Ef06z61He1IlXMI4enQ4pdR8vjtPoPfn3gsgr1xj9JzQQO3L4GycYULOONkmzo
-	 HUEgT3YIH78ZA==
+	b=Cl+BmRHCLYBKRvTpkTJ2ts1aCXai+iKulAvgUBKyfMNjanDTbunqudcCY9U4T2low
+	 FBhvBDYNNVAFX/OAkSI+Iy8GpbWTUA8/Q4LZhHEDhHYal7BLA2H1C0ZnpnxCdyDdB3
+	 ZxsDwj2xc5Gmrubeh+XITLEwqwxPSi6sapgbhfngRw2HVNEHdJWiceGWaNmNpdqJm8
+	 Z+FhjkPOaRxQtHfuyzcpHqcQos6llTZfVWVbmGGO5GykhU1JONlkMIhU1gaStpAX8M
+	 5s7YcidMGfCysXq6l1eW5wL7GrCUj1Q2sKc57jFxyvclNSkGBp2ZXzyw3fQl0B0rMr
+	 TMP+c7eL+x+pQ==
 From: Bjorn Andersson <andersson@kernel.org>
 To: Konrad Dybcio <konradybcio@kernel.org>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Rudraksha Gupta <guptarud@gmail.com>
+	Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>
 Cc: linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Subject: Re: [PATCH v2] ARM: dts: qcom: msm8960: expressatt: Add coreriver,tc360-touchkey
-Date: Wed,  8 Jul 2026 09:56:19 -0500
-Message-ID: <178352261589.2235436.9498498267915599094.b4-ty@kernel.org>
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 0/3] Add CCI and CAMSS support for Kaanapali
+Date: Wed,  8 Jul 2026 09:56:20 -0500
+Message-ID: <178352261637.2235436.16367939885864866010.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260527-expressatt-touchkey-v2-1-049dca41fc3a@gmail.com>
-References: <20260527-expressatt-touchkey-v2-1-049dca41fc3a@gmail.com>
+In-Reply-To: <20260508-knp-camera-v1-0-a18e289163fd@oss.qualcomm.com>
+References: <20260508-knp-camera-v1-0-a18e289163fd@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -71,9 +70,8 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-3.66 / 15.00];
+X-Spamd-Result: default: False [-5.16 / 15.00];
 	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
-	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
@@ -81,48 +79,56 @@ X-Spamd-Result: default: False [-3.66 / 15.00];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-117707-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:guptarud@gmail.com,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:dmitry.baryshkov@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
-	FREEMAIL_TO(0.00)[kernel.org,gmail.com];
+	TAGGED_FROM(0.00)[bounces-117708-lists,linux-arm-msm=lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:hangxiang.ma@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
 	MIME_TRACE(0.00)[0:+];
 	RCVD_COUNT_THREE(0.00)[4];
 	FORWARDED(0.00)[lists@lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	TO_DN_SOME(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	RCPT_COUNT_SEVEN(0.00)[9];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[8];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	MID_RHS_MATCH_FROM(0.00)[];
 	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,vger.kernel.org:from_smtp]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 19065727CD4
+X-Rspamd-Queue-Id: C681D72806E
 
 
-On Wed, 27 May 2026 19:13:41 -0700, Rudraksha Gupta wrote:
-> Add the tc360 touchkey. It's unknown if this is the actual model of the
-> touchkey, as downstream doesn't mention a variant, but this works.
+On Fri, 08 May 2026 01:36:44 -0700, Hangxiang Ma wrote:
+> This series adds CCI and CAMSS support for Qualcomm Kaanapali SoC.
 > 
-> Link:
-> https://github.com/LineageOS/android_kernel_samsung_d2/blob/stable/cm-12.0-YNG4N/drivers/input/keyboard/cypress_touchkey_236/Makefile#L5
-> 
+> This series has been tested using the following commands with a downstream
+> driver for S5KJN5 sensor.
+> - media-ctl --reset
+> - media-ctl -V '"msm_csiphy2":0[fmt:SGBRG10/4096x3072]'
+> - media-ctl -V '"msm_csid0":0[fmt:SGBRG10/4096x3072]'
+> - media-ctl -V '"msm_vfe0_rdi0":0[fmt:SGBRG10/4096x3072]'
+> - media-ctl -l '"msm_csiphy2":1->"msm_csid0":0[1]'
+> - media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
+> - yavta  --capture=20 -I -n 5 -f SGBRG10P -s 4096x3072 -F  /dev/video0
 > 
 > [...]
 
 Applied, thanks!
 
-[1/1] ARM: dts: qcom: msm8960: expressatt: Add coreriver,tc360-touchkey
-      commit: 346e9112f3dab91a5cf3100a99ec256ff0b7f0fe
+[1/3] arm64: dts: qcom: kaanapali: Add camss node
+      commit: 7cc8ca0387f572a4d69941fe380e7a262342491d
+[2/3] arm64: dts: qcom: kaanapali: Add CCI definitions
+      commit: c25b80614c31a30b1b0f44fc5ae260aff90fa4aa
+[3/3] arm64: dts: qcom: kaanapali: Add camera MCLK pinctrl
+      commit: b6f8ecb80c1f894bcd0c612bf0ed4c5fee52d287
 
 Best regards,
 -- 
