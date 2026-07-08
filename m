@@ -1,52 +1,52 @@
-Return-Path: <linux-arm-msm+bounces-117541-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-117542-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id c7jmAgMCTmpIBgIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-117541-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Jul 2026 09:53:39 +0200
+	id Jk+EO7wCTmppBgIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-117542-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Jul 2026 09:56:45 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 59EC6722D78
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Jul 2026 09:53:38 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 36E74722DB8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Jul 2026 09:56:44 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=eea4Ujqz;
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=LjJlrrq2;
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117541-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117541-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117542-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117542-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 7DADB3057F26
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jul 2026 07:47:16 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 9F465305CAD8
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Jul 2026 07:49:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AFC403F4108;
-	Wed,  8 Jul 2026 07:47:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F3E6B3F9278;
+	Wed,  8 Jul 2026 07:48:30 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E06E83DF00E;
-	Wed,  8 Jul 2026 07:46:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F29F53E8685;
+	Wed,  8 Jul 2026 07:48:17 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783496832; cv=none; b=toBMjHzzlp4VwW+zFoqeZVS35I6hBmCl4Y3U14xMlppyylyiLJHYMKyBE/zWPyTOWLhetVjiSdUiG6KmIyCI1/vQ87B3sx2unvz0oOi4tf+iNNZLJFyqVA0IbmZy40uxT3mmsc6gq1bjbp1x3JleLqlJjPoP4vvsa1vOeFmrA4A=
+	t=1783496908; cv=none; b=UyBMmjue7W88LrvZnRTh1Y3FF/4EQ5h9/LUYD4CilBPGthA1q0AyxrAVergqqNFFHykk+41Bb3ZpKoqUeZMs8QFnV2znziJDIUn1VpE1YFqkSyjhlMCRptIK++GSR5RY8exnByYEvQr1BEnoSLAmM3/Pw4W9CM3huvqqbucQrKs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783496832; c=relaxed/simple;
-	bh=K9Q7SJnCDiRxFjGAjd6hdK0ca30lSYi1RwfNS4/WVXg=;
+	s=arc-20240116; t=1783496908; c=relaxed/simple;
+	bh=x+g7k2KKI6hfDtJZ+4b3/wXjpV/OYRwxYBBqqZpVeco=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qZj0TuDjS8Tc6AjYehPoEI601cxAAWzNGrxEUzR2aC4bzd7A9ymjT2jOWWVW6JWLVy0L0ylUqJAHYm842m6JfmB531qTvyhsGtZt4R3hFyZKzuNmQw+bQhR+64uPo0oY5zoqWjLh6Aan36oPfDsagguHa0/IzY0VFVXn4+9pWHE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eea4Ujqz; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C66DD1F000E9;
-	Wed,  8 Jul 2026 07:46:39 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=pa73ZYppgH8bpnxOA0f+pnBl8RpWggWEgEq+s/O90O6uOjvjCwxV7KGKa+TtTj8PG5cQYu8bg0pthtJjBaj74rvf0UJFqp5aNAY1nciNHYLEUzd7jNDAANLheQmxA9UUF6XROnB3lnXEcS2PAIPmQBZ3wEul2w+J+XL5R5xu+b0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LjJlrrq2; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A58581F000E9;
+	Wed,  8 Jul 2026 07:48:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783496811;
-	bh=neDS02cfQQVbwWO1slKZu1V0NB0VTVrZbXTSCvVa/Kc=;
+	s=k20260515; t=1783496892;
+	bh=3OevjrqXdRJOTrMJtKKzkDBmycrF0jmHB4LMFtbouHE=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=eea4Ujqz62FT0vySYF9NSerT3eNneByUh/zKAeLpIGg4Giepjmq9LwSzCfe6pI7qg
-	 t5/s4JlSgEOLi80un2HKW38j+1E+FgpoT47E6KaSAvGc7r9e4vHqNxZbgSTmc3N9sv
-	 sXNxZJfRXPJf0JKot1UJgMa2c8WHnIFd7vunEKRf3bzpMJdv/SIbyJSivwKrY8aoEi
-	 xrNOfxWTWt0lUjB7a0L0lNUYbQbCwmZ1X1oTyPSB+uXLQDnLmaWgTreYIxFc2SCY4r
-	 e2hp8QV9mvBJMcf5MtCZjcWi1nO5gDjdz7/sXDF9dh9/gTutMr7owKEG5uAhHVcWYN
-	 l4nN4l3c5wWkA==
-Date: Wed, 8 Jul 2026 08:46:30 +0100
+	b=LjJlrrq2oFTukn2i1pCUeSiArZM+6hQwNFxPYuh/g4jt66M47+7zhAhVufrXJTXvk
+	 AYGtWhiMJP8oNmL8n8nXqUgv6HcBAi0TGS6ok7M3saBtRWkgpxKgGjhPam/vaNydxr
+	 CHIJLBeX77gHZsupfpi6opKk03yZQ8eKPbuUn4pn3WL92SCHv2VSxiLF0NCmigi5ro
+	 CFqHb+DMeL6sc73iLwtBHsA/jRtqZvbJdwhlvt3z+168bJLs0cz+8ixPo3/IuOv3rN
+	 HiBlWecG0OBlYEX9SIrBUR4iWn573796Y/jk1BCDlj+rRRWhUoXoRKebDzZQ0UpIvm
+	 MK4PX9aO5dTzQ==
+Date: Wed, 8 Jul 2026 08:47:51 +0100
 From: Lorenzo Stoakes <ljs@kernel.org>
 To: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
 Cc: Jonathan Corbet <corbet@lwn.net>, 
@@ -75,11 +75,11 @@ Cc: Jonathan Corbet <corbet@lwn.net>,
 	workflows@vger.kernel.org, linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, 
 	linux-arch@vger.kernel.org, linux-mm@kvack.org, linux-arm-msm@vger.kernel.org, 
 	linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH v3 05/26] genirq/irqdesc: Annotate static information
- into meminspect
-Message-ID: <ak3_cfHe8fkNfyud@lucifer>
+Subject: Re: [PATCH v3 11/26] mm/swapfile: Annotate static information into
+ meminspect
+Message-ID: <ak4AgXqMnkn8rVGE@lucifer>
 References: <20260708-meminspect-v3-v3-0-7aa5a0a74d5c@oss.qualcomm.com>
- <20260708-meminspect-v3-v3-5-7aa5a0a74d5c@oss.qualcomm.com>
+ <20260708-meminspect-v3-v3-11-7aa5a0a74d5c@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -88,7 +88,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260708-meminspect-v3-v3-5-7aa5a0a74d5c@oss.qualcomm.com>
+In-Reply-To: <20260708-meminspect-v3-v3-11-7aa5a0a74d5c@oss.qualcomm.com>
 X-Rspamd-Action: no action
 X-Spamd-Result: default: False [-3.16 / 15.00];
 	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
@@ -96,13 +96,13 @@ X-Spamd-Result: default: False [-3.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-117541-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-117542-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS(0.00)[m:mukesh.ojha@oss.qualcomm.com,m:corbet@lwn.net,m:skhan@linuxfoundation.org,m:ehristev@kernel.org,m:arnd@arndb.de,m:dennis@kernel.org,m:tj@kernel.org,m:cl@gentwo.org,m:akpm@linux-foundation.org,m:tglx@kernel.org,m:peterz@infradead.org,m:anna-maria@linutronix.de,m:frederic@kernel.org,m:jstultz@google.com,m:sboyd@kernel.org,m:kees@kernel.org,m:mingo@redhat.com,m:juri.lelli@redhat.com,m:vincent.guittot@linaro.org,m:dietmar.eggemann@arm.com,m:rostedt@goodmis.org,m:bsegall@google.com,m:mgorman@suse.de,m:vschneid@redhat.com,m:kprateek.nayak@amd.com,m:david@kernel.org,m:liam@infradead.org,m:vbabka@kernel.org,m:rppt@kernel.org,m:surenb@google.com,m:mhocko@suse.com,m:jackmanb@google.com,m:hannes@cmpxchg.org,m:ziy@nvidia.com,m:chrisl@kernel.org,m:kasong@tencent.com,m:shikemeng@huaweicloud.com,m:nphamcs@gmail.com,m:baoquan.he@linux.dev,m:baohua@kernel.org,m:youngjun.park@lge.com,m:pmladek@suse.com,m:john.ogness@linutronix.de,m:senozhatsky@chromium.org,m:andersson@kernel
  .org,m:mathieu.poirier@linaro.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:saravanak@kernel.org,m:workflows@vger.kernel.org,m:linux-doc@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-arch@vger.kernel.org,m:linux-mm@kvack.org,m:linux-arm-msm@vger.kernel.org,m:linux-remoteproc@vger.kernel.org,m:devicetree@vger.kernel.org,s:lists@lfdr.de];
@@ -123,63 +123,52 @@ X-Spamd-Result: default: False [-3.16 / 15.00];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MISSING_XM_UA(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,lucifer:mid,linaro.org:email,qualcomm.com:email,vger.kernel.org:from_smtp]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,qualcomm.com:email,lucifer:mid,vger.kernel.org:from_smtp,linaro.org:email]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 59EC6722D78
+X-Rspamd-Queue-Id: 36E74722DB8
 
-On Wed, Jul 08, 2026 at 11:01:44AM +0530, Mukesh Ojha wrote:
+On Wed, Jul 08, 2026 at 11:01:50AM +0530, Mukesh Ojha wrote:
 > From: Eugen Hristev <ehristev@kernel.org>
 >
 > Annotate vital static information into inspection table:
->  - total_nr_irqs
+>  - nr_swapfiles
 >
-> Information on these annotated variables is stored in a dedicated
-> meminspect section.
+> Information on these variables is stored in a dedicated meminspect
+> section.
 >
 > Signed-off-by: Eugen Hristev <eugen.hristev@linaro.org>
 > Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
 > ---
->  kernel/irq/irqdesc.c | 2 ++
+>  mm/swapfile.c | 2 ++
 >  1 file changed, 2 insertions(+)
 >
-> diff --git a/kernel/irq/irqdesc.c b/kernel/irq/irqdesc.c
-> index 80ef4e27dcf4..4e58e7f5fc6c 100644
-> --- a/kernel/irq/irqdesc.c
-> +++ b/kernel/irq/irqdesc.c
-> @@ -16,6 +16,7 @@
->  #include <linux/irqdomain.h>
->  #include <linux/sysfs.h>
->  #include <linux/string_choices.h>
+> diff --git a/mm/swapfile.c b/mm/swapfile.c
+> index a602e5820513..d480727e4987 100644
+> --- a/mm/swapfile.c
+> +++ b/mm/swapfile.c
+> @@ -42,6 +42,7 @@
+>  #include <linux/suspend.h>
+>  #include <linux/zswap.h>
+>  #include <linux/plist.h>
 > +#include <linux/meminspect.h>
 >
->  #include "internals.h"
->
-> @@ -142,6 +143,7 @@ static void desc_set_defaults(unsigned int irq, struct irq_desc *desc, int node,
->  }
->
->  unsigned int total_nr_irqs __read_mostly = NR_IRQS;
-> +MEMINSPECT_SIMPLE_ENTRY(total_nr_irqs);
+>  #include <asm/tlbflush.h>
+>  #include <linux/leafops.h>
+> @@ -65,6 +66,7 @@ static void move_cluster(struct swap_info_struct *si,
+>   */
+>  static DEFINE_SPINLOCK(swap_lock);
+>  static unsigned int nr_swapfiles;
+> +MEMINSPECT_SIMPLE_ENTRY(nr_swapfiles);
 
-Err... this is effectively exporting this unexported variable to drivers?
+Now the EXPORT_SYMBOL_GPL() is an EXPORT_SYMBOL() in effect no?
 
-This is massively open to abuse no? A driver could now manipulate this value if
-it wanted to?
-
-Why would we want internal state like this exposed to drivers/firmware? This
-isn't something you can even do right now without kernel debug symbols.
-
-I am getting ever more convinced that this resembles a backdoor EXPORT_SYMBOLS()
-but now much worse because you get a VA and a PA and more information...!
-
->
->  /**
->   * irq_get_nr_irqs() - Number of interrupts supported by the system.
+>  atomic_long_t nr_swap_pages;
+>  /*
+>   * Some modules use swappable objects and may try to swap them out under
 >
 > --
 > 2.53.0
 >
-
-Thanks, Lorenzo
 
