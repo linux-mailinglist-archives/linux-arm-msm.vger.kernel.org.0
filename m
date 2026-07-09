@@ -1,58 +1,58 @@
-Return-Path: <linux-arm-msm+bounces-117930-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-117932-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id mT+kMItpT2ohgQIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-117930-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Jul 2026 11:27:39 +0200
+	id rYFsBVxpT2oTgQIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-117932-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Jul 2026 11:26:52 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 29BBD72EF2C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Jul 2026 11:27:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6653372EEF2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Jul 2026 11:26:51 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20201202 header.b=HfKXjrK6;
+	dkim=pass header.d=kernel.org header.s=k20201202 header.b=l3hOQ4+3;
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117930-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117930-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117932-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117932-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 3E30A30B043A
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jul 2026 09:19:00 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 6F57131311B1
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jul 2026 09:19:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 71956401A08;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8D862402BA0;
 	Thu,  9 Jul 2026 09:18:38 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 359D9401A29;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A274402429;
 	Thu,  9 Jul 2026 09:18:37 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783588717; cv=none; b=Pb+M+tNrxZ6BvHXQIwyEr3SV8R0vvrh5IZuTz9zg/hZT6Frgx/Dt+KoqZOEc+Q/jjF6VnCo3gc1jncYUYiGwqGaamt2NPmOo8926iRSgOMoX/Vodm5pUENHEybtgoAtg+iHTeLo/kGyQGNKK8KasnNyKH2MZiK03WLbNaYKyf0Q=
+	t=1783588717; cv=none; b=VpwwSGy2TZghm4x/+zPsYOzOw709gsJMUMVhl9+UVgHNVNay5j/Z5KgNB68zO+j5jiND33CsbJUshA5Mwum567WSbWkF91seqAzhKDMjEh+4N+UTsXqMQJchcgC5uZo6VbLTyWw/T8Jo9Wa33AensAkzRPw5WmMNdqifuuHLxkM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1783588717; c=relaxed/simple;
-	bh=JqCXiscIog4kZohcOHEPHuzfiLGUqD9PxagctliMr7c=;
+	bh=2TcyOXsmylc9xai9nNc9EisV18MbNeNLG4uNJzVn8pI=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=kLC7GXBg/LFuTMwYon9qr/Xw9UiIcBUCcJEIoTYABbhn9mvezepEvZj1K95bSRsGwYbQyFnN8J4dMSPGpYQXmEGo3K+sooRQ90bvR+lwEy74gS/Ku+YVwxdVSfQ0bEEJX3QR8EK6zdOLsnk++cODhPMlL8wq1LNo7/wrRKQUPOU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HfKXjrK6; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 8CC34C2BD01;
+	 In-Reply-To:To:Cc; b=MqVf1yH+SFEyUC0jh8NnP0bwkTdDtGU5nM7S5Shrh+pxAyjFpj4ZtAuwR/PsOlr/5wU8lvn9+1VTiuNsWSVakJtn3vTB3nRFljO1sgh8k8L+DB3EqLrciyaIG1XAOKk7exOok0pH1qhpAXRoai0FDNXp+Sq2NXfyOx46Hh7aM90=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=l3hOQ4+3; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 9DD8CC2BCFD;
 	Thu,  9 Jul 2026 09:18:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1783588716;
-	bh=JqCXiscIog4kZohcOHEPHuzfiLGUqD9PxagctliMr7c=;
+	bh=2TcyOXsmylc9xai9nNc9EisV18MbNeNLG4uNJzVn8pI=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=HfKXjrK6446RDNbM7MxPkHJR6nRyO6E4W4NP9FxsDoWnneZ9JxtoElYQFC5tqnY7V
-	 J4erZFRxKb4IyqeuNrcEtHU1xwu8AU7fCGxnLmnGqgq7K00qTiJd5tKRcxNs4czQtA
-	 WMuMJdFbTHLvKQld5pIA9dIX4qsH6EHDtHC4pcezkg0+L6525UQOZ8ioMxtyhLa+qH
-	 U+OR5nR8OWrpfu1ctqa4+ivN21YJIOWAZAhtKlOI9HWLY3U/15z9Tq/R9GaleRUtR5
-	 8Z54rhXxKjv/HZd0B/z53j9nIYUmG1ZEhvcOT8pCTHl8y1DHxDh7qeRCulQcS0xAvn
-	 g+Uh7p6lQgT0g==
+	b=l3hOQ4+3+QE4KlKe8hUHyMJOb7VET8wGDmsqn8FxHcBM6nr3FWtEtqPwT1QQFdghk
+	 Jir+jw8VzKBWLJu0ku7Q8mPnvkMPwlbicHCkrEuWk23HKJ9a4twskh6pbDoK7jhb37
+	 LkS9OMFFx7XI57uHzHf6X0hwG31M+9Nu+3hT+wfROieOwaxxgmCRAEB+rbMmTfPkCw
+	 x8meJvmMeUGCryhbHiN1g7E4fBuL+1HAls+1YqzzrmYsWulwk+fYBRnhHp56iph/e8
+	 qZh62i82H4jILBGoCInP9/FxzdhQF8tJk5q02gaQs3ISV/5VfqAed1wz+NJarZDxav
+	 UY2F8/HBTNDAg==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 79A67C44506;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 89F07C44501;
 	Thu,  9 Jul 2026 09:18:36 +0000 (UTC)
 From: George Moussalem via B4 Relay <devnull+george.moussalem.outlook.com@kernel.org>
-Date: Thu, 09 Jul 2026 13:18:31 +0400
-Subject: [PATCH v5 5/6] arm64: dts: qcom: ipq5018: add node required for
- Bluetooth support
+Date: Thu, 09 Jul 2026 13:18:32 +0400
+Subject: [PATCH v5 6/6] MAINTAINERS: Add IPQ5018 driver to Qualcomm
+ Bluetooth driver entry
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -61,7 +61,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260709-ipq5018-bluetooth-v5-5-e476c41f03b8@outlook.com>
+Message-Id: <20260709-ipq5018-bluetooth-v5-6-e476c41f03b8@outlook.com>
 References: <20260709-ipq5018-bluetooth-v5-0-e476c41f03b8@outlook.com>
 In-Reply-To: <20260709-ipq5018-bluetooth-v5-0-e476c41f03b8@outlook.com>
 To: Bartosz Golaszewski <brgl@kernel.org>, 
@@ -76,11 +76,11 @@ Cc: linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
  George Moussalem <george.moussalem@outlook.com>, 
  Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1783588713; l=1135;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1783588713; l=702;
  i=george.moussalem@outlook.com; s=20250321; h=from:subject:message-id;
- bh=ymJvkEJnDShOUP8UxN5TyZg3+NjK0WZUomZnujMqESc=;
- b=RYY8skanotxliOrV7roe0ikM4OLojv53aWcRD6phI/hhClq9Vonk38JCmUCOBpbH0Uwfhe3LT
- liF6nLYmr4xDMXkyIZ5aIbG3FJfkIJLm+qzVdNR8dXc4y4CmyeQtz1X
+ bh=2A14I/9djkbP7Q/3gMV0xrYoXvOWpPLiNZFRJ5IU8Qc=;
+ b=E5AlHnX2v2ikivvWxaDyWRXrdlt6w6bqiiGkCWHWmGorm+1BvaoideNHaGiMCcdgSiOtl8BWq
+ 0/u/tBoJAIgC7Np7whNWHhHMrfMbsfGyVnRtN7mdb4vXTtINRJ8rf4Z
 X-Developer-Key: i=george.moussalem@outlook.com; a=ed25519;
  pk=/PuRTSI9iYiHwcc6Nrde8qF4ZDhJBlUgpHdhsIjnqIk=
 X-Endpoint-Received: by B4 Relay for george.moussalem@outlook.com/20250321
@@ -99,7 +99,7 @@ X-Spamd-Result: default: False [-1.66 / 15.00];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-117930-lists,linux-arm-msm=lfdr.de,george.moussalem.outlook.com];
+	TAGGED_FROM(0.00)[bounces-117932-lists,linux-arm-msm=lfdr.de,george.moussalem.outlook.com];
 	RCVD_TLS_LAST(0.00)[];
 	FORGED_RECIPIENTS(0.00)[m:brgl@kernel.org,m:marcel@holtmann.org,m:luiz.dentz@gmail.com,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:andersson@kernel.org,m:konradybcio@kernel.org,m:p.zabel@pengutronix.de,m:linux-arm-msm@vger.kernel.org,m:linux-bluetooth@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:george.moussalem@outlook.com,m:bartosz.golaszewski@oss.qualcomm.com,m:luizdentz@gmail.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	FREEMAIL_REPLYTO(0.00)[outlook.com];
@@ -127,45 +127,31 @@ X-Spamd-Result: default: False [-1.66 / 15.00];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 29BBD72EF2C
+X-Rspamd-Queue-Id: 6653372EEF2
 
 From: George Moussalem <george.moussalem@outlook.com>
 
-Add node to enable Bluetooth support on the IPQ5018 platform.
+Add the Qualcomm IPQ5018 Bluetooth driver to the existing entry for
+Qualcomm Bluetooth drivers.
 
-Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Acked-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: George Moussalem <george.moussalem@outlook.com>
 ---
- arch/arm64/boot/dts/qcom/ipq5018.dtsi | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ MAINTAINERS | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq5018.dtsi b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-index 6f8004a22a1f..8c252fa3ff5b 100644
---- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-@@ -453,6 +453,22 @@ tcsr: syscon@1937000 {
- 			reg = <0x01937000 0x21000>;
- 		};
+diff --git a/MAINTAINERS b/MAINTAINERS
+index eb8cdcc76324..33dd0c70c277 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -21876,6 +21876,7 @@ L:	linux-arm-msm@vger.kernel.org
+ S:	Maintained
+ F:	Documentation/devicetree/bindings/net/bluetooth/qcom,*
+ F:	drivers/bluetooth/btqca.[ch]
++F:	drivers/bluetooth/btqcomipc.c
+ F:	drivers/bluetooth/btqcomsmd.c
+ F:	drivers/bluetooth/hci_qca.c
  
-+		bluetooth: bluetooth@7000000 {
-+			compatible = "qcom,ipq5018-bt";
-+			reg = <0x07000000 0x58000>;
-+
-+			firmware-name = "qca/bt_fw_patch.mbn";
-+
-+			clocks = <&gcc GCC_BTSS_LPO_CLK>;
-+			clock-names = "lpo";
-+			resets = <&gcc GCC_BTSS_BCR>;
-+
-+			qcom,ipc = <&apcs_glb 8 23>;
-+			interrupts = <GIC_SPI 162 IRQ_TYPE_EDGE_RISING>;
-+
-+			status = "disabled";
-+		};
-+
- 		sdhc_1: mmc@7804000 {
- 			compatible = "qcom,ipq5018-sdhci", "qcom,sdhci-msm-v5";
- 			reg = <0x7804000 0x1000>;
 
 -- 
 2.53.0
