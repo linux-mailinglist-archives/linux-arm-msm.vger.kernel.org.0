@@ -1,78 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-117908-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-117909-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id NANlIHtbT2p1fAIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-117908-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Jul 2026 10:27:39 +0200
+	id pm0/F1pcT2q1fAIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-117909-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Jul 2026 10:31:22 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6CBC772E438
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Jul 2026 10:27:38 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 571DE72E4DC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Jul 2026 10:31:21 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=jQTXadIh;
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=UQL3AXnn;
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117908-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 104.64.211.4 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117908-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117909-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c15:e001:75::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117909-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id C282A3042536
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jul 2026 08:21:05 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 28817305EE01
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jul 2026 08:24:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A817D3EA960;
-	Thu,  9 Jul 2026 08:21:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3549E3ED5A6;
+	Thu,  9 Jul 2026 08:23:29 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47F6F3CBE96
-	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Jul 2026 08:21:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD5AC3ED13B
+	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Jul 2026 08:23:27 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783585261; cv=none; b=oYEzN0iqdUZ1BfDn2aDdMv6+gpCHShGWYKvDYKhH4WVAOtmFEqg0Mi0Og8WKOqNoEiat7emHpED+Jnmm+B0oxvSqnXwvzdde9Jgn775ngJ81WFfjdp3T90AcSFJWogEzmv2NJwzEPxYOnXUA3TFNf/xyR4Ytn832cM94USgZCs0=
+	t=1783585409; cv=none; b=r1RivOYMWyb5pol7rk21Bm9XO2TjVpeTOu6rxCvPK87cFnvRA08jmlulcfz7pS2MStgK2Idzq+CU1xdnjNyviLQYve2qp3Wt8DI+jLGWSkD1Zv4vRWtvvX2qA/BsYdQJOZw/HHhgf3Qf3sZOWyZJbKIWXGfoc0DTuVTSN8YVBB4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783585261; c=relaxed/simple;
-	bh=Ohzl7PWWxPjWZ4tXvMcYkXyrj5Wxk4aqB0wBzBEY2O0=;
+	s=arc-20240116; t=1783585409; c=relaxed/simple;
+	bh=6Ied3ittILH0SrgaGw661g66NqWsEQKh/BF7h1MMXmo=;
 	h=From:In-Reply-To:MIME-Version:References:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=uUR7+eq3fXR7duHWOdSR92m4OAR8qvRuZZ3Vd+tiJxDfOjGw0Rn77HVsFnUPdvaWCmh2brJqXCyaglCZBcvI7t58ygqTKyyn37BRpHlbvWHzdd/8TNTCPpa65tHbCaHZXIdZeyXgNwuoV8+pLctGjwqQ3pHfazXmaYDwCV5WkMA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jQTXadIh; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEE6D1F000E9
-	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Jul 2026 08:20:59 +0000 (UTC)
+	 To:Cc:Content-Type; b=azC/nNMzmNZ8fzrT5UIB7ErHtT/vONVvSN+uHFT9XoUDE+OoN/gyLmM1go28pzVYyQ9IWaAeC7Do9z+1cI8WZDgX+aVsphV/7XAKYCBzuZd4TkoqxK7Ju7PL2y0qe8Y+uflg9frt9MbX9oZp7kF0ifNvqGvogNgj8tQwkWTMqR0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UQL3AXnn; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B498D1F01558
+	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Jul 2026 08:23:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783585259;
-	bh=9tUtktBx772SuNsHQ5mcJ9lnSn/4XPHVAAgyesELQcY=;
+	s=k20260515; t=1783585407;
+	bh=JX57usYGbmwSuLis8nZD6Khzp7TX8N2nVp+nRSDo+18=;
 	h=From:In-Reply-To:References:Date:Subject:To:Cc;
-	b=jQTXadIhqjAIfbf/M+pHE5woVFPcv7CPCsaR/+q1L/EcSvDDlwA3tHsNOags65Bco
-	 iD4y0ZuAOGAE38C+t71xryFmOIBXQd2Ne/t4DUkn+SPjZCMioHWTLKp4sJo/3ugts9
-	 ci4ZZTxTDDteQnLpG2ZldCaHnZ8kVJ3Gi1s88tiRBNWJV8niuOVRrXuujpAZ1B12Rl
-	 Sug/bz3VDnX8ELwOcgjMjSQcDBMJWBAUSxENX+izop4o150HKOMwPGm4D2dYR8Wbbn
-	 NRcMPu8S3atEEgS+aKKqhyfo4QPuSpaMpUwc41KdZKePTsZ9MUfeW1CuKMqyfGxMNM
-	 XlUkrOrQhCosg==
-Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-39c81bb4182so7354531fa.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Jul 2026 01:20:59 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AHgh+Rqh0lYiv1qZmwnVa48zvbyDbFfsPMNOkez8xT+jiZh3+UqYrWYTvUrrYgmNtldyJALmYXpOKB7sN0gyAHYa@vger.kernel.org
-X-Gm-Message-State: AOJu0YwFEAMjOYorfstsvFCoHM3r5uxO/CpjcAMOnJ2ck/9P08iil6fZ
-	L6pYWUWrFQRW57spX7so4nnXVoycQPI5vSfiSAOmGO2zkqVk6cASblW7owFzTlCy0mM7GtDBMfz
-	ZmCE7SXH2OPizkyX/i6dNyPnuQFUnuVUaCrS72TfKww==
-X-Received: by 2002:a05:6512:350a:b0:5b0:11b4:fd7d with SMTP id
- 2adb3069b0e04-5b011b4fed3mr1316663e87.55.1783585258690; Thu, 09 Jul 2026
- 01:20:58 -0700 (PDT)
+	b=UQL3AXnngU02OKLyPwoUNvEUG8N8F0LykMwrCzDxzw2fUZi6kKutCscS9XzjWgibd
+	 JkZg4Yz2jIvZ6H1fOcemfFo9uOwmJFKcCmOlvqU7k/U+q+yHpjSZBIkP5JFl4CBiGy
+	 uYuQwVWMUj3fN4KjaDJGHMKUDZBWLM9wr202mEu5nTDSiZAbIuCx0tvvgcDG2PWLy6
+	 ieCxDYULCTBQmGIJTARhNkawua3oV9BmSTlsbAzT29K1HkHnvNJQLriw9gQRJ4LTya
+	 jMeEI3eyDoZJsCgt65jm+mTQFYdJxzZDgGkSIcnyq/VjRqfUbO/LmbkNlHwBPMkCxW
+	 wAgaayYYLRc1Q==
+Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-39c8ee87f7eso1530011fa.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Jul 2026 01:23:27 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AHgh+Ro9KMyGSO4wS+YeVdr8r+RSFw0Ob8yKUO2BT7gqH+kHY6+EeTXXkdVprMZnF6S1yvTWNbJCL0kV1Eu7qcXM@vger.kernel.org
+X-Gm-Message-State: AOJu0Yws2fl1hTNt2uZ7nCqzlPO002tUWa5hgVGQdpTWPsFfaTknGjEk
+	7bH5Iq7dNoMYhpCS994eU2naPBd5nEVnKPFskUpLIsxGVGXIvccfenyQ0B7xD5xDVh1ONwlJl8o
+	+TfFNxtH9IgOfVFq/IRs8excgKmunpdbruvOGjc5wQA==
+X-Received: by 2002:a05:651c:cf:b0:39b:b6d:59a1 with SMTP id
+ 38308e7fff4ca-39c7995088amr10707071fa.3.1783585406379; Thu, 09 Jul 2026
+ 01:23:26 -0700 (PDT)
 Received: from 969154062570 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 9 Jul 2026 01:20:57 -0700
+ HTTPREST; Thu, 9 Jul 2026 01:23:25 -0700
 Received: from 969154062570 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 9 Jul 2026 01:20:57 -0700
+ HTTPREST; Thu, 9 Jul 2026 01:23:24 -0700
 From: Bartosz Golaszewski <brgl@kernel.org>
-In-Reply-To: <20260708114924.1069239-2-prasad.kumpatla@oss.qualcomm.com>
+In-Reply-To: <20260708114924.1069239-3-prasad.kumpatla@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260708114924.1069239-1-prasad.kumpatla@oss.qualcomm.com> <20260708114924.1069239-2-prasad.kumpatla@oss.qualcomm.com>
-Date: Thu, 9 Jul 2026 01:20:57 -0700
-X-Gmail-Original-Message-ID: <CAMRc=Md7LFXEd5KZ0Q4QExAjm3J=kSuE2dY+VA24Nw7MfVh_5g@mail.gmail.com>
-X-Gm-Features: AVVi8Ccn_oAqwXTtlBZJX_W2TZrcjkC2Qh7GQ-UuQblJCynSYsRTJkzjBuBAll4
-Message-ID: <CAMRc=Md7LFXEd5KZ0Q4QExAjm3J=kSuE2dY+VA24Nw7MfVh_5g@mail.gmail.com>
-Subject: Re: [PATCH v1 1/4] ASoC: dt-bindings: qcom: add LPASS LPR vote clock ID
+References: <20260708114924.1069239-1-prasad.kumpatla@oss.qualcomm.com> <20260708114924.1069239-3-prasad.kumpatla@oss.qualcomm.com>
+Date: Thu, 9 Jul 2026 01:23:24 -0700
+X-Gmail-Original-Message-ID: <CAMRc=MfE3thXsff0JO2f2Ly_+CqzDfqs8V9CdcrT84h81OFV3A@mail.gmail.com>
+X-Gm-Features: AVVi8CdTNc-86OaQqwT6qb7warmJNN6NrVU1VuyhoUcS_2X108_MW-QkjDl-vGs
+Message-ID: <CAMRc=MfE3thXsff0JO2f2Ly_+CqzDfqs8V9CdcrT84h81OFV3A@mail.gmail.com>
+Subject: Re: [PATCH v1 2/4] ASoC: qcom: q6prm: add support for LPASS LPR
+ resource voting
 To: Prasad Kumpatla <prasad.kumpatla@oss.qualcomm.com>
 Cc: Krzysztof Kozlowski <krzk@kernel.org>, 
 	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>, linux-arm-msm@vger.kernel.org, 
@@ -90,7 +91,7 @@ X-Spamd-Result: default: False [-3.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
@@ -98,7 +99,7 @@ X-Spamd-Result: default: False [-3.66 / 15.00];
 	MIME_TRACE(0.00)[0:+];
 	RCPT_COUNT_TWELVE(0.00)[19];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-117908-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-117909-lists,linux-arm-msm=lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	FORGED_RECIPIENTS(0.00)[m:prasad.kumpatla@oss.qualcomm.com,m:krzk@kernel.org,m:srinivas.kandagatla@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:linux-gpio@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-sound@vger.kernel.org,m:andersson@kernel.org,m:brgl@kernel.org,m:linusw@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:lgirdwood@gmail.com,m:broonie@kernel.org,m:srini@kernel.org,m:perex@perex.cz,m:tiwai@suse.com,m:conor@kernel.org,s:lists@lfdr.de];
 	FORWARDED(0.00)[lists@lfdr.de];
@@ -116,51 +117,148 @@ X-Spamd-Result: default: False [-3.66 / 15.00];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MISSING_XM_UA(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 6CBC772E438
+X-Rspamd-Queue-Id: 571DE72E4DC
 
-On Wed, 8 Jul 2026 13:49:21 +0200, Prasad Kumpatla
+On Wed, 8 Jul 2026 13:49:22 +0200, Prasad Kumpatla
 <prasad.kumpatla@oss.qualcomm.com> said:
-> Add a new clock ID, LPASS_HW_LPR_VOTE, to represent the LPASS low-power
-> resource (LPR) vote through the PRM interface.
+> Add support for issuing LPASS low-power resource (LPR) votes through
+> the PRM interface.
 >
-> The LPASS PRM supports a resource voting mechanism to control low-power
-> states via PARAM_ID_RSC_CPU_LPR. Exposing this as a q6prm clock ID allows
-> clients to request the LPR vote using the existing qcom,q6prm clock
-> provider interface.
+> Some platforms (e.g. Hawi) require the LPASS to be kept active via LPR
+> resource voting instead of the existing hardware core vote mechanism.
+> Handle this by introducing support for PARAM_ID_RSC_CPU_LPR when the
+> LPR vote clock ID is requested.
 >
-> This functionality is required on newer platforms (e.g. Hawi) where LPASS
-> clients need to explicitly manage LPR resource voting via PRM.
+> For LPR requests, use the appropriate parameter ID and payload format
+> to disable CPU subsystem sleep, ensuring that the LPASS register space
+> remains accessible.
 >
-> Also update Q6AFE_MAX_CLK_ID to account for the newly added clock ID.
+> Also add the corresponding clock mapping for LPASS_HW_LPR_VOTE and make
+> the q6dsp clock ID range consistent with the dt-bindings by deriving
+> it from Q6AFE_MAX_CLK_ID.
 >
 > Signed-off-by: Prasad Kumpatla <prasad.kumpatla@oss.qualcomm.com>
 > ---
->  include/dt-bindings/sound/qcom,q6dsp-lpass-ports.h | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
+>  sound/soc/qcom/qdsp6/q6dsp-lpass-clocks.c |  2 +-
+>  sound/soc/qcom/qdsp6/q6prm-clocks.c       |  2 ++
+>  sound/soc/qcom/qdsp6/q6prm.c              | 18 ++++++++++++++----
+>  sound/soc/qcom/qdsp6/q6prm.h              |  1 +
+>  4 files changed, 18 insertions(+), 5 deletions(-)
 >
-> diff --git a/include/dt-bindings/sound/qcom,q6dsp-lpass-ports.h b/include/dt-bindings/sound/qcom,q6dsp-lpass-ports.h
-> index 45850f2d4..06ca2c287 100644
-> --- a/include/dt-bindings/sound/qcom,q6dsp-lpass-ports.h
-> +++ b/include/dt-bindings/sound/qcom,q6dsp-lpass-ports.h
-> @@ -236,8 +236,9 @@
->  #define LPASS_HW_AVTIMER_VOTE		101
->  #define LPASS_HW_MACRO_VOTE		102
->  #define LPASS_HW_DCODEC_VOTE		103
-> +#define LPASS_HW_LPR_VOTE		104
+> diff --git a/sound/soc/qcom/qdsp6/q6dsp-lpass-clocks.c b/sound/soc/qcom/qdsp6/q6dsp-lpass-clocks.c
+> index 03838582a..79527a367 100644
+> --- a/sound/soc/qcom/qdsp6/q6dsp-lpass-clocks.c
+> +++ b/sound/soc/qcom/qdsp6/q6dsp-lpass-clocks.c
+> @@ -12,7 +12,7 @@
+>  #include <dt-bindings/sound/qcom,q6dsp-lpass-ports.h>
+>  #include "q6dsp-lpass-clocks.h"
 >
-> -#define Q6AFE_MAX_CLK_ID			104
-> +#define Q6AFE_MAX_CLK_ID			105
+> -#define Q6DSP_MAX_CLK_ID			104
+> +#define Q6DSP_MAX_CLK_ID			Q6AFE_MAX_CLK_ID
+>  #define Q6DSP_LPASS_CLK_ROOT_DEFAULT		0
 >
->  #define LPASS_CLK_ATTRIBUTE_INVALID		0x0
->  #define LPASS_CLK_ATTRIBUTE_COUPLE_NO		0x1
+>
+> diff --git a/sound/soc/qcom/qdsp6/q6prm-clocks.c b/sound/soc/qcom/qdsp6/q6prm-clocks.c
+> index 4c574b48a..2b2b3872e 100644
+> --- a/sound/soc/qcom/qdsp6/q6prm-clocks.c
+> +++ b/sound/soc/qcom/qdsp6/q6prm-clocks.c
+> @@ -63,6 +63,8 @@ static const struct q6dsp_clk_init q6prm_clks[] = {
+>  		       "LPASS_HW_MACRO"),
+>  	Q6DSP_VOTE_CLK(LPASS_HW_DCODEC_VOTE, Q6PRM_HW_CORE_ID_DCODEC,
+>  		       "LPASS_HW_DCODEC"),
+> +	Q6DSP_VOTE_CLK(LPASS_HW_LPR_VOTE, Q6PRM_HW_LPR_VOTE,
+> +		       "LPASS_HW_LPR_VOTE"),
+>  };
+>
+>  static const struct q6dsp_clk_desc q6dsp_clk_q6prm __maybe_unused = {
+> diff --git a/sound/soc/qcom/qdsp6/q6prm.c b/sound/soc/qcom/qdsp6/q6prm.c
+> index 04892fb44..22ace8bcb 100644
+> --- a/sound/soc/qcom/qdsp6/q6prm.c
+> +++ b/sound/soc/qcom/qdsp6/q6prm.c
+> @@ -31,10 +31,16 @@ struct q6prm {
+>  #define PARAM_ID_RSC_HW_CORE		0x08001032
+>  #define PARAM_ID_RSC_LPASS_CORE		0x0800102B
+>  #define PARAM_ID_RSC_AUDIO_HW_CLK	0x0800102C
+> +#define PARAM_ID_RSC_CPU_LPR		0x08001A6E
+> +
+> +#define LPR_CPU_SS_SLEEP_DISABLED	0x1
+>
+>  struct prm_cmd_request_hw_core {
+>  	struct apm_module_param_data param_data;
+> -	uint32_t hw_clk_id;
+> +	union {
+> +		u32 hw_clk_id;
+> +		u32 lpr_state;
+> +	};
+>  } __packed;
+>
+>  struct prm_cmd_request_rsc {
+> @@ -62,6 +68,7 @@ static int q6prm_set_hw_core_req(struct device *dev, uint32_t hw_block_id, bool
+>  	struct prm_cmd_request_hw_core *req;
+>  	gpr_device_t *gdev = prm->gdev;
+>  	uint32_t opcode, rsp_opcode;
+> +	bool lpr_req = hw_block_id == Q6PRM_HW_LPR_VOTE;
+
+Please use braces here for better readability.
+
+>
+>  	if (enable) {
+>  		opcode = PRM_CMD_REQUEST_HW_RSC;
+> @@ -82,10 +89,13 @@ static int q6prm_set_hw_core_req(struct device *dev, uint32_t hw_block_id, bool
+>
+>  	param_data->module_instance_id = GPR_PRM_MODULE_IID;
+>  	param_data->error_code = 0;
+> -	param_data->param_id = PARAM_ID_RSC_HW_CORE;
+> +	param_data->param_id = lpr_req ? PARAM_ID_RSC_CPU_LPR : PARAM_ID_RSC_HW_CORE;
+>  	param_data->param_size = sizeof(*req) - APM_MODULE_PARAM_DATA_SIZE;
+>
+> -	req->hw_clk_id = hw_block_id;
+> +	if (lpr_req)
+> +		req->lpr_state = LPR_CPU_SS_SLEEP_DISABLED;
+> +	else
+> +		req->hw_clk_id = hw_block_id;
+>
+>  	return q6prm_send_cmd_sync(prm, pkt, rsp_opcode);
+>  }
+> @@ -94,7 +104,6 @@ int q6prm_vote_lpass_core_hw(struct device *dev, uint32_t hw_block_id,
+>  			     const char *client_name, uint32_t *client_handle)
+>  {
+>  	return q6prm_set_hw_core_req(dev, hw_block_id, true);
+> -
+>  }
+>  EXPORT_SYMBOL_GPL(q6prm_vote_lpass_core_hw);
+>
+> @@ -210,6 +219,7 @@ static int prm_probe(gpr_device_t *gdev)
+>  	cc->gdev = gdev;
+>  	mutex_init(&cc->lock);
+>  	init_waitqueue_head(&cc->wait);
+> +
+>  	dev_set_drvdata(dev, cc);
+
+These newline ninja changes are just unneeded noise in this patch.
+
+>
+>  	if (!q6apm_is_adsp_ready())
+> diff --git a/sound/soc/qcom/qdsp6/q6prm.h b/sound/soc/qcom/qdsp6/q6prm.h
+> index a988a3208..bd5ee0c40 100644
+> --- a/sound/soc/qcom/qdsp6/q6prm.h
+> +++ b/sound/soc/qcom/qdsp6/q6prm.h
+> @@ -87,6 +87,7 @@
+>  #define Q6PRM_LPASS_CLK_ROOT_DEFAULT	0
+>  #define Q6PRM_HW_CORE_ID_LPASS		1
+>  #define Q6PRM_HW_CORE_ID_DCODEC		2
+> +#define Q6PRM_HW_LPR_VOTE		3
+>
+>  int q6prm_set_lpass_clock(struct device *dev, int clk_id, int clk_attr,
+>  			  int clk_root, unsigned int freq);
 > --
 > 2.34.1
 >
 >
 
-Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Bart
 
