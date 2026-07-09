@@ -1,116 +1,111 @@
-Return-Path: <linux-arm-msm+bounces-118037-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-118038-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id XYTvJ42vT2r/mgIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-118037-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Jul 2026 16:26:21 +0200
+	id ZJr9LXy0T2ornAIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-118038-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Jul 2026 16:47:24 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9E7A2732357
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Jul 2026 16:26:20 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0F6F2732720
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Jul 2026 16:47:24 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=N5hEGG3f;
-	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=hQ4kVR4N;
-	dmarc=pass (policy=reject) header.from=qualcomm.com;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118037-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 104.64.211.4 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118037-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=sang-engineering.com header.s=k1 header.b=PUzFH9mS;
+	dmarc=none;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118038-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118038-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id DA1653185C1F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jul 2026 14:11:47 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 852E130A6B12
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jul 2026 14:26:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7118C2AD10;
-	Thu,  9 Jul 2026 14:07:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CB380334695;
+	Thu,  9 Jul 2026 14:26:38 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mail.zeus03.de (zeus03.de [194.117.254.33])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF1FC1BBBFC
-	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Jul 2026 14:07:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76C351A0712
+	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Jul 2026 14:26:34 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783606042; cv=none; b=tT302A+88EbgewtpEXBFbiaQO9A1CgtTvAyVht75kdHD89idnU8iT/4rJiGY/AO/GlVyIx5ALW+H5gLuVscCdRtWQ5Sha4jr4XFrwgnuKsFmY7WEGs7Lk4uAbLWIcvyH+6MKaXbRPG4tAxEir1d2oppfGT/DtZZzynpIyVgcltA=
+	t=1783607198; cv=none; b=IyRzZI4RqEYH3OsPl6o/0QfJPGyJfbTJEspzRW9X7BnUWRSYgEiVX1VPNIydS1EysZE6QFjJWvJCX8B8t+Azs8FGYQe+LliooepBxDxHUOD28Zuws8y4joa8gfwivIlrxJwX3dkI6V88NK+AOGwHpi3iiSP23qSWrqebU8KaUYM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783606042; c=relaxed/simple;
-	bh=fWELxgqBDTV6UIy0DqvW2BAFG6PSmXOlOgJYCkZcs/0=;
+	s=arc-20240116; t=1783607198; c=relaxed/simple;
+	bh=h1ju3EVqaKp6EYSTzX8YR5qdeLvUidypMDyLlo7QjJc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rlQD5YAsfzmWXrdz4LEcm0l56dMR50y/3BVeiBER2vSGULIXjC8rntmAdvP+F5ZFQ+lPzpM3rxwtbA3Q8tN9jbW9NBd1tJuwncKLEtBk+Wed8sId2AwZFqDdAT+x9TTSzfmLlsEBpIdRmi0L3pXVR8rtectMd7yF8zDTICLG6ao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=N5hEGG3f; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=hQ4kVR4N; arc=none smtp.client-ip=205.220.180.131
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 669Dw5VF1919459
-	for <linux-arm-msm@vger.kernel.org>; Thu, 9 Jul 2026 14:07:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=exj1OkBLX7/QojjHNAo08NMH
-	7mpLGfvzHV7yrAUqtY8=; b=N5hEGG3fdfcAwydzW4SZux4bNew3BjX8v+/fDKPY
-	8fqfeLhkKvYlbP4qtkNa3BUENt3SW5q3z07j/mfl8l6+NIKCvPk8qdYvTwFzs5Hv
-	/M6J9nQ62KRY6GJftvTdXB33j/vPbA9UolskL3wAl9qR9h371pBs0nvUBJhJTOko
-	YLHcOEB3xGr8CCmKPc1XAC6sCY4TjeXNyhIB5TqboyIT93sVZKzD0EVa2CPpAmS7
-	D3GtFFuVgHUmjCTLClUEZVi4mT3bJ3o4Ffhv4QJBj4OCiElNPDn5i3aIfbIUT/Sf
-	W4DKwR6r/jOSjskDEy42dv/uLprShpmqqFG5LmrQ+Klkaw==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f9sqwcky4-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 09 Jul 2026 14:07:19 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-51c075c1e25so9970571cf.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Jul 2026 07:07:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1783606039; x=1784210839; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=exj1OkBLX7/QojjHNAo08NMH7mpLGfvzHV7yrAUqtY8=;
-        b=hQ4kVR4NPgPds7xRqnuH174AwQTp7a7OmhaXVSd1rIawACFBpa/7oPaaQJ0Opk6fBl
-         f8+p1l8YiZe/cfUFreNd+kwTENZeNisc+CAbJ4U1rm9XHWVWdPo5fUl/eFAgvfEiXARo
-         jIcDGeqd+5v/hu2yMGB5VlwUEtIcyJARsywNAfVQ7rJo/WEcWRDlLM3kOck57uCXOeXO
-         mGkEyMW5CrY5ofdLeMbRo0PJ6AHrZy0zAuf8B0RisgPBLZzFDOSncVYIQMcCzYgi9bwI
-         scS1JcdNw+j76b8Rhou10cSWo6MGx7ouuiS38roWszHTX5NEDjporQTUPHsIy/1D0QdA
-         10rw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783606039; x=1784210839;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=exj1OkBLX7/QojjHNAo08NMH7mpLGfvzHV7yrAUqtY8=;
-        b=CkpVAjda66nt/TAadAesHOPxTgtVNopZ6CS+18b9tZrjFm5kqiXInR+vyEl0YIwHbQ
-         XXF3J9VZdG1XyEhN/6XfVBeggjTrI0d4Pr6iDM0+ajooMerIWHlJ0PzZKZeBPna3PX8s
-         GS42zMxM7ER7/Zddc5+Oujm9LDwhbXJYv3mi8H89F+dCQsGFbD1KKEqXwjUWqVgh7rdI
-         gbpBrcFeITV+KuNIP9UFDbZ23J1JJJP2WIxVeJmhdDbJ/QeYdD7OTWmAIjB/gBKL1cE8
-         B7ELKzyQDZlmAj6WrfzkIE10bxn0mIX+ySWQkPzozGYkMIQ/tkhP/cgpXIh751KhMPYi
-         fziQ==
-X-Forwarded-Encrypted: i=1; AHgh+RpCpS9h/yipQuI42JkJQVJBBzPCPCPdiVuyObiGGCcjTpSGsqOyztW9SmOdHpJv4d3c1hkOD2otJCpNBosG@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz0lupfPLxjOZTamHCOHxVaecP6Ty8m7FxUfWZ2AJidbGslRhYI
-	5yK+lpImZtLTPtWNC1YLpmY2h/UOaYg9A0iwC2vD6RAKvbiqOD8uydIoStiWjKqwbfl+8J39REz
-	VfxFFv2COUDBZOj/tgukVPUoeecw4yVX82F7SvI0ZsRI8Oe3jO2PIOHbL2A+POMwPGscW
-X-Gm-Gg: AfdE7cl2Y4QGd8QUeSjxS+KSVOymA2cJ4JsvPGTocYdunVkg8RE2gpSe3A+CZyDbfj6
-	2RK4LlYpqF/5SD4AexFWZvp674noMVfKs8XdENOkX/2jJb/omrnJVUBV13Yj+tLEVG0DNvB2v7W
-	iQZMGl5U3p68J1Jb/dQQtXPwQS8NCF4vDABIJSNDWaPUhH4erDNi7yTA/3Bws1WS6AAfVQH1Yp/
-	z00eazZp6EwKO4I0LEPV8ggVuQFBIKafuipMQcYuWa7PFiIGSBE9DWlh0E82XjHVtlw+zrlj8zL
-	vaO6yVygDrttBjvCXArNqv8aZHAFpLU44uvBT5VsOpl97TBcLQdFd2OeVwE9OM03U0+ik4OUybS
-	qvcNqBtJlhCR5D8q5Yj0sjA==
-X-Received: by 2002:ac8:5f89:0:b0:51c:8fb:fa54 with SMTP id d75a77b69052e-51c8b4d5a86mr74945881cf.57.1783606038992;
-        Thu, 09 Jul 2026 07:07:18 -0700 (PDT)
-X-Received: by 2002:ac8:5f89:0:b0:51c:8fb:fa54 with SMTP id d75a77b69052e-51c8b4d5a86mr74944871cf.57.1783606038297;
-        Thu, 09 Jul 2026 07:07:18 -0700 (PDT)
-Received: from oss.qualcomm.com ([5.12.73.156])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-493eb705e22sm51620965e9.6.2026.07.09.07.07.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Jul 2026 07:07:17 -0700 (PDT)
-Date: Thu, 9 Jul 2026 17:07:15 +0300
-From: Abel Vesa <abel.vesa@oss.qualcomm.com>
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: eliza: Enable first QUPv3 wrapper by
- default
-Message-ID: <tm4tyrsmzhbirfgywc5dpqzea5t5emnmyamp6l626mfaxtejsp@slgppnnsj464>
-References: <20260709-dts-qcom-eliza-enable-qupv3-1st-v1-1-e9a6904d0dea@oss.qualcomm.com>
- <6f2b72ca-8560-4e69-b971-afdd9e2a7a28@oss.qualcomm.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=GBIedRFpb+qJqZ+FhydF8FLKhR2AhS7pK7C+7XaAbUwHUkXljFMPsG70lqKSpuS45FNf3ZZJii6z4VUrz+wQINuHX7gMXBMJZ9I3ArNjsdM8xZERYy/a7SfdLsDL003b9/f91cxoi0tGE1zC983knMat+xcZ/IdIrQ36BT/B5D4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com; spf=pass smtp.mailfrom=sang-engineering.com; dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b=PUzFH9mS; arc=none smtp.client-ip=194.117.254.33
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	sang-engineering.com; h=date:from:to:cc:subject:message-id
+	:references:mime-version:content-type:in-reply-to; s=k1; bh=ULW9
+	VBv4cRlM6iC85iVcPrTJ/RUoBanK7j5g1mX7o9s=; b=PUzFH9mSrFXR0BT7bcHZ
+	Edu7cwpTc+qJ+OrNpmfIGFDVhxIXkWvuhCfoFDFMwIRDsg61YTEhJsUS9CVKi6az
+	P6v9kZs22j7OxfFuONh4fL96A7/4aZXTeYEKXEFLvDnbaWjtQMvRU/sqEcZFKEHD
+	8CbLj3eD9wSCrMFlNxTu44NT6Nq72wdBYP4Zha/eGHVeKZZ2hJbbBLrepfix+5y8
+	wPbx7qBDvD10x4wZ1uvqlRfiKPJQNDeM6c9wbZwAjaetlqpPufip7tXqIrrtvEGv
+	yj/byiXXftAa0kvhgazHR8mM/mwB9T9fZRFwzl2sGHwDRyxeR+oELM4DKsYB1m8w
+	Vg==
+Received: (qmail 1163672 invoked from network); 9 Jul 2026 16:26:26 +0200
+Received: by mail.zeus03.de with ESMTPSA (TLS_AES_256_GCM_SHA384 encrypted, authenticated); 9 Jul 2026 16:26:26 +0200
+X-UD-Smtp-Session: l3s3148p1@Of/AaC5WFLZQT+F6
+Date: Thu, 9 Jul 2026 16:26:25 +0200
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+To: Pan Chuang <panchuang@vivo.com>
+Cc: Frank Li <Frank.Li@nxp.com>, Vinod Koul <vkoul@kernel.org>,
+	Keguang Zhang <keguang.zhang@gmail.com>,
+	Sean Wang <sean.wang@mediatek.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Andreas =?utf-8?Q?F=C3=A4rber?= <afaerber@suse.de>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Daniel Mack <daniel@zonque.org>,
+	Haojian Zhuang <haojian.zhuang@gmail.com>,
+	Robert Jarzmik <robert.jarzmik@free.fr>,
+	Paul Walmsley <pjw@kernel.org>,
+	Samuel Holland <samuel.holland@sifive.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Magnus Damm <magnus.damm@gmail.com>,
+	Orson Zhai <orsonzhai@gmail.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Chunyan Zhang <zhang.lyra@gmail.com>,
+	Patrice Chotard <patrice.chotard@foss.st.com>,
+	=?utf-8?Q?Am=C3=A9lie?= Delaunay <amelie.delaunay@foss.st.com>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Chen-Yu Tsai <wens@kernel.org>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Laxman Dewangan <ldewangan@nvidia.com>,
+	Jon Hunter <jonathanh@nvidia.com>,
+	Thierry Reding <thierry.reding@kernel.org>,
+	Vignesh Raghavendra <vigneshr@ti.com>,
+	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Icenowy Zheng <zhengxingda@iscas.ac.cn>,
+	Kees Cook <kees@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+	Miaoqian Lin <linmq006@gmail.com>,
+	Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Biju Das <biju.das.jz@bp.renesas.com>,
+	Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>,
+	John Madieu <john.madieu.xa@bp.renesas.com>,
+	Thomas Andreatta <thomasandreatta2000@gmail.com>,
+	"open list:FREESCALE eDMA DRIVER" <imx@lists.linux.dev>,
+	"open list:FREESCALE eDMA DRIVER" <dmaengine@vger.kernel.org>,
+	open list <linux-kernel@vger.kernel.org>,
+	"open list:MIPS/LOONGSON1 ARCHITECTURE" <linux-mips@vger.kernel.org>,
+	"moderated list:MEDIATEK DMA DRIVER" <linux-arm-kernel@lists.infradead.org>,
+	"moderated list:MEDIATEK DMA DRIVER" <linux-mediatek@lists.infradead.org>,
+	"moderated list:ARM/ACTIONS SEMI ARCHITECTURE" <linux-actions@lists.infradead.org>,
+	"open list:ARM/QUALCOMM MAILING LIST" <linux-arm-msm@vger.kernel.org>,
+	"open list:SIFIVE DRIVERS" <linux-riscv@lists.infradead.org>,
+	"open list:ARM/RISC-V/RENESAS ARCHITECTURE" <linux-renesas-soc@vger.kernel.org>,
+	"moderated list:STM32 DMA DRIVERS" <linux-stm32@st-md-mailman.stormreply.com>,
+	"open list:ARM/Allwinner sunXi SoC support" <linux-sunxi@lists.linux.dev>,
+	"open list:TEGRA ARCHITECTURE SUPPORT" <linux-tegra@vger.kernel.org>
+Subject: Re: [PATCH 00/26] dmaengine: Remove redundant error messages on IRQ
+ request failure
+Message-ID: <ak-vkQ8g_ePdY15f@shikoro>
+References: <20260709135846.97972-1-panchuang@vivo.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -119,86 +114,94 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <6f2b72ca-8560-4e69-b971-afdd9e2a7a28@oss.qualcomm.com>
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA5MDEzNyBTYWx0ZWRfX4luwuD9nWHem
- 3IDrv4zdEDSFarmMDE5XKuGpkzy5RiRgufEW+FWMlVwhGrKG+sVroC36ziPR0ulCQS+xL0gyefj
- g5jaY4niCRnChEtv/v2m507C1onQ0HOUGHuwYulh+1Fn8kadOGoYZ30z4mOt9biXqQ99K0ndLz/
- 1N1DTqJq8CdD0J+DWYkSwvOwSai7+gCossfNafn98ELJOMjERlbBGOHV+EYXwUXHhIzyiErNWJz
- Dfo4BNAPKh7i0IIovw+cRkgajFPkhNOSVWEp4wWnt+optdqyymtlaaX2pnFVhAzmpH7IdYawRLI
- jGrtX5e8+P9WrkqqHq42ESKC3cIOIE+JfQ+MKt5jxMjOJYKmt04vHpitxL1HVbmCojE7G5hlcKX
- C8lQZYOS+A20QMbca6fPdrIz2itSWuhd19DorMUCA5s1WeelAX3t78kCONlDmOYQXY60DxV6zt9
- UZalfqfSd+IG3peM3hw==
-X-Proofpoint-GUID: Ivaq_efoiOVPpI8st-mf-yfUNlNNIyb6
-X-Authority-Analysis: v=2.4 cv=fMIJG5ae c=1 sm=1 tr=0 ts=6a4fab17 cx=c_pps
- a=WeENfcodrlLV9YRTxbY/uA==:117 a=qUYP/O48JsHWwiZSxXr1NQ==:17
- a=kj9zAlcOel0A:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=EUspDBNiAAAA:8 a=vxGFvYnQpFAaycP-2XAA:9 a=CjuIK1q_8ugA:10
- a=kacYvNCVWA4VmyqE58fU:22
-X-Proofpoint-ORIG-GUID: Ivaq_efoiOVPpI8st-mf-yfUNlNNIyb6
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA5MDEzNyBTYWx0ZWRfX036Yw0sd9maq
- Be5spaxA8+RxBLdERh+XgDcwDJGYJpEA6eqaoTId5UqVgVygoR7H31Kg23DiBr+Av9qph3wnnhS
- nzpKbjSbyuVakFvy/XUl+qhmhHAECXY=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-09_03,2026-07-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 bulkscore=0 phishscore=0 clxscore=1015 impostorscore=0
- spamscore=0 priorityscore=1501 malwarescore=0 lowpriorityscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607090137
+In-Reply-To: <20260709135846.97972-1-panchuang@vivo.com>
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-1.66 / 15.00];
+X-Spamd-Result: default: False [0.34 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
+	R_DKIM_ALLOW(-0.20)[sang-engineering.com:s=k1];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-118037-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,qualcomm.com:email,qualcomm.com:dkim,oss.qualcomm.com:from_mime,oss.qualcomm.com:dkim];
-	FORGED_RECIPIENTS(0.00)[m:konrad.dybcio@oss.qualcomm.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:dmitry.baryshkov@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
-	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	FORWARDED(0.00)[lists@lfdr.de];
-	FORGED_SENDER(0.00)[abel.vesa@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[abel.vesa@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	TO_DN_ALL(0.00)[];
+	TAGGED_FROM(0.00)[bounces-118038-lists,linux-arm-msm=lfdr.de,renesas];
 	FROM_HAS_DN(0.00)[];
-	MISSING_XM_UA(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	DMARC_NA(0.00)[sang-engineering.com];
+	FORWARDED(0.00)[lists@lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:panchuang@vivo.com,m:Frank.Li@nxp.com,m:vkoul@kernel.org,m:keguang.zhang@gmail.com,m:sean.wang@mediatek.com,m:matthias.bgg@gmail.com,m:angelogioacchino.delregno@collabora.com,m:afaerber@suse.de,m:mani@kernel.org,m:daniel@zonque.org,m:haojian.zhuang@gmail.com,m:robert.jarzmik@free.fr,m:pjw@kernel.org,m:samuel.holland@sifive.com,m:geert+renesas@glider.be,m:magnus.damm@gmail.com,m:orsonzhai@gmail.com,m:baolin.wang@linux.alibaba.com,m:zhang.lyra@gmail.com,m:patrice.chotard@foss.st.com,m:amelie.delaunay@foss.st.com,m:mcoquelin.stm32@gmail.com,m:alexandre.torgue@foss.st.com,m:wens@kernel.org,m:jernej.skrabec@gmail.com,m:ldewangan@nvidia.com,m:jonathanh@nvidia.com,m:thierry.reding@kernel.org,m:vigneshr@ti.com,m:hayashi.kunihiko@socionext.com,m:mhiramat@kernel.org,m:dmitry.baryshkov@oss.qualcomm.com,m:zhengxingda@iscas.ac.cn,m:kees@kernel.org,m:andersson@kernel.org,m:linmq006@gmail.com,m:quic_jseerapu@quicinc.com,m:claudiu.beznea.uj@bp.renesas.com,m:biju.das.jz@bp.
+ renesas.com,m:cosmin-gabriel.tanislav.xa@renesas.com,m:john.madieu.xa@bp.renesas.com,m:thomasandreatta2000@gmail.com,m:imx@lists.linux.dev,m:dmaengine@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-mips@vger.kernel.org,m:linux-arm-kernel@lists.infradead.org,m:linux-mediatek@lists.infradead.org,m:linux-actions@lists.infradead.org,m:linux-arm-msm@vger.kernel.org,m:linux-riscv@lists.infradead.org,m:linux-renesas-soc@vger.kernel.org,m:linux-stm32@st-md-mailman.stormreply.com,m:linux-sunxi@lists.linux.dev,m:linux-tegra@vger.kernel.org,m:keguangzhang@gmail.com,m:matthiasbgg@gmail.com,m:haojianzhuang@gmail.com,m:geert@glider.be,m:magnusdamm@gmail.com,m:zhanglyra@gmail.com,m:mcoquelinstm32@gmail.com,m:jernejskrabec@gmail.com,s:lists@lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	FORGED_SENDER(0.00)[wsa@sang-engineering.com,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_CC(0.00)[nxp.com,kernel.org,gmail.com,mediatek.com,collabora.com,suse.de,zonque.org,free.fr,sifive.com,glider.be,linux.alibaba.com,foss.st.com,nvidia.com,ti.com,socionext.com,oss.qualcomm.com,iscas.ac.cn,quicinc.com,bp.renesas.com,renesas.com,lists.linux.dev,vger.kernel.org,lists.infradead.org,st-md-mailman.stormreply.com];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	RCPT_COUNT_GT_50(0.00)[55];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[wsa@sang-engineering.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[sang-engineering.com:+];
 	ALIAS_RESOLVED(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,renesas];
+	MISSING_XM_UA(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[10];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCVD_COUNT_SEVEN(0.00)[7]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[shikoro:mid,vger.kernel.org:from_smtp,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,sang-engineering.com:from_mime,sang-engineering.com:dkim]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 9E7A2732357
+X-Rspamd-Queue-Id: 0F6F2732720
 
-On 26-07-09 15:08:09, Konrad Dybcio wrote:
-> On 7/9/26 11:12 AM, Abel Vesa wrote:
-> > Since each serial engine will be enabled as needed in each board dts,
-> > there is no point of disabling the first QUPv3 wrapper in SoC dtsi.
-> > 
-> > So enable it by default. This is also now in line with the other SoCs, and
-> > also with the second QUPv3 wrapper.
-> > 
-> > Fixes: 844807e1f89d ("arm64: dts: qcom: eliza: Add QUPv3, GPI DMA, SDHCI and LLCC nodes")
-> > Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-> > ---
+On Thu, Jul 09, 2026 at 09:58:04PM +0800, Pan Chuang wrote:
+> Commit 55b48e23f5c4b6f5ca9b7ab09599b17dcf501c10 ("genirq/devres: Add
+> error handling in devm_request_*_irq()") added automatic error logging
+> to devm_request_threaded_irq() and devm_request_any_context_irq() via
+> the new devm_request_result() helper. The helper prints device name,
+> IRQ number, handler functions, and error code on failure.
 > 
-> Go ahead and enable both QUP wrappers and both DMA controllers,
-> a subset of both is assigned to HLOS by default by the tz config
+> Since devm_request_irq() is a static inline wrapper around
+> devm_request_threaded_irq(), it also benefits from this automatic
+> logging.
+> 
+> This series removes the now-redundant dev_err() and dev_err_probe() calls
+> in dmaengine drivers that follow these devm_request_*_irq() functions,
+> as the core now provides more detailed diagnostic information on failure.
+> 
+> Pan Chuang (26):
+>   dmaengine: fsl-edma-main: Remove redundant dev_err()/dev_err_probe()
+>   dmaengine: fsl-qdma: Remove redundant dev_err()/dev_err_probe()
+>   dmaengine: loongson-loongson1-apb-dma: Remove redundant
+>     dev_err()/dev_err_probe()
+>   dmaengine: mediatek-mtk-cqdma: Remove redundant
+>     dev_err()/dev_err_probe()
+>   dmaengine: mediatek-mtk-hsdma: Remove redundant
+>     dev_err()/dev_err_probe()
+>   dmaengine: mmp_pdma: Remove redundant dev_err()/dev_err_probe()
+>   dmaengine: moxart-dma: Remove redundant dev_err()/dev_err_probe()
+>   dmaengine: owl-dma: Remove redundant dev_err()/dev_err_probe()
+>   dmaengine: pxa_dma: Remove redundant dev_err()/dev_err_probe()
+>   dmaengine: qcom-gpi: Remove redundant dev_err()/dev_err_probe()
+>   dmaengine: sf-pdma-sf-pdma: Remove redundant dev_err()/dev_err_probe()
+>   dmaengine: sh-rcar-dmac: Remove redundant dev_err()/dev_err_probe()
+>   dmaengine: sh-rz-dmac: Remove redundant dev_err()/dev_err_probe()
+>   dmaengine: sh-shdmac: Remove redundant dev_err()/dev_err_probe()
+>   dmaengine: sh-usb-dmac: Remove redundant dev_err()/dev_err_probe()
+>   dmaengine: sprd-dma: Remove redundant dev_err()/dev_err_probe()
+>   dmaengine: st_fdma: Remove redundant dev_err()/dev_err_probe()
+>   dmaengine: stm32-stm32-dma: Remove redundant dev_err()/dev_err_probe()
+>   dmaengine: stm32-stm32-dma3: Remove redundant
+>     dev_err()/dev_err_probe()
+>   dmaengine: stm32-stm32-mdma: Remove redundant
+>     dev_err()/dev_err_probe()
+>   dmaengine: sun4i-dma: Remove redundant dev_err()/dev_err_probe()
+>   dmaengine: sun6i-dma: Remove redundant dev_err()/dev_err_probe()
+>   dmaengine: tegra20-apb-dma: Remove redundant dev_err()/dev_err_probe()
+>   dmaengine: ti-edma: Remove redundant dev_err()/dev_err_probe()
+>   dmaengine: uniphier-xdmac: Remove redundant dev_err()/dev_err_probe()
+>   dmaengine: xgene-dma: Remove redundant dev_err()/dev_err_probe()
 
-But the other QUP and both DMA controllers are already enabled by
-default.
+One patch per subsystem for such trivial changes, please.
+
 
