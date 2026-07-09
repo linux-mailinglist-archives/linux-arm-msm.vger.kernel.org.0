@@ -1,261 +1,181 @@
-Return-Path: <linux-arm-msm+bounces-117867-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-117868-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id Riv+J+FHT2rSdQIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-117867-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Jul 2026 09:04:01 +0200
+	id 4/JuE6FIT2r0dQIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-117868-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Jul 2026 09:07:13 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 164F472D730
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Jul 2026 09:04:01 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id D207D72D74C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Jul 2026 09:07:12 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=m6nLKaEZ;
-	dmarc=pass (policy=quarantine) header.from=kernel.org;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117867-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117867-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=fairphone.com header.s=fair header.b=gLsp7Dd1;
+	dmarc=pass (policy=quarantine) header.from=fairphone.com;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117868-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.232.135.74 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117868-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 24EF6306194B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jul 2026 06:57:46 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 0FE7A301104D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jul 2026 07:07:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DFB583DDDD7;
-	Thu,  9 Jul 2026 06:57:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5828D396588;
+	Thu,  9 Jul 2026 07:07:09 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83EE73D8918;
-	Thu,  9 Jul 2026 06:57:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC50735C188
+	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Jul 2026 07:07:02 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783580246; cv=none; b=oObQfGxjBIj5IDcZ9Hr+a9j+kUw5UHt4HllyJOpu8BT6YZyBy/a454Gw5wZCJ/yWkrNULsNH+3D8rEteasoqO5bCALoKdf9gwj4uPQ3LE2Jq4sFREaHB+0S+b4x3LFcXwTbuc3K6k3fHg+a7wgmXuwCfU/mABgOjMqFa9JkEUKA=
+	t=1783580828; cv=none; b=EeiGSGBt3WRfxJFMnY6M2VpjX7bATE4HOIs9Vzj6fwTk8PD/fnYXx4G9y8Qqb9c4FqpEhQlXwtFPNt90SrC21F2Sd601QJag2hx+mDMNSrrANlwRGNzjAgrtUUAVt99lYUHYT9JjXy28+ejApAKguQgCVWM9NkVEX9kwAUqY/7w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783580246; c=relaxed/simple;
-	bh=DfepxRz0nVsgttAIch/jHAMaedvHM2NGLx+JXZ/T9ZM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=px3v3tn8DkqNjgxqOVTQyEKpUB/8Bhx1bbt4qhYXCxbLc5uD0lPloeeCPfcJAm9DReSmCyXS4C5ll7XI/lNpGOxOVP1ydbEbYDI/BcnuEzEKkYwzwzMIVJyZflnK9KteA0TCKdV0sNyzZ/tzt0lV7kdDJThnggAKqFmR1zlbiqc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=m6nLKaEZ; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB4DB1F000E9;
-	Thu,  9 Jul 2026 06:57:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783580245;
-	bh=dErr3Zh0vTaF8Ff3QS58CHwh0Qs9hpdBaaBy8mXQ6Ig=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=m6nLKaEZsJ3bSiCagFRNaaRARhd83X4j2SybyYYTmIb2ihjU10iiY0ju8g6C7esL+
-	 EPjAsg9uYyx33g7BdfWoIZher9l7aUxrJ8t8J3GboZ9bl4QSI/B49V2xHtEBWqwxJk
-	 b1RdLHKfd1F17tuY5V0hoIYyIkBmo4c1QgFLV315LPSnqnREKkzYrIJHPdodcKrjgw
-	 fP5/RmwrffLrvwZbnefrrvX5r2Xw90K2HLQu8Xr2/cvYROUZKGq/p6BEOfmg6kQRq2
-	 JWay1ihp0S6seIlgEFc7O9GUUrq775bkTY6SKSfTb30sAiA4LkMiaHjhY8RCET/0y4
-	 Yh/FEvaXOsH/Q==
-Date: Thu, 9 Jul 2026 08:57:17 +0200
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Kishore Batta <kishore.batta@oss.qualcomm.com>
-Cc: Jonathan Corbet <corbet@lwn.net>, 
-	Shuah Khan <skhan@linuxfoundation.org>, Jeff Hugo <jeff.hugo@oss.qualcomm.com>, 
-	Carl Vanderlip <carl.vanderlip@oss.qualcomm.com>, Oded Gabbay <ogabbay@kernel.org>, linux-doc@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	mhi@lists.linux.dev
-Subject: Re: [PATCH v6 7/7] bus: mhi: Expose DDR training data via controller
- sysfs
-Message-ID: <n35ouuyvy25ocbfaedksryoz5d53cylk2pcsxz7f25us444gh7@7ybkifq3fbae>
-References: <20260701-sahara_protocol_new_v2-v6-0-3a78362c4741@oss.qualcomm.com>
- <20260701-sahara_protocol_new_v2-v6-7-3a78362c4741@oss.qualcomm.com>
+	s=arc-20240116; t=1783580828; c=relaxed/simple;
+	bh=Bnd/Zp3niZIQob/FNfLgwtO3XTUE9bxrb51tY42Yjss=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=dCpcoaDhPpSGkLg3jvgx6cidaFx/FfedanH8v/rWl3KZ4bbd37tKylGEcNw8SxwXqrX8I/10w/OvfZ/g6GjdMQTo9OW55QQK6+e1QggfslRvEN/nz1QZnqz4/ZH7ias9sfKbiW5K0AuUDPr4zs9UUwVXOFKp34qfusUlqm6hAr4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=gLsp7Dd1; arc=none smtp.client-ip=209.85.208.48
+Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-698b558a792so1825813a12.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Jul 2026 00:07:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1783580820; x=1784185620; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-type:content-transfer-encoding:mime-version:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=39wxSflXcaAuLOW85LSK1MzZPDJ4dD+cTINLmzJuWNw=;
+        b=gLsp7Dd1WVvvxNVzg0TEshjZfYeaBtgcq8CTqXXbwUOJd7r8Qtb+oP9eCA/LzinkrT
+         /ueUwtkfdbEZT3eRvolfn182weA34O2dMkA/8QNSaiwQ4Oos0CsAqs/uaoDPXGSue2QE
+         sE5Iau+Am+lLQ2kJj54eDIkSdJew+WpHDO/bFtybnWU8S5C5Ll0s2trL+ntKRvcgEh8w
+         iZ3SzhmzPVaxidRhAA4aPtwzhpMwE9IN2w0nnyx/NvkFN2EJnQnoMpPmNN4iNn4O9vdp
+         hiQf0djgmMURAn5qc1tsFRlkv2rSEDq213wtVSbXULMU4+y2n+0u/CWfJ+4MEFiq2Pvd
+         Kdow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783580820; x=1784185620;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-type:content-transfer-encoding:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=39wxSflXcaAuLOW85LSK1MzZPDJ4dD+cTINLmzJuWNw=;
+        b=qxe7spm2d0cRiDL6m4upup0nKEr75xUr3bQaRC9mhR/3kq6pmZYy4wRl347HrLZQfb
+         GKmGmSwy3XP7iRgsQdMfbyC6zw98vwG4t5aSga984bAmnTQYDDfVlCOBu/WuMY64OqQJ
+         d+/qdk++vl5Q6ywPLAxRsNKoS/fwRffNjkpqNxx2UXWxCAfQTCX5/siVLH+w1lxWsml+
+         ier4SYvPskC3v2JflrGx/CxzVa2V5lJmGQs7nubb0TQ82D7TNTJq0c73X6VPxJ6BE74T
+         2gnKTRu5AwN4DgG2lqJcqASyYzSbbvqLP6c46ZsYaMJwyyKogYHT49Ww8MdKNMnOS6Ot
+         WZEQ==
+X-Forwarded-Encrypted: i=1; AHgh+RpxM4GesntJ9djmQsEwkQJKQ4QFvbk0DleRFxE8MlFkq+NPjpTZ393QDRcwhcx3D51FSOtNE3DMGSvNmXrC@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywvo5zXH1UKaXfOvfe8Q3qCiIN5FvI41IWH5436IPCbwOWtpuLT
+	2K1VYZSUNSgBYJEpLcZTkGR6b8JX0THkUvnDJjuJRMlOLpRuwH3YJHhZggrEfUv9xGI=
+X-Gm-Gg: AfdE7cmjjacdvDZlmwlyeS03wE/89D5ptOIvdI+vWlvZZQ6bNXxUTsOCmgqpRgkE/Ph
+	Qk/TJQhCi/9Qm4GtHQTOEubgBpc6DaRFKGrLnUXjLemiFOfoun6Az+UzwICFMmqaQHWU2iBgziD
+	4cbiZFIAMSXKNHf+aoTS0iyhXoqK3z8VyCEAPGGpKK5NniorFuAoEPRlQLygjZivmbYtiHyaovq
+	pqd97sFHBKM18XPB6XSWoZPDi8DYyDiUvomBes25bMj6p2bnBeC2TYSnwBqxlWIv/CI1wKaxv1u
+	MDzzN2atoPX5uqRKll3MeKwzUtp5fNbfCkRr2YDyvr+F4xNnkQ4GZJAwY0c7UfyNN7cUQTumVMY
+	iGW9vjSIF+9KdaCCu+UCJqVCvZgJ0xKx7MII6E9LRP6BTHBXaQotipjmqGjcCMapr3NLgVDvBDK
+	n+SpuGitJUlI8wQ4Q/zB5C7l3uft3b/S5quvdXqDCG86obzqvFxfjLzGVkyQ==
+X-Received: by 2002:a17:907:3f86:b0:c15:d0b6:495c with SMTP id a640c23a62f3a-c15d0b64ce5mr261020666b.29.1783580818201;
+        Thu, 09 Jul 2026 00:06:58 -0700 (PDT)
+Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c15ca1bd81asm240667266b.30.2026.07.09.00.06.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 09 Jul 2026 00:06:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260701-sahara_protocol_new_v2-v6-7-3a78362c4741@oss.qualcomm.com>
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Thu, 09 Jul 2026 09:06:56 +0200
+Message-Id: <DJTUMRRV8K1A.3AL1AMOF242DP@fairphone.com>
+Cc: "Srinivas Kandagatla" <srini@kernel.org>, "Liam Girdwood"
+ <lgirdwood@gmail.com>, "Mark Brown" <broonie@kernel.org>, "Jaroslav Kysela"
+ <perex@perex.cz>, "Takashi Iwai" <tiwai@suse.com>, "Bjorn Andersson"
+ <andersson@kernel.org>, "Konrad Dybcio" <konradybcio@kernel.org>, "Rob
+ Herring" <robh@kernel.org>, "Krzysztof Kozlowski" <krzk+dt@kernel.org>,
+ "Conor Dooley" <conor+dt@kernel.org>,
+ <cros-qcom-dts-watchers@chromium.org>,
+ <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>,
+ <linux-sound@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+ <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>
+Subject: Re: [PATCH RFC 1/2] ASoC: codecs: lpass-tx-macro: Use correct
+ config for sc7280
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+To: "Dmitry Baryshkov" <dmitry.baryshkov@oss.qualcomm.com>, "Luca Weiss"
+ <luca.weiss@fairphone.com>
+X-Mailer: aerc 0.21.0-0-g5549850facc2
+References: <20260526-sc7280-tx-macro-v1-0-1aad6900fec0@fairphone.com>
+ <20260526-sc7280-tx-macro-v1-1-1aad6900fec0@fairphone.com>
+ <4rd4l5ioccdiggvlwl623qsdoy2udy5cr6sigyxrg5pbdll37g@sboebzvzlr6m>
+In-Reply-To: <4rd4l5ioccdiggvlwl623qsdoy2udy5cr6sigyxrg5pbdll37g@sboebzvzlr6m>
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-4.66 / 15.00];
-	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
+X-Spamd-Result: default: False [-0.16 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	MV_CASE(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[fairphone.com,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74];
+	R_DKIM_ALLOW(-0.20)[fairphone.com:s=fair];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	FORWARDED(0.00)[lists@lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:kishore.batta@oss.qualcomm.com,m:corbet@lwn.net,m:skhan@linuxfoundation.org,m:jeff.hugo@oss.qualcomm.com,m:carl.vanderlip@oss.qualcomm.com,m:ogabbay@kernel.org,m:linux-doc@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:dri-devel@lists.freedesktop.org,m:mhi@lists.linux.dev,s:lists@lfdr.de];
-	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_SENDER(0.00)[mani@kernel.org,linux-arm-msm@vger.kernel.org];
-	TAGGED_FROM(0.00)[bounces-117867-lists,linux-arm-msm=lfdr.de];
+	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-117868-lists,linux-arm-msm=lfdr.de];
+	FORWARDED(0.00)[lists@lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
+	FORGED_RECIPIENTS(0.00)[m:srini@kernel.org,m:lgirdwood@gmail.com,m:broonie@kernel.org,m:perex@perex.cz,m:tiwai@suse.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:cros-qcom-dts-watchers@chromium.org,m:~postmarketos/upstreaming@lists.sr.ht,m:phone-devel@vger.kernel.org,m:linux-sound@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:devicetree@vger.kernel.org,m:dmitry.baryshkov@oss.qualcomm.com,m:luca.weiss@fairphone.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	RECEIVED_HELO_LOCALHOST(0.00)[];
+	FORGED_SENDER(0.00)[luca.weiss@fairphone.com,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_CC(0.00)[kernel.org,gmail.com,perex.cz,suse.com,chromium.org,lists.sr.ht,vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	MISSING_XM_UA(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	ALIAS_RESOLVED(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[mani@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	RCPT_COUNT_SEVEN(0.00)[11];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	TO_DN_SOME(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[luca.weiss@fairphone.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[fairphone.com:+];
+	ALIAS_RESOLVED(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	RCPT_COUNT_TWELVE(0.00)[19];
+	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,vger.kernel.org:from_smtp,qualcomm.com:email]
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	TO_DN_SOME(0.00)[]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 164F472D730
+X-Rspamd-Queue-Id: D207D72D74C
 
-On Wed, Jul 01, 2026 at 04:07:41PM +0530, Kishore Batta wrote:
-> DDR training data captured during Sahara command mode needs to be
-> accessible to userspace so it can be persisted and reused on subsequent
-> boots. Currently, the training data is stored internally in the driver
-> but has no external visibility once the Sahara channel is torn down.
-> 
-> Expose the captured DDR training data via a read-only binary sysfs
-> attribute on the MHI controller device:
-> 
-> /sys/bus/mhi/devices/<mhi_cntrl>/ddr_training_data
-> 
-> The sysfs read callback serves data directly from controller scoped storage
-> and protects access with the controller training data lock. The attribute
-> lifetime is tied to the controller device via devres, allowing the data to
-> remain readable after Sahara channel teardown and ensuring automatic
-> cleanup when controller device is removed.
-> 
+Hi Dmitry,
 
-If this training data is RO, then what is the use of exposing it to userspace?
+On Sat Jul 4, 2026 at 1:55 AM CEST, Dmitry Baryshkov wrote:
+> On Tue, May 26, 2026 at 05:29:54PM +0200, Luca Weiss wrote:
+>> With the v9 data, the controls will have completely wrong names and
+>> using wrong code paths that do not apply to v9.4.
+>>=20
+>> Note, that this will change control names so it's a breaking change.
+>
+> Is it something that we want to keep as compatible for the old DTs? Or
+> is it completely broken and unusable?
 
-- Mani
+It's definitely not completely broken since a good number of devices
+work (seemingly) correctly with it.
 
-> Userspace flow:
-> 1. For each controller device, userspace reads the ddr_training_data sysfs
->    attribute.
-> 2. If the read returns non-zero data, userspace persists it using a
->    serial specific filename (for example, mdmddr_0x<serial_no>.mbn).
-> 3. On subsequent boots, the Sahara driver attempts to load this serial
->    specific DDR training image before falling back to the default
->    training image, restoring DDR calibration data and avoiding retraining.
-> 
-> Add ABI documentation for the DDR training data sysfs attribute exposed by
-> Sahara MHI driver.
-> 
-> Signed-off-by: Kishore Batta <kishore.batta@oss.qualcomm.com>
-> ---
->  .../ABI/testing/sysfs-bus-mhi-ddr_training_data    | 19 +++++++
->  drivers/bus/mhi/host/clients/sahara/sahara.c       | 62 ++++++++++++++++++++++
->  2 files changed, 81 insertions(+)
-> 
-> diff --git a/Documentation/ABI/testing/sysfs-bus-mhi-ddr_training_data b/Documentation/ABI/testing/sysfs-bus-mhi-ddr_training_data
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..810b487b5a5fdba133d81255f9879844e3938a10
-> --- /dev/null
-> +++ b/Documentation/ABI/testing/sysfs-bus-mhi-ddr_training_data
-> @@ -0,0 +1,19 @@
-> +What:                   /sys/bus/mhi/devices/<mhi-cntrl>/ddr_training_data
-> +
-> +Date:                   March 2026
-> +
-> +Contact:                Kishore Batta <kishore.batta@oss.qualcomm.com>
-> +
-> +Description:            Contains the DDR training data for the Qualcomm device
-> +                        connected. MHI driver populates different controller
-> +                        nodes for each device. The DDR training data is exposed
-> +                        to userspace to read and save the training data file to
-> +                        the filesystem. In the subsequent boot up of the device,
-> +                        the training data is restored from host to device
-> +                        optimizing the boot up time of the device.
-> +
-> +Usage:                  Example for reading DDR training data:
-> +                        cat /sys/bus/mhi/devices/mhi0/ddr_training_data
-> +
-> +Permissions:            The file permissions are set to 0444 allowing read
-> +                        access.
-> diff --git a/drivers/bus/mhi/host/clients/sahara/sahara.c b/drivers/bus/mhi/host/clients/sahara/sahara.c
-> index 07bc743aa061dd2fa85638067d494562152474e3..72ac751c302a98448b5756c9feb438647bd0ce4b 100644
-> --- a/drivers/bus/mhi/host/clients/sahara/sahara.c
-> +++ b/drivers/bus/mhi/host/clients/sahara/sahara.c
-> @@ -273,6 +273,66 @@ static struct sahara_cntrl_training_data *sahara_cntrl_training_get(struct devic
->  	return ct;
->  }
->  
-> +static ssize_t ddr_training_data_read(struct file *filp, struct kobject *kobj,
-> +				      const struct bin_attribute *attr, char *buf,
-> +				      loff_t offset, size_t count)
-> +{
-> +	struct device *dev = kobj_to_dev(kobj);
-> +	struct sahara_cntrl_training_data *ct;
-> +	size_t available;
-> +
-> +	ct = sahara_cntrl_training_get(dev);
-> +	if (!ct)
-> +		return -ENODEV;
-> +
-> +	mutex_lock(&ct->lock);
-> +
-> +	/* No data yet or offset past end */
-> +	if (!ct->data || offset >= ct->size) {
-> +		mutex_unlock(&ct->lock);
-> +		return 0;
-> +	}
-> +
-> +	available = ct->size - offset;
-> +	count = min(count, available);
-> +	memcpy(buf, (u8 *)ct->data + offset, count);
-> +
-> +	mutex_unlock(&ct->lock);
-> +
-> +	return count;
-> +}
-> +static BIN_ATTR_RO(ddr_training_data, 0);
-> +
-> +static void sahara_sysfs_devres_release(struct device *dev, void *res)
-> +{
-> +	device_remove_bin_file(dev, &bin_attr_ddr_training_data);
-> +}
-> +
-> +static void sahara_sysfs_create(struct mhi_device *mhi_dev)
-> +{
-> +	struct device *dev = &mhi_dev->mhi_cntrl->mhi_dev->dev;
-> +	void *cookie;
-> +	int ret;
-> +
-> +	if (devres_find(dev, sahara_sysfs_devres_release, NULL, NULL))
-> +		return;
-> +
-> +	ret = device_create_bin_file(dev, &bin_attr_ddr_training_data);
-> +	if (ret) {
-> +		dev_warn(&mhi_dev->dev,
-> +			 "Failed to create DDR training sysfs node (%d)\n", ret);
-> +		return;
-> +	}
-> +
-> +	cookie = devres_alloc(sahara_sysfs_devres_release, 1, GFP_KERNEL);
-> +	if (!cookie) {
-> +		device_remove_bin_file(dev, &bin_attr_ddr_training_data);
-> +		return;
-> +	}
-> +
-> +	devres_add(dev, cookie);
-> +}
-> +
->  static int sahara_find_image(struct sahara_context *context, u32 image_id)
->  {
->  	char *fw_path;
-> @@ -1131,6 +1191,8 @@ static int sahara_mhi_probe(struct mhi_device *mhi_dev, const struct mhi_device_
->  		return ret;
->  	}
->  
-> +	sahara_sysfs_create(mhi_dev);
-> +
->  	return 0;
->  }
->  
-> 
-> -- 
-> 2.34.1
-> 
+I also tried and I could make the microphone on Fairphone 5 (QCM6490,
+Elite audio) work even with the "wrong" v9.0 config, by updating the
+control names to the v9 names instead of the correct v9.4 names.
 
--- 
-மணிவண்ணன் சதாசிவம்
+In the cover letter I've expanded more on this and the possible options
+I see.
+
+Regards
+Luca
+
+>
+>>=20
+>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+>> ---
+>>  sound/soc/codecs/lpass-tx-macro.c | 9 ++-------
+>>  1 file changed, 2 insertions(+), 7 deletions(-)
+>>=20
+
 
