@@ -1,52 +1,52 @@
-Return-Path: <linux-arm-msm+bounces-117849-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-117850-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id 1G3AG4Y9T2rIcgIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-117849-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Jul 2026 08:19:50 +0200
+	id FTgsNOw9T2rkcgIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-117850-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Jul 2026 08:21:32 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5336472D0F5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Jul 2026 08:19:49 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id C88A172D122
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Jul 2026 08:21:31 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=Xj2nAPqj;
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=HE50AB6T;
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117849-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c15:e001:75::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117849-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117850-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 104.64.211.4 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117850-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 69192301CF45
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jul 2026 06:19:30 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id E447B3014242
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jul 2026 06:21:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DFA9C3B4EAC;
-	Thu,  9 Jul 2026 06:19:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E8C1E3B775E;
+	Thu,  9 Jul 2026 06:21:24 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 969023845A4;
-	Thu,  9 Jul 2026 06:19:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A40E73ABD8E;
+	Thu,  9 Jul 2026 06:21:23 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783577966; cv=none; b=U8+dVcRTt+AGfeKmIe1bEpd6zvQQrt/PRAIM1d3pwe+FfeMMiMATij2TG+RZna/yB3sGiJ0PcdqxZkJRguAM1NbyAuIDyuMhORlKY67q1cyDDoocGNC7FK7wwluevWVNjW96gRCuJeqTscQUzR977x9Kf6lv8smrv/gD6YwXSPE=
+	t=1783578084; cv=none; b=GdzVtGqi269yqvFP/QYPeFiQWsgA5xhFSda5jholkqH3eaYKHs9ODQT7G+yE4IMWF3Xr2eEnTIZDfC2u4zhZUI1urv/RXM/Aa1zqgd2WhN6fCM8WRtFTlGUrMMY6qsNoQjXVTkBlPqyYPEJBpP/KdjbbvWTPhvqKWk3lLbiaVAI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783577966; c=relaxed/simple;
-	bh=b3vwuROwR75ZNbwPw1lMhYCu/z43/EngiIFlll/Kbuk=;
+	s=arc-20240116; t=1783578084; c=relaxed/simple;
+	bh=grAu5E6GfaofHrek+v2aH9VBcsjYoFThFsuqz8IEfOs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DlvbWjQ4PBSajEGv7pDftYYbGsoARb9p1HktjK4jgfxXvVuk7GMf8ZcOiq2GPVOgLZ4sH9BfNngdb0+9v2neKVVjjHIHwlVIXJ/KeLosJvPOQJNcC+yeWwcYYUOn+rKU6tlQOiUZuKHbjDNwRjL1pAkpsQXTFFyoQ0IPZiQVL0k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Xj2nAPqj; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C823F1F000E9;
-	Thu,  9 Jul 2026 06:19:21 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=UbwVnsG1PSi5HYQ7xX8rGG3mYHiHUteyVoiqM31wtT9frUfw/ojbxAaRYmaSLmmA5iVkbAogfKI6hqID/wkJhIRfkItnKwvMGTwfrnGi5rCqrLBav5qXe6N22SgNR39KxoTp78AboTsCMdlFy+FSFHFCC35SoX4w6XpZ3LdJ5mw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HE50AB6T; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE0951F000E9;
+	Thu,  9 Jul 2026 06:21:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783577965;
-	bh=P55A+JYorEZ78pydXyA8ExRBLDhH3TJQ6tb/oYsGNtg=;
+	s=k20260515; t=1783578083;
+	bh=avnLObW5dxVopVTUHmZJmNzAyLLSH95SmjofjaiSK/Y=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=Xj2nAPqjf+pUbZQOtAN+IvYgivepLAvWoa0qOp5yzZ2BOdLrkS8UuIF6FpCsQcBe+
-	 1eC8M6baKLuKkCqZZ2MPvzR3f4QXW/r8Krr/NtxTe4nKXibLvPFpQcDvJxl682TeqR
-	 t6uDDbIqIeAQWFDgaSv97CkmZsBhR0tQ1fMWIafYQgSxr++hJMAbo7je9qcaur9ooF
-	 QXj5EuzsAg9oToGULd0Cpe0CWyIdjp+pRaUv8Te2gvg/d8neANGebNE7FBQO20jULs
-	 V98Jb3xo1VQg01sq/Wx58lXhppSV6UKAgFekmWIDM0lUq3akc32rRjKmxsrzwg/IXd
-	 3Bt+KUwkVqAVQ==
-Date: Thu, 9 Jul 2026 08:19:17 +0200
+	b=HE50AB6T6u8vIVbIcCz6uZe8Kj3T1R1zz8vsHh11DaO/+G75qD99OSEHjxbwRnon6
+	 77VNDQDXMACMZydcRTx4NGDbjjU6OpoalrqW2ZFiW7vtb7jmazsxcfPTzv1Gr/pPwB
+	 0BdHltp8Hm0im/kYSM/tIZrcc4c35KyH+DOwx1dH9vzohc2yZUp5WfbX4Flmgd7oi6
+	 eyVvo/7wAVeX9Qy+CFYKBt+X8Reh0XPm3mGVzEUIHdLxq8MwksQpHMqVT0d5VAG5jB
+	 QyS3NXDeoLzb+y/cUAbhNX2AFcxuAA3ejWNN3dx94ugUtdGPcb9cCinT9jLA7A6QgJ
+	 Ti1eRvYeQMTAw==
+Date: Thu, 9 Jul 2026 08:21:15 +0200
 From: Manivannan Sadhasivam <mani@kernel.org>
 To: Kishore Batta <kishore.batta@oss.qualcomm.com>
 Cc: Jonathan Corbet <corbet@lwn.net>, 
@@ -54,11 +54,11 @@ Cc: Jonathan Corbet <corbet@lwn.net>,
 	Carl Vanderlip <carl.vanderlip@oss.qualcomm.com>, Oded Gabbay <ogabbay@kernel.org>, linux-doc@vger.kernel.org, 
 	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
 	mhi@lists.linux.dev
-Subject: Re: [PATCH v6 4/7] bus: mhi: Add QDU100 Sahara variant and firmware
- fallback
-Message-ID: <n45ii7ekxeefuxw2ydwzsx7lqlfczbgg6obrzmzpytl2fin7j5@vbhmrptcjvcb>
+Subject: Re: [PATCH v6 5/7] bus: mhi: Load DDR training data using device
+ serial number
+Message-ID: <ysumvduurfx5jq7r2eaa4ik24eqk5at24frvjl3zyif4wc4ojj@2bhq4vzuqlnw>
 References: <20260701-sahara_protocol_new_v2-v6-0-3a78362c4741@oss.qualcomm.com>
- <20260701-sahara_protocol_new_v2-v6-4-3a78362c4741@oss.qualcomm.com>
+ <20260701-sahara_protocol_new_v2-v6-5-3a78362c4741@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,14 +68,14 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260701-sahara_protocol_new_v2-v6-4-3a78362c4741@oss.qualcomm.com>
+In-Reply-To: <20260701-sahara_protocol_new_v2-v6-5-3a78362c4741@oss.qualcomm.com>
 X-Rspamd-Action: no action
 X-Spamd-Result: default: False [-4.66 / 15.00];
 	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
@@ -87,7 +87,7 @@ X-Spamd-Result: default: False [-4.66 / 15.00];
 	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	FORGED_SENDER(0.00)[mani@kernel.org,linux-arm-msm@vger.kernel.org];
-	TAGGED_FROM(0.00)[bounces-117849-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-117850-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
 	MISSING_XM_UA(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
@@ -100,59 +100,55 @@ X-Spamd-Result: default: False [-4.66 / 15.00];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
 	TO_DN_SOME(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,vbhmrptcjvcb:mid,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,vger.kernel.org:from_smtp]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,qualcomm.com:email,vger.kernel.org:from_smtp,2bhq4vzuqlnw:mid]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 5336472D0F5
+X-Rspamd-Queue-Id: C88A172D122
 
-On Wed, Jul 01, 2026 at 04:07:38PM +0530, Kishore Batta wrote:
-> The Sahara driver currently selects a firmware image table based on the
-> attached device, but it does not recognize QDU100 devices that expose the
-> protocol on the SAHARA MHI channel. As a result, the host cannot associate
-> QDU100 devices with the correct firmware namespace during image transfer.
+On Wed, Jul 01, 2026 at 04:07:39PM +0530, Kishore Batta wrote:
+> Devices may provide device specific DDR training data that can be reused
+> across boot to avoid retraining and reduce boot time. The Sahara driver
+> currently always falls back to the default DDR training image, even when
+> serial specific training data is available.
 > 
-> Extend the probe time variant selection to match the SAHARA MHI channel and
-> associate it with the QDU100 firmware folder. Add a firmware lookup
-> fallback for cases where an image does not have an explicit entry in the
-> device's firmware table. This allows required images to be provisioned by
-> the platform.
+> Extend the firmware loading logic for the DDR training image to first
+> attempt loading a per-device image dervied from the device serial number.
+> If the serial-specific image is not present, fall back to the existing
+> default image, preserving current behavior.
 > 
-> This change only affects devices matched on the SAHARA MHI channel and
-> does not change behavior for existing AIC100 and AIC200 devices.
+> This allows reuse of previously generated DDR training data when available,
+> while keeping the existing training flow unchanged for devices without
+> saved data or for all other firmware images.
 > 
 > Signed-off-by: Kishore Batta <kishore.batta@oss.qualcomm.com>
 > ---
->  drivers/bus/mhi/host/clients/sahara/sahara.c | 27 +++++++++++++++--
->  drivers/bus/mhi/host/pci_generic.c           | 45 ++++++++++++++++++++++++++++
->  2 files changed, 70 insertions(+), 2 deletions(-)
+>  drivers/bus/mhi/host/clients/sahara/sahara.c | 25 ++++++++++++++++++++++++-
+>  1 file changed, 24 insertions(+), 1 deletion(-)
 > 
 > diff --git a/drivers/bus/mhi/host/clients/sahara/sahara.c b/drivers/bus/mhi/host/clients/sahara/sahara.c
-> index e339c67e236af271645ca81cc517efd9eead87e4..9adbd84859073d8024ba2a5fcfa33897439d6759 100644
+> index 9adbd84859073d8024ba2a5fcfa33897439d6759..b5ca6353540dc3815db6539e7424afdb749fd3f6 100644
 > --- a/drivers/bus/mhi/host/clients/sahara/sahara.c
 > +++ b/drivers/bus/mhi/host/clients/sahara/sahara.c
-> @@ -189,6 +189,7 @@ static bool is_streaming(struct sahara_context *context)
+> @@ -59,6 +59,7 @@
+>  #define SAHARA_RESET_LENGTH		0x8
+>  #define SAHARA_MEM_DEBUG64_LENGTH	0x18
+>  #define SAHARA_MEM_READ64_LENGTH	0x18
+> +#define SAHARA_DDR_TRAINING_IMG_ID	34
 >  
->  static int sahara_find_image(struct sahara_context *context, u32 image_id)
->  {
-> +	char *fw_path;
->  	int ret;
->  
->  	if (image_id == context->active_image_id)
-> @@ -201,8 +202,28 @@ static int sahara_find_image(struct sahara_context *context, u32 image_id)
+>  struct sahara_packet {
+>  	__le32 cmd;
+> @@ -226,6 +227,27 @@ static int sahara_find_image(struct sahara_context *context, u32 image_id)
+>  		return 0;
 >  	}
 >  
->  	if (image_id >= context->table_size || !context->image_table[image_id]) {
-> -		dev_err(&context->mhi_dev->dev, "request for unknown image: %d\n", image_id);
-> -		return -EINVAL;
-> +		if (!context->fw_folder) {
-> +			dev_err(&context->mhi_dev->dev,
-> +				"Request for unknown image: %u (no fw folder)\n", image_id);
-> +			return -EINVAL;
-> +		}
+> +	/* DDR training special case: Try per-serial number file first */
+> +	if (image_id == SAHARA_DDR_TRAINING_IMG_ID && context->fw_folder) {
+> +		u32 serial_num = context->mhi_dev->mhi_cntrl->serial_number;
 > +
-> +		fw_path = kasprintf(GFP_KERNEL, "qcom/%s/%u",
-> +				    context->fw_folder, image_id);
+> +		fw_path = kasprintf(GFP_KERNEL,
+> +				    "qcom/%s/mdmddr_0x%x.mbn",
+> +				    context->fw_folder, serial_num);
 > +		if (!fw_path)
 > +			return -ENOMEM;
 > +
@@ -160,93 +156,25 @@ On Wed, Jul 01, 2026 at 04:07:38PM +0530, Kishore Batta wrote:
 > +					      fw_path,
 > +					      &context->mhi_dev->dev);
 > +		kfree(fw_path);
-> +		if (ret) {
-> +			dev_err(&context->mhi_dev->dev,
-> +				"request for unknown image: %d\n", image_id);
-> +			return -EINVAL;
+> +
+> +		if (!ret) {
+> +			context->active_image_id = image_id;
+> +			return 0;
 > +		}
-> +		context->active_image_id = image_id;
-> +		return 0;
->  	}
->  
+> +	}
+> +
 >  	/*
-> @@ -870,8 +891,10 @@ static void sahara_mhi_dl_xfer_cb(struct mhi_device *mhi_dev, struct mhi_result
->  
->  static const struct mhi_device_id sahara_mhi_match_table[] = {
->  	{ .chan = "QAIC_SAHARA", },
-> +	{ .chan = "SAHARA"},
->  	{},
->  };
-> +MODULE_DEVICE_TABLE(mhi, sahara_mhi_match_table);
->  
+>  	 * This image might be optional. The device may continue without it.
+>  	 * Only the device knows. Suppress error messages that could suggest an
+> @@ -235,7 +257,8 @@ static int sahara_find_image(struct sahara_context *context, u32 image_id)
+>  				      context->image_table[image_id],
+>  				      &context->mhi_dev->dev);
+>  	if (ret) {
+> -		dev_dbg(&context->mhi_dev->dev, "request for image id %d / file %s failed %d\n",
+> +		dev_dbg(&context->mhi_dev->dev,
+> +			"request for image id %d / file %s failed %d\n",
 
-This change should belong to a separate patch.
-
->  static struct mhi_driver sahara_mhi_driver = {
->  	.id_table = sahara_mhi_match_table,
-> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-> index 391ab146f501c6ce1c81f6138f7c491a49c2f264..82e41632afc555a53dec3d8395558ae039b33bbd 100644
-> --- a/drivers/bus/mhi/host/pci_generic.c
-> +++ b/drivers/bus/mhi/host/pci_generic.c
-> @@ -300,6 +300,43 @@ static const struct mhi_pci_dev_info mhi_qcom_qdu100_info = {
->  	.reset_on_remove = true,
->  };
->  
-> +static const char * const qdu100_image_table[] = {
-> +	[5] = "qcom/qdu100/uefi.elf",
-> +	[8] = "qcom/qdu100/qdsp6sw.mbn",
-> +	[16] = "qcom/qdu100/efs1.bin",
-> +	[17] = "qcom/qdu100/efs2.bin",
-> +	[20] = "qcom/qdu100/efs3.bin",
-> +	[23] = "qcom/qdu100/aop.mbn",
-> +	[25] = "qcom/qdu100/tz.mbn",
-> +	[29] = "qcom/qdu100/zeros_1sector.bin",
-> +	[33] = "qcom/qdu100/hypvm.mbn",
-> +	[34] = "qcom/qdu100/mdmddr.mbn",
-> +	[36] = "qcom/qdu100/multi_image_qti.mbn",
-> +	[37] = "qcom/qdu100/multi_image.mbn",
-> +	[38] = "qcom/qdu100/xbl_config.elf",
-> +	[39] = "qcom/qdu100/abl_userdebug.elf",
-> +	[40] = "qcom/qdu100/zeros_1sector.bin",
-> +	[41] = "qcom/qdu100/devcfg.mbn",
-> +	[42] = "qcom/qdu100/zeros_1sector.bin",
-> +	[45] = "qcom/qdu100/tools_l.elf",
-> +	[46] = "qcom/qdu100/Quantum.elf",
-> +	[47] = "qcom/qdu100/quest.elf",
-> +	[48] = "qcom/qdu100/xbl_ramdump.elf",
-> +	[49] = "qcom/qdu100/shrm.elf",
-> +	[50] = "qcom/qdu100/cpucp.elf",
-> +	[51] = "qcom/qdu100/aop_devcfg.mbn",
-> +	[52] = "qcom/qdu100/fw_csm_gsi_3.0.elf",
-> +	[53] = "qcom/qdu100/qdsp6sw_dtbs.elf",
-> +	[54] = "qcom/qdu100/qupv3fw.elf",
-> +};
-> +
-> +static const struct mhi_sahara_fw_table qdu100_sahara_fw = {
-> +	.image_table = qdu100_image_table,
-> +	.table_size = ARRAY_SIZE(qdu100_image_table),
-> +	.fw_folder = "qdu100",
-> +	.non_streaming = false,
-> +};
-> +
->  static const struct mhi_channel_config mhi_qcom_sa8775p_channels[] = {
->  	MHI_CHANNEL_CONFIG_UL(46, "IP_SW0", 2048, 1),
->  	MHI_CHANNEL_CONFIG_DL(47, "IP_SW0", 2048, 2),
-> @@ -1399,6 +1436,14 @@ static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
->  
->  	pci_set_drvdata(pdev, mhi_pdev);
->  
-> +	/*
-> +	 * Provide Sahara firmware mapping. Sahara consumes it via
-> +	 * mhi_dev->mhi_cntrl->sahara_fw at probe time.
-> +	 */
-> +	if (info == &mhi_qcom_qdu100_info ||
-> +	    (info->name && !strcmp(info->name, "qcom-qdu100")))
-> +		mhi_cntrl->sahara_fw = &qdu100_sahara_fw;
-> +
-
-Why are you adding QAIC MHI controller config in pci_generic driver? This driver
-only handles Modem devices.
+Spurious change.
 
 - Mani
 
