@@ -1,447 +1,208 @@
-Return-Path: <linux-arm-msm+bounces-117958-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-117959-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id Db3tOZ6LT2qCjQIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-117958-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Jul 2026 13:53:02 +0200
+	id +6lNFsyNT2pCjgIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-117959-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Jul 2026 14:02:20 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id A5DA1730ABB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Jul 2026 13:53:02 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9AFBD730C5B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Jul 2026 14:02:14 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=oxB8q5Mb;
-	dmarc=pass (policy=quarantine) header.from=kernel.org;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117958-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c09:e001:a7::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117958-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=EE+m97Gc;
+	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=GV3E8pSQ;
+	dmarc=pass (policy=reject) header.from=qualcomm.com;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117959-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 104.64.211.4 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117959-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 1FE813000FD5
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jul 2026 11:53:02 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 7A4AA3027279
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jul 2026 12:00:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A8E3B332EBB;
-	Thu,  9 Jul 2026 11:52:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 744B03F54DF;
+	Thu,  9 Jul 2026 12:00:19 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03C6641A76A
-	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Jul 2026 11:52:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C3CC40C5A0
+	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Jul 2026 12:00:17 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783597979; cv=none; b=dila9aIX8R/pjmRYRKhG9WkeUlYMx4pK0zYVXd2K81sG4RdbSKmUwqzJ3VSDg5UN4WBoc8Z031nCop0r7rMeY5Vm6R6f1zMgf+NGiT4NOSw/inbglDdBLKSNRsDca1b5uJaaRxhYd7StIxuhqgTMzT5QuqDwHrofXRLb0GCJaZg=
+	t=1783598419; cv=none; b=qVUgj7jTxiOb2evLIvuezEMteKeQVzpfhIchqgenmF1fUUZ3ODjIKnxpx2A0VxYBgpQi3OaLQmqCXbCKfxru6VcD8eyOd+nAFuEu+SzCJIlezEc39xaUBPQrmYGTc350OR42oyuGWw+HAypLizZvakQ3/d8K8wdy9/Z8i0kiHMc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783597979; c=relaxed/simple;
-	bh=OW+aH0tUatYmp7viWjlPcvAQClVXuEkcdLsxCspfdvM=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=sDmSYS5iZy2Exi77nr1jsG1hWHaat42qPg6k2QeUpgEDSo4I2teTuQqV1PguY1WbNMCU/nBg8D7QX2ceu+7HEZDqyyjHr997IiifPCpl7GkX+u1aKn3vkildF+2dpDC6kpbkTJwNq/fD6KP8kTP0f4F3WFke8wWFIqSZLb6XWHg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oxB8q5Mb; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50BBB1F00A3A;
-	Thu,  9 Jul 2026 11:52:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783597976;
-	bh=aHY/ldfaHAixa+EkxLo4xL9lijBkSr6mnJ0Fi3xSB6M=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=oxB8q5MbAEGcD6zAo1P7ZUrWn1594bieZiWWiEOhSKp08fI/DdcRU5SfBGXuvY2SQ
-	 vZ5sQw6k0+1tQGuQpU4blnmYZme2RFzWcB3XwZ/Vt5zOgByyGaiH7v6fUgocdvDFTD
-	 Y0mhjFPhE5KeCpNVLrpAMX6rhZUn/DQ1oLpqmsQmAZ3zufCVbjQ46oy62yyONrD4Om
-	 e6txFd6AawrRLMZ+U9sk7JYtK4DicLR/U+lIi8GsOMTOkxyRnI8vcSzW92SOMI3djY
-	 OiE7UrFWmsg+wU2iWAfKHCgttzj1DqW7dLbEkVRqvOfcy8i0l18HWRYuAQcdAoyO0s
-	 s5OHCktIS048Q==
-From: Maxime Ripard <mripard@kernel.org>
-Date: Thu, 09 Jul 2026 13:51:14 +0200
-Subject: [PATCH 48/60] drm/msm/mdp5: Convert to atomic_create_state
+	s=arc-20240116; t=1783598419; c=relaxed/simple;
+	bh=Fqy9N5XcnM5H+GhfkYovZ70jYQ2D5WnWKy7vsBFwWx8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=JeWUqwJRg1Q37N3CxJTbEbDlsNtWlXSHLkpm0kuMmzqqUgrwcWh2pBSH+NDVCMCheFMCEnksIs70fSrxxkv4xeuh9/7QeDLoJpl6dU6fyK/HkoH87Odz7Oc0d2vqTmfNHuelnHkwc08gWV+NdOjOlGcOOq8jfklhkq1RrMHNJr8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=EE+m97Gc; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=GV3E8pSQ; arc=none smtp.client-ip=205.220.168.131
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 669BN4BW1450391
+	for <linux-arm-msm@vger.kernel.org>; Thu, 9 Jul 2026 12:00:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	WIfOtZbZMrMEoS2OviVK9Y4/CgDoqO5R7WiKMYF1faE=; b=EE+m97GccjqkrB7p
+	GhDSgb/jK0FjMLAMWVpctqFk35ljik7U/l0KauDjVNxczmKjMR+xiK2/YJRltCgJ
+	1xX6wN5oV9whD9Zb6g0rC34mH7uOo9ij7hlZG84M9H4cH/+5xaTcUafLmKMXZ+23
+	m+FXKpBLHNzrp6JRAI0nX41JEJlYzJsu5Q7UcpnHRYXILDqjJwhfstpN+JSX3IhH
+	XYpAW8IriATc3HiRc/x2ohynbiueti+E4PCvMGZC3GvJlJeWGKrqbo/RUJ7h8f2/
+	KaF0TTc5Y1Njw2Ckkli0xQ0EgcII28T/iXwNf2UFqgBjOJisovBhVcnsxRGkPe2L
+	+DOVEA==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fa55vhrnt-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 09 Jul 2026 12:00:15 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-51bfd1772d8so3874011cf.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Jul 2026 05:00:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1783598414; x=1784203214; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=WIfOtZbZMrMEoS2OviVK9Y4/CgDoqO5R7WiKMYF1faE=;
+        b=GV3E8pSQhHPR7zhO2QrY+q9cRVevt0L52YS53r4hqfnnwIdx2Lgh3W9l4Y419/2TkI
+         G3zflpJVIMW8aWRhUQKJoZNrcWlm8M/EJpxkgZxyGQ4jsef4pYTbbWwqy1k4XnAcZKZI
+         2yTdj5W9RIIopJYqVDSOLekksgnX85aKJ5JInPht0KdrdYEKd0ZIDDpGgR40dNeLjygM
+         Cfk2E7GXIubBYjZSoTVQSpeToVDnT20lMA2Hf9yQ7GOfly20342SpkRK/Mbp6lA4XRu+
+         zB2P5yELGb7q9IpiBeRGOIaW+iEvHSBsYwDDhFq3Tdxqx8UoBsIzE1G2bMCq97ZlLsMu
+         5cFA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783598414; x=1784203214;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=WIfOtZbZMrMEoS2OviVK9Y4/CgDoqO5R7WiKMYF1faE=;
+        b=pMx8APTOYb4KvceOKkaFGIuUwRK8ligyXTA6CPb/wP1t+xsvIDdRd0J5kvt2lIP/8Q
+         yGSc97gRGz5C6bcUAVNMPi+gJ+UDqRMu95HLCUw75EQAWONOt+MAyKwWMqpl/d7Dez8O
+         8gIRPT8oy8f4+gIiS1qLtobvuIVz0XXg8xcytoNkbL164R6ojtmLG+arFsvR3a5eeVOb
+         49WuRzfvv18NC6yrtPEchF76JxWLHuW1KriRQFwpMdzY+wCMJ0pIudy6bfqi224qt31C
+         oufn7QdqE0d/PneMIpXpPr31jGBtOh7MW9O9ilXgDSdkBtHQEx6RSM0ZDaPHcnHm+YPY
+         TiAg==
+X-Forwarded-Encrypted: i=1; AHgh+RoY/A8C/K1q9o2fQI0yY2YfyGmSPwQuzsXEaCmemWa7ggD7XYAIuDLZAJMv7ypZfJJkEals5r1g9GMpA54D@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz172d2tLbf45f0QJ5hsiWaLrq1nlzMsX1l1z3bTkxd+I9+OFhE
+	4k1FQKfHOOLMvc8nvoiYp55F4sY0TIlPNahyUjSCZAs09seC2QczWmOzgr25VG0HIiy83OWUo7P
+	qz3mlg9J7CKbvbYvCExRVrVYbarNRLj3VrbKCBXmMdYQQcF7sCaDZ7GsPj9Zz1b/mxF09
+X-Gm-Gg: AfdE7cnUP8f0kjC0RjFl7aVFAnQ9NzvojkwzsVa/kefT7AMx8PH7ou15hb5JEbtAy9J
+	R4v9LpotJZV8HbMH8N/TKvJcA6YaUYK2+LAX+11yiOmiY5SJxoq4BXB6omlqmrpfBpzXF33mFLy
+	j+57sUPHuft7rJhSynHbjpOkvTvsqRjzj6E9XFEkkEIww06RzznC2XGwTzHZ6xDtaXv+jRXVNQz
+	Ri2VDaGkzEP6/nfyzGVtjr4QKdErvHnadGsirbq5vY5bZIH3du1rH+opKrpw4RuZha2R4Cfns0L
+	C6PGTU5CdseD4LJFBD5oFpwJ6m8RlOxY4rI56PKCfdXFOfJJl9W18HX/Jr/jmsSGWKHZErK5oP1
+	hDi4IgqRlNrASBh15Pb1Vw5w0SfpgcEBefyA=
+X-Received: by 2002:ac8:5a4e:0:b0:51c:4ffa:9b71 with SMTP id d75a77b69052e-51c967b4132mr30171241cf.6.1783598413712;
+        Thu, 09 Jul 2026 05:00:13 -0700 (PDT)
+X-Received: by 2002:ac8:5a4e:0:b0:51c:4ffa:9b71 with SMTP id d75a77b69052e-51c967b4132mr30170781cf.6.1783598413095;
+        Thu, 09 Jul 2026 05:00:13 -0700 (PDT)
+Received: from [192.168.120.193] ([178.235.128.140])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c15ad821ae3sm464086766b.5.2026.07.09.05.00.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 09 Jul 2026 05:00:12 -0700 (PDT)
+Message-ID: <8db91103-fda4-4b24-a88d-a2901968e0d9@oss.qualcomm.com>
+Date: Thu, 9 Jul 2026 14:00:09 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/4] clk: qcom: Add Audio Core clock controller support
+ on Qualcomm Shikra SoC
+To: Imran Shaik <imran.shaik@oss.qualcomm.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd
+ <sboyd@kernel.org>, Brian Masney <bmasney@redhat.com>,
+        Philipp Zabel <p.zabel@pengutronix.de>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+Cc: Ajit Pandey <ajit.pandey@oss.qualcomm.com>,
+        Taniya Das <taniya.das@oss.qualcomm.com>,
+        Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+References: <20260708-shikra-audiocorecc-v2-0-b320d822cdd0@oss.qualcomm.com>
+ <20260708-shikra-audiocorecc-v2-3-b320d822cdd0@oss.qualcomm.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20260708-shikra-audiocorecc-v2-3-b320d822cdd0@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260709-drm-no-more-plane-reset-v1-48-302d986fe5f0@kernel.org>
-References: <20260709-drm-no-more-plane-reset-v1-0-302d986fe5f0@kernel.org>
-In-Reply-To: <20260709-drm-no-more-plane-reset-v1-0-302d986fe5f0@kernel.org>
-To: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
- Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, 
- Simona Vetter <simona@ffwll.ch>
-Cc: dri-devel@lists.freedesktop.org, Maxime Ripard <mripard@kernel.org>, 
- abhinav.kumar@linux.dev, freedreno@lists.freedesktop.org, 
- jesszhan0024@gmail.com, linux-arm-msm@vger.kernel.org, lumag@kernel.org, 
- marijn.suijten@somainline.org, robin.clark@oss.qualcomm.com, 
- sean@poorly.run
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=7120; i=mripard@kernel.org;
- h=from:subject:message-id; bh=OW+aH0tUatYmp7viWjlPcvAQClVXuEkcdLsxCspfdvM=;
- b=owGbwMvMwCmsHn9OcpHtvjLG02pJDFn+3XLR/roHLZ/Z1URZ7kjlXJzp+uqQ1Lcn4h/Z5ucc5
- 9dVnabdMZWFQZiTQVZMkeWJTNjp5e2LqxzsV/6AmcPKBDKEgYtTACay0o2x4W192X2DdzMEHT8Z
- BJtorsu7UT+x9F7QC7909knehlYlTEoXZafeO7HTQodnW16tqTQTY33hCzGrX5HH0v+43vzPujx
- LdD/n120rvzrf+HUjp//cs/v3QjecSDuco7GWU9rG4FKniAkA
-X-Developer-Key: i=mripard@kernel.org; a=openpgp;
- fpr=BE5675C37E818C8B5764241C254BCFC56BF6CE8D
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA5MDExNSBTYWx0ZWRfX6jF0n2bpSPM3
+ YgpD1RZYHormcrrR1qdN5eUwPuq3I6NmBzyhFg9Aw/RNCMGfjEE2nZpM5+WciPSYt2hM+U/tscC
+ PEWLioxr5349mZkWXtVdfcPeq2nvLC2H6m0j/p/uxcD8s7Q3UsGQXHYmMSNGYoMuHPXRG7FOuca
+ YPgd+eLIytL5J1eTHXVRl8g/jNeXTUmV9fhRFoklQB2Sh8pHLhHXCsBZR9FEMCNAD0e8IBwDuib
+ OTl0yS6l2J4E0DBU6wcbbC7keEdX/8CrarzdXH92/g10XCoi3r/v3qkmpQUzC1eHoWATFVuebed
+ KHP12kvMv4HsTU2EywUoVHBA19H1iatM7V3d/lQVpGwnOlof0aaT0u3HsYYMVKy4d3hjD3PF4ts
+ nuj6moNqoEpa6uUYN+PK0QnQsD9n1IIkU3rSIV9NYKVz7ONncU4k0n5aq/+JQ4srdU4Ylc4E0JL
+ QWVxRSI1T9GWbA15B3g==
+X-Authority-Analysis: v=2.4 cv=KfDidwYD c=1 sm=1 tr=0 ts=6a4f8d4f cx=c_pps
+ a=WeENfcodrlLV9YRTxbY/uA==:117 a=PRfkaYvzSr8QmIIGAkY2Sg==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=EUspDBNiAAAA:8 a=TegkrtGQps0JBSonG1sA:9 a=QEXdDO2ut3YA:10
+ a=kacYvNCVWA4VmyqE58fU:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA5MDExNSBTYWx0ZWRfX0bLe04+38gC+
+ BThnb9ys21iTOjT3xdQK07zl7oyo0s2Z8kecGX9NLGKM/28zR/IE4//bODQSumoiNhXWDR3ewwm
+ aN+h8D0oPm27KepfFm4qnAT1T6Hu9OM=
+X-Proofpoint-ORIG-GUID: YPPh67TMGiVkXU3VUTvQHJ0beiuqxMRt
+X-Proofpoint-GUID: YPPh67TMGiVkXU3VUTvQHJ0beiuqxMRt
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-09_02,2026-07-09_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 impostorscore=0 lowpriorityscore=0 phishscore=0 malwarescore=0
+ adultscore=0 clxscore=1015 priorityscore=1501 spamscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607090115
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-5.16 / 15.00];
-	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-117959-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_RECIPIENTS(0.00)[m:maarten.lankhorst@linux.intel.com,m:tzimmermann@suse.de,m:airlied@gmail.com,m:simona@ffwll.ch,m:dri-devel@lists.freedesktop.org,m:mripard@kernel.org,m:abhinav.kumar@linux.dev,m:freedreno@lists.freedesktop.org,m:jesszhan0024@gmail.com,m:linux-arm-msm@vger.kernel.org,m:lumag@kernel.org,m:marijn.suijten@somainline.org,m:robin.clark@oss.qualcomm.com,m:sean@poorly.run,s:lists@lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER(0.00)[mripard@kernel.org,linux-arm-msm@vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[14];
-	FREEMAIL_TO(0.00)[linux.intel.com,suse.de,gmail.com,ffwll.ch];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,qualcomm.com:email,qualcomm.com:dkim,oss.qualcomm.com:from_mime,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns];
+	FORGED_SENDER(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[17];
+	FORGED_RECIPIENTS(0.00)[m:imran.shaik@oss.qualcomm.com,m:andersson@kernel.org,m:mturquette@baylibre.com,m:sboyd@kernel.org,m:bmasney@redhat.com,m:p.zabel@pengutronix.de,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:konradybcio@kernel.org,m:ajit.pandey@oss.qualcomm.com,m:taniya.das@oss.qualcomm.com,m:jagadeesh.kona@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:linux-clk@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:devicetree@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	FORWARDED(0.00)[lists@lfdr.de];
-	TAGGED_FROM(0.00)[bounces-117958-lists,linux-arm-msm=lfdr.de];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	TO_DN_SOME(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	ALIAS_RESOLVED(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
+	RSPAMD_EMAILBL_FAIL(0.00)[linux-arm-msm@vger.kernel.org:query timed out];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[mripard@kernel.org,linux-arm-msm@vger.kernel.org];
-	FREEMAIL_CC(0.00)[lists.freedesktop.org,kernel.org,linux.dev,gmail.com,vger.kernel.org,somainline.org,oss.qualcomm.com,poorly.run];
-	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	ALIAS_RESOLVED(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	TO_DN_SOME(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,somainline.org:email,qualcomm.com:email,linux.dev:email,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,poorly.run:email]
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: A5DA1730ABB
+X-Rspamd-Queue-Id: 9AFBD730C5B
 
-The plane reset implementation creates a custom state
-subclass, but only initializes a pristine state without resetting any
-hardware. This is equivalent to what atomic_create_state expects.
-Convert to it.
+On 7/8/26 8:25 PM, Imran Shaik wrote:
+> Add support for Audio Core Clock Controller (AUDIOCORECC) and Audio Core
+> CSR resets on Qualcomm Shikra SoC.
+> 
+> Signed-off-by: Imran Shaik <imran.shaik@oss.qualcomm.com>
+> ---
 
-The conversion was done using the following Coccinelle semantic patch:
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-@@
-identifier funcs;
-symbol drm_atomic_helper_plane_reset;
-symbol drm_atomic_helper_plane_create_state;
-@@
-
-struct drm_plane_funcs funcs = {
-  ...,
-- .reset = drm_atomic_helper_plane_reset,
-+ .atomic_create_state = drm_atomic_helper_plane_create_state,
-  ...,
-};
-
-@match_struct_reset@
-identifier funcs, reset_func;
-@@
-struct drm_plane_funcs funcs = {
-    ...,
-    .reset = reset_func,
-    ...,
-};
-
-@reset_uses_helpers depends on match_struct_reset@
-identifier match_struct_reset.reset_func;
-@@
-
- void reset_func(...)
- {
- 	<+...
-(
- 	__drm_atomic_helper_plane_reset(...);
-|
-	__drm_gem_reset_shadow_plane(...);
-)
- 	...+>
- }
-
-@match_struct_destroy@
-identifier funcs, destroy_func;
-@@
-struct drm_plane_funcs funcs = {
-    ...,
-    .atomic_destroy_state = destroy_func,
-    ...,
-};
-
-@script:python renamed_func@
-old_name << match_struct_reset.reset_func;
-new_name;
-@@
-if old_name.endswith("_reset"):
-    coccinelle.new_name = old_name.replace("_reset", "_create_state")
-else:
-    coccinelle.new_name = old_name
-
-@update_struct depends on match_struct_reset && reset_uses_helpers@
-identifier match_struct_reset.funcs, match_struct_reset.reset_func;
-identifier renamed_func.new_name;
-@@
-struct drm_plane_funcs funcs = {
-    ...,
--   .reset = reset_func,
-+   .atomic_create_state = new_name,
-    ...,
-};
-
-@drop_destroy depends on update_struct && match_struct_destroy@
-identifier match_struct_reset.reset_func;
-identifier match_struct_destroy.destroy_func;
-identifier container_func;
-identifier P;
-symbol drm_atomic_helper_plane_destroy_state;
-symbol __drm_atomic_helper_plane_destroy_state;
-@@
-
- void reset_func(struct drm_plane *P)
- {
- 	...
-(
--	if (P->state) {
-- 		<+...
-(
--		drm_atomic_helper_plane_destroy_state(P, P->state);
-|
--		__drm_atomic_helper_plane_destroy_state(P->state);
-|
--		P->funcs->atomic_destroy_state(P, P->state);
-|
--		destroy_func(P, P->state);
-)
-- 		...+>
-- 	}
-|
--	drm_WARN_ON_ONCE(P->dev, P->state);
-|
--	WARN_ON(P->state);
-)
- 	...
-(
--	kfree(P->state);
-|
--	kfree(container_func(P->state));
-|
- 	// kfree is optional
-)
-(
--	P->state = NULL;
-|
- 	// plane->state clearing is optional
-)
- 	...
- }
-
-@drop_destroy_mtk depends on update_struct@
-identifier P;
-symbol __drm_atomic_helper_plane_destroy_state;
-symbol to_mtk_plane_state;
-@@
-
- void mtk_plane_reset(struct drm_plane *P)
- {
- 	...
--	if (P->state) {
--		__drm_atomic_helper_plane_destroy_state(P->state);
--		...
--	} else {
- 		...
--	}
- 	...
- }
-
-@transform_nv50_wndw depends on update_struct@
-identifier S;
-@@
-
- void nv50_wndw_reset(...)
- {
- 	...
--	if (WARN_ON(!(S = kzalloc_obj(*S))))
-+	S = kzalloc_obj(*S);
-+	if (WARN_ON(!S))
- 		return;
- 	...
- }
-
-@transform_kzalloc depends on update_struct@
-identifier match_struct_reset.reset_func;
-identifier P, S;
-statement ST;
-statement list STL;
-@@
-
- void reset_func(struct drm_plane *P)
- {
- 	<...
- 	S = kzalloc_obj(*S);
-(
--	if (S)
--	{
--		STL
--	}
-+	if (!S) return;
-+
-+	STL
-|
--	if (S) ST
-+	if (!S) return;
-+
-+	ST
-)
-	...>
- }
-
-@transform_body depends on update_struct@
-identifier match_struct_reset.reset_func;
-identifier renamed_func.new_name;
-identifier S, P;
-expression PS;
-@@
-- void reset_func(struct drm_plane *P)
-+ struct drm_plane_state *new_name(struct drm_plane *P)
-{
-	...
- 	S = kzalloc_obj(*S);
-	...
-(
- 	if (!S) {
-		...
--		return;
-+		return ERR_PTR(-ENOMEM);
- 	}
-|
- 	if (WARN_ON(!S)) {
-		...
--		return;
-+		return ERR_PTR(-ENOMEM);
- 	}
-|
- 	if (S == NULL) {
- 		...
--		return;
-+		return ERR_PTR(-ENOMEM);
- 	}
-)
-	...
-(
--	__drm_atomic_helper_plane_reset(P, PS);
-+	__drm_atomic_helper_plane_state_init(PS, P);
-|
--	__drm_gem_reset_shadow_plane(P, PS);
-+	__drm_gem_shadow_plane_state_init(P, PS);
-)
-	...
-}
-
-@update_early_return depends on update_struct@
-identifier match_struct_reset.reset_func;
-identifier renamed_func.new_name;
-identifier P;
-expression PS;
-@@
- struct drm_plane_state *new_name(struct drm_plane *P)
-{
-	<+...
--	return;
-+	return ERR_PTR(-EINVAL);
-	...+>
-}
-
-@update_return_plane depends on update_struct@
-identifier match_struct_reset.reset_func;
-identifier renamed_func.new_name;
-identifier P;
-expression PS;
-@@
- struct drm_plane_state *new_name(struct drm_plane *P)
-{
-	...
- 	__drm_atomic_helper_plane_state_init(PS, P);
-	...
-+
-+	return PS;
-}
-
-@update_return_shadow depends on update_struct@
-identifier renamed_func.new_name;
-identifier P;
-expression PS;
-@@
- struct drm_plane_state *new_name(struct drm_plane *P)
-{
-	...
- 	__drm_gem_shadow_plane_state_init(P, PS);
-	...
-+
-+	return &PS->base;
-}
-
-Signed-off-by: Maxime Ripard <mripard@kernel.org>
----
-Cc: abhinav.kumar@linux.dev
-Cc: freedreno@lists.freedesktop.org
-Cc: jesszhan0024@gmail.com
-Cc: linux-arm-msm@vger.kernel.org
-Cc: lumag@kernel.org
-Cc: marijn.suijten@somainline.org
-Cc: robin.clark@oss.qualcomm.com
-Cc: sean@poorly.run
----
- drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c | 16 ++++++----------
- 1 file changed, 6 insertions(+), 10 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
-index 841f444a8d68..7e878c698247 100644
---- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
-+++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
-@@ -78,23 +78,19 @@ mdp5_plane_atomic_print_state(struct drm_printer *p,
- 	drm_printf(p, "\tnormalized_zpos=%u\n", pstate->base.normalized_zpos);
- 	drm_printf(p, "\talpha=%u\n", pstate->base.alpha);
- 	drm_printf(p, "\tstage=%s\n", stage2name(pstate->stage));
- }
- 
--static void mdp5_plane_reset(struct drm_plane *plane)
-+static struct drm_plane_state *mdp5_plane_create_state(struct drm_plane *plane)
- {
- 	struct mdp5_plane_state *mdp5_state;
--
--	if (plane->state)
--		__drm_atomic_helper_plane_destroy_state(plane->state);
--
--	kfree(to_mdp5_plane_state(plane->state));
--	plane->state = NULL;
- 	mdp5_state = kzalloc_obj(*mdp5_state);
- 	if (!mdp5_state)
--		return;
--	__drm_atomic_helper_plane_reset(plane, &mdp5_state->base);
-+		return ERR_PTR(-ENOMEM);
-+	__drm_atomic_helper_plane_state_init(&mdp5_state->base, plane);
-+
-+	return &mdp5_state->base;
- }
- 
- static struct drm_plane_state *
- mdp5_plane_duplicate_state(struct drm_plane *plane)
- {
-@@ -124,11 +120,11 @@ static void mdp5_plane_destroy_state(struct drm_plane *plane,
- }
- 
- static const struct drm_plane_funcs mdp5_plane_funcs = {
- 		.update_plane = drm_atomic_helper_update_plane,
- 		.disable_plane = drm_atomic_helper_disable_plane,
--		.reset = mdp5_plane_reset,
-+		.atomic_create_state = mdp5_plane_create_state,
- 		.atomic_duplicate_state = mdp5_plane_duplicate_state,
- 		.atomic_destroy_state = mdp5_plane_destroy_state,
- 		.atomic_print_state = mdp5_plane_atomic_print_state,
- };
- 
-
--- 
-2.54.0
-
+Konrad
 
