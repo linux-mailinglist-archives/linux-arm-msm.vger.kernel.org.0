@@ -1,183 +1,201 @@
-Return-Path: <linux-arm-msm+bounces-117850-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-117851-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id FTgsNOw9T2rkcgIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-117850-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Jul 2026 08:21:32 +0200
+	id Q08ZOMQ+T2occwIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-117851-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Jul 2026 08:25:08 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id C88A172D122
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Jul 2026 08:21:31 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5149E72D190
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Jul 2026 08:25:08 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=HE50AB6T;
-	dmarc=pass (policy=quarantine) header.from=kernel.org;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117850-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 104.64.211.4 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117850-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=gmail.com header.s=20251104 header.b=huaiW3w0;
+	dmarc=pass (policy=none) header.from=gmail.com;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117851-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117851-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id E447B3014242
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jul 2026 06:21:28 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 8CB4A303F24B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jul 2026 06:23:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E8C1E3B775E;
-	Thu,  9 Jul 2026 06:21:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 989563BED44;
+	Thu,  9 Jul 2026 06:23:21 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A40E73ABD8E;
-	Thu,  9 Jul 2026 06:21:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF3D73BED31
+	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Jul 2026 06:23:18 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783578084; cv=none; b=GdzVtGqi269yqvFP/QYPeFiQWsgA5xhFSda5jholkqH3eaYKHs9ODQT7G+yE4IMWF3Xr2eEnTIZDfC2u4zhZUI1urv/RXM/Aa1zqgd2WhN6fCM8WRtFTlGUrMMY6qsNoQjXVTkBlPqyYPEJBpP/KdjbbvWTPhvqKWk3lLbiaVAI=
+	t=1783578201; cv=none; b=HwVVkH5fP9QpbC8ZQ5PNx7Adx5mp9oknebdVsp+sbt6bYI2SBzHh0ZR3RZ4tPcpiQFospBdhbtxUqTt+t1MrC1q2ZTFPmp8+LqDnLlQOd1fOgkpNrHxr050msYLAeEkdzztaFHgdgOKb7g6hDf0OPA48iXDvGt3ZXzA2EoUPEtg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783578084; c=relaxed/simple;
-	bh=grAu5E6GfaofHrek+v2aH9VBcsjYoFThFsuqz8IEfOs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UbwVnsG1PSi5HYQ7xX8rGG3mYHiHUteyVoiqM31wtT9frUfw/ojbxAaRYmaSLmmA5iVkbAogfKI6hqID/wkJhIRfkItnKwvMGTwfrnGi5rCqrLBav5qXe6N22SgNR39KxoTp78AboTsCMdlFy+FSFHFCC35SoX4w6XpZ3LdJ5mw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HE50AB6T; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE0951F000E9;
-	Thu,  9 Jul 2026 06:21:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783578083;
-	bh=avnLObW5dxVopVTUHmZJmNzAyLLSH95SmjofjaiSK/Y=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=HE50AB6T6u8vIVbIcCz6uZe8Kj3T1R1zz8vsHh11DaO/+G75qD99OSEHjxbwRnon6
-	 77VNDQDXMACMZydcRTx4NGDbjjU6OpoalrqW2ZFiW7vtb7jmazsxcfPTzv1Gr/pPwB
-	 0BdHltp8Hm0im/kYSM/tIZrcc4c35KyH+DOwx1dH9vzohc2yZUp5WfbX4Flmgd7oi6
-	 eyVvo/7wAVeX9Qy+CFYKBt+X8Reh0XPm3mGVzEUIHdLxq8MwksQpHMqVT0d5VAG5jB
-	 QyS3NXDeoLzb+y/cUAbhNX2AFcxuAA3ejWNN3dx94ugUtdGPcb9cCinT9jLA7A6QgJ
-	 Ti1eRvYeQMTAw==
-Date: Thu, 9 Jul 2026 08:21:15 +0200
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Kishore Batta <kishore.batta@oss.qualcomm.com>
-Cc: Jonathan Corbet <corbet@lwn.net>, 
-	Shuah Khan <skhan@linuxfoundation.org>, Jeff Hugo <jeff.hugo@oss.qualcomm.com>, 
-	Carl Vanderlip <carl.vanderlip@oss.qualcomm.com>, Oded Gabbay <ogabbay@kernel.org>, linux-doc@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	mhi@lists.linux.dev
-Subject: Re: [PATCH v6 5/7] bus: mhi: Load DDR training data using device
- serial number
-Message-ID: <ysumvduurfx5jq7r2eaa4ik24eqk5at24frvjl3zyif4wc4ojj@2bhq4vzuqlnw>
-References: <20260701-sahara_protocol_new_v2-v6-0-3a78362c4741@oss.qualcomm.com>
- <20260701-sahara_protocol_new_v2-v6-5-3a78362c4741@oss.qualcomm.com>
+	s=arc-20240116; t=1783578201; c=relaxed/simple;
+	bh=DztzhJvSAMQjQSAwxbn1gzxvsM7T2uHdgcxGnlsaFEA=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=cFHZeLXLA26+TryBZkKWlNoP7rfajDTk6jBn6TV9k0b5CwZDr5cingDe6lu0t7Y47AXI4IWgRhhWJX5jBN8iZ63KRbEJAkEgbXppVftUYh7hcqigkxWCB4Nyw7miOdP9xrJLyc+QgIsCbw+MiIgCwgR0GXrTjqBS7zh3/gLncW0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=huaiW3w0; arc=none smtp.client-ip=209.85.214.176
+Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-2cc97653887so16912935ad.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jul 2026 23:23:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1783578198; x=1784182998; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=F+zTyO38kFOW42Ye072aTRdmVTUuZduS9Yzytq9n62s=;
+        b=huaiW3w0qHN75iOi7GjmJtZ7kBq8B/c5H+Zjq/w3OdJPQXjDT0nUQIb6dN8BHELDLB
+         RH99DVJLl0EcSbN+asB+tuUVJLImjCgj82Lk31Y1TVZBHoYFzHwbq0BfPXc3X+dvOQmT
+         ScTp/bahZw19YuUtLalR+SkImI0Rp0qwKohvl+H3fxGK/qq8/Mvb9wWn49/oLXZzAFrR
+         q7fvN9qauGH93DFrQ0GlgE2h5eoe8cXcpQ+DHoYPUPTBCRIu5lsfb78kqqGKNJ6ugeiJ
+         rlkrtQtfhGlLzAO3oztIDZMi3jwfOr84O+2+Bs/9OaboDoU3nfYW8y4PYB5jTD8RnVoj
+         +4Iw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783578198; x=1784182998;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=F+zTyO38kFOW42Ye072aTRdmVTUuZduS9Yzytq9n62s=;
+        b=K1ihH2gS90t+Vx6Sq9H+mlZ3DgftzRrvYN61leclzg4lSrZp1cpiKnOF7nUI2SBK3k
+         NmsQJxyFOBxHRWUcNEWhqVn9rYKcEgaLp1VJeb73IoqYT7Ki4UPL7VRgLASDBSnHxA6F
+         cAP8E3xbfI2rdAXb9GogffKwutyftgyik4PVx6E7WQy8fLj0LASp3D5vF71BgT3ubfwj
+         J7Vbf9zlY6AvOCZJsTWUCxWI1Kt7FtZhmlVzbrShNnXRr1YK3f1EXCbYtqgRxv0Vr4bl
+         zrMF/g6dZrAy2Bl8+l/qjVBfReBSZdhO7u15nZSJVZlN74yfhpY82Tu3C3ScnDtRyRJW
+         +hEw==
+X-Gm-Message-State: AOJu0YyU9u2Y/8gZov+4m5foNf1jdOnz4GasEWG/sGVWMab+GPSJbjKU
+	dPddcdMPYshNhRtQf6uiuGXKXctPGRYT2n0+bXj4M4msiQlbAOhn+ZNK
+X-Gm-Gg: AfdE7clJoppbVzZ+FEtApl4k6FJI6Tl4pP7NKqvbjuN7E3dPfAAIxiZD28dumGqjwUH
+	cE1jaBe0eZeof5JJu++DNT64MahyO90qpx0LAw7bmNJaHZDpHtkeA36PiCq5Zp/Kr0XcrOZsGw+
+	fi+9pdXoPWRBAyfun8fIjs9xsag7nOnLSHu0Wht8heewDfrVp/IjfuyLvV46YaFNXqUfbLN9UF1
+	u60KU/LHuBngMAU52WwLj8yiGCmgfcQd6KuEX8q9ZlvaV5G6FJIAIC6RWS/XNS/k0ihlAaOtTJE
+	7ucyCulKsjRR+fuTxWjctBN2usaL/AH/4XAtUTogizeIhjVLs/9mQbrvXkfxKXLIwe+AHTAN6pK
+	Ar0wZlDJCGBDyd73dftwaTIzc7XIrNv0xsTHbgQ0OdRzU8hIptwC9zYDE1Rk3i5D1NxP6r8X8VE
+	DlyWHMmpFrYLlJexd/8vLWYDRRbhqCKonQ
+X-Received: by 2002:a17:903:230c:b0:2c9:fa31:84f9 with SMTP id d9443c01a7336-2ccea2d807cmr62949145ad.5.1783578197580;
+        Wed, 08 Jul 2026 23:23:17 -0700 (PDT)
+Received: from haichao.tail057a43.ts.net ([2001:da8:e000:1206:ea9b:46f2:6d0c:46c7])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ccc9d1e26esm38741495ad.44.2026.07.08.23.23.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 08 Jul 2026 23:23:16 -0700 (PDT)
+From: Ruoyu Wang <ruoyuw560@gmail.com>
+To: robdclark@gmail.com,
+	quic_abhinavk@quicinc.com,
+	dmitry.baryshkov@linaro.org,
+	sean@poorly.run,
+	marijn.suijten@somainline.org,
+	airlied@gmail.com,
+	simona@ffwll.ch
+Cc: linux-arm-msm@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org,
+	linux-kernel@vger.kernel.org,
+	Ruoyu Wang <ruoyuw560@gmail.com>
+Subject: [PATCH] drm/msm: Only fini scheduler after successful init
+Date: Thu,  9 Jul 2026 14:23:09 +0800
+Message-ID: <20260709062309.4168362-1-ruoyuw560@gmail.com>
+X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260701-sahara_protocol_new_v2-v6-5-3a78362c4741@oss.qualcomm.com>
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-4.66 / 15.00];
-	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	MID_CONTAINS_FROM(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	R_MISSING_CHARSET(0.50)[];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	FREEMAIL_FROM(0.00)[gmail.com];
 	RCVD_TLS_LAST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	FORWARDED(0.00)[lists@lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:kishore.batta@oss.qualcomm.com,m:corbet@lwn.net,m:skhan@linuxfoundation.org,m:jeff.hugo@oss.qualcomm.com,m:carl.vanderlip@oss.qualcomm.com,m:ogabbay@kernel.org,m:linux-doc@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:dri-devel@lists.freedesktop.org,m:mhi@lists.linux.dev,s:lists@lfdr.de];
-	RCVD_COUNT_THREE(0.00)[4];
+	FREEMAIL_CC(0.00)[vger.kernel.org,lists.freedesktop.org,gmail.com];
+	TAGGED_FROM(0.00)[bounces-117851-lists,linux-arm-msm=lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:robdclark@gmail.com,m:quic_abhinavk@quicinc.com,m:dmitry.baryshkov@linaro.org,m:sean@poorly.run,m:marijn.suijten@somainline.org,m:airlied@gmail.com,m:simona@ffwll.ch,m:linux-arm-msm@vger.kernel.org,m:dri-devel@lists.freedesktop.org,m:freedreno@lists.freedesktop.org,m:linux-kernel@vger.kernel.org,m:ruoyuw560@gmail.com,s:lists@lfdr.de];
+	FREEMAIL_TO(0.00)[gmail.com,quicinc.com,linaro.org,poorly.run,somainline.org,ffwll.ch];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_SENDER(0.00)[mani@kernel.org,linux-arm-msm@vger.kernel.org];
-	TAGGED_FROM(0.00)[bounces-117850-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	MISSING_XM_UA(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER(0.00)[ruoyuw560@gmail.com,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[12];
+	FORWARDED(0.00)[lists@lfdr.de];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	ALIAS_RESOLVED(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[mani@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	RCPT_COUNT_SEVEN(0.00)[11];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
 	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[ruoyuw560@gmail.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[gmail.com:+];
+	RCVD_COUNT_FIVE(0.00)[5];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	ALIAS_RESOLVED(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,qualcomm.com:email,vger.kernel.org:from_smtp,2bhq4vzuqlnw:mid]
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,vger.kernel.org:from_smtp]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: C88A172D122
+X-Rspamd-Queue-Id: 5149E72D190
 
-On Wed, Jul 01, 2026 at 04:07:39PM +0530, Kishore Batta wrote:
-> Devices may provide device specific DDR training data that can be reused
-> across boot to avoid retraining and reduce boot time. The Sahara driver
-> currently always falls back to the default DDR training image, even when
-> serial specific training data is available.
-> 
-> Extend the firmware loading logic for the DDR training image to first
-> attempt loading a per-device image dervied from the device serial number.
-> If the serial-specific image is not present, fall back to the existing
-> default image, preserving current behavior.
-> 
-> This allows reuse of previously generated DDR training data when available,
-> while keeping the existing training flow unchanged for devices without
-> saved data or for all other firmware images.
-> 
-> Signed-off-by: Kishore Batta <kishore.batta@oss.qualcomm.com>
-> ---
->  drivers/bus/mhi/host/clients/sahara/sahara.c | 25 ++++++++++++++++++++++++-
->  1 file changed, 24 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/bus/mhi/host/clients/sahara/sahara.c b/drivers/bus/mhi/host/clients/sahara/sahara.c
-> index 9adbd84859073d8024ba2a5fcfa33897439d6759..b5ca6353540dc3815db6539e7424afdb749fd3f6 100644
-> --- a/drivers/bus/mhi/host/clients/sahara/sahara.c
-> +++ b/drivers/bus/mhi/host/clients/sahara/sahara.c
-> @@ -59,6 +59,7 @@
->  #define SAHARA_RESET_LENGTH		0x8
->  #define SAHARA_MEM_DEBUG64_LENGTH	0x18
->  #define SAHARA_MEM_READ64_LENGTH	0x18
-> +#define SAHARA_DDR_TRAINING_IMG_ID	34
->  
->  struct sahara_packet {
->  	__le32 cmd;
-> @@ -226,6 +227,27 @@ static int sahara_find_image(struct sahara_context *context, u32 image_id)
->  		return 0;
->  	}
->  
-> +	/* DDR training special case: Try per-serial number file first */
-> +	if (image_id == SAHARA_DDR_TRAINING_IMG_ID && context->fw_folder) {
-> +		u32 serial_num = context->mhi_dev->mhi_cntrl->serial_number;
-> +
-> +		fw_path = kasprintf(GFP_KERNEL,
-> +				    "qcom/%s/mdmddr_0x%x.mbn",
-> +				    context->fw_folder, serial_num);
-> +		if (!fw_path)
-> +			return -ENOMEM;
-> +
-> +		ret = firmware_request_nowarn(&context->firmware,
-> +					      fw_path,
-> +					      &context->mhi_dev->dev);
-> +		kfree(fw_path);
-> +
-> +		if (!ret) {
-> +			context->active_image_id = image_id;
-> +			return 0;
-> +		}
-> +	}
-> +
->  	/*
->  	 * This image might be optional. The device may continue without it.
->  	 * Only the device knows. Suppress error messages that could suggest an
-> @@ -235,7 +257,8 @@ static int sahara_find_image(struct sahara_context *context, u32 image_id)
->  				      context->image_table[image_id],
->  				      &context->mhi_dev->dev);
->  	if (ret) {
-> -		dev_dbg(&context->mhi_dev->dev, "request for image id %d / file %s failed %d\n",
-> +		dev_dbg(&context->mhi_dev->dev,
-> +			"request for image id %d / file %s failed %d\n",
+msm_ringbuffer_new() destroys a partially initialized ring through
+msm_ringbuffer_destroy() when an allocation or scheduler setup step
+fails.
 
-Spurious change.
+If drm_sched_init() fails before it finishes initializing the scheduler,
+the failure path still calls drm_sched_fini(). That teardown path assumes
+the scheduler work items, lists, and workqueue state were initialized.
 
-- Mani
+Track successful scheduler initialization and call drm_sched_fini() only
+after drm_sched_init() returned 0.
 
+This issue was found by a static analysis checker and confirmed by
+manual source review.
+
+Fixes: 1d8a5ca436ee ("drm/msm: Conversion to drm scheduler")
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+---
+ drivers/gpu/drm/msm/msm_ringbuffer.c | 7 ++++---
+ drivers/gpu/drm/msm/msm_ringbuffer.h | 1 +
+ 2 files changed, 5 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/gpu/drm/msm/msm_ringbuffer.c b/drivers/gpu/drm/msm/msm_ringbuffer.c
+index 0d14c31bd4e47..af2b0edc4d586 100644
+--- a/drivers/gpu/drm/msm/msm_ringbuffer.c
++++ b/drivers/gpu/drm/msm/msm_ringbuffer.c
+@@ -108,9 +108,9 @@ struct msm_ringbuffer *msm_ringbuffer_new(struct msm_gpu *gpu, int id,
+ 	ring->memptrs_iova = memptrs_iova;
+ 
+ 	ret = drm_sched_init(&ring->sched, &args);
+-	if (ret) {
++	if (ret)
+ 		goto fail;
+-	}
++	ring->sched_initialized = true;
+ 
+ 	INIT_LIST_HEAD(&ring->submits);
+ 	spin_lock_init(&ring->submit_lock);
+@@ -132,7 +132,8 @@ void msm_ringbuffer_destroy(struct msm_ringbuffer *ring)
+ 	if (IS_ERR_OR_NULL(ring))
+ 		return;
+ 
+-	drm_sched_fini(&ring->sched);
++	if (ring->sched_initialized)
++		drm_sched_fini(&ring->sched);
+ 
+ 	msm_fence_context_free(ring->fctx);
+ 
+diff --git a/drivers/gpu/drm/msm/msm_ringbuffer.h b/drivers/gpu/drm/msm/msm_ringbuffer.h
+index 28ca8c9f7463d..3631ec283c6e5 100644
+--- a/drivers/gpu/drm/msm/msm_ringbuffer.h
++++ b/drivers/gpu/drm/msm/msm_ringbuffer.h
+@@ -56,6 +56,7 @@ struct msm_ringbuffer {
+ 	 * The job scheduler for this ring.
+ 	 */
+ 	struct drm_gpu_scheduler sched;
++	bool sched_initialized;
+ 
+ 	/*
+ 	 * List of in-flight submits on this ring.  Protected by submit_lock.
 -- 
-மணிவண்ணன் சதாசிவம்
+2.51.0
+
 
