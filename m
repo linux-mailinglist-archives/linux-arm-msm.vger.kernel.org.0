@@ -1,195 +1,353 @@
-Return-Path: <linux-arm-msm+bounces-117927-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-117929-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id oZwyLTFpT2r9gAIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-117927-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Jul 2026 11:26:09 +0200
+	id LyZ1FXNnT2pNgAIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-117929-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Jul 2026 11:18:43 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2B38172EEDC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Jul 2026 11:26:09 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 007D772ED0C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Jul 2026 11:18:42 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=YEef0RU5;
+	dkim=pass header.d=kernel.org header.s=k20201202 header.b=A+2EIdxX;
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117927-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117927-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117929-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.232.135.74 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117929-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 34C16305C1AA
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jul 2026 09:18:14 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 2B13A300C0EE
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jul 2026 09:18:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6DADB40149C;
-	Thu,  9 Jul 2026 09:18:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3DE02401A3B;
+	Thu,  9 Jul 2026 09:18:37 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 497253F8893;
-	Thu,  9 Jul 2026 09:18:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D60963FF1B9;
+	Thu,  9 Jul 2026 09:18:36 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783588688; cv=none; b=lVd4YKZIpNgpRe/YkH3EypMbVEnottn9n3u314YHXXijxraCNM0GjxjS0v70dgg7VkyeaqO+pUiM8rDlD+cd1ZasM8Hso+ZE85v0u4/0MITRatFZ5FC1CNmkY0/bOsJ2heA90CdVb/LMWfihex989n11rRZy4LCAPzonzahdDXw=
+	t=1783588717; cv=none; b=VQNtmLdlc0vqG1ID3YTHrF3MPK/SVZ5UejDZQeRTqInUH8wdi5LIsDXo9opdfamm+6vl/fMX6KusmXvBg1emPDbvzwIrg0nGbYPc3JdyEAni8igNW67pyT11IrgNbdtcyty57tkBc7Ts9wb3j3HvvFRUa3ZQF09KaGI4ub9C0KM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783588688; c=relaxed/simple;
-	bh=N/gh54s4OihDfld7F9b4Mg6B69v+qijNBUDuZONwALI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Mlqo8CDrslmKaQURV57zBsSp3mrqPNCf8i1FdDTQNiubVlaNTPD7JUPAw0KS/NA0u7tjmNePPWDA7u644cO7umjmKTVKF4dnQsCsnb+7F0J7KbZCVlb7sJ+Ze66G+VAtZOmf8Q/ChWOoFNZTjldJWSpx3/6h18XuqRGrxvU8s84=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YEef0RU5; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1F941F000E9;
-	Thu,  9 Jul 2026 09:17:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783588687;
-	bh=BEMcw8GAKz3jSF3iw3VgzW8YSfsS57654If934RMsrc=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=YEef0RU5toiTWSQj+MtfBMxBIdpCg/Z74PvTPGyppad+87PHS31w6ZiUyJu16lDf2
-	 Ju/Vz2ah7RuFmP/GmKPoYZn5sOIG7izXpe8ctGxOa8fxtZSU3tS8U0Zr24fY8elcMG
-	 +ar0R0N+IXhM2ntjzlP3rcEsgmfoNKisWMAPrime76mCqFJnwl5Fr8ZjcqokRSSXFn
-	 HEtHcmKWZKKvH4KK0kxPZzYrs/srbIjrFbUkRkfWXkIB5qTJmGNn+NJHayOTCvYyGQ
-	 i1UOs8TpKv4HuBM/zjRUk1aO/61AGEz9pDfOJbu7Zn3G7WtkwTAA00pkNlW9dLnvm4
-	 bmX1p/Q/bC9xw==
-Message-ID: <458850b0-bf36-4784-9130-50dcfb30ee75@kernel.org>
-Date: Thu, 9 Jul 2026 11:17:56 +0200
+	s=arc-20240116; t=1783588717; c=relaxed/simple;
+	bh=fvHZc4p0DL5VlLp9DIbDgG95XFGGwwbnBILIOWNU0N8=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=d0Uxlb/dQHAiq1sApflZ+kYcQB1/3LXrzhRSgeV2wsJznbEyL+0dhZFKmr2CCB8JPH715FMXXzSd17UuV4jkh3mils4Y9dNARpqkRgGe0GTLQHrnrIeeCayaA5qGXagFQgMin4kXz2dD03ruSz3O+BAPYmtiufojEjd8gTAkqcw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=A+2EIdxX; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 41619C2BCC7;
+	Thu,  9 Jul 2026 09:18:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1783588716;
+	bh=fvHZc4p0DL5VlLp9DIbDgG95XFGGwwbnBILIOWNU0N8=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=A+2EIdxXnwuG2s1aXcK94gfgqIg6NvV719XZw7+IYK9Bbwlx7qSjdyMC55MQCfbAD
+	 t0mM+tHkwvnWmzX4T778AlwvJZFq/fOjHg1VKgZ8nrqhxaxzemG1Em1lEfggnh1l3s
+	 /ppwy+aIKKE4qKHXEMFBiPlyV5JOuiVW5P6NKoRm/aaUiX78lxv7vuSZcpFYTHAcHn
+	 L7AfP8rqXzQRqQ29ROmLzoahJVghrBpch8dp5PEF63Q1vBYvjZumuOQMft2sRihZ/U
+	 255e0g6wjMRK+wVZBEjOluT3BFKC8CqOaQubT6kRT31cKcxHSqI+x9xciCPp1S435V
+	 sZCC9QOo8DqlQ==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 265CEC43458;
+	Thu,  9 Jul 2026 09:18:36 +0000 (UTC)
+From: George Moussalem via B4 Relay <devnull+george.moussalem.outlook.com@kernel.org>
+Subject: [PATCH v5 0/6] Add support for IPQ5018 Bluetooth
+Date: Thu, 09 Jul 2026 13:18:26 +0400
+Message-Id: <20260709-ipq5018-bluetooth-v5-0-e476c41f03b8@outlook.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/5] dt-bindings: arm: coresight-tnoc: Drop
- arm,primecell to bind on platform bus
-To: Jie Gan <jie.gan@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Tingwei Zhang <tingwei.zhang@oss.qualcomm.com>,
- Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
- Abel Vesa <abel.vesa@oss.qualcomm.com>,
- Suzuki K Poulose <suzuki.poulose@arm.com>, Mike Leach <mike.leach@arm.com>,
- James Clark <james.clark@linaro.org>, Leo Yan <leo.yan@arm.com>,
- Yuanfang Zhang <yuanfang.zhang@oss.qualcomm.com>,
- Abel Vesa <abelvesa@kernel.org>,
- Alexander Shishkin <alexander.shishkin@linux.intel.com>,
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, coresight@lists.linaro.org,
- linux-arm-kernel@lists.infradead.org
-References: <20260707-fix-tracenoc-probe-issue-v5-0-bf733ed9ebd0@oss.qualcomm.com>
- <20260707-fix-tracenoc-probe-issue-v5-1-bf733ed9ebd0@oss.qualcomm.com>
- <20260709-versed-marvellous-pigeon-22e2ba@quoll>
- <e5876525-4568-43bd-8c91-6dc462b18fa3@oss.qualcomm.com>
- <02baada9-3f87-4e60-a469-44af5ebe1afe@kernel.org>
- <c120ec84-c125-4dec-945a-da12624d82e7@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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
-In-Reply-To: <c120ec84-c125-4dec-945a-da12624d82e7@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/33PzWqEMBQF4FeRrJshP5oYKWXeo3SRxGsNo2Y0M
+ bQMvnujs2hLh24C50K+w7mhAIuDgJrihhZILjg/5VA9Fcj2enoH7NqcESNMEMEq7K5zRWiNzbB
+ C9D72mIiuE8KqVlYc5X/XBTr3cZivb/e8wLxmOt6PaIQQ9EE3xfMhS8Kz6O0F64CnNMKIU40JV
+ rUGzkxnS6XPPoTTvOrB+nE85edlbzM6AN4vLjaF1bIqqdSGSoX27t6F6JfPY16iR/k/SxLNla1
+ SygABUnby7Nc4eH/Z2w4vsZ+GemSwbBAmJekIN8KYvwb/NvbdDwyeDcFaLVlNa234b2Pbti8WY
+ fE3uAEAAA==
+X-Change-ID: 20260625-ipq5018-bluetooth-06ff66c9d753
+To: Bartosz Golaszewski <brgl@kernel.org>, 
+ Marcel Holtmann <marcel@holtmann.org>, 
+ Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, 
+ Philipp Zabel <p.zabel@pengutronix.de>
+Cc: linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ George Moussalem <george.moussalem@outlook.com>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>, 
+ Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1783588713; l=11753;
+ i=george.moussalem@outlook.com; s=20250321; h=from:subject:message-id;
+ bh=fvHZc4p0DL5VlLp9DIbDgG95XFGGwwbnBILIOWNU0N8=;
+ b=HS4HOGaF9DbkrXdazaGDTAdduJFCzhlxKH4PAz+ono4ay10+fKEC3uE30i1OnnFXrc912Shqg
+ mKpuEzzNyucDfy+mY9k+XKxuptc/FQiCUcDFXTzJbXcQUMO3AWr8rkz
+X-Developer-Key: i=george.moussalem@outlook.com; a=ed25519;
+ pk=/PuRTSI9iYiHwcc6Nrde8qF4ZDhJBlUgpHdhsIjnqIk=
+X-Endpoint-Received: by B4 Relay for george.moussalem@outlook.com/20250321
+ with auth_id=364
+X-Original-From: George Moussalem <george.moussalem@outlook.com>
+Reply-To: george.moussalem@outlook.com
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-3.66 / 15.00];
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
+	FREEMAIL_REPLYTO_NEQ_FROM(2.00)[];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-117927-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_TO(0.00)[kernel.org,holtmann.org,gmail.com,pengutronix.de];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:jie.gan@oss.qualcomm.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:tingwei.zhang@oss.qualcomm.com,m:jingyi.wang@oss.qualcomm.com,m:abel.vesa@oss.qualcomm.com,m:suzuki.poulose@arm.com,m:mike.leach@arm.com,m:james.clark@linaro.org,m:leo.yan@arm.com,m:yuanfang.zhang@oss.qualcomm.com,m:abelvesa@kernel.org,m:alexander.shishkin@linux.intel.com,m:konrad.dybcio@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:coresight@lists.linaro.org,m:linux-arm-kernel@lists.infradead.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
-	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_SENDER(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[22];
-	FORWARDED(0.00)[lists@lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	FORGED_RECIPIENTS(0.00)[m:brgl@kernel.org,m:marcel@holtmann.org,m:luiz.dentz@gmail.com,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:andersson@kernel.org,m:konradybcio@kernel.org,m:p.zabel@pengutronix.de,m:linux-arm-msm@vger.kernel.org,m:linux-bluetooth@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:george.moussalem@outlook.com,m:krzysztof.kozlowski@oss.qualcomm.com,m:bartosz.golaszewski@oss.qualcomm.com,m:konrad.dybcio@oss.qualcomm.com,m:dmitry.baryshkov@oss.qualcomm.com,m:luizdentz@gmail.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FORGED_SENDER(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
+	FORWARDED(0.00)[lists@lfdr.de];
+	FREEMAIL_REPLYTO(0.00)[outlook.com];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[18];
 	TO_DN_SOME(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-117929-lists,linux-arm-msm=lfdr.de,george.moussalem.outlook.com];
+	FREEMAIL_CC(0.00)[vger.kernel.org,outlook.com,oss.qualcomm.com];
+	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
 	ALIAS_RESOLVED(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	HAS_REPLYTO(0.00)[george.moussalem@outlook.com];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,vger.kernel.org:from_smtp]
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	REPLYTO_DOM_NEQ_TO_DOM(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,vger.kernel.org:from_smtp,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,outlook.com:replyto,outlook.com:mid,outlook.com:email]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 2B38172EEDC
+X-Rspamd-Queue-Id: 007D772ED0C
 
-On 09/07/2026 11:02, Jie Gan wrote:
->>> The issue is that we are not allowed to introduce a DT property to
->>> bypass the AMBA bus validation, which reads the Component ID (CID)
->>
->> It is the first time "bypass the AMBU bus validation" appears in this
->> patch. You do not see that as a problem?
->>
->> Again, third time and the last: describe the actual hardware and the
->> actual problem coming from the hardware.
-> 
-> Understood, will focus on describe the hardware and the hardware issue.
-> 
-> Commit message description updated like below:
-> 
-> The Aggregator TraceNoC hardware exposes CID registers, but the 
-> Component ID value read from those registers is 0 instead of a valid 
-> AMBA Component ID. As a result, the device cannot be identified by the 
-> AMBA bus and is not discovered as an AMBA device.
-> 
-> Since the hardware does not provide a valid AMBA identification, 
-> describe the Aggregator TraceNoC using a dedicated compatible string and 
-> bind it to the existing platform driver.
-> 
+Hello,
 
-yes, that's good.
+This patch series introduces Bluetooth support for IPQ5018.
+
+Bluetooth firmware is loaded by the host into a dedicated reserved
+memory carveout and authenticated by TrustZone. A Secure Channel Manager
+(SCM) call safely brings the peripheral core out of reset.
+
+A shared memory ring buffer topology handles runtime data frame
+transport between the host APSS and the Bluetooth controller.
+An outgoing APCS IPC bit and an incoming GIC interrupt handle
+host/guest signaling.
+
+This series has been tested and verified on various IPQ5018 router
+boards utilizing firmware extracted from GPL distributions, using both
+mdt and mbn file formats.
+
+[   14.781511] Bluetooth: hci0: QCA Product ID   :0x00000016
+[   14.781583] Bluetooth: hci0: QCA SOC Version  :0x20180100
+[   14.785926] Bluetooth: hci0: QCA ROM Version  :0x00000100
+[   14.791546] Bluetooth: hci0: QCA Patch Version:0x00003ded
+[   14.796698] Bluetooth: hci0: QCA controller version 0x01000100
+[   14.802217] Bluetooth: hci0: QCA Downloading qca/mpnv10.bin
+[   16.393850] Bluetooth: hci0: QCA FW build version: BTFW.MAPLE.1.0.0-00102-MPL_ROM_PATCHZ-1
 
 Best regards,
-Krzysztof
+George Moussalem
+
+Signed-off-by: George Moussalem <george.moussalem@outlook.com>
+---
+Changes in v5:
+- Updated the bindings file to change from using a memory-region
+  property to using a reg property for the shared memory area and made
+  reg a required property.
+- Added Bartosz G. to the maintainers list in the bindings file.
+- Updated the driver to acquire the memory region as platform resource
+  using devm_platform_get_and_ioremap_resource()
+- Replaced macros with unsafe arithmetic with inline functions that
+  safely calculate the size by reading values using endian functions
+  le**_to_cpu().
+- Update btss_lbuf_size to guard against division by zero and against
+  the offset extending beyond the total size of the context info struct.
+- Updated btqcomipc_send to enqueue packets before releasing the
+  spinlock to avoid stranding packets in the queue indefinitely.
+- Added an explicit DMA read barrier in the RX loop before reading and
+  processing each ring entry to guarantee memory ordering.
+- Added strict arithmetic validation for long-message metadata handling
+  before computing wrap segments and hardened the non-contiguous path to
+  prevent underflow.
+- Hardened split-segment firmware loading error handling. If
+  request_firmware() for a segment fails, the code now exits that path
+  immediately instead of falling through to memcpy_toio() and added
+  explicit split-file size validation before copy.
+- Updated HCI dev close path state teardown to avoid stale transport
+  stale after PAS shutdown. btqcomipc_close() now explicitly sets
+  running state to false under lock after shutdown.
+- Made IRQ registration safe against spurious interrupts by keeping the
+  line disabled after request (flags includes now IRQF_NO_AUTOEN).
+  IRQ is now enabled only in btqcomipc_open() right before firmware boot
+  and disabled again on open-failure and close paths.
+- Reordered remove-path teardown to eliminate worker vs HCI lifetime
+  race. It now unregisters HCI first to stop new traffic, then calls
+  btqcomipc_deinit() to stop async processing, and only then frees hdev.
+- Removed reserved memory area from the dtsi, moved bluetooth node under
+  the soc node, and added unit address and reg property.
+- Link to v4: https://lore.kernel.org/r/20260706-ipq5018-bluetooth-v4-0-350262a30959@outlook.com
+
+Changes in v4:
+- Ordered switch statements in btqca.c. NOTE: left enum qca_bt_soc_type
+  unordered in the header file as the btqca driver has conditionally
+  checks whether bt_soc_type is above a certain value:
+  'if (soc_type >= QCA_WCN3991)' is found in 5 places
+- Fixed TX path serialization by protecting btqcomipc_send and
+  btss_send ring access with desc->lock, preventing concurrent updates
+  of ring indices and free counters from TX and worker contexts.
+- Fixed and simplified firmware ring traversal to decode little-endian
+  next and translate firmware offsets via TO_APPS_ADDR in all ring
+  walks, avoiding invalid pointer dereferences.
+- Added short-message RX length validation (msg_len must not exceed
+  IPC_MSG_PLD_SZ when not long message), preventing out-of-bounds read
+  from inline shared-memory payloads.
+- Fixed RX allocation failure behavior to advance ring index and
+  continue, preventing permanent RX ring stall on transient kmalloc
+  failures.
+- Replace macro for calculting large buffer size that performed unsafe
+  arithmetic by an inline function that safely calculates the size by
+  reading values using endian functions le**_to_cpu().
+- Declared aux_ptr as a zero-initialized struct as opposed to using
+  memset and changed struct definition by updating its member to use
+  u32 as opposed to __le32 as these values aren't set by firmware and
+  need not be validated on endianness.
+- Fixed long-message slot leak when short TX ring is full by
+  snapshotting and rolling back long-buffer accounting on
+  allocation-success/short-ring-fail path.
+- Updated firmware load logic to remove call to qcom_mdt_pas_init for
+  which the export was recently removed and replaced it by calls to
+  read the metadata and the validation of it using SCM.
+  NOTE: Sashiko correctly pointed out that the firmware ELF/mdt headers
+  weren't validated in the driver. However, this is done by the call to
+  qcom_mdt_read_metadata which returns -EINVAL if the mdt header isn't
+  valid.
+- Hardened firmware segment bounds checks against integer overflow by
+  using subtraction form (filesz <= mem_size - vaddr).
+- Replaced unsafe firmware split name rewrite with validated stem
+  handling and kasprintf formatting, removing underflow/overflow risk.
+- Converted workqueue allocation to devm_alloc_ordered_workqueue to fix
+  workqueue leak in IRQ registration failure path.
+- Added cleanup path in btqcomipc_open to shut down controller on
+  startup timeout, avoiding leaving peripheral powered after failed open
+- Reordered probe sequence to allocate/attach hdev before IRQ
+  registration, eliminating early-spurious-IRQ dereference window for
+  desc->hdev.
+- Reordered remove path to unregister/free hdev before driver deinit,
+  preventing send path from racing against queue/work teardown.
+- Corrected HCI command packet length parsing to use 8-bit plen directly
+  instead of using le16_to_cpu.
+- Fixed endianness and address translation in TX ACK processing path.
+  Converted firmware-owned ring metadata before use in btss_process_ack:
+  rbuf base offset, msg header, long-message pointer, and message length
+  are now read via le32_to_cpu or le16_to_cpu prior to reclaim logic.
+- Added explicit producer ordering barrier in TX ring publish path.
+  Inserted dma_wmb between payload or header writes and widx update so
+  firmware cannot observe producer index advancement before data becomes
+  visible.
+- Removed info message printing FW build info as that was recently
+  introduced in the kernel in commit bdea21b3be43
+- Added dependency on OF and ARCH_QCOM symbols to Kconfig. In addition,
+  also select QCOM_MDT_LOADER and QCOM_SCM.
+- Removed syscon compatible from mailbox node, avoiding dt_binding_check
+  failures and update the syscon acquisition logic in driver probe
+  accordingly.
+- Link to v3: https://lore.kernel.org/r/20260703-ipq5018-bluetooth-v3-0-62da72818ab3@outlook.com
+
+Changes in v3:
+- Consolidated the SCM and helper call into one function which now
+  checks availability of the SCM call inline.
+- Changed argument to boolean type to set ECO power mode on or off as
+  opposed to passing a raw power mode value.
+- Removed unneeded parentheses in if statement
+- Declared aux_ptr as a zero-initialized struct as opposed to using
+  memset
+- Changed for loop to a while loop for better readability
+- Reordered function definition of btqcomipc_update_stats to avoid the
+  need for a forward declaration.
+- Removed unneeded header files from btqcomipc.c (bits.h, device.h,
+  init.h, kernel.h, of_irq.h, types.h)
+- Link to v2: https://lore.kernel.org/r/20260629-ipq5018-bluetooth-v2-0-02770f03b6bb@outlook.com
+
+Changes in v2:
+- removed unused struct member btss_reset from m0_btss struct.
+- used devm_reset_control_get_exclusive_deasserted to acquire and
+  deassert btss_reset in one call. No need to explicitly assert upon
+  unbind since devres will handle it.
+- As per Bjorn's comments, collapsed the rproc and BT driver into one
+  which now handles firmware loading and transport.
+- As per further review comments and above change, squashed the two
+  devicetree bindings into one to represent the Bluetooth controller
+- Added new SCM call to drive Bluetooth power modes. Based on testing on
+  more router boards, this is required during start/stop sequences to
+  avoid the controller hanging. This is only supported on relatively
+  newer QSEE versions, so the SCM call is checked for availability
+  before use.
+- Refactored resource lifecycle management in the driver so that IRQ and
+  work queue are managed at the driver level (probe/remove) while FW
+  loading and powering on/off the controller is handled upon hdev
+  open/close.
+- Consolidated TX send functions for custom IPC and HCI frames into one
+  and solved a potential NULL pointer dereference issue under TX
+  pressure.
+- Replace code to load and initialize firmware metadate by existing
+  qcom_mdt_pas_init function.
+- Solved an off byone calculation error in the RX parser.
+- Added entry to MAINTAINERS file
+- Link to v1: https://lore.kernel.org/r/20260625-ipq5018-bluetooth-v1-0-d999be0e04f7@outlook.com
+
+---
+George Moussalem (6):
+      dt-bindings: net: bluetooth: Document Qualcomm IPQ5018 Bluetooth controller
+      Bluetooth: btqca: Add IPQ5018 support
+      firmware: qcom: scm: Add support for setting Bluetooth power modes
+      Bluetooth: Introduce Qualcomm IPQ5018 IPC based HCI driver
+      arm64: dts: qcom: ipq5018: add node required for Bluetooth support
+      MAINTAINERS: Add IPQ5018 driver to Qualcomm Bluetooth driver entry
+
+ .../bindings/net/bluetooth/qcom,ipq5018-bt.yaml    |   87 ++
+ MAINTAINERS                                        |    1 +
+ arch/arm64/boot/dts/qcom/ipq5018.dtsi              |   16 +
+ drivers/bluetooth/Kconfig                          |   14 +
+ drivers/bluetooth/Makefile                         |    1 +
+ drivers/bluetooth/btqca.c                          |   16 +
+ drivers/bluetooth/btqca.h                          |    3 +
+ drivers/bluetooth/btqcomipc.c                      | 1230 ++++++++++++++++++++
+ drivers/firmware/qcom/qcom_scm.c                   |   44 +
+ drivers/firmware/qcom/qcom_scm.h                   |    1 +
+ include/linux/firmware/qcom/qcom_scm.h             |    1 +
+ 11 files changed, 1414 insertions(+)
+---
+base-commit: ca75417ab1793f23b3ddc91869f0809b593d6954
+change-id: 20260625-ipq5018-bluetooth-06ff66c9d753
+prerequisite-message-id: <20260703-block-as-nvmem-v8-0-98ae32bfc49a@oss.qualcomm.com>
+prerequisite-patch-id: 467ba5e0fde0e9a1e9d0a6faf3d22ba2126c62a7
+prerequisite-patch-id: 9168930e40551e842c8171d5433a6f39ad4b78a4
+prerequisite-patch-id: 64fecfbd1e085d7d2ab0ae23295ca34ec8e14c5e
+prerequisite-patch-id: 7bf282ed9312b2ffdbe420429bbe355622620272
+prerequisite-patch-id: 29a7d652948d13f91bdd4fc5fb8e6dbcd6e5fcc5
+prerequisite-patch-id: c03136820a7749fd9630080e6d4459a298b3b630
+prerequisite-patch-id: 43975fc425bf2f5dd5c1de66aaa78c4b4bde568c
+prerequisite-patch-id: 75caa99e3bbcdf41b6462b9f5f703bea1d4a65fa
+prerequisite-patch-id: b9b2a2f80a4827b457166b20f54644e57d90b824
+
+Best regards,
+-- 
+George Moussalem <george.moussalem@outlook.com>
+
+
 
