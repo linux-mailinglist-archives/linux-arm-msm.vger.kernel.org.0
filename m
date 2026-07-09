@@ -1,87 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-117827-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-117828-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id Sp7GOiAXT2p5aQIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-117827-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Jul 2026 05:36:00 +0200
+	id unPaBLwYT2rjaQIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-117828-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Jul 2026 05:42:52 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 401F272C543
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Jul 2026 05:36:00 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0CA4772C613
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Jul 2026 05:42:51 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=vivo.com header.s=selector2 header.b=NutE10Fz;
+	dkim=pass header.d=vivo.com header.s=selector2 header.b=Ng1C9532;
 	dmarc=pass (policy=quarantine) header.from=vivo.com;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117827-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117827-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117828-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c15:e001:75::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117828-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=reject ("cv is fail on i=2")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 1D41D3052652
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jul 2026 03:35:01 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 7C11F305E1F1
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jul 2026 03:37:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 700B038F643;
-	Thu,  9 Jul 2026 03:35:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D337E3AFAF4;
+	Thu,  9 Jul 2026 03:35:43 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from TYPPR03CU001.outbound.protection.outlook.com (mail-japaneastazon11012001.outbound.protection.outlook.com [52.101.126.1])
+Received: from SEYPR02CU001.outbound.protection.outlook.com (mail-koreacentralazon11013038.outbound.protection.outlook.com [40.107.44.38])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D52238D3EF;
-	Thu,  9 Jul 2026 03:34:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD0353AE1A8;
+	Thu,  9 Jul 2026 03:35:41 +0000 (UTC)
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783568100; cv=fail; b=pyj+ULpvb3FFMcFR66Bt58Ro2UQqe1pb0wWQ6sbQK8KFSH/2fJBJ/f1u2dSJbBIoSJJlM2d6S1f7Q/D6hnUiwCSdTNhwVpLru0u28Y3uMO/vYKSG+nzsCvq/zSMljNHjn91LEyvKZs4Q5ggNJliEokpSKh9ZEOpgG74RQF+moYg=
+	t=1783568143; cv=fail; b=KSGqlSer0BDxySElqz6/8DIwZ9FSvoOiJZBHE61OxnC33/16VvsMTYoTYyZfoOGGw/ZJmTebkKdudKNqmQL97hKxVoWJvWUORiELaqcOiGc3M/vtG/PDTOaCpjCXZPKNLOYUbLH7mKCjIRD3tqqCE9sNWPXe2dwWnOchMQSnTmU=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783568100; c=relaxed/simple;
-	bh=+3J/eDnCSZCZBu6Nd4AH6Y1kNjQle7pe+8I3hPRCuTQ=;
-	h=From:To:Cc:Subject:Date:Message-Id:Content-Type:MIME-Version; b=R8AWwzr6zeoK6EVqU62JsS5qUhC6oRJtDN4qvdQfaGcg1ndIeDkuvgCiy6xs0dW4zWJ9SmsUvzk3oN3+89QPjp3FnbYnvylijnun11bf33ijDa1FNE1Qmr33XnZ0GYaVPYA9dYhFwGxHorwRQ2nbjPiJ6MnlHJFxCLlVjaNLYKM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=vivo.com; spf=pass smtp.mailfrom=vivo.com; dkim=pass (2048-bit key) header.d=vivo.com header.i=@vivo.com header.b=NutE10Fz; arc=fail smtp.client-ip=52.101.126.1
+	s=arc-20240116; t=1783568143; c=relaxed/simple;
+	bh=qdB9bY+JzOFa+efFt9wfEbsWBnIUPZyrzlNaNIuud2U=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=EZUFStIAzsKmblrthRiRtDoj+5pfAedZEflzA/q7rE7qsogAN7CnnCOufIavurldrZwC3txkoFTcXp2JEP2D24HEEXMiuvIbLJVkwq54hXrSY7L7Dhs4swdJ6bNYXoqsqDxBU1cLrJCss3U2QNi4jp+wqdqW1N5xXAZtydbvpWk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=vivo.com; spf=pass smtp.mailfrom=vivo.com; dkim=pass (2048-bit key) header.d=vivo.com header.i=@vivo.com header.b=Ng1C9532; arc=fail smtp.client-ip=40.107.44.38
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Z54+tPnbz0UYYpSHMNHndnOS2Glq9YQIJrz4SOJ5vJHuRdQRv0KuhKocSJSXeLij7m6khOs8yUG0y9HE+RwOrXfpyA0XZJH7Dh62cCZcBaVQFy3jGGJtuYDuHl+uK1lah0Ea6pICJBk5ByOj9SM6EzC90TDxNueiVFHNYbFIZYVW72+IKXs/soPoipQ5lmZD8GWQEppa/wwxQwUZDmiR9sorAVA0KYx6qCqLlZpeISWuZlUstJ4zewZt4cGAmkkYsZYF0B4VbWoL9pcB2ZPEIFeagfBRYExn7hlX08d+XcBFxxQO/44ZlDRcqGs7OYqSnhphZ4VPCstq6S4vtwLwWQ==
+ b=G2JATjk8e2xndQytGk5n2xnf46R5aY8YGLZ9F3YtLd7OmrrouGDwoCM9bTYuWA6XchvAwyWdg/o3lfqj+OYztqXk7jzSxT60F9NcrKGrvPbklGW6GLlxnByU9I/MUviwW3P+ZxdttzlwQmAWzp8+2ilb2IYKrWMh8TEx3Cpz5TSp191wIJAQP/+5Gw/V3qCRmKyNu1DJtXZC0Bs0WxsiKzxGYpaZemlo7RC5krlfaFXiHqWHITnncKjI4wKfNe1uErgA9TiKrvNb+r14TlDSBl7ZCTkaqTO5sn5annK/tfh/Va0CQdfHGEQ0HIQt42vubrDsbTdlsgklxh15hThyOQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=m7JAm6c5QpWscHDUz2WKVnHugJ6te115xZNRdOcGfts=;
- b=c/DHEjK/sqWW3eQVC7t31SEohMwEzqRV31SCpo10mb97+fy7LoJBzCMR5bO2NeC4R5xF9LXD8WsvUO93mx+FF3CPN67NEE6a0me3Y+7rRwjuTVt7dzJbiG7wntAdWITtdgFb6Gnv5wnr3fkc363DowNwd/jKS8MELsuxTD2FVnDAlB22KCm6TrjCgGwnxNP01kDeofjlYk+wAJg4+GE5c2sZJmUwE2KYQ4JVyWH/SzvUfbQGxA3T20o33Ma2rPu60JQMpDx7Wy46MB3r3Bnt2cwHc7SRq/VkhbqTDaAJMC2s727sjWqfTw4R/afRtkbZg8cLWym7gYnkW4bQ6Ejmvw==
+ bh=Ef7KvaHXb8A59JsoFu31euCt0p7aqES7MUvLMS7lc0I=;
+ b=sEwlfcSUTogCCu66t3XKarZA6JSeYSNGFsEah4fkVzUNidW3pTOvkLbupP5KLd2lub8mE7WjI3d9IDr6hXFHIkVdljVIuCEX/51FhIjIAaIQTC3MarhxTXacm4QQAUUqVK7OPYrHS28fVqU6dskwvZbdMxZoQujT36FQIcfXAvqmSTl1cRbk5jObwXq+UbDYgfFMG6VEFlsAkGOwKgyTqaDwBBF0HY88+ENoH05ZRF3yMBZatxn8aVxdVvm2sxr/rrPeoIjfxkl1TBE8MmHTGFVd+hxbxpdPQm2w6RZguoW98jNcp8ItKEo12quSw7PTnXr9GsI73tUR5hegKfKPew==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=vivo.com; dmarc=pass action=none header.from=vivo.com;
  dkim=pass header.d=vivo.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vivo.com; s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=m7JAm6c5QpWscHDUz2WKVnHugJ6te115xZNRdOcGfts=;
- b=NutE10FzDHfNJpMrKlBLPBYaVA75/dwliVb7gjlaVv/8DIOLvUSkR5gXgabMpII98TH1rC+MqYsUy9q1SnLqAc55uXA/moe7k0G3MSqwJ57SOO9TImRKL229Q2W5PECxxKjqWuqUlKJB+RP4Jbu8SF9xpJM0+Nzkt42i3a0ENDzU6RyRmnxasWftG5UHptrgSeermQNPLJv0vdsqd8jk61nRuXvUH5ht2HZ7HoThNrELMmLDoDvIWKWb1o9euYSWcAKo6AQ7p3Md9BakAX+y7Qe+CzDC00r+/j7tk2a9sWihaK32VSJ/ewCXHNvqbSvIvAqxoOHy+735jvVRla4TLw==
+ bh=Ef7KvaHXb8A59JsoFu31euCt0p7aqES7MUvLMS7lc0I=;
+ b=Ng1C9532lyt8q7U0wBEylFovWuWHifGngpcGJFrkJ6ZKyRZJbT+QQjMNTa51q/8gn3iBrpJLF504isTUM08PYn6m4QZ8I4I2DwxBWKtuudRXIB3Hl5HHqGmp1ZxcYsAt+9Ke5tet1VVwVRJI41Zl0JWVrWtK0SQq9hMx39dgMxioqffiubPGg3otnHflxd55xhLDLa1ssmRy9HfJajY+wtCJw/ivPf2cj/CvjT080/cGaFeYk1T6NeEqqCnIg0oXBbWluVVVbVyMQhK1+WJFWGm9y/NFtO8AcIllVE/IaSTiGyqBIjRhfUCF/31wKK/dMgL0PnmoaXQRQ/kt2c3bTg==
 Received: from SEZPR06MB5832.apcprd06.prod.outlook.com (2603:1096:101:c8::12)
- by SEYPR06MB6360.apcprd06.prod.outlook.com (2603:1096:101:13f::10) with
+ by TYZPR06MB6213.apcprd06.prod.outlook.com (2603:1096:400:33f::14) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.15; Thu, 9 Jul
- 2026 03:34:50 +0000
+ 2026 03:35:29 +0000
 Received: from SEZPR06MB5832.apcprd06.prod.outlook.com
  ([fe80::f98:5e32:4ccb:d07b]) by SEZPR06MB5832.apcprd06.prod.outlook.com
  ([fe80::f98:5e32:4ccb:d07b%6]) with mapi id 15.21.0181.014; Thu, 9 Jul 2026
- 03:34:50 +0000
+ 03:35:29 +0000
 From: Pan Chuang <panchuang@vivo.com>
 To: Sebastian Reichel <sre@kernel.org>,
-	Linus Walleij <linusw@kernel.org>,
-	Chen-Yu Tsai <wens@kernel.org>,
-	Hans de Goede <hansg@kernel.org>,
-	Support Opensource <support.opensource@diasemi.com>,
-	Amit Sunil Dhamne <amitsd@google.com>,
-	Saravanan Sekar <sravanhome@gmail.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Samuel Kayode <samkay014@gmail.com>,
-	Casey Connolly <casey.connolly@linaro.org>,
-	Orson Zhai <orsonzhai@gmail.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Chunyan Zhang <zhang.lyra@gmail.com>,
-	linux-pm@vger.kernel.org (open list:SYSTEM RESET/SHUTDOWN DRIVERS),
-	linux-kernel@vger.kernel.org (open list),
-	linux-arm-kernel@lists.infradead.org (moderated list:ARM/Mediatek SoC support),
-	linux-mediatek@lists.infradead.org (moderated list:ARM/Mediatek SoC support),
-	imx@lists.linux.dev (open list:NXP PF1550 PMIC MFD DRIVER),
-	linux-arm-msm@vger.kernel.org (open list:ARM/QUALCOMM MAILING LIST)
+	linux-arm-msm@vger.kernel.org (open list:ARM/QUALCOMM MAILING LIST),
+	linux-pm@vger.kernel.org (open list:POWER SUPPLY CLASS/SUBSYSTEM and DRIVERS),
+	linux-kernel@vger.kernel.org (open list)
 Cc: Pan Chuang <panchuang@vivo.com>
-Subject: [PATCH 00/43] power: Remove redundant error messages on IRQ request failure
-Date: Thu,  9 Jul 2026 11:33:39 +0800
-Message-Id: <20260709033428.362970-1-panchuang@vivo.com>
+Subject: [PATCH 29/43] power: supply: qcom_smbb: Remove redundant dev_err()/dev_err_probe()
+Date: Thu,  9 Jul 2026 11:34:08 +0800
+Message-Id: <20260709033428.362970-30-panchuang@vivo.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260709033428.362970-1-panchuang@vivo.com>
+References: <20260709033428.362970-1-panchuang@vivo.com>
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
 X-ClientProxiedBy: TPYP295CA0017.TWNP295.PROD.OUTLOOK.COM (2603:1096:7d0:a::9)
@@ -93,236 +80,121 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SEZPR06MB5832:EE_|SEYPR06MB6360:EE_
-X-MS-Office365-Filtering-Correlation-Id: a2303c2f-d8ba-435a-dc1d-08dedd6b07cc
+X-MS-TrafficTypeDiagnostic: SEZPR06MB5832:EE_|TYZPR06MB6213:EE_
+X-MS-Office365-Filtering-Correlation-Id: 9ba71a50-0b0c-4482-a492-08dedd6b1f67
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|23010399003|1800799024|376014|7416014|52116014|11063799006|56012099006|18002099003|6133799003|921020|38350700014;
+	BCL:0;ARA:13230040|366016|1800799024|23010399003|52116014|376014|38350700014|56012099006|11063799006|18002099003|22082099003;
 X-Microsoft-Antispam-Message-Info:
-	P0c5wX6Zdb0agOCKZa0qbc0jN69beP1K8FHaERdiu6e56Gf/yLNpXvxXHoMPlOKLVSGeYQf7cQ6wAmReAARiy1MQLI8HUVsd38saL77lgr6j2WjTup3u6fHv4zHPYk5Bvq3pV3vnir1QdSQZeeA1DhvPwJZDIq8iAiGLj8g2fh4/eN8KtTMme1IWN6Po9gyadHLjWQhX6wfczS8fK9wocZps2X7eGonBJ5WKeMuKadv190JODDoB1SSHi7X71O8anqq0dUKxVgRam4mq+wgA/YXLeZMj9T333paFWryw/c9XeLiXYdEV9rnf9HLH3OucCOoCiKJpKGc8ve+xC476uDt8q62smpg3X/VPXb7QBJ0tSl913krygohiupVImHSia2jNAq2VAIrS1OmTPL6OJsSvMxa7bNE0oZA4975Qd8Omka0XQkhCQ3UftYqgiElFVIfK/h48UajCBN2seAX7A0dHz65x2Ogpn2cX696v5NYuP6UTPaWshNDi7Mr9XbF2Tom6G5O6TqTT4w9XkAs+/RcjVmUvDNjAbcDzQ0ukG3M/8ey/+U+jYP68GMQm3fKjCjd307LMZxDV1IsHtPoKbjLOGe/grg279u96NhqWgv3cJPGcjmp3nEVlQ99LIsJ1UQUSbDTQuZhFqduUqtsFergZWluDQmoyZlF6l1atL14wcGr7A6qWR1vWwND4RXQm06uin61hKcJ2roevFYDXMTTlD0r2aMYb2UAf5TvTMMt1h2wklPCunOYtnhneEzNy
+	oouW/s86QQkW2V6fK0EEHQ1OaQMXGeOxDr5C6lb+i9Uz1Piv1kvl/RupQQMFTZMYce781ja5t/Xafu/+2nBiyQ1Owkg96gKV3y0qC99OFFyM5czMIHiuqrnkXpj0oxc4h5abk/mTS3/GPbdwzH3vpxWF0r+XeYzDAJz85j/xZlKpVqs9emSrpPh1xv55MOrp5uFz5XlBY59zJB7Zf2+fDiOI8xUOFiFC0Tk6HRgTeEmFENpjUBFn1hvXduT5WNemMjCsovBnu3SPnuDhqlRMjyq09rzPQZ8VptI52sojFwbQk8czhNRiJuFpYZrN0BAdOuW6/qgd2F5/fpNIHx2wHdqnypkjBuogrI3MWmnKvAUDzSKwQ4NIuIJI9bWt/ZeFWcKtN3cDde9w7jhThXQK+nNu/jKdLtoMbBe2vGhE2MNTWeGLDIwVjrS/XatXyu79y/k6Epy3E+g/NYBgbLmu/isFVUj6oMfu0/Vzb8tmsOiHlS/pNKqUMcO2uU9vR3jdQFqryOPEAj2r3exVINn/nrJxhp2pkh7iIWnYmOvubgQiyzOXq/qXPIiWd7wNnQcbEUvCryAPRCvj+SSXtHO/CVpcxyqEfrIkqPVjoLX2c6e6V8+JqWDXUMp9n8oAclC/5kvIBxvOvt6vixCLBrLv6t8YbXkVKmARw6+AgJqoaCqoWqyPSmK6mMQuxaXAyUF/3MbczfB4h5sszgquLSoj4b2RbyCBeY6iszP1uNpXESY=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SEZPR06MB5832.apcprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(23010399003)(1800799024)(376014)(7416014)(52116014)(11063799006)(56012099006)(18002099003)(6133799003)(921020)(38350700014);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SEZPR06MB5832.apcprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(23010399003)(52116014)(376014)(38350700014)(56012099006)(11063799006)(18002099003)(22082099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?Gm++FXjTYhidG/YOq9mDMeP/GsaWmq78sj8PLiBG+pGVYK7CultcMM31rXRU?=
- =?us-ascii?Q?oDgPZizZyPPqjbJxlqJdj6/mnLPmnQuiv4guPL9dnToe8ufRQbGqO02GwODR?=
- =?us-ascii?Q?+vuWO1JxmvbtXhM9afGoyVZKMuZQ1NnThwanWKYb9lDQsgOuJrgwa42DK47P?=
- =?us-ascii?Q?0pXmqTnAgn+t6QS9jBk9qa/q4CZpQ/3xxjy7uqSgYN3jlbf3hMZ76CwcX04Y?=
- =?us-ascii?Q?tWKZ6HVyPHYSbD1kf3I8rJbxzigWZJBpKt2D1auoMX/wmesFGcZLRliKp93n?=
- =?us-ascii?Q?ga9R5LG3KdWvW9vy45mV2sAuQczZpAH0oSX/CtlwZb/bDV3hBtLEUPLB0y1g?=
- =?us-ascii?Q?34HMlcMxL7ZcGtfkllzohooyTWVi924oWN2vYOn6n0+cJYXtdvlIppNbjOiP?=
- =?us-ascii?Q?73Yid07/KF9pBt1n0chkOYmuBHcx70AEaojcjf/AVGGjbUHUhggOrwzxBw8B?=
- =?us-ascii?Q?4SJeLDjgUT8joF5hzUKC/ddwdvf7iaTy4l7bVE7PwvZznbbYiBwVoASkKZlH?=
- =?us-ascii?Q?xrhwbJIzsGjbHLCWa6OsXtFs3Kv3TDNFNHkcQ2Vh6BWpAPOVAEJj1MgW+029?=
- =?us-ascii?Q?+naz+RgoJG9DLFC8K59PePvZ92DfinPGTWS2weVXrzjCqocn3He+o2qaBebE?=
- =?us-ascii?Q?wvhrq9UL5nxl79HAfMJDhzq068gZ6DJNXOqpp7HvS4NHtgNKm9LR6OnFDgbp?=
- =?us-ascii?Q?AS+40G4curgPbMRh/kSacHPIoJamN5AYVXdzCkFJ74QFaQ6Hh4WAMQrQ+rUc?=
- =?us-ascii?Q?r6gpDsRvqH/BH+xZS29GCoACMap7M5dcxSQYhrUCuPIAXDEaPVhbNsE9+AUu?=
- =?us-ascii?Q?pb8TSxwh4vqR1QnYNpiS/3Hd7OALUHTnniZTdqT9q6h9YPhd6B4bR/+gZhKa?=
- =?us-ascii?Q?JDocYS7NUfc/D6NSCfmVcnyY0MXOIlTFsINwBDfMNL8ejX7Pk6XtUPzQfIqi?=
- =?us-ascii?Q?J4mx3PZBKWcQBZjVQm/Yp5vmOhv0jJdA+SNKPf/eMSOTLuc0b+/jvlKZQCX+?=
- =?us-ascii?Q?TTyCA6DYdz76bJvm3oNdCkbLV5IMT7W2f+m+xoJvtZubERY+mU65bm5n1WLH?=
- =?us-ascii?Q?OrHvZCCvgMDIToqcl7L1JC4W5b3kTPyHloMFJT0b7T976BQkocPnMh7y+W+6?=
- =?us-ascii?Q?KpE6/0qzigzp6fJTTdLPVcbYB59PFV3B0FCBJ2vlj01RBG9PWb8SryktFY+T?=
- =?us-ascii?Q?1V5D5jAY2WT4aq360BnXOv3npX9RPoJtDqiLxKBUNklW1gvtFq8kDOml+92a?=
- =?us-ascii?Q?BBKcRtTmEx88CxRuI9x57Lx5+kNrWJsUmXKCIYX8h8QmiyXsmPV1Fn0mkWuA?=
- =?us-ascii?Q?ou3UQDB+DqGTY21esEO7P25EsJygET9mKnkJ9d6C+kYvd2peh9vMsAPkONDf?=
- =?us-ascii?Q?w66X33gl5nvcP2Cr07U0y50jmXBmKIoWWRm2fLe07qyjbwTTO7bDHowt4lPQ?=
- =?us-ascii?Q?XfPhDYNTZUhGQ+yblQ5b4mWfxjliLb7H6Ht7Fc+7lpJ2qYIWOitOZpSlbr5f?=
- =?us-ascii?Q?etXpt0iSzph70OqooPEhNKsTzcEt3+lZrxrTd6hQlayRy0yBmNqvE4nyJpZs?=
- =?us-ascii?Q?UnmmxLNNXnFU8Tq1i8bzFawN8gRNwZu0TDiYTkcUDj8oAve93HvRFmatG/+9?=
- =?us-ascii?Q?PHcpYMz19CkVmoYTcOVl/D+ynAT+9ArcKJ673iBnV0n4d4Ph2xvpliaHBolG?=
- =?us-ascii?Q?+w2S23Mmi+9oj1uRyvY8Yi5H+fS7oVP2T/fM7xTLB6x22FlqeXfbCDrNHC8W?=
- =?us-ascii?Q?0L4sN5FX1w=3D=3D?=
+	=?us-ascii?Q?iqVfNaPUzd8Sk9jtFk7AOC/ngzgoi39JBAokN0OyZoZxgEjDdH/kw6XmjzB7?=
+ =?us-ascii?Q?ETk294FGjKsbIT1yPgvT3FwZqo94hrA+z8wSg+ozzpYLscUVTfcW0+pXvKpC?=
+ =?us-ascii?Q?7+gkgmF5ziKsXpu7CHwKG2DfNvMSZun8JQN8bCXFjSaFLNix1Ek0kvkygshN?=
+ =?us-ascii?Q?vXa9iaWLhynbYSJtRwzZuRRbkISs6w1sGbF9B8oCN89MpouuoTErTK2nABpt?=
+ =?us-ascii?Q?tawT56Q8tgqPv0MaKHHnwpigDnJrShtYV+JHqVtS38oV/B6CP47Ck4UD77Bl?=
+ =?us-ascii?Q?xgpXWlmmukzzBTHmBS2Y1SqPrMhno9gwPXV98RIH/2/92FAP2AzjWVtsQtY6?=
+ =?us-ascii?Q?MUAsxCuxLjvlLAKng7BhjaBN6GCs5aCIlHFOlMZ9NNugMHf+/7E3cU0Vzq8t?=
+ =?us-ascii?Q?ueIAEZp3hvzrNbz0SP2qAGfnHlxy3tfL1o7P3W1wh0aBBxiRycwxVt/GKZc9?=
+ =?us-ascii?Q?v/WwWMqaeSYhF2WwAEyM+I039vVx12eDKZdYEHjZmqylEySwbUSFtZgd/a4V?=
+ =?us-ascii?Q?Vz0Lc5HpStgm9BiHIISs2EQzeguV0OoPKRcoPvQ7qKe7PXoYcTky22MBhhIR?=
+ =?us-ascii?Q?e6jdQaSLdlgX2Em+Tf6aDBOc/LpQG9F81FqV1tztkgIFd/BkwkfAyLXVGUDH?=
+ =?us-ascii?Q?1AlQ2K6OLFd77MZkhuibHfndv5TvyJWwfFvwuEQXsId50r4qmp34Bxk4V1Pm?=
+ =?us-ascii?Q?E6MpMyrgDkrjIUtOavOlL/jVo1q2UtAVVIX7TJ7P4OY445d+xXZl+WQJDhPC?=
+ =?us-ascii?Q?1gDQTyaQs4+AUAW8XXfHUiYTgRxRPEdCOEcmoj4A0kZjmrtvMcjNyRnK+C7L?=
+ =?us-ascii?Q?i+zBfhtna/rYP1mZpldBsO4qDvTQfulgZi8VzyfnFUrZPTqf/1z9Nd/UeX5y?=
+ =?us-ascii?Q?+jRBj9/rsIQMeThDz4vwGj0u4MsyJ3yd/+895jP13eu6lH3OwPToUpzXrxzR?=
+ =?us-ascii?Q?dSJLORePhpFQUBwLAxFXJxn7eBzs4T6C85e+5S3KKj2eyXzVN1sCpaSGp3p5?=
+ =?us-ascii?Q?BqKK+IPKhgFSnPb0TgNVT94GIbm/18WdTUbeNXNzQwpJOkmLPQOQ3GOOKy9M?=
+ =?us-ascii?Q?Z/P7GLvZcL6+UvHWGVugerJnH21cY8kk2ZxF/79ITPBCwvelaD56pIjBBHYN?=
+ =?us-ascii?Q?KAwOxxtkq00eWlF619ssuz3EQ8Q4KBYfmg7ql78gjgi1jtY100nk0j54RuXt?=
+ =?us-ascii?Q?ccvoV+642IP9dMVnhfCVnYjza3jyAGJNGd8Q+W1MLfd1mW6CiQ/X9bKF9OLN?=
+ =?us-ascii?Q?UUoK6btRylgfb3WGc+7lT0hQmN8Wg5wTkwUpwCD43Lv5zB9AR46RjRw1P7Mc?=
+ =?us-ascii?Q?Q2awVKM1LmaRt+0MUAyz7aYZ57zGTWq2NqpQ9tqLcwQfiSZEJXKJ3CxSfS7Q?=
+ =?us-ascii?Q?OwNVDieSGNd3gw///mKlevJZIvm+9t1ICPVXhX9sJrXzWuO9ibsgI5ccoizM?=
+ =?us-ascii?Q?PXz9bPtFxF71IAfFa+NUZGgJl7ivrlO6WMstF7hhZJrdFKRPoPkUHCw0/LJz?=
+ =?us-ascii?Q?AkHex6ypCRCPsKiQb60auJ7UhtbcvLkPsY71blrYCuL+x4MQ4w7qCWCKKtJ5?=
+ =?us-ascii?Q?ypMefplyYLDvp7DRpIipyfCDVykKZdZ2zYLN3v7fcffSZGrc+2FAyPj5HR5a?=
+ =?us-ascii?Q?TCl/PgU+5gOekTsOluq32urL/tgRGjpEbh2TiLxC1uc+NfNf9QsPTLBcknIH?=
+ =?us-ascii?Q?BssPZUsMW+zZV/n40lUv0aInmhnIrChkSUeQntPk10RIVCEaHPFcW0Uynrlf?=
+ =?us-ascii?Q?ytukupDEMw=3D=3D?=
 X-OriginatorOrg: vivo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: a2303c2f-d8ba-435a-dc1d-08dedd6b07cc
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9ba71a50-0b0c-4482-a492-08dedd6b1f67
 X-MS-Exchange-CrossTenant-AuthSource: SEZPR06MB5832.apcprd06.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Jul 2026 03:34:49.7346
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Jul 2026 03:35:29.2975
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 923e42dc-48d5-4cbe-b582-1a797a6412ed
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: WhJoL70c7Z48w8Et6VIKeRc3R+ZzNUJdv2Ale4Ygp3C6mEr87vMLZ9leLvs2/2LlHbvQxSqDyChlw2xakVfeqw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEYPR06MB6360
+X-MS-Exchange-CrossTenant-UserPrincipalName: XPUJXqdGTcdydrSLZckyWZk/pGHMJqR/l9lO3SUJb0z7fWMcgJRXIe6wYu13MbvhZZRet53TQNryAQxsZNoIcA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYZPR06MB6213
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [2.84 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
-	ARC_REJECT(1.00)[cv is fail on i=2];
+X-Spamd-Result: default: False [1.34 / 15.00];
 	MID_CONTAINS_FROM(1.00)[];
-	DMARC_POLICY_ALLOW(-0.50)[vivo.com,quarantine];
+	ARC_REJECT(1.00)[cv is fail on i=2];
 	R_MISSING_CHARSET(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[vivo.com,quarantine];
 	R_DKIM_ALLOW(-0.20)[vivo.com:s=selector2];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-117827-lists,linux-arm-msm=lfdr.de];
-	MIME_TRACE(0.00)[0:+];
-	RCPT_COUNT_TWELVE(0.00)[21];
-	FREEMAIL_TO(0.00)[kernel.org,diasemi.com,google.com,gmail.com,collabora.com,linaro.org,linux.alibaba.com,vger.kernel.org,lists.infradead.org,lists.linux.dev];
+	TAGGED_FROM(0.00)[bounces-117828-lists,linux-arm-msm=lfdr.de];
+	TO_DN_SOME(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:sre@kernel.org,m:linusw@kernel.org,m:wens@kernel.org,m:hansg@kernel.org,m:support.opensource@diasemi.com,m:amitsd@google.com,m:sravanhome@gmail.com,m:matthias.bgg@gmail.com,m:angelogioacchino.delregno@collabora.com,m:samkay014@gmail.com,m:casey.connolly@linaro.org,m:orsonzhai@gmail.com,m:baolin.wang@linux.alibaba.com,m:zhang.lyra@gmail.com,m:linux-pm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-arm-kernel@lists.infradead.org,m:linux-mediatek@lists.infradead.org,m:imx@lists.linux.dev,m:linux-arm-msm@vger.kernel.org,m:panchuang@vivo.com,m:matthiasbgg@gmail.com,m:zhanglyra@gmail.com,s:lists@lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
+	MIME_TRACE(0.00)[0:+];
 	FORWARDED(0.00)[lists@lfdr.de];
 	FORGED_SENDER(0.00)[panchuang@vivo.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[vivo.com:+];
+	FORGED_RECIPIENTS(0.00)[m:sre@kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-pm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:panchuang@vivo.com,s:lists@lfdr.de];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCPT_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[panchuang@vivo.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
+	DKIM_TRACE(0.00)[vivo.com:+];
 	RCVD_COUNT_FIVE(0.00)[5];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,vivo.com:from_mime,vivo.com:dkim,vivo.com:mid]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vivo.com:from_mime,vivo.com:email,vivo.com:mid,vivo.com:dkim,vger.kernel.org:from_smtp,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 401F272C543
+X-Rspamd-Queue-Id: 0CA4772C613
 
-Commit 55b48e23f5c4b6f5ca9b7ab09599b17dcf501c10 ("genirq/devres: Add
-error handling in devm_request_*_irq()") added automatic error logging
-to devm_request_threaded_irq() and devm_request_any_context_irq() via
-the new devm_request_result() helper. The helper prints device name,
-IRQ number, handler functions, and error code on failure.
+The devm_request_threaded_irq() and devm_request_irq() now automatically
+log detailed error messages on failure. This eliminates the need for
+driver-specific dev_err() and dev_err_probe() calls that previously
+printed generic messages.
 
-Since devm_request_irq() is a static inline wrapper around
-devm_request_threaded_irq(), it also benefits from this automatic
-logging.
+Signed-off-by: Pan Chuang <panchuang@vivo.com>
+---
+ drivers/power/supply/qcom_smbb.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-This series removes the now-redundant dev_err() and dev_err_probe() calls
-in power drivers that follow these devm_request_*_irq() functions, as the
-core now provides more detailed diagnostic information on failure.
-
-Pan Chuang (43):
-  power: reset: pwr-mlxbf: Remove redundant dev_err()/dev_err_probe()
-  power: supply: 88pm860x_battery: Remove redundant
-    dev_err()/dev_err_probe()
-  power: supply: 88pm860x_charger: Remove redundant
-    dev_err()/dev_err_probe()
-  power: supply: ab8500_btemp: Remove redundant
-    dev_err()/dev_err_probe()
-  power: supply: ab8500_charger: Remove redundant
-    dev_err()/dev_err_probe()
-  power: supply: ab8500_fg: Remove redundant dev_err()/dev_err_probe()
-  power: supply: act8945a_charger: Remove redundant
-    dev_err()/dev_err_probe()
-  power: supply: axp20x_ac_power: Remove redundant
-    dev_err()/dev_err_probe()
-  power: supply: axp20x_usb_power: Remove redundant
-    dev_err()/dev_err_probe()
-  power: supply: axp288_charger: Remove redundant
-    dev_err()/dev_err_probe()
-  power: supply: axp288_fuel_gauge: Remove redundant
-    dev_err()/dev_err_probe()
-  power: supply: bq24190_charger: Remove redundant
-    dev_err()/dev_err_probe()
-  power: supply: bq24257_charger: Remove redundant
-    dev_err()/dev_err_probe()
-  power: supply: bq24735-charger: Remove redundant
-    dev_err()/dev_err_probe()
-  power: supply: bq256xx_charger: Remove redundant
-    dev_err()/dev_err_probe()
-  power: supply: bq257xx_charger: Remove redundant
-    dev_err()/dev_err_probe()
-  power: supply: cpcap-battery: Remove redundant
-    dev_err()/dev_err_probe()
-  power: supply: cpcap-charger: Remove redundant
-    dev_err()/dev_err_probe()
-  power: supply: da9150-fg: Remove redundant dev_err()/dev_err_probe()
-  power: supply: generic-adc-battery: Remove redundant
-    dev_err()/dev_err_probe()
-  power: supply: max14656_charger_detector: Remove redundant
-    dev_err()/dev_err_probe()
-  power: supply: max77759_charger: Remove redundant
-    dev_err()/dev_err_probe()
-  power: supply: max8903_charger: Remove redundant
-    dev_err()/dev_err_probe()
-  power: supply: max8971_charger: Remove redundant
-    dev_err()/dev_err_probe()
-  power: supply: mp2629_charger: Remove redundant
-    dev_err()/dev_err_probe()
-  power: supply: mt6360_charger: Remove redundant
-    dev_err()/dev_err_probe()
-  power: supply: mt6370-charger: Remove redundant
-    dev_err()/dev_err_probe()
-  power: supply: pf1550-charger: Remove redundant
-    dev_err()/dev_err_probe()
-  power: supply: qcom_smbb: Remove redundant dev_err()/dev_err_probe()
-  power: supply: qcom_smbx: Remove redundant dev_err()/dev_err_probe()
-  power: supply: rk817_charger: Remove redundant
-    dev_err()/dev_err_probe()
-  power: supply: rn5t618_power: Remove redundant
-    dev_err()/dev_err_probe()
-  power: supply: rt9455_charger: Remove redundant
-    dev_err()/dev_err_probe()
-  power: supply: rt9467-charger: Remove redundant
-    dev_err()/dev_err_probe()
-  power: supply: rt9471: Remove redundant dev_err()/dev_err_probe()
-  power: supply: sbs-charger: Remove redundant dev_err()/dev_err_probe()
-  power: supply: sc27xx_fuel_gauge: Remove redundant
-    dev_err()/dev_err_probe()
-  power: supply: surface-rt-ec: Remove redundant
-    dev_err()/dev_err_probe()
-  power: supply: tps65090-charger: Remove redundant
-    dev_err()/dev_err_probe()
-  power: supply: tps65217_charger: Remove redundant
-    dev_err()/dev_err_probe()
-  power: supply: twl4030_charger: Remove redundant
-    dev_err()/dev_err_probe()
-  power: supply: twl6030_charger: Remove redundant
-    dev_err()/dev_err_probe()
-  power: supply: ucs1002_power: Remove redundant
-    dev_err()/dev_err_probe()
-
- drivers/power/reset/pwr-mlxbf.c                  |  2 --
- drivers/power/supply/88pm860x_battery.c          | 10 ++--------
- drivers/power/supply/88pm860x_charger.c          |  5 +----
- drivers/power/supply/ab8500_btemp.c              |  5 +----
- drivers/power/supply/ab8500_charger.c            |  5 +----
- drivers/power/supply/ab8500_fg.c                 |  2 --
- drivers/power/supply/act8945a_charger.c          |  4 +---
- drivers/power/supply/axp20x_ac_power.c           |  5 +----
- drivers/power/supply/axp20x_usb_power.c          |  5 +----
- drivers/power/supply/axp288_charger.c            |  3 +--
- drivers/power/supply/axp288_fuel_gauge.c         |  2 +-
- drivers/power/supply/bq24190_charger.c           |  4 +---
- drivers/power/supply/bq24257_charger.c           |  4 +---
- drivers/power/supply/bq24735-charger.c           |  6 +-----
- drivers/power/supply/bq256xx_charger.c           |  4 +---
- drivers/power/supply/bq257xx_charger.c           |  2 --
- drivers/power/supply/cpcap-battery.c             |  6 +-----
- drivers/power/supply/cpcap-charger.c             |  6 +-----
- drivers/power/supply/da9150-fg.c                 |  4 +---
- drivers/power/supply/generic-adc-battery.c       |  2 +-
- drivers/power/supply/max14656_charger_detector.c |  4 +---
- drivers/power/supply/max77759_charger.c          |  4 +---
- drivers/power/supply/max8903_charger.c           | 15 +++------------
- drivers/power/supply/max8971_charger.c           |  2 +-
- drivers/power/supply/mp2629_charger.c            |  4 +---
- drivers/power/supply/mt6360_charger.c            |  3 +--
- drivers/power/supply/mt6370-charger.c            |  4 +---
- drivers/power/supply/pf1550-charger.c            |  3 +--
- drivers/power/supply/qcom_smbb.c                 |  5 +----
- drivers/power/supply/qcom_smbx.c                 |  3 +--
- drivers/power/supply/rk817_charger.c             | 12 ++++--------
- drivers/power/supply/rn5t618_power.c             |  5 +----
- drivers/power/supply/rt9455_charger.c            |  4 +---
- drivers/power/supply/rt9467-charger.c            |  3 +--
- drivers/power/supply/rt9471.c                    |  3 +--
- drivers/power/supply/sbs-charger.c               |  2 +-
- drivers/power/supply/sc27xx_fuel_gauge.c         |  8 ++------
- drivers/power/supply/surface-rt-ec.c             |  2 +-
- drivers/power/supply/tps65090-charger.c          |  6 +-----
- drivers/power/supply/tps65217_charger.c          |  6 +-----
- drivers/power/supply/twl4030_charger.c           | 10 ++--------
- drivers/power/supply/twl6030_charger.c           |  4 +---
- drivers/power/supply/ucs1002_power.c             | 10 ++--------
- 43 files changed, 49 insertions(+), 159 deletions(-)
-
+diff --git a/drivers/power/supply/qcom_smbb.c b/drivers/power/supply/qcom_smbb.c
+index 28afe758a2da..f33aab9619c4 100644
+--- a/drivers/power/supply/qcom_smbb.c
++++ b/drivers/power/supply/qcom_smbb.c
+@@ -937,11 +937,8 @@ static int smbb_charger_probe(struct platform_device *pdev)
+ 		rc = devm_request_threaded_irq(&pdev->dev, irq, NULL,
+ 				smbb_charger_irqs[i].handler, IRQF_ONESHOT,
+ 				smbb_charger_irqs[i].name, chg);
+-		if (rc) {
+-			dev_err(&pdev->dev, "failed to request irq '%s'\n",
+-				smbb_charger_irqs[i].name);
++		if (rc)
+ 			return rc;
+-		}
+ 	}
+ 
+ 	/*
 -- 
 2.34.1
 
