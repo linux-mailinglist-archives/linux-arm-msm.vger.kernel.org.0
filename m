@@ -1,105 +1,105 @@
-Return-Path: <linux-arm-msm+bounces-117854-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-117855-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id 4jxEERM/T2oycwIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-117854-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Jul 2026 08:26:27 +0200
+	id 7aEQBYc/T2pecwIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-117855-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Jul 2026 08:28:23 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id D151772D1C6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Jul 2026 08:26:26 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 779A872D237
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Jul 2026 08:28:22 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=e8drr8S6;
-	dkim=pass header.d=oss.qualcomm.com header.s=google header.b="h1daU/Fm";
+	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=Yd+vR+Ri;
+	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=iQHxMvjt;
 	dmarc=pass (policy=reject) header.from=qualcomm.com;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117854-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.232.135.74 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117854-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117855-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117855-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 39787300B599
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jul 2026 06:26:26 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 5CDD93070584
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jul 2026 06:26:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C65A93C1966;
-	Thu,  9 Jul 2026 06:26:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 074F33C1F47;
+	Thu,  9 Jul 2026 06:26:29 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF64E3BBFC0
-	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Jul 2026 06:26:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19D9B30BB94
+	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Jul 2026 06:26:12 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783578365; cv=none; b=i0Dvn1izfi/K4Em6Q2eNO8JUzbHOiPeh3XeBE8SyG2hIxzWw+OdiIUx3YiA9CYkQ15wdUZtEQrMavjpTHLUwM8adeIQIH8jwPrBVZJS+1WIqTniqfPP7lSNKGHYiIYftTO4aJZAfGQttgh7tWH2FdkX4uDHiMh0OMtWidjR53A0=
+	t=1783578385; cv=none; b=AoeMCDpVrINcZi22Lu7fXLBdGRazQv6YtMrapROk7geoRKSpWm8WkAD1pWb8H0B0kul51BN2uEC5MH4ileiidgslFX7HY2A2nj8bQhFSPJM3J+n6rZ8SyyXIBAIHk18KAlKsgZej0PT5ZKwnnpbQYrlLh1Y6JtbQopXBafKBsYc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783578365; c=relaxed/simple;
-	bh=b2izFxn+4IiiyKp9j0s8vQoNlL/tiuR3/hHtBJpHypk=;
+	s=arc-20240116; t=1783578385; c=relaxed/simple;
+	bh=qUNkuXWrcdVtB04kDk+E37DmPlOZJrpTJArSzZKtMVY=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Ti8HN5vti7dCV5b2flwowswBbXLaHCj0pqzdAjCx4pAJ8LoYwzrA25dtpzufaj1m28dVpC2PQksJU7tbEQ572PhPnNU3xPL32+Q9xb1g1F+siiUDgIkLhcvZ50JFtsTViAj43V6gh6QWF0iPGfy2zOSmO06aKQDih1EXFSJ0cHw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=e8drr8S6; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=h1daU/Fm; arc=none smtp.client-ip=205.220.168.131
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 669608WM712373
-	for <linux-arm-msm@vger.kernel.org>; Thu, 9 Jul 2026 06:25:57 GMT
+	 In-Reply-To:To:Cc; b=DEeXy0Z0kUFeV7rToMtTwnwHKQRv0CvgYoF6tvMUt8JChTmKQoc4PCxfDxkQ7/XjaP4FzrgrNuhaXfK7oGcJZ6ReF0dTLBho4qGl2NndBhvrBzm20+03xYOcn+2QPww1pgdZT8TlBvOLJ7ghlFOqElc+9apEAG0oavLG4Hl5HSk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Yd+vR+Ri; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=iQHxMvjt; arc=none smtp.client-ip=205.220.180.131
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66960SVx750282
+	for <linux-arm-msm@vger.kernel.org>; Thu, 9 Jul 2026 06:26:09 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	XkS0qjbBMR4bx7I0LwF03G25ZO0lBo870NfALSlDjq4=; b=e8drr8S6L/NQmGEG
-	+01bhR+Y+IVDfJc99E+U3BaaxSi87bNGogUvMwHI6OjC/MlcteROsVg0tpt15Uic
-	iK7VAiITAy4z0uDp3HZWFOV2k5QK6nBh7kDZzgPdwnpYFX3XI7qsHgUjQMLQHz/b
-	ArxVvks6Si/rwNIEsKdmhTEBMMftGG58nWCOrOC7m5YtsD8UPMf4wa6h/zpOn6Kd
-	XbmkXSpQPgXLJi6Ze7mkyXtmKBrEK6GaSw+IjuFVvDI6wB+AbUcmvtRZ3VfEDc9A
-	VWwcv7sjdTl0XE/dAh+qpiKbWJNYGFKX7u0XdpCpAfmQJM92BbfBXbaGUpe46D53
-	TDOQVw==
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fa55vg9g5-1
+	UFMApzgUBiN57ks2oOsTxl0jxniFCalkMhusL1AmBmM=; b=Yd+vR+RiSzmU2zUV
+	hZyKp52vpLsGuVzyaT3zoiCIQJ9LFu/DteNpajO0H43/bxH1s2YGKkgl6MANM3HP
+	0egOPDeL69RG9qjtaZEfkEFX+a0Y2ywQpdbfx8pwJii51VqEV7acKw9tQNY9LdB9
+	96ZN8G+ShctTdORDYx5YoKavz6FFQmM4bX4fi7Go+FVhQh4FwfC8kPoATDv76FMS
+	Zer+/y2MD3WKPVItAcKOprBxYYX9AzINFpOtKEDHqpGh2i271ucW7rrhJ+gXH8C8
+	YuwC3+8XQoo52D4lrgPQ68v5L/LKW2VkjHVjIGqcTxboeu1e7ONRU/Ay6RTtDKTf
+	b2PJZQ==
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f9wwfsmr1-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 09 Jul 2026 06:25:57 +0000 (GMT)
-Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-2ccb687f82eso26938925ad.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jul 2026 23:25:57 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 09 Jul 2026 06:26:09 +0000 (GMT)
+Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-2ccd1958e8fso20127065ad.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Jul 2026 23:26:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1783578357; x=1784183157; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1783578368; x=1784183168; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :content-type:mime-version:subject:date:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=XkS0qjbBMR4bx7I0LwF03G25ZO0lBo870NfALSlDjq4=;
-        b=h1daU/Fmx3Hjus0nNPbksoi6Jf8pbFseciWOCN4YLgPj71iue1cKb7Hp4j2kVzaY/D
-         J5D9vnP7FVEg4oxiBc7Fd3Ezch4tq98FZD5crtcHEbHhIGHBktvvt47QvyjsqkUUIr3I
-         K8pmMtrsSCAPHz4f7/LiavFMY332CaZJsbQ4KBRZ4ZTuSbSwVmvQvekwJj3qcxtp5iwE
-         UWgAEnTzmvXfZ+SIPZezGVboI14WegzBJA1qK0mITWIwmR0JNnO6XJ3+DWk9iIo54pAv
-         K2NjEnP0GtTT6nGRJZ8t+n6BRViTkxkT7LUoK/H7Qyxg4i959aRMBU6JoRlU/0Gs7Yf+
-         vUtA==
+        bh=UFMApzgUBiN57ks2oOsTxl0jxniFCalkMhusL1AmBmM=;
+        b=iQHxMvjtzHBgf24rsKnmlvUfcPKL/qkbft1RuLvi7Y6pUQ+gXRvWsvWJqKObrmHH7/
+         AeEfSofuEnAiJH6THvl0Ruyo8RoDrB95BahEpPjvSxqIvXcWN5hG3tE2ov8jljf7R3hg
+         f2v2g02pxbXDMRMERjAQrgWNgKtcR/JNBMJRQ6R2aVod1z6uHpoTvISgIiAQKWo72mFD
+         l39LogxgtSE//KMhDmbt1JzSqVJ3jBNZLe2m9DbpgEmvPhSoHWShYw9cWpvVPbyxfsVF
+         jWMJ9gkzRz9ujkYuUwCa75roLk8inAoxnCrJZZP9+ytiDxTi/wR1y+zoQQfNuj7sp7FQ
+         4wRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783578357; x=1784183157;
+        d=1e100.net; s=20251104; t=1783578368; x=1784183168;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :content-type:mime-version:subject:date:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=XkS0qjbBMR4bx7I0LwF03G25ZO0lBo870NfALSlDjq4=;
-        b=ZUgumwtjCzPzGicy9mOZaL6jMokspCo6ImrDr3q5xp0Jx4QkBYUAV9lhRa+Es3oq5N
-         4r5H1Hm4azxuuckBgGFI7XJllwDpRK2sqABcT7QNgv1kd8VZTYbcxeuWpCZBWg8JXGJd
-         SDiWWET0Mr0sg4IHDlasmM6jMD+lJ1JN3JzHE4/3ANB7pBl0chaPhw9/EUfbP0XCyB0n
-         FoFuS7D/laD5xb+aAsvigmJFAwnqoFApqPGDpqoZdDMGhjpJilzIbfSw3+t4chk2EZTx
-         zwWdrwwmZ3BGH7IhdcUA+rOyaYgdCVxv65PId4Sq0xG8BEfIHD07Kp9FXC2em86hMokI
-         m4RQ==
-X-Forwarded-Encrypted: i=1; AHgh+RojzM9QhUetSnUgVQOqYLZ2LFa53DP9U5AUFedNrMRpcxSkFRsNsjBvtrL6n506k5N6ErZ1x6mC15kMjWkV@vger.kernel.org
-X-Gm-Message-State: AOJu0YyV1QUJ7X88eJFOdbu+hjUq78ioOl6H3VdH84KOTTo6kh3MOVM0
-	CFjw0RxMYylyvZ4hwgkkwVLXnPZfN4fEx8rgkm6NtfeeLvakFCpwXprpILmLYFIE3npK1h7Q8H+
-	Tx4/KKDcQVlfSQLygt+8GN0odgPwT5aPeIv8lLuh5PgqXI8Hgse49KqtRZsY840WInGZ1
-X-Gm-Gg: AfdE7cm41pNphftVY4aZiM4Qo84sys70f1O41IN67ivtPGuCPaSzkB9NyEDgQyRyBVD
-	lyDhaiw9ZOQwKfYNKubFGbJv/BtTR9+slq+xnUFj22zeL1J4a65LJd8N7cGo1riVQhvRldahk8U
-	DbYQhcOUGGl1A+r4Kqkg5zwkwvSnkOSa98IuPKo5s8+yDpyBVD8JUtzrrWaSLXeQR5oFXSbKbjd
-	A5B0eyHgn2GheAxrdLLPe8y+QZIHJNa84EFEyYdJC63c3zpdaYfr08i/O/lpqi1zYaP3AwgCjq5
-	chEVdulcc9SxdCKbmrd41Zw/suJBHO4El9xEwyenssllv+fbO/TYOqKnLV2dDj5Er5AZ51uWjAI
-	4fm6AE8TBCUT1T7ccIEjX0ehFu4hz7lEBB+RJDOsm1+Au
-X-Received: by 2002:a17:902:daca:b0:2ca:c4a5:84bb with SMTP id d9443c01a7336-2ccea3a737fmr61763975ad.38.1783578356707;
-        Wed, 08 Jul 2026 23:25:56 -0700 (PDT)
-X-Received: by 2002:a17:902:daca:b0:2ca:c4a5:84bb with SMTP id d9443c01a7336-2ccea3a737fmr61763605ad.38.1783578356098;
-        Wed, 08 Jul 2026 23:25:56 -0700 (PDT)
+        bh=UFMApzgUBiN57ks2oOsTxl0jxniFCalkMhusL1AmBmM=;
+        b=PVNrkmhPt5ysSveBHrrhCQxhV0lxzBHdTMh4IcvI8YR0KrCYgQiEUOBi/WXyYfZKeN
+         /MkTKCDtOx8qeFFEBag7pQZwyHwBrbq2/h2A2Upo7hyVpus8idS8Td3vOIMvVIGSkivk
+         pXD8eba7jtUZ2qT8SWEOCxebucEHrpt1buC3DqYbLiB9KL0yrZBIu0Tmrqhwwtcg0+8n
+         cqXMcXj7jEfSI6gc0mk6K/EQ2G0NXPHTjH/dMAuDk6hkQoGFnsYJqljY1ubqIk3UzEJO
+         gpI3seQCxd3GUiiExNkZAB8xpQuyMW+D01xC+/0ObqeGfoozD6S0cQ7CnN98LntmlosT
+         rKFQ==
+X-Forwarded-Encrypted: i=1; AHgh+RomYTO/fUbNrorDGFsgGLW5UvK9bJ723FckVbJVa8ezDeJfrjqlVQYfFlGjLLkZPTj1ITg/uD1Uuyj4xAc0@vger.kernel.org
+X-Gm-Message-State: AOJu0YzavWCkxaWBV6JI1aAL+/P+cN1aWdwQi1K2Kc6pSZtMQDmA20Hs
+	mnvMO6puqd/r6Tp6Hmf3SRdRPWDlIxstm/tvnkX4YaW50qyKUpHkrQIKsuT/lDcL9aCntuWX58c
+	F2f2nF4vC5ZoJVb12LhAG92mnJJjjYUOntVP7B8XzPjBOffm9O6xAZ7bUgZvTsoso9qn3
+X-Gm-Gg: AfdE7cnSj4mVp6/xnoyxEZ0/31g5+LtvCcyZcJH0UktK4+tCDhT34Rt3ulcmXVT85Q7
+	rFaCnmKYSZLelGy4SCnqIsxSEvKPQCcgUpCiUh1GJAzVh1lqzboQcfI0GYhGbLgXXgkmEK/5jdH
+	CNUXNgd/vEGi7GOTcSklDdQ4VHZXeL+ekSYV8rHoFqDNvh7nMjWIiHcMhfB0mnmHvCa7xySNazE
+	g8UVNu9VaZIgWURT2CPx3116G2YUTWaCVh58kNPG3foQHj4Y92s/839/DA+IT/chaBnFQ6dkR75
+	WXVJIIimOaX6zvwEKqK8RtYjcbQNW44sNPCJa5EvkglxCeS9jJ0GIHspB4rxcvkKI/6EFmybxhU
+	TcVAU6IMHluQzw7Io4Z1TiNRTgP2Z1Kz8EB+OkySTsLBe
+X-Received: by 2002:a17:903:298f:b0:2c0:b6c7:227e with SMTP id d9443c01a7336-2ccea3485b7mr72525245ad.5.1783578368301;
+        Wed, 08 Jul 2026 23:26:08 -0700 (PDT)
+X-Received: by 2002:a17:903:298f:b0:2c0:b6c7:227e with SMTP id d9443c01a7336-2ccea3485b7mr72524695ad.5.1783578367691;
+        Wed, 08 Jul 2026 23:26:07 -0700 (PDT)
 Received: from hu-ptalari-hyd.qualcomm.com ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ccc9bf74cbsm37986405ad.18.2026.07.08.23.25.44
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ccc9bf74cbsm37986405ad.18.2026.07.08.23.25.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Jul 2026 23:25:55 -0700 (PDT)
+        Wed, 08 Jul 2026 23:26:07 -0700 (PDT)
 From: Praveen Talari <praveen.talari@oss.qualcomm.com>
-Date: Thu, 09 Jul 2026 11:55:14 +0530
-Subject: [PATCH 2/6] serial: 8250: update .pm callbacks to return int
+Date: Thu, 09 Jul 2026 11:55:15 +0530
+Subject: [PATCH 3/6] tty: serial: update .pm callbacks to return int
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -108,7 +108,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260709-add_return_check_for_uart_change_pm-v1-2-e85c6ffa8ec4@oss.qualcomm.com>
+Message-Id: <20260709-add_return_check_for_uart_change_pm-v1-3-e85c6ffa8ec4@oss.qualcomm.com>
 References: <20260709-add_return_check_for_uart_change_pm-v1-0-e85c6ffa8ec4@oss.qualcomm.com>
 In-Reply-To: <20260709-add_return_check_for_uart_change_pm-v1-0-e85c6ffa8ec4@oss.qualcomm.com>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -148,52 +148,53 @@ Cc: linux-kernel@vger.kernel.org, linux-serial@vger.kernel.org,
         aniket.randive@oss.qualcomm.com, chandana.chiluveru@oss.qualcomm.com,
         Praveen Talari <praveen.talari@oss.qualcomm.com>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1783578321; l=7834;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1783578321; l=13929;
  i=praveen.talari@oss.qualcomm.com; s=20251114; h=from:subject:message-id;
- bh=b2izFxn+4IiiyKp9j0s8vQoNlL/tiuR3/hHtBJpHypk=;
- b=DiGW1ZUts1Plz+MKuKKnKr4MwFWfW5eunK8R4MyGl0ZMAS/6fAayulfFs5o4Ae/dAXTYeNVbK
- +fgruC+Vge8B91yUCFVVeTpTzyXxnoAKhIaokLIyV6nwlSzhKWExJ8e
+ bh=qUNkuXWrcdVtB04kDk+E37DmPlOZJrpTJArSzZKtMVY=;
+ b=33rkx3Q4diRf5acWplYLWUgebCOis8BKueJFS0I1nhVhOUHCzaYBEY5s9tR3bAH/jgTDLPvqW
+ 9Aj9nwmg8NDAZZ7wCZoP7YsLbPjTm+0VnDUDzUnj92SYWNFfEGZTZMo
 X-Developer-Key: i=praveen.talari@oss.qualcomm.com; a=ed25519;
  pk=NGK/88fjyHXgfhIKwag7+uIytOmyOypvZ/hDFaYPEss=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA5MDA1OCBTYWx0ZWRfX37zy8u2P9qxc
- 4kG9v4maOm6MhsxdBjkNsmvGavnNixGWDnfHzzzTntsb/6mDq9N93wFGCliOmNPbVwg9Dm66mKk
- n05ydC0IC1yU/TuuFJHJ8BrWEQ1o4jthsNrg8jbXq2201sGKJGIaBfJThdPvlFfYdoIMkaHE2F1
- r2Sqs5spVZsMXNBtVAX2TQIc14PWt1Nmr7f1lvqx/6EJ4RVoMsOLHvafOdv8hU9sDePCMa90ZxW
- Xm3XbI/lkHGNpiZVJHD0Sav9O1z/O5bWLvJER2Ly9f00k53cdgOws2S1AQB5ogUd4aTFO4dfvg3
- FGVmhLouQlUGAymxzcGrY+A4rLGHEh0qm0RNggnlTpdTvTcg8k46whi20XR1iIacyIzJ7rchD2P
- mPi286ECwaa5N2hhm5J/2MTPRYTr3s1FheapIgTpHkoEHFPGNDQmS9Ra6kFcTPDj7LWBwPHkOoP
- GaJtIypIxBIVlkCEwsw==
-X-Authority-Analysis: v=2.4 cv=KfDidwYD c=1 sm=1 tr=0 ts=6a4f3ef5 cx=c_pps
- a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA5MDA1OCBTYWx0ZWRfX/vs+x5QOpxQ3
+ 6vpdH2liQSYUMSBmwFlRLUnkqha7SLBngVbKR41rLIRPzYRDNQ4iTJp3CK9p4S5uJOW+YWCZQtu
+ pe79EIMFGOA2zijmb7xRj6uLRzxsdF4MuJef+zS215vMTdH1vvOvZ4C135f51lHuRihP0OKIrUo
+ ous2/IHMtO63ajA+FVGhLQHT2YQ4H0MS6M3vyyvC8IDXL6yVh8zsvFvG1qUPr/sCAbCX4ZYz4al
+ dfo9yO+PUHkn1u/IeQ3iKAxChoZKOBUxvAa2l1E11UReBGUuhSDeUbGpP4UdsbDiLc0/ACLchrx
+ lfnaj9+zX3st6grmz2pSCMXS/ocjXaSHAanOfwjtj2W2oTpoEaoN2G0aAknQPJVgWmPZ3xZnJNq
+ 3MoRBvb8f8ZC/MadJvEViyEhbx3gAOg0Q64PJg/0DAMNQXI2RTqEE54/jpxAgYco+0xcLZ7uXor
+ jWDXzxyF9QVVUrK+vjg==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA5MDA1OCBTYWx0ZWRfX4P9bVt4nP8lF
+ 8n4TTmmW1n6wTZd12hwBwCW4ERAGmcHL+pmhCqq7TFyHgAZKDsm9ThBkSRODj61004Otn/PItsG
+ zoNUI7bOIjvTM2ZFmHQ8AZy4AJNr/ac=
+X-Proofpoint-ORIG-GUID: UvSnFM-S8AiMtVxPM2PAqaJqcpZAqN9u
+X-Proofpoint-GUID: UvSnFM-S8AiMtVxPM2PAqaJqcpZAqN9u
+X-Authority-Analysis: v=2.4 cv=Krh9H2WN c=1 sm=1 tr=0 ts=6a4f3f01 cx=c_pps
+ a=JL+w9abYAAE89/QcEU+0QA==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
  a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
- a=EUspDBNiAAAA:8 a=MdvWXRze9gsMBWCGvMoA:9 a=QEXdDO2ut3YA:10
- a=GvdueXVYPmCkWapjIL-Q:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA5MDA1OCBTYWx0ZWRfXx4A6Hjq21w35
- VIljSpz2s+Hg+PplYRtPfNzHjBUUQ5RyXdlU8wSlxrAvyXgCv1edOK7R2dYPTQgwe0DTqtBF2s6
- 2lH7t7dWcBMzZ926uPonPa76I79QZFA=
-X-Proofpoint-ORIG-GUID: iiwsJTrUcIwKCENoGO0dL4Ve3hpDX7zY
-X-Proofpoint-GUID: iiwsJTrUcIwKCENoGO0dL4Ve3hpDX7zY
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
+ a=EUspDBNiAAAA:8 a=5x3-L-KNCuIJjzK26vwA:9 a=QEXdDO2ut3YA:10
+ a=324X-CrmTo6CU4MGRt3R:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-09_01,2026-07-08_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 impostorscore=0 lowpriorityscore=0 phishscore=0 malwarescore=0
- adultscore=0 clxscore=1015 priorityscore=1501 spamscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607090058
+ clxscore=1015 phishscore=0 priorityscore=1501 impostorscore=0
+ lowpriorityscore=0 adultscore=0 spamscore=0 suspectscore=0 bulkscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2607090058
 X-Rspamd-Action: no action
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-117854-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-117855-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	RCPT_COUNT_TWELVE(0.00)[41];
 	FORWARDED(0.00)[lists@lfdr.de];
@@ -202,8 +203,8 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
  g,m:linux-stm32@st-md-mailman.stormreply.com,m:linux-omap@vger.kernel.org,m:linux-mips@vger.kernel.org,m:mukesh.savaliya@oss.qualcomm.com,m:aniket.randive@oss.qualcomm.com,m:chandana.chiluveru@oss.qualcomm.com,m:praveen.talari@oss.qualcomm.com,m:matthiasbgg@gmail.com,m:zhanglyra@gmail.com,m:mcoquelinstm32@gmail.com,s:lists@lfdr.de];
 	FORGED_SENDER(0.00)[praveen.talari@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,vger.kernel.org:from_smtp,oss.qualcomm.com:from_mime,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,uart_port.pm:url,qualcomm.com:email,qualcomm.com:dkim,uart_ops.pm:url];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,oss.qualcomm.com:from_mime,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,uart_ops.pm:url,qualcomm.com:email,qualcomm.com:dkim];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
@@ -218,216 +219,403 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
 	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: D151772D1C6
+X-Rspamd-Queue-Id: 779A872D237
 
-The uart_ops.pm and uart_port.pm callback signatures have been changed
-from void to int. Update all 8250 .pm implementations to match.
+The uart_ops.pm callback signature has been changed from void to int.
+Update all remaining non-8250 serial driver .pm implementations to match
+the new signature by returning 0.
 
-serial8250_do_pm() is the core 8250 power management helper, exported
-for use by sub-drivers. Change its return type from void to int and
-update its declaration in include/linux/serial_8250.h accordingly.
-serial8250_do_pm() always returns 0.
+The sh-sci driver exports sci_pm() for reuse by rsci.c; update the
+forward declaration in sh-sci-common.h accordingly.
 
-serial8250_pm() is the uart_ops.pm entry point for the 8250 driver. It
-delegates to a per-port pm function stored in uart_port.pm or falls back
-to serial8250_do_pm(). Both paths are called for their side effects and
-the function returns 0.
-
-The remaining sub-driver callbacks perform their PM work through
-platform-specific helpers (clocks, runtime PM, GPIO) and currently have
-no error paths of their own. Update them to return 0 to satisfy the new
-signature; individual error propagation can be added per-driver as
-needed.
-
-  8250_exar: exar_pm()
-  8250_mtk:  mtk8250_do_pm()
-  8250_omap: omap_8250_pm()
-  8250_pxa:  serial_pxa_pm()
+Drivers updated:
+  atmel_serial:    atmel_serial_pm()
+  dz:              dz_pm()
+  fsl_lpuart:      lpuart_uart_pm()
+  msm_serial:      msm_power()
+  omap-serial:     serial_omap_pm()
+  pxa:             serial_pxa_pm()
+  qcom_geni_serial: qcom_geni_serial_pm()
+  samsung_tty:     s3c24xx_serial_pm()
+  sc16is7xx:       sc16is7xx_pm()
+  serial_txx9:     serial_txx9_pm()
+  sh-sci/rsci:     sci_pm()
+  sprd_serial:     sprd_pm()
+  st-asc:          asc_pm()
+  stm32-usart:     stm32_usart_pm()
+  uartlite:        ulite_pm()
+  xilinx_uartps:   cdns_uart_pm()
+  zs:              zs_pm()
 
 No functional change intended.
 
 Signed-off-by: Praveen Talari <praveen.talari@oss.qualcomm.com>
 ---
- drivers/tty/serial/8250/8250_dw.c   | 3 ++-
- drivers/tty/serial/8250/8250_exar.c | 4 +++-
- drivers/tty/serial/8250/8250_mtk.c  | 4 +++-
- drivers/tty/serial/8250/8250_omap.c | 6 ++++--
- drivers/tty/serial/8250/8250_port.c | 9 ++++++---
- drivers/tty/serial/8250/8250_pxa.c  | 6 ++++--
- include/linux/serial_8250.h         | 6 +++---
- 7 files changed, 25 insertions(+), 13 deletions(-)
+ drivers/tty/serial/atmel_serial.c     | 5 +++--
+ drivers/tty/serial/fsl_lpuart.c       | 3 ++-
+ drivers/tty/serial/msm_serial.c       | 5 +++--
+ drivers/tty/serial/omap-serial.c      | 3 ++-
+ drivers/tty/serial/pxa.c              | 3 ++-
+ drivers/tty/serial/qcom_geni_serial.c | 5 +++--
+ drivers/tty/serial/samsung_tty.c      | 5 +++--
+ drivers/tty/serial/sc16is7xx.c        | 5 +++--
+ drivers/tty/serial/serial_txx9.c      | 3 ++-
+ drivers/tty/serial/sh-sci-common.h    | 4 ++--
+ drivers/tty/serial/sh-sci.c           | 5 +++--
+ drivers/tty/serial/sprd_serial.c      | 5 +++--
+ drivers/tty/serial/st-asc.c           | 5 +++--
+ drivers/tty/serial/stm32-usart.c      | 5 +++--
+ drivers/tty/serial/uartlite.c         | 5 +++--
+ drivers/tty/serial/xilinx_uartps.c    | 5 +++--
+ 16 files changed, 43 insertions(+), 28 deletions(-)
 
-diff --git a/drivers/tty/serial/8250/8250_dw.c b/drivers/tty/serial/8250/8250_dw.c
-index 5fba913f3301..7d5fa11d685f 100644
---- a/drivers/tty/serial/8250/8250_dw.c
-+++ b/drivers/tty/serial/8250/8250_dw.c
-@@ -458,7 +458,7 @@ static int dw8250_handle_irq(struct uart_port *p)
- 	return 1;
- }
- 
--static void
-+static int
- dw8250_do_pm(struct uart_port *port, unsigned int state, unsigned int old)
+diff --git a/drivers/tty/serial/atmel_serial.c b/drivers/tty/serial/atmel_serial.c
+index 5d8c1cfc1c60..bcbcb77d4df8 100644
+--- a/drivers/tty/serial/atmel_serial.c
++++ b/drivers/tty/serial/atmel_serial.c
+@@ -2063,8 +2063,8 @@ static void atmel_shutdown(struct uart_port *port)
+ /*
+  * Power / Clock management.
+  */
+-static void atmel_serial_pm(struct uart_port *port, unsigned int state,
+-			    unsigned int oldstate)
++static int atmel_serial_pm(struct uart_port *port, unsigned int state,
++			   unsigned int oldstate)
  {
- 	if (!state)
-@@ -468,6 +468,7 @@ dw8250_do_pm(struct uart_port *port, unsigned int state, unsigned int old)
+ 	struct atmel_uart_port *atmel_port = to_atmel_uart_port(port);
  
- 	if (state)
- 		pm_runtime_put_sync_suspend(port->dev);
-+	return 0;
- }
- 
- static void dw8250_set_termios(struct uart_port *p, struct ktermios *termios,
-diff --git a/drivers/tty/serial/8250/8250_exar.c b/drivers/tty/serial/8250/8250_exar.c
-index c682c0d0dffa..0d0026ea155f 100644
---- a/drivers/tty/serial/8250/8250_exar.c
-+++ b/drivers/tty/serial/8250/8250_exar.c
-@@ -419,7 +419,7 @@ static const struct serial_rs485 generic_rs485_supported = {
- 	.flags = SER_RS485_ENABLED | SER_RS485_RTS_ON_SEND,
- };
- 
--static void exar_pm(struct uart_port *port, unsigned int state, unsigned int old)
-+static int exar_pm(struct uart_port *port, unsigned int state, unsigned int old)
- {
- 	/*
- 	 * Exar UARTs have a SLEEP register that enables or disables each UART
-@@ -428,6 +428,8 @@ static void exar_pm(struct uart_port *port, unsigned int state, unsigned int old
- 	 * the UART channel may only write to the corresponding bit.
- 	 */
- 	serial_port_out(port, UART_EXAR_SLEEP, state ? 0xff : 0);
-+
+@@ -2095,6 +2095,7 @@ static void atmel_serial_pm(struct uart_port *port, unsigned int state,
+ 	default:
+ 		dev_err(port->dev, "atmel_serial: unknown pm %d\n", state);
+ 	}
 +	return 0;
  }
  
  /*
-diff --git a/drivers/tty/serial/8250/8250_mtk.c b/drivers/tty/serial/8250/8250_mtk.c
-index e6a56cf54ae0..9184b1eeddd7 100644
---- a/drivers/tty/serial/8250/8250_mtk.c
-+++ b/drivers/tty/serial/8250/8250_mtk.c
-@@ -452,7 +452,7 @@ static int __maybe_unused mtk8250_runtime_resume(struct device *dev)
+diff --git a/drivers/tty/serial/fsl_lpuart.c b/drivers/tty/serial/fsl_lpuart.c
+index b7919c05f0fb..a6b6fb7aca88 100644
+--- a/drivers/tty/serial/fsl_lpuart.c
++++ b/drivers/tty/serial/fsl_lpuart.c
+@@ -820,7 +820,7 @@ static void lpuart32_start_tx(struct uart_port *port)
+ 	}
+ }
+ 
+-static void
++static int
+ lpuart_uart_pm(struct uart_port *port, unsigned int state, unsigned int oldstate)
+ {
+ 	switch (state) {
+@@ -832,6 +832,7 @@ lpuart_uart_pm(struct uart_port *port, unsigned int state, unsigned int oldstate
+ 		pm_runtime_get_sync(port->dev);
+ 		break;
+ 	}
++	return 0;
+ }
+ 
+ /* return TIOCSER_TEMT when transmitter is not busy */
+diff --git a/drivers/tty/serial/msm_serial.c b/drivers/tty/serial/msm_serial.c
+index 2e999cb9c974..33b663a3514c 100644
+--- a/drivers/tty/serial/msm_serial.c
++++ b/drivers/tty/serial/msm_serial.c
+@@ -1421,8 +1421,8 @@ static int msm_verify_port(struct uart_port *port, struct serial_struct *ser)
  	return 0;
  }
  
--static void
-+static int
- mtk8250_do_pm(struct uart_port *port, unsigned int state, unsigned int old)
+-static void msm_power(struct uart_port *port, unsigned int state,
+-		      unsigned int oldstate)
++static int msm_power(struct uart_port *port, unsigned int state,
++		     unsigned int oldstate)
  {
- 	if (!state)
-@@ -462,6 +462,8 @@ mtk8250_do_pm(struct uart_port *port, unsigned int state, unsigned int old)
+ 	struct msm_port *msm_port = to_msm_port(port);
  
- 	if (state)
- 		pm_runtime_put_sync_suspend(port->dev);
-+
+@@ -1440,6 +1440,7 @@ static void msm_power(struct uart_port *port, unsigned int state,
+ 	default:
+ 		pr_err("msm_serial: Unknown PM state %d\n", state);
+ 	}
 +	return 0;
  }
  
- #ifdef CONFIG_SERIAL_8250_DMA
-diff --git a/drivers/tty/serial/8250/8250_omap.c b/drivers/tty/serial/8250/8250_omap.c
-index c552c6b9a037..8f099afd6ff8 100644
---- a/drivers/tty/serial/8250/8250_omap.c
-+++ b/drivers/tty/serial/8250/8250_omap.c
-@@ -527,8 +527,8 @@ static void omap_8250_set_termios(struct uart_port *port,
+ #ifdef CONFIG_CONSOLE_POLL
+diff --git a/drivers/tty/serial/omap-serial.c b/drivers/tty/serial/omap-serial.c
+index a689d190940c..5029821e3559 100644
+--- a/drivers/tty/serial/omap-serial.c
++++ b/drivers/tty/serial/omap-serial.c
+@@ -1017,7 +1017,7 @@ serial_omap_set_termios(struct uart_port *port, struct ktermios *termios,
+ 	dev_dbg(up->port.dev, "serial_omap_set_termios+%d\n", up->port.line);
  }
  
- /* same as 8250 except that we may have extra flow bits set in EFR */
--static void omap_8250_pm(struct uart_port *port, unsigned int state,
--			 unsigned int oldstate)
-+static int omap_8250_pm(struct uart_port *port, unsigned int state,
-+			unsigned int oldstate)
+-static void
++static int
+ serial_omap_pm(struct uart_port *port, unsigned int state,
+ 	       unsigned int oldstate)
  {
- 	struct uart_8250_port *up = up_to_u8250p(port);
- 	u8 efr;
-@@ -546,6 +546,8 @@ static void omap_8250_pm(struct uart_port *port, unsigned int state,
+@@ -1035,6 +1035,7 @@ serial_omap_pm(struct uart_port *port, unsigned int state,
  	serial_out(up, UART_LCR, UART_LCR_CONF_MODE_B);
  	serial_out(up, UART_EFR, efr);
  	serial_out(up, UART_LCR, 0);
-+
 +	return 0;
  }
  
- static void omap_serial_fill_features_erratas(struct uart_8250_port *up,
-diff --git a/drivers/tty/serial/8250/8250_port.c b/drivers/tty/serial/8250/8250_port.c
-index 630deb7dd344..315e0a2fcc14 100644
---- a/drivers/tty/serial/8250/8250_port.c
-+++ b/drivers/tty/serial/8250/8250_port.c
-@@ -2848,16 +2848,18 @@ serial8250_set_ldisc(struct uart_port *port, struct ktermios *termios)
- 		serial8250_do_set_ldisc(port, termios);
+ static void serial_omap_release_port(struct uart_port *port)
+diff --git a/drivers/tty/serial/pxa.c b/drivers/tty/serial/pxa.c
+index 10fc8990579b..1f6541f251f9 100644
+--- a/drivers/tty/serial/pxa.c
++++ b/drivers/tty/serial/pxa.c
+@@ -507,7 +507,7 @@ serial_pxa_set_termios(struct uart_port *port, struct ktermios *termios,
+ 	uart_port_unlock_irqrestore(&up->port, flags);
  }
- 
--void serial8250_do_pm(struct uart_port *port, unsigned int state,
--		      unsigned int oldstate)
-+int serial8250_do_pm(struct uart_port *port, unsigned int state,
-+		     unsigned int oldstate)
- {
- 	struct uart_8250_port *p = up_to_u8250p(port);
- 
- 	serial8250_set_sleep(p, state != 0);
-+
-+	return 0;
- }
- EXPORT_SYMBOL(serial8250_do_pm);
  
 -static void
 +static int
- serial8250_pm(struct uart_port *port, unsigned int state,
+ serial_pxa_pm(struct uart_port *port, unsigned int state,
  	      unsigned int oldstate)
  {
-@@ -2865,6 +2867,7 @@ serial8250_pm(struct uart_port *port, unsigned int state,
- 		port->pm(port, state, oldstate);
+@@ -517,6 +517,7 @@ serial_pxa_pm(struct uart_port *port, unsigned int state,
+ 		clk_prepare_enable(up->clk);
  	else
- 		serial8250_do_pm(port, state, oldstate);
+ 		clk_disable_unprepare(up->clk);
 +	return 0;
  }
  
- static unsigned int serial8250_port_size(struct uart_8250_port *pt)
-diff --git a/drivers/tty/serial/8250/8250_pxa.c b/drivers/tty/serial/8250/8250_pxa.c
-index 6dd0190b4843..02f0037e0a31 100644
---- a/drivers/tty/serial/8250/8250_pxa.c
-+++ b/drivers/tty/serial/8250/8250_pxa.c
-@@ -76,8 +76,8 @@ static void serial_pxa_dl_write(struct uart_8250_port *up, u32 value)
+ static void serial_pxa_release_port(struct uart_port *port)
+diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
+index 7ead87b4eb65..17ab8acb3b8e 100644
+--- a/drivers/tty/serial/qcom_geni_serial.c
++++ b/drivers/tty/serial/qcom_geni_serial.c
+@@ -1724,8 +1724,8 @@ static int geni_serial_resource_init(struct uart_port *uport)
+ 	return 0;
  }
  
- 
--static void serial_pxa_pm(struct uart_port *port, unsigned int state,
--	      unsigned int oldstate)
-+static int serial_pxa_pm(struct uart_port *port, unsigned int state,
-+			 unsigned int oldstate)
+-static void qcom_geni_serial_pm(struct uart_port *uport,
+-		unsigned int new_state, unsigned int old_state)
++static int qcom_geni_serial_pm(struct uart_port *uport,
++			       unsigned int new_state, unsigned int old_state)
  {
- 	struct pxa8250_data *data = port->private_data;
  
-@@ -85,6 +85,8 @@ static void serial_pxa_pm(struct uart_port *port, unsigned int state,
- 		clk_prepare_enable(data->clk);
- 	else
- 		clk_disable_unprepare(data->clk);
-+
+ 	/* If we've never been called, treat it as off */
+@@ -1738,6 +1738,7 @@ static void qcom_geni_serial_pm(struct uart_port *uport,
+ 		 old_state == UART_PM_STATE_ON)
+ 		pm_runtime_put_sync(uport->dev);
+ 
 +	return 0;
  }
  
- static int serial_pxa_probe(struct platform_device *pdev)
-diff --git a/include/linux/serial_8250.h b/include/linux/serial_8250.h
-index a95b2d143d24..12916189c20c 100644
---- a/include/linux/serial_8250.h
-+++ b/include/linux/serial_8250.h
-@@ -57,7 +57,7 @@ struct plat_serial8250_port {
- 				     struct ktermios *);
- 	unsigned int	(*get_mctrl)(struct uart_port *);
- 	int		(*handle_irq)(struct uart_port *);
--	void		(*pm)(struct uart_port *, unsigned int state,
-+	int		(*pm)(struct uart_port *port, unsigned int state,
- 			      unsigned old);
- 	void		(*handle_break)(struct uart_port *);
- };
-@@ -189,8 +189,8 @@ void serial8250_do_set_ldisc(struct uart_port *port, struct ktermios *termios);
- unsigned int serial8250_do_get_mctrl(struct uart_port *port);
- int serial8250_do_startup(struct uart_port *port);
- void serial8250_do_shutdown(struct uart_port *port);
--void serial8250_do_pm(struct uart_port *port, unsigned int state,
--		      unsigned int oldstate);
-+int serial8250_do_pm(struct uart_port *port, unsigned int state,
-+		     unsigned int oldstate);
- void serial8250_do_set_mctrl(struct uart_port *port, unsigned int mctrl);
- void serial8250_do_set_divisor(struct uart_port *port, unsigned int baud,
- 			       unsigned int quot);
+ /**
+diff --git a/drivers/tty/serial/samsung_tty.c b/drivers/tty/serial/samsung_tty.c
+index 63d0232dffc2..4d35112cb153 100644
+--- a/drivers/tty/serial/samsung_tty.c
++++ b/drivers/tty/serial/samsung_tty.c
+@@ -1290,8 +1290,8 @@ static int apple_s5l_serial_startup(struct uart_port *port)
+ 	return ret;
+ }
+ 
+-static void s3c24xx_serial_pm(struct uart_port *port, unsigned int level,
+-			      unsigned int old)
++static int s3c24xx_serial_pm(struct uart_port *port, unsigned int level,
++			     unsigned int old)
+ {
+ 	struct s3c24xx_uart_port *ourport = to_ourport(port);
+ 	int timeout = 10000;
+@@ -1318,6 +1318,7 @@ static void s3c24xx_serial_pm(struct uart_port *port, unsigned int level,
+ 	default:
+ 		dev_err(port->dev, "s3c24xx_serial: unknown pm %d\n", level);
+ 	}
++	return 0;
+ }
+ 
+ /* baud rate calculation
+diff --git a/drivers/tty/serial/sc16is7xx.c b/drivers/tty/serial/sc16is7xx.c
+index daebd92f32c7..47fec6c5e3c2 100644
+--- a/drivers/tty/serial/sc16is7xx.c
++++ b/drivers/tty/serial/sc16is7xx.c
+@@ -1216,10 +1216,11 @@ static int sc16is7xx_verify_port(struct uart_port *port,
+ 	return 0;
+ }
+ 
+-static void sc16is7xx_pm(struct uart_port *port, unsigned int state,
+-			 unsigned int oldstate)
++static int sc16is7xx_pm(struct uart_port *port, unsigned int state,
++			unsigned int oldstate)
+ {
+ 	sc16is7xx_power(port, (state == UART_PM_STATE_ON) ? 1 : 0);
++	return 0;
+ }
+ 
+ static void sc16is7xx_null_void(struct uart_port *port)
+diff --git a/drivers/tty/serial/serial_txx9.c b/drivers/tty/serial/serial_txx9.c
+index 4ae9a45c8e3a..e97dea43708a 100644
+--- a/drivers/tty/serial/serial_txx9.c
++++ b/drivers/tty/serial/serial_txx9.c
+@@ -680,7 +680,7 @@ serial_txx9_set_termios(struct uart_port *up, struct ktermios *termios,
+ 	uart_port_unlock_irqrestore(up, flags);
+ }
+ 
+-static void
++static int
+ serial_txx9_pm(struct uart_port *port, unsigned int state,
+ 	      unsigned int oldstate)
+ {
+@@ -694,6 +694,7 @@ serial_txx9_pm(struct uart_port *port, unsigned int state,
+ 	 */
+ 	if (state == 0 && oldstate != -1)
+ 		serial_txx9_initialize(port);
++	return 0;
+ }
+ 
+ static int serial_txx9_request_resource(struct uart_port *up)
+diff --git a/drivers/tty/serial/sh-sci-common.h b/drivers/tty/serial/sh-sci-common.h
+index 01ff9fced803..2f03750094df 100644
+--- a/drivers/tty/serial/sh-sci-common.h
++++ b/drivers/tty/serial/sh-sci-common.h
+@@ -44,8 +44,8 @@ void sci_release_port(struct uart_port *port);
+ int sci_request_port(struct uart_port *port);
+ void sci_config_port(struct uart_port *port, int flags);
+ int sci_verify_port(struct uart_port *port, struct serial_struct *ser);
+-void sci_pm(struct uart_port *port, unsigned int state,
+-		   unsigned int oldstate);
++int sci_pm(struct uart_port *port, unsigned int state,
++	   unsigned int oldstate);
+ 
+ struct plat_sci_reg {
+ 	u8 offset;
+diff --git a/drivers/tty/serial/sh-sci.c b/drivers/tty/serial/sh-sci.c
+index 787e7cdc5e9c..36a08fd6677f 100644
+--- a/drivers/tty/serial/sh-sci.c
++++ b/drivers/tty/serial/sh-sci.c
+@@ -2931,8 +2931,8 @@ static void sci_set_termios(struct uart_port *port, struct ktermios *termios,
+ 		sci_enable_ms(port);
+ }
+ 
+-void sci_pm(struct uart_port *port, unsigned int state,
+-		   unsigned int oldstate)
++int sci_pm(struct uart_port *port, unsigned int state,
++	   unsigned int oldstate)
+ {
+ 	struct sci_port *sci_port = to_sci_port(port);
+ 
+@@ -2944,6 +2944,7 @@ void sci_pm(struct uart_port *port, unsigned int state,
+ 		sci_port_enable(sci_port);
+ 		break;
+ 	}
++	return 0;
+ }
+ EXPORT_SYMBOL_NS_GPL(sci_pm, "SH_SCI");
+ 
+diff --git a/drivers/tty/serial/sprd_serial.c b/drivers/tty/serial/sprd_serial.c
+index 092755f35683..571123f58232 100644
+--- a/drivers/tty/serial/sprd_serial.c
++++ b/drivers/tty/serial/sprd_serial.c
+@@ -900,8 +900,8 @@ static int sprd_verify_port(struct uart_port *port, struct serial_struct *ser)
+ 	return 0;
+ }
+ 
+-static void sprd_pm(struct uart_port *port, unsigned int state,
+-		unsigned int oldstate)
++static int sprd_pm(struct uart_port *port, unsigned int state,
++		   unsigned int oldstate)
+ {
+ 	struct sprd_uart_port *sup =
+ 		container_of(port, struct sprd_uart_port, port);
+@@ -914,6 +914,7 @@ static void sprd_pm(struct uart_port *port, unsigned int state,
+ 		clk_disable_unprepare(sup->clk);
+ 		break;
+ 	}
++	return 0;
+ }
+ 
+ #ifdef CONFIG_CONSOLE_POLL
+diff --git a/drivers/tty/serial/st-asc.c b/drivers/tty/serial/st-asc.c
+index 6ed9a327702b..39404bd94592 100644
+--- a/drivers/tty/serial/st-asc.c
++++ b/drivers/tty/serial/st-asc.c
+@@ -435,8 +435,8 @@ static void asc_shutdown(struct uart_port *port)
+ 	free_irq(port->irq, port);
+ }
+ 
+-static void asc_pm(struct uart_port *port, unsigned int state,
+-		unsigned int oldstate)
++static int asc_pm(struct uart_port *port, unsigned int state,
++		  unsigned int oldstate)
+ {
+ 	struct asc_port *ascport = to_asc_port(port);
+ 	unsigned long flags;
+@@ -459,6 +459,7 @@ static void asc_pm(struct uart_port *port, unsigned int state,
+ 		clk_disable_unprepare(ascport->clk);
+ 		break;
+ 	}
++	return 0;
+ }
+ 
+ static void asc_set_termios(struct uart_port *port, struct ktermios *termios,
+diff --git a/drivers/tty/serial/stm32-usart.c b/drivers/tty/serial/stm32-usart.c
+index ad06b760cfca..a4a93d3911f8 100644
+--- a/drivers/tty/serial/stm32-usart.c
++++ b/drivers/tty/serial/stm32-usart.c
+@@ -1418,8 +1418,8 @@ stm32_usart_verify_port(struct uart_port *port, struct serial_struct *ser)
+ 	return -EINVAL;
+ }
+ 
+-static void stm32_usart_pm(struct uart_port *port, unsigned int state,
+-			   unsigned int oldstate)
++static int stm32_usart_pm(struct uart_port *port, unsigned int state,
++			  unsigned int oldstate)
+ {
+ 	struct stm32_port *stm32port = container_of(port,
+ 			struct stm32_port, port);
+@@ -1438,6 +1438,7 @@ static void stm32_usart_pm(struct uart_port *port, unsigned int state,
+ 		pm_runtime_put_sync(port->dev);
+ 		break;
+ 	}
++	return 0;
+ }
+ 
+ #if defined(CONFIG_CONSOLE_POLL)
+diff --git a/drivers/tty/serial/uartlite.c b/drivers/tty/serial/uartlite.c
+index 6240c3d4dfd7..8e2d1d4dc10a 100644
+--- a/drivers/tty/serial/uartlite.c
++++ b/drivers/tty/serial/uartlite.c
+@@ -412,8 +412,8 @@ static int ulite_verify_port(struct uart_port *port, struct serial_struct *ser)
+ 	return -EINVAL;
+ }
+ 
+-static void ulite_pm(struct uart_port *port, unsigned int state,
+-		     unsigned int oldstate)
++static int ulite_pm(struct uart_port *port, unsigned int state,
++		    unsigned int oldstate)
+ {
+ 	int ret;
+ 
+@@ -425,6 +425,7 @@ static void ulite_pm(struct uart_port *port, unsigned int state,
+ 		pm_runtime_mark_last_busy(port->dev);
+ 		pm_runtime_put_autosuspend(port->dev);
+ 	}
++	return 0;
+ }
+ 
+ #ifdef CONFIG_CONSOLE_POLL
+diff --git a/drivers/tty/serial/xilinx_uartps.c b/drivers/tty/serial/xilinx_uartps.c
+index a072b75dbaf2..c81a57e0c77e 100644
+--- a/drivers/tty/serial/xilinx_uartps.c
++++ b/drivers/tty/serial/xilinx_uartps.c
+@@ -1231,8 +1231,8 @@ static void cdns_uart_poll_put_char(struct uart_port *port, unsigned char c)
+ }
+ #endif
+ 
+-static void cdns_uart_pm(struct uart_port *port, unsigned int state,
+-		   unsigned int oldstate)
++static int cdns_uart_pm(struct uart_port *port, unsigned int state,
++			unsigned int oldstate)
+ {
+ 	switch (state) {
+ 	case UART_PM_STATE_OFF:
+@@ -1243,6 +1243,7 @@ static void cdns_uart_pm(struct uart_port *port, unsigned int state,
+ 		pm_runtime_get_sync(port->dev);
+ 		break;
+ 	}
++	return 0;
+ }
+ 
+ static const struct uart_ops cdns_uart_ops = {
 
 -- 
 2.34.1
