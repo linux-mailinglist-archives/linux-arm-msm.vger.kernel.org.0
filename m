@@ -1,109 +1,123 @@
-Return-Path: <linux-arm-msm+bounces-117821-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-117822-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id RSoSGlQHT2pUZQIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-117821-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Jul 2026 04:28:36 +0200
+	id gDR5ARIIT2qKZQIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-117822-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Jul 2026 04:31:46 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id DC3A372BEEC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Jul 2026 04:28:35 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6F65072BF43
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Jul 2026 04:31:45 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=Nvidia.com header.s=selector2 header.b=bz5IKidz;
-	dmarc=pass (policy=reject) header.from=nvidia.com;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117821-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117821-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=vivo.com header.s=selector2 header.b="KwFXQ/xV";
+	dmarc=pass (policy=quarantine) header.from=vivo.com;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117822-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117822-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=reject ("cv is fail on i=2")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 21CFF3023F8F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jul 2026 02:28:23 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 5C651302734B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jul 2026 02:31:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3FB7F3264DE;
-	Thu,  9 Jul 2026 02:28:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B2332FF164;
+	Thu,  9 Jul 2026 02:31:41 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from PH0PR06CU001.outbound.protection.outlook.com (mail-westus3azon11011043.outbound.protection.outlook.com [40.107.208.43])
+Received: from TYPPR03CU001.outbound.protection.outlook.com (mail-japaneastazon11012052.outbound.protection.outlook.com [52.101.126.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D087A2E06E4;
-	Thu,  9 Jul 2026 02:28:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2469A14A60F;
+	Thu,  9 Jul 2026 02:31:38 +0000 (UTC)
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783564102; cv=fail; b=tlpbIcPANXsiMXy5iJ06PKTrz787c8SRaFHM7gH3VAjP1GcIjZWIo9BuHPMTyCow9tUdENZnfwpyM+tFggSeQLBMjl8TZeEXFDK8ibVOG4VDUC07H1i/tkXEImWiGNfXeZbqfxxkMqWmVKNpvRWSwbIfxF1+sFnB1aOKMf0ifew=
+	t=1783564301; cv=fail; b=rIxBJgKQB/IxUd9Yu9kRAWzYBWnKueGOrb1Rq9IrkNwcRrXOlJlp3kjtUk1rOxt9AftNKuQbJXwxfbTEeNmihhnF/wUjZ6tTETQ7XKYv+wdFF2uebGYRnUGQXufAG7lJMzTS69bjvdBgYudyKyAC1f4WfftEvDWfZqqjUSMnDW0=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783564102; c=relaxed/simple;
-	bh=628hE3qKJtKmhgz1J5dqnmQSJXhpojgwSEt0XJFiwHk=;
-	h=Content-Type:Date:Message-Id:Subject:Cc:To:From:References:
-	 In-Reply-To:MIME-Version; b=Vm/x+6xBFJbi3VSssHfYOjGEuz7jGt0qXTfhQEsIGMFppWdjPHNDbN405Ragin8uDZqEBu+eO1rPQiNjr/N0EFZP/1Ygl0U20N+hIN2o9qtPec4ReaO9/a2Y26TNHfys4pFEgXquYG4wz3rfKV5oOohc/bXWbQowpOSTdOFFOcQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=bz5IKidz; arc=fail smtp.client-ip=40.107.208.43
+	s=arc-20240116; t=1783564301; c=relaxed/simple;
+	bh=znMPjn/4IGaBlCiq5LG9W+TSBq1Cl6QNqKV8sEHd2mM=;
+	h=From:To:Subject:Date:Message-Id:Content-Type:MIME-Version; b=b5ezmZxLsOEqBdVDqXEVta5o6/3+sElK/cwiBJRGQQHa19RoQjr2gJpraVWq9wJhD15fqXJB3W8L6TNS96HcuZRaWpdPw0veAHy/5S6Ffh7q7TpD4HtvpPNo+CBKDt83ocCt2EJWwODHvjuVR1BPiY3LC0U9RiwVWIySxM9BGF8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=vivo.com; spf=pass smtp.mailfrom=vivo.com; dkim=pass (2048-bit key) header.d=vivo.com header.i=@vivo.com header.b=KwFXQ/xV; arc=fail smtp.client-ip=52.101.126.52
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=bOJJj7rmx60PJSWTNzmJhpej3sKFS5Wz0lJyPQb5rMSve7PCKTFTIEQRyzvrxznC2DbuldrKOnvAKU9jqmPxJWQntoKhXg07xNTS5g9vCvdt+IgIYPJqK3AiSmLbbOyBkkn6b8zt53Ft5+JJpdycLFNpgJiPe/UOPFKv3kMMAXjhP9r+o7zcJFDtQoYFwKpKr6ZDaeScx/TEUs2nnAUUWEgoVp672imEF+mPjXx5I/8tYGeAr1IMtPhWiUn2x89iY6ggjMo1B351Xkxs1t9FJuUH5Hpjg21G0jIWKkIAyn48n9kCDMCGHalzg3ZWOtRMzb4YCaooM7vGRNBq1UcszQ==
+ b=qHu5emWwIc+uGdLMCWmtc+HuliYBqFQFj69Eb/6qip/xiZIhjPJcoivwGM6/E45cIQQMhcypwwvdUMIcLZKdGKaoB6jMwtCAHYw/fs4+53IM+cLDOEWjkfYUvs/iVPA0HGtGhmVIgUwXj8AnL+2udtEhSPH8wniQr0mGPNI+Jast+ovKwI8XQG5o40SB4wRIW2SSLGgGUYqFxXsphSIDuhjQSOHAI2v7EDhpIQk3/46YPVGX+3dfmNIAxT6Se/SWUd4s6CgROFNAKzbo6Av4Pd0kdJsn9/hiTSFVsfbRSw0pbFU5c4FKcauzZz/nalWucMGD2oEZpTvix58+iFEmvw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=628hE3qKJtKmhgz1J5dqnmQSJXhpojgwSEt0XJFiwHk=;
- b=sZ826dWvoJR0CQ61f3y+brnuYXkfl04ZcglwMw+BPJmSZTUXxsjb5KcakHxBlOed2S0bYLpG6GoZv19gn0CUFc8vdaWxjyynM229HQOu4ejImMFB69UXvhsxuPH8ZPA8lI8EA5C/udW+KtxkWVQdL/iyZCA2TqyJumPa+fF5rKqsovCiF+rVvN3HBm2R2Eh3mzVThdA+EGJs9mzQRXPukCuyOZIb6R9Yu9+MExQUbhncldCXh0F35bVZTtNq3jXR1sD/+4bAPzE3m1agCEBGkpuuZz4rk640FTvxEXLpGBISN73kYHU157Us2EiDYZGz4q/Q3w2PFPgbL914OQDcJw==
+ bh=Zb15SH/XYFa+RyS0cTGgR/gZagBNPGGjTMJKmIURz8M=;
+ b=xtSAF7ki0R7RdTyVNixnHBgVXyiFOtg4Wk+qbVQjzlIc6yqTM0JLgBye52Q+YLPH2pe6DekT8hj0FiXF27nDZvO6mcZlqkep3v5KI4xX1YeMAP+Z+U2vQOPc7+lOUkIdXaWAVU5EOIstFWYJA3YYcvG0DGFWukPVZsOejZw3fvce7kGM4s9SlI8j7j2LckqFFhfzwpqtQ7aemEVCGtcMvPDkDZf9hHjzzxe0CSRuOKZ3XpAIzrE7L00btSa9d9yYSN88142UiFAiPV5TdSbinP0KuX6Zrkdzh+3oAIMRsx2dv0jXBSxKENYnBQlJmB2Zbauhoy6Ax9bP5dGb6lalQQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
+ smtp.mailfrom=vivo.com; dmarc=pass action=none header.from=vivo.com;
+ dkim=pass header.d=vivo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vivo.com; s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=628hE3qKJtKmhgz1J5dqnmQSJXhpojgwSEt0XJFiwHk=;
- b=bz5IKidz0aU0mhB4xRGwF2vFDP73iMiXQqknrJ5piQ94nra9oZVGFVmgDe6LIAxnbohuh5HRTYE7Nb+sgJjBiU11MeikVvzjdlL7gLMg9FB0voeTqK2vX0EWDvU4yK8XINW2Jcme270SiUwpeTTBjJeVR5I8HQOI6beO+PCgz7QLFyngV63D6DqDjxNBNCsLbSVkoDkvXpDOA9khZOgGBmvxDCZH4TCPrJ2qRBHGlV/SfOiIftDwBLNpnTBNvEWKH3osMg8sqSjD59eUOJ546U6ZafLqbMDSUgdR8iT7u5ANT8ENEFWf78eWB65Tg1Cf+6Ou3uIZQjOx4iYueE2Mvg==
-Received: from IA0PR12MB8374.namprd12.prod.outlook.com (2603:10b6:208:40e::7)
- by CH3PR12MB8185.namprd12.prod.outlook.com (2603:10b6:610:123::17) with
+ bh=Zb15SH/XYFa+RyS0cTGgR/gZagBNPGGjTMJKmIURz8M=;
+ b=KwFXQ/xVozptnhlCLkFe+wIw8eifW3MDFgXMgUgzoA1tU1ReYPmC6D/8adYynMvVeDEwa7iRT8ZPAxTLv5L/H3lkXtLz1of3gA+zOZuESdkLh2HPTggQpmF4IpOS3uClYI/iVBxSdTsdQvB1zp0TK9ZcVjFrCrS/qZi18LzVubRZFk1KY0imE8N0XRDTfX7w2hr0mRL4cuGZ0A8JHgaVvbzjmhLtX+7gk5zhAFDYdLnL0G8CsfguMVZxBqi5zYaEnA7DOoh883TL4yftoM7zxreInxXSu/bi8mTo2lQEw6fHhBlZ2sZnsq7h7yWk4byuEf+tqAd7HiJZs8bU7fq7Wg==
+Received: from SEZPR06MB5832.apcprd06.prod.outlook.com (2603:1096:101:c8::12)
+ by KUZPR06MB8800.apcprd06.prod.outlook.com (2603:1096:d10:c7::11) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.11; Thu, 9 Jul
- 2026 02:28:07 +0000
-Received: from IA0PR12MB8374.namprd12.prod.outlook.com
- ([fe80::d85f:4c87:ae84:3f16]) by IA0PR12MB8374.namprd12.prod.outlook.com
- ([fe80::d85f:4c87:ae84:3f16%5]) with mapi id 15.21.0181.014; Thu, 9 Jul 2026
- 02:28:07 +0000
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Wed, 08 Jul 2026 22:28:00 -0400
-Message-Id: <DJTOP760MDDG.2KUSKD8WVVKJ5@nvidia.com>
-Subject: Re: [PATCH 13/13] mm/mremap: convert mremap code to use vma_flags_t
-Cc: <akpm@linux-foundation.org>, <tsbogend@alpha.franken.de>,
- <maddy@linux.ibm.com>, <mpe@ellerman.id.au>,
- <maarten.lankhorst@linux.intel.com>, <mripard@kernel.org>,
- <tzimmermann@suse.de>, <airlied@gmail.com>, <simona@ffwll.ch>,
- <l.stach@pengutronix.de>, <inki.dae@samsung.com>, <sw0312.kim@samsung.com>,
- <kyungmin.park@samsung.com>, <krzk@kernel.org>, <peter.griffin@linaro.org>,
- <jani.nikula@linux.intel.com>, <joonas.lahtinen@linux.intel.com>,
- <rodrigo.vivi@intel.com>, <tursulin@ursulin.net>,
- <robin.clark@oss.qualcomm.com>, <lumag@kernel.org>, <lyude@redhat.com>,
- <dakr@kernel.org>, <tomi.valkeinen@ideasonboard.com>, <hjc@rock-chips.com>,
- <heiko@sntech.de>, <andy.yan@rock-chips.com>, <thierry.reding@kernel.org>,
- <mperttunen@nvidia.com>, <jonathanh@nvidia.com>, <kraxel@redhat.com>,
- <dmitry.osipenko@collabora.com>, <zack.rusin@broadcom.com>,
- <matthew.brost@intel.com>, <thomas.hellstrom@linux.intel.com>,
- <oleksandr_andrushchenko@epam.com>, <deller@gmx.de>, <bcrl@kvack.org>,
- <viro@zeniv.linux.org.uk>, <brauner@kernel.org>, <muchun.song@linux.dev>,
- <osalvador@suse.de>, <david@kernel.org>, <baolin.wang@linux.alibaba.com>,
- <liam@infradead.org>, <npache@redhat.com>, <ryan.roberts@arm.com>,
- <dev.jain@arm.com>, <baohua@kernel.org>, <hughd@google.com>,
- <vbabka@kernel.org>, <rppt@kernel.org>, <surenb@google.com>,
- <mhocko@suse.com>, <jannh@google.com>, <pfalcato@suse.de>,
- <kees@kernel.org>, <perex@perex.cz>, <tiwai@suse.com>,
- <linux-mips@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
- <linuxppc-dev@lists.ozlabs.org>, <dri-devel@lists.freedesktop.org>,
- <etnaviv@lists.freedesktop.org>, <linux-arm-kernel@lists.infradead.org>,
- <linux-samsung-soc@vger.kernel.org>, <intel-gfx@lists.freedesktop.org>,
- <linux-arm-msm@vger.kernel.org>, <freedreno@lists.freedesktop.org>,
- <nouveau@lists.freedesktop.org>, <linux-rockchip@lists.infradead.org>,
- <linux-tegra@vger.kernel.org>, <virtualization@lists.linux.dev>,
- <intel-xe@lists.freedesktop.org>, <xen-devel@lists.xenproject.org>,
- <linux-fbdev@vger.kernel.org>, <linux-aio@kvack.org>,
- <linux-fsdevel@vger.kernel.org>, <linux-mm@kvack.org>,
- <linux-sound@vger.kernel.org>
-To: "Lorenzo Stoakes" <ljs@kernel.org>, "Lance Yang" <lance.yang@linux.dev>
-From: "Zi Yan" <ziy@nvidia.com>
-X-Mailer: aerc 0.21.0
-References: <380f761d35a3faa4370f8b3f92e3d4af3d4c7110.1782760670.git.ljs@kernel.org> <20260702134947.25189-1-lance.yang@linux.dev> <akaJx8Zt8kazlrjq@lucifer>
-In-Reply-To: <akaJx8Zt8kazlrjq@lucifer>
-X-ClientProxiedBy: DS7P220CA0110.NAMP220.PROD.OUTLOOK.COM
- (2603:10b6:8:25d::12) To IA0PR12MB8374.namprd12.prod.outlook.com
- (2603:10b6:208:40e::7)
+ 2026 02:31:35 +0000
+Received: from SEZPR06MB5832.apcprd06.prod.outlook.com
+ ([fe80::f98:5e32:4ccb:d07b]) by SEZPR06MB5832.apcprd06.prod.outlook.com
+ ([fe80::f98:5e32:4ccb:d07b%6]) with mapi id 15.21.0181.014; Thu, 9 Jul 2026
+ 02:31:34 +0000
+From: Pan Chuang <panchuang@vivo.com>
+To: "Rafael J. Wysocki" <rafael@kernel.org>,
+	Daniel Lezcano <daniel.lezcano@kernel.org>,
+	Zhang Rui <rui.zhang@intel.com>,
+	Lukasz Luba <lukasz.luba@arm.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Markus Mayer <mmayer@broadcom.com>,
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>,
+	zhanghongchen <zhanghongchen@loongson.cn>,
+	Yinbo Zhu <zhuyinbo@loongson.cn>,
+	Amit Kucheria <amitk@kernel.org>,
+	Thara Gopinath <thara.gopinath@gmail.com>,
+	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund@ragnatech.se>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Magnus Damm <magnus.damm@gmail.com>,
+	John Madieu <john.madieu.xa@bp.renesas.com>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Bartlomiej Zolnierkiewicz <bzolnier@gmail.com>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Peter Griffin <peter.griffin@linaro.org>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Thierry Reding <thierry.reding@kernel.org>,
+	Jonathan Hunter <jonathanh@nvidia.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+	Pan Chuang <panchuang@vivo.com>,
+	Laura Nao <laura.nao@collabora.com>,
+	Mason Chang <mason-cw.chang@mediatek.com>,
+	Fei Shao <fshao@chromium.org>,
+	Frank Wunderlich <frank-w@public-files.de>,
+	Jiapeng Chong <jiapeng.chong@linux.alibaba.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
+	Svyatoslav Ryhel <clamor95@gmail.com>,
+	linux-pm@vger.kernel.org (open list:THERMAL),
+	linux-kernel@vger.kernel.org (open list),
+	linux-arm-kernel@lists.infradead.org (moderated list:BROADCOM BCM7XXX ARM ARCHITECTURE),
+	imx@lists.linux.dev (open list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE),
+	linux-arm-msm@vger.kernel.org (open list:QUALCOMM TSENS THERMAL DRIVER),
+	linux-renesas-soc@vger.kernel.org (open list:RENESAS R-CAR THERMAL DRIVERS),
+	linux-rockchip@lists.infradead.org (open list:ARM/Rockchip SoC support),
+	linux-samsung-soc@vger.kernel.org (open list:SAMSUNG THERMAL DRIVER),
+	linux-stm32@st-md-mailman.stormreply.com (moderated list:ARM/STM32 ARCHITECTURE),
+	linux-tegra@vger.kernel.org (open list:TEGRA ARCHITECTURE SUPPORT),
+	linux-mediatek@lists.infradead.org (moderated list:ARM/Mediatek SoC support:Keyword:mediatek)
+Subject: [PATCH 00/18] thermal/drivers: Remove redundant error messages on IRQ request failure
+Date: Thu,  9 Jul 2026 10:30:03 +0800
+Message-Id: <20260709023048.599150-1-panchuang@vivo.com>
+X-Mailer: git-send-email 2.34.1
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: TPYP295CA0019.TWNP295.PROD.OUTLOOK.COM
+ (2603:1096:7d0:a::14) To SEZPR06MB5832.apcprd06.prod.outlook.com
+ (2603:1096:101:c8::12)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -111,143 +125,157 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: IA0PR12MB8374:EE_|CH3PR12MB8185:EE_
-X-MS-Office365-Filtering-Correlation-Id: d08dc437-8440-482d-c719-08dedd61b611
+X-MS-TrafficTypeDiagnostic: SEZPR06MB5832:EE_|KUZPR06MB8800:EE_
+X-MS-Office365-Filtering-Correlation-Id: 70fb9282-7ee3-421d-4ce6-08dedd6231bb
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|1800799024|376014|366016|7416014|11063799006|18002099003|22082099003|4143699003|56012099006;
+	BCL:0;ARA:13230040|52116014|23010399003|366016|1800799024|7416014|376014|38350700014|921020|18002099003|11063799006|56012099006|6133799003;
 X-Microsoft-Antispam-Message-Info:
-	Z/tjc06LNUj/ulqvzkhbzEoBDPqp8rufyAQcTElPkkRlF0B8T5Lbv7NMmcJr2fLtFbSsJgLgtFQE7voqnqaki+sE2P+d6Zq2TFmjE3fxJChyNDeTmhCtDvTiZO/XKngfNniy6jwmycUEa9vLkF/v2tAPyDLh4KOe8cIEtY8vtgAgmXR1KyNJPJW6VdDsUdKzYzL3I9N8Bgwyf2BDWdf+/jn3SJxXVHol2dODQXVmawEDDxxYe96QGbU8mg1IlAcDPVqgvY1CTNKIwHqWXo3HmmWXSRLC0lN2jN6ij11QBSyuVAY95RX+XdDCdiLHzjRN2nUcFafDKEwUJXECHDVv1pFmO+mPI2ZeDGU4uOG2KYqabOpq0AZ9U02WcOV+U5RXGj/0o58kNOZjIZXq8fjCkZno1LUGZ6pSljvH5R5tf+KUa5bZzEfGxC8fqYD4G4sHmVG2ZTvIDgG8RQNuqN5pIDhbPgMDHHgQn8uVdJYhWdGmCTbKhWOOB+jIlOYBfDORJ3fvm3BXCRyJ+MUAz7yvTyXwBlTV+Czo/rvFJC5g+vcpCcbEUWiElMspJ2ZW1nBbO8EFIAa9cdCLclSyU2JwoTl9+jG54SN7IHjyF3ozn47MSbc135KTOEkZcoJ+kUIaiOnk6eDkiLfNe8mpH1guZ6PqDK6XGo3FvG6Io0XdOcc=
+	6etLwCHUEWhmfC31D/Bu8QoyAGLR6iL1slE3kRDmYMOlGHhf3zB8PKFtf5+LC/RoQo3o2vspywARwBPknKqsAMv5/toUka3eJGCIh+EoZSQEGmN1Jug5EbVlfaPGRie+cSwuzh9vGI/booIw1LKcFquoTPIn+rku0G0GqXU6PJLlNN3Px1i08P5jKmrETRvISRmi7+H5J7pvW1PxofYRjKFun/T3AgvADk2fJyxeVJtPdu3XD+gbliUBrRHccg7cfSiPn7EcPrz2LZUyduRdgbWCdqiWzb1s0twg3dxkDyTJCF1faJeR6RjaojvT0BlQJyCxqKG3O1kRGWdlWWZnINVF9NJFrx0ndfYhliVDN9FZu87UFx2W9foaxtEP0jzXZDQqotOswge7x0vObC1YHAhlW5NJZSEpIIIL83JjcO1evYaURywCme18NxU0XJzYRxZisncnZkjj31+AJtk/sILkARtCrRRbHm9It2urggNYpsUD3hsWBbt8mIMvYovJ5xl/rsxSu8EWl5YoNATxqG5mtXKBsfmQ6I9YH9CPWliIHqnYgvLfBUj5ZnLDZsiD/2MA8FuZgZ0fcY+FDGjpbj8KYOMtbO7QErFvbewLPmM1WipG2TdaMTzUFKMdnu2Gv45v1VNjLPKab4IvfMPXX6fexzLk6SYWdKO22zypoG9imL5zDwFtWMVZ7uMCleKp+KHmQw6PMjyBs825ARhFHgQBoaNM8s0/fXkI8y4ryXU=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:IA0PR12MB8374.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(1800799024)(376014)(366016)(7416014)(11063799006)(18002099003)(22082099003)(4143699003)(56012099006);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SEZPR06MB5832.apcprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(52116014)(23010399003)(366016)(1800799024)(7416014)(376014)(38350700014)(921020)(18002099003)(11063799006)(56012099006)(6133799003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?b0drdVdBNTVMRW1PY2NGdUlvZm5yTDUvUlNxNm5CRXJhcG5NTHBVQVgvZDZi?=
- =?utf-8?B?S2hVcjdVcWJxZ2swZUZjSC9ITUkrczBKTjlWVlJ5aWVWRStvcWVvNU92b3dJ?=
- =?utf-8?B?YmlQNm1CQ28rNitYUzB1TUMrZFJCanluTVhwTGJEa1F4SldlMlQvL0hVNXNN?=
- =?utf-8?B?RnROemo0ZmdrL25FcUtHbWRsaGNLUzBvYjI4WThVRUVqVkIxeEtjVGZjVU9L?=
- =?utf-8?B?UzNRTUh5a3BUZjFFcnM0WU5Eaklzb3RwT3E0Y1JSZFEvdDRtWi9XOGJ5L2ph?=
- =?utf-8?B?RUJLc0hLREpIMCtZS0Y4eUN5VmJZUk5OZVZWOW93anpkbTBwUzVCek5icDNr?=
- =?utf-8?B?bE1GZEhhcEdtYlk4OFlwWFlobU9ZMFVBNW5hWWtkemRBb201UXN6ekQreW5o?=
- =?utf-8?B?b01oSGphdWJIOU91OGNFZFM3aTVxOWRPOXl5OGxDVUFBdmV4Zkpqak1KV1c0?=
- =?utf-8?B?T3JDWGtZV0p4aSt2Z0pxT2ZYQ2V2eGtTVlJwOW5YNGJ4dUpudGhxM1hhRkFr?=
- =?utf-8?B?ZXd2cTRpNnJmVWZTSGk2Ylg0QTlJS2pwbEx5YTJIcjBxVjNHbThZWVFMTENK?=
- =?utf-8?B?elh2Nk40WFBucHgzd01vNWl1MlRvTHpueEFQZEdVVjdGYnBqNG5lZWRQNTdT?=
- =?utf-8?B?YjVzMWgvNmw4bGpIVUUySjE0NHVzUzd0NVloT3loRDYzVWdsNEJ2ZTJBV242?=
- =?utf-8?B?K3pJZ2d2cHVHZ296RDBXMHdycFgxZEpFV3ZveW93YXlQZ08vNUlnRm05Sjd3?=
- =?utf-8?B?dm5EOUx2NTZQVEJ1WHAzZnF5cUhCTEkzUk9XNk0yek9VUGhlR0ZzWFNOYzNJ?=
- =?utf-8?B?NnpKckl1WTF5emJNT29rZDRXU1pJemFuVGRRWUJBRXZEYXNESUIrbVRRalhq?=
- =?utf-8?B?TVV5MUJzR1ArUWJoQ05FUm5CeHhGRHJLVEU0Z2lOMkxrQmNiQnQzNGZxN1hw?=
- =?utf-8?B?Y1BmcHU1MWdZMkcvY1ErMGtFWVMvWnBnTThGd2I3emdLOFZYSm1oSHhUS2R2?=
- =?utf-8?B?eVpNOFp3NC9EQ1hDRStsMnZLSmdObktmQjVFNGo4NzNZYysvYTYvcHlUenFG?=
- =?utf-8?B?WFJlaVFnbDMrNnN1OEdYYjE1YzczTzVXdUJ1K3BESk90K1FURFlVU0xZMU1Z?=
- =?utf-8?B?RGJWRUlVTFZMZy9vbExnRW5DcVREZytCTDZoMVNFaTNvYSs5Mm5DeUdNSzdL?=
- =?utf-8?B?N0NyWVZpaHNLdGlLYysvWk41MDZ3YXdUOHE1SUczODVNeXIrMis1Vjh0QzA0?=
- =?utf-8?B?Y1lBakpkZ0ZHR3pJRjlTQWJKWFhTcHJwdUJKS3JhZnZiMU5oUVpnZERjM2VR?=
- =?utf-8?B?bmgxSFlnMTVaSzVyYnIyYWVKUzR1Y01hSUtyTTFNUmxZTUJwcmV0ZmhxYXFV?=
- =?utf-8?B?Vjl4aXI3L0FDOTFkZUVQL25oUUFyZ3RmRlBPdkR3MUpPditUenZhS1hxSWlr?=
- =?utf-8?B?SGVFSlhrb0xCU3NsZ0JVVmlPekxKbFdzaXd0MWx1SDM2VHhYcDBQdlNBWjRE?=
- =?utf-8?B?QjcrYnY4R0dlQklVMFllNEVPVjFoOFh0WEdnT09yajZiOTcrQkYvSGhWcXdz?=
- =?utf-8?B?bDBXVlpXU1R6dlBEbm1JNnRXUWdLWEQwQ0lRUDB3L0QxZWtxOXFxNHVmb2ZK?=
- =?utf-8?B?VHV6dUh1d0hpbFVVY1lyT1gvVHBmZ1h0NUJreWJjTjZjWHlqbFNQTW96M2Zm?=
- =?utf-8?B?YjI1TVZrYmhFRkRuSU9oY1lKK0lmcU8xQ3E2UDJrZmMwbTlWVFhCVE9WUkdN?=
- =?utf-8?B?a3VKaW0zUWc0eXdoWDh0Q3dhekxVMUt2Vkl4MUNRUGlmNDNsTVJDVytwRktW?=
- =?utf-8?B?c3VpRlQ1b0hyTitNRmpsSTBYWS9WVzN3ZkFBQ1RvRWE1SXh6dWhPdGxWNjFN?=
- =?utf-8?B?bVdvQnFVSVhxbTRSVy8yckJ3aW9SWlFtRGUzaHAvR3dYd1ZTUjdQTGJRUzFN?=
- =?utf-8?B?TmtYeFRRSWNhTytJNGhpclVLcitvcnJOd0VwLzQ5dlBOYURLYm1wVEFVTDJh?=
- =?utf-8?B?WWhETDBzRzJXcEwydmVaWWF4VDVTMGtDbGY3RlpnUGRabHdRMmNmTDVrbFFC?=
- =?utf-8?B?L3VibzBteDdUNmNkZXdWUlQ5ZHFXMm9XWTl0NHVCY0VBaGRkdEpLcmdlaVl6?=
- =?utf-8?B?d21mKzM1M3FMM3VPcHdMbnBYUFFsbGhXWGVuRDA4MHlqV3BHZStzWkJjUjdI?=
- =?utf-8?B?Q3dwbCtuNHcvaWpmWVV4eE1IQmFGeHpQUytIWkxyMFRNK3VLVkJSZTNOam9J?=
- =?utf-8?B?c3BEWXpUQnNyb1dTVFVWR200RUNLL2hXTXd6Y0VVY05VNlFxclpqVG8wa21J?=
- =?utf-8?Q?o/F5FtLy/Vhx3E1ynX?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d08dc437-8440-482d-c719-08dedd61b611
-X-MS-Exchange-CrossTenant-AuthSource: IA0PR12MB8374.namprd12.prod.outlook.com
+	=?us-ascii?Q?nLU2s9FefGR5lZlr/WpM/N1cHMI4MOnLXQSGkAnzYUixx89gYPn4qpM4aTkz?=
+ =?us-ascii?Q?YWud6ZFpIeBNAO4uKP5nJ+8sEeGtrDFxv+XkRWQa/pG9R4E6O9xFTkwLApD5?=
+ =?us-ascii?Q?nWhIBhHnwLZY0pIvqsqPE6EjwJtIWoDeIN7c+1lat0DY+EREf5mdWKFS8xbC?=
+ =?us-ascii?Q?MvMfQloj4iCuLe1DYG7hq5kwptcyq9CDnm+QD7R80p10lQdRY0LHRBxx1meD?=
+ =?us-ascii?Q?EzHjknX5y2H2EwANrebn7/zPHimqcbUyqRo7wZTELexW6uf3pYvnnw+Vbptj?=
+ =?us-ascii?Q?7IedyeKme5xf/2Vk66qT0UEcpayTl+PdCw6MAq6Sm+FAoFa7WZyMnQL5FbKe?=
+ =?us-ascii?Q?+GyB+yNWE9RrO8wEtNYAbmhT32ceZ7ilM2+wUsfwbC9bw4rYLqOejejhL9BK?=
+ =?us-ascii?Q?nc1Li1351CaDu3wfaYJWiR6dqpPHokheeaToDQHwXuLB0+gRFQnGjH/LUEFw?=
+ =?us-ascii?Q?jY5D5NMva6b0sf9Z0fhsMYpMr/NYuAs3YJTSwtaxrrHPZvWlz8jcSgigo67i?=
+ =?us-ascii?Q?GxNshuHtP4DHfnx8ujL6OcwJ19pxIokKpTny1U8g3DH0xMvGPCcVup6se7r3?=
+ =?us-ascii?Q?7uGvExkIu+MpZR9jIarqXxBl0+LZHmLqdU9lrAuh8yNshcqF/wBNX3hyFZH3?=
+ =?us-ascii?Q?dz4s9Z04uL3G2aWZCXiHtym2Tqa+Mnshi68C74cfPG+g0QqBJbXqOcMfHWs0?=
+ =?us-ascii?Q?3cyzfO3cMIXkH5gJeactkMGn/CYydqo5qVzghAjMH9oJyaiK4NpPwnN5tqpc?=
+ =?us-ascii?Q?fmFiyeZxDygFK3f20iyOI2tJt+cCd0jbvFq/zU0J0B9r3JIolZBAVTljgRlB?=
+ =?us-ascii?Q?5EtMW09spAvevNikDidRCsLw8OtwpSnud4HYqiE/Sn1ObWZQ+AMS0cU1W4w6?=
+ =?us-ascii?Q?JWj/cgKrLxjwt366NAufQCU5Z6inru56dIBsBWJN6FdLYZAlcrhfH+Y0//47?=
+ =?us-ascii?Q?qqrcLfLTLtqPAK8oa/mdW8i8SpE8SEnk3fYw1EQR6NjAoO2PXJcPYGjIQXbP?=
+ =?us-ascii?Q?7oPp2SGrS0/0Bf7CUKqdeo/Ek0YJwBKWJ2Z776YQa+E9I5DZRSgVmE9DrVzE?=
+ =?us-ascii?Q?se2wjdwsmg+Y2di04qbXxAbGdO3QF7s4m1FTyNPWm1NmfDnZannl8NMy93fx?=
+ =?us-ascii?Q?LUeBCQFljrsYi5PXvjkJXU73JUKjwIywIVcVY31fc3+l/RQp4FsmdOD6hDWq?=
+ =?us-ascii?Q?x5G30OzAOvqlfw5UO1n8hA9awSITgr6Nl3Rf9sgp6bWBf2qLyyO3S6giNhw1?=
+ =?us-ascii?Q?w6zaDTDam6EWHErEfs3YAUotZKmcQ+QK0jm/Xss2eSJI76l2t/cd3PI/nIt3?=
+ =?us-ascii?Q?lViEBnAyKpJdhDu31p9XAAxa7omXozms8li6znxWahXqYmJW3xDdF0DnAvOk?=
+ =?us-ascii?Q?xsJoUS0/JPFJXbAQJj2ukD2SAXHpOrWe+a+SJ1pKcpwDV5kvInjJtG+VWdrv?=
+ =?us-ascii?Q?yS5Q++dY/GzXWbfTqpIRwgTyHMpkPbexaIdCkI1aGDhZsA2AaPctjeXwzUSG?=
+ =?us-ascii?Q?z6LCkK9qLJ1hVl+1ywT1c2S2WMf1I6kvd25y3BUE0xkyu0jmJbzDbQm1YD3s?=
+ =?us-ascii?Q?L65e3Z0XBZkq0CVtl7NWzL5Oehmn+Zw6rsNH4avYsMCeigDfcB4d6ifHuYOV?=
+ =?us-ascii?Q?GwR7eL+uXpRcr37V10erNYnBfiJUDB70MJpZTAkJVBaiPUd9dWRaIo4MpMRq?=
+ =?us-ascii?Q?BhNzTP+UNxzxExIjrFfB8Ika+iXJwR/cl3VKgFGn89eiI+VLgaAllYMr4+vx?=
+ =?us-ascii?Q?i/+or4t1nA=3D=3D?=
+X-OriginatorOrg: vivo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 70fb9282-7ee3-421d-4ce6-08dedd6231bb
+X-MS-Exchange-CrossTenant-AuthSource: SEZPR06MB5832.apcprd06.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Jul 2026 02:28:07.1996
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Jul 2026 02:31:34.7865
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-Id: 923e42dc-48d5-4cbe-b582-1a797a6412ed
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: HwvHZWQC9MdnD6g3v08vrOQ4XTKGoKoqxeyCnkhEi4z4/RE9HfeCt5vBm/x1LNgj
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB8185
+X-MS-Exchange-CrossTenant-UserPrincipalName: DVhgkewTd2EN/hIfgnq+yD75CFZFnXJmCw8ddwRZLcc/GekWLNki6edKlLUpUmotdedMVsXx6nTaxfXo8bZQmQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: KUZPR06MB8800
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-7.16 / 15.00];
-	WHITELIST_DMARC(-7.00)[nvidia.com:D:+];
+X-Spamd-Result: default: False [2.84 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_REJECT(1.00)[cv is fail on i=2];
-	DMARC_POLICY_ALLOW(-0.50)[nvidia.com,reject];
-	R_DKIM_ALLOW(-0.20)[Nvidia.com:s=selector2];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	MID_CONTAINS_FROM(1.00)[];
+	R_MISSING_CHARSET(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[vivo.com,quarantine];
+	R_DKIM_ALLOW(-0.20)[vivo.com:s=selector2];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[linux-foundation.org,alpha.franken.de,linux.ibm.com,ellerman.id.au,linux.intel.com,kernel.org,suse.de,gmail.com,ffwll.ch,pengutronix.de,samsung.com,linaro.org,intel.com,ursulin.net,oss.qualcomm.com,redhat.com,ideasonboard.com,rock-chips.com,sntech.de,nvidia.com,collabora.com,broadcom.com,epam.com,gmx.de,kvack.org,zeniv.linux.org.uk,linux.dev,linux.alibaba.com,infradead.org,arm.com,google.com,suse.com,perex.cz,vger.kernel.org,lists.ozlabs.org,lists.freedesktop.org,lists.infradead.org,lists.linux.dev,lists.xenproject.org];
-	TAGGED_FROM(0.00)[bounces-117821-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER(0.00)[ziy@nvidia.com,linux-arm-msm@vger.kernel.org];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_RECIPIENTS(0.00)[m:akpm@linux-foundation.org,m:tsbogend@alpha.franken.de,m:maddy@linux.ibm.com,m:mpe@ellerman.id.au,m:maarten.lankhorst@linux.intel.com,m:mripard@kernel.org,m:tzimmermann@suse.de,m:airlied@gmail.com,m:simona@ffwll.ch,m:l.stach@pengutronix.de,m:inki.dae@samsung.com,m:sw0312.kim@samsung.com,m:kyungmin.park@samsung.com,m:krzk@kernel.org,m:peter.griffin@linaro.org,m:jani.nikula@linux.intel.com,m:joonas.lahtinen@linux.intel.com,m:rodrigo.vivi@intel.com,m:tursulin@ursulin.net,m:robin.clark@oss.qualcomm.com,m:lumag@kernel.org,m:lyude@redhat.com,m:dakr@kernel.org,m:tomi.valkeinen@ideasonboard.com,m:hjc@rock-chips.com,m:heiko@sntech.de,m:andy.yan@rock-chips.com,m:thierry.reding@kernel.org,m:mperttunen@nvidia.com,m:jonathanh@nvidia.com,m:kraxel@redhat.com,m:dmitry.osipenko@collabora.com,m:zack.rusin@broadcom.com,m:matthew.brost@intel.com,m:thomas.hellstrom@linux.intel.com,m:oleksandr_andrushchenko@epam.com,m:deller@gmx.de,m:bcrl@kvack.org,m:viro@zeniv.linux.org.uk,m:bra
- uner@kernel.org,m:muchun.song@linux.dev,m:osalvador@suse.de,m:david@kernel.org,m:baolin.wang@linux.alibaba.com,m:liam@infradead.org,m:npache@redhat.com,m:ryan.roberts@arm.com,m:dev.jain@arm.com,m:baohua@kernel.org,m:hughd@google.com,m:vbabka@kernel.org,m:rppt@kernel.org,m:surenb@google.com,m:mhocko@suse.com,m:jannh@google.com,m:pfalcato@suse.de,m:kees@kernel.org,m:perex@perex.cz,m:tiwai@suse.com,m:linux-mips@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linuxppc-dev@lists.ozlabs.org,m:dri-devel@lists.freedesktop.org,m:etnaviv@lists.freedesktop.org,m:linux-arm-kernel@lists.infradead.org,m:linux-samsung-soc@vger.kernel.org,m:intel-gfx@lists.freedesktop.org,m:linux-arm-msm@vger.kernel.org,m:freedreno@lists.freedesktop.org,m:nouveau@lists.freedesktop.org,m:linux-rockchip@lists.infradead.org,m:linux-tegra@vger.kernel.org,m:virtualization@lists.linux.dev,m:intel-xe@lists.freedesktop.org,m:xen-devel@lists.xenproject.org,m:linux-fbdev@vger.kernel.org,m:linux-aio@kvack.org,m:linux-fsdevel
- @vger.kernel.org,m:linux-mm@kvack.org,m:linux-sound@vger.kernel.org,m:ljs@kernel.org,m:lance.yang@linux.dev,s:lists@lfdr.de];
 	FORWARDED(0.00)[lists@lfdr.de];
+	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-117822-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[Nvidia.com:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	TO_DN_SOME(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[ziy@nvidia.com,linux-arm-msm@vger.kernel.org];
+	FORGED_SENDER(0.00)[panchuang@vivo.com,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS(0.00)[m:rafael@kernel.org,m:daniel.lezcano@kernel.org,m:rui.zhang@intel.com,m:lukasz.luba@arm.com,m:miquel.raynal@bootlin.com,m:mmayer@broadcom.com,m:bcm-kernel-feedback-list@broadcom.com,m:florian.fainelli@broadcom.com,m:Frank.Li@nxp.com,m:s.hauer@pengutronix.de,m:kernel@pengutronix.de,m:festevam@gmail.com,m:zhanghongchen@loongson.cn,m:zhuyinbo@loongson.cn,m:amitk@kernel.org,m:thara.gopinath@gmail.com,m:niklas.soderlund@ragnatech.se,m:geert+renesas@glider.be,m:magnus.damm@gmail.com,m:john.madieu.xa@bp.renesas.com,m:heiko@sntech.de,m:bzolnier@gmail.com,m:krzk@kernel.org,m:peter.griffin@linaro.org,m:alim.akhtar@samsung.com,m:mcoquelin.stm32@gmail.com,m:alexandre.torgue@foss.st.com,m:thierry.reding@kernel.org,m:jonathanh@nvidia.com,m:matthias.bgg@gmail.com,m:angelogioacchino.delregno@collabora.com,m:srinivas.pandruvada@linux.intel.com,m:panchuang@vivo.com,m:laura.nao@collabora.com,m:mason-cw.chang@mediatek.com,m:fshao@chromium.org,m:frank-w@public-files.de,m:jiapeng.
+ chong@linux.alibaba.com,m:andriy.shevchenko@linux.intel.com,m:jirislaby@kernel.org,m:clamor95@gmail.com,m:linux-pm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-arm-kernel@lists.infradead.org,m:imx@lists.linux.dev,m:linux-arm-msm@vger.kernel.org,m:linux-renesas-soc@vger.kernel.org,m:linux-rockchip@lists.infradead.org,m:linux-samsung-soc@vger.kernel.org,m:linux-stm32@st-md-mailman.stormreply.com,m:linux-tegra@vger.kernel.org,m:linux-mediatek@lists.infradead.org,m:tharagopinath@gmail.com,m:geert@glider.be,m:magnusdamm@gmail.com,m:mcoquelinstm32@gmail.com,m:matthiasbgg@gmail.com,s:lists@lfdr.de];
+	FREEMAIL_TO(0.00)[kernel.org,intel.com,arm.com,bootlin.com,broadcom.com,nxp.com,pengutronix.de,gmail.com,loongson.cn,ragnatech.se,glider.be,bp.renesas.com,sntech.de,linaro.org,samsung.com,foss.st.com,nvidia.com,collabora.com,linux.intel.com,vivo.com,mediatek.com,chromium.org,public-files.de,linux.alibaba.com,vger.kernel.org,lists.infradead.org,lists.linux.dev,st-md-mailman.stormreply.com];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_GT_50(0.00)[82];
-	MID_RHS_MATCH_FROM(0.00)[];
+	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[panchuang@vivo.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[vivo.com:+];
+	RCVD_COUNT_FIVE(0.00)[5];
 	ALIAS_RESOLVED(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	RCPT_COUNT_GT_50(0.00)[52];
+	TAGGED_RCPT(0.00)[linux-arm-msm,renesas];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[Nvidia.com:dkim,nvidia.com:from_mime,nvidia.com:email,nvidia.com:mid,vger.kernel.org:from_smtp,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,vivo.com:from_mime,vivo.com:dkim,vivo.com:mid,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: DC3A372BEEC
+X-Rspamd-Queue-Id: 6F65072BF43
 
-On Thu Jul 2, 2026 at 12:07 PM EDT, Lorenzo Stoakes wrote:
-> On Thu, Jul 02, 2026 at 09:49:47PM +0800, Lance Yang wrote:
->>
->> On Mon, Jun 29, 2026 at 08:25:36PM +0100, Lorenzo Stoakes wrote:
->> >Replace use of the legacy vm_flags_t flags with vma_flags_t values
->> >throughout the mremap logic.
->> >
->> >Additionally update comments to reflect the changes to be consistent.
->> >
->> >No functional change intended.
->> >
->> >Signed-off-by: Lorenzo Stoakes <ljs@kernel.org>
->> >---
->>
->> The vm_flags_set() cases below spell out vma_start_write(), but the
->> vm_flags_clear() cases don't?
->
-> Yep as I said elsewhere, implicitly taking the lock is terrible and me do=
-ing
-> this is completely on purpose to get rid of that :)
->
-> But I haven't been clear enough clearly, so I should put the argument as =
-to why
-> that's ok in the commit message.
->
-> Will do so on respin.
+Commit 55b48e23f5c4b6f5ca9b7ab09599b17dcf501c10 ("genirq/devres: Add
+error handling in devm_request_*_irq()") added automatic error
+logging to devm_request_threaded_irq() and
+devm_request_any_context_irq() via the new devm_request_result() 
+helper, which prints device name, IRQ number, handler functions, and
+error code on failure.
 
-How about also add a comment to vma_clear*() telling us a lock is not
-needed and why like you explained a lock is needed for vma_set*()?
-This asymmetry could confuse people.=20
+Since devm_request_irq() is a static inline wrapper around
+devm_request_threaded_irq(), it also benefits from this automatic
+logging.
 
-This patch looks good to me.
+Remove the now-redundant dev_err() and dev_err_probe() calls in
+thermal drivers that follow these devm_request_*_irq() functions, as
+the core now provides more detailed diagnostic information on failure.
 
-Reviewed-by: Zi Yan <ziy@nvidia.com>
+Pan Chuang (18):
+  thermal/drivers/airoha: Remove redundant dev_err()
+  thermal/drivers/armada: Remove redundant dev_err()
+  thermal/drivers/db8500: Remove redundant dev_err()
+  thermal/drivers/hisi: Remove redundant dev_err()
+  thermal/drivers/imx: Remove redundant dev_err()
+  thermal/drivers/loongson2: Remove redundant dev_err_probe()
+  thermal/drivers/max77620: Remove redundant dev_err()
+  thermal/drivers/rockchip: Remove redundant dev_err_probe()
+  thermal/drivers/brcmstb_thermal: Remove redundant dev_err_probe()
+  thermal: intel: int340x: Remove redundant dev_err()
+  thermal/drivers/intel/bxt_pmic: Remove redundant dev_err()
+  thermal/drivers/mediatek/lvts_thermal: Remove redundant dev_err()
+  thermal/drivers/qcom: Remove redundant dev_err()
+  thermal/drivers/renesas: Remove redundant dev_err()
+  thermal/drivers/exynos: Remove redundant dev_err()
+  thermal/drivers/st: Remove redundant dev_err()
+  thermal/drivers/tegra: Remove redundant dev_err() and dev_err_probe()
+  thermal/drivers/imx91: Remove redundant dev_err_probe()
 
---=20
-Best Regards,
-Yan, Zi
+ drivers/thermal/airoha_thermal.c                          | 4 +---
+ drivers/thermal/armada_thermal.c                          | 5 +----
+ drivers/thermal/broadcom/brcmstb_thermal.c                | 3 +--
+ drivers/thermal/db8500_thermal.c                          | 8 ++------
+ drivers/thermal/hisi_thermal.c                            | 4 +---
+ drivers/thermal/imx91_thermal.c                           | 2 +-
+ drivers/thermal/imx_thermal.c                             | 4 +---
+ .../intel/int340x_thermal/processor_thermal_device_pci.c  | 8 ++------
+ drivers/thermal/intel/intel_bxt_pmic_thermal.c            | 4 +---
+ drivers/thermal/loongson2_thermal.c                       | 2 +-
+ drivers/thermal/max77620_thermal.c                        | 8 ++------
+ drivers/thermal/mediatek/lvts_thermal.c                   | 2 +-
+ drivers/thermal/qcom/lmh.c                                | 1 -
+ drivers/thermal/qcom/tsens.c                              | 5 +----
+ drivers/thermal/renesas/rcar_thermal.c                    | 4 +---
+ drivers/thermal/renesas/rzg3e_thermal.c                   | 4 +---
+ drivers/thermal/rockchip_thermal.c                        | 3 +--
+ drivers/thermal/samsung/exynos_tmu.c                      | 4 +---
+ drivers/thermal/st/st_thermal_memmap.c                    | 4 +---
+ drivers/thermal/st/stm_thermal.c                          | 5 +----
+ drivers/thermal/tegra/soctherm.c                          | 8 ++------
+ drivers/thermal/tegra/tegra30-tsensor.c                   | 3 +--
+ 22 files changed, 25 insertions(+), 70 deletions(-)
+
+-- 
+2.34.1
 
 
