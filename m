@@ -1,356 +1,228 @@
-Return-Path: <linux-arm-msm+bounces-118053-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-118054-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id /uSFOArET2o7oAIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-118053-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Jul 2026 17:53:46 +0200
+	id XSFLGkvET2pMoAIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-118054-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Jul 2026 17:54:51 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 26ABF733258
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Jul 2026 17:53:46 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id C7281733292
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Jul 2026 17:54:50 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=NXP1.onmicrosoft.com header.s=selector1-NXP1-onmicrosoft-com header.b=gjQ4oN4Q;
-	dmarc=fail reason="SPF not aligned (relaxed), DKIM not aligned (relaxed)" header.from=nxp.com (policy=none);
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118053-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118053-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	arc=reject ("cv is fail on i=2")
+	dkim=pass header.d=gourry.net header.s=google header.b=MkQCpSd2;
+	dmarc=none;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118054-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118054-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 2E349309DC56
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jul 2026 15:49:04 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 6EC9730F1C4F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jul 2026 15:49:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D5329423A64;
-	Thu,  9 Jul 2026 15:49:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8B95633121E;
+	Thu,  9 Jul 2026 15:49:29 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from MRWPR03CU001.outbound.protection.outlook.com (mail-francesouthazon11011044.outbound.protection.outlook.com [40.107.130.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f48.google.com (mail-qv1-f48.google.com [209.85.219.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 049993019D9;
-	Thu,  9 Jul 2026 15:49:00 +0000 (UTC)
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783612142; cv=fail; b=BM7ZGEH0iz8yT6svPd/+FuRkE0d7d5gNgBBGuPMZlxqSuZ3dKDstXl20J9Ab3iC2JDsc9u1zP+P5c7YfVoc4ClUYKOcJmMGsqGLPNzZS8ppXfJpR9kkNsSa0mawBJvD8tRhJb7kJqr3Jb0tg+Wh0EgBski+xG7kBznVr8meL9+s=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783612142; c=relaxed/simple;
-	bh=93mgYucnzPgG4xJxLYADTtvWOSYApSaxvGh9W2xtzeQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=L6I9e6dOrx+Ac9fIMk7Yfia3ZpTXATfq2yoa2XvAShRP82ixfZ6GqvpV8teY96n8fB+/S8ktL5C+7Wlr3Gi7TXsBRahotbGgcpwRapYAXWdXv3zfJRSKKWkaQAAllFVurq7BXo1gobWYmpzOQAGEz471QQfr6y0HhC9KBvlFLiA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=gjQ4oN4Q; arc=fail smtp.client-ip=40.107.130.44
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=FCm2GriPcyEdZ0Y6cjVgAPSQLQ6GjZY+Jzrq5hcx89j8lD5TvYgr55aJ1FjL4hGyDXTbGlfh9MdNzVIftYxFxa7DsHmrUFD4Kuoe8oTfPN+aDxBh9IlQou379svIAYNdXfWft1/EeERmoWKLDMtI7/1uD+BZpUa7HpbqxVhyZeuCah2Zh23DlCI9g0ev5Me5EUuGY7kSNwGKjU3wC0xoSt3iIVBTkl3sESudGfo9tF66WDCv2lD/Lmu89wgRGTfisopDFL2wX2c+/3FpR1MoycVsGOrYUGzEqInzVQMAow0UOyxK4Ty85Xn3ZPbt65dZ0sCf+lBEO9Hbsv4lrvMGCg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=in84MNJ056J0Brua02VKCupPYCxcKTSD9B8CQgKzD1c=;
- b=WiGGc2XEiukO24260MdafBFxcsBE2WUSA992bxcULsGqgbzH6oZXE8IiHSPyFEL0kpg5Xp3TvwYUq2j0DRT/ypZgpPaVPbCONJC7vjzh/WOeu02ef061tq4oLjnOWIlKyzHrzF6gJYfpPAPY0KDSEeex0CW7OGvTSU8kV30QryMtY5gCaU8wfhMLopg/LXI6V32cvfOmMHnY3UKBsF3Q/JjOjrydo2Zq5N3bO2zIjBycpyceqsmS7bJM+oC9+co07wOchsYX32CZqoJKsMZ5MT/xMWpyCdKDGEoPw4dz1heyOxuojNA/xGi/xcScP62A+csRl+gdHCJw2j3E+dsJFQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
- dkim=pass header.d=oss.nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
- s=selector1-NXP1-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=in84MNJ056J0Brua02VKCupPYCxcKTSD9B8CQgKzD1c=;
- b=gjQ4oN4Q+3oBhY/frtDZBsbK1E6bp/qNQwGHWy3fXl2R/NytBoBAkgEkZB06cx9kcBry9nUNNy5w3kXLzVCX2C+zq89Lltzl7kEiT4AfNhaiqGzpR08S56CsoHOmAS1iK0TwD9APlYJu1SmMevRwvOGc8z8sHg5tue6UaLwP4kuXT65IcFsu6VNNyPwSf33il/2aubbsEvpqP9jSeVXGCjY6KJXpaQQr4QHkSRVaYLGF//eQZDSc16sD3cgfbI6aCI+GDgsRibm7VgIFhEhDAw3erWWIDHvedXJzv35GxcJCcR8wztvdqCDfDoxn67RKRSe4Hsana6pFn+KOoP1s1Q==
-Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
- by AS8PR04MB8612.eurprd04.prod.outlook.com (2603:10a6:20b:427::16) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.15; Thu, 9 Jul
- 2026 15:48:57 +0000
-Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
- ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
- ([fe80::2146:83a2:5329:b7c%6]) with mapi id 15.21.0159.007; Thu, 9 Jul 2026
- 15:48:57 +0000
-Date: Thu, 9 Jul 2026 11:48:48 -0400
-From: Frank Li <Frank.li@oss.nxp.com>
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Robert Foss <rfoss@kernel.org>,
-	Todor Tomov <todor.too@gmail.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-	Bryan O'Donoghue <bod@kernel.org>,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
-	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-media@vger.kernel.org, Krzysztof Kozlowski <krzk@kernel.org>
-Subject: Re: [PATCH v12 4/6] media: qcom: camss: Add legacy_phy flag to SoC
- definition structures
-Message-ID: <ak_C4BCzekUIdBwc@lizhi-Precision-Tower-5810>
-References: <20260708-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v12-0-f8588da41f16@linaro.org>
- <20260708-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v12-4-f8588da41f16@linaro.org>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260708-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v12-4-f8588da41f16@linaro.org>
-X-ClientProxiedBy: SA1P222CA0167.NAMP222.PROD.OUTLOOK.COM
- (2603:10b6:806:3c3::15) To GV2PR04MB11799.eurprd04.prod.outlook.com
- (2603:10a6:150:2cf::9)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C9AE42643E
+	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Jul 2026 15:49:26 +0000 (UTC)
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783612169; cv=none; b=LSOj+JnEbU7GG1cXhYfo5gPm1EluOWZf34u58WsrElGV5Lz/BwSC9UsWj9cLn05PkO8IpHESFZFxmMXVHY5rhmg2XSRuJVFwfBASVxhsieS7/o+IuB3ZE0pl/Sm4U9XbiC0ywonWFbsvMNQH/fpjkzS3tz/Cqa1WgcafM8xfVV8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783612169; c=relaxed/simple;
+	bh=0qkqAHRaBHgpB2UR0C6dAMPOVUmsbtzeoEt8MNK67Xo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=q36yZ3StuIXiXxLqV85jHaVBxzqMFO4QOG2Od6PMmCgN2Jo6f3mn1xVOs+MGUuDyNCu9vMf368c5SUlhHN0VX1P+hnqXORLEWw1z1AXL4bOtkp3DjrOubK0jZPUmUrP0VT5HRwxte9PROvV1RoVbw8aZ29zNl7Gz7y3osE1vhDY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net; spf=pass smtp.mailfrom=gourry.net; dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b=MkQCpSd2; arc=none smtp.client-ip=209.85.219.48
+Received: by mail-qv1-f48.google.com with SMTP id 6a1803df08f44-8f1a8e914a9so450536d6.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Jul 2026 08:49:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gourry.net; s=google; t=1783612166; x=1784216966; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=hryUWYzOZzjuIh9gJx+Hzg+n+E360+tJZh4R7BZGeLA=;
+        b=MkQCpSd2m04untsXU1nx9KbvtduhWS0cCQoIcza8A3pVIhVf9PRW/CsEN/DZAtCuls
+         p7RoVeKsjloxBKU2AfxnCCAN8lhXWQBNDMfPG7gVZRfQmXhyKackY8MGGcFAEPPVy0Fv
+         SDU2e8AQxkDk3sY44SjU+DAZTvcrqgnaYjF6Y4p8tOSybH+22dFesBK1qZJowyT//dMI
+         6ZToGGs97IuDvRPOGP/+9UTODYx8cfsPo8904OY1zAoe+0Q0w2DVPfcKw8nstjaGRKyi
+         ELgcN2ve0gKuNONy45AfjzXvUlPyOrsp6pJgUy/3Xnn2gf7Puzf5UJmIyCvxOjIpgVPr
+         CZNA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783612166; x=1784216966;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=hryUWYzOZzjuIh9gJx+Hzg+n+E360+tJZh4R7BZGeLA=;
+        b=eGdFn/jON5YwbOVaqGPOmdVZ3t6d+gn2R+efwsGKJhiaX16/bvxI2iugZS43K4E0nS
+         co/DRRmk/KlFq0HiO0qVeb+QppPWG45kK/+FqEa45h1hvcYktjikNSfz6gE4BkWRymfg
+         2sqsgCHw/UCN1atpSXaq/4zssxJRgxfH1oNTF4DygGd4GmC16UdrdwYZGsv6JgvBeiHG
+         qJl6zskLdn6U5Ng/x0sIKObjZVoCLa2h8rdxCRbVY37CP48DMWht83zIk3qNUg4mw3wG
+         1ZZ6x0IHgYL0yOve8k34YsaEaJSSrvjn16MyLKNEh4SDdaTpWq2QTVbz51ASA+RG2V29
+         ONqw==
+X-Forwarded-Encrypted: i=1; AHgh+Rp7aHBXOEllTXrAyBKPekeRYEmRnG2wePXsmP3c3jCxOByzSKSQnTMV+LK9oUT3KYzAOvIXkJThAx2271+i@vger.kernel.org
+X-Gm-Message-State: AOJu0YwGJUMclRlhQpTO5l5ov/tDp3wZ1SwNMgC61y7doAtuq4zs/2dB
+	FaR1aY5U4Xp2qk8aG+o8SSDIfP1+mbzUdDbe8eOFFhr7pqZsrIBp4GQ2h9BNDIVBIGA=
+X-Gm-Gg: AfdE7cn7P24eIKirnNzQQ2qu561lCDxsvwkjE3Oyc8zp+roB0aOqKqH4Ik7nl4A+CxC
+	cTYsbbfaTLLMmlYz61hwzEMUKA1j9AIUVEeeyL/1hvuxqAOk1OyekoIB5tWoJYxllNJaa4PXdue
+	0LOjnQEgqXT2Q7Hc46AEhijm/N/ipFFHszgxpoaxN+Y659ZsbB6PCZhNd5UrhOiYLCseF3JxBFZ
+	FGPOImKayKSnZlyWdv0vgFORiLQthcmGP5OIW+8ttj6va2UYKkn2uQtq9Rshqcz5pHaoTH24pWv
+	MgtEm7hB6uzGvfn/9qgRvRsBpePWUeAErB4nZdsffEg1KTQUMk5EAy7wt2Ytsl+VRlRr5QE0+sg
+	ukZ4ccSzno/MC0v4m93NaVcWs+tx49zoGq7ds7NhjCb5wqBCaSmRt7LYT2h2NgaJPgQz/r45JAY
+	fPKJccg1obDgnC2OLmO39xWfDCQT3zLV7jfAzAv4lH+iMqHTzd4w92rog5bO0dKKPnizKE
+X-Received: by 2002:ad4:5c8a:0:b0:8cc:2a92:48e4 with SMTP id 6a1803df08f44-8fec217b8bfmr87997286d6.32.1783612165998;
+        Thu, 09 Jul 2026 08:49:25 -0700 (PDT)
+Received: from gourry-fedora-PF4VCD3F (pool-173-79-60-52.washdc.fios.verizon.net. [173.79.60.52])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8ffd7c1d9f6sm20164456d6.23.2026.07.09.08.49.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 09 Jul 2026 08:49:24 -0700 (PDT)
+Date: Thu, 9 Jul 2026 11:49:18 -0400
+From: Gregory Price <gourry@gourry.net>
+To: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Pedro Falcato <pfalcato@suse.de>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Russell King <linux@armlinux.org.uk>,
+	Dinh Nguyen <dinguyen@kernel.org>,
+	Simon Schuster <schuster.simon@siemens-energy.com>,
+	"James E . J . Bottomley" <James.Bottomley@hansenpartnership.com>,
+	Helge Deller <deller@gmx.de>, Jarkko Sakkinen <jarkko@kernel.org>,
+	Thomas Gleixner <tglx@kernel.org>, Ingo Molnar <mingo@redhat.com>,
+	Borislav Petkov <bp@alien8.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org,
+	Ian Abbott <abbotti@mev.co.uk>,
+	H Hartley Sweeten <hsweeten@visionengravers.com>,
+	Lucas Stach <l.stach@pengutronix.de>,
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+	Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Dmitry Baryshkov <lumag@kernel.org>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Thierry Reding <thierry.reding@kernel.org>,
+	Mikko Perttunen <mperttunen@nvidia.com>,
+	Jonathan Hunter <jonathanh@nvidia.com>,
+	Christian Koenig <christian.koenig@amd.com>,
+	Huang Rui <ray.huang@amd.com>, Ankit Agrawal <ankita@nvidia.com>,
+	Alex Williamson <alex@shazbot.org>,
+	Alexander Viro <viro@zeniv.linux.org.uk>,
+	Christian Brauner <brauner@kernel.org>,
+	Dan Williams <djbw@kernel.org>, Muchun Song <muchun.song@linux.dev>,
+	Oscar Salvador <osalvador@suse.de>,
+	David Hildenbrand <david@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	"Liam R . Howlett" <liam@infradead.org>,
+	Matthew Wilcox <willy@infradead.org>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Arnaldo Carvalho de Melo <acme@kernel.org>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Steven Rostedt <rostedt@goodmis.org>, SeongJae Park <sj@kernel.org>,
+	Miaohe Lin <linmiaohe@huawei.com>, Hugh Dickins <hughd@google.com>,
+	Mike Rapoport <rppt@kernel.org>, Kees Cook <kees@kernel.org>,
+	Paolo Bonzini <pbonzini@redhat.com>, linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, linux-parisc@vger.kernel.org,
+	linux-sgx@vger.kernel.org, etnaviv@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+	freedreno@lists.freedesktop.org, linux-tegra@vger.kernel.org,
+	kvm@vger.kernel.org, linux-fsdevel@vger.kernel.org,
+	nvdimm@lists.linux.dev, linux-mm@kvack.org, iommu@lists.linux.dev,
+	linux-perf-users@vger.kernel.org,
+	linux-trace-kernel@vger.kernel.org, kasan-dev@googlegroups.com,
+	damon@lists.linux.dev, Rik van Riel <riel@surriel.com>,
+	Harry Yoo <harry@kernel.org>, Jann Horn <jannh@google.com>
+Subject: Re: [PATCH 17/30] mm: prefer vma_[start,end]_pgoff() to
+ vma->vm_pgoff in kernel/
+Message-ID: <ak_C_o2ehS17Q5HV@gourry-fedora-PF4VCD3F>
+References: <cover.1782735110.git.ljs@kernel.org>
+ <ea87349d63205bf4c26ea79854f179a9bf8cfb0b.1782735110.git.ljs@kernel.org>
+ <akZCg73F-oGzDp1a@pedro-suse.lan>
+ <akZGqclqQ6gS12Vv@lucifer>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|AS8PR04MB8612:EE_
-X-MS-Office365-Filtering-Correlation-Id: 0a4ad449-bf10-4810-0e07-08deddd19619
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|366016|7416014|376014|19092799006|1800799024|22082099003|18002099003|11063799006|4143699003|56012099006;
-X-Microsoft-Antispam-Message-Info:
-	YbttoWzmymMkYesr/m6isMIGOTJ2sVPrVQ3RYreDUGj5zJKqyh0FGtUYni5rPF1WnwFZCy7OGT3n0vQQ6kXpVqwGDBg4y5NeSvVj1RlK/3uo20Ov/3gYbvRsuvOdVeObK2n9ndkJdGoRO0ZJkikLXiRTL9Qcz032i73MkBIihKpm5Rz3JQduLOUbSAnB5s3tnDOOIVP90n7kQX2cMCC8XRhThah/fVkOdl65iJ5aSHYA5Tvj6I9P7w0DSKwmlxIKZeaWfLHwP1jbg30MEsdqUtK4rfj79UQbi51lP6MJEmRH6b4xTy47F3M5TkEWhz5VgRGwtYD38ZK15MotB/Wn3SPBt/LnX1oZe3Y1g4JtDy0R2ICBQBBPAZjU1m2BM9wuoncdRZ1gUYqEJxZ3G7JEzCS/rFmttPEQpDhzcAo3MhlWD0mdfOHkj741R9A/NeIhVuU8ZRAlc12g5hjtiHd76EMCifMmzjGbAk82z5Flk/mxI5MtNHXUVGS0xKCrecUVSJj1a5gXgWwPJkkkkS/TydlN9LMfkJmJ4B1Fc96rZ/8zZ08YI8AM/Dnt36l7HNCBF02AzEUetvY8WGZ4XYWIrrar0grtt6nPfMPQYnhDDGsOgLz9B/HK+/QQAq7ICa4Nbg/Zm0Up9X6orukYiTkYC9EcJyKevW9wKdDe9GhTDbc=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(366016)(7416014)(376014)(19092799006)(1800799024)(22082099003)(18002099003)(11063799006)(4143699003)(56012099006);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?EB0f1eQqiEvQY3ltGGWNRbybZZne8fCASzdxdW54YkVohVR3zFYUoCFftXuB?=
- =?us-ascii?Q?/ZccCd7KgJ6sdHAuDyF1WYyO2orajRiSRkuJj6RXam0Vms24Wbc7nUkyuOiW?=
- =?us-ascii?Q?M6bjXNcxHDqcWR/toqPFVIJCodCb3A4hD9mIjZ/vxA1PVfO/RlOCknUqUyKs?=
- =?us-ascii?Q?oBlbNF9h/HbvswkIah+766/wCv8ooGOWBvcZo/oUp61OwBvAZbFjN80mPgBX?=
- =?us-ascii?Q?ufCpVkPZJUmVXOItMcYPYKLoFJncEGy2v4WYf78hgnYK6iJQSD+DxTBMG9mJ?=
- =?us-ascii?Q?XAKDG+cA+1wok90Eod5iehc3RTIeogR8rSy1RErCNCMif+Ptlg5fgN/S2Aqf?=
- =?us-ascii?Q?1R8yII530Y6gSRtvzO+pwarYqOkcP2gYygYIQa4AVxN/ftOrKyyu40Qlg8Zq?=
- =?us-ascii?Q?MQD0nF7A9iGAnzNdnNO8tThDTEj8jHWlyQW18L6VCCfrlm/iKxwtU2MeIP8M?=
- =?us-ascii?Q?tALfz5gxIUWnsQbr1rRFnvdKn9FdzWQqjDL0ENnbboE2aunVZoGFJ9BdzZFD?=
- =?us-ascii?Q?fvCdL2kHsEwelsCn2uRGuEri/G75u8yn7+CburGF3oHpxFfCjVtzRa87nOF4?=
- =?us-ascii?Q?WSiPtmFPuYYsy9X8W3yHq/sDT0a4u13FVeUvExesxfumL+Wjtn2h6uOAv9MB?=
- =?us-ascii?Q?qC3Ul2ZCQluS77/MaAdajFxZTxGa9wRLkYKF4ly7cL2LvTncz/wd4yOZPFpK?=
- =?us-ascii?Q?OcYxOvK1mDJp7XoR8FUymQRtTM3rAssRZBAO0tnTWOxz+TdEow7ddpkXYE0Z?=
- =?us-ascii?Q?siaYyxPwRERQ+T22I6VxnKPiGqyYlwxYF2rfrm6Q6mWedpw0qYNtECo0zRkv?=
- =?us-ascii?Q?pyfl8sfWTDb74tTYevzf9YSol9wkzVRkW1WF06GTU/bOHTHPvojsPM4Q1tOv?=
- =?us-ascii?Q?EX4SFYsDwBEry0Evc+hTf/cL2n9jQ6FvqWumG5U2sElyPfPMihMuA7BYyP24?=
- =?us-ascii?Q?nJGAOdaxL2wIXG4jMIcTxh5CnxWE8DVucGpTWDjg/FodiBEm8resxySiyCQd?=
- =?us-ascii?Q?twxWJJGbfoGrEozR0pS/AOwH3q/jFtJSED0BCRpcIgILts33vH+dh8NeuUZK?=
- =?us-ascii?Q?pZVbljZb6WYgOJd4tzUFem/2bQM02mC4ZqnA7PtCvCxbGDIMs5LyDddn9cSQ?=
- =?us-ascii?Q?LOk4AKBNViQTW7evys98tTwueTSHiH9TZZoOxNs6HiK3yDVmiOEDwlqvmTqi?=
- =?us-ascii?Q?yHiqZbwEghDTsEtQgy/81trxWific8DIniwuhL3QR/HntqnD/6enTSZqEF/x?=
- =?us-ascii?Q?o6Rb9AGP24S6LwHfoMuYiaNu3TxUeCxEM7xfOxStYGYJXvGCXLI/Gl7tKtb1?=
- =?us-ascii?Q?uvfxVuVKuOOuypvnDSgdlvPGx/IFe7FBX0f6ashN8ft1HwbIYDw+xlIr43ZJ?=
- =?us-ascii?Q?Z4odz45SBcj1KKkMl4JmnCva/FNrnWwRR3Ya8jRa2zbSj2988ilrj995zuxz?=
- =?us-ascii?Q?XEa3zJ0biCB4hadSaYo/m5rKxQ5QsoCL3b+q0T7Qz8hgfes4gDPI52aAP7et?=
- =?us-ascii?Q?qR7E8xZYmda5eaAuNfEHLALaUqzg/0f2W92JGOkOJqe7+bHBvEh/1UuMvCJs?=
- =?us-ascii?Q?u2keqEDDlG7ITyxZSDv2FDY/AciN4/Bxfp5FOwYRrpic8RfqlSoKSFDmkMMd?=
- =?us-ascii?Q?GVRZoB8GxCVs4qat9RL3TLBXVnKQBFwsiQ4rdpnxB0koV2S4vDBofjPEM+B0?=
- =?us-ascii?Q?BaFweTGq0DfKx8aXrwf4LZC8HeMJPvQd2QIG9ymN8boByaPQpiLXTJTTg8ZV?=
- =?us-ascii?Q?TWyoPU1YzwaCibjS+wwuIzpUWq0vS0ji49IEn4p1c/3XzFEDdPXZ?=
-X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0a4ad449-bf10-4810-0e07-08deddd19619
-X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Jul 2026 15:48:57.1610
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: xEpvGjcs7uZ81xd92pggZOnDoawgjfn/1Ilm2d4njVNhAFCzt5T2E0HwxPDdASIz4n4rjRXcOAEWNgVL4U75XhHjHEpaxJUlPpqPLe+yGqjMUsYQNl3Im62gXvoN0DI1
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR04MB8612
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <akZGqclqQ6gS12Vv@lucifer>
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [2.44 / 15.00];
+X-Spamd-Result: default: False [0.34 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
-	ARC_REJECT(1.00)[cv is fail on i=2];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MID_RHS_NOT_FQDN(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
-	R_DKIM_ALLOW(-0.20)[NXP1.onmicrosoft.com:s=selector1-NXP1-onmicrosoft-com];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_DKIM_ALLOW(-0.20)[gourry.net:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
-	DMARC_POLICY_SOFTFAIL(0.10)[nxp.com : SPF not aligned (relaxed), DKIM not aligned (relaxed),none];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-118054-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-118053-lists,linux-arm-msm=lfdr.de];
-	RCPT_COUNT_TWELVE(0.00)[20];
-	MIME_TRACE(0.00)[0:+];
-	FORWARDED(0.00)[lists@lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:bryan.odonoghue@linaro.org,m:andersson@kernel.org,m:mturquette@baylibre.com,m:sboyd@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:rfoss@kernel.org,m:todor.too@gmail.com,m:mchehab@kernel.org,m:konradybcio@kernel.org,m:vladimir.zapolskiy@linaro.org,m:bod@kernel.org,m:loic.poulain@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:linux-clk@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-media@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,m:todortoo@gmail.com,s:lists@lfdr.de];
-	FORGED_SENDER(0.00)[Frank.li@oss.nxp.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[NXP1.onmicrosoft.com:+];
+	FORGED_RECIPIENTS(0.00)[m:ljs@kernel.org,m:pfalcato@suse.de,m:akpm@linux-foundation.org,m:linux@armlinux.org.uk,m:dinguyen@kernel.org,m:schuster.simon@siemens-energy.com,m:James.Bottomley@hansenpartnership.com,m:deller@gmx.de,m:jarkko@kernel.org,m:tglx@kernel.org,m:mingo@redhat.com,m:bp@alien8.de,m:dave.hansen@linux.intel.com,m:x86@kernel.org,m:abbotti@mev.co.uk,m:hsweeten@visionengravers.com,m:l.stach@pengutronix.de,m:airlied@gmail.com,m:simona@ffwll.ch,m:patrik.r.jakobsson@gmail.com,m:maarten.lankhorst@linux.intel.com,m:mripard@kernel.org,m:tzimmermann@suse.de,m:robin.clark@oss.qualcomm.com,m:lumag@kernel.org,m:tomi.valkeinen@ideasonboard.com,m:thierry.reding@kernel.org,m:mperttunen@nvidia.com,m:jonathanh@nvidia.com,m:christian.koenig@amd.com,m:ray.huang@amd.com,m:ankita@nvidia.com,m:alex@shazbot.org,m:viro@zeniv.linux.org.uk,m:brauner@kernel.org,m:djbw@kernel.org,m:muchun.song@linux.dev,m:osalvador@suse.de,m:david@kernel.org,m:surenb@google.com,m:liam@infradead.org,m:willy@infrad
+ ead.org,m:m.szyprowski@samsung.com,m:peterz@infradead.org,m:acme@kernel.org,m:namhyung@kernel.org,m:mhiramat@kernel.org,m:oleg@redhat.com,m:rostedt@goodmis.org,m:sj@kernel.org,m:linmiaohe@huawei.com,m:hughd@google.com,m:rppt@kernel.org,m:kees@kernel.org,m:pbonzini@redhat.com,m:linux-kernel@vger.kernel.org,m:linux-arm-kernel@lists.infradead.org,m:linux-parisc@vger.kernel.org,m:linux-sgx@vger.kernel.org,m:etnaviv@lists.freedesktop.org,m:dri-devel@lists.freedesktop.org,m:linux-arm-msm@vger.kernel.org,m:freedreno@lists.freedesktop.org,m:linux-tegra@vger.kernel.org,m:kvm@vger.kernel.org,m:linux-fsdevel@vger.kernel.org,m:nvdimm@lists.linux.dev,m:linux-mm@kvack.org,m:iommu@lists.linux.dev,m:linux-perf-users@vger.kernel.org,m:linux-trace-kernel@vger.kernel.org,m:kasan-dev@googlegroups.com,m:damon@lists.linux.dev,m:riel@surriel.com,m:harry@kernel.org,m:jannh@google.com,m:patrikrjakobsson@gmail.com,s:lists@lfdr.de];
+	FORWARDED(0.00)[lists@lfdr.de];
+	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_CC(0.00)[suse.de,linux-foundation.org,armlinux.org.uk,kernel.org,siemens-energy.com,hansenpartnership.com,gmx.de,redhat.com,alien8.de,linux.intel.com,mev.co.uk,visionengravers.com,pengutronix.de,gmail.com,ffwll.ch,oss.qualcomm.com,ideasonboard.com,nvidia.com,amd.com,shazbot.org,zeniv.linux.org.uk,linux.dev,google.com,infradead.org,samsung.com,goodmis.org,huawei.com,vger.kernel.org,lists.infradead.org,lists.freedesktop.org,lists.linux.dev,kvack.org,googlegroups.com,surriel.com];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	DMARC_NA(0.00)[gourry.net];
+	FORGED_SENDER(0.00)[gourry@gourry.net,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[gourry.net:+];
+	MISSING_XM_UA(0.00)[];
 	TO_DN_SOME(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[Frank.li@oss.nxp.com,linux-arm-msm@vger.kernel.org];
-	FREEMAIL_CC(0.00)[kernel.org,baylibre.com,gmail.com,linaro.org,oss.qualcomm.com,vger.kernel.org];
-	ALIAS_RESOLVED(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	FROM_NEQ_ENVFROM(0.00)[gourry@gourry.net,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCPT_COUNT_GT_50(0.00)[76];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,lizhi-Precision-Tower-5810:mid,oss.nxp.com:from_mime,linaro.org:email,nxp.com:email,NXP1.onmicrosoft.com:dkim]
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	ALIAS_RESOLVED(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,gourry-fedora-PF4VCD3F:mid,gourry.net:from_mime,gourry.net:dkim]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 26ABF733258
+X-Rspamd-Queue-Id: C7281733292
 
-On Wed, Jul 08, 2026 at 01:06:58AM +0100, Bryan O'Donoghue wrote:
-> Flag which SoCs have legacy - builtin PHY code. This will be useful in
-> subsequent patches to inform PHY bringup logic if legacy bindings are
-> available.
->
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> ---
+On Thu, Jul 02, 2026 at 12:30:59PM +0100, Lorenzo Stoakes wrote:
+> 
+...
+> static inline unsigned long vma_offset(const struct vm_area_struct *vma,
+> 				       const unsigned long address)
+> {
+> 	/* Retains page offset and tags. */
+> 	return address - vma->vm_start;
+> }
+> 
+...
+> And I'm not sure it's really all that useful. Perhaps retaining vma_offset()
+> would be though.
+> 
 
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Silly question:
 
->  drivers/media/platform/qcom/camss/camss.c | 17 +++++++++++++++++
->  drivers/media/platform/qcom/camss/camss.h |  1 +
->  2 files changed, 18 insertions(+)
->
-> diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
-> index 95e655a8b6aa0..e814a96953b1b 100644
-> --- a/drivers/media/platform/qcom/camss/camss.c
-> +++ b/drivers/media/platform/qcom/camss/camss.c
-> @@ -5512,6 +5512,7 @@ static void camss_remove(struct platform_device *pdev)
->
->  static const struct camss_resources msm8916_resources = {
->  	.version = CAMSS_8x16,
-> +	.legacy_phy = true,
->  	.csiphy_res = csiphy_res_8x16,
->  	.csid_res = csid_res_8x16,
->  	.ispif_res = &ispif_res_8x16,
-> @@ -5523,6 +5524,7 @@ static const struct camss_resources msm8916_resources = {
->
->  static const struct camss_resources msm8939_resources = {
->  	.version = CAMSS_8x39,
-> +	.legacy_phy = true,
->  	.csiphy_res = csiphy_res_8x39,
->  	.csid_res = csid_res_8x39,
->  	.ispif_res = &ispif_res_8x39,
-> @@ -5534,6 +5536,7 @@ static const struct camss_resources msm8939_resources = {
->
->  static const struct camss_resources msm8953_resources = {
->  	.version = CAMSS_8x53,
-> +	.legacy_phy = true,
->  	.icc_res = icc_res_8x53,
->  	.icc_path_num = ARRAY_SIZE(icc_res_8x53),
->  	.csiphy_res = csiphy_res_8x96,
-> @@ -5547,6 +5550,7 @@ static const struct camss_resources msm8953_resources = {
->
->  static const struct camss_resources msm8996_resources = {
->  	.version = CAMSS_8x96,
-> +	.legacy_phy = true,
->  	.csiphy_res = csiphy_res_8x96,
->  	.csid_res = csid_res_8x96,
->  	.ispif_res = &ispif_res_8x96,
-> @@ -5558,6 +5562,7 @@ static const struct camss_resources msm8996_resources = {
->
->  static const struct camss_resources qcm2290_resources = {
->  	.version = CAMSS_2290,
-> +	.legacy_phy = true,
->  	.csiphy_res = csiphy_res_2290,
->  	.csid_res = csid_res_2290,
->  	.vfe_res = vfe_res_2290,
-> @@ -5571,6 +5576,7 @@ static const struct camss_resources qcm2290_resources = {
->  static const struct camss_resources qcs8300_resources = {
->  	.version = CAMSS_8300,
->  	.pd_name = "top",
-> +	.legacy_phy = true,
->  	.csiphy_res = csiphy_res_8300,
->  	.tpg_res = tpg_res_8775p,
->  	.csid_res = csid_res_8775p,
-> @@ -5587,6 +5593,7 @@ static const struct camss_resources qcs8300_resources = {
->  static const struct camss_resources sa8775p_resources = {
->  	.version = CAMSS_8775P,
->  	.pd_name = "top",
-> +	.legacy_phy = true,
->  	.csiphy_res = csiphy_res_8775p,
->  	.tpg_res = tpg_res_8775p,
->  	.csid_res = csid_res_8775p,
-> @@ -5602,6 +5609,7 @@ static const struct camss_resources sa8775p_resources = {
->
->  static const struct camss_resources sdm660_resources = {
->  	.version = CAMSS_660,
-> +	.legacy_phy = true,
->  	.csiphy_res = csiphy_res_660,
->  	.csid_res = csid_res_660,
->  	.ispif_res = &ispif_res_660,
-> @@ -5613,6 +5621,7 @@ static const struct camss_resources sdm660_resources = {
->
->  static const struct camss_resources sdm670_resources = {
->  	.version = CAMSS_845,
-> +	.legacy_phy = true,
->  	.csiphy_res = csiphy_res_670,
->  	.csid_res = csid_res_670,
->  	.vfe_res = vfe_res_670,
-> @@ -5624,6 +5633,7 @@ static const struct camss_resources sdm670_resources = {
->  static const struct camss_resources sdm845_resources = {
->  	.version = CAMSS_845,
->  	.pd_name = "top",
-> +	.legacy_phy = true,
->  	.csiphy_res = csiphy_res_845,
->  	.csid_res = csid_res_845,
->  	.vfe_res = vfe_res_845,
-> @@ -5635,6 +5645,7 @@ static const struct camss_resources sdm845_resources = {
->  static const struct camss_resources sm6150_resources = {
->  	.version = CAMSS_6150,
->  	.pd_name = "top",
-> +	.legacy_phy = true,
->  	.csiphy_res = csiphy_res_sm6150,
->  	.csid_res = csid_res_sm6150,
->  	.vfe_res = vfe_res_sm6150,
-> @@ -5661,6 +5672,7 @@ static const struct camss_resources sm6350_resources = {
->  static const struct camss_resources sm8250_resources = {
->  	.version = CAMSS_8250,
->  	.pd_name = "top",
-> +	.legacy_phy = true,
->  	.csiphy_res = csiphy_res_8250,
->  	.csid_res = csid_res_8250,
->  	.vfe_res = vfe_res_8250,
-> @@ -5674,6 +5686,7 @@ static const struct camss_resources sm8250_resources = {
->  static const struct camss_resources sc8280xp_resources = {
->  	.version = CAMSS_8280XP,
->  	.pd_name = "top",
-> +	.legacy_phy = true,
->  	.csiphy_res = csiphy_res_sc8280xp,
->  	.csid_res = csid_res_sc8280xp,
->  	.ispif_res = NULL,
-> @@ -5688,6 +5701,7 @@ static const struct camss_resources sc8280xp_resources = {
->  static const struct camss_resources sc7280_resources = {
->  	.version = CAMSS_7280,
->  	.pd_name = "top",
-> +	.legacy_phy = true,
->  	.csiphy_res = csiphy_res_7280,
->  	.csid_res = csid_res_7280,
->  	.vfe_res = vfe_res_7280,
-> @@ -5701,6 +5715,7 @@ static const struct camss_resources sc7280_resources = {
->  static const struct camss_resources sm8550_resources = {
->  	.version = CAMSS_8550,
->  	.pd_name = "top",
-> +	.legacy_phy = true,
->  	.csiphy_res = csiphy_res_8550,
->  	.csid_res = csid_res_8550,
->  	.vfe_res = vfe_res_8550,
-> @@ -5715,6 +5730,7 @@ static const struct camss_resources sm8550_resources = {
->  static const struct camss_resources sm8650_resources = {
->  	.version = CAMSS_8650,
->  	.pd_name = "top",
-> +	.legacy_phy = true,
->  	.csiphy_res = csiphy_res_sm8650,
->  	.csid_res = csid_res_sm8650,
->  	.csid_wrapper_res = &csid_wrapper_res_sm8550,
-> @@ -5729,6 +5745,7 @@ static const struct camss_resources sm8650_resources = {
->  static const struct camss_resources x1e80100_resources = {
->  	.version = CAMSS_X1E80100,
->  	.pd_name = "top",
-> +	.legacy_phy = true,
->  	.csiphy_res = csiphy_res_x1e80100,
->  	.tpg_res = tpg_res_x1e80100,
->  	.csid_res = csid_res_x1e80100,
-> diff --git a/drivers/media/platform/qcom/camss/camss.h b/drivers/media/platform/qcom/camss/camss.h
-> index 93d691c8ac63b..698694d3064ea 100644
-> --- a/drivers/media/platform/qcom/camss/camss.h
-> +++ b/drivers/media/platform/qcom/camss/camss.h
-> @@ -107,6 +107,7 @@ enum icc_count {
->  struct camss_resources {
->  	enum camss_version version;
->  	const char *pd_name;
-> +	const bool legacy_phy;
->  	const struct camss_subdev_resources *csiphy_res;
->  	const struct camss_subdev_resources *tpg_res;
->  	const struct camss_subdev_resources *csid_res;
->
-> --
-> 2.54.0
->
+   What's the purpose of retaining tags in a non-address value?
+
+That sounds like there's fragility just waiting to be broken.
+
+(I presume you are talking about things like ARM MTE and such, right?)
+
+> This is one that I think makes more sense.
+> 
+> But in general, I'd rather hold off from yet more churn here.
+> 
+> I'm making these changes to establish a basis for virtual page offsets
+> introduced in [0], rather than just cleaning up in general.
+> 
+
+I agree with this.  If the refactors here suddenly have to think about
+corner cases on things like tags, that's better resolved separately.
+
+~Gregory
 
