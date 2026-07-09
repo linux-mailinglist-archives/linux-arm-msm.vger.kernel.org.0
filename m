@@ -1,84 +1,83 @@
-Return-Path: <linux-arm-msm+bounces-118046-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-118047-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id vSCDNmG9T2pwngIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-118046-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Jul 2026 17:25:21 +0200
+	id /ytWGBK+T2qongIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-118047-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Jul 2026 17:28:18 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 43EAC732D71
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Jul 2026 17:25:21 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id B63DF732E2D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Jul 2026 17:28:17 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=gourry.net header.s=google header.b=XYuSc5IC;
+	dkim=pass header.d=gourry.net header.s=google header.b=RcHNg+Ts;
 	dmarc=none;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118046-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118046-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118047-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118047-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id AE851311B7D6
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jul 2026 15:19:02 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 8DD873044297
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jul 2026 15:20:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DD0EC36DA0F;
-	Thu,  9 Jul 2026 15:18:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B1DEB351C27;
+	Thu,  9 Jul 2026 15:20:55 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qt1-f172.google.com (mail-qt1-f172.google.com [209.85.160.172])
+Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F6003672BF
-	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Jul 2026 15:18:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B96AC366DA5
+	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Jul 2026 15:20:52 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783610332; cv=none; b=h2zFcR2XduqKWPrcb3x3cyuMETKgYhxW45yjLgkn/HWrfgSuo3lHQ1vDtHDqvEA4QEygcolNuLQXYCYuCH3/7dWlJ+cL/sju5T1zoz6eQAbT1ZgLidhQbuSVWl9KBkpZlDXc0VVaupNJVd8etiSJaiTfRHOiTbrKnXyN4oYYJag=
+	t=1783610455; cv=none; b=Yk3+zCM18ik8lnVQqbss6Lx2qVSnRIto2W+gMFiADZyFWGJ2YZ1IDZnuCKPsHuX9yphSwW0GBS6bQ1dxXwyjTuQX1E4vrVOPOm2hh980BVoNNQR0RNUL4zZK46wV5O4iD1ciB7+PcQW/k0kB8489Ep8p7whO3ojX1peekJjWmqw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783610332; c=relaxed/simple;
-	bh=EmhDmZEzfDqtz+/wM5OYtSnBNKhNR5z6WmgKAnKqYZg=;
+	s=arc-20240116; t=1783610455; c=relaxed/simple;
+	bh=bI1J+cBiMa2SCkpHmKrJG+azHdWZ7mPEOFo5aU/4c1s=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fhv19IJZEx0CXyBL35NFQsgbyzDRSMc/nQ0KF2a1gmLsEKjxSJD9brAZ6IW/qd0KkOhRd5YVTNIXIEoUu0iHC8f4YdXj2I7++JBpjsQvWdik8+r06w82Vq8Yan0nWQl5N71+acMsN9UPLaDZG6jbgSojM9PDi81ocqwjMCBruuo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net; spf=pass smtp.mailfrom=gourry.net; dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b=XYuSc5IC; arc=none smtp.client-ip=209.85.160.172
-Received: by mail-qt1-f172.google.com with SMTP id d75a77b69052e-51c16ac21acso11054011cf.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Jul 2026 08:18:48 -0700 (PDT)
+	 Content-Type:Content-Disposition:In-Reply-To; b=mpZflH4UuqgbxRsCqStEjWw9ZPCjHjR+5kLHa2EPRP+np4RHScJSys4LcczxCvhQASiJW0X5NMfSWD4Ctf+L4r1rrVs5yL15q2H3e+CN2TTIWzaqCujBJ0x/oUmN4cMZMu9KprZfFeTl2SeEh+8faommwUBUp3FIyF/6l6gX+HM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net; spf=pass smtp.mailfrom=gourry.net; dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b=RcHNg+Ts; arc=none smtp.client-ip=209.85.222.182
+Received: by mail-qk1-f182.google.com with SMTP id af79cd13be357-92ed19f4d60so67130485a.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Jul 2026 08:20:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gourry.net; s=google; t=1783610327; x=1784215127; darn=vger.kernel.org;
+        d=gourry.net; s=google; t=1783610452; x=1784215252; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:content-type:mime-version
          :references:message-id:subject:cc:to:from:date:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=D66HPeIJnm5ZDnK+VorUOpyiniaZPeUCt2fPIKMnyb4=;
-        b=XYuSc5IC+EVJbDWikpVPC9cDKrnWwVwEAM4vxRerghx9T5cLKor0lZn/3xvEy8MYvH
-         P4G8QPzYbfEZ/SuD19iQ/Y1IHWEN8FQYvrl4gGGNvM85yYx5CoTWRnrwozvd8buW/yZu
-         rTLr0Kl5kFm/eeBRVjl2lZuNMDx5WC8PeGDIx78E6vBCLlaGrNT+PUtAJ/u8INBmJnMf
-         RbCmKrzJydlT8MQRk1duN94/X88hvDTJtAhpiVN/Uddledvv9UkLMBn9POBFDX+NJflU
-         wUwaXNQ4tD3o84h7GQtBbwvEsPtUxnWPlr1FHKAANE+13sbK/9le7ZhU64POCONVaFwl
-         Syjg==
+        bh=3aG5hxu0JYH7EcM/cq6JX5Yef1RoVI9XARU/q8dKmL4=;
+        b=RcHNg+TswvftK0rg4pdx5hqB/98t8hg3+kCvMaP3Wvj32IUEgQZ9DN6uIqXYkrZSWA
+         1Eu5dZ6dcjNig8HJNvE+HrO3uN3YkcDCXU37P3fJdj3k9VCdvMTFR7yu9VDftTB5iRqA
+         K8SDg1lchFzNdcbcs3f9FNQDV5/hxAjH8ASDXRrDVmRioSlH/e6Cr/Z6a8I4QbteOIIC
+         HvDkHSwlINZylnxe4+hrpcd6PFlecb7POo21Ozhg6IB09pfT0HXX7rLljq1wRn9Pbbcd
+         1U2ZSUGtyb2krIIqADL9WnNTQZIShhSl1bsfu2qXF5pL0rNCLyyOu7Cy0nkMjbppGyxx
+         /9Eg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783610327; x=1784215127;
+        d=1e100.net; s=20251104; t=1783610452; x=1784215252;
         h=in-reply-to:content-disposition:content-type:mime-version
          :references:message-id:subject:cc:to:from:date:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=D66HPeIJnm5ZDnK+VorUOpyiniaZPeUCt2fPIKMnyb4=;
-        b=tZFtWarm/prBVp7jWdAyzHH1MLVQB/KdD00ih/DEmH8BO12ya9hM7CNsN7WnLsKowN
-         3O1BfrzjRlcKz5MaohK+yfk5ABekn7rmFD9Z/lxw+y1jzStnoHzZgS/hxRO1m64MG1WA
-         IoAPC70VP3tCzKu8mwCviMZpOjMS1HIA8XpAcqQYgjhROtOGtrRewZt5ONVD7EGvY7p/
-         xIvIUuO4XEm4iswu/tEusLCPYmH2zTF/PxgBZB1RiUxS73AoTQrsCBCBV5ZuGUJGsqnE
-         bQkeqW+4Pp4CLjGg2ozGgdLbAYb+z4cb5uP2pwEhxjMNwz2RsYwHhQSckVHxvnGMph1v
-         HFTw==
-X-Forwarded-Encrypted: i=1; AHgh+RoiW9YU7pUOqPV+oKyYya6BUdh9Zn0RUxGN8U8Vei4iG5OqzlaZwaexWAH9flCEDeUQBJWAOt9uexzutHkO@vger.kernel.org
-X-Gm-Message-State: AOJu0YyF/EqMShVwfcQVXzWyc62Wbknh5RhwF8+60WQZpf95+pglrqnW
-	cMFut7svrvfE8TzIzZwPV4Yb11KFBkw9egx/HlAwi5iAEuyxkrU8Xm33a7sSlp7AbM0=
-X-Gm-Gg: AfdE7clddCuTYrjR9zNOsBEdR8FTHWJK0T9+s81FE+2YDBkCp886cle7KVEyBTw6o4Q
-	T1nahUVLpUL00zi1Nskfu9DNgZ8VehLkWY2Mgy4iqSdpKlpWaktOdBbdc6ycpWCwjkZXM3PwzW2
-	A/2+v9m43UGAcwQIcMN/UjG19dpz17HEV+ZwBq8fqVLSx1BqhjeirIpgXCy6VTOqcUkZLgnanTY
-	l45y6xnevMgprZ0eZtOrJNTfWkFq8npdskuBR0VemgJaIHWAs50+oxhUI4zVckmiAZugypzze0o
-	WC0IrYxXRqGmyNlTECtz0Ss2FMdsnsaRFlcSu/U79UD9K4CdcnN8H40ZdIalonek3tnPvqIxT2s
-	6OckadVxgr/5k2VgYhnZrEvYlj9TRxqo9mxL11G4tYfvl00jjSJt9ikLl67o40NScYbdsVIFOQ8
-	SPdUepxws8o1PZwIT9A5pGE+2V0DOcBNOO3REexnIOHTa6UWV35a5UpbRTmgBNGjzQpic+EgJXv
-	Jrv4Mk=
-X-Received: by 2002:ac8:5cd4:0:b0:51c:1c2c:a8c9 with SMTP id d75a77b69052e-51c8b3e2e32mr79753441cf.43.1783610327278;
-        Thu, 09 Jul 2026 08:18:47 -0700 (PDT)
+        bh=3aG5hxu0JYH7EcM/cq6JX5Yef1RoVI9XARU/q8dKmL4=;
+        b=H3Eiu4PQyTEeNEPrj3UNIh3mUKGWemhQBvpKqqnQwWq0p6mJDr6VQbQ9prRLQR6UNH
+         9eBqx6T6AGxqb1fcrUKPC3BROjP3tkO+CUsDSlpUBdffBDqKN1yy0FOXXNzgjrDrkp2E
+         KJR1/tizCKZq/nZLvAE8714UP0Hd4yF151jb4y85YHU5mqSgfJ3Ph5NgjQGQt0qmpm/k
+         UcCEqnn+1IwQumuLnYe68tGtV7D5B/dDbmFkYZGNsHq1O8YYfjmJ6I0iFIdeAh5/51PV
+         w+MViAcHsiAeJqG2LdmVvi6AoCHw6VvvTv+Hqw53tj3PTRWxYc3FtDG601yor9f1VIOC
+         9ONg==
+X-Forwarded-Encrypted: i=1; AHgh+RrF6NN/3CFMG9f2l80P5e/dVfMif/7e0VimYol6TWY51FtWRA05Jvsthxu7RAZ8emN4n4ArTpEKJUArHV3i@vger.kernel.org
+X-Gm-Message-State: AOJu0YwSz5KUX1gaZXzwRZ4TEVTBV1PatefTkOMhVfc0GAT/jKUstj1s
+	W5XX775ok8wUP0uBAsrXWWepRQ7+VTg7oUdT5RqqWStm+Uw4trvH6b2fFXZQhDHFr+U=
+X-Gm-Gg: AfdE7ckfdZ9w4eUsfkSCADMdimNFqy23mhpOr7fN8HMz3kIjqXD+0/XGBjZoEasTtyZ
+	9D3w5+JOCzS88sl3Mx4Ff3LXqoiuRx3tR+oiwm85D1tkjl1UdH40286fi8wXvGHssONFk9BE9sr
+	fEVU0j7l+OEdiHYlWpSMxRbbibaWBFhDvGsYTYx+xJPuCxHOB0xYkwic4nhd79PIHoycUMI6HgP
+	g7OIB6eSdC1ZMlSnIyTbGmV//kczX4jkbE+zheeDX6Nur+IgQUMeU18qiYa156iDrfwPBNQxanL
+	juu6jWKbnf2pSF0PkEajmmm/Qd8Q5ABjEFJaESTfpDPXn27pnr6Vc4EvASF02EEctEA9xJIFKYm
+	e1TSP+9gyYQjv9pkYiAkuJeeLSzy+P8P6XGH+/ODVpYNK51Q8iapjGhjRv6kDTrue8d1ZTlpwZR
+	QDT9UzeNJUlyK9L3bv/2uFivc7tBxy5oYwZjqiqWifCJbSd69WJYsaZmWFxMRuP12ORt+T
+X-Received: by 2002:a05:620a:179e:b0:92a:f74f:904 with SMTP id af79cd13be357-92edab23ef2mr337298385a.1.1783610451142;
+        Thu, 09 Jul 2026 08:20:51 -0700 (PDT)
 Received: from gourry-fedora-PF4VCD3F (pool-173-79-60-52.washdc.fios.verizon.net. [173.79.60.52])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-51c41db4fb5sm158006781cf.25.2026.07.09.08.18.44
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-92e90ca90a5sm1652288685a.32.2026.07.09.08.20.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Jul 2026 08:18:45 -0700 (PDT)
-Date: Thu, 9 Jul 2026 11:18:40 -0400
+        Thu, 09 Jul 2026 08:20:49 -0700 (PDT)
+Date: Thu, 9 Jul 2026 11:20:44 -0400
 From: Gregory Price <gourry@gourry.net>
 To: Lorenzo Stoakes <ljs@kernel.org>
 Cc: Andrew Morton <akpm@linux-foundation.org>,
@@ -136,10 +135,11 @@ Cc: Andrew Morton <akpm@linux-foundation.org>,
 	damon@lists.linux.dev, Pedro Falcato <pfalcato@suse.de>,
 	Rik van Riel <riel@surriel.com>, Harry Yoo <harry@kernel.org>,
 	Jann Horn <jannh@google.com>
-Subject: Re: [PATCH 13/30] mm/vma: refactor vmg_adjust_set_range() for clarity
-Message-ID: <ak-70CHGujkI5jJI@gourry-fedora-PF4VCD3F>
+Subject: Re: [PATCH 14/30] mm/vma: minor cleanup of expand_[upwards,
+ downwards]()
+Message-ID: <ak-8TKDC1GBOeMOM@gourry-fedora-PF4VCD3F>
 References: <cover.1782735110.git.ljs@kernel.org>
- <ada7972f49ea7f1ff1df6d11e4651f270444f8fd.1782735110.git.ljs@kernel.org>
+ <b24f70b72f0a9e2a37b904e5b59d80b88bd42e4a.1782735110.git.ljs@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -148,18 +148,18 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ada7972f49ea7f1ff1df6d11e4651f270444f8fd.1782735110.git.ljs@kernel.org>
+In-Reply-To: <b24f70b72f0a9e2a37b904e5b59d80b88bd42e4a.1782735110.git.ljs@kernel.org>
 X-Rspamd-Action: no action
 X-Spamd-Result: default: False [0.34 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MID_RHS_NOT_FQDN(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	R_DKIM_ALLOW(-0.20)[gourry.net:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-118046-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-118047-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS(0.00)[m:ljs@kernel.org,m:akpm@linux-foundation.org,m:linux@armlinux.org.uk,m:dinguyen@kernel.org,m:schuster.simon@siemens-energy.com,m:James.Bottomley@hansenpartnership.com,m:deller@gmx.de,m:jarkko@kernel.org,m:tglx@kernel.org,m:mingo@redhat.com,m:bp@alien8.de,m:dave.hansen@linux.intel.com,m:x86@kernel.org,m:abbotti@mev.co.uk,m:hsweeten@visionengravers.com,m:l.stach@pengutronix.de,m:airlied@gmail.com,m:simona@ffwll.ch,m:patrik.r.jakobsson@gmail.com,m:maarten.lankhorst@linux.intel.com,m:mripard@kernel.org,m:tzimmermann@suse.de,m:robin.clark@oss.qualcomm.com,m:lumag@kernel.org,m:tomi.valkeinen@ideasonboard.com,m:thierry.reding@kernel.org,m:mperttunen@nvidia.com,m:jonathanh@nvidia.com,m:christian.koenig@amd.com,m:ray.huang@amd.com,m:ankita@nvidia.com,m:alex@shazbot.org,m:viro@zeniv.linux.org.uk,m:brauner@kernel.org,m:djbw@kernel.org,m:muchun.song@linux.dev,m:osalvador@suse.de,m:david@kernel.org,m:surenb@google.com,m:liam@infradead.org,m:willy@infradead.org,m:m.szyprow
@@ -180,21 +180,23 @@ X-Spamd-Result: default: False [0.34 / 15.00];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	RCPT_COUNT_GT_50(0.00)[76];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	ALIAS_RESOLVED(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[gourry-fedora-PF4VCD3F:mid,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,gourry.net:from_mime,gourry.net:email,gourry.net:dkim,vger.kernel.org:from_smtp]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[gourry-fedora-PF4VCD3F:mid,gourry.net:from_mime,gourry.net:email,gourry.net:dkim,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,vger.kernel.org:from_smtp]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 43EAC732D71
+X-Rspamd-Queue-Id: B63DF732E2D
 
-On Mon, Jun 29, 2026 at 01:23:24PM +0100, Lorenzo Stoakes wrote:
-> Add comments with ASCII diagrams to describe what we're doing, avoid
-> dubious use of PHYS_PFN(), and use vma_start_pgoff().
+On Mon, Jun 29, 2026 at 01:23:25PM +0100, Lorenzo Stoakes wrote:
+> Adjust the stack expansion functions expand_upwards() and
+> expand_downwards() such that they are expressed in terms of named constant
+> values, and make use of vma_start_pgoff().
 > 
-> The most complicated scenario represented here is vmg->__adjust_next_start
-> - when this is set, vmg->[start, end] actually indicate the range to be
-> retained, so take special care to describe this accurately.
+> This clearly documents that we are referencing the page offset of the start
+> of the VMA.
+> 
+> Additionally this cleans up the overflow check in expand_upwards().
 > 
 > No functional change intended.
 > 
@@ -202,49 +204,4 @@ On Mon, Jun 29, 2026 at 01:23:24PM +0100, Lorenzo Stoakes wrote:
 
 Reviewed-by: Gregory Price <gourry@gourry.net>
 
-> +		/*
-> +		 * vmg->start    vmg->end
-> +		 * |             |
-> +		 * v    merge    v
-> +		 * <------------->
-> +		 *         delta
-> +		 *        <------>
-> +		 * |------|----------------|
-> +		 * | prev |    middle      |
-> +		 * |------|----------------|
-> +		 *        ^
-> +		 *        |
-> +		 *        middle->vm_start
-> +		 */
-
-Even with these diagrams, it's a bit difficult to understand what the
-actual intent/result of this chunk is (but that may be a limitation of
-me not spending enough time reading the surrounding code, not a comment
-of your work here).
-
-~Gregory
-
-> +		/*
-> +		 *                Originally:
-> +		 *
-> +		 *            vmg->start   vmg->end
-> +		 *            |            |
-> +		 *            v    merge   v
-> +		 *            <------------>
-> +		 *            .            .
-> +		 * merge_existing_range() updates to:
-> +		 *            .            .
-> +		 * vmg->start vmg->end     .
-> +		 * |          |            .
-> +		 * v  retain  v            .
-> +		 * <---------->            .
-> +		 *             delta       .
-> +		 *            <----->      .
-> +		 * |----------------|------|
-> +		 * |    middle      | next |
-> +		 * |----------------|------|
-> +		 *                  ^
-> +		 *                  |
-> +		 *                  next->vm_start
-> +		 */
 
