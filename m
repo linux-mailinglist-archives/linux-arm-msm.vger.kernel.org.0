@@ -1,181 +1,196 @@
-Return-Path: <linux-arm-msm+bounces-117943-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-117944-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id +XyHHFh1T2qBhAIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-117943-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Jul 2026 12:18:00 +0200
+	id YXB+C7p8T2rphwIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-117944-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Jul 2026 12:49:30 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0C1C572F7DD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Jul 2026 12:18:00 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6F8C372FDD6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Jul 2026 12:49:29 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=intel.com header.s=Intel header.b=ji6e8qyc;
-	dmarc=pass (policy=none) header.from=intel.com;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117943-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.232.135.74 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117943-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=linaro.org header.s=google header.b=Fyb7d6Ju;
+	dmarc=pass (policy=none) header.from=linaro.org;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-117944-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-117944-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 0A36E304921C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jul 2026 10:16:59 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 21C84310C09A
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Jul 2026 10:18:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 459B53F4110;
-	Thu,  9 Jul 2026 10:16:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8C2C83FA5C7;
+	Thu,  9 Jul 2026 10:18:30 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.9])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B7C53AFB14;
-	Thu,  9 Jul 2026 10:16:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B58063F9F47
+	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Jul 2026 10:18:28 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783592185; cv=none; b=kLdI6DfjVJsCVQBPIGmMgSZFhEsphPXBbZrabM3eNY5DTaQGuTRyEL0AmdhNmfLFlD3Wg8HX4rPZizevWx3xR/chdjQHV0yijg2TwG5LVtTsIUGY0xYwb5zrjiExs+LS4xmSq0q1Mbo7cF1Zgep8O56gMnfIgouVKhD4w4D1T7M=
+	t=1783592310; cv=none; b=BmdGriovfVGYvlw1AloWLDMtM+PjAtcW/yimoCNM705MlsmlePqL1/RiHt+0ac/h6pqeEhQmiIFzRCOy/0iWay2y1O+nJ4cJZl62CUAzODej9N06tD/N8xt7s+Dys30BHzN3RDa0r1rfyp5nICgXT0hHr1twIdskpYe5FJOqAOE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783592185; c=relaxed/simple;
-	bh=vUyuVhXb5XWOW1lu5ae8NpgTwEcJHaHweC6f6X1cbX8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=r4WUYOAdE3kHAD9CAuSgPyiZtbFO9GcxLVNX2aJ5WyU/zcx4JM2P3LZyQRpOWd2//JZSMF8wfAYmt8VrUdObmwU+X8U5aNjfQ2oDdCbS6GObbjlGHn9OeSVKsGWnE7DpLJOQbQYaoT2tz1J9oLMQEYyiqwUUus7knc5WXx/KnDE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ji6e8qyc; arc=none smtp.client-ip=192.198.163.9
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1783592182; x=1815128182;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=vUyuVhXb5XWOW1lu5ae8NpgTwEcJHaHweC6f6X1cbX8=;
-  b=ji6e8qycOK9XTAsqrHCOh6aaNAjoLiqjUVdKZQm+snnRdvtEJsGo/qix
-   OupLfCGgH6dSBdsoKcrxZR0ucKFmPhpBkalP+iSHh7+91nbXrj46OZbjr
-   wqG71jEmekPMxcBT00b50s8Vr/doXWh1Hr4jd9a1cpdfAQ2HLVwp8thBa
-   RZunDLK0/9D73mRG0TPhhUTgfuoAG0eNmEHPpf9uC5hI74mOIu3WngOnM
-   n1+zvpWC30qk3iRu9aF79yD4pjTLK2Z7Tu/T2RZrEJAgJ1zDHuZOCPCXX
-   HG9muFRmvASemAvPjwUq3VdV4cBDqwHD5/N6dGbtE2HtQaNNzk2pF4jTq
-   A==;
-X-CSE-ConnectionGUID: 3Pu68IgrRvmwd45z6EwWjw==
-X-CSE-MsgGUID: uXkFtDF5TGeeFpoPasmUEA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11841"; a="94916084"
-X-IronPort-AV: E=Sophos;i="6.25,154,1779174000"; 
-   d="scan'208";a="94916084"
-Received: from orviesa008.jf.intel.com ([10.64.159.148])
-  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jul 2026 03:16:19 -0700
-X-CSE-ConnectionGUID: nZeE0HBNTiyYL9uGZR4QmA==
-X-CSE-MsgGUID: 88JSxELiQ7WNKT7Oj54cVQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,154,1779174000"; 
-   d="scan'208";a="254058060"
-Received: from ettammin-mobl3.ger.corp.intel.com (HELO localhost) ([10.245.245.235])
-  by orviesa008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jul 2026 03:16:11 -0700
-Date: Thu, 9 Jul 2026 13:16:08 +0300
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: Praveen Talari <praveen.talari@oss.qualcomm.com>
-Cc: Jiri Slaby <jirislaby@kernel.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Ilpo =?iso-8859-1?Q?J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Richard Genoud <richard.genoud@bootlin.com>,
-	Nicolas Ferre <nicolas.ferre@microchip.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Peter Griffin <peter.griffin@linaro.org>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	Orson Zhai <orsonzhai@gmail.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Chunyan Zhang <zhang.lyra@gmail.com>,
-	Patrice Chotard <patrice.chotard@foss.st.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Peter Korsgaard <jacmet@sunsite.dk>,
-	Michal Simek <michal.simek@amd.com>,
-	Aaro Koskinen <aaro.koskinen@iki.fi>,
-	Janusz Krzysztofik <jmkrzyszt@gmail.com>,
-	Tony Lindgren <tony@atomide.com>,
-	Russell King <linux@armlinux.org.uk>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-	bjorn.andersson@oss.qualcomm.com,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	linux-kernel@vger.kernel.org, linux-serial@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-	linux-samsung-soc@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-omap@vger.kernel.org, linux-mips@vger.kernel.org,
-	Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>,
-	aniket.randive@oss.qualcomm.com,
-	chandana.chiluveru@oss.qualcomm.com
-Subject: Re: [PATCH 0/6] tty: serial: propagate errors from uart_ops.pm
- callback
-Message-ID: <ak906CqHYDooQTVu@ashevche-desk.local>
-References: <20260709-add_return_check_for_uart_change_pm-v1-0-e85c6ffa8ec4@oss.qualcomm.com>
- <9320a573-ebf8-459b-a313-3a8b73a6180b@kernel.org>
- <5eecf3a0-b608-4057-b400-236f6952b380@oss.qualcomm.com>
+	s=arc-20240116; t=1783592310; c=relaxed/simple;
+	bh=yaj0W5X6oCbo4WUumWzVBVwkSEBMzMLAlQ6ucjWEMFw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=cMvi3YvGA/WE9CJgGA4bPj8qjUfXE+OXTEXwC6T5cDtAEWXdUMeniVA6JzcIhd9iWlQLm8gNs32ggWMWus4YWjt+80N7jJ1EBEShjkFF85SPFTzLuYJM9lje4fjxZ13pJ25YMv/h3/VLwVxGJRTrI4V8KhYagjF8gtyckIG/CrM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Fyb7d6Ju; arc=none smtp.client-ip=209.85.167.43
+Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-5aebf96bc89so267090e87.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Jul 2026 03:18:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1783592307; x=1784197107; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from:references
+         :cc:to:subject:user-agent:mime-version:date:message-id:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=zrROiXI0zNUVTumAeHoman/juLPQPZ/xLG3NWye+Z/c=;
+        b=Fyb7d6JuGilbcpyaQj2EFT5YTxZNFhmWDMD7IAaQ4m7antd4YUJ+mmbnARpRawgm3q
+         tebchlo6bQ8mcMikjqs2+92KovTTEsWsN6aGLp3lI0rqyDsvvAlilt6YYqXTaE8xvGMS
+         qmCZHEnLT/CPrk93aJgsWF58cUTe0zW8thZUpdb+U9BpMipZhLPVnymNicwCRrduCka9
+         BzjX6/MnjX22GGp4WePCwEUo62I1YuykEei80m4mcwMVoEZkIFeWcKEWS/Cf5ntE0I8F
+         8aie6gvXzTdya8ZZPy2XewjxQwBeOBczeP9sz4AAUC2C62IMab1+eRPrkTkfT03bbax7
+         AXZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783592307; x=1784197107;
+        h=content-transfer-encoding:content-type:in-reply-to:from:references
+         :cc:to:subject:user-agent:mime-version:date:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=zrROiXI0zNUVTumAeHoman/juLPQPZ/xLG3NWye+Z/c=;
+        b=US0U2hBJZtlLftfFBWFK1X1PMTduzg5YCFRKPV5Eg17wywKLxV//JZxqJPUnsDkdgQ
+         U8pGeKjXHh7ygd9kEEJIU3srTJGqXaUBS33eAF2W0czyfuu4hBBGvJRtD86TImmrhf7g
+         oGGWjvimCjnzrD5+v3KV408zFF0i0hZ847eHvko1oq6iOYuY2aPh9cbDph5On+5Oaht+
+         28mXUuyCRSc0ahU6oodIC7vSVt/x0asNXK5tSw8ZrrtC2nyTxCf8ceBjIVLYEscMeRRX
+         NE9oK1U7FfAxvzaF36NNadSMxLCXHASpmAKauaQygA3f1pCBGdBkJLCipzlXyRrWQ5Xf
+         jTNQ==
+X-Forwarded-Encrypted: i=1; AHgh+Ro2/xe1BKlM6gfODG5STqetKpCy7gC4aBq8BJjYA4CfZBmnpE6K1yzQ9iL7qlCPiuAXgSQksqBUw8/nhvsE@vger.kernel.org
+X-Gm-Message-State: AOJu0YzvfxC0Itq/g/gb0ZU6QYMGhwY0TefIa7sptB7iyb02/LkKqAEM
+	jG6wVRMHEWJQryGjAWipxixCYx/wSh3YOZZBMGNdj9LPQYDXErQtfPlQC+vWa3Ae92g=
+X-Gm-Gg: AfdE7cmqlfHmk+ZoaBF1O/0ARRlW6zzwUKQWu6C0MS+SokOcPnwqqrIUhscQxNJsnlv
+	92mnUVXqeC5SmeyRWzH3LNAYvme6DQl+a5Zumn551KlHBatd47PmgUyZUgXB+NDrgQmzx/SvkVE
+	BeoK5Y3VM7ISeRjAvt3hxg8qydHBOuc093DRzUBFo6dCj6BGsgX9rBqaK/9cN5lDi2yVwzpPEGK
+	IBIMBkkcs5lkQ66f5FCind33kSdXGTlNm78bQvn9OIXBb6WAy4LVCyUhhT6WxgheBXtrSa4HJsJ
+	wKZJvYnqoj95ENlCVixv5w4YoYp02U33+lCZZnpA7Djl2/AzbHxI672zdcXJBu0/r/kWeGsKViS
+	qk3oJpmmS32kfasUUNJSPrHeW7Az+0hV0iLNqjvNMUlx3g1s9qLMCiAo67HyT/abFWM8GGI8Y8X
+	lmv4YVpkv+KlINlP1ao6WTwcQwb2wsibA9nUE/A6KzUAIUaAy2S/jEBKqOA7hjwhCzwPE=
+X-Received: by 2002:a05:6512:a351:b0:5ae:bf93:d65a with SMTP id 2adb3069b0e04-5b01552c6bamr289400e87.7.1783592306874;
+        Thu, 09 Jul 2026 03:18:26 -0700 (PDT)
+Received: from [192.168.1.100] (91-159-24-186.elisa-laajakaista.fi. [91.159.24.186])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5b0151b89cfsm531244e87.14.2026.07.09.03.18.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 09 Jul 2026 03:18:26 -0700 (PDT)
+Message-ID: <89cc9f43-891d-4ef6-948f-37341c04411e@linaro.org>
+Date: Thu, 9 Jul 2026 13:18:25 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <5eecf3a0-b608-4057-b400-236f6952b380@oss.qualcomm.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
- krs, Bertel Jungin Aukio 5, 02600 Espoo
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/4] clk: qcom: common: Register reset controller only
+ when resets are present
+To: Imran Shaik <imran.shaik@oss.qualcomm.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Brian Masney <bmasney@redhat.com>,
+ Philipp Zabel <p.zabel@pengutronix.de>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>
+Cc: Ajit Pandey <ajit.pandey@oss.qualcomm.com>,
+ Taniya Das <taniya.das@oss.qualcomm.com>,
+ Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>,
+ linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+References: <20260708-shikra-audiocorecc-v2-0-b320d822cdd0@oss.qualcomm.com>
+ <20260708-shikra-audiocorecc-v2-1-b320d822cdd0@oss.qualcomm.com>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+In-Reply-To: <20260708-shikra-audiocorecc-v2-1-b320d822cdd0@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-3.66 / 15.00];
-	WHITELIST_SPF_DKIM(-3.00)[intel.com:d:+,kernel.org:s:+];
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[intel.com,none];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
-	R_DKIM_ALLOW(-0.20)[intel.com:s=Intel];
+	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
+	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	URIBL_MULTI_FAIL(0.00)[vger.kernel.org:server fail,linux.intel.com:server fail,intel.com:server fail,sto.lore.kernel.org:server fail,ashevche-desk.local:server fail];
+	TAGGED_FROM(0.00)[bounces-117944-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-117943-lists,linux-arm-msm=lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_SENDER(0.00)[andriy.shevchenko@linux.intel.com,linux-arm-msm@vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[40];
-	FORGED_RECIPIENTS(0.00)[m:praveen.talari@oss.qualcomm.com,m:jirislaby@kernel.org,m:gregkh@linuxfoundation.org,m:ilpo.jarvinen@linux.intel.com,m:matthias.bgg@gmail.com,m:angelogioacchino.delregno@collabora.com,m:richard.genoud@bootlin.com,m:nicolas.ferre@microchip.com,m:alexandre.belloni@bootlin.com,m:claudiu.beznea@tuxon.dev,m:krzk@kernel.org,m:peter.griffin@linaro.org,m:alim.akhtar@samsung.com,m:orsonzhai@gmail.com,m:baolin.wang@linux.alibaba.com,m:zhang.lyra@gmail.com,m:patrice.chotard@foss.st.com,m:mcoquelin.stm32@gmail.com,m:alexandre.torgue@foss.st.com,m:jacmet@sunsite.dk,m:michal.simek@amd.com,m:aaro.koskinen@iki.fi,m:jmkrzyszt@gmail.com,m:tony@atomide.com,m:linux@armlinux.org.uk,m:tsbogend@alpha.franken.de,m:bjorn.andersson@oss.qualcomm.com,m:konrad.dybcio@oss.qualcomm.com,m:linux-kernel@vger.kernel.org,m:linux-serial@vger.kernel.org,m:linux-arm-kernel@lists.infradead.org,m:linux-mediatek@lists.infradead.org,m:linux-arm-msm@vger.kernel.org,m:linux-samsung-soc@vger.kernel.org,
- m:linux-stm32@st-md-mailman.stormreply.com,m:linux-omap@vger.kernel.org,m:linux-mips@vger.kernel.org,m:mukesh.savaliya@oss.qualcomm.com,m:aniket.randive@oss.qualcomm.com,m:chandana.chiluveru@oss.qualcomm.com,m:matthiasbgg@gmail.com,m:zhanglyra@gmail.com,m:mcoquelinstm32@gmail.com,s:lists@lfdr.de];
-	MIME_TRACE(0.00)[0:+];
-	HAS_ORG_HEADER(0.00)[];
-	FORWARDED(0.00)[lists@lfdr.de];
-	FREEMAIL_CC(0.00)[kernel.org,linuxfoundation.org,linux.intel.com,gmail.com,collabora.com,bootlin.com,microchip.com,tuxon.dev,linaro.org,samsung.com,linux.alibaba.com,foss.st.com,sunsite.dk,amd.com,iki.fi,atomide.com,armlinux.org.uk,alpha.franken.de,oss.qualcomm.com,vger.kernel.org,lists.infradead.org,st-md-mailman.stormreply.com];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[andriy.shevchenko@linux.intel.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[intel.com:+];
+	FORGED_SENDER(0.00)[vladimir.zapolskiy@linaro.org,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[17];
+	FORGED_RECIPIENTS(0.00)[m:imran.shaik@oss.qualcomm.com,m:andersson@kernel.org,m:mturquette@baylibre.com,m:sboyd@kernel.org,m:bmasney@redhat.com,m:p.zabel@pengutronix.de,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:konradybcio@kernel.org,m:ajit.pandey@oss.qualcomm.com,m:taniya.das@oss.qualcomm.com,m:jagadeesh.kona@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:linux-clk@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:devicetree@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FORWARDED(0.00)[lists@lfdr.de];
+	DKIM_TRACE(0.00)[linaro.org:+];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	TO_DN_SOME(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[5];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	MISSING_XM_UA(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[vladimir.zapolskiy@linaro.org,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[linux.intel.com:from_mime,intel.com:dkim,vger.kernel.org:from_smtp,ashevche-desk.local:mid,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,linaro.org:from_mime,linaro.org:email,linaro.org:mid,linaro.org:dkim,qualcomm.com:email,vger.kernel.org:from_smtp]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 0C1C572F7DD
+X-Rspamd-Queue-Id: 6F8C372FDD6
 
-On Thu, Jul 09, 2026 at 02:22:17PM +0530, Praveen Talari wrote:
-> On 09-07-2026 12:23, Jiri Slaby wrote:
-> > On 09. 07. 26, 8:25, Praveen Talari wrote:
+On 7/8/26 21:25, Imran Shaik wrote:
+> Some clock controller descriptors do not define resets. Avoid registering
+> a reset controller in such cases by checking desc->num_resets.
+> 
+> Signed-off-by: Imran Shaik <imran.shaik@oss.qualcomm.com>
+> ---
+>   drivers/clk/qcom/common.c | 24 +++++++++++++-----------
+>   1 file changed, 13 insertions(+), 11 deletions(-)
+> 
+> diff --git a/drivers/clk/qcom/common.c b/drivers/clk/qcom/common.c
+> index eec369d2173b5ce24bc1ca860d2ac1bbdce04524..be9b6ebb2fffde05e3f209571c53b601d823d479 100644
+> --- a/drivers/clk/qcom/common.c
+> +++ b/drivers/clk/qcom/common.c
+> @@ -359,17 +359,19 @@ int qcom_cc_really_probe(struct device *dev,
+>   		qcom_cc_clk_regs_configure(dev, desc->driver_data, regmap);
+>   	}
+>   
+> -	reset = &cc->reset;
+> -	reset->rcdev.of_node = dev->of_node;
+> -	reset->rcdev.ops = &qcom_reset_ops;
+> -	reset->rcdev.owner = dev->driver->owner;
+> -	reset->rcdev.nr_resets = desc->num_resets;
+> -	reset->regmap = regmap;
+> -	reset->reset_map = desc->resets;
+> -
+> -	ret = devm_reset_controller_register(dev, &reset->rcdev);
+> -	if (ret)
+> -		goto put_rpm;
+> +	if (desc->num_resets) {
+> +		reset = &cc->reset;
+> +		reset->rcdev.of_node = dev->of_node;
+> +		reset->rcdev.ops = &qcom_reset_ops;
+> +		reset->rcdev.owner = dev->driver->owner;
+> +		reset->rcdev.nr_resets = desc->num_resets;
+> +		reset->regmap = regmap;
+> +		reset->reset_map = desc->resets;
+> +
+> +		ret = devm_reset_controller_register(dev, &reset->rcdev);
+> +		if (ret)
+> +			goto put_rpm;
+> +	}
+>   
+>   	if (desc->gdscs && desc->num_gdscs) {
+>   		scd = devm_kzalloc(dev, sizeof(*scd), GFP_KERNEL);
+> 
 
-...
-
-> > OK, now I miss the rationale behind the patchset. Neither there is a
-> > possible code path to actually test this?
-> The rationale is that qcom_geni_serial_pm() calls
-> pm_runtime_resume_and_get() which can fail, but its return value is
-> currently discarded because the callback is void. 
-
-So, you take the solution from a wrong end. Just get rid of .pm() in your driver.
-With that, problem solved. Really, this series is a road to even more broken
-PM solutions.
+Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 
 -- 
-With Best Regards,
-Andy Shevchenko
-
-
+Best wishes,
+Vladimir
 
