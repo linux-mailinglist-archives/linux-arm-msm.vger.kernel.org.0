@@ -1,83 +1,83 @@
-Return-Path: <linux-arm-msm+bounces-118360-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-118361-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id vqduON5CUWrFBQMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-118360-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 21:07:10 +0200
+	id fPhtLLxEUWpDBgMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-118361-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 21:15:08 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5999473D87C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 21:07:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0B56E73DA0A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 21:15:08 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=gourry.net header.s=google header.b=tyGs4YzK;
+	dkim=pass header.d=gourry.net header.s=google header.b=VDEsCTjK;
 	dmarc=none;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118360-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118360-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118361-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118361-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id ABB3D3021732
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 19:05:37 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 3F7E7307FC1A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 19:08:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D191B23C39A;
-	Fri, 10 Jul 2026 19:05:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1D636383316;
+	Fri, 10 Jul 2026 19:08:41 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qk1-f178.google.com (mail-qk1-f178.google.com [209.85.222.178])
+Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A4783812E5
-	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jul 2026 19:05:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A4E7381B06
+	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jul 2026 19:08:38 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783710336; cv=none; b=ZhOI7BsTQsqfqWIKkAUP5fmhB8NICPly6mMCdwdxDX5+LVPLQSwVevMsTNFXOSGQ3Hd+xt/MZNUaPUBeNjugVUZhhusRxDNEacD5fjhq2S4BKuM44p5W+Wmk6d47C6XnxP291HLMMO1OmXcAwLd/opJcd7MJ0ij+YAVpJ1gXKc0=
+	t=1783710520; cv=none; b=SdsDNyE53uaWJwvUh7B6ezCNbGNUYurOjoS8iDd7Aln4YGDfZsbZE6EgeF2OzWWkaOqRNC/YvIBtDwJjiJezqOUmfpnRRusSbvqJ8ikVgA5vO+VoUJZe7uDfs1rKXS8LsM3Y5J/AZJhvf4+GoA8jxXPeiA37qJgP7dRAPLAXjMs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783710336; c=relaxed/simple;
-	bh=0O95+yAo6D3yNWuX9lzWEAviyk6KjGyNsi91HXznKL4=;
+	s=arc-20240116; t=1783710520; c=relaxed/simple;
+	bh=HnhvpODSykZGd0gC/qYJbWWYfTQ/iP5eixsH8/fLwto=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=oLo5WKeR2zsiAER0sSLgfS8kvFSXJV84NRpMW5Iz7R4kUP7FzePq81LuRukNRr2X7WyQ2SrIddfVKLi301GuLgc/93t19exQr0LByQGT0tR2EDSf+6DSIzg9QbWAUf3MdGII+/CXdlVodRsHJNDP7Lt++ZPQIWPEH9hKHDM0BqI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net; spf=pass smtp.mailfrom=gourry.net; dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b=tyGs4YzK; arc=none smtp.client-ip=209.85.222.178
-Received: by mail-qk1-f178.google.com with SMTP id af79cd13be357-92e50979c71so125284585a.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jul 2026 12:05:34 -0700 (PDT)
+	 Content-Type:Content-Disposition:In-Reply-To; b=c4innG9d6q/jsWXxY2pZff8Q8jAlBTpBJR5Xkp+5iPJBy7O2mzWOMc8idQFmYJ09JKa0AOoXutUzDcjgA8ZHRUtnjUGMlbtzHEzx2thfx167Dh/4r6sk1cDMe/3p3Y5+99Ay2Wf01vVbVtGUNQtBKTiewtVLkI/8A798IGyo/bo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net; spf=pass smtp.mailfrom=gourry.net; dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b=VDEsCTjK; arc=none smtp.client-ip=209.85.160.171
+Received: by mail-qt1-f171.google.com with SMTP id d75a77b69052e-51c0c45c580so8697231cf.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jul 2026 12:08:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gourry.net; s=google; t=1783710333; x=1784315133; darn=vger.kernel.org;
+        d=gourry.net; s=google; t=1783710517; x=1784315317; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:content-type:mime-version
          :references:message-id:subject:cc:to:from:date:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=5Cb4T8zzpAMOVzwqCT+1eDu/jZ6x8Q2fk7Pyrqw1u7c=;
-        b=tyGs4YzKykavFOU7RpmSsqQAhspsUgdW4ruG/mBjVMFoJjf6CNDMip1BPFXVYFwgBV
-         S8mzQQ31fxxPWg1IYsGznuUYTJEueHjursWZ4QHWCV8xifPKDBSq3dxqRhn2gPsTjQb5
-         ASAqJfwDZV8FsYtCKMxuKXvhMgWH/uY483GNeeIiNloZT/uuc9aPJPi8J24RQb7myLHE
-         5lHGqnVQh+bigcLMCkxKtvThM3lBt+pQm6X0conpdFV8gErXzkYi/eCt6H+ikbVByjiE
-         E6SFU35OwPnGWINhkRXxffFldULXzgkmy9/IKyFsiHdUGRhLJhtwroVBVCQ8cMYA0SI0
-         zWLg==
+        bh=iFtVuusRSG4YUFzvnh+nyLwKm1T7E76ZywXpwPdPfD8=;
+        b=VDEsCTjKsnadZV20yXTb3QGwgp50ACDuZI7J4yZKKnWBo4OT84PTfoMP3kJg+oiBdH
+         1Gqgrx4jhlPhVKge9W66xtJ9wDRTc4izjFCCt+rN7ATcsy3EiHWmIIUOHQpkcQ4H0GhZ
+         5URDPxsY2v+WopdI1n/n1b+Owcaxi9ivJmVR/hXxWrQgqOmaEpJvYRwnsKEJuNbIQ0ZD
+         Ya4AYykxXANS0WeLWcV4bDUTBCcLPPI6gJWBW3WrN+Pvpd641O4GCIqULVwXv1BP7SOl
+         9Sa7C+VJCErM682fW2glWudhoGDS2rJYRwzNYg/PxJ+zhe4VZ5Gw1/VP+IiGeOB0MHea
+         NHcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783710333; x=1784315133;
+        d=1e100.net; s=20251104; t=1783710517; x=1784315317;
         h=in-reply-to:content-disposition:content-type:mime-version
          :references:message-id:subject:cc:to:from:date:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=5Cb4T8zzpAMOVzwqCT+1eDu/jZ6x8Q2fk7Pyrqw1u7c=;
-        b=gSnDQ55SqTdg1RlADGbOakZBuGDTze98dy2RWl1/sYyyqtelWufXU8B1L2ARObsl0r
-         752rMWGv6CSedPsP6Q7Mux/chtQLp0L/IGdnjDHMElP58Flo2eDjP7hYUP6YYxUEDQjv
-         fu6ZEoEnTCU/WmkIUpNHGo278huaeCVz0TGAeUEbo0a7OhwUFJXnuGluavpgbsJaj8Jb
-         IMirRmjPSS6WhqalKUIien2I4iuAF49xpNrOrs+LVN1WY+tzqINP53Wyh5R3CB2kgSln
-         83pwhULj1jFmx8aKBioEWZkCuHHAL5oufVhu3on3DTNcuO8qGwa49jissj9wmth54KTy
-         6qtQ==
-X-Forwarded-Encrypted: i=1; AHgh+RqldmSt/A6I9xw5ViatVw++lr7sPM2w2G03yq/BKlcVjn8IXE+oRanN1YG5QWE5AjkmznSWccIrWHlfNzsG@vger.kernel.org
-X-Gm-Message-State: AOJu0YybOUfYOP+iAkjtK6N8q3rqc5sXLQ6/QA7AlNNrycbqMu0P8LBP
-	RZvYMUgRUKYfLLHQ3LO2RtomIeh3ZbIMnXWtyQCsyJmJCZhHxtaMVHbNBMpXzp4QwBM=
-X-Gm-Gg: AfdE7cmaqpqdAkiHnHeYjO3rOAdPad/r4bLll1gkNlWGQBHUY0AvhLuEsSbJyD6eRty
-	vh7k2rhp6bMOnp67gxnc4ZZ/s19RhhgypMP5X+68Nfg+JYMcpNZZw1qk1GOBo3ykN8EzMHjO1QI
-	giCv3FHpqN2sxiWIL87Frt62JU4TSBCynspKjqnQBygAyyU6wTD7D8Rb1BAzMWUCFGxeZhLnusQ
-	X264a98iBAd2hNpeI+x2KWh3KnMlrgDOyd+XvR3zQhnKIzOiYDnEisd1+LA1lg8xpGZhFK6JtvV
-	GLjX9JYgBWS4a/4rbj5mSvKuJwGTAOIVT81VDgXBu9tnHRSu40u6w87eLN32eDuEbUgTaMFqgsq
-	LKQVf+nr1C00KGPQQezSrayfp0UWEp671TsfTIU5Iy88+89B8rrgqV+tML3bZFAwzvpEDKH86PA
-	G8LtFA2/T5/ekyIvAQ3kM5Ua5Gq3tOkufUU+mMJUxWpZXIC1eOzmHfUG8GNLbODZ8UYGgh
-X-Received: by 2002:a05:6214:33c5:b0:8f0:65c7:315d with SMTP id 6a1803df08f44-903ff971194mr4994756d6.24.1783710333250;
-        Fri, 10 Jul 2026 12:05:33 -0700 (PDT)
+        bh=iFtVuusRSG4YUFzvnh+nyLwKm1T7E76ZywXpwPdPfD8=;
+        b=Z0pBqJI94tC53kWuZ/3RCYCA+oQz6AppHyMA1sQdR2RmsxLf9Ogx+3iBxiin/zUOeI
+         CBXZ1sZvO7e+8g+6jszpCkfPRHEOsI3uBCf6s5KagVWLYdvg2kTqI9A/CiB9poTbuoYl
+         kybk2RbOzSqZ8MY83QNTBy9vHf0U2C6wWJ+pXJPywqTvyWszzQR9hWvPfhHGbRxOD6y3
+         cGtr/Lj0SvAQSCbpU7iG+qcnSMnqbayXtujPIBmBqYzexP31ZASCzazXlqvgZaY3xisG
+         q6+3+zUr4pAglM+Ewc9jLAUT2uT7bYclzB1xpu+Xbo2StUUWeS9FhE4tcnzgEqWIpco4
+         I/+A==
+X-Forwarded-Encrypted: i=1; AHgh+RooOCKZ4ila4VeOSfjX6D3abeolNxm8DJDtkQt1dh+xZNHhU8Oaxd8yTeoSy+wJ7R5kQMVuuWLDKKVrrNYj@vger.kernel.org
+X-Gm-Message-State: AOJu0YyO3ByWjI1SjW3Mid528B5lbSBn021MO63thySptUTnl2ENTY+7
+	VW01ohWWkz+miubuLOZOUds8u+ET34wvdI+FSI5RgdomOtpHG+4e57zpLY2bU5jOnRg=
+X-Gm-Gg: AfdE7cnxXtvuqMJBNCHG8axUH8QDxh+Yv3Fblu+IPEDOJK72B239KVj1jEC1I2efNS3
+	eUtw8emJhRIiPAMvPcujAspgqDzPOqYWXVhW5Nf8/3cFUEKfS1+I2eSwVwQYYcPRYOvcvVDWkl5
+	IgYUNoNVhDIkGrnPQJXCVwZBSS+OtxniJr6Sd6cTLCTFF5wfKTRVgKhWQ2hizuZVPxUJ+p3Wu08
+	Dh0XhewUiAwEps2GvhQukPTK9FmlZD8eIkeoWyyFy/+BeNYA++I/agPqgcu2XbpNfZb4T+mvsF7
+	J2YO0SUwX78upUYkT41ZNJk6GphX3QmUNUfHC2iZe/9OWVyiaDX/CowvbuRBOcW1sGdvg1f0ILk
+	HZRlEFt5pvXSV8ELbUdsjMGP/pxRUI45E5hSVtFcHBl6vLitbYwjzk+AuDYTIRMBJ/08Yco93Wv
+	w2DNYQMSZ/1AB389aePXQHbmtzLNzu9b7rLkR3J0MsRwYsfMIG22mRKhFbOL1+mae/8Xfm
+X-Received: by 2002:a05:622a:1818:b0:51c:b900:513d with SMTP id d75a77b69052e-51cbf280a8amr2226311cf.53.1783710517321;
+        Fri, 10 Jul 2026 12:08:37 -0700 (PDT)
 Received: from gourry-fedora-PF4VCD3F (pool-173-79-60-52.washdc.fios.verizon.net. [173.79.60.52])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8ffd80fe009sm47940576d6.38.2026.07.10.12.05.30
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8ffd7c1da1bsm47847566d6.30.2026.07.10.12.08.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Jul 2026 12:05:32 -0700 (PDT)
-Date: Fri, 10 Jul 2026 15:05:27 -0400
+        Fri, 10 Jul 2026 12:08:36 -0700 (PDT)
+Date: Fri, 10 Jul 2026 15:08:31 -0400
 From: Gregory Price <gourry@gourry.net>
 To: Lorenzo Stoakes <ljs@kernel.org>
 Cc: Andrew Morton <akpm@linux-foundation.org>,
@@ -135,10 +135,10 @@ Cc: Andrew Morton <akpm@linux-foundation.org>,
 	damon@lists.linux.dev, Pedro Falcato <pfalcato@suse.de>,
 	Rik van Riel <riel@surriel.com>, Harry Yoo <harry@kernel.org>,
 	Jann Horn <jannh@google.com>
-Subject: Re: [PATCH 20/30] mm/vma: introduce vma_assert_can_modify()
-Message-ID: <alFCd1RtttwxKBLc@gourry-fedora-PF4VCD3F>
+Subject: Re: [PATCH 22/30] mm/vma: move __install_special_mapping() to vma.c
+Message-ID: <alFDLz9_oSSvHTuJ@gourry-fedora-PF4VCD3F>
 References: <cover.1782735110.git.ljs@kernel.org>
- <23c7602c58cacc23ef22618a27af9a2d54addf58.1782735110.git.ljs@kernel.org>
+ <b3254231831037ca3e9757e3e05c90072e04a6aa.1782735110.git.ljs@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -147,31 +147,30 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <23c7602c58cacc23ef22618a27af9a2d54addf58.1782735110.git.ljs@kernel.org>
+In-Reply-To: <b3254231831037ca3e9757e3e05c90072e04a6aa.1782735110.git.ljs@kernel.org>
 X-Rspamd-Action: no action
 X-Spamd-Result: default: False [0.34 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MID_RHS_NOT_FQDN(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	R_DKIM_ALLOW(-0.20)[gourry.net:s=google];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-118360-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-118361-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS(0.00)[m:ljs@kernel.org,m:akpm@linux-foundation.org,m:linux@armlinux.org.uk,m:dinguyen@kernel.org,m:schuster.simon@siemens-energy.com,m:James.Bottomley@hansenpartnership.com,m:deller@gmx.de,m:jarkko@kernel.org,m:tglx@kernel.org,m:mingo@redhat.com,m:bp@alien8.de,m:dave.hansen@linux.intel.com,m:x86@kernel.org,m:abbotti@mev.co.uk,m:hsweeten@visionengravers.com,m:l.stach@pengutronix.de,m:airlied@gmail.com,m:simona@ffwll.ch,m:patrik.r.jakobsson@gmail.com,m:maarten.lankhorst@linux.intel.com,m:mripard@kernel.org,m:tzimmermann@suse.de,m:robin.clark@oss.qualcomm.com,m:lumag@kernel.org,m:tomi.valkeinen@ideasonboard.com,m:thierry.reding@kernel.org,m:mperttunen@nvidia.com,m:jonathanh@nvidia.com,m:christian.koenig@amd.com,m:ray.huang@amd.com,m:ankita@nvidia.com,m:alex@shazbot.org,m:viro@zeniv.linux.org.uk,m:brauner@kernel.org,m:djbw@kernel.org,m:muchun.song@linux.dev,m:osalvador@suse.de,m:david@kernel.org,m:surenb@google.com,m:liam@infradead.org,m:willy@infradead.org,m:m.szyprow
  ski@samsung.com,m:peterz@infradead.org,m:acme@kernel.org,m:namhyung@kernel.org,m:mhiramat@kernel.org,m:oleg@redhat.com,m:rostedt@goodmis.org,m:sj@kernel.org,m:linmiaohe@huawei.com,m:hughd@google.com,m:rppt@kernel.org,m:kees@kernel.org,m:pbonzini@redhat.com,m:linux-kernel@vger.kernel.org,m:linux-arm-kernel@lists.infradead.org,m:linux-parisc@vger.kernel.org,m:linux-sgx@vger.kernel.org,m:etnaviv@lists.freedesktop.org,m:dri-devel@lists.freedesktop.org,m:linux-arm-msm@vger.kernel.org,m:freedreno@lists.freedesktop.org,m:linux-tegra@vger.kernel.org,m:kvm@vger.kernel.org,m:linux-fsdevel@vger.kernel.org,m:nvdimm@lists.linux.dev,m:linux-mm@kvack.org,m:iommu@lists.linux.dev,m:linux-perf-users@vger.kernel.org,m:linux-trace-kernel@vger.kernel.org,m:kasan-dev@googlegroups.com,m:damon@lists.linux.dev,m:pfalcato@suse.de,m:riel@surriel.com,m:harry@kernel.org,m:jannh@google.com,m:patrikrjakobsson@gmail.com,s:lists@lfdr.de];
 	FORWARDED(0.00)[lists@lfdr.de];
-	MIME_TRACE(0.00)[0:+];
 	FREEMAIL_CC(0.00)[linux-foundation.org,armlinux.org.uk,kernel.org,siemens-energy.com,hansenpartnership.com,gmx.de,redhat.com,alien8.de,linux.intel.com,mev.co.uk,visionengravers.com,pengutronix.de,gmail.com,ffwll.ch,suse.de,oss.qualcomm.com,ideasonboard.com,nvidia.com,amd.com,shazbot.org,zeniv.linux.org.uk,linux.dev,google.com,infradead.org,samsung.com,goodmis.org,huawei.com,vger.kernel.org,lists.infradead.org,lists.freedesktop.org,lists.linux.dev,kvack.org,googlegroups.com,surriel.com];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	DMARC_NA(0.00)[gourry.net];
 	FORGED_SENDER(0.00)[gourry@gourry.net,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[gourry.net:+];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	MISSING_XM_UA(0.00)[];
-	TO_DN_SOME(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
@@ -179,37 +178,31 @@ X-Spamd-Result: default: False [0.34 / 15.00];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	RCPT_COUNT_GT_50(0.00)[76];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	MIME_TRACE(0.00)[0:+];
 	ALIAS_RESOLVED(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[gourry-fedora-PF4VCD3F:mid,vger.kernel.org:from_smtp,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,gourry.net:from_mime,gourry.net:email,gourry.net:dkim]
+	TO_DN_SOME(0.00)[]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 5999473D87C
+X-Rspamd-Queue-Id: 0B56E73DA0A
 
-On Mon, Jun 29, 2026 at 01:23:31PM +0100, Lorenzo Stoakes wrote:
-> vma_assert_write_locked() and vma_assert_attached() are useful for their
-> own purposes, however VMA code absolutely does allow the modification of
-> non-write locked VMAs if they are at that point detached (i.e. unreachable
-> from anywhere).
+On Mon, Jun 29, 2026 at 01:23:33PM +0100, Lorenzo Stoakes wrote:
+> This function is operating on VMAs and rightly belongs in vma.c, where it
+> can be subject to VMA userland testing and allows us to isolate it from the
+> rest of mm.
 > 
-
-curiosity: I presume this happens mostly during init and/or teardown of
-a vma?
-
-> It's therefore useful to be able to assert that a VMA is either
-> detached (modification doesn't matter) or write locked (you're explicitly
-> locked for modification).
+> The _install_special_mapping() function will remain in mmap.c as a wrapper,
+> since this is used by architecture-specific code.
 > 
-> Therefore introduce vma_assert_can_modify() for this purpose.
+> Doing so allows us to isolate more functions in vma.c for the same reasons.
 > 
-> While we're here, make vma_is_attached() available generally - if
-> !CONFIG_PER_VMA_LOCKS, then there's no sense in which a VMA is
-> detached (vma_mark_detached() is a noop), so have this default to true in
-> this case.
+> This forms part of work to allow for tracking MAP_PRIVATE file-backed
+> mappings by their anonymous virtual page offset, as doing so allows us to
+> isolate and keep code that interacts with this together.
+> 
+> No functional change intended.
 > 
 > Signed-off-by: Lorenzo Stoakes <ljs@kernel.org>
 
 Reviewed-by: Gregory Price <gourry@gourry.net>
-
 
