@@ -1,54 +1,54 @@
-Return-Path: <linux-arm-msm+bounces-118394-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-118396-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id Xed1G9VVUWqlCgMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-118394-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 22:28:05 +0200
+	id bH3gIRdWUWrJCgMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-118396-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 22:29:11 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2003D73E463
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 22:28:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E981C73E4D5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 22:29:10 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=mab6I1St;
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=HwOfOxNY;
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118394-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118394-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118396-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118396-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 956923059D32
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 20:25:42 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id ADE2C304B19B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 20:26:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8FB483A16AC;
-	Fri, 10 Jul 2026 20:25:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2606039F160;
+	Fri, 10 Jul 2026 20:26:03 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3CA339BFF1;
-	Fri, 10 Jul 2026 20:25:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BECA239A7FE;
+	Fri, 10 Jul 2026 20:26:01 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783715140; cv=none; b=nNQETDMQfaQkwIGULwWoJJJE2FKbMFkHEB+TxjdVISnch/mjJFA5lpBlNaorZ2PpDOfAkz/lqa5sYPA5rH/qVQbNTgz9yqdKUy/zslcdPe/xCdSvL/YHlyd35hseu+T7IIihTCGzZ1HYMOKR4K8o4VyiCf/z+fWAkoxC5m27Yxc=
+	t=1783715163; cv=none; b=mttg1o8beIYoPXZCwP93aH2WnI+UQC7j5Iy9SVI0n3qMzJC8YvItqujwe3F5mOHA0ruZVJn/WASACpameoYG9LIa+RprCCTyneq9mWXhctwq50qZARUucbzei6y/0BTH7XH5BE9oDXGBy9OHXbGlANYHWJGX2yKgK/Hz9tW+9X4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783715140; c=relaxed/simple;
-	bh=ckvqCIz6u2cx+l/WDG6gaArVCUWUIRqrGc2wRGUU3cQ=;
+	s=arc-20240116; t=1783715163; c=relaxed/simple;
+	bh=viV3MpLqfUAe1sqc9evXVxPvdZ0z1c7yNCArBlJLKts=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=uAfdXPjZnJXoMQg18lL28oVSjT2fY578lolqTCbuCAGl5O+hshNH9nvrMl1vHHZbjoAxBwqiw6O5dLOEh0URSa8FgK6BGDCpCNpbnjmfPEYoVgzD1lv1l8RYA1S3ZEUCv+z/op1pBmxcaZpsMFLQDAnZPjp92i5iakkqOG0lLBI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mab6I1St; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 606461F00A3A;
-	Fri, 10 Jul 2026 20:25:15 +0000 (UTC)
+	 In-Reply-To:To:Cc; b=fbUeiBrGVmbP3Ra32CQJ7R4dD/N6GKRANyVUTFDYU0l05QVmjPA+TIwRpwPoJFJTxcVMx9BqgyaEheq63Ax9rwFflgZIVviNNwdEapttN8JTOcMC9b9pHStbtjnAhB2QahaSl2uFINVNMFbyC/urkRPQRJoGp8Y57oVu3N+ubyY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HwOfOxNY; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD1A91F000E9;
+	Fri, 10 Jul 2026 20:25:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783715138;
-	bh=cISQtH1v9odRfIrbAbtNudocrvnlKFEn/zLm3RnWId0=;
+	s=k20260515; t=1783715161;
+	bh=bUGGYLPM184fXg7TuW5WlZpqNKDyTrGesm4GIDrm7/g=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=mab6I1StgAzj9g7uw5lQ/WS5hP///Fjejk+W+vwBcSz7BidfRMMNLWK8hC9Ksatl1
-	 gswNJV0nG+cI3mkpyGUw9hZtSi8RjZ1Hn0Cks+8M6durix9KxdHBsmsEJpP4uzzED8
-	 nwaNmCyg7v5aq+9gb6aFja4/BRzqV03uXijWLCJhjJBaKoIksOwwmCoPQNjfcTWVdb
-	 zpnr4ozejDmTByYn3l1TvntcG2kUv26aOn0O+NTjRuERWfwlgXGwDF2AQ7fQQthSpO
-	 OM87sySq0K04/Zv6rZAF7yNU1yp1Yno0o5/2J89J8xL9KBaczByOCZaLm6M2KmLaJs
-	 Zd11QZPEcWKsQ==
+	b=HwOfOxNYJr0ufnnwjsShvm8UoTFDoVDyZyLe5qM8luP+IyMfUureE/4/LdfG8uNvp
+	 l2fyy2sklIZ1g8zXU1h/Dujp91lJ3y/YMUEyIA0yaCkBv64dn7+eK6bnjONBXyGjkh
+	 2MdWVKmdvm7AgFGWE4NqEcl7KMYdmzXxx45wTsfG/uOos67hsa+uJWogpK3oSsHZLs
+	 PEoCxmuQR0OPyTuKW9A7PRu792Qxjs8eLhacq5hB9InGQR663cidPLcGe/v49JjENl
+	 kWNryTiYfujVP70WKEmXvqMUsNxPgx4q7+0bAV5xV/Oa57dgKbVLEJW9cwR83wMw30
+	 Xxu+4E6LLwm+Q==
 From: Lorenzo Stoakes <ljs@kernel.org>
-Date: Fri, 10 Jul 2026 21:17:02 +0100
-Subject: [PATCH v2 21/33] mm: use linear_page_[index, delta]() consistently
+Date: Fri, 10 Jul 2026 21:17:03 +0100
+Subject: [PATCH v2 22/33] mm/vma: introduce vma_assert_can_modify()
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -57,7 +57,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260710-b4-pre-scalable-cow-v2-21-2a5aa403d977@kernel.org>
+Message-Id: <20260710-b4-pre-scalable-cow-v2-22-2a5aa403d977@kernel.org>
 References: <20260710-b4-pre-scalable-cow-v2-0-2a5aa403d977@kernel.org>
 In-Reply-To: <20260710-b4-pre-scalable-cow-v2-0-2a5aa403d977@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>, 
@@ -136,15 +136,14 @@ Cc: Lorenzo Stoakes <ljs@kernel.org>, linux-mm@kvack.org,
  linux-sgx@vger.kernel.org, etnaviv@lists.freedesktop.org, 
  dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
  freedreno@lists.freedesktop.org, linux-tegra@vger.kernel.org, 
- kvm@vger.kernel.org, Russell King <linux+etnaviv@armlinux.org.uk>, 
- Kai Huang <kai.huang@intel.com>, Ackerley Tng <ackerleytng@google.com>
+ kvm@vger.kernel.org, Russell King <linux+etnaviv@armlinux.org.uk>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=10399; i=ljs@kernel.org;
- h=from:subject:message-id; bh=ckvqCIz6u2cx+l/WDG6gaArVCUWUIRqrGc2wRGUU3cQ=;
- b=kA0DAAoWz53NioHifxQByyZiAGpRUzzIHD/Ww2NC0/pDOgUFGYibcK9BkNhLN7CJLfyH3DJ7B
- oh1BAAWCgAdFiEE5/QXv1IUVp6J0E9Gz53NioHifxQFAmpRUzwACgkQz53NioHifxTDZQD7BkHF
- NX9UQukSdl2VQHKwu0wreg7UTF/+bcMU3geRfBYA/0WbEVtZm+JfAzf9LjseOW526ZEuHJGrzmp
- uZYAiIK0F
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3596; i=ljs@kernel.org;
+ h=from:subject:message-id; bh=viV3MpLqfUAe1sqc9evXVxPvdZ0z1c7yNCArBlJLKts=;
+ b=owGbwMvMwCV2fu7ZrsZH9SKMp9WSGLICg22Kz9fNu6eSNvvBXWZ7lRONX6ct3GUurDZVbbXAC
+ pPsR6V/OkpZGMS4GGTFFFmefxHfHyQSNq/zgr8bzBxWJpAhDFycAjCRhN8M/wz3Ji1evXiHVaSo
+ 7KH3RZOj9q/2tta+sizgwKoUXSbHeTEM/xOvbZzUJBNU59dnr7C7/JXw/aXmwrs9029wLZytnZn
+ xnhEA
 X-Developer-Key: i=ljs@kernel.org; a=openpgp;
  fpr=E7F417BF5214569E89D04F46CF9DCD8A81E27F14
 X-Rspamd-Action: no action
@@ -159,7 +158,7 @@ X-Spamd-Result: default: False [-3.66 / 15.00];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-118394-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-118396-lists,linux-arm-msm=lfdr.de];
 	FORGED_RECIPIENTS(0.00)[m:akpm@linux-foundation.org,m:david@kernel.org,m:liam@infradead.org,m:vbabka@kernel.org,m:rppt@kernel.org,m:surenb@google.com,m:mhocko@suse.com,m:riel@surriel.com,m:harry@kernel.org,m:jannh@google.com,m:lance.yang@linux.dev,m:pfalcato@suse.de,m:linux@armlinux.org.uk,m:dinguyen@kernel.org,m:schuster.simon@siemens-energy.com,m:James.Bottomley@HansenPartnership.com,m:deller@gmx.de,m:viro@zeniv.linux.org.uk,m:brauner@kernel.org,m:jack@suse.cz,m:djbw@kernel.org,m:willy@infradead.org,m:muchun.song@linux.dev,m:osalvador@suse.de,m:mhiramat@kernel.org,m:oleg@redhat.com,m:peterz@infradead.org,m:mingo@redhat.com,m:acme@kernel.org,m:namhyung@kernel.org,m:mark.rutland@arm.com,m:alexander.shishkin@linux.intel.com,m:jolsa@kernel.org,m:irogers@google.com,m:adrian.hunter@intel.com,m:james.clark@linaro.org,m:ziy@nvidia.com,m:baolin.wang@linux.alibaba.com,m:npache@redhat.com,m:ryan.roberts@arm.com,m:dev.jain@arm.com,m:baohua@kernel.org,m:linmiaohe@huawei.com,m:nao.horiguchi@gma
  il.com,m:xu.xin16@zte.com.cn,m:chengming.zhou@linux.dev,m:sj@kernel.org,m:matthew.brost@intel.com,m:joshua.hahnjy@gmail.com,m:rakie.kim@sk.com,m:byungchul@sk.com,m:gourry@gourry.net,m:ying.huang@linux.alibaba.com,m:apopple@nvidia.com,m:hughd@google.com,m:peterx@redhat.com,m:kees@kernel.org,m:m.szyprowski@samsung.com,m:robin.murphy@arm.com,m:andreyknvl@gmail.com,m:glider@google.com,m:dvyukov@google.com,m:rostedt@goodmis.org,m:mathieu.desnoyers@efficios.com,m:jarkko@kernel.org,m:dave.hansen@linux.intel.com,m:tglx@kernel.org,m:bp@alien8.de,m:x86@kernel.org,m:hpa@zytor.com,m:abbotti@mev.co.uk,m:hsweeten@visionengravers.com,m:l.stach@pengutronix.de,m:christian.gmeiner@gmail.com,m:airlied@gmail.com,m:simona@ffwll.ch,m:patrik.r.jakobsson@gmail.com,m:maarten.lankhorst@linux.intel.com,m:mripard@kernel.org,m:tzimmermann@suse.de,m:robin.clark@oss.qualcomm.com,m:lumag@kernel.org,m:abhinav.kumar@linux.dev,m:jesszhan0024@gmail.com,m:sean@poorly.run,m:marijn.suijten@somainline.org,m:tomi.valkeinen
  @ideasonboard.com,m:thierry.reding@kernel.org,m:mperttunen@nvidia.com,m:jonathanh@nvidia.com,m:christian.koenig@amd.com,m:ray.huang@amd.com,m:matthew.auld@intel.com,m:jgg@ziepe.ca,m:yishaih@nvidia.com,m:skolothumtho@nvidia.com,m:kevin.tian@intel.com,m:ankita@nvidia.com,m:alex@shazbot.org,s:lists@lfdr.de];
@@ -173,7 +172,7 @@ X-Spamd-Result: default: False [-3.66 / 15.00];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	RCPT_COUNT_GT_50(0.00)[124];
+	RCPT_COUNT_GT_50(0.00)[122];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[ljs@kernel.org,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[kernel.org:+];
@@ -183,285 +182,102 @@ X-Spamd-Result: default: False [-3.66 / 15.00];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,etnaviv];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[gourry.net:email,suse.de:email,intel.com:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,vger.kernel.org:from_smtp]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 2003D73E463
+X-Rspamd-Queue-Id: E981C73E4D5
 
-There are a number of places where we open code what linear_page_index()
-and linear_page_delta() calculate.
+vma_assert_write_locked() and vma_assert_attached() are useful for their
+own purposes, however VMA code absolutely does allow the modification of
+non-write locked VMAs if they are at that point detached (i.e. unreachable
+from anywhere).
 
-Replace this code with the appropriate functions for consistency.
+It's therefore useful to be able to assert that a VMA is either
+detached (modification doesn't matter) or write locked (you're explicitly
+locked for modification).
 
-No functional change intended.
+Therefore introduce vma_assert_can_modify() for this purpose.
 
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de> # for DRM
-Acked-by: Kai Huang <kai.huang@intel.com> # for sgx
-Reviewed-by: Gregory Price <gourry@gourry.net>
-Reviewed-by: Pedro Falcato <pfalcato@suse.de> # for mm
-Reviewed-by: Ackerley Tng <ackerleytng@google.com> # for guest_memfd
+While we're here, make vma_is_attached() available generally - if
+!CONFIG_PER_VMA_LOCK, then there's no sense in which a VMA is
+detached (vma_mark_detached() is a noop), so have this default to true in
+this case.
+
+Also update VMA userland tests to reflect this change, correcting the
+previously open-coded vma_assert_[attached,detached]() there.
+
 Signed-off-by: Lorenzo Stoakes <ljs@kernel.org>
 ---
- arch/arm/mm/fault-armv.c              | 2 +-
- arch/x86/kernel/cpu/sgx/virt.c        | 3 ++-
- drivers/gpu/drm/etnaviv/etnaviv_gem.c | 3 ++-
- drivers/gpu/drm/gma500/gem.c          | 2 +-
- drivers/gpu/drm/msm/msm_gem.c         | 3 ++-
- drivers/gpu/drm/omapdrm/omap_gem.c    | 5 +++--
- drivers/gpu/drm/tegra/gem.c           | 3 ++-
- drivers/gpu/drm/ttm/ttm_bo_vm.c       | 7 ++++---
- drivers/vfio/pci/nvgrace-gpu/main.c   | 3 ++-
- drivers/vfio/pci/vfio_pci_core.c      | 3 ++-
- mm/nommu.c                            | 2 +-
- mm/vma.c                              | 2 +-
- virt/kvm/guest_memfd.c                | 2 +-
- 13 files changed, 24 insertions(+), 16 deletions(-)
+ include/linux/mmap_lock.h       |  8 ++++++++
+ tools/testing/vma/include/dup.h | 15 +++++++++++++--
+ 2 files changed, 21 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/mm/fault-armv.c b/arch/arm/mm/fault-armv.c
-index b505f1fd7984..2769b0f3325f 100644
---- a/arch/arm/mm/fault-armv.c
-+++ b/arch/arm/mm/fault-armv.c
-@@ -132,7 +132,7 @@ make_coherent(struct address_space *mapping, struct vm_area_struct *vma,
- 	pgoff_t pgoff;
- 	int aliases = 0;
+diff --git a/include/linux/mmap_lock.h b/include/linux/mmap_lock.h
+index 04b8f61ece5d..d513286d8160 100644
+--- a/include/linux/mmap_lock.h
++++ b/include/linux/mmap_lock.h
+@@ -506,6 +506,8 @@ static inline __must_check
+ int vma_start_write_killable(struct vm_area_struct *vma) { return 0; }
+ static inline void vma_assert_write_locked(struct vm_area_struct *vma)
+ 		{ mmap_assert_write_locked(vma->vm_mm); }
++static inline bool vma_is_attached(struct vm_area_struct *vma)
++		{ return true; }
+ static inline void vma_assert_attached(struct vm_area_struct *vma) {}
+ static inline void vma_assert_detached(struct vm_area_struct *vma) {}
+ static inline void vma_mark_attached(struct vm_area_struct *vma) {}
+@@ -530,6 +532,12 @@ static inline void vma_assert_stabilised(struct vm_area_struct *vma)
  
--	pgoff = vma->vm_pgoff + ((addr - vma->vm_start) >> PAGE_SHIFT);
-+	pgoff = linear_page_index(vma, addr);
+ #endif /* CONFIG_PER_VMA_LOCK */
  
- 	/*
- 	 * If we have any shared mappings that are in the same mm
-diff --git a/arch/x86/kernel/cpu/sgx/virt.c b/arch/x86/kernel/cpu/sgx/virt.c
-index db6806c40483..6a1933ddc6fc 100644
---- a/arch/x86/kernel/cpu/sgx/virt.c
-+++ b/arch/x86/kernel/cpu/sgx/virt.c
-@@ -9,6 +9,7 @@
- #include <linux/miscdevice.h>
- #include <linux/mm.h>
- #include <linux/mman.h>
-+#include <linux/pagemap.h>
- #include <linux/sched/mm.h>
- #include <linux/sched/signal.h>
- #include <linux/slab.h>
-@@ -41,7 +42,7 @@ static int __sgx_vepc_fault(struct sgx_vepc *vepc,
- 	WARN_ON(!mutex_is_locked(&vepc->lock));
- 
- 	/* Calculate index of EPC page in virtual EPC's page_array */
--	index = vma->vm_pgoff + PFN_DOWN(addr - vma->vm_start);
-+	index = linear_page_index(vma, addr);
- 
- 	epc_page = xa_load(&vepc->page_array, index);
- 	if (epc_page)
-diff --git a/drivers/gpu/drm/etnaviv/etnaviv_gem.c b/drivers/gpu/drm/etnaviv/etnaviv_gem.c
-index b0436a1e103f..2e4d6d117ee2 100644
---- a/drivers/gpu/drm/etnaviv/etnaviv_gem.c
-+++ b/drivers/gpu/drm/etnaviv/etnaviv_gem.c
-@@ -6,6 +6,7 @@
- #include <drm/drm_prime.h>
- #include <drm/drm_print.h>
- #include <linux/dma-mapping.h>
-+#include <linux/pagemap.h>
- #include <linux/shmem_fs.h>
- #include <linux/spinlock.h>
- #include <linux/vmalloc.h>
-@@ -188,7 +189,7 @@ static vm_fault_t etnaviv_gem_fault(struct vm_fault *vmf)
- 	}
- 
- 	/* We don't use vmf->pgoff since that has the fake offset: */
--	pgoff = (vmf->address - vma->vm_start) >> PAGE_SHIFT;
-+	pgoff = linear_page_delta(vma, vmf->address);
- 
- 	pfn = page_to_pfn(pages[pgoff]);
- 
-diff --git a/drivers/gpu/drm/gma500/gem.c b/drivers/gpu/drm/gma500/gem.c
-index 88f1e86c8903..2708e8c68f4c 100644
---- a/drivers/gpu/drm/gma500/gem.c
-+++ b/drivers/gpu/drm/gma500/gem.c
-@@ -288,7 +288,7 @@ static vm_fault_t psb_gem_fault(struct vm_fault *vmf)
- 
- 	/* Page relative to the VMA start - we must calculate this ourselves
- 	   because vmf->pgoff is the fake GEM offset */
--	page_offset = (vmf->address - vma->vm_start) >> PAGE_SHIFT;
-+	page_offset = linear_page_delta(vma, vmf->address);
- 
- 	/* CPU view of the page, don't go via the GART for CPU writes */
- 	if (pobj->stolen)
-diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
-index efd3d3c9a449..cbf723a5d86f 100644
---- a/drivers/gpu/drm/msm/msm_gem.c
-+++ b/drivers/gpu/drm/msm/msm_gem.c
-@@ -9,6 +9,7 @@
- #include <linux/spinlock.h>
- #include <linux/shmem_fs.h>
- #include <linux/dma-buf.h>
-+#include <linux/pagemap.h>
- 
- #include <drm/drm_dumb_buffers.h>
- #include <drm/drm_prime.h>
-@@ -360,7 +361,7 @@ static vm_fault_t msm_gem_fault(struct vm_fault *vmf)
- 	}
- 
- 	/* We don't use vmf->pgoff since that has the fake offset: */
--	pgoff = (vmf->address - vma->vm_start) >> PAGE_SHIFT;
-+	pgoff = linear_page_delta(vma, vmf->address);
- 
- 	pfn = page_to_pfn(pages[pgoff]);
- 
-diff --git a/drivers/gpu/drm/omapdrm/omap_gem.c b/drivers/gpu/drm/omapdrm/omap_gem.c
-index 8e013e4f2c6b..00404fb6c29a 100644
---- a/drivers/gpu/drm/omapdrm/omap_gem.c
-+++ b/drivers/gpu/drm/omapdrm/omap_gem.c
-@@ -5,6 +5,7 @@
-  */
- 
- #include <linux/dma-mapping.h>
-+#include <linux/pagemap.h>
- #include <linux/seq_file.h>
- #include <linux/shmem_fs.h>
- #include <linux/spinlock.h>
-@@ -359,7 +360,7 @@ static vm_fault_t omap_gem_fault_1d(struct drm_gem_object *obj,
- 	pgoff_t pgoff;
- 
- 	/* We don't use vmf->pgoff since that has the fake offset: */
--	pgoff = (vmf->address - vma->vm_start) >> PAGE_SHIFT;
-+	pgoff = linear_page_delta(vma, vmf->address);
- 
- 	if (omap_obj->pages) {
- 		omap_gem_cpu_sync_page(obj, pgoff);
-@@ -407,7 +408,7 @@ static vm_fault_t omap_gem_fault_2d(struct drm_gem_object *obj,
- 	const int m = DIV_ROUND_UP(omap_obj->width << fmt, PAGE_SIZE);
- 
- 	/* We don't use vmf->pgoff since that has the fake offset: */
--	pgoff = (vmf->address - vma->vm_start) >> PAGE_SHIFT;
-+	pgoff = linear_page_delta(vma, vmf->address);
- 
- 	/*
- 	 * Actual address we start mapping at is rounded down to previous slot
-diff --git a/drivers/gpu/drm/tegra/gem.c b/drivers/gpu/drm/tegra/gem.c
-index 436394e04812..1d8d27a5ea89 100644
---- a/drivers/gpu/drm/tegra/gem.c
-+++ b/drivers/gpu/drm/tegra/gem.c
-@@ -13,6 +13,7 @@
- #include <linux/dma-buf.h>
- #include <linux/iommu.h>
- #include <linux/module.h>
-+#include <linux/pagemap.h>
- #include <linux/vmalloc.h>
- 
- #include <drm/drm_drv.h>
-@@ -564,7 +565,7 @@ static vm_fault_t tegra_bo_fault(struct vm_fault *vmf)
- 	if (!bo->pages)
- 		return VM_FAULT_SIGBUS;
- 
--	offset = (vmf->address - vma->vm_start) >> PAGE_SHIFT;
-+	offset = linear_page_delta(vma, vmf->address);
- 	page = bo->pages[offset];
- 
- 	return vmf_insert_page(vma, vmf->address, page);
-diff --git a/drivers/gpu/drm/ttm/ttm_bo_vm.c b/drivers/gpu/drm/ttm/ttm_bo_vm.c
-index a80510489c45..88babf435ac2 100644
---- a/drivers/gpu/drm/ttm/ttm_bo_vm.c
-+++ b/drivers/gpu/drm/ttm/ttm_bo_vm.c
-@@ -32,6 +32,7 @@
- #define pr_fmt(fmt) "[TTM] " fmt
- 
- #include <linux/export.h>
-+#include <linux/pagemap.h>
- 
- #include <drm/ttm/ttm_bo.h>
- #include <drm/ttm/ttm_placement.h>
-@@ -208,9 +209,9 @@ vm_fault_t ttm_bo_vm_fault_reserved(struct vm_fault *vmf,
- 	if (unlikely(err != 0))
- 		return VM_FAULT_SIGBUS;
- 
--	page_offset = ((address - vma->vm_start) >> PAGE_SHIFT) +
--		vma->vm_pgoff - drm_vma_node_start(&bo->base.vma_node);
--	page_last = vma_pages(vma) + vma->vm_pgoff -
-+	page_offset = linear_page_index(vma, address) -
-+		drm_vma_node_start(&bo->base.vma_node);
-+	page_last = vma_end_pgoff(vma) -
- 		drm_vma_node_start(&bo->base.vma_node);
- 
- 	if (unlikely(page_offset >= PFN_UP(bo->base.size)))
-diff --git a/drivers/vfio/pci/nvgrace-gpu/main.c b/drivers/vfio/pci/nvgrace-gpu/main.c
-index d07dcacb76bd..963fd8ded20d 100644
---- a/drivers/vfio/pci/nvgrace-gpu/main.c
-+++ b/drivers/vfio/pci/nvgrace-gpu/main.c
-@@ -11,6 +11,7 @@
- #include <linux/jiffies.h>
- #include <linux/sched.h>
- #include <linux/pci-p2pdma.h>
-+#include <linux/pagemap.h>
- #include <linux/pm_runtime.h>
- #include <linux/memory-failure.h>
- 
-@@ -385,7 +386,7 @@ static unsigned long addr_to_pgoff(struct vm_area_struct *vma,
- 	u64 pgoff = vma->vm_pgoff &
- 		((1U << (VFIO_PCI_OFFSET_SHIFT - PAGE_SHIFT)) - 1);
- 
--	return ((addr - vma->vm_start) >> PAGE_SHIFT) + pgoff;
-+	return linear_page_delta(vma, addr) + pgoff;
++static inline void vma_assert_can_modify(struct vm_area_struct *vma)
++{
++	if (vma_is_attached(vma))
++		vma_assert_write_locked(vma);
++}
++
+ static inline void mmap_write_lock(struct mm_struct *mm)
+ {
+ 	__mmap_lock_trace_start_locking(mm, true);
+diff --git a/tools/testing/vma/include/dup.h b/tools/testing/vma/include/dup.h
+index 7ed165c8d9bc..e9ddc818f2c3 100644
+--- a/tools/testing/vma/include/dup.h
++++ b/tools/testing/vma/include/dup.h
+@@ -1163,6 +1163,11 @@ static inline struct vm_area_struct *vma_next(struct vma_iterator *vmi)
+ 	return mas_find(&vmi->mas, ULONG_MAX);
  }
  
- static vm_fault_t nvgrace_gpu_vfio_pci_huge_fault(struct vm_fault *vmf,
-diff --git a/drivers/vfio/pci/vfio_pci_core.c b/drivers/vfio/pci/vfio_pci_core.c
-index 3f11a9624b9c..a113c55845e1 100644
---- a/drivers/vfio/pci/vfio_pci_core.c
-+++ b/drivers/vfio/pci/vfio_pci_core.c
-@@ -20,6 +20,7 @@
- #include <linux/module.h>
- #include <linux/mutex.h>
- #include <linux/notifier.h>
-+#include <linux/pagemap.h>
- #include <linux/pci.h>
- #include <linux/pm_runtime.h>
- #include <linux/slab.h>
-@@ -1780,7 +1781,7 @@ static vm_fault_t vfio_pci_mmap_huge_fault(struct vm_fault *vmf,
- 	struct vm_area_struct *vma = vmf->vma;
- 	struct vfio_pci_core_device *vdev = vma->vm_private_data;
- 	unsigned long addr = vmf->address & ~((PAGE_SIZE << order) - 1);
--	unsigned long pgoff = (addr - vma->vm_start) >> PAGE_SHIFT;
-+	unsigned long pgoff = linear_page_delta(vma, addr);
- 	unsigned long pfn = vma_to_pfn(vma) + pgoff;
- 	vm_fault_t ret = VM_FAULT_FALLBACK;
- 
-diff --git a/mm/nommu.c b/mm/nommu.c
-index 52074ea90acb..c0a0869cd0d6 100644
---- a/mm/nommu.c
-+++ b/mm/nommu.c
-@@ -1355,7 +1355,7 @@ static int split_vma(struct vma_iterator *vmi, struct vm_area_struct *vma,
- 	*region = *vma->vm_region;
- 	new->vm_region = region;
- 
--	npages = (addr - vma->vm_start) >> PAGE_SHIFT;
-+	npages = linear_page_delta(vma, addr);
- 
- 	if (new_below) {
- 		region->vm_top = region->vm_end = new->vm_end = addr;
-diff --git a/mm/vma.c b/mm/vma.c
-index 4a4d096ba86a..7aa0149f076c 100644
---- a/mm/vma.c
-+++ b/mm/vma.c
-@@ -517,7 +517,7 @@ __split_vma(struct vma_iterator *vmi, struct vm_area_struct *vma,
- 		new->vm_end = addr;
- 	} else {
- 		new->vm_start = addr;
--		new->vm_pgoff += ((addr - vma->vm_start) >> PAGE_SHIFT);
-+		new->vm_pgoff += linear_page_delta(vma, addr);
- 	}
- 
- 	err = -ENOMEM;
-diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
-index db57c5766ab6..f0e5da490866 100644
---- a/virt/kvm/guest_memfd.c
-+++ b/virt/kvm/guest_memfd.c
-@@ -440,7 +440,7 @@ static int kvm_gmem_set_policy(struct vm_area_struct *vma, struct mempolicy *mpo
- static struct mempolicy *kvm_gmem_get_policy(struct vm_area_struct *vma,
- 					     unsigned long addr, pgoff_t *ilx)
++static inline bool vma_is_attached(struct vm_area_struct *vma)
++{
++	return refcount_read(&vma->vm_refcnt);
++}
++
+ /*
+  * WARNING: to avoid racing with vma_mark_attached()/vma_mark_detached(), these
+  * assertions should be made either under mmap_write_lock or when the object
+@@ -1170,12 +1175,12 @@ static inline struct vm_area_struct *vma_next(struct vma_iterator *vmi)
+  */
+ static inline void vma_assert_attached(struct vm_area_struct *vma)
  {
--	pgoff_t pgoff = vma->vm_pgoff + ((addr - vma->vm_start) >> PAGE_SHIFT);
-+	pgoff_t pgoff = linear_page_index(vma, addr);
- 	struct inode *inode = file_inode(vma->vm_file);
+-	WARN_ON_ONCE(!refcount_read(&vma->vm_refcnt));
++	WARN_ON_ONCE(!vma_is_attached(vma));
+ }
  
- 	*ilx = inode->i_ino;
+ static inline void vma_assert_detached(struct vm_area_struct *vma)
+ {
+-	WARN_ON_ONCE(refcount_read(&vma->vm_refcnt));
++	WARN_ON_ONCE(vma_is_attached(vma));
+ }
+ 
+ static inline void vma_assert_write_locked(struct vm_area_struct *);
+@@ -1564,3 +1569,9 @@ static inline pgoff_t linear_page_index(const struct vm_area_struct *vma,
+ 	pgoff += vma_start_pgoff(vma);
+ 	return pgoff;
+ }
++
++static inline void vma_assert_can_modify(struct vm_area_struct *vma)
++{
++	if (vma_is_attached(vma))
++		vma_assert_write_locked(vma);
++}
 
 -- 
 2.55.0
