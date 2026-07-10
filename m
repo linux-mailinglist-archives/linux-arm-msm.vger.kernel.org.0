@@ -1,55 +1,55 @@
-Return-Path: <linux-arm-msm+bounces-118385-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-118386-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id GatlDC5VUWpXCgMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-118385-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 22:25:18 +0200
+	id xNt9NW9VUWp9CgMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-118386-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 22:26:23 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9950E73E36D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 22:25:17 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7896D73E3D7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 22:26:23 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=YNDixLET;
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=cmnlAT5w;
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118385-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118385-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118386-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118386-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 3C2A8301C88B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 20:22:13 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 566F430210F7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 20:22:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 62960399CF2;
-	Fri, 10 Jul 2026 20:22:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9479439A070;
+	Fri, 10 Jul 2026 20:22:34 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2418E397E91;
-	Fri, 10 Jul 2026 20:22:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 456EB44998C;
+	Fri, 10 Jul 2026 20:22:33 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783714931; cv=none; b=kYsonPpPfU5mQE0Utq0REg2eRsaKDJ4gkKZ6utc0l3MQjyqFaO0T663T/DukQLtwo55gERvUrgh5uhCh8xl9geRYzusENph7W8Pof0AFM80GMt/JPLndtMQHzA0Se81Fz7JOn/N8wxmqA4GCP1Qsunkp8RScHGorreIH5QvCKOk=
+	t=1783714954; cv=none; b=uC/UtVy2Kocy+EvbAsOhsx6/biCI+2T9DmY7LiNEiwuFxffIwjJfsCAwPXQOIqOW0175my48o+lRb2aJ1RhzHCZNkllXCtOmyL2nwzoN5OxCQsudSG6jE7DugKHGncRtu5VKnwxtI9PEQZGjoYr+94js4Rp905Y+x0mKK7KGOu0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783714931; c=relaxed/simple;
-	bh=mLgNYeeooTfeSgODnN2j9KxYGDmFa4rlCkKK11Bijx0=;
+	s=arc-20240116; t=1783714954; c=relaxed/simple;
+	bh=9w7HTwMbIR3XlC1PY7gTQx5p4l7ISN45M8ruExx6jwU=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=aKPMplDrFDG7cuwO9kVR1OwFPe1/KROXroAoe/uYn/1kRHNBW3mzWlCZwcI2cd13vltgl6zxKgnoTTRK4OvpBQ5bJi18FllI21qI993rC/YCM2jiE8NS34h2ucQrMUSdkC7AnTdToKNl4emL5DGsPAw3d5dYZKOSOiDXb2NLF84=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YNDixLET; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 161461F000E9;
-	Fri, 10 Jul 2026 20:21:46 +0000 (UTC)
+	 In-Reply-To:To:Cc; b=U7ya52f6F+8cxVhIV/gteOboBG4LbvxUt4qy+017mkB6LhA/y367xg417mG981zArelgWgsmSEKLrmEfRIw0DL6rOkT4/Rghn+gW7NB5C4utDdw4y6OwrD98QW46RYqOGtvfKwXcHKva+DzgqIMSQMuELf9YhLv8UhRldxnRcQ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cmnlAT5w; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41A311F00A3A;
+	Fri, 10 Jul 2026 20:22:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783714929;
-	bh=mp2XcEzmrsUMsE6Z8vlg0yAD1+XKOgCHxsSBkhx0qCg=;
+	s=k20260515; t=1783714952;
+	bh=pXMh/gI7Ejl6sQaq6pNCmizKlHMxVh3sNzK86kWl2h4=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=YNDixLETTihnC81MSj5vI2w82St/z2bpWmYfKR8ywUGWm3Jp3GYvqd7wjfiVfTRbg
-	 J4IfC7fCrwanGf6IJfkBZoOzbWd5REyZOciwm+c+SNLmMSkNXr9JC6qBv7H5tO6MlJ
-	 XLpER1fSQILJDtWnNEHpFgaEaCQjFjRgc57TuNj+cVvkEcW55HnugAjEYQRCVU4Sn8
-	 lrJn3V6v4WujodJw3PNzBE6sug/YLghVyz4gNrEl98e/IZkI9SyBn7OYmnBLAraswy
-	 RRmsSaDGg2eFi7Dr/+iUd6PPljAxeHSxrN/6w5OIhDkKLEDsrKLlceKXQkUDBzcxxx
-	 I2w5Kwx8etXxw==
+	b=cmnlAT5wzlYt3brmt40tysj0J5B1gKaWPdvxMOyfuvulZ+5sH8m2RssNtYd7kJ9hM
+	 3JEic/R7P0blm57mcQ0VabhZOtCOAB4dhCKn5vcEPWkjCnXEjOckc/MFsTHkCovBo4
+	 dEg/4zgFADMecv/GyNsJqD96QSHp1WhhbtMbrSCjAIUGp0fIoob9V7aAjMbXb5Yjae
+	 iBWFOm0BbeaaXFduRQLeC1gA41fycIKRojdC7cmdk7PU3JZWYDX4zaGQz3M2yYKf1w
+	 SU3WfX6qJrW400SI9+5KSdVXY3Bp5Pl2jDAeKWzdIH9ZClW5J9NYnrxx0HvA7R6dwl
+	 m3LRjk41KWVYQ==
 From: Lorenzo Stoakes <ljs@kernel.org>
-Date: Fri, 10 Jul 2026 21:16:53 +0100
-Subject: [PATCH v2 12/33] MAINTAINERS: Move mm/interval_tree.c to rmap
- section
+Date: Fri, 10 Jul 2026 21:16:54 +0100
+Subject: [PATCH v2 13/33] mm/vma: introduce and use vmg_pages(),
+ vmg_[start, end]_pgoff()
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -58,7 +58,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260710-b4-pre-scalable-cow-v2-12-2a5aa403d977@kernel.org>
+Message-Id: <20260710-b4-pre-scalable-cow-v2-13-2a5aa403d977@kernel.org>
 References: <20260710-b4-pre-scalable-cow-v2-0-2a5aa403d977@kernel.org>
 In-Reply-To: <20260710-b4-pre-scalable-cow-v2-0-2a5aa403d977@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>, 
@@ -139,12 +139,12 @@ Cc: Lorenzo Stoakes <ljs@kernel.org>, linux-mm@kvack.org,
  freedreno@lists.freedesktop.org, linux-tegra@vger.kernel.org, 
  kvm@vger.kernel.org, Russell King <linux+etnaviv@armlinux.org.uk>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=909; i=ljs@kernel.org;
- h=from:subject:message-id; bh=mLgNYeeooTfeSgODnN2j9KxYGDmFa4rlCkKK11Bijx0=;
- b=owGbwMvMwCV2fu7ZrsZH9SKMp9WSGLICg62b0rarxqkEWXU1vhHT+ft4/uldajUyJw9vXaP5a
- L3kyaT/HaUsDGJcDLJiiizPv4jvDxIJm9d5wd8NZg4rE8gQBi5OAZgIuxrD/0qvjxoNTUff7Xl0
- ND5tn1zYsuAJxRs7+ez43wsU8Sldfs7I8OLfR6m7kr8nLuTfXF7/67wLy+JVk03/vGQyPpKWZui
- gxg8A
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3014; i=ljs@kernel.org;
+ h=from:subject:message-id; bh=9w7HTwMbIR3XlC1PY7gTQx5p4l7ISN45M8ruExx6jwU=;
+ b=owGbwMvMwCV2fu7ZrsZH9SKMp9WSGLICg61/Za29l6e37xfjD8NZsUc+LmZ86SXA+JLr6YcvJ
+ poWjBckOkpZGMS4GGTFFFmefxHfHyQSNq/zgr8bzBxWJpAhDFycAjARbUmG/9VbDidYv8s915f2
+ n5N9N+szsfC93vKXTXQ3b1lYeO7JPxtGhmm3bFJOBQZ+EvJqXVpxqdBDXn1u0dxHp0v5fk/fOXu
+ jNCcA
 X-Developer-Key: i=ljs@kernel.org; a=openpgp;
  fpr=E7F417BF5214569E89D04F46CF9DCD8A81E27F14
 X-Rspamd-Action: no action
@@ -153,24 +153,25 @@ X-Spamd-Result: default: False [-3.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORWARDED(0.00)[lists@lfdr.de];
-	TAGGED_FROM(0.00)[bounces-118385-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_TO(0.00)[linux-foundation.org,kernel.org,infradead.org,google.com,suse.com,surriel.com,linux.dev,suse.de,armlinux.org.uk,siemens-energy.com,HansenPartnership.com,gmx.de,zeniv.linux.org.uk,suse.cz,redhat.com,arm.com,linux.intel.com,intel.com,linaro.org,nvidia.com,linux.alibaba.com,huawei.com,gmail.com,zte.com.cn,sk.com,gourry.net,samsung.com,goodmis.org,efficios.com,alien8.de,zytor.com,mev.co.uk,visionengravers.com,pengutronix.de,ffwll.ch,oss.qualcomm.com,poorly.run,somainline.org,ideasonboard.com,amd.com,ziepe.ca,shazbot.org];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-118386-lists,linux-arm-msm=lfdr.de];
 	FORGED_RECIPIENTS(0.00)[m:akpm@linux-foundation.org,m:david@kernel.org,m:liam@infradead.org,m:vbabka@kernel.org,m:rppt@kernel.org,m:surenb@google.com,m:mhocko@suse.com,m:riel@surriel.com,m:harry@kernel.org,m:jannh@google.com,m:lance.yang@linux.dev,m:pfalcato@suse.de,m:linux@armlinux.org.uk,m:dinguyen@kernel.org,m:schuster.simon@siemens-energy.com,m:James.Bottomley@HansenPartnership.com,m:deller@gmx.de,m:viro@zeniv.linux.org.uk,m:brauner@kernel.org,m:jack@suse.cz,m:djbw@kernel.org,m:willy@infradead.org,m:muchun.song@linux.dev,m:osalvador@suse.de,m:mhiramat@kernel.org,m:oleg@redhat.com,m:peterz@infradead.org,m:mingo@redhat.com,m:acme@kernel.org,m:namhyung@kernel.org,m:mark.rutland@arm.com,m:alexander.shishkin@linux.intel.com,m:jolsa@kernel.org,m:irogers@google.com,m:adrian.hunter@intel.com,m:james.clark@linaro.org,m:ziy@nvidia.com,m:baolin.wang@linux.alibaba.com,m:npache@redhat.com,m:ryan.roberts@arm.com,m:dev.jain@arm.com,m:baohua@kernel.org,m:linmiaohe@huawei.com,m:nao.horiguchi@gma
  il.com,m:xu.xin16@zte.com.cn,m:chengming.zhou@linux.dev,m:sj@kernel.org,m:matthew.brost@intel.com,m:joshua.hahnjy@gmail.com,m:rakie.kim@sk.com,m:byungchul@sk.com,m:gourry@gourry.net,m:ying.huang@linux.alibaba.com,m:apopple@nvidia.com,m:hughd@google.com,m:peterx@redhat.com,m:kees@kernel.org,m:m.szyprowski@samsung.com,m:robin.murphy@arm.com,m:andreyknvl@gmail.com,m:glider@google.com,m:dvyukov@google.com,m:rostedt@goodmis.org,m:mathieu.desnoyers@efficios.com,m:jarkko@kernel.org,m:dave.hansen@linux.intel.com,m:tglx@kernel.org,m:bp@alien8.de,m:x86@kernel.org,m:hpa@zytor.com,m:abbotti@mev.co.uk,m:hsweeten@visionengravers.com,m:l.stach@pengutronix.de,m:christian.gmeiner@gmail.com,m:airlied@gmail.com,m:simona@ffwll.ch,m:patrik.r.jakobsson@gmail.com,m:maarten.lankhorst@linux.intel.com,m:mripard@kernel.org,m:tzimmermann@suse.de,m:robin.clark@oss.qualcomm.com,m:lumag@kernel.org,m:abhinav.kumar@linux.dev,m:jesszhan0024@gmail.com,m:sean@poorly.run,m:marijn.suijten@somainline.org,m:tomi.valkeinen
  @ideasonboard.com,m:thierry.reding@kernel.org,m:mperttunen@nvidia.com,m:jonathanh@nvidia.com,m:christian.koenig@amd.com,m:ray.huang@amd.com,m:matthew.auld@intel.com,m:jgg@ziepe.ca,m:yishaih@nvidia.com,m:skolothumtho@nvidia.com,m:kevin.tian@intel.com,m:ankita@nvidia.com,m:alex@shazbot.org,s:lists@lfdr.de];
+	FREEMAIL_TO(0.00)[linux-foundation.org,kernel.org,infradead.org,google.com,suse.com,surriel.com,linux.dev,suse.de,armlinux.org.uk,siemens-energy.com,HansenPartnership.com,gmx.de,zeniv.linux.org.uk,suse.cz,redhat.com,arm.com,linux.intel.com,intel.com,linaro.org,nvidia.com,linux.alibaba.com,huawei.com,gmail.com,zte.com.cn,sk.com,gourry.net,samsung.com,goodmis.org,efficios.com,alien8.de,zytor.com,mev.co.uk,visionengravers.com,pengutronix.de,ffwll.ch,oss.qualcomm.com,poorly.run,somainline.org,ideasonboard.com,amd.com,ziepe.ca,shazbot.org];
 	FORGED_SENDER(0.00)[ljs@kernel.org,linux-arm-msm@vger.kernel.org];
+	MIME_TRACE(0.00)[0:+];
 	RCVD_COUNT_THREE(0.00)[4];
+	FORWARDED(0.00)[lists@lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	RCPT_COUNT_GT_50(0.00)[122];
 	PRECEDENCE_BULK(0.00)[];
@@ -178,43 +179,103 @@ X-Spamd-Result: default: False [-3.66 / 15.00];
 	DKIM_TRACE(0.00)[kernel.org:+];
 	ALIAS_RESOLVED(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	MIME_TRACE(0.00)[0:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,etnaviv];
-	TO_DN_SOME(0.00)[]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[gourry.net:email,vger.kernel.org:from_smtp,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,suse.de:email]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 9950E73E36D
+X-Rspamd-Queue-Id: 7896D73E3D7
 
-This file implements code for the interval trees used by the file and anon
-rmap implementation, so belongs in the rmap section.
+In the VMA logic we often need to determine the number of pages in the
+specified merge range, as well as the start and end page offsets of that
+range.
 
-Acked-by: Pedro Falcato <pfalcato@suse.de>
+Introduce and use helpers for these purposes.
+
+No functional change intended.
+
+Reviewed-by: Pedro Falcato <pfalcato@suse.de>
+Reviewed-by: Gregory Price <gourry@gourry.net>
 Signed-off-by: Lorenzo Stoakes <ljs@kernel.org>
 ---
- MAINTAINERS | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/vma.c | 11 ++++-------
+ mm/vma.h | 17 +++++++++++++++++
+ 2 files changed, 21 insertions(+), 7 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index c3e535ca4bef..ef168b583325 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -17208,6 +17208,7 @@ R:	Lance Yang <lance.yang@linux.dev>
- L:	linux-mm@kvack.org
- S:	Maintained
- F:	include/linux/rmap.h
-+F:	mm/interval_tree.c
- F:	mm/page_vma_mapped.c
- F:	mm/rmap.c
- F:	tools/testing/selftests/mm/rmap.c
-@@ -17313,7 +17314,6 @@ T:	git git://git.kernel.org/pub/scm/linux/kernel/git/akpm/mm
- F:	include/trace/events/mmap.h
- F:	fs/proc/task_mmu.c
- F:	fs/proc/task_nommu.c
--F:	mm/interval_tree.c
- F:	mm/mincore.c
- F:	mm/mlock.c
- F:	mm/mmap.c
+diff --git a/mm/vma.c b/mm/vma.c
+index 35ba3475128f..995de8198fbb 100644
+--- a/mm/vma.c
++++ b/mm/vma.c
+@@ -197,11 +197,9 @@ static void init_multi_vma_prep(struct vma_prepare *vp,
+  */
+ static bool can_vma_merge_before(struct vma_merge_struct *vmg)
+ {
+-	pgoff_t pglen = PHYS_PFN(vmg->end - vmg->start);
+-
+ 	if (is_mergeable_vma(vmg, /* merge_next = */ true) &&
+ 	    is_mergeable_anon_vma(vmg, /* merge_next = */ true)) {
+-		if (vmg->next->vm_pgoff == vmg->pgoff + pglen)
++		if (vmg_end_pgoff(vmg) == vma_start_pgoff(vmg->next))
+ 			return true;
+ 	}
+ 
+@@ -221,7 +219,7 @@ static bool can_vma_merge_after(struct vma_merge_struct *vmg)
+ {
+ 	if (is_mergeable_vma(vmg, /* merge_next = */ false) &&
+ 	    is_mergeable_anon_vma(vmg, /* merge_next = */ false)) {
+-		if (vmg->prev->vm_pgoff + vma_pages(vmg->prev) == vmg->pgoff)
++		if (vma_end_pgoff(vmg->prev) == vmg_start_pgoff(vmg))
+ 			return true;
+ 	}
+ 	return false;
+@@ -759,7 +757,7 @@ static int commit_merge(struct vma_merge_struct *vmg)
+ 	 */
+ 	vma_adjust_trans_huge(vma, vmg->start, vmg->end,
+ 			      vmg->__adjust_middle_start ? vmg->middle : NULL);
+-	vma_set_range(vma, vmg->start, vmg->end, vmg->pgoff);
++	vma_set_range(vma, vmg->start, vmg->end, vmg_start_pgoff(vmg));
+ 	vmg_adjust_set_range(vmg);
+ 	vma_iter_store_overwrite(vmg->vmi, vmg->target);
+ 
+@@ -962,8 +960,7 @@ static __must_check struct vm_area_struct *vma_merge_existing_range(
+ 		 *    middle     next
+ 		 * shrink/delete extend
+ 		 */
+-
+-		pgoff_t pglen = PHYS_PFN(vmg->end - vmg->start);
++		const pgoff_t pglen = vmg_pages(vmg);
+ 
+ 		VM_WARN_ON_VMG(!merge_right, vmg);
+ 		/* If we are offset into a VMA, then prev must be middle. */
+diff --git a/mm/vma.h b/mm/vma.h
+index 8e4b61a7304c..527716c8739d 100644
+--- a/mm/vma.h
++++ b/mm/vma.h
+@@ -230,6 +230,23 @@ static inline bool vmg_nomem(struct vma_merge_struct *vmg)
+ 	return vmg->state == VMA_MERGE_ERROR_NOMEM;
+ }
+ 
++static inline pgoff_t vmg_start_pgoff(const struct vma_merge_struct *vmg)
++{
++	return vmg->pgoff;
++}
++
++static inline pgoff_t vmg_pages(const struct vma_merge_struct *vmg)
++{
++	const unsigned long size = vmg->end - vmg->start;
++
++	return size >> PAGE_SHIFT;
++}
++
++static inline pgoff_t vmg_end_pgoff(const struct vma_merge_struct *vmg)
++{
++	return vmg_start_pgoff(vmg) + vmg_pages(vmg);
++}
++
+ /* Assumes addr >= vma->vm_start. */
+ static inline pgoff_t vma_pgoff_offset(struct vm_area_struct *vma,
+ 				       unsigned long addr)
 
 -- 
 2.55.0
