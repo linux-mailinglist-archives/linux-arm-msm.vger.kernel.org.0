@@ -1,173 +1,128 @@
-Return-Path: <linux-arm-msm+bounces-118247-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-118248-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id sYplNh7KUGqe5AIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-118247-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 12:31:58 +0200
+	id qrMvCvDJUGqY5AIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-118248-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 12:31:12 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 431CB739BB5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 12:31:58 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9F2F7739BA1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 12:31:11 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20201202 header.b=VleuwWBO;
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=FQ5FjPsN;
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118247-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118247-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118248-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.232.135.74 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118248-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id DE38D307204B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 10:28:31 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 1AE553008D70
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 10:31:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF7DC408014;
-	Fri, 10 Jul 2026 10:28:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 51E0F409293;
+	Fri, 10 Jul 2026 10:31:08 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C687E40800B;
-	Fri, 10 Jul 2026 10:28:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E06E3F8222;
+	Fri, 10 Jul 2026 10:31:05 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783679310; cv=none; b=C+x0tj9gyI2VQN2D8yTgD65jQoZeT+RaD7ldIY71rNS2bZBT8lSJBc7f+XqQTyR1NqdETOkzP4PnKfUqUKjeJwXeyA3pry607nOOAr6Xu1hJeGKMh9/qRphb+cLylw3KMrmz/rklPBmhrk1SPVG00NX/CnAW23RUeDkic4o9slA=
+	t=1783679468; cv=none; b=C6VmxprjgQGy5eB+MQJxOhCjw6w/V2mnutUV+BnLupTN9aw0l39PeMYWNFQz8xO27sH/brKBYJdUwvo844kUryllTp+ciwUQHHZxhXqgHMh5a11KLqKNRGECSuRv2SmJ+Jz0BX+cGwf0V/Lo8nweASZArhpZwWuMnat6SxP5I6I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783679310; c=relaxed/simple;
-	bh=mOV2tzckd0rVyjljkX3ZrGReEaXi1MYOVMs9+Um5Bto=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=TF1Z6vXutH15BS9341tQIlL2tbkfhzJRUDgVQevp8pfGW/DLerrN6e7iFfFobiKVeJ35UPCPIsouCpJNthIDxOFF2K5HChLtSQ34hYMmgNq+UcZJ5trzJVLxAzhuUrTCpdI62CO95/ICfwA6mykTfMkTkmHPwrbEOV0LVQZA1HE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VleuwWBO; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 45F93C2BCB8;
-	Fri, 10 Jul 2026 10:28:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1783679310;
-	bh=mOV2tzckd0rVyjljkX3ZrGReEaXi1MYOVMs9+Um5Bto=;
-	h=From:Date:Subject:To:Cc:Reply-To:From;
-	b=VleuwWBOKNgsUaPP/cjeboj7xDRVNFaTyHUO0t/jSgvmGonDarnFo7nCEqlIqjRjA
-	 4D+JXvd4WxS2fQAKm/BGk5KrqPMS5BbmDtHcyxlsRwcXE2fGpQLJvVHPDS+CYPUTAx
-	 Qy245vTMs5FtHSnyWp41CMW/pWu/vdHG5kI9BpmGDuaKhFSxVQi8cn4v8ZC37O5RyF
-	 BxgmIn3v1Te8rfrWXsJcZhA/QAriI8fpaRi+tgU+ZhCGNZtvZ45acYIpp2F57gPteg
-	 NO3rkaHs53KrCbAwhg/hKovL6W086v5R49mORnvYR6jOViWOm8f+gFmzAYCivhw5QT
-	 i4nXwYZHekh9g==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 242C0C43458;
-	Fri, 10 Jul 2026 10:28:30 +0000 (UTC)
-From: Federico Amedeo Izzo via B4 Relay <devnull+federico.izzo.pro@kernel.org>
-Date: Fri, 10 Jul 2026 12:28:29 +0200
-Subject: [PATCH v2] slimbus: qcom-ngd-ctrl: fix ngd register base address
+	s=arc-20240116; t=1783679468; c=relaxed/simple;
+	bh=ciMpBU5q5X5MpU3DMrlVl+ZF4pBUD8wSBnMQE41zaZk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ws6Cu2agejA3q9G6DuoW7iDOr2kYIMtV6fyiU1rKFjvV6WlKgxWsHhHPWOs5zjBP6yge3XD5VY6Np9Z3oAceasHqn9Y8r+dH1mc/lOwDBYJirL7XxvvSV1iS3c0jP3lpeJbpKlv+oNUxO2dCT57CJUM8n3eHsJGb/qaLRuQ347Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FQ5FjPsN; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F24191F000E9;
+	Fri, 10 Jul 2026 10:31:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1783679465;
+	bh=v9mglEQYnPs6uk3OJ3Xuvp9hCfi2X4aAytOeMWAoI7k=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=FQ5FjPsNOieS0sERUz6obcmLz+1VTDcNw2SSm6i/1AWFQK7OGHR9gNhNNON/C2Axb
+	 A13b6MhKhmHt0k4Junss+zgGFrkf96FdL4WkOuB99IRLqbjzCy/M11AVo8lRQuIr1h
+	 wJ7EU8nPdIfdaJp+ynA3eY6Jvmj9nZRHGj/l8ZSE5ZbSvKOwYcSfme4Rg2URQDSSfY
+	 r4uvcoDcIk4FSPwexuP9x5FfKF4llBPb6GB43OboPkJMDUSdXZ80wlSjt7PdX8+9Qs
+	 JrVJk30/lIsewgOKAKb9Q0i/FIC8nYohBxCSzhfKltHOS1mzen3PjBqkrBOeul1nO7
+	 dUXz3OKzePTug==
+Date: Fri, 10 Jul 2026 12:31:01 +0200
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Shawn Guo <shengchao.guo@oss.qualcomm.com>
+Cc: Jassi Brar <jassisinghbrar@gmail.com>, 
+	Manivannan Sadhasivam <mani@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Bartosz Golaszewski <brgl@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
+	Deepti Jaggi <deepti.jaggi@oss.qualcomm.com>
+Subject: Re: [PATCH v2] dt-bindings: mailbox: qcom-ipcc: Document Nord IPCC
+Message-ID: <20260710-armored-tacky-jackal-e5edc1@quoll>
+References: <20260709080848.4070338-1-shengchao.guo@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260710-qcom-ngd-register-base-fix-v2-1-0bb247c954c9@izzo.pro>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/42NQQ6CMBBFr0Jm7Zi2glBX3sOwaGGAmkhxikQh3
- N2CF3D5fn7eWyAQOwpwSRZgmlxwvo+gDglUnelbQldHBiXUWeRC47PyD+zbGplaF0ZitCYQNu6
- NJtO5PBlZpLaAKBiY4rzLb+WPw8veqRo34/boosHzZ69Pcvv9FZokSsya3Ni0aLQS+urm2R8H9
- lCu6/oFEg/iG9UAAAA=
-X-Change-ID: 20260709-qcom-ngd-register-base-fix-a59713a184b8
-To: Srinivas Kandagatla <srini@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org, 
- linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org, 
- ~postmarketos/upstreaming@lists.sr.ht, 
- Federico Amedeo Izzo <federico@izzo.pro>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1783679309; l=1720;
- i=federico@izzo.pro; s=20251017; h=from:subject:message-id;
- bh=+vuRfWB5TZ02U83zLp1dfXk7Vc/G5WPRtcOB/wAoh3Q=;
- b=0N3znYgt/Ey7czV5f9j2HziGVCJSAu52iQ0fAv1CAhUsKaYwkodgsS9BeRdAEjMczYzt73ypn
- 8rflv6Ol1gSDn8HNrKVmenFd0qUwl6WPTfCiKV20KCavAOkpo0FgCzT
-X-Developer-Key: i=federico@izzo.pro; a=ed25519;
- pk=XfmNfpH48k8jLbId5NKrp0yoKoFb/uLjr97qIxBImBw=
-X-Endpoint-Received: by B4 Relay for federico@izzo.pro/20251017 with
- auth_id=544
-X-Original-From: Federico Amedeo Izzo <federico@izzo.pro>
-Reply-To: federico@izzo.pro
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260709080848.4070338-1-shengchao.guo@oss.qualcomm.com>
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-5.16 / 15.00];
+X-Spamd-Result: default: False [-4.66 / 15.00];
 	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-118247-lists,linux-arm-msm=lfdr.de,federico.izzo.pro];
+	RCVD_COUNT_THREE(0.00)[4];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:srini@kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-sound@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:phone-devel@vger.kernel.org,m:~postmarketos/upstreaming@lists.sr.ht,m:federico@izzo.pro,s:lists@lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:shengchao.guo@oss.qualcomm.com,m:jassisinghbrar@gmail.com,m:mani@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:andersson@kernel.org,m:brgl@kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:devicetree@vger.kernel.org,m:deepti.jaggi@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	FORGED_SENDER(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[12];
+	FORGED_SENDER(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
 	MIME_TRACE(0.00)[0:+];
 	FORWARDED(0.00)[lists@lfdr.de];
-	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-118248-lists,linux-arm-msm=lfdr.de];
 	DKIM_TRACE(0.00)[kernel.org:+];
+	TO_DN_SOME(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
-	REPLYTO_DOM_NEQ_TO_DOM(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_CC(0.00)[gmail.com,kernel.org,vger.kernel.org,oss.qualcomm.com];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	HAS_REPLYTO(0.00)[federico@izzo.pro];
-	RCPT_COUNT_SEVEN(0.00)[7];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,msgid.link:url,izzo.pro:replyto,izzo.pro:mid,izzo.pro:email]
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MISSING_XM_UA(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,quoll:mid,qualcomm.com:email,vger.kernel.org:from_smtp]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 431CB739BB5
+X-Rspamd-Queue-Id: 9F2F7739BA1
 
-From: Federico Amedeo Izzo <federico@izzo.pro>
+On Thu, Jul 09, 2026 at 04:08:48PM +0800, Shawn Guo wrote:
+> From: Deepti Jaggi <deepti.jaggi@oss.qualcomm.com>
+> 
+> Document Inter-Processor Communication Controller on Qualcomm Nord SoC.
+> 
+> Signed-off-by: Deepti Jaggi <deepti.jaggi@oss.qualcomm.com>
+> Signed-off-by: Shawn Guo <shengchao.guo@oss.qualcomm.com>
+> ---
+> Changes in v2:
+> - Drop qcom,ipcc fallback from commit log
+> - Link to v1: https://lore.kernel.org/all/20260420040141.1247612-1-shengchao.guo@oss.qualcomm.com/
+> 
+>  Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml | 1 +
+>  1 file changed, 1 insertion(+)
 
-The slimbus controller register base was calculated using the
-controller ID and the register size, producing wrong results for ID > 1.
-
-The expression reduces to ngd->base = ctrl->base for controller with ID = 1;
-but for ID > 1 the other factors produce a wrong base address.
-This bug caused a crash while trying to bring-up the secondary
-slimbus controller (ID = 3) on oneplus-enchilada with sdm845.
-
-In practice, the correct base address for each slimbus controller can be
-obtained from the device-tree, so there is no need for further
-calculations.
-
-This was validated by reading the version register from the WCN3990 slim
-interface on oneplus-enchilada.
-
-Fixes: 917809e2280b ("slimbus: ngd: Add qcom SLIMBus NGD driver")
-Signed-off-by: Federico Amedeo Izzo <federico@izzo.pro>
----
-Changes in v2:
-- add missing Fixes and S-o-b tags
-- Link to v1: https://patch.msgid.link/20260709-qcom-ngd-register-base-fix-v1-1-5f7ab48f9209@izzo.pro
----
- drivers/slimbus/qcom-ngd-ctrl.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
-
-diff --git a/drivers/slimbus/qcom-ngd-ctrl.c b/drivers/slimbus/qcom-ngd-ctrl.c
-index 80877e951849..91932f8d021b 100644
---- a/drivers/slimbus/qcom-ngd-ctrl.c
-+++ b/drivers/slimbus/qcom-ngd-ctrl.c
-@@ -1547,8 +1547,7 @@ static int of_qcom_slim_ngd_register(struct device *parent,
- 			kfree(ngd);
- 			return ret;
- 		}
--		ngd->base = ctrl->base + ngd->id * data->offset +
--					(ngd->id - 1) * data->size;
-+		ngd->base = ctrl->base + data->offset;
- 
- 		return 0;
- 	}
-
----
-base-commit: b9810cd75b9fb56a3425d391cba3f608502bd474
-change-id: 20260709-qcom-ngd-register-base-fix-a59713a184b8
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
 Best regards,
---  
-Federico Amedeo Izzo <federico@izzo.pro>
-
+Krzysztof
 
 
