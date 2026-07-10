@@ -1,177 +1,229 @@
-Return-Path: <linux-arm-msm+bounces-118222-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-118221-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id oKbUEEbCUGqJ4gIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-118222-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 11:58:30 +0200
+	id wT5oHkzBUGpU4gIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-118221-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 11:54:20 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8EC5D739557
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 11:58:29 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1A655739493
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 11:54:20 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=fairphone.com header.s=fair header.b=oJ1OwsRU;
-	dmarc=pass (policy=quarantine) header.from=fairphone.com;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118222-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118222-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=linaro.org header.s=google header.b="Ip/hqoeG";
+	dmarc=pass (policy=none) header.from=linaro.org;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118221-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.232.135.74 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118221-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id CABE93022051
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 09:55:13 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 820E4300B9F4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 09:54:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 893EB3F9F43;
-	Fri, 10 Jul 2026 09:55:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0391C3FB05C;
+	Fri, 10 Jul 2026 09:54:19 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A54033F1AC8
-	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jul 2026 09:55:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DFFB3FB7E9
+	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jul 2026 09:54:14 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783677313; cv=none; b=dpjzcLtzAKIx2eOSVG3EGME0qV9NhULYU5va6Kwvunv3HN7mxD/Ce2DDRg6EWjsIaCtqj8RjCXASUilNyTdVK97wdmCkGp7Cw8w4ZOp2ogCPuYuaF+rpvuAgowD+8qrociY3i7d8xzM6LBj2NijX+kojOBCBmQEExjyz5NGzdVU=
+	t=1783677258; cv=none; b=GiwRR48Je7mj/eIjy6ZWI1eUxj+0VhjEqmZoLA71uwe1hVRvnjrjeSRYOpzXbwDg7jj3NgqZW1ppyjtc+2AwzyHXyx32jRfxBFLcF+zpqjFIlFaybGsvAy4b3TwFhG7AWnYYbxmHdX3m/WoXw9Hi72Ntn/O/qq3W4W39hfv/jTo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783677313; c=relaxed/simple;
-	bh=PYaQlk7YAPrQ041M/bvdqcr1+tAUHuw1nB/hxRtlWPQ=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=ALGDRJ/XJLLUrwkGgW7oY6vNfYTMcBCouZn5qE0AsJfXqk+r6H7WgAzr2HyZagaOrpfYFVaz2Y7LU4W0i+aMaF76slVUWXM9GedpaKZraKRZPvR1K646XFCIhhFI74WLIqfkTRqmf7c3WF3XmG67UT6OZ4oqt41ZQYsq1I/W4/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=oJ1OwsRU; arc=none smtp.client-ip=209.85.208.52
-Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-698beff7178so1362827a12.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jul 2026 02:55:10 -0700 (PDT)
+	s=arc-20240116; t=1783677258; c=relaxed/simple;
+	bh=v8P2Uf45mI/biqxnOxHWfgXQmu+JaXEwT05r7bGVu80=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=sX73GxiJsnaNZxT0HXFCr33WWCXcPTnAXO3hR0/ftWQm6/j9imdPdVW7pnM6hOJAykero4l2LCgIx1HKyExsUZ7QJz3NQOqwUm6m/o5qvakspRnKu8Ms2So7hTFkeZt1PDdC9KpHk07ywMzZLe8ou7nUasNUBhq0FPX5VWiXVeE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Ip/hqoeG; arc=none smtp.client-ip=209.85.221.45
+Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-47c6e9a694bso405713f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jul 2026 02:54:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1783677309; x=1784282109; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:content-type
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=Au4v6cU7MBsP2sPvCvHMdLpV1qE/Ythj9i6e9ev27jE=;
-        b=oJ1OwsRUV46RFfdUQBdY1bFjrXlxV/DcYyafzidK7UlvZnEUC9TMJKqmwLy6iV7Ho9
-         I8jflLJjnC7mVyIVQOQCfATIQTjzTXg+vXQ32O0p8afiYWzBEhoVgUL+KPspRGRbjtVf
-         J6LOYQ+EXSZX0UcX8bTmjar5497jKhtWAqelMi8Ns5MU5j8ZsKWDHhCJ6mPh5iAZxCN5
-         g/Fnc3kSa3+N777cSRfm+vuUIWVXQpH3/FJg3Txb238wZk+3FhZa0bqk5mQlnngA1BXF
-         E8WIjMSlfRBGExVgQZuPT36FZ+1M4nYHNBXvMulV0dRGyqBKir6FR0xNqZShjYGraxjE
-         +rvg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783677309; x=1784282109;
-        h=cc:to:message-id:content-transfer-encoding:content-type
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+        d=linaro.org; s=google; t=1783677252; x=1784282052; darn=vger.kernel.org;
+        h=mime-version:user-agent:content-transfer-encoding:content-type
+         :references:in-reply-to:date:cc:to:from:subject:message-id:from:to
          :cc:subject:date:message-id:reply-to:content-type;
-        bh=Au4v6cU7MBsP2sPvCvHMdLpV1qE/Ythj9i6e9ev27jE=;
-        b=Xm8HRbXYiPVG5OK6gjEekU8KP3VeJhgAIduXegN0c7WxZPnkXu2PU7vqX/ahFoeQkh
-         teZm6RQ4x4UoSOkZ2LVcMsJfec5cevfvrep8/iOYWQVjNQexXnKBk/ADfUDb5i8BrtAK
-         Uhy1sn6EUB24Z/J1Sde1YgSSf8ui33pKgy+ywDHYlUwCO/77ViD3Rmv83XmvDDLHpuhb
-         QZIul/wMGK7fj0wMFFkY0QwtX3+2+rmr6KLvyQInzU+El/GEAGy6aC1iiL7VxDvjA9B7
-         E768MHen8/HwyS7tm1CjrV7LlTNl2VS308qIBf1L7xexG7LIWIG3r9E6XZosN7j94CQ7
-         iklA==
-X-Forwarded-Encrypted: i=1; AHgh+Rp0i3JVMKFnhJ1CIFt9eJ4Ih9F4m2iu4A/EmGb2GEjJIiOfsvSvUcHfY9KabYmdr/q1UnM6VQT5ZoOuJ9E9@vger.kernel.org
-X-Gm-Message-State: AOJu0YxPnrMHA3IofLClIFWWWkb46IDL+JMaRsuf6dDRCuV7IM2xZI+R
-	vRp+Z7n5ncA3LB89BiTbioxh0624Y7467NVhZrS1VqrDuCEwk5+WdwT5/lM/NWlSynw=
-X-Gm-Gg: AfdE7cnNZ4E9ti8MYGhckAkbJprEEOSSfaZQerOlpDVFXrAujNlLfbHNNj1ngDXEAzF
-	ArK6vUuaSfTZyxUKolvIVATK48tUUMI+f2G3KayazPA7pe+bFtccT1ZYxre+i8sOriZwlfpiUg1
-	Lfjz0KeMCTCzrQ6j9TVSPZkHw7PtcyaRvS/JRV0s3hVF7dDV474ezLrD6jIy8XowvSfP+xBxo+e
-	X9mQ9v9vZwy22HUTMaViBHTL1med69Cw0juK3wpYwBzFmuspwhxXRpfEXDH9jfHi7gQnRoQNHiO
-	iy1GPkhWnyDPIHq0qFey9taAPtYIlJkieLlp9Lh3uhmlnj0cMdXevoI3JGMpu6OVKgb6267TPI0
-	GQqgxX0ofLIq9MySjRve3IwOw5WznO1aJLBUi+Cjg3I/yk6FmDEhz6pE0ebh8S5GMe/wqwyGtWa
-	gSaQ31/CSlf+4hPbNa/75vsFqAfnKrEqt/JVU/Mu+79xr5wF9WIVLUTHCMLXdOPLTpie0=
-X-Received: by 2002:a17:907:a2cb:b0:c06:f67e:ed9 with SMTP id a640c23a62f3a-c15ce06fb21mr479808066b.10.1783677309069;
-        Fri, 10 Jul 2026 02:55:09 -0700 (PDT)
-Received: from [172.16.220.101] (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c15bb51af39sm502892966b.29.2026.07.10.02.55.08
+        bh=v8P2Uf45mI/biqxnOxHWfgXQmu+JaXEwT05r7bGVu80=;
+        b=Ip/hqoeGAr/myjEmeIAVuqq/vHDGOW82Jij0v9V7U9rEvPVd9xIOWYyooT6BVXBmQX
+         oQtmGVl0uMY1ruyFgsmEHUkL4uUGHUyVEIfFDGOZQIlD95I00sEkYCvvLbsUVaCRcdE/
+         21l9ux9MUb0iFF5oP9hKQH6roO+9UKLSfUNsGIWQFMT0Tc948Tjponv4UABojt2vCMnC
+         gLTlIF36tLwLlPnNOmJ3i9z8rMMq3NEiQtkOpsuomare+m7yXnB+/mZ0F6cQEI72XISf
+         Mm8Wpf/L6vFfce6tR71mQY2uUfqusyRMIGEgWKU19OdDbVQgTfvp33yjhc0PQ3Zo1D9L
+         hSmw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783677252; x=1784282052;
+        h=mime-version:user-agent:content-transfer-encoding:content-type
+         :references:in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=v8P2Uf45mI/biqxnOxHWfgXQmu+JaXEwT05r7bGVu80=;
+        b=ihf8tGUmmXd+E3+kfC+aJtC3HApiINOt5l7B4WDnBhkmb6KDbs7K5OGGC24v1mWla2
+         KqNadojBtaiONP2YOJSJIJLGBN/+jhEvdHHLuHJykodET3vWJd2jt78lUj0wJuus1ZIH
+         S7pXjoR6ve2RPYt5Tb/6DGmJyqYmdHZch95xUOXSMBsjWrgH5txtVXaRlx2auMnUgc8u
+         l3BptdfNAV1/kIb/A/ASJeQsDsoQ7dI37zv2lNyRGJ2ROBoUfCDGoWrxjfa4ArBIljBF
+         T5WlHxW2pStKF27/AbHMPK9m+RYUonVdJDspo7pCFRZu4a70jv/5H70HQR7FTgER7j/m
+         DPFQ==
+X-Forwarded-Encrypted: i=1; AHgh+RrM1odXbLZDRQwCyd1R2tda+qobxDANYGG3JzOFEGRZYMuMMnhsILDavtse6AQAjSIR9gjzcKiQf8S9zv3o@vger.kernel.org
+X-Gm-Message-State: AOJu0YyQSpWzF9VnprW99OhfDKvF8U14FCL0ZoG/hSwqL+2sx3tuxAOk
+	UMpSV+7vx2BiXEjchn0/g/mFk3+Da9IKcTyMUU7mHnKauAcn3m2Ht/HJWqp5efrHi0M=
+X-Gm-Gg: AfdE7cnDYTPP2B2suOJoGmbDnPQSSEoub/Jn75aks8eEM2mT7G4x84zVp8fGLnNIy7A
+	1O6Pi6+iNBaC5t0gFGFFQC8EzHrb+vsW9m/TW+7ZvEI3/WJUUJela0MbJN2AzxHSW3H/9scBdB5
+	hiW8uNL+2nKLUmUuY8fJ4PitrV2XAOyspT+ZyLOzBGIG+a29Qr8P7T5my76xqUdZ2ksuHawWbNi
+	iIzJwsxe8jhP4L6O1WNmV8YLSVwIo06f4LFKkGtb/3jpMh6wKm0KLdUs0vCH0Il/H/k6MXsIkPR
+	rdNAeDBh4BlT4KhwUEosZolHxgpmFK4gOdJRxqMiviE69Q7TrR10zcbMQ0BAsB0IMYXBG7lT+h8
+	7tcXPV3YIP4iMLQZi13rgFVu/82g5o8iBF2eR4zfcE/9OcdMUaS9wUkvB9XvymnwKfbZOqwfsB9
+	ZTM+GQ7pj+T4mGFDudoBl3ew6f
+X-Received: by 2002:a05:6000:27d4:b0:47d:f441:5f93 with SMTP id ffacd0b85a97d-47df4416019mr6854730f8f.25.1783677252374;
+        Fri, 10 Jul 2026 02:54:12 -0700 (PDT)
+Received: from [192.168.219.26] ([212.129.74.16])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47aa039ae44sm55993210f8f.23.2026.07.10.02.54.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Jul 2026 02:55:08 -0700 (PDT)
-From: Luca Weiss <luca.weiss@fairphone.com>
-Date: Fri, 10 Jul 2026 11:53:57 +0200
-Subject: [PATCH] arm64: dts: qcom: milos: Add reset for sdhc_2
+        Fri, 10 Jul 2026 02:54:12 -0700 (PDT)
+Message-ID: <a4003ac352f382fa4ff329acdfa561eb06e77289.camel@linaro.org>
+Subject: Re: [RFC] Significant Random I/O Performance Regression in Linux
+ Kernel 6.18 (Up to 27.7%) Likely Caused by Commit 3c7ac40d7322
+From: =?ISO-8859-1?Q?Andr=E9?= Draszik <andre.draszik@linaro.org>
+To: =?UTF-8?Q?=E5=AD=99=E9=AD=81?= "(Kui Sun)" <kui.sun@unisoc.com>, Neil
+ Armstrong <neil.armstrong@linaro.org>, Bart Van Assche
+ <bvanassche@acm.org>, Alim Akhtar	 <alim.akhtar@samsung.com>, Avri Altman
+ <avri.altman@wdc.com>, "James E.J. Bottomley"
+ <James.Bottomley@HansenPartnership.com>, "\"Martin K. Petersen\""	
+ <martin.petersen@oracle.com>
+Cc: Peter Griffin <peter.griffin@linaro.org>, Tudor Ambarus	
+ <tudor.ambarus@linaro.org>, Will McVicker <willmcvicker@google.com>, 
+ Manivannan Sadhasivam	 <mani@kernel.org>, "kernel-team@android.com"
+ <kernel-team@android.com>,  "linux-samsung-soc@vger.kernel.org"	
+ <linux-samsung-soc@vger.kernel.org>, "linux-scsi@vger.kernel.org"	
+ <linux-scsi@vger.kernel.org>, "linux-kernel@vger.kernel.org"	
+ <linux-kernel@vger.kernel.org>, "stable@vger.kernel.org"	
+ <stable@vger.kernel.org>, "linux-arm-msm@vger.kernel.org"	
+ <linux-arm-msm@vger.kernel.org>, =?UTF-8?Q?=E5=BC=A0=E5=A6=82=E6=B3=89?=
+ "(Rain Zhang)" <Rain.Zhang@unisoc.com>, "cixi.geng@linux.dev"
+ <cixi.geng@linux.dev>,  =?UTF-8?Q?=E5=94=90=E6=9C=88=E6=9E=97?= "(Yuelin
+ Tang)"	 <yuelin.tang@unisoc.com>, =?UTF-8?Q?=E9=99=88=E6=96=87=E8=B6=85?=
+ "(Wenchao Chen)" <Wenchao.Chen@unisoc.com>
+Date: Fri, 10 Jul 2026 10:54:19 +0100
+In-Reply-To: <12a8417dc8644a71b9cb25c53c93805a@zeshmbx08.spreadtrum.com>
+References: <12a8417dc8644a71b9cb25c53c93805a@zeshmbx08.spreadtrum.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.56.2-8+build1 
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260710-milos-sdhc2-reset-v1-1-c7a155a517ba@fairphone.com>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXMQQqDMBBG4avIrDuQBEylVyld1PG3TmlVMiqCe
- Hdju/wW721kSAqjW7FRwqKmQ5/hLwVJ9+xfYG2yKbgQ3dU7/upnMLamk8AJhokrRO9jKVLWFeV
- uTGh1/T3vj79trt+Q6RzRvh/v8YP/dQAAAA==
-X-Change-ID: 20260710-milos-sdhc2-reset-8e61165cc5b8
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1783677308; l=848;
- i=luca.weiss@fairphone.com; s=20250611; h=from:subject:message-id;
- bh=PYaQlk7YAPrQ041M/bvdqcr1+tAUHuw1nB/hxRtlWPQ=;
- b=tBUxYIBAa0gg6mhoBBDXd7hHoXWxfEi7SSUfj8X/YkiBcJKxuJwdW6iSBv023QxwCayIGFH8I
- dmYEDZooJ8cDoA9dMOQgOhPC9SQ2bLu2B8Nr3kg6izhXLzS9N4BAP88
-X-Developer-Key: i=luca.weiss@fairphone.com; a=ed25519;
- pk=O1aw+AAust5lEmgrNJ1Bs7PTY0fEsJm+mdkjExA69q8=
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[fairphone.com,quarantine];
-	R_DKIM_ALLOW(-0.20)[fairphone.com:s=fair];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-118222-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-118221-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER(0.00)[luca.weiss@fairphone.com,linux-arm-msm@vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[13];
-	FORGED_RECIPIENTS(0.00)[m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:dmitry.baryshkov@oss.qualcomm.com,m:~postmarketos/upstreaming@lists.sr.ht,m:phone-devel@vger.kernel.org,m:konrad.dybcio@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:luca.weiss@fairphone.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:kui.sun@unisoc.com,m:neil.armstrong@linaro.org,m:bvanassche@acm.org,m:alim.akhtar@samsung.com,m:avri.altman@wdc.com,m:James.Bottomley@HansenPartnership.com,m:martin.petersen@oracle.com,m:peter.griffin@linaro.org,m:tudor.ambarus@linaro.org,m:willmcvicker@google.com,m:mani@kernel.org,m:kernel-team@android.com,m:linux-samsung-soc@vger.kernel.org,m:linux-scsi@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:stable@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:Rain.Zhang@unisoc.com,m:cixi.geng@linux.dev,m:yuelin.tang@unisoc.com,m:Wenchao.Chen@unisoc.com,s:lists@lfdr.de];
+	FORGED_SENDER(0.00)[andre.draszik@linaro.org,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[21];
+	DKIM_TRACE(0.00)[linaro.org:+];
 	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	TO_DN_EQ_ADDR_SOME(0.00)[];
 	FORWARDED(0.00)[lists@lfdr.de];
-	DKIM_TRACE(0.00)[fairphone.com:+];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	TO_DN_SOME(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[luca.weiss@fairphone.com,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ALIAS_RESOLVED(0.00)[];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[andre.draszik@linaro.org,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	RCVD_COUNT_FIVE(0.00)[5];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,fairphone.com:from_mime,fairphone.com:email,fairphone.com:mid,fairphone.com:dkim]
+	ALIAS_RESOLVED(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,vger.kernel.org:from_smtp,linaro.org:from_mime,linaro.org:dkim,linaro.org:mid]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 8EC5D739557
+X-Rspamd-Queue-Id: 1A655739493
 
-Add the missing reset (BCR) for sdhc_2.
+Hi,
 
-Fixes: d9d59d105f98 ("arm64: dts: qcom: Add initial Milos dtsi")
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
----
- arch/arm64/boot/dts/qcom/milos.dtsi | 2 ++
- 1 file changed, 2 insertions(+)
+On Fri, 2026-07-10 at 07:17 +0000, =E5=AD=99=E9=AD=81 (Kui Sun) wrote:
+> Dear Kernel Maintainers,
+>=20
+> During our upgrade from Linux kernel 5.15 to Linux kernel 6.18, we observ=
+ed a significant performance regression in random I/O
+> workloads=E2=80=94with a maximum degradation of 27.7%.
 
-diff --git a/arch/arm64/boot/dts/qcom/milos.dtsi b/arch/arm64/boot/dts/qcom/milos.dtsi
-index 8c9232988953..262fa8801256 100644
---- a/arch/arm64/boot/dts/qcom/milos.dtsi
-+++ b/arch/arm64/boot/dts/qcom/milos.dtsi
-@@ -1724,6 +1724,8 @@ &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
- 
- 			iommus = <&apps_smmu 0x540 0>;
- 
-+			resets = <&gcc GCC_SDCC2_BCR>;
-+
- 			bus-width = <4>;
- 
- 			qcom,dll-config = <0x0007442c>;
+[...]
 
----
-base-commit: 8cdeaa50eae8dad34885515f62559ee83e7e8dda
-change-id: 20260710-milos-sdhc2-reset-8e61165cc5b8
+> This issue is particularly pronounced in single-threaded, small-block I/O=
+ scenarios=E3=80=82
+>=20
+> To illustrate the impact, we conducted benchmark tests using AnTuTu on Un=
+isoc T615 devices.
+> The results are summarized below:
 
-Best regards,
---  
-Luca Weiss <luca.weiss@fairphone.com>
+[...]
 
+
+> Root Cause Identification
+>=20
+> Through investigation, we identified that upstream commit 3c7ac40d732232f=
+ec0ba31d0a5e3cc9c112fc2e7, merged in April 2025, is likely
+> responsible for this performance drop.
+> After locally reverting this commit on kernel 6.18, performance fully rec=
+overed:
+>=20
+> Table 4=EF=BC=9AMixed Random Read/Write Speed Scores=EF=BC=88After Revert=
+=EF=BC=89
+> Device=C2=A0 Kernel Version=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 Test1=C2=A0=C2=A0=
+ Test2=C2=A0=C2=A0 Test3=C2=A0=C2=A0 Average
+> T615=C2=A0=C2=A0=C2=A0 5.15=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0 18604=C2=A0=C2=A0 18314=C2=A0=C2=A0 17732=C2=A0=C2=A0 18216=
+.67
+> T615=C2=A0=C2=A0=C2=A0 6.18=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 13372=C2=A0=C2=A0 13081=C2=A0=C2=
+=A0 13081=C2=A0=C2=A0 13178.00=EF=BC=88=E2=86=9327.66%=EF=BC=89
+> T615=C2=A0=C2=A0=C2=A0 6.18=EF=BC=88reverted 3c7ac40)=C2=A0 18314=C2=A0=
+=C2=A0 18604=C2=A0=C2=A0 18604=C2=A0=C2=A0 18507.33
+>=20
+
+Thank you for your above analysis. Your numbers match up well with my own
+observations at the time in
+https://lore.kernel.org/all/88d31a258feb36425ad73d0323077972f85f8341.camel@=
+linaro.org/
+
+[...]
+
+> Request and Recommendations
+>=20
+> Given the tangible impact on mobile user experience, we kindly request th=
+e community to:
+> 1.=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 Consider reverting commit 3c7ac40d732232=
+fec0ba31d0a5e3cc9c112fc2e7, or
+> 2.=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 Re-evaluate the proposed change in light=
+ of its effect on low-concurrency I/O paths, as discussed here:
+> https://lore.kernel.org/lkml/88d31a258feb36425ad73d0323077972f85f8341.cam=
+el@linaro.org/
+
+While originally I was trying to find a solution that doesn't regress exist=
+ing
+platforms and still works for the newly added platform, I can only second t=
+he request
+for revert, given how important UFS is for mobile.
+
+Mani was also in favour of reverting:
+https://lore.kernel.org/all/4enen7mopxtx4ijl5qyrd2gnxvv3kygtlnhxpr64egckpvk=
+ja4@hjli25ndhxwc/
+
+
+Cheers,
+Andre'
 
