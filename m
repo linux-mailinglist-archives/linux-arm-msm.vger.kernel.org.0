@@ -1,216 +1,225 @@
-Return-Path: <linux-arm-msm+bounces-118183-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-118182-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id Isb0H0aeUGrz2QIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-118183-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 09:24:54 +0200
+	id Y0mRKfqcUGrA2QIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-118182-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 09:19:22 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2C06A738042
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 09:24:53 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id AA02D737FF2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 09:19:21 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=unisoc.com header.s=default header.b=scKGTpym;
-	dmarc=pass (policy=quarantine) header.from=unisoc.com;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118183-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118183-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=myXt26N+;
+	dmarc=pass (policy=quarantine) header.from=kernel.org;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118182-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 104.64.211.4 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118182-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id A746F3040213
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 07:19:27 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id E19B730091F7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 07:19:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B0943CBE86;
-	Fri, 10 Jul 2026 07:19:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A18253C942B;
+	Fri, 10 Jul 2026 07:19:17 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from SHSQR01.spreadtrum.com (mx1.unisoc.com [222.66.158.135])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7E5D3C81B5;
-	Fri, 10 Jul 2026 07:19:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64A853C8713;
+	Fri, 10 Jul 2026 07:19:15 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783667967; cv=none; b=hjwmV7G+rYVPi5k6zpNiTEYkC7uMCDOGiYZXv03oMsll1gebnOxb1gJzBWhXqbY0rZnmevsXnlwJ8/EDoj2mwsV1Y2+avF7U/apTOARAiTefiY5lyjARyk1+lxPED8/8WG/bKiA9TSp4MgHAjA7wORdQRejinkKlxrVmtKGwC9k=
+	t=1783667957; cv=none; b=L5/da0+ouhW83AanQqsFDRTbXQ1rwj967umt6rTbaYFkpAZMeyLsGg9OBOfVLfENckP18cTWt1lK1s749vBq/8+rJcpCBN318/sZA9HGWol6ClUZu1es3aznBRROhVDbDzIENjJDCIKD4Vq4kwPMdmnd1Y1fMJ4YZc7wHsU78gA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783667967; c=relaxed/simple;
-	bh=aj+YhqhvAVDzbO/TXfxyrU3L93cMoH8Vbqhkw68VZIQ=;
-	h=From:To:CC:Subject:Date:Message-ID:Content-Type:MIME-Version; b=avdYL8Pl2e0AdZGKJ3a3NChTXSvJR/Y0FOyM9zA7xzQ81GVTNUREkjcqjRfah47WC8AMX7Y+JpC0YSs4QPCeeVDZPfXP0GD/rfv3L0ISfd7VFE/17jNjJqWcl+YwWC0ByNBBDnaELaofLgHhx5aEab03ftfZ3VyW+G4nd/N3R3U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=unisoc.com; spf=pass smtp.mailfrom=unisoc.com; dkim=pass (2048-bit key) header.d=unisoc.com header.i=@unisoc.com header.b=scKGTpym; arc=none smtp.client-ip=222.66.158.135
-Received: from dlp.unisoc.com ([10.29.3.86])
-	by SHSQR01.spreadtrum.com with ESMTPS id 66A7HltP096563
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
-	Fri, 10 Jul 2026 15:17:47 +0800 (+08)
-	(envelope-from kui.sun@unisoc.com)
-Received: from SHDLP.spreadtrum.com (shmbx06.spreadtrum.com [10.0.1.11])
-	by dlp.unisoc.com (SkyGuard) with ESMTPS id 4gxNSh1gx2z2RsTBD;
-	Fri, 10 Jul 2026 15:17:24 +0800 (CST)
-Received: from zeshmbx08.spreadtrum.com (10.29.3.106) by
- shmbx06.spreadtrum.com (10.0.1.11) with Microsoft SMTP Server (TLS) id
- 15.0.1497.48; Fri, 10 Jul 2026 15:17:46 +0800
-Received: from zeshmbx08.spreadtrum.com ([fe80::e01e:2441:3a50:dadb]) by
- zeshmbx08.spreadtrum.com ([fe80::e01e:2441:3a50:dadb%17]) with mapi id
- 15.00.1497.048; Fri, 10 Jul 2026 15:17:46 +0800
-From: =?gb2312?B?y++//SAoS3VpIFN1bik=?= <kui.sun@unisoc.com>
-To: Neil Armstrong <neil.armstrong@linaro.org>,
-        Bart Van Assche
-	<bvanassche@acm.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman
-	<avri.altman@wdc.com>,
-        "James E.J. Bottomley"
-	<James.Bottomley@HansenPartnership.com>,
-        "\"Martin K. Petersen\""
-	<martin.petersen@oracle.com>,
-        "andre.draszik@linaro.org"
-	<andre.draszik@linaro.org>
-CC: Peter Griffin <peter.griffin@linaro.org>,
-        Tudor Ambarus
-	<tudor.ambarus@linaro.org>,
-        Will McVicker <willmcvicker@google.com>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        "kernel-team@android.com"
-	<kernel-team@android.com>,
-        "linux-samsung-soc@vger.kernel.org"
-	<linux-samsung-soc@vger.kernel.org>,
-        "linux-scsi@vger.kernel.org"
-	<linux-scsi@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org"
-	<linux-kernel@vger.kernel.org>,
-        "stable@vger.kernel.org"
-	<stable@vger.kernel.org>,
-        "linux-arm-msm@vger.kernel.org"
-	<linux-arm-msm@vger.kernel.org>,
-        =?gb2312?B?1cXI58iqIChSYWluIFpoYW5nKQ==?=
-	<Rain.Zhang@unisoc.com>,
-        "cixi.geng@linux.dev" <cixi.geng@linux.dev>,
-        =?gb2312?B?zMbUwsHWIChZdWVsaW4gVGFuZyk=?= <yuelin.tang@unisoc.com>,
-        =?gb2312?B?s8LOxLOsIChXZW5jaGFvIENoZW4p?= <Wenchao.Chen@unisoc.com>
-Subject: [RFC] Significant Random I/O Performance Regression in Linux Kernel
- 6.18 (Up to 27.7%) Likely Caused by Commit 3c7ac40d7322
-Thread-Topic: [RFC] Significant Random I/O Performance Regression in Linux
- Kernel 6.18 (Up to 27.7%) Likely Caused by Commit 3c7ac40d7322
-Thread-Index: Ad0PYz14eL5yCSXkTdewaVgxWTlWPg==
-Date: Fri, 10 Jul 2026 07:17:45 +0000
-Message-ID: <12a8417dc8644a71b9cb25c53c93805a@zeshmbx08.spreadtrum.com>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-ms-exchange-transport-fromentityheader: Hosted
-Content-Type: text/plain; charset="gb2312"
-Content-Transfer-Encoding: base64
+	s=arc-20240116; t=1783667957; c=relaxed/simple;
+	bh=2ebazmcRQz6NTsvpvpn73W5dWmXNinBJYeLt1uzYNvg=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=Bo5FJuR/nMwxSJ6tSbH7P8bCubEW1xhqu87n2gU2eFgtGOO3bXLz9SgXDiclF6NQcfNh8LPON4SKv9f/n5jkc3kN0RIOxb1ASubi/Sfxb+NnlSSzCVnH9WIyaPBmNT+awaC4wpvCCc8MMIeVRLllcD+ktaEm10emZpe0GDsw97A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=myXt26N+; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 568EE1F000E9;
+	Fri, 10 Jul 2026 07:19:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1783667955;
+	bh=GPaDaing63u8qADiTsjeVrYu7NPcyjiWM8KEXDrvz9E=;
+	h=Date:Subject:From:To:Cc:References:In-Reply-To;
+	b=myXt26N+Lz+EnKHBU7BBwU7Tw70R4AV5g7mHyYC2Tqxglt4zDx5i1ZMiwQp2Cv1+p
+	 q65emxLUCqHPa8drEvKTT3+8KT/jU+bQmJfliWQdm3q2jxd3Zn+rnDJFcR8oYftvD8
+	 /gYmOvg64y/of7bT/X6A5K+tl1ZOF0TfoDVT/z09AOsFjAJ+TWxrDU90YurgJExIvR
+	 mdkrtFnbjmkIxlM5wm1gU/1QFGZ7G2C8MmmBCX6nHHMGkPYW3KGGUXzMvtPj1aS5zO
+	 z6WcpsLg/ubragzAMDXaC7mwBC6JEwWpWW/peCTAlQGve/lZBmC976JI6sBNEqN9DY
+	 DsN2SC2AltTqw==
+Message-ID: <7a099224-ea95-40ec-b279-f8834f261e23@kernel.org>
+Date: Fri, 10 Jul 2026 09:19:10 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MAIL:SHSQR01.spreadtrum.com 66A7HltP096563
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unisoc.com;
-	s=default; t=1783667888;
-	bh=aj+YhqhvAVDzbO/TXfxyrU3L93cMoH8Vbqhkw68VZIQ=;
-	h=From:To:CC:Subject:Date;
-	b=scKGTpymxuuIT9wVstpWw7R/fTHsMpLVRjg5/J/r3Jwg2FrGV8BKxFCionqkMiUsi
-	 Q8huleQlx11NAicH6pbDJEqKbo+fqYaEHSI2Zgrku8Bw6VfK7S7kN3kdbAUNILiazG
-	 /rk/m99XS8LoE1ZE6nu0JGhiBBnBV+wKuU14Zbc7EOZv2sVh41Y/fLDcGhsdgTwI8H
-	 d+bIGk89GXxqmHJkWmaqUsKvhaZaiOAExaQ/wzQxO++vwG8wOOOUc/jVeLOzfNa7VJ
-	 8ihw9jDQa6qQFJQIJP87jEiG4QQ5mFrPDN4HZe9U0j507+nzF55USIK0APHdZNkLkP
-	 VcqdK9SxXxf/Q==
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 1/2] dt-bindings: qcom,snps-dwc3: Add property
+ indicating presence of eUSB2 phy
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+ Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Wesley Cheng <quic_wcheng@quicinc.com>,
+ "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+ "linux-usb@vger.kernel.org" <linux-usb@vger.kernel.org>,
+ "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+ "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+References: <20260709-eusb2-interrupt-handling-v5-v4-0-d4f993925608@oss.qualcomm.com>
+ <20260709-eusb2-interrupt-handling-v5-v4-1-d4f993925608@oss.qualcomm.com>
+ <d742u7jrpm7gdoljgiwkfexc47qhprwoibk6fadpm3qilbdpgi@jrkbrwfmqmrp>
+ <alBOC18CpkGDhM2m@vbox> <20260710-warping-resolute-wasp-e4b8ce@quoll>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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
+In-Reply-To: <20260710-warping-resolute-wasp-e4b8ce@quoll>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-2.06 / 15.00];
+X-Spamd-Result: default: False [-3.66 / 15.00];
+	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[unisoc.com,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[unisoc.com:s=default];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
-	MIME_BASE64_TEXT(0.10)[];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-118182-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[12];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-118183-lists,linux-arm-msm=lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:neil.armstrong@linaro.org,m:bvanassche@acm.org,m:alim.akhtar@samsung.com,m:avri.altman@wdc.com,m:James.Bottomley@HansenPartnership.com,m:martin.petersen@oracle.com,m:andre.draszik@linaro.org,m:peter.griffin@linaro.org,m:tudor.ambarus@linaro.org,m:willmcvicker@google.com,m:mani@kernel.org,m:kernel-team@android.com,m:linux-samsung-soc@vger.kernel.org,m:linux-scsi@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:stable@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:Rain.Zhang@unisoc.com,m:cixi.geng@linux.dev,m:yuelin.tang@unisoc.com,m:Wenchao.Chen@unisoc.com,s:lists@lfdr.de];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,zeshmbx08.spreadtrum.com:mid];
-	FORGED_SENDER(0.00)[kui.sun@unisoc.com,linux-arm-msm@vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[21];
+	FORGED_SENDER(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	RCVD_COUNT_THREE(0.00)[4];
+	FORGED_RECIPIENTS(0.00)[m:Thinh.Nguyen@synopsys.com,m:dmitry.baryshkov@oss.qualcomm.com,m:krishna.kurapati@oss.qualcomm.com,m:gregkh@linuxfoundation.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:quic_wcheng@quicinc.com,m:linux-arm-msm@vger.kernel.org,m:linux-usb@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	FORWARDED(0.00)[lists@lfdr.de];
 	TO_DN_EQ_ADDR_SOME(0.00)[];
 	MIME_TRACE(0.00)[0:+];
-	FORWARDED(0.00)[lists@lfdr.de];
-	DKIM_TRACE(0.00)[unisoc.com:+];
-	MISSING_XM_UA(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[kui.sun@unisoc.com,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	ALIAS_RESOLVED(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCVD_COUNT_SEVEN(0.00)[7]
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,qualcomm.com:email,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 2C06A738042
+X-Rspamd-Queue-Id: AA02D737FF2
 
-RGVhciBLZXJuZWwgTWFpbnRhaW5lcnMsDQoNCkR1cmluZyBvdXIgdXBncmFkZSBmcm9tIExpbnV4
-IGtlcm5lbCA1LjE1IHRvIExpbnV4IGtlcm5lbCA2LjE4LCB3ZSBvYnNlcnZlZCBhIHNpZ25pZmlj
-YW50IHBlcmZvcm1hbmNlIHJlZ3Jlc3Npb24gaW4gcmFuZG9tIEkvTyB3b3JrbG9hZHOhqndpdGgg
-YSBtYXhpbXVtIGRlZ3JhZGF0aW9uIG9mIDI3LjclLg0KVGhpcyBpc3N1ZSBpcyBwYXJ0aWN1bGFy
-bHkgcHJvbm91bmNlZCBpbiBzaW5nbGUtdGhyZWFkZWQsIHNtYWxsLWJsb2NrIEkvTyBzY2VuYXJp
-b3Ohow0KDQpUbyBpbGx1c3RyYXRlIHRoZSBpbXBhY3QsIHdlIGNvbmR1Y3RlZCBiZW5jaG1hcmsg
-dGVzdHMgdXNpbmcgQW5UdVR1IG9uIFVuaXNvYyBUNjE1IGRldmljZXMuDQpUaGUgcmVzdWx0cyBh
-cmUgc3VtbWFyaXplZCBiZWxvdzoNCg0KVGFibGUgIDGjulJhbmRvbSBSZWFkL1dyaXRlIFNwZWVk
-IFNjb3Jlcw0KRGV2aWNlICBLZXJuZWwgVmVyc2lvbiAgVGVzdCAxICBUZXN0IDIgIFRlc3QgMyAg
-QXZlcmFnZQ0KVDYxNSAgICA1LjE1ICAgICAgICAgICAgMjA5MDYgICAyMDUwOCAgIDIxMzYyICAg
-MjA5MjUuMzMNClQ2MTUgICAgNi4xOCAgICAgICAgICAgIDIwMTY0ICAgMjExMDcgICAyMTA3NyAg
-IDIwNzgyLjY3DQoNClRhYmxlICAyo7pNdWx0aS10aHJlYWRlZCBNaXhlZCBSYW5kb20gUmVhZC9X
-cml0ZSBTY29yZXMNCkRldmljZSAgS2VybmVsIFZlcnNpb24gIFRlc3QgMSAgVGVzdCAyICBUZXN0
-IDMgIEF2ZXJhZ2UNClQ2MTUgICAgNS4xNSAgICAgICAgICAgIDQ2NzAgICAgNDcwMSAgICA0NDU3
-ICAgIDQ2MDkuMzMNClQ2MTUgICAgNi4xOCAgICAgICAgICAgIDQzMTEgICAgNDY5NyAgICA0NDcx
-ICAgIDQ0OTMuMDANCg0KVGFibGUgICAzo7pNaXhlZCBSYW5kb20gUmVhZC9Xcml0ZSBTcGVlZCBT
-Y29yZXOjqFNpbmdsZS10aHJlYWRlZKOpDQpEZXZpY2UgIEtlcm5lbCBWZXJzaW9uICBUZXN0IDEg
-IFRlc3QgMiAgVGVzdCAzICBBdmVyYWdlDQpUNjE1ICAgIDUuMTUgICAgICAgICAgICAxODYwNCAg
-IDE4MzE0ICAgMTc3MzIgICAxODIxNi42Nw0KVDYxNSAgICA2LjE4ICAgICAgICAgICAgMTMzNzIg
-ICAxMzA4MSAgIDEzMDgxICAgMTMxNzguMDCjqKH9MjcuNjYlo6kNCg0KTm90YWJseSwgb25seSB0
-aGUgc2luZ2xlLXRocmVhZGVkIHRlc3QgKFRhYmxlIDMpIHNob3dzIHNldmVyZSBkZWdyYWRhdGlv
-biwgd2hpbGUgbXVsdGktdGhyZWFkZWQgdGVzdHMgZXhoaWJpdCBtaW5pbWFsIGNoYW5nZSAoPDMl
-KS4NClRoaXMgc3Ryb25nbHkgc3VnZ2VzdHMgdGhlIHJlZ3Jlc3Npb24gaXMgdGllZCB0byBpbmNy
-ZWFzZWQgcGVyLXJlcXVlc3Qgc2NoZWR1bGluZyBvciBpbnRlcnJ1cHQgb3ZlcmhlYWQgaW4gbG93
-LWNvbmN1cnJlbmN5LCBzbWFsbC1ibG9jayAoZS5nLiwgNEtCKSBJL08gcGF0aHMuDQoNClJvb3Qg
-Q2F1c2UgSWRlbnRpZmljYXRpb24NCg0KVGhyb3VnaCBpbnZlc3RpZ2F0aW9uLCB3ZSBpZGVudGlm
-aWVkIHRoYXQgdXBzdHJlYW0gY29tbWl0IDNjN2FjNDBkNzMyMjMyZmVjMGJhMzFkMGE1ZTNjYzlj
-MTEyZmMyZTcsIG1lcmdlZCBpbiBBcHJpbCAyMDI1LCBpcyBsaWtlbHkgcmVzcG9uc2libGUgZm9y
-IHRoaXMgcGVyZm9ybWFuY2UgZHJvcC4NCkFmdGVyIGxvY2FsbHkgcmV2ZXJ0aW5nIHRoaXMgY29t
-bWl0IG9uIGtlcm5lbCA2LjE4LCBwZXJmb3JtYW5jZSBmdWxseSByZWNvdmVyZWQ6DQoNClRhYmxl
-IDSjuk1peGVkIFJhbmRvbSBSZWFkL1dyaXRlIFNwZWVkIFNjb3Jlc6OoQWZ0ZXIgUmV2ZXJ0o6kN
-CkRldmljZSAgS2VybmVsIFZlcnNpb24gICAgICAgICAgICAgICAgICBUZXN0MSAgIFRlc3QyICAg
-VGVzdDMgICBBdmVyYWdlDQpUNjE1ICAgIDUuMTUgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAxODYwNCAgIDE4MzE0ICAgMTc3MzIgICAxODIxNi42Nw0KVDYxNSAgICA2LjE4ICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgIDEzMzcyICAgMTMwODEgICAxMzA4MSAgIDEzMTc4LjAw
-o6ih/TI3LjY2JaOpDQpUNjE1ICAgIDYuMTijqHJldmVydGVkIDNjN2FjNDApICAxODMxNCAgIDE4
-NjA0ICAgMTg2MDQgICAxODUwNy4zMw0KDQpUZWNobmljYWwgQW5hbHlzaXMNCg0KV2UgYmVsaWV2
-ZSB0aGUgY2hhbmdlIGludHJvZHVjZWQgYWRkaXRpb25hbCBpbnRlcnJ1cHQgb3Igc2NoZWR1bGlu
-ZyBsYXRlbmN5Lg0KSW4gbXVsdGktdGhyZWFkZWQgd29ya2xvYWRzLCBhIHNpbmdsZSBpbnRlcnJ1
-cHQgY2FuIHByb2Nlc3MgbXVsdGlwbGUgNEtCIHJlcXVlc3RzIChlLmcuLCA4IHJlcXVlc3RzKSwg
-YW1vcnRpemluZyB0aGUgc2NoZWR1bGluZyBjb3N0IHRvIE0vOCBwZXIgcmVxdWVzdCAod2hlcmUg
-TSBpcyB0aGUgdG90YWwgb3ZlcmhlYWQpLg0KSW4gY29udHJhc3QsIHNpbmdsZS10aHJlYWRlZCBJ
-L08gaGFuZGxlcyBvbmx5IG9uZSByZXF1ZXN0IHBlciBpbnRlcnJ1cHQsIGluY3VycmluZyB0aGUg
-ZnVsbCBjb3N0IE0gcGVyIG9wZXJhdGlvbi4NCkNvbnNlcXVlbnRseSwgc2luZ2xlLXRocmVhZGVk
-IHNtYWxsIEkvTyBpcyBoaWdobHkgc2Vuc2l0aXZlIHRvIHN1Y2ggbGF0ZW5jeSBpbmNyZWFzZXMs
-IGV4cGxhaW5pbmcgdGhlIGRpc3Byb3BvcnRpb25hdGUgaW1wYWN0IG9ic2VydmVkIGluIFRhYmxl
-IDMuDQoNClJlcXVlc3QgYW5kIFJlY29tbWVuZGF0aW9ucw0KDQpHaXZlbiB0aGUgdGFuZ2libGUg
-aW1wYWN0IG9uIG1vYmlsZSB1c2VyIGV4cGVyaWVuY2UsIHdlIGtpbmRseSByZXF1ZXN0IHRoZSBj
-b21tdW5pdHkgdG86DQoxLiAgICAgIENvbnNpZGVyIHJldmVydGluZyBjb21taXQgM2M3YWM0MGQ3
-MzIyMzJmZWMwYmEzMWQwYTVlM2NjOWMxMTJmYzJlNywgb3INCjIuICAgICAgUmUtZXZhbHVhdGUg
-dGhlIHByb3Bvc2VkIGNoYW5nZSBpbiBsaWdodCBvZiBpdHMgZWZmZWN0IG9uIGxvdy1jb25jdXJy
-ZW5jeSBJL08gcGF0aHMsIGFzIGRpc2N1c3NlZCBoZXJlOg0KaHR0cHM6Ly9sb3JlLmtlcm5lbC5v
-cmcvbGttbC84OGQzMWEyNThmZWIzNjQyNWFkNzNkMDMyMzA3Nzk3MmY4NWY4MzQxLmNhbWVsQGxp
-bmFyby5vcmcvDQozLCAgICAgIENvdWxkIHdlIGFkZCBhIGZsYWcgdG8gYWxsb3cgb3VyIFVGUyBk
-cml2ZXIgdG8gY2hvb3NlIGJldHdlZW4gdXNpbmcgYW4gaW50ZXJydXB0IG9yIGFuIGludGVycnVw
-dCB0aHJlYWQ/IFsxXQ0KDQpGdXJ0aGVybW9yZSwgd2UgcmVjb21tZW5kIHRoYXQgZnV0dXJlIGV2
-YWx1YXRpb25zIG9mIHNpbWlsYXIgY2hhbmdlcyBpbmNsdWRlOg0KKiAgICAgICBTbWFsbC1ibG9j
-ayAoZS5nLiwgNEtCIG9yIDhLQikgcmFuZG9tIHJlYWQvd3JpdGUgYmVuY2htYXJrcywgYW5kDQoq
-ICAgICAgIFNpbmdsZS10aHJlYWRlZCB3b3JrbG9hZHMsDQphcyB0aGVzZSBhcmUgY3JpdGljYWwg
-Zm9yIG1vYmlsZSBhbmQgZW1iZWRkZWQgc3lzdGVtcy4NCg0KV2UgYXBwcmVjaWF0ZSB5b3VyIGF0
-dGVudGlvbiBhbmQgYXJlIGhhcHB5IHRvIHByb3ZpZGUgYWRkaXRpb25hbCBkYXRhIG9yIGFzc2lz
-dCBpbiB2YWxpZGF0aW5nIHBvdGVudGlhbCBmaXhlcy4NCg0KWzFdOiBodHRwczovL2xvcmUua2Vy
-bmVsLm9yZy9saW51eC1zY3NpLzIwMjYwNzEwMDY1OTQ4LjQ2NzUxNC0xLWt1aS5zdW5AdW5pc29j
-LmNvbS9ULyN1DQo=
+On 10/07/2026 09:16, Krzysztof Kozlowski wrote:
+> On Fri, Jul 10, 2026 at 01:52:45AM +0000, Thinh Nguyen wrote:
+>> On Thu, Jul 09, 2026, Dmitry Baryshkov wrote:
+>>> On Thu, Jul 09, 2026 at 02:22:36PM +0530, Krishna Kurapati wrote:
+>>>> Add property "qcom,has-eusb2-phy" to indicate whether the SoC has eUSB2 phy
+>>>> or not. This is used to modify dp/dm interrupts during host mode suspend.
+>>>>
+>>>> Signed-off-by: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
+>>>> ---
+>>>>  Documentation/devicetree/bindings/usb/qcom,snps-dwc3.yaml | 7 +++++++
+>>>>  1 file changed, 7 insertions(+)
+>>>>
+>>>> diff --git a/Documentation/devicetree/bindings/usb/qcom,snps-dwc3.yaml b/Documentation/devicetree/bindings/usb/qcom,snps-dwc3.yaml
+>>>> index 8201656b41ed..0c6a839be82f 100644
+>>>> --- a/Documentation/devicetree/bindings/usb/qcom,snps-dwc3.yaml
+>>>> +++ b/Documentation/devicetree/bindings/usb/qcom,snps-dwc3.yaml
+>>>> @@ -152,6 +152,13 @@ properties:
+>>>>        HS/FS/LS modes are supported.
+>>>>      type: boolean
+>>>>  
+>>>> +  qcom,has-eusb2-phy:
+>>>> +    description:
+>>>> +      If present, it indicates that the controller is working with eUSB2
+>>>> +      phy. This property is used to modify dp/dm interrupt configurations
+>>>> +      while entering suspend.
+>>>> +    type: boolean
+>>>
+>>> I still have exactly the same concern. This information is already
+>>> present in the DT.
+>>>
+>>
+>> Could you clarify what you mean by "this information is already present
+>> in the DT"? Are you suggesting we use the dwc3 node's compatible string
+>> to infer the phy type?
+>>
+>> The dwc3 glue compatible describes the controller, not the phy. They are
+>> separate IP blocks. A board variant could reuse the same dwc3 compatible
+>> with a different phy attached, making that inference silently wrong.
+>>
+>> The phy type is described somewhere else in the DT (in the phy node
+>> itself), referenced via the phy's phandle on the dwc3 core child node.
+>> We could walk that phandle and check whether the phy node's compatible
+>> contains "eusb2". However, that relies on a naming convention that isn't
+>> enforced anywhere. All current eusb2 phy compatibles happen to follow it
+>> (qcom,sm8550-snps-eusb2-phy, qcom,sm8750-m31-eusb2-phy,
+>> samsung,exynos2200-eusb2-phy, etc.), but a future phy driver could break
+> 
+> You have a fixed/finite list of phys which needs something special, so
+> that information as Dmitry said is in DT already.
+> 
+> Anyway, the commit msg and property field have insufficient description
+> of actual hardware problem being represented by this property, so it
+> looks way too much as SW policy.
+
+
+And Dmitry already said this at v3.
+
+And Sashiko gave the same review:
+"[Medium] The `qcom,has-eusb2-phy` property introduces a redundant
+boolean flag that duplicates existing hardware topology information, and
+its description incorrectly encodes software behavior."
+
+
+Best regards,
+Krzysztof
 
