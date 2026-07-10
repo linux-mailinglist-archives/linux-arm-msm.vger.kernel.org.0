@@ -1,79 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-118236-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-118237-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id 2WXLLUTFUGpN4wIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-118236-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 12:11:16 +0200
+	id dVcXFqbGUGq54wIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-118237-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 12:17:10 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id AC2757397BF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 12:11:15 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8ED157398F8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 12:17:09 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=intel.com header.s=Intel header.b=E5301W6t;
+	dkim=pass header.d=intel.com header.s=Intel header.b=K74HiR8M;
 	dmarc=pass (policy=none) header.from=intel.com;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118236-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 104.64.211.4 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118236-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118237-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118237-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 6B9B13001860
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 10:06:47 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id ED778301F5C8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 10:12:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3D52A314D37;
-	Fri, 10 Jul 2026 10:06:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9BE053C277E;
+	Fri, 10 Jul 2026 10:12:23 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.21])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA5C34028CA
-	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jul 2026 10:06:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A2263F86F7
+	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jul 2026 10:12:20 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783678006; cv=none; b=XESZNk8EBRhjDHXSmnmyQlwlLuxTIoxhi8zW8yMp/BMrrWL9aTV8oi6xZq9ip3pX+QAWZe8+UDd4Kl34WrEG9B+vPbjhfrf9WQGUQKvtuRALnaD2+4Nw0xmjdhbr2IoiSWu3vuxdUryUNkxC2SUOENrTUTp7+E8/5xcuChvIhBs=
+	t=1783678343; cv=none; b=jBueAlAqy/YL71y3/HGtPetuqhusLMkdmKSZNgpiAxKg44MaMYtGgN6CAXk+sDrxshvQXlWYieflWX5C/XSdZfTfbfDeThWonG6ABkkH8DXUV2SW8Sgr9fUexg696YnuKQromQUNDbgQ17Peb7ZTyobOGb7jCqjhzOVvz6CDkTU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783678006; c=relaxed/simple;
-	bh=OHeQBKLU7Wl5dB7AgxWq3rCkCzuqCpatvDXPwhLwL/I=;
+	s=arc-20240116; t=1783678343; c=relaxed/simple;
+	bh=telgb67+44ChLmvvgt7W4O8BCG94OnPlFXajoZTf0YU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mn+rwvQ5qMdxKVG6TgE+cLclGFHt8PasUHGoFVbJ5626aPe4huAF0hhKpH0T3G+eDG9J4lo7cQEAsf36Xuw+bg2tlaj1JIEC1/FZ/hxV8RHD3aCs29lkBhD0z4E7paEHox+KKz81wxYh8+YgUIYQIi6HainCIz01ZZLSR63+HRc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=E5301W6t; arc=none smtp.client-ip=198.175.65.13
+	 Content-Type:Content-Disposition:In-Reply-To; b=uQhRBLYgKR5yejuUQsJ/6EFEdOGc2TdI/l+5CHsfHF5wtFqq8VmuUBu4vg3Xmy7XW1kFlcMQPLlzz5tbcmvHhqibP6pAzsXGhEyMqclfTrsYHZ1Er4l0JHnCdVSY5cOYJQ17xM3OqAC2YhwY09V/T0j1IzrlO21Wi823rZckX4Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=K74HiR8M; arc=none smtp.client-ip=198.175.65.21
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1783678004; x=1815214004;
+  t=1783678341; x=1815214341;
   h=date:from:to:cc:subject:message-id:references:
    mime-version:in-reply-to;
-  bh=OHeQBKLU7Wl5dB7AgxWq3rCkCzuqCpatvDXPwhLwL/I=;
-  b=E5301W6tm1BontTAqh9ty/wSwvi9u9fetBzWY6QNzCnSacamgTrXjCFW
-   4fhSYRKkAU0vyaUwivmcWJw0/Fbfz3w0+cPmfulrFv8xTMf9ya4IJ+FUs
-   6JIPcv/wr4OTpdx7U/2uJGrAlf7HjNpcsJd08pEA6/N6C8zYrVP+aQGNA
-   nrF5o21A23cWgyAA91nu1gAUfLP141730OVACV5GUse3Rl1ijCierJ0bY
-   aU8oqLaFau305jfwJL1iDnV3yv0i6+U6gowZyG6WU99CQuhevqHrofBb1
-   QsenyqeqNsHBPiKD51b0qQtC9bVdJsFA/OKia6K8MVO2rqn84jKjlca9p
+  bh=telgb67+44ChLmvvgt7W4O8BCG94OnPlFXajoZTf0YU=;
+  b=K74HiR8MRDkj6GybuHIuqmBYmBQK1nIItWAj+MT/9dmvVBGokp8ox0RF
+   F7op4WqG51vXj8HKa83+G3IJn4/H/ukp7vF+tFVnYVfcrOu3Yx8PVVrOX
+   JN734Jwp6LWwxv3oorxgdUDkZ4Egon5Tgji1TWD90SYIYmjNPWdnuCGfD
+   OHWlqXnGVemnXeEUdlAaym59ArV8+FPpk0W5LX8YU77zJBAdoMuek6e/0
+   3ae5D/LWd040eTZUDHTEtQv3n8Rl1gGTfi8FFsZnMBv04M1LxUSNOMrSe
+   O2Xlt/L1bR0fG0L7DcbcDEYLWOXtaiifAYA2CGy9XVeWk0hHrL9y/jGVo
    Q==;
-X-CSE-ConnectionGUID: vc2ReiAgTz2zPrBUrrKavA==
-X-CSE-MsgGUID: fqbOafCJSXe+08MUqR6uUQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11841"; a="95528812"
+X-CSE-ConnectionGUID: 24AtMTYVRWaSEtWSMj+jPg==
+X-CSE-MsgGUID: QV1pYt57QqmJpyhedcoOHw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11841"; a="84233529"
 X-IronPort-AV: E=Sophos;i="6.25,154,1779174000"; 
-   d="scan'208";a="95528812"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
-  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Jul 2026 03:06:44 -0700
-X-CSE-ConnectionGUID: jlXg6/e7RcuVIcN7IqqIbQ==
-X-CSE-MsgGUID: h0dHgIYnR5KU3F4t8zjQiQ==
+   d="scan'208";a="84233529"
+Received: from fmviesa008.fm.intel.com ([10.60.135.148])
+  by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Jul 2026 03:12:20 -0700
+X-CSE-ConnectionGUID: 8Dx5dY3kQ1uP+/Dsl1vsow==
+X-CSE-MsgGUID: FQyMKse3Tt2H8SILs8hFhA==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.25,154,1779174000"; 
-   d="scan'208";a="251487830"
+   d="scan'208";a="252201727"
 Received: from kamilkon-desk.igk.intel.com (HELO localhost) ([10.211.136.201])
-  by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Jul 2026 03:06:42 -0700
-Date: Fri, 10 Jul 2026 12:06:39 +0200
+  by fmviesa008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Jul 2026 03:12:19 -0700
+Date: Fri, 10 Jul 2026 12:12:17 +0200
 From: Kamil Konieczny <kamil.konieczny@linux.intel.com>
 To: Rob Clark <rob.clark@oss.qualcomm.com>
 Cc: igt-dev@lists.freedesktop.org, freedreno@lists.freedesktop.org,
 	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] tests/msm: Add perfcntrs test
-Message-ID: <20260710100639.xrdyl6lbiidsgvjj@kamilkon-DESK.igk.intel.com>
+Subject: Re: [PATCH v2 1/2] drm-uapi: Sync msm_drm.h
+Message-ID: <20260710101217.2gaubw6d43w33d67@kamilkon-DESK.igk.intel.com>
 Mail-Followup-To: Kamil Konieczny <kamil.konieczny@linux.intel.com>,
 	Rob Clark <rob.clark@oss.qualcomm.com>,
 	igt-dev@lists.freedesktop.org, freedreno@lists.freedesktop.org,
 	linux-arm-msm@vger.kernel.org
 References: <20260708161224.507091-1-rob.clark@oss.qualcomm.com>
- <20260708161224.507091-3-rob.clark@oss.qualcomm.com>
+ <20260708161224.507091-2-rob.clark@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,19 +82,19 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260708161224.507091-3-rob.clark@oss.qualcomm.com>
+In-Reply-To: <20260708161224.507091-2-rob.clark@oss.qualcomm.com>
 X-Rspamd-Action: no action
 X-Spamd-Result: default: False [-5.16 / 15.00];
 	WHITELIST_SPF_DKIM(-3.00)[intel.com:d:+,kernel.org:s:+];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[intel.com,none];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	R_DKIM_ALLOW(-0.20)[intel.com:s=Intel];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-118236-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-118237-lists,linux-arm-msm=lfdr.de];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER(0.00)[kamil.konieczny@linux.intel.com,linux-arm-msm@vger.kernel.org];
@@ -114,263 +114,329 @@ X-Spamd-Result: default: False [-5.16 / 15.00];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
 	MID_RHS_MATCH_FROMTLD(0.00)[];
 	MISSING_XM_UA(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,intel.com:email,intel.com:dkim,linux.intel.com:from_mime,kamilkon-DESK.igk.intel.com:mid,qualcomm.com:email,vger.kernel.org:from_smtp,checkpatch.pl:url]
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[linux.intel.com:from_mime,intel.com:email,intel.com:dkim,vger.kernel.org:from_smtp,kamilkon-DESK.igk.intel.com:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email,gitlab.freedesktop.org:url]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: AC2757397BF
+X-Rspamd-Queue-Id: 8ED157398F8
 
 Hi Rob,
-On 2026-07-08 at 09:12:24 -0700, Rob Clark wrote:
-> Add tests for new PERFCNTR_CONFIG ioctl.
+On 2026-07-08 at 09:12:23 -0700, Rob Clark wrote:
+> Pull in updated UABI header with PERFCNTR_CONFIG ioctl.  Sync with:
+> 
+>    commit 44c460d2cc8b87c08360fe60f861660c8045ef90
+>    Merge: 9bb8af2770b7 9a967125427e
+>    Author: Dave Airlie <airlied@redhat.com>
+> 
+>        Merge tag 'drm-msm-next-2026-05-30' of https://gitlab.freedesktop.org/drm/msm into drm-next
 > 
 > Signed-off-by: Rob Clark <rob.clark@oss.qualcomm.com>
-> ---
->  tests/msm/meson.build     |   1 +
->  tests/msm/msm_perfcntrs.c | 196 ++++++++++++++++++++++++++++++++++++++
->  2 files changed, 197 insertions(+)
->  create mode 100644 tests/msm/msm_perfcntrs.c
-> 
-> diff --git a/tests/msm/meson.build b/tests/msm/meson.build
-> index 2ba5b4db2279..0a7f35662c03 100644
-> --- a/tests/msm/meson.build
-> +++ b/tests/msm/meson.build
-> @@ -1,6 +1,7 @@
->  msm_progs = [
->  	'msm_bo',
->  	'msm_mapping',
-> +	'msm_perfcntrs',
->  	'msm_recovery',
->  	'msm_shrink',
->  	'msm_submit',
-> diff --git a/tests/msm/msm_perfcntrs.c b/tests/msm/msm_perfcntrs.c
-> new file mode 100644
-> index 000000000000..42f77456939e
-> --- /dev/null
-> +++ b/tests/msm/msm_perfcntrs.c
-> @@ -0,0 +1,196 @@
-> +// SPDX-License-Identifier: MIT
-> +/*
-> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-> + */
-> +
-> +#include <errno.h>
-> +
-> +#include "igt.h"
-> +#include "igt_core.h"
-> +#include "igt_msm.h"
-> +#include "msm_drm.h"
-> +
-> +static int
-> +__configure_counters(struct msm_device *dev, bool global, unsigned nr_groups,
-> +		     const char **groups, unsigned count)
-> +{
-> +	uint32_t countables[count];
-> +	struct drm_msm_perfcntr_group group[nr_groups];
-> +	struct drm_msm_perfcntr_config req = {
-> +		.flags = global ? MSM_PERFCNTR_STREAM : 0,
-> +		.nr_groups = nr_groups,
-> +		.groups = VOID2U64(group),
-> +		.period = global ? NSEC_PER_SEC : 0,
-> +		.bufsz_shift = global ? 10 : 0,
-> +		.group_stride = sizeof(struct drm_msm_perfcntr_group),
-> +	};
-> +
-> +	memset(group, 0, sizeof(group));
-> +	/* selecting countable 0 for each counter is fine: */
-> +	memset(countables, 0, sizeof(countables));
-> +
-> +	for (unsigned i = 0; i < nr_groups; i++) {
+> Part-of: <https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/41158>
 
-checkpatch suggest using 'unsigned int'.
+Sorry, I sent acked-by but I wanted to write r-b instead, so
 
-> +		strcpy(group[i].group_name, groups[i]);
-> +		group[i].nr_countables = count;
-> +		group[i].countables = global ? VOID2U64(countables) : 0;
-> +	}
-> +
-> +	return drmIoctl(dev->fd, DRM_IOCTL_MSM_PERFCNTR_CONFIG, &req);
-> +}
-> +
-> +static int
-> +configure_counters(struct msm_device *dev, bool global, unsigned count)
-> +{
-> +	/* CP group is present on all gens.. SP would be another good candidate */
-> +	const char *groups[] = {"CP"};
-> +	return __configure_counters(dev, global, 1, groups, count);
-> +}
-> +
-> +static unsigned
-> +get_available_counters(struct msm_device *dev, bool global)
-> +{
-> +	for (unsigned i = 0; ; i++) {
-> +		int ret = configure_counters(dev, global, i + 1);
-> +		igt_warn("%u: ret=%d\n", i, ret);
-
-Why warn here? It will make your test fail, imho you should use
-igt_info() instead.
-
-> +		if (ret < 0)
-> +			return i;
-
-and this imho:
-		if (ret < 0) {
-			igt_warn("Unexpected error\n");
-			return i;
-		}
-
-> +		if (global)
-> +			close(ret);
-> +	}
-> +}
-> +
-> +
-
-One newline is enough.
-
-I will merge this as is with whitespace/style fixes with the help
-of checkpatch.pl --fix-inplace. If you want improve test with
-above s/warn/info/ please send a fix.
-
-LGTM
-Acked-by: Kamil Konieczny <kamil.konieczny@linux.intel.com>
+Reviewed-by: Kamil Konieczny <kamil.konieczny@linux.intel.com>
 
 Regards,
 Kamil
 
-> +int igt_main()
-> +{
-> +	/* device instance for global counter collection: */
-> +	struct msm_device *dev_global = NULL;
-> +	/* device instances for local counter reservation: */
-> +	struct msm_device *dev_local_1 = NULL;
-> +	struct msm_device *dev_local_2 = NULL;
-> +	unsigned num_counters;
+PS. series is merged.
+
+> ---
+>  include/drm-uapi/msm_drm.h | 204 ++++++++++++++++++++++++++++++++++---
+>  1 file changed, 188 insertions(+), 16 deletions(-)
+> 
+> diff --git a/include/drm-uapi/msm_drm.h b/include/drm-uapi/msm_drm.h
+> index 2377147b6af0..7f2e594be4eb 100644
+> --- a/include/drm-uapi/msm_drm.h
+> +++ b/include/drm-uapi/msm_drm.h
+> @@ -90,6 +90,34 @@ struct drm_msm_timespec {
+>  #define MSM_PARAM_RAYTRACING 0x11 /* RO */
+>  #define MSM_PARAM_UBWC_SWIZZLE 0x12 /* RO */
+>  #define MSM_PARAM_MACROTILE_MODE 0x13 /* RO */
+> +#define MSM_PARAM_UCHE_TRAP_BASE 0x14 /* RO */
+> +/* PRR (Partially Resident Region) is required for sparse residency: */
+> +#define MSM_PARAM_HAS_PRR    0x15  /* RO */
+> +/* MSM_PARAM_EN_VM_BIND is set to 1 to enable VM_BIND ops.
+> + *
+> + * With VM_BIND enabled, userspace is required to allocate iova and use the
+> + * VM_BIND ops for map/unmap ioctls.  MSM_INFO_SET_IOVA and MSM_INFO_GET_IOVA
+> + * will be rejected.  (The latter does not have a sensible meaning when a BO
+> + * can have multiple and/or partial mappings.)
+> + *
+> + * With VM_BIND enabled, userspace does not include a submit_bo table in the
+> + * SUBMIT ioctl (this will be rejected), the resident set is determined by
+> + * the the VM_BIND ops.
+> + *
+> + * Enabling VM_BIND will fail on devices which do not have per-process pgtables.
+> + * And it is not allowed to disable VM_BIND once it has been enabled.
+> + *
+> + * Enabling VM_BIND should be done (attempted) prior to allocating any BOs or
+> + * submitqueues of type MSM_SUBMITQUEUE_VM_BIND.
+> + *
+> + * Relatedly, when VM_BIND mode is enabled, the kernel will not try to recover
+> + * from GPU faults or failed async VM_BIND ops, in particular because it is
+> + * difficult to communicate to userspace which op failed so that userspace
+> + * could rewind and try again.  When the VM is marked unusable, the SUBMIT
+> + * ioctl will throw -EPIPE.
+> + */
+> +#define MSM_PARAM_EN_VM_BIND 0x16  /* WO, once */
+> +#define MSM_PARAM_AQE	     0x17  /* RO */
+>  
+>  /* For backwards compat.  The original support for preemption was based on
+>   * a single ring per priority level so # of priority levels equals the #
+> @@ -113,6 +141,19 @@ struct drm_msm_param {
+>  
+>  #define MSM_BO_SCANOUT       0x00000001     /* scanout capable */
+>  #define MSM_BO_GPU_READONLY  0x00000002
+> +/* Private buffers do not need to be explicitly listed in the SUBMIT
+> + * ioctl, unless referenced by a drm_msm_gem_submit_cmd.  Private
+> + * buffers may NOT be imported/exported or used for scanout (or any
+> + * other situation where buffers can be indefinitely pinned, but
+> + * cases other than scanout are all kernel owned BOs which are not
+> + * visible to userspace).
+> + *
+> + * In exchange for those constraints, all private BOs associated with
+> + * a single context (drm_file) share a single dma_resv, and if there
+> + * has been no eviction since the last submit, there are no per-BO
+> + * bookeeping to do, significantly cutting the SUBMIT overhead.
+> + */
+> +#define MSM_BO_NO_SHARE      0x00000004
+>  #define MSM_BO_CACHE_MASK    0x000f0000
+>  /* cache modes */
+>  #define MSM_BO_CACHED        0x00010000
+> @@ -122,6 +163,7 @@ struct drm_msm_param {
+>  
+>  #define MSM_BO_FLAGS         (MSM_BO_SCANOUT | \
+>                                MSM_BO_GPU_READONLY | \
+> +                              MSM_BO_NO_SHARE | \
+>                                MSM_BO_CACHE_MASK)
+>  
+>  struct drm_msm_gem_new {
+> @@ -179,6 +221,17 @@ struct drm_msm_gem_cpu_fini {
+>   * Cmdstream Submission:
+>   */
+>  
+> +#define MSM_SYNCOBJ_RESET 0x00000001 /* Reset syncobj after wait. */
+> +#define MSM_SYNCOBJ_FLAGS ( \
+> +		MSM_SYNCOBJ_RESET | \
+> +		0)
 > +
-> +	igt_fixture() {
-> +		dev_global = igt_msm_dev_open();
-> +		dev_local_1 = igt_msm_dev_open();
-> +		dev_local_2 = igt_msm_dev_open();
+> +struct drm_msm_syncobj {
+> +	__u32 handle;     /* in, syncobj handle. */
+> +	__u32 flags;      /* in, from MSM_SUBMIT_SYNCOBJ_FLAGS */
+> +	__u64 point;      /* in, timepoint for timeline syncobjs. */
+> +};
 > +
-> +		num_counters = get_available_counters(dev_global, true);
-> +		igt_info("num_counters=%u\n", num_counters);
-> +	}
+>  /* The value written into the cmdstream is logically:
+>   *
+>   *   ((relocbuf->gpuaddr + reloc_offset) << shift) | or
+> @@ -220,7 +273,10 @@ struct drm_msm_gem_submit_cmd {
+>  	__u32 size;           /* in, cmdstream size */
+>  	__u32 pad;
+>  	__u32 nr_relocs;      /* in, number of submit_reloc's */
+> -	__u64 relocs;         /* in, ptr to array of submit_reloc's */
+> +	union {
+> +		__u64 relocs; /* in, ptr to array of submit_reloc's */
+> +		__u64 iova;   /* cmdstream address (for VM_BIND contexts) */
+> +	};
+>  };
+>  
+>  /* Each buffer referenced elsewhere in the cmdstream submit (ie. the
+> @@ -268,17 +324,6 @@ struct drm_msm_gem_submit_bo {
+>  		MSM_SUBMIT_FENCE_SN_IN   | \
+>  		0)
+>  
+> -#define MSM_SUBMIT_SYNCOBJ_RESET 0x00000001 /* Reset syncobj after wait. */
+> -#define MSM_SUBMIT_SYNCOBJ_FLAGS        ( \
+> -		MSM_SUBMIT_SYNCOBJ_RESET | \
+> -		0)
+> -
+> -struct drm_msm_gem_submit_syncobj {
+> -	__u32 handle;     /* in, syncobj handle. */
+> -	__u32 flags;      /* in, from MSM_SUBMIT_SYNCOBJ_FLAGS */
+> -	__u64 point;      /* in, timepoint for timeline syncobjs. */
+> -};
+> -
+>  /* Each cmdstream submit consists of a table of buffers involved, and
+>   * one or more cmdstream buffers.  This allows for conditional execution
+>   * (context-restore), and IB buffers needed for per tile/bin draw cmds.
+> @@ -292,13 +337,80 @@ struct drm_msm_gem_submit {
+>  	__u64 cmds;           /* in, ptr to array of submit_cmd's */
+>  	__s32 fence_fd;       /* in/out fence fd (see MSM_SUBMIT_FENCE_FD_IN/OUT) */
+>  	__u32 queueid;        /* in, submitqueue id */
+> -	__u64 in_syncobjs;    /* in, ptr to array of drm_msm_gem_submit_syncobj */
+> -	__u64 out_syncobjs;   /* in, ptr to array of drm_msm_gem_submit_syncobj */
+> +	__u64 in_syncobjs;    /* in, ptr to array of drm_msm_syncobj */
+> +	__u64 out_syncobjs;   /* in, ptr to array of drm_msm_syncobj */
+>  	__u32 nr_in_syncobjs; /* in, number of entries in in_syncobj */
+>  	__u32 nr_out_syncobjs; /* in, number of entries in out_syncobj. */
+>  	__u32 syncobj_stride; /* in, stride of syncobj arrays. */
+>  	__u32 pad;            /*in, reserved for future use, always 0. */
+> +};
 > +
-> +	igt_describe("Multiple process should be able to reserve the same "
-> +		     "counters for local counter collection");
-> +	igt_subtest("perfcntrs-local-coexist") {
-> +		igt_require(num_counters > 0);
+> +#define MSM_VM_BIND_OP_UNMAP	0
+> +#define MSM_VM_BIND_OP_MAP	1
+> +#define MSM_VM_BIND_OP_MAP_NULL	2
+>  
+> +#define MSM_VM_BIND_OP_DUMP	1
+> +#define MSM_VM_BIND_OP_FLAGS ( \
+> +		MSM_VM_BIND_OP_DUMP | \
+> +		0)
 > +
-> +		igt_assert_eq(0, configure_counters(dev_local_1, false, num_counters));
-> +		igt_assert_eq(0, configure_counters(dev_local_2, false, num_counters));
+> +/**
+> + * struct drm_msm_vm_bind_op - bind/unbind op to run
+> + */
+> +struct drm_msm_vm_bind_op {
+> +	/** @op: one of MSM_VM_BIND_OP_x */
+> +	__u32 op;
+> +	/** @handle: GEM object handle, MBZ for UNMAP or MAP_NULL */
+> +	__u32 handle;
+> +	/** @obj_offset: Offset into GEM object, MBZ for UNMAP or MAP_NULL */
+> +	__u64 obj_offset;
+> +	/** @iova: Address to operate on */
+> +	__u64 iova;
+> +	/** @range: Number of bites to to map/unmap */
+> +	__u64 range;
+> +	/** @flags: Bitmask of MSM_VM_BIND_OP_FLAG_x */
+> +	__u32 flags;
+> +	/** @pad: MBZ */
+> +	__u32 pad;
+> +};
 > +
-> +		/* release the reservations: */
-> +		configure_counters(dev_local_1, false, 0);
-> +		configure_counters(dev_local_2, false, 0);
-> +	}
+> +#define MSM_VM_BIND_FENCE_FD_IN		0x00000001
+> +#define MSM_VM_BIND_FENCE_FD_OUT	0x00000002
+> +#define MSM_VM_BIND_FLAGS ( \
+> +		MSM_VM_BIND_FENCE_FD_IN | \
+> +		MSM_VM_BIND_FENCE_FD_OUT | \
+> +		0)
 > +
-> +	igt_describe("non-conflict global and local counters");
-> +	igt_subtest("perfcntrs-non-conflict-global-local") {
-> +		int num_local = num_counters - 2;
-> +		int stream_fd;
+> +/**
+> + * struct drm_msm_vm_bind - Input of &DRM_IOCTL_MSM_VM_BIND
+> + */
+> +struct drm_msm_vm_bind {
+> +	/** @flags: in, bitmask of MSM_VM_BIND_x */
+> +	__u32 flags;
+> +	/** @nr_ops: the number of bind ops in this ioctl */
+> +	__u32 nr_ops;
+> +	/** @fence_fd: in/out fence fd (see MSM_VM_BIND_FENCE_FD_IN/OUT) */
+> +	__s32 fence_fd;
+> +	/** @queue_id: in, submitqueue id */
+> +	__u32 queue_id;
+> +	/** @in_syncobjs: in, ptr to array of drm_msm_gem_syncobj */
+> +	__u64 in_syncobjs;
+> +	/** @out_syncobjs: in, ptr to array of drm_msm_gem_syncobj */
+> +	__u64 out_syncobjs;
+> +	/** @nr_in_syncobjs: in, number of entries in in_syncobj */
+> +	__u32 nr_in_syncobjs;
+> +	/** @nr_out_syncobjs: in, number of entries in out_syncobj */
+> +	__u32 nr_out_syncobjs;
+> +	/** @syncobj_stride: in, stride of syncobj arrays */
+> +	__u32 syncobj_stride;
+> +	/** @op_stride: sizeof each struct drm_msm_vm_bind_op in @ops */
+> +	__u32 op_stride;
+> +	union {
+> +		/** @op: used if num_ops == 1 */
+> +		struct drm_msm_vm_bind_op op;
+> +		/** @ops: userptr to array of drm_msm_vm_bind_op if num_ops > 1 */
+> +		__u64 ops;
+> +	};
+>  };
+>  
+>  #define MSM_WAIT_FENCE_BOOST	0x00000001
+> @@ -344,10 +456,20 @@ struct drm_msm_gem_madvise {
+>  /*
+>   * Draw queues allow the user to set specific submission parameter. Command
+>   * submissions specify a specific submitqueue to use.  ID 0 is reserved for
+> - * backwards compatibility as a "default" submitqueue
+> + * backwards compatibility as a "default" submitqueue.
+> + *
+> + * Because VM_BIND async updates happen on the CPU, they must run on a
+> + * virtual queue created with the flag MSM_SUBMITQUEUE_VM_BIND.  If we had
+> + * a way to do pgtable updates on the GPU, we could drop this restriction.
+>   */
+>  
+> -#define MSM_SUBMITQUEUE_FLAGS (0)
+> +#define MSM_SUBMITQUEUE_ALLOW_PREEMPT	0x00000001
+> +#define MSM_SUBMITQUEUE_VM_BIND	0x00000002  /* virtual queue for VM_BIND ops */
 > +
-> +		igt_require(num_counters > 2);
+> +#define MSM_SUBMITQUEUE_FLAGS		    ( \
+> +		MSM_SUBMITQUEUE_ALLOW_PREEMPT | \
+> +		MSM_SUBMITQUEUE_VM_BIND | \
+> +		0)
+>  
+>  /*
+>   * The submitqueue priority should be between 0 and MSM_PARAM_PRIORITIES-1,
+> @@ -369,6 +491,52 @@ struct drm_msm_submitqueue_query {
+>  	__u32 pad;
+>  };
+>  
+> +#define MSM_PERFCNTR_STREAM	0x00000001
+> +#define MSM_PERFCNTR_UPDATE	0x00000002
+> +#define MSM_PERFCNTR_FLAGS	( \
+> +		MSM_PERFCNTR_STREAM | \
+> +		MSM_PERFCNTR_UPDATE | \
+> +		0)
 > +
-> +		igt_assert_eq(0, configure_counters(dev_local_1, false, num_local));
-> +		igt_assert_eq(0, configure_counters(dev_local_2, false, num_local));
+> +struct drm_msm_perfcntr_group {
+> +	char group_name[16];
+> +	__u32 nr_countables;
+> +	__u32 pad;         /* mbz */
+> +	__u64 countables;  /* pointer to an array of nr_countables u32 */
+> +};
 > +
-> +		stream_fd = configure_counters(dev_global, true, 2);
-> +		igt_assert_lte(0, stream_fd);
-> +		close(stream_fd);
+> +/*
+> + * Note, for MSM_PERFCNTR_STREAM, the ioctl returns an fd to read recorded
+> + * counters.  This only works because the ioctl is DRM_IOW(), if we returned
+> + * a out param in the ioctl struct the copy_to_user() (in drm_ioctl())
+> + * could fault, causing us to leak the fd.
+> + *
+> + * If the ioctl returns with error E2BIG, that means more counters/countables
+> + * are requested than are currently available.  If MSM_PERFCNTR_UPDATE flag
+> + * is set, drm_msm_perfcntr_group::nr_countables will be updated to return
+> + * the actual # of counters available.
+> + *
+> + * The data read from the has the following format for each sampling period:
+> + *
+> + *     uint64_t timestamp;  // CP_ALWAYS_ON_COUNTER captured at sample time
+> + *     uint32_t seqno;      // increments by 1 each period, reset to 0 on discontinuity
+> + *     uint32_t mbz;        // pad out counters to 64b
+> + *     struct {
+> + *        uint64_t counter[nr_countables];
+> + *     } groups[nr_groups];
+> + *
+> + * The ordering of groups and counters matches the order in PERFCNTR_CONFIG
+> + * ioctl.
+> + */
+> +struct drm_msm_perfcntr_config {
+> +	__u32 flags;         /* bitmask of MSM_PERFCNTR_x */
+> +	__u32 nr_groups;     /* # of entries in groups array */
+> +	__u64 groups;        /* pointer to array of drm_msm_perfcntr_group */
+> +	__u64 period;        /* sampling period in ns */
+> +	__u32 bufsz_shift;   /* sample buffer size in bytes is 1<<bufsz_shift */
+> +	__u32 group_stride;  /* sizeof(struct drm_msm_perfcntr_group) */
+> +};
 > +
-> +		/* release the reservations: */
-> +		configure_counters(dev_local_1, false, 0);
-> +		configure_counters(dev_local_2, false, 0);
-> +	}
-> +
-> +	igt_describe("conflict, local first");
-> +	igt_subtest("conflict-local-first") {
-> +		int num_local = num_counters - 1;
-> +		int stream_fd;
-> +
-> +		igt_require(num_counters > 2);
-> +
-> +		igt_assert_eq(0, configure_counters(dev_local_1, false, num_local));
-> +		igt_assert_eq(0, configure_counters(dev_local_2, false, num_local));
-> +
-> +		stream_fd = configure_counters(dev_global, true, 2);
-> +		igt_assert_lt(stream_fd, 0);
-> +
-> +		/* release the reservation for dev_local_1: */
-> +		configure_counters(dev_local_1, false, 0);
-> +
-> +		/* should still fail: */
-> +		stream_fd = configure_counters(dev_global, true, 2);
-> +		igt_assert_lt(stream_fd, 0);
-> +
-> +		/* release the reservation for dev_local_2: */
-> +		configure_counters(dev_local_2, false, 0);
-> +
-> +		/* now should succeed: */
-> +		stream_fd = configure_counters(dev_global, true, 2);
-> +		igt_assert_lte(0, stream_fd);
-> +		close(stream_fd);
-> +	}
-> +
-> +	igt_describe("conflict, global first");
-> +	igt_subtest("conflict-global-first") {
-> +		int num_local = num_counters - 1;
-> +		int stream_fd;
-> +
-> +		igt_require(num_counters > 2);
-> +
-> +		stream_fd = configure_counters(dev_global, true, 2);
-> +		igt_assert_lte(0, stream_fd);
-> +
-> +		/* Should fail because two counters already allocated for global collection: */
-> +		igt_assert_neq(0, configure_counters(dev_local_1, false, num_local));
-> +
-> +		/* release global counters: */
-> +		close(stream_fd);
-> +
-> +		/* Now reservation should succeed: */
-> +		igt_assert_eq(0, configure_counters(dev_local_1, false, num_local));
-> +
-> +		/* release the reservations: */
-> +		configure_counters(dev_local_1, false, 0);
-> +	}
-> +
-> +	igt_describe("multiple groups");
-> +	igt_subtest("multiple-groups") {
-> +		const char *groups[] = {"CP", "SP"};
-> +
-> +		igt_require(num_counters > 0);
-> +
-> +		igt_assert_eq(0,
-> +			__configure_counters(dev_local_1, false, ARRAY_SIZE(groups), groups, 1));
-> +
-> +		/* release the reservations: */
-> +		configure_counters(dev_local_1, false, 0);
-> +	}
-> +
-> +	igt_describe("duplicate groups");
-> +	igt_subtest("duplicate-groups") {
-> +		const char *groups[] = {"CP", "CP"};
-> +
-> +		igt_require(num_counters > 0);
-> +
-> +		igt_assert_neq(0,
-> +			__configure_counters(dev_local_1, false, ARRAY_SIZE(groups), groups, 1));
-> +
-> +		/* release the reservations: */
-> +		configure_counters(dev_local_1, false, 0);
-> +	}
-> +
-> +	igt_fixture() {
-> +		igt_msm_dev_close(dev_global);
-> +		igt_msm_dev_close(dev_local_1);
-> +		igt_msm_dev_close(dev_local_2);
-> +	}
-> +}
+>  #define DRM_MSM_GET_PARAM              0x00
+>  #define DRM_MSM_SET_PARAM              0x01
+>  #define DRM_MSM_GEM_NEW                0x02
+> @@ -384,6 +552,8 @@ struct drm_msm_submitqueue_query {
+>  #define DRM_MSM_SUBMITQUEUE_NEW        0x0A
+>  #define DRM_MSM_SUBMITQUEUE_CLOSE      0x0B
+>  #define DRM_MSM_SUBMITQUEUE_QUERY      0x0C
+> +#define DRM_MSM_VM_BIND                0x0D
+> +#define DRM_MSM_PERFCNTR_CONFIG        0x0E
+>  
+>  #define DRM_IOCTL_MSM_GET_PARAM        DRM_IOWR(DRM_COMMAND_BASE + DRM_MSM_GET_PARAM, struct drm_msm_param)
+>  #define DRM_IOCTL_MSM_SET_PARAM        DRM_IOW (DRM_COMMAND_BASE + DRM_MSM_SET_PARAM, struct drm_msm_param)
+> @@ -397,6 +567,8 @@ struct drm_msm_submitqueue_query {
+>  #define DRM_IOCTL_MSM_SUBMITQUEUE_NEW    DRM_IOWR(DRM_COMMAND_BASE + DRM_MSM_SUBMITQUEUE_NEW, struct drm_msm_submitqueue)
+>  #define DRM_IOCTL_MSM_SUBMITQUEUE_CLOSE  DRM_IOW (DRM_COMMAND_BASE + DRM_MSM_SUBMITQUEUE_CLOSE, __u32)
+>  #define DRM_IOCTL_MSM_SUBMITQUEUE_QUERY  DRM_IOW (DRM_COMMAND_BASE + DRM_MSM_SUBMITQUEUE_QUERY, struct drm_msm_submitqueue_query)
+> +#define DRM_IOCTL_MSM_VM_BIND          DRM_IOWR(DRM_COMMAND_BASE + DRM_MSM_VM_BIND, struct drm_msm_vm_bind)
+> +#define DRM_IOCTL_MSM_PERFCNTR_CONFIG  DRM_IOW (DRM_COMMAND_BASE + DRM_MSM_PERFCNTR_CONFIG, struct drm_msm_perfcntr_config)
+>  
+>  #if defined(__cplusplus)
+>  }
 > -- 
 > 2.55.0
 > 
