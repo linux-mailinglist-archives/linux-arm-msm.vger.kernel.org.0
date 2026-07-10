@@ -1,200 +1,377 @@
-Return-Path: <linux-arm-msm+bounces-118235-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-118236-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id /Y5/LQHEUGoH4wIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-118235-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 12:05:53 +0200
+	id 2WXLLUTFUGpN4wIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-118236-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 12:11:16 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id EEB057396E6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 12:05:52 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id AC2757397BF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 12:11:15 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=ncSLyGGp;
-	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=SFSgnNAh;
-	dmarc=pass (policy=reject) header.from=qualcomm.com;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118235-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118235-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=intel.com header.s=Intel header.b=E5301W6t;
+	dmarc=pass (policy=none) header.from=intel.com;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118236-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 104.64.211.4 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118236-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 4304630A4EF8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 09:59:02 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 6B9B13001860
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 10:06:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C687C3FC5D9;
-	Fri, 10 Jul 2026 09:58:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3D52A314D37;
+	Fri, 10 Jul 2026 10:06:46 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8836A3FBB7E
-	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jul 2026 09:58:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA5C34028CA
+	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jul 2026 10:06:43 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783677502; cv=none; b=GSEjIFM8Sq3ySq7Ho225r2BtGzcpZbEN7GC+QhY0Vxbsm6cK5ieMshoGFG73jbkdn4Kn/SWGCUnP7JHWQdWQeLnCeS6/Y/wMCq/VEUXM+w6vPxx4YLpD+mF8zEcHht7OguuwZs93OFtz35uP82xhsd2+bd+4yUtAzeYXnUtSsIA=
+	t=1783678006; cv=none; b=XESZNk8EBRhjDHXSmnmyQlwlLuxTIoxhi8zW8yMp/BMrrWL9aTV8oi6xZq9ip3pX+QAWZe8+UDd4Kl34WrEG9B+vPbjhfrf9WQGUQKvtuRALnaD2+4Nw0xmjdhbr2IoiSWu3vuxdUryUNkxC2SUOENrTUTp7+E8/5xcuChvIhBs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783677502; c=relaxed/simple;
-	bh=qAjInHkeUeHTU5/obRlVXmq4HSKxkWkrqTV+hOURKFU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=bi17k9nTijxnZQWWeZnZMN5A9KClsOoh+zWhWR0cOTxZdl+Yz/VOd++sdnpEjBYQc59nAfGoQZOkfBeIrGc/TLPMte1+pEvERbnWdEj1OmRcUbfJAkhMSZyI6xSORw8I+9WDWCvu/UbVkMB8W2VMrGOROaHLgXFrB7VIkRjerQo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ncSLyGGp; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=SFSgnNAh; arc=none smtp.client-ip=205.220.168.131
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66A7dUQm4156533
-	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jul 2026 09:58:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	ODeSgPG8MhSR8ou+9lD99WLW4a/i5wJARDilaJz3tTw=; b=ncSLyGGpPvbrnftc
-	Wz53y84iTBPH1QfzLRYrhx66/kSb3qmWwPwSTSST4N9jozoowWhT7NSxkncZuBov
-	MpoxUWJe8kuhpTlwKHknrLt9RSvaVoS94jC3tuVtn7E6udHhjCTsiTWsC06Q5VZm
-	Z3AxoBSrlVJnU4ZgqXzt09FJscXqAKWvL8m912Qi9roObpVAgOvdsFKVMmHrkOpa
-	Fy0VSv+iuBvuzcyfD2YMXySYqqAbbUACOFtw/OhI0cO/D2DzOgL3aBv1Yq01YmTD
-	XaWcP6bayY+1jgISD6ReKFfgKf+weW0eNZAVTKUvbPkdK6m6EVR/eTL+QFuyrGwD
-	wJeGtQ==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fahv8jr51-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jul 2026 09:58:20 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-51c15c77619so2351731cf.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jul 2026 02:58:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1783677500; x=1784282300; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=ODeSgPG8MhSR8ou+9lD99WLW4a/i5wJARDilaJz3tTw=;
-        b=SFSgnNAhjuVoQ/HRNOTZGSdq7nX4kVpIqLQTLGEly84tlFe5RNUbgKnDudYryvFqR8
-         fqnOleLtKA4QccfyyJEG9qWFtK7GE262g9K8fSpFRW4Htuq356/YM/sAOhivSVPTuXNu
-         lNmU5Eq+76FtqHCFilKdPTaXr7xMCGXqSVMKObeyxYKWx/Z854nYwLPLvwdwJtl9fIId
-         x93rmKHB53hjJ40emz1gFkN8AEd7PO3t27SlSl7L7290r/wNv4tE5Mal7LyVKYrjEE1G
-         jW2niDMSit7PD+d5S+8fDj8zEKO90xp1BqXsiyeeJ92BbfuCFqq0Hdo9gR7fnkV4//yr
-         fqtw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783677500; x=1784282300;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=ODeSgPG8MhSR8ou+9lD99WLW4a/i5wJARDilaJz3tTw=;
-        b=mM2PzaGtKa6lP38x56lBuGSNNK85bvje1qP3dZr+ydXPUIe4Hu0Zi7UG0ShmSUqJy9
-         UReG8Ltg0CTYZhKeF812ZW4lquIzWzM8jh4VpNvC9PJSZZ9jzX9y/rjuEX3B2JykuqLO
-         8kGOBhs6WNDM1dKyzbXZW2o0pBjnFjaoFoGUuaxzxQuVkTTrO/T2iGMqaLkhPMJmL071
-         iEG2TtiboG2+kKIzBg8x/j8/igrGIOy6WjhrTxON1pUr16ZMRlmpAjoFHW8dd4R6Qo8i
-         P/BVpnQIT8kJsCTLbDTRMt5MUoY/jRA0QUaIV0cwXcc1MKzaaxPqLYsai9nchR7VV80I
-         B9qQ==
-X-Forwarded-Encrypted: i=1; AHgh+Rrg+BxqPEFat9wPxsyucwAGcYI5TvXSt9vbiw50U4EFvYTUYhytPDDhNzzfCs8FF4QOjU/zzo8Ol5TtkczG@vger.kernel.org
-X-Gm-Message-State: AOJu0YzZCWGi/DcSaRH89+CiAcSgOil934ilDsFF+CaeihM0Q4ljZHqq
-	ALGwam3KJR8TpVHLz3U1Xs8rzEqhu5CHNpkTNZJ5pdHm7/UgYKC/pHVrgu3YJxWej5VBygcc2t+
-	ueTJiwPWtRBBo2osinlUqEE2TBSsfYHy6wQ16uKwBqOfPH9s3VCk8/HuYj7vvBYkVoVsT
-X-Gm-Gg: AfdE7cn8eyoE0JnM6D3mldRt0dMa/8DSdBhPkXbfU0oskmkdR8vECqS7Uw88IXvyil7
-	xVy+Y013txcTnaczBeMTUjYjnz2MJzab6wOZB622fCU0FV76XN/tw5h87meVJ4rDnetS58yy8Dw
-	AMMyN1O3hWImOAIfMjzhu9xidrw834NYr3Cte1tvDvZHyqshXdgMVzwwLNfqmsFJFxsAkOplFfd
-	ZnEzYTkCsGXdMSGQZmbzKBtbtBauGAFE+2c99oNIhMhDtU6qwO7/7pmL2RmvIN8FgEjTdlx89zY
-	v8qyerXyE8nBKc4gQz9BaMxyemwSRbLgtIebBN6ygjJKAohgu/XPHaHEWRkY49k6tbvHzuW26B0
-	WVLEPgvuX76Tv0QeZUghV3By3JrLl889LZp4=
-X-Received: by 2002:a05:622a:28a:b0:51b:f9e0:87b0 with SMTP id d75a77b69052e-51c965f67ecmr66969401cf.2.1783677499928;
-        Fri, 10 Jul 2026 02:58:19 -0700 (PDT)
-X-Received: by 2002:a05:622a:28a:b0:51b:f9e0:87b0 with SMTP id d75a77b69052e-51c965f67ecmr66969141cf.2.1783677499587;
-        Fri, 10 Jul 2026 02:58:19 -0700 (PDT)
-Received: from [192.168.120.193] ([178.235.128.140])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c15e6286a5csm225060266b.11.2026.07.10.02.58.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 10 Jul 2026 02:58:18 -0700 (PDT)
-Message-ID: <8e4a1fad-3b77-4dc0-b4da-86781ea7e571@oss.qualcomm.com>
-Date: Fri, 10 Jul 2026 11:58:16 +0200
+	s=arc-20240116; t=1783678006; c=relaxed/simple;
+	bh=OHeQBKLU7Wl5dB7AgxWq3rCkCzuqCpatvDXPwhLwL/I=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mn+rwvQ5qMdxKVG6TgE+cLclGFHt8PasUHGoFVbJ5626aPe4huAF0hhKpH0T3G+eDG9J4lo7cQEAsf36Xuw+bg2tlaj1JIEC1/FZ/hxV8RHD3aCs29lkBhD0z4E7paEHox+KKz81wxYh8+YgUIYQIi6HainCIz01ZZLSR63+HRc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=E5301W6t; arc=none smtp.client-ip=198.175.65.13
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1783678004; x=1815214004;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=OHeQBKLU7Wl5dB7AgxWq3rCkCzuqCpatvDXPwhLwL/I=;
+  b=E5301W6tm1BontTAqh9ty/wSwvi9u9fetBzWY6QNzCnSacamgTrXjCFW
+   4fhSYRKkAU0vyaUwivmcWJw0/Fbfz3w0+cPmfulrFv8xTMf9ya4IJ+FUs
+   6JIPcv/wr4OTpdx7U/2uJGrAlf7HjNpcsJd08pEA6/N6C8zYrVP+aQGNA
+   nrF5o21A23cWgyAA91nu1gAUfLP141730OVACV5GUse3Rl1ijCierJ0bY
+   aU8oqLaFau305jfwJL1iDnV3yv0i6+U6gowZyG6WU99CQuhevqHrofBb1
+   QsenyqeqNsHBPiKD51b0qQtC9bVdJsFA/OKia6K8MVO2rqn84jKjlca9p
+   Q==;
+X-CSE-ConnectionGUID: vc2ReiAgTz2zPrBUrrKavA==
+X-CSE-MsgGUID: fqbOafCJSXe+08MUqR6uUQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11841"; a="95528812"
+X-IronPort-AV: E=Sophos;i="6.25,154,1779174000"; 
+   d="scan'208";a="95528812"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Jul 2026 03:06:44 -0700
+X-CSE-ConnectionGUID: jlXg6/e7RcuVIcN7IqqIbQ==
+X-CSE-MsgGUID: h0dHgIYnR5KU3F4t8zjQiQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.25,154,1779174000"; 
+   d="scan'208";a="251487830"
+Received: from kamilkon-desk.igk.intel.com (HELO localhost) ([10.211.136.201])
+  by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Jul 2026 03:06:42 -0700
+Date: Fri, 10 Jul 2026 12:06:39 +0200
+From: Kamil Konieczny <kamil.konieczny@linux.intel.com>
+To: Rob Clark <rob.clark@oss.qualcomm.com>
+Cc: igt-dev@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+	linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2 2/2] tests/msm: Add perfcntrs test
+Message-ID: <20260710100639.xrdyl6lbiidsgvjj@kamilkon-DESK.igk.intel.com>
+Mail-Followup-To: Kamil Konieczny <kamil.konieczny@linux.intel.com>,
+	Rob Clark <rob.clark@oss.qualcomm.com>,
+	igt-dev@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+	linux-arm-msm@vger.kernel.org
+References: <20260708161224.507091-1-rob.clark@oss.qualcomm.com>
+ <20260708161224.507091-3-rob.clark@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: milos: Add reset for sdhc_2
-To: Luca Weiss <luca.weiss@fairphone.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20260710-milos-sdhc2-reset-v1-1-c7a155a517ba@fairphone.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20260710-milos-sdhc2-reset-v1-1-c7a155a517ba@fairphone.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: yYjaTJFSXLvtfP22mYHTHSaYbyFhzYAo
-X-Proofpoint-ORIG-GUID: yYjaTJFSXLvtfP22mYHTHSaYbyFhzYAo
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzEwMDA5OCBTYWx0ZWRfX4H+CthpUAVzk
- t6GCJc4ebGZf/R9kFO9HF7Adxg1xawkTTWmEC7pdfkQ92eHmUzTlU0t6gwbaa6WPC/A5gMJu14G
- RiikvIlagpfEhDGiD89nc/q/kvyFjlI=
-X-Authority-Analysis: v=2.4 cv=funsol4f c=1 sm=1 tr=0 ts=6a50c23c cx=c_pps
- a=WeENfcodrlLV9YRTxbY/uA==:117 a=PRfkaYvzSr8QmIIGAkY2Sg==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
- a=6H0WHjuAAAAA:8 a=EUspDBNiAAAA:8 a=DccJuX7HoWOZ6YIWSGUA:9 a=QEXdDO2ut3YA:10
- a=AYr37p2UDEkA:10 a=kacYvNCVWA4VmyqE58fU:22 a=Soq9LBFxuPC4vsCAQt-j:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzEwMDA5OCBTYWx0ZWRfXys4BsA9TAcoE
- xYOUkUctY/CQI8djLqRVs/LpMLekLOmILgJhr3gDyCw7z3SyVphvLwXP+lhmtzjx+natyIbTMeO
- CpnDm9B2jB7aWqiDF1SZrhIQS9MchaKypy4NVE0EIgkVg7tScTk/agy3X+kuFqW5WEU9bJmZklg
- cg8ZY1+N5jXKjFvflWo7WzSrxx5rPYCo/yNPo1EPiSFi4RBwIjWhMTqXAV8QyO1Jb6XHf06iViH
- SD3Gc05pDCSYWWkftDUdkdHOtGaaMNOBgxS5iKS0rEWVp3Uhl9euOizU2dKZljxNCfSaheJYa7b
- vDjbMGSPE/3yQhNJEYUfV522gPYKxD7Lz1BjbPQqGcp/p2eUTMoAWJKqf/WbmKOGgxaCeTjFhVq
- QepiXUzowflrZtc+qlFQPdNBihATlQ3Ciuyd6RWRXDLDQFGcogNuP7Mzkz6zpUUvucjEdQUkdEA
- 1UH1UrTXEiii7onUPhw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-10_02,2026-07-09_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 phishscore=0 clxscore=1015 lowpriorityscore=0 adultscore=0
- bulkscore=0 suspectscore=0 malwarescore=0 priorityscore=1501 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607100098
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260708161224.507091-3-rob.clark@oss.qualcomm.com>
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-5.16 / 15.00];
+	WHITELIST_SPF_DKIM(-3.00)[intel.com:d:+,kernel.org:s:+];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	DMARC_POLICY_ALLOW(-0.50)[intel.com,none];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
+	R_DKIM_ALLOW(-0.20)[intel.com:s=Intel];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-118235-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,qualcomm.com:dkim,fairphone.com:email,oss.qualcomm.com:from_mime,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,vger.kernel.org:from_smtp,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns];
-	FORGED_SENDER(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[12];
-	FORGED_RECIPIENTS(0.00)[m:luca.weiss@fairphone.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:dmitry.baryshkov@oss.qualcomm.com,m:~postmarketos/upstreaming@lists.sr.ht,m:phone-devel@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FORWARDED(0.00)[lists@lfdr.de];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
+	TAGGED_FROM(0.00)[bounces-118236-lists,linux-arm-msm=lfdr.de];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ALIAS_RESOLVED(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	FORGED_SENDER(0.00)[kamil.konieczny@linux.intel.com,linux-arm-msm@vger.kernel.org];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_RECIPIENTS(0.00)[m:rob.clark@oss.qualcomm.com,m:igt-dev@lists.freedesktop.org,m:freedreno@lists.freedesktop.org,m:linux-arm-msm@vger.kernel.org,s:lists@lfdr.de];
+	FORWARDED(0.00)[lists@lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[intel.com:+];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCVD_COUNT_SEVEN(0.00)[7]
+	TO_DN_SOME(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[kamil.konieczny@linux.intel.com,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_THREE(0.00)[4];
+	ALIAS_RESOLVED(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	MID_RHS_MATCH_FROMTLD(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,intel.com:email,intel.com:dkim,linux.intel.com:from_mime,kamilkon-DESK.igk.intel.com:mid,qualcomm.com:email,vger.kernel.org:from_smtp,checkpatch.pl:url]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: EEB057396E6
+X-Rspamd-Queue-Id: AC2757397BF
 
-On 7/10/26 11:53 AM, Luca Weiss wrote:
-> Add the missing reset (BCR) for sdhc_2.
+Hi Rob,
+On 2026-07-08 at 09:12:24 -0700, Rob Clark wrote:
+> Add tests for new PERFCNTR_CONFIG ioctl.
 > 
-> Fixes: d9d59d105f98 ("arm64: dts: qcom: Add initial Milos dtsi")
-> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> Signed-off-by: Rob Clark <rob.clark@oss.qualcomm.com>
 > ---
+>  tests/msm/meson.build     |   1 +
+>  tests/msm/msm_perfcntrs.c | 196 ++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 197 insertions(+)
+>  create mode 100644 tests/msm/msm_perfcntrs.c
+> 
+> diff --git a/tests/msm/meson.build b/tests/msm/meson.build
+> index 2ba5b4db2279..0a7f35662c03 100644
+> --- a/tests/msm/meson.build
+> +++ b/tests/msm/meson.build
+> @@ -1,6 +1,7 @@
+>  msm_progs = [
+>  	'msm_bo',
+>  	'msm_mapping',
+> +	'msm_perfcntrs',
+>  	'msm_recovery',
+>  	'msm_shrink',
+>  	'msm_submit',
+> diff --git a/tests/msm/msm_perfcntrs.c b/tests/msm/msm_perfcntrs.c
+> new file mode 100644
+> index 000000000000..42f77456939e
+> --- /dev/null
+> +++ b/tests/msm/msm_perfcntrs.c
+> @@ -0,0 +1,196 @@
+> +// SPDX-License-Identifier: MIT
+> +/*
+> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+> + */
+> +
+> +#include <errno.h>
+> +
+> +#include "igt.h"
+> +#include "igt_core.h"
+> +#include "igt_msm.h"
+> +#include "msm_drm.h"
+> +
+> +static int
+> +__configure_counters(struct msm_device *dev, bool global, unsigned nr_groups,
+> +		     const char **groups, unsigned count)
+> +{
+> +	uint32_t countables[count];
+> +	struct drm_msm_perfcntr_group group[nr_groups];
+> +	struct drm_msm_perfcntr_config req = {
+> +		.flags = global ? MSM_PERFCNTR_STREAM : 0,
+> +		.nr_groups = nr_groups,
+> +		.groups = VOID2U64(group),
+> +		.period = global ? NSEC_PER_SEC : 0,
+> +		.bufsz_shift = global ? 10 : 0,
+> +		.group_stride = sizeof(struct drm_msm_perfcntr_group),
+> +	};
+> +
+> +	memset(group, 0, sizeof(group));
+> +	/* selecting countable 0 for each counter is fine: */
+> +	memset(countables, 0, sizeof(countables));
+> +
+> +	for (unsigned i = 0; i < nr_groups; i++) {
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+checkpatch suggest using 'unsigned int'.
 
-Konrad
+> +		strcpy(group[i].group_name, groups[i]);
+> +		group[i].nr_countables = count;
+> +		group[i].countables = global ? VOID2U64(countables) : 0;
+> +	}
+> +
+> +	return drmIoctl(dev->fd, DRM_IOCTL_MSM_PERFCNTR_CONFIG, &req);
+> +}
+> +
+> +static int
+> +configure_counters(struct msm_device *dev, bool global, unsigned count)
+> +{
+> +	/* CP group is present on all gens.. SP would be another good candidate */
+> +	const char *groups[] = {"CP"};
+> +	return __configure_counters(dev, global, 1, groups, count);
+> +}
+> +
+> +static unsigned
+> +get_available_counters(struct msm_device *dev, bool global)
+> +{
+> +	for (unsigned i = 0; ; i++) {
+> +		int ret = configure_counters(dev, global, i + 1);
+> +		igt_warn("%u: ret=%d\n", i, ret);
+
+Why warn here? It will make your test fail, imho you should use
+igt_info() instead.
+
+> +		if (ret < 0)
+> +			return i;
+
+and this imho:
+		if (ret < 0) {
+			igt_warn("Unexpected error\n");
+			return i;
+		}
+
+> +		if (global)
+> +			close(ret);
+> +	}
+> +}
+> +
+> +
+
+One newline is enough.
+
+I will merge this as is with whitespace/style fixes with the help
+of checkpatch.pl --fix-inplace. If you want improve test with
+above s/warn/info/ please send a fix.
+
+LGTM
+Acked-by: Kamil Konieczny <kamil.konieczny@linux.intel.com>
+
+Regards,
+Kamil
+
+> +int igt_main()
+> +{
+> +	/* device instance for global counter collection: */
+> +	struct msm_device *dev_global = NULL;
+> +	/* device instances for local counter reservation: */
+> +	struct msm_device *dev_local_1 = NULL;
+> +	struct msm_device *dev_local_2 = NULL;
+> +	unsigned num_counters;
+> +
+> +	igt_fixture() {
+> +		dev_global = igt_msm_dev_open();
+> +		dev_local_1 = igt_msm_dev_open();
+> +		dev_local_2 = igt_msm_dev_open();
+> +
+> +		num_counters = get_available_counters(dev_global, true);
+> +		igt_info("num_counters=%u\n", num_counters);
+> +	}
+> +
+> +	igt_describe("Multiple process should be able to reserve the same "
+> +		     "counters for local counter collection");
+> +	igt_subtest("perfcntrs-local-coexist") {
+> +		igt_require(num_counters > 0);
+> +
+> +		igt_assert_eq(0, configure_counters(dev_local_1, false, num_counters));
+> +		igt_assert_eq(0, configure_counters(dev_local_2, false, num_counters));
+> +
+> +		/* release the reservations: */
+> +		configure_counters(dev_local_1, false, 0);
+> +		configure_counters(dev_local_2, false, 0);
+> +	}
+> +
+> +	igt_describe("non-conflict global and local counters");
+> +	igt_subtest("perfcntrs-non-conflict-global-local") {
+> +		int num_local = num_counters - 2;
+> +		int stream_fd;
+> +
+> +		igt_require(num_counters > 2);
+> +
+> +		igt_assert_eq(0, configure_counters(dev_local_1, false, num_local));
+> +		igt_assert_eq(0, configure_counters(dev_local_2, false, num_local));
+> +
+> +		stream_fd = configure_counters(dev_global, true, 2);
+> +		igt_assert_lte(0, stream_fd);
+> +		close(stream_fd);
+> +
+> +		/* release the reservations: */
+> +		configure_counters(dev_local_1, false, 0);
+> +		configure_counters(dev_local_2, false, 0);
+> +	}
+> +
+> +	igt_describe("conflict, local first");
+> +	igt_subtest("conflict-local-first") {
+> +		int num_local = num_counters - 1;
+> +		int stream_fd;
+> +
+> +		igt_require(num_counters > 2);
+> +
+> +		igt_assert_eq(0, configure_counters(dev_local_1, false, num_local));
+> +		igt_assert_eq(0, configure_counters(dev_local_2, false, num_local));
+> +
+> +		stream_fd = configure_counters(dev_global, true, 2);
+> +		igt_assert_lt(stream_fd, 0);
+> +
+> +		/* release the reservation for dev_local_1: */
+> +		configure_counters(dev_local_1, false, 0);
+> +
+> +		/* should still fail: */
+> +		stream_fd = configure_counters(dev_global, true, 2);
+> +		igt_assert_lt(stream_fd, 0);
+> +
+> +		/* release the reservation for dev_local_2: */
+> +		configure_counters(dev_local_2, false, 0);
+> +
+> +		/* now should succeed: */
+> +		stream_fd = configure_counters(dev_global, true, 2);
+> +		igt_assert_lte(0, stream_fd);
+> +		close(stream_fd);
+> +	}
+> +
+> +	igt_describe("conflict, global first");
+> +	igt_subtest("conflict-global-first") {
+> +		int num_local = num_counters - 1;
+> +		int stream_fd;
+> +
+> +		igt_require(num_counters > 2);
+> +
+> +		stream_fd = configure_counters(dev_global, true, 2);
+> +		igt_assert_lte(0, stream_fd);
+> +
+> +		/* Should fail because two counters already allocated for global collection: */
+> +		igt_assert_neq(0, configure_counters(dev_local_1, false, num_local));
+> +
+> +		/* release global counters: */
+> +		close(stream_fd);
+> +
+> +		/* Now reservation should succeed: */
+> +		igt_assert_eq(0, configure_counters(dev_local_1, false, num_local));
+> +
+> +		/* release the reservations: */
+> +		configure_counters(dev_local_1, false, 0);
+> +	}
+> +
+> +	igt_describe("multiple groups");
+> +	igt_subtest("multiple-groups") {
+> +		const char *groups[] = {"CP", "SP"};
+> +
+> +		igt_require(num_counters > 0);
+> +
+> +		igt_assert_eq(0,
+> +			__configure_counters(dev_local_1, false, ARRAY_SIZE(groups), groups, 1));
+> +
+> +		/* release the reservations: */
+> +		configure_counters(dev_local_1, false, 0);
+> +	}
+> +
+> +	igt_describe("duplicate groups");
+> +	igt_subtest("duplicate-groups") {
+> +		const char *groups[] = {"CP", "CP"};
+> +
+> +		igt_require(num_counters > 0);
+> +
+> +		igt_assert_neq(0,
+> +			__configure_counters(dev_local_1, false, ARRAY_SIZE(groups), groups, 1));
+> +
+> +		/* release the reservations: */
+> +		configure_counters(dev_local_1, false, 0);
+> +	}
+> +
+> +	igt_fixture() {
+> +		igt_msm_dev_close(dev_global);
+> +		igt_msm_dev_close(dev_local_1);
+> +		igt_msm_dev_close(dev_local_2);
+> +	}
+> +}
+> -- 
+> 2.55.0
+> 
 
