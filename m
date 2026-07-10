@@ -1,55 +1,55 @@
-Return-Path: <linux-arm-msm+bounces-118407-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-118408-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id rnANJT9YUWqECwMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-118407-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 22:38:23 +0200
+	id dGlYIqNXUWpYCwMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-118408-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 22:35:47 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id F288973E6C3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 22:38:22 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3AFF373E67C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 22:35:47 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=Rn0Rgzrg;
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b="HJU/LxQF";
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118407-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118407-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118408-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118408-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id CE24530BBD3D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 20:30:00 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 1447130CCFB4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 20:30:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1B9FE3AA9CA;
-	Fri, 10 Jul 2026 20:29:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EA30436CDF3;
+	Fri, 10 Jul 2026 20:30:18 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC5233A5421;
-	Fri, 10 Jul 2026 20:29:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED21439A4C5;
+	Fri, 10 Jul 2026 20:30:16 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783715395; cv=none; b=JMCzHc0VywFNMNBiWPjRZEI8+Jnr+k6BkSU/T5ZZ+0q7Yj93EZ8pEFuYFPsn6QMDLtWk0KZP2h9+McdcJaW9pk/4cpS03nE9m1KfzZRCY+ucfsmXMxBk/5YlH3Wsf2+5CjYmSgR3p8t2QKFPwsUSZn0D0thY2FlHBP3OCaza47w=
+	t=1783715418; cv=none; b=nAPemqXjPlHfJl42iL7wxcMRAGe+KN7MtXuJDdWIfrjnsDtD9yCZ0cj0KqhgW5VVoc6IXu+xGUD+Tdh84hLQvVWw6lGuOSWfdlbGsVvMj9JQ3xjUWw+my9lBOj1Iw+blOQC5qkoGkVTHamDwbiubcc42nybFxejXYsSiRtIeUQE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783715395; c=relaxed/simple;
-	bh=BSllJJ+2rRUlWzlXkjh5aitKXn0vM/W5l9yfCPbZwkk=;
+	s=arc-20240116; t=1783715418; c=relaxed/simple;
+	bh=G0Z54AjtjNI6CjvRN0QWBiGJMevNN1T++vP+QCfqk78=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=WXe40fy7ElBuM1vHUPfrylomYTMU0+i1cM8bYVo5Bb8DQavbh2qILVynofHnCDMNatO5NP9KmrFD1vL9M7cmk3A96kpLi3+apKSEkH/HU6XE9hUh1me038AxKMo5qKrxza+IxeSpgk1KkmtJ1vSWyWVdJKM4f31/J9CGZBClrw4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Rn0Rgzrg; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C37601F00A3A;
-	Fri, 10 Jul 2026 20:29:30 +0000 (UTC)
+	 In-Reply-To:To:Cc; b=Yn8az0M3/awDg4Wu9mHjLkVwAC28Hc86cu21FObEk1aXkX4VdFZ5Y7Zk6A8pdrkb2V8EmkxkvFQTtkbv3368pXFtFvc/p4Kg/JT3KiA63b/y550vPNgUU/lq9QqsMc7QoQp+3MWTOM12KO0v/zGDmLJZtn+WUb1AAdK1Qld+3iU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HJU/LxQF; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE5081F000E9;
+	Fri, 10 Jul 2026 20:29:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783715393;
-	bh=h9TL51kQxKXHzSfeISmn1qw+QGG9KCcdgBvdsczJlCQ=;
+	s=k20260515; t=1783715416;
+	bh=B5I9XJhmOOi1LkWbRSVKnYIkRF+jGCGnmzoiak9EY5o=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=Rn0Rgzrg1X9P5gZsTrshFOS+gMVue/gsuP7CnzM73czznQcn4F9ItkfgBxrFDuH66
-	 94EeIgI5hcr2XIsN3JzPfM7oBQE/vD8l9enMDbVOU8lNTUaYV6fcAL/6vBz7qX6VIq
-	 NV817DVIfXpi6wJ/hRvPJWaIpuFGj1/DltiI/mD1dBclCFblMGKiu2Oj5CzNoyCves
-	 RnQ7aytJQVF43RBtHHafqZbjIwVNRBtQ8O3PLFYcWa7naE5fgN6Q0oqeQLqBuFn/+5
-	 cBxamOvFBWiDSagHuu6Y8tOkVPWaz0YBClxQVn17b8Kz9ZPR1RYz7NH+4ZEm0mLklt
-	 x3Y3guK3Ete2A==
+	b=HJU/LxQFVzsJlRTCMRzOJHdKDqTBAxtBcBwpt63liPwwYag6kcqfVKglYfllNuHwG
+	 zruaDbLFSHOKgoo0BqDuxifQenxMZ32LDVjzeICMBYJ3UJv5j+AnJcMgzxnGHtBdeN
+	 j8C36crjgwo2R/uzmYN1HthGyrQ3fCMsmbG+73WdXAXoxUFqceMyzp9ZW1PdmaRa9O
+	 G5/VT52++Jk599/Cwob6URDW22K7/Nduaq0RP+KDtJ0pkxdcPa3d89vPvW4V4rHBk/
+	 CW0bBjmWxC4r28Ips94X2CU8upp1gMEWiWKnHmBXHuAIxpE3/rXj+RtTqbCeQkATao
+	 rwCQBxnl2483Q==
 From: Lorenzo Stoakes <ljs@kernel.org>
-Date: Fri, 10 Jul 2026 21:17:13 +0100
-Subject: [PATCH v2 32/33] tools/testing/vma: default VMA, mm flag bits to
- 64-bit
+Date: Fri, 10 Jul 2026 21:17:14 +0100
+Subject: [PATCH v2 33/33] tools/testing/vma: output compared expression on
+ ASSERT_[EQ, NE]()
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -58,7 +58,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260710-b4-pre-scalable-cow-v2-32-2a5aa403d977@kernel.org>
+Message-Id: <20260710-b4-pre-scalable-cow-v2-33-2a5aa403d977@kernel.org>
 References: <20260710-b4-pre-scalable-cow-v2-0-2a5aa403d977@kernel.org>
 In-Reply-To: <20260710-b4-pre-scalable-cow-v2-0-2a5aa403d977@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>, 
@@ -139,12 +139,12 @@ Cc: Lorenzo Stoakes <ljs@kernel.org>, linux-mm@kvack.org,
  freedreno@lists.freedesktop.org, linux-tegra@vger.kernel.org, 
  kvm@vger.kernel.org, Russell King <linux+etnaviv@armlinux.org.uk>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1053; i=ljs@kernel.org;
- h=from:subject:message-id; bh=BSllJJ+2rRUlWzlXkjh5aitKXn0vM/W5l9yfCPbZwkk=;
- b=owGbwMvMwCV2fu7ZrsZH9SKMp9WSGLICg23tbadanfaQzj1y4rvlNcVF9qIRv947JUd902jK7
- TLzq0/oKGVhEONikBVTZHn+RXx/kEjYvM4L/m4wc1iZQIYwcHEKwERaNBj+qb36GFjppLrx8Iv8
- qbKmX233/fKVUtoRUPVgwvsv2l762Qz/dFWP/9kU0fePtSxGdTuTmXbp2f3yftdqG2/ekOSalyL
- PCAA=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2588; i=ljs@kernel.org;
+ h=from:subject:message-id; bh=G0Z54AjtjNI6CjvRN0QWBiGJMevNN1T++vP+QCfqk78=;
+ b=owGbwMvMwCV2fu7ZrsZH9SKMp9WSGLICg+027xOdH8B2QFVjitv8mSdNCqatzzDPuLx5q/P3m
+ bsqvNas6ihlYRDjYpAVU2R5/kV8f5BI2LzOC/5uMHNYmUCGMHBxCsBESt8y/M8V4Tz0xp5xXe19
+ wcer453cVuotTvQq2Z9Z+MFqXm4M42uG/5UJ81+tnzZdSGb1KWONWwnKD/+4b41bGtXx//vvOW9
+ DqtkB
 X-Developer-Key: i=ljs@kernel.org; a=openpgp;
  fpr=E7F417BF5214569E89D04F46CF9DCD8A81E27F14
 X-Rspamd-Action: no action
@@ -153,13 +153,13 @@ X-Spamd-Result: default: False [-3.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-118407-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-118408-lists,linux-arm-msm=lfdr.de];
 	FORGED_RECIPIENTS(0.00)[m:akpm@linux-foundation.org,m:david@kernel.org,m:liam@infradead.org,m:vbabka@kernel.org,m:rppt@kernel.org,m:surenb@google.com,m:mhocko@suse.com,m:riel@surriel.com,m:harry@kernel.org,m:jannh@google.com,m:lance.yang@linux.dev,m:pfalcato@suse.de,m:linux@armlinux.org.uk,m:dinguyen@kernel.org,m:schuster.simon@siemens-energy.com,m:James.Bottomley@HansenPartnership.com,m:deller@gmx.de,m:viro@zeniv.linux.org.uk,m:brauner@kernel.org,m:jack@suse.cz,m:djbw@kernel.org,m:willy@infradead.org,m:muchun.song@linux.dev,m:osalvador@suse.de,m:mhiramat@kernel.org,m:oleg@redhat.com,m:peterz@infradead.org,m:mingo@redhat.com,m:acme@kernel.org,m:namhyung@kernel.org,m:mark.rutland@arm.com,m:alexander.shishkin@linux.intel.com,m:jolsa@kernel.org,m:irogers@google.com,m:adrian.hunter@intel.com,m:james.clark@linaro.org,m:ziy@nvidia.com,m:baolin.wang@linux.alibaba.com,m:npache@redhat.com,m:ryan.roberts@arm.com,m:dev.jain@arm.com,m:baohua@kernel.org,m:linmiaohe@huawei.com,m:nao.horiguchi@gma
  il.com,m:xu.xin16@zte.com.cn,m:chengming.zhou@linux.dev,m:sj@kernel.org,m:matthew.brost@intel.com,m:joshua.hahnjy@gmail.com,m:rakie.kim@sk.com,m:byungchul@sk.com,m:gourry@gourry.net,m:ying.huang@linux.alibaba.com,m:apopple@nvidia.com,m:hughd@google.com,m:peterx@redhat.com,m:kees@kernel.org,m:m.szyprowski@samsung.com,m:robin.murphy@arm.com,m:andreyknvl@gmail.com,m:glider@google.com,m:dvyukov@google.com,m:rostedt@goodmis.org,m:mathieu.desnoyers@efficios.com,m:jarkko@kernel.org,m:dave.hansen@linux.intel.com,m:tglx@kernel.org,m:bp@alien8.de,m:x86@kernel.org,m:hpa@zytor.com,m:abbotti@mev.co.uk,m:hsweeten@visionengravers.com,m:l.stach@pengutronix.de,m:christian.gmeiner@gmail.com,m:airlied@gmail.com,m:simona@ffwll.ch,m:patrik.r.jakobsson@gmail.com,m:maarten.lankhorst@linux.intel.com,m:mripard@kernel.org,m:tzimmermann@suse.de,m:robin.clark@oss.qualcomm.com,m:lumag@kernel.org,m:abhinav.kumar@linux.dev,m:jesszhan0024@gmail.com,m:sean@poorly.run,m:marijn.suijten@somainline.org,m:tomi.valkeinen
  @ideasonboard.com,m:thierry.reding@kernel.org,m:mperttunen@nvidia.com,m:jonathanh@nvidia.com,m:christian.koenig@amd.com,m:ray.huang@amd.com,m:matthew.auld@intel.com,m:jgg@ziepe.ca,m:yishaih@nvidia.com,m:skolothumtho@nvidia.com,m:kevin.tian@intel.com,m:ankita@nvidia.com,m:alex@shazbot.org,s:lists@lfdr.de];
@@ -179,38 +179,87 @@ X-Spamd-Result: default: False [-3.66 / 15.00];
 	DKIM_TRACE(0.00)[kernel.org:+];
 	ALIAS_RESOLVED(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,etnaviv];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,vger.kernel.org:from_smtp]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: F288973E6C3
+X-Rspamd-Queue-Id: 3AFF373E67C
 
-With all of the sanitisers turned on, setting the VMA and mm flag bits
-depth to 128 by default results in overly long build times.
+Update the macros to output the compared values at hex for easier debugging
+when test asserts fail.
 
-Reduce this to 64 - we can always manipulate these later for testing of
-larger bitmaps as needed.
+We have to be careful not to re-evaluate expressions as they may have
+side-effects. So update the code to take local copies and use these for
+both the test and the debug output.
+
+Also remove unused IS_SET() macro.
 
 Signed-off-by: Lorenzo Stoakes <ljs@kernel.org>
 ---
- tools/testing/vma/Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/vma/shared.h | 38 ++++++++++++++++++++++++++------------
+ 1 file changed, 26 insertions(+), 12 deletions(-)
 
-diff --git a/tools/testing/vma/Makefile b/tools/testing/vma/Makefile
-index e72b45dedda5..ef6cc558afe1 100644
---- a/tools/testing/vma/Makefile
-+++ b/tools/testing/vma/Makefile
-@@ -10,7 +10,7 @@ OFILES = $(SHARED_OFILES) main.o shared.o maple-shim.o
- TARGETS = vma
+diff --git a/tools/testing/vma/shared.h b/tools/testing/vma/shared.h
+index ca4f1238f1c7..97cd7a679dc1 100644
+--- a/tools/testing/vma/shared.h
++++ b/tools/testing/vma/shared.h
+@@ -21,19 +21,35 @@
+ 		}							\
+ 	} while (0)
  
- # These can be varied to test different sizes.
--CFLAGS += -DNUM_VMA_FLAG_BITS=128 -DNUM_MM_FLAG_BITS=128
-+CFLAGS += -DNUM_VMA_FLAG_BITS=64 -DNUM_MM_FLAG_BITS=64
+-#define ASSERT_TRUE(_expr)						\
+-	do {								\
+-		if (!(_expr)) {						\
+-			fprintf(stderr,					\
+-				"Assert FAILED at %s:%d:%s(): %s is FALSE.\n", \
+-				__FILE__, __LINE__, __FUNCTION__, #_expr); \
+-			return false;					\
+-		}							\
++#define __ASSERT_TRUE(_expr, _fmt, ...)					   \
++	do {								   \
++		if (!(_expr)) {						   \
++			fprintf(stderr,					   \
++				"Assert FAILED at %s:%d:%s(): %s is FALSE" \
++				_fmt ".\n",				   \
++				__FILE__, __LINE__, __FUNCTION__, #_expr   \
++				__VA_OPT__(,) __VA_ARGS__);		   \
++			return false;					   \
++		}							   \
+ 	} while (0)
  
- main.o: main.c shared.c shared.h vma_internal.h tests/merge.c tests/mmap.c tests/vma.c ../../../mm/vma.c ../../../mm/vma_init.c ../../../mm/vma_exec.c ../../../mm/vma.h include/custom.h include/dup.h include/stubs.h
++#define __TO_SCALAR(x)	((unsigned long long)(uintptr_t)(x))
++
++#define ASSERT_TRUE(_expr) __ASSERT_TRUE(_expr, "")
+ #define ASSERT_FALSE(_expr) ASSERT_TRUE(!(_expr))
+-#define ASSERT_EQ(_val1, _val2) ASSERT_TRUE((_val1) == (_val2))
+-#define ASSERT_NE(_val1, _val2) ASSERT_TRUE((_val1) != (_val2))
++#define ASSERT_EQ(_val1, _val2) do {				 \
++	__typeof__(_val1) __val1 = (_val1);			 \
++	__typeof__(_val2) __val2 = (_val2);			 \
++	__ASSERT_TRUE(__val1 == __val2, " (0x%llx != 0x%llx)",	 \
++		      __TO_SCALAR(__val1), __TO_SCALAR(__val2)); \
++	} while (0)
++
++#define ASSERT_NE(_val1, _val2) do {				 \
++	__typeof__(_val1) __val1 = (_val1);			 \
++	__typeof__(_val2) __val2 = (_val2);			 \
++	__ASSERT_TRUE(__val1 != __val2, " (0x%llx == 0x%llx)",	 \
++		      __TO_SCALAR(__val1), __TO_SCALAR(__val2)); \
++	} while (0)
  
+ #define ASSERT_FLAGS_SAME_MASK(_flags, _flags_other) \
+ 	ASSERT_TRUE(vma_flags_same_mask((_flags), (_flags_other)))
+@@ -53,8 +69,6 @@
+ #define ASSERT_FLAGS_NONEMPTY(_flags) \
+ 	ASSERT_FALSE(vma_flags_empty(_flags))
+ 
+-#define IS_SET(_val, _flags) ((_val & _flags) == _flags)
+-
+ extern bool fail_prealloc;
+ 
+ /* Override vma_iter_prealloc() so we can choose to fail it. */
 
 -- 
 2.55.0
