@@ -1,160 +1,126 @@
-Return-Path: <linux-arm-msm+bounces-118241-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-118240-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id v481C3fGUGqe4wIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-118241-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 12:16:23 +0200
+	id IslLN1/GUGqW4wIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-118240-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 12:15:59 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 10E3B7398C0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 12:16:22 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 54EAE7398A4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 12:15:59 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=D7jSSXxD;
-	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=EX7ba5d0;
+	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=Yxis0IsE;
 	dmarc=pass (policy=reject) header.from=qualcomm.com;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118241-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c15:e001:75::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118241-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118240-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118240-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 6A8E0300693D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 10:13:27 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 09103305EE38
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 10:13:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 148AC3F1AD1;
-	Fri, 10 Jul 2026 10:13:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9B0E8403AE4;
+	Fri, 10 Jul 2026 10:13:12 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93E9D3CB2FE
-	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jul 2026 10:13:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B03D3F86F7;
+	Fri, 10 Jul 2026 10:13:10 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783678400; cv=none; b=n8tRqVM+kjgVJC8xrY+HsUuPCqoW/UMw2QC74lER+ajESWwUVtkGKIHb9CeRxpTzc2nxpZ0BFBY2Ws4v3wfHzl5dBlKVEXuFoe3oIohdIvz/mfpl7ZZpyos5/bG7TEUCTXzX+lL9moIqDflRJ7iSthhC6mP+IjrvCDFLY2ADZmk=
+	t=1783678392; cv=none; b=KOIAR4aa2HEheviyboSluqzp/hf6REurLVj3EHF66nc0s0K7PBKdprO0Bnh0G1G2pLYQItfdEbc55tct3Uk9yzD2D2BSWB5jv0JMml0Kg5rmGNHbovekagyPMnC3PPQqOv21zo+MYTYfhLc2DTM0ytM5NkNCiziwwl65v+4rGV8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783678400; c=relaxed/simple;
-	bh=jBBnW6WFudmvEPdq0uOwfkuZMk72McbQneZaQOFjN3g=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=BvtHOz58ipNXQxGSP9jYRfUVdlV5Wx/yVZOlV5qiVUt9v3by/3VYcIXIymO7DWRS6EQqeB8qlqtWb7cQSIMmudjwyg9h/KVOCdUX3/jjxf10to3eVrfVAIPhco6BiDpWw6lgrHkXGT9+0JNFyDX1L9wTnWCttlJtq7LjdE8RQ/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=D7jSSXxD; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=EX7ba5d0; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1783678392; c=relaxed/simple;
+	bh=gdzghHsVJkX/BeYiGV7j+ToMLP4NKruD9h6gRDju5ig=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=APwVG/ZprVmBaYmI2m4/v8YFZCW1/ekUOhiMTJU3ZkD870cZaqglf6O7sHsDwWI28rcinaUD4UItx7osyAtk2WSxHualsDoulYFCSaukCYOb4Rs5/ElLXm1WuLxIhA9PCx0Z0hSoU4GyvuL4WhyPHqqanfvoh/NW+QhvshvoSiw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Yxis0IsE; arc=none smtp.client-ip=205.220.180.131
 Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66A7egDR092390
-	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jul 2026 10:13:17 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66A7eeXU092339;
+	Fri, 10 Jul 2026 10:13:04 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	bV8KvWCZd21k3Re7nM7YSXO7CD2b03uTu9SGUiG6fXI=; b=D7jSSXxDPyx7uc6c
-	4aut/MjSt5s4Mzo56LBaDDp/ojDd+7hkhupviKT2yW+Y4y5ScIXedvmacZ5cOLVu
-	Hl1D7tmH/lXOq0BJDf2mps/LWCqQwZjf4K9dHtBamo4Piozxf0RUCBCO1n+OMSFr
-	c6vlLOnhnRlFs0dX/yXT81oKdGcygN6KOvBICbI2oyxIeuXEDg2nMZBCgFZvqVHl
-	bJJDZq5MYygMRpLo+5rbFcc/QAbYLEDK9Aa4eStt1q2XWBT3cxaoC6l3X9FqbfNV
-	B9akTnIkKADUyl2TcaLz/6yYBGRw35WELJtBv4T9pRqdi84DHrmRUhw1UPPEjmqb
-	vEOhug==
-Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com [209.85.210.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fadvjc5u6-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jul 2026 10:13:17 +0000 (GMT)
-Received: by mail-pf1-f197.google.com with SMTP id d2e1a72fcca58-8485d853b08so1708322b3a.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jul 2026 03:13:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1783678396; x=1784283196; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :content-type:mime-version:subject:date:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=bV8KvWCZd21k3Re7nM7YSXO7CD2b03uTu9SGUiG6fXI=;
-        b=EX7ba5d0lh+AuJXuSRr2dHkerCjYAaFS2qPoC0XStpO6YbeDQpdl7qbgTYGVF1aJUS
-         dEHZQaDnXm+5YQAtBI6Uy0PEmShToJlW7+nfI09JMyD+cgE6IdU2JGa2eDLuUeewx5VS
-         rqxF7WZ+9L755FIiqTvbav79k65U8I+xxtrGFaO87ULworj4GX+86DlFZz6Rlc/NKNZI
-         nDHlXehm6gyagcbjgQkYeLpSKMqdn8A4oKiMmm6iPW9wnTJVL/CrG6YwgNtyl8MBF+Rn
-         CkBVlKN+qbhu0I5JsG1viVnBmCxUSDpgnyUKjxu8GhlUhjjcHSvcUXeKhdFvUhBgD++v
-         w1KQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783678396; x=1784283196;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :content-type:mime-version:subject:date:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=bV8KvWCZd21k3Re7nM7YSXO7CD2b03uTu9SGUiG6fXI=;
-        b=CU5Tok580IkJg98KsOEIeX7qAfIY143vLQm5PxtN6hKVispahknxFfZb6nqSkFXypg
-         h3lpM7eE78w7m8GKwUs1GeOiU6PazyNmYYtYbZGZ/DspIJ+pjoTLq0BSfPtCxNlTw9kh
-         sNTYMTZEi0jsfMF1od5W+pWdsOp5MWO7YGhLN0jEpDR++k0JooVfuzaLQfYROnPJwEex
-         j/4Eak3jo4bTC6offKCGFCuTSW0yB0f5u+M7boLVcPmNUxQBD0z6su7iRb5Q5SCMsWYJ
-         nVi+HRX0tw3WxrYKEvREPds9Q3cWUmcZOW+bOSgBnvBu8BFUdwxb3/bd0NDrfMMxPA2F
-         clcg==
-X-Forwarded-Encrypted: i=1; AHgh+RotgYX54OkjiVmAfGDbJH17lc0fxAfZnp7wHb8zRKh2wTGj8rtR50oGhr4Bit8CMsTbuqcpDkJyNxnvyfUQ@vger.kernel.org
-X-Gm-Message-State: AOJu0YwCwPeSyapDQkENxzdP3zEGq0uOzrsoVoJZN3CM0FOTsaOomLws
-	kNnz000xAy8WfuhkC4T4WH1oM5fub74T9JutJVUwl90PS3ua8EXm0o8mFWGAICWyo60RRkcpkEp
-	qnqCVwkiVbIcGlCydiKRyusCypi8Z8VzVSC3xeO6+Pxmphmzxsv+VgSrvmWruTaJc25UU
-X-Gm-Gg: AfdE7cnSo00ba+/XraJLc6OMpfEs4p1eeW6BYC+DeCeiDpwtuH1SSpoNIDzGCR6RzVt
-	XWa/gDLKTb/ZPMrMxzT8Oi0rbf5cSc8bRd2cfer90+dZFjcSZMzWJyTJCEhEL7dLWs23TjotpEK
-	Tm8wROfwjb7tBrd+7/tmoXSm4J4RoJezuBuCXBsNu1iwBlpgsmtWHn//I035d9hjzjbrs2ArmBP
-	x5+mkUnVRVb1OEVoPoH5qyxJUJHVr723D03tyCAjmMpzzOzxmLbg6rhzSDdrCF2XmTcg0B1iH8h
-	tZ6ZfqpEm4CzX/tLG8LsbPG+0fzU+F4hCuBXVChAu4qjkR7KU2yBLePW7R7o7m9rBqbkRWNgR2L
-	LyWZ9UKz4sGEXJQg2IhXDAQU2H7ZomAUAXKM3hwCGa2LZ
-X-Received: by 2002:a05:6a00:748d:b0:848:4754:28ea with SMTP id d2e1a72fcca58-84847542ddcmr8408553b3a.12.1783678395428;
-        Fri, 10 Jul 2026 03:13:15 -0700 (PDT)
-X-Received: by 2002:a05:6a00:748d:b0:848:4754:28ea with SMTP id d2e1a72fcca58-84847542ddcmr8408533b3a.12.1783678394806;
-        Fri, 10 Jul 2026 03:13:14 -0700 (PDT)
-Received: from hu-ptalari-hyd.qualcomm.com ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-847f6d7a96fsm9977815b3a.46.2026.07.10.03.13.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Jul 2026 03:13:14 -0700 (PDT)
-From: Praveen Talari <praveen.talari@oss.qualcomm.com>
-Date: Fri, 10 Jul 2026 15:42:44 +0530
-Subject: [PATCH v4 2/2] spi: qcom-geni: Fix missing error check on
- pm_runtime_get_sync()
+	fDaAlLM/vYTFmq4duyZj/0Kvfiq4vCvEiCwsqBWXP30=; b=Yxis0IsEmW4McgPE
+	CtHigz4y7Xn3wzuO/Iyv7/n8BLtQtNOrIx2dMHNKhzTliNifzbIGu1FoA0yll/za
+	dq3ca7Z4sxym3FhB36oR3x/Ra72CSC6rIR4jeMKMYc67Pg7Ki4e5Qx3icjyoDGgc
+	xwO8xaQEsPTcgca3wL4EoO688H6wLBU+3m1ZTPd1qsM6Mq/IlvK5f1ZqdbTfUckH
+	sfynLtsQD3U7UREgkaOKj5daCCtMJVTkbfZxfu2WgYzPoEjgbUPrpxCwnJlXIm/7
+	UydnCT+GRQbUEsBiSzbId58WX4r1LP5n6mP/NG2uXf+5OktfLWp6fyUO/Y6ZZ/K0
+	+PJxMA==
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fadvjc5sm-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 10 Jul 2026 10:13:03 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (8.18.1.7/8.18.1.7) with ESMTP id 66AACxmL030438;
+	Fri, 10 Jul 2026 10:12:59 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 4f6u8mgsjd-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 10 Jul 2026 10:12:59 +0000 (GMT)
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.18.1.12/8.18.1.12) with ESMTP id 66AACxWS030433;
+	Fri, 10 Jul 2026 10:12:59 GMT
+Received: from hu-devc-hyd-u22-c.qualcomm.com (hu-kotarake-hyd.qualcomm.com [10.213.97.140])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 66AACwrx030431
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 10 Jul 2026 10:12:59 +0000 (GMT)
+Received: by hu-devc-hyd-u22-c.qualcomm.com (Postfix, from userid 2389607)
+	id 067D0B2D; Fri, 10 Jul 2026 15:42:58 +0530 (+0530)
+Date: Fri, 10 Jul 2026 15:42:58 +0530
+From: Rakesh Kota <rakesh.kota@oss.qualcomm.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        sashiko-reviews@lists.linux.dev,
+        Komal Bajaj <komal.bajaj@oss.qualcomm.com>, robh@kernel.org,
+        linux-phy@lists.infradead.org, neil.armstrong@linaro.org,
+        vkoul@kernel.org, olteanv@gmail.com, krzk+dt@kernel.org,
+        conor+dt@kernel.org, devicetree@vger.kernel.org,
+        Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>
+Subject: Re: [PATCH 3/4] arm64: dts: qcom: Add Shikra CQM SoM platform
+Message-ID: <20260710101258.32srtofmovmxqhh7@hu-kotarake-hyd.qualcomm.com>
+References: <20260514103918.cs5m5kcxcrcgukvx@hu-kamalw-hyd.qualcomm.com>
+ <obdxony34ckfbtsqj66siszw44sgieskcye5hg66ulkisctpwl@fyqczpze5tnw>
+ <20260518114927.edxbzvklqatlntv2@hu-kamalw-hyd.qualcomm.com>
+ <CAO9ioeVMieo8HtpRw+n4ZU9uV-_RQM061q5XfAA1Dtk2fnp4+g@mail.gmail.com>
+ <bvankzuazswuigrm7hvyjqigzfaru5o43wi3zvyphgme2pgqwz@pyspqky3u6cn>
+ <5idu4ljmcvcvzqsr5g73h2roxzs36l6xxc5ju6ovc5aitt3gx4@wmfqueyf2rj6>
+ <20260630124220.4lja4zshpf66kwj3@hu-kotarake-hyd.qualcomm.com>
+ <33c74e59-076a-4877-9e62-83a8ebbf2d54@oss.qualcomm.com>
+ <20260703093035.q5xgljuigpt6zqt6@hu-kotarake-hyd.qualcomm.com>
+ <fku5jad6op5upobwvrphbqteg76zukbovsifzarizz4m3ofuka@gdpaxzzuraee>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260710-fix_sticky_-einval_after_pm_runtime_api_failure-v4-2-be81d6c15043@oss.qualcomm.com>
-References: <20260710-fix_sticky_-einval_after_pm_runtime_api_failure-v4-0-be81d6c15043@oss.qualcomm.com>
-In-Reply-To: <20260710-fix_sticky_-einval_after_pm_runtime_api_failure-v4-0-be81d6c15043@oss.qualcomm.com>
-To: "Rafael J. Wysocki" <rafael@kernel.org>, Pavel Machek <pavel@kernel.org>,
-        Len Brown <lenb@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Danilo Krummrich <dakr@kernel.org>, Mark Brown <broonie@kernel.org>,
-        Alok Chauhan <alokc@codeaurora.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Dilip Kota <dkota@codeaurora.org>,
-        Girish Mahadevan <girishm@codeaurora.org>,
-        bjorn.andersson@oss.qualcomm.com,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Praveen Talari <praveen.talari@oss.qualcomm.com>, linux-pm@vger.kernel.org,
-        driver-core@lists.linux.dev, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org,
-        Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>,
-        aniket.randive@oss.qualcomm.com, chandana.chiluveru@oss.qualcomm.com
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1783678373; l=2859;
- i=praveen.talari@oss.qualcomm.com; s=20251114; h=from:subject:message-id;
- bh=jBBnW6WFudmvEPdq0uOwfkuZMk72McbQneZaQOFjN3g=;
- b=SSyJjUgoguSeWg251n1KeZRyWrsQz325hAFIge4pglnHKXOmA/4WhEFet02HX4KH0aFHdds4U
- EjWuQGXvQiMA9czhxSLubFt5mAGm9HlMXmX3P8zySnpjyq3aMfxrwsM
-X-Developer-Key: i=praveen.talari@oss.qualcomm.com; a=ed25519;
- pk=NGK/88fjyHXgfhIKwag7+uIytOmyOypvZ/hDFaYPEss=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzEwMDA5OSBTYWx0ZWRfX4KUEb4JvKLnQ
- WMJOMGOceg04CdqN4ryRhH7jQN23ivRxjYGNpc9EuoJMzgIT/bUBKmYfrRER4A92WdPD292M3pq
- 9yMVod5XlsJM5dfMo024geYaXnyqab8TPie4WH+d9Sfrn6n+6RW7GCoastkk+kHI1TZoLZ2ve/Y
- lZDUK5liyuSzcLM6l2VFwzzp/x87hxG7k6g0n3MYtiRkyJiJDJyxHi3to/Utk6GB9TA1zPkQPCU
- /HHAl11SOP05XMxxKCvkqJpClXvLVGEmxzSTkJU9/UnEjZFWkUtp/djsJr1W6RGyvcwaMR8lPqI
- Ug05I06xCjfVw5YMfICxBWOkxUrW6sfnqKnECmbdIGqBU7Ghxrub1heFh3WGmRtwOX4hHDdumqv
- 2mJW0aFAo4OEm87wUSXmjGTM1EvyE+Dyvbclh9SBy0opnWgaTUeqDnUUzX4cFCkp9lh4Aca3ISi
- BwYSqkputJdLggrX4Qg==
-X-Authority-Analysis: v=2.4 cv=WpIb99fv c=1 sm=1 tr=0 ts=6a50c5bd cx=c_pps
- a=rEQLjTOiSrHUhVqRoksmgQ==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=rPJgdety-6tgKaoqdU0A:9 a=QEXdDO2ut3YA:10
- a=2VI0MkxyNR6bbpdq8BZq:22
-X-Proofpoint-GUID: 9Xk_YOD1Dk3uuwDdg-ShfyT5DYQquZEf
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzEwMDA5OSBTYWx0ZWRfX9ZdP9hyWgLo0
- TuP9t2AdwH5uhvo7OtnroU55wDvqv2qrmvkncGnt2lW4EBXRbUGXRf9dk//qtf2QPncYZl6levK
- TGTgDH/aGrhbyHvecw3bVMx4DL0xvjM=
-X-Proofpoint-ORIG-GUID: 9Xk_YOD1Dk3uuwDdg-ShfyT5DYQquZEf
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <fku5jad6op5upobwvrphbqteg76zukbovsifzarizz4m3ofuka@gdpaxzzuraee>
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzEwMDA5OSBTYWx0ZWRfX75PDXj2du02N
+ pSAq0Z/AIuLDA4sJUgg2fUxDmuWmVkYEZthLfBzVh5iHx20Yvx12LyqoijY6BfOLCVxVYadJX+5
+ 2XUuY80CyM6RgelZWlT5bB6UeVShct4atPVw/9rvtPLXjbgkENwqXUGcg+gUtKNSmThvUUFUSNw
+ FbzBbUU4ytR4lRy3PNCszdBvnooSY49KRYFqAWTntd+dG4JTJ1EsqOOiMthrBnLVdErnOkNqqGS
+ oKCMuYkltqL9jJBTveQ7TarSDpfOTWULHt6YeRbnC091Or6e10AtXgxX3oswnxtMjYZhVqiX6xH
+ I7u5uJBKiMlBGcn7E3qbTYCBusmzVvtBWaEctEVzf3IP/gmzJWfszR18atFIXUbYEO5vIkDKsay
+ wOCO28Ea0gQgp4Adyvtty3bIuSttYwqjDnImPQP/4qV7KOd3hSeUE1Hfth3ZUMyhVbD6GJnIWSS
+ 1JU4dY0+IdqCJEJ53OA==
+X-Authority-Analysis: v=2.4 cv=WpIb99fv c=1 sm=1 tr=0 ts=6a50c5af cx=c_pps
+ a=Ou0eQOY4+eZoSc0qltEV5Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22 a=VwQbUJbxAAAA:8
+ a=EUspDBNiAAAA:8 a=VBNFWE7bcIDabh-JT7cA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: C-z7uAMYT63C9wHHvd6mIaQe3zUhmRyV
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzEwMDA5OSBTYWx0ZWRfXx19kZwwGD1rB
+ U24buVBizs2URxLvTLDcANrnZWgDIioWzCd2Q5rD+huWOVel7717vyPmAi/QM4s8+kN2uE8rnb+
+ RaCJTIZqSau0fqeVey0Q7v3CIxv0Dy4=
+X-Proofpoint-ORIG-GUID: C-z7uAMYT63C9wHHvd6mIaQe3zUhmRyV
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-07-10_02,2026-07-09_04,2025-10-01_01
@@ -165,123 +131,175 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
  definitions=main-2607100099
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-118241-lists,linux-arm-msm=lfdr.de];
-	RCPT_COUNT_TWELVE(0.00)[22];
 	MIME_TRACE(0.00)[0:+];
+	RCPT_COUNT_TWELVE(0.00)[15];
 	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-118240-lists,linux-arm-msm=lfdr.de];
 	FORWARDED(0.00)[lists@lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:rafael@kernel.org,m:pavel@kernel.org,m:lenb@kernel.org,m:gregkh@linuxfoundation.org,m:dakr@kernel.org,m:broonie@kernel.org,m:alokc@codeaurora.org,m:swboyd@chromium.org,m:dianders@chromium.org,m:dkota@codeaurora.org,m:girishm@codeaurora.org,m:bjorn.andersson@oss.qualcomm.com,m:konrad.dybcio@oss.qualcomm.com,m:praveen.talari@oss.qualcomm.com,m:linux-pm@vger.kernel.org,m:driver-core@lists.linux.dev,m:linux-kernel@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-spi@vger.kernel.org,m:mukesh.savaliya@oss.qualcomm.com,m:aniket.randive@oss.qualcomm.com,m:chandana.chiluveru@oss.qualcomm.com,s:lists@lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:dmitry.baryshkov@oss.qualcomm.com,m:konrad.dybcio@oss.qualcomm.com,m:kamal.wadhwa@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:sashiko-reviews@lists.linux.dev,m:komal.bajaj@oss.qualcomm.com,m:robh@kernel.org,m:linux-phy@lists.infradead.org,m:neil.armstrong@linaro.org,m:vkoul@kernel.org,m:olteanv@gmail.com,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:devicetree@vger.kernel.org,m:jishnu.prakash@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_SENDER(0.00)[praveen.talari@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	FORGED_SENDER(0.00)[rakesh.kota@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_CC(0.00)[oss.qualcomm.com,vger.kernel.org,lists.linux.dev,kernel.org,lists.infradead.org,linaro.org,gmail.com];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,qualcomm.com:dkim,vger.kernel.org:from_smtp,oss.qualcomm.com:from_mime,hu-kotarake-hyd.qualcomm.com:mid];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,qualcomm.com:email,qualcomm.com:dkim,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,oss.qualcomm.com:from_mime,oss.qualcomm.com:dkim,oss.qualcomm.com:mid];
-	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[praveen.talari@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[rakesh.kota@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	DKIM_TRACE(0.00)[qualcomm.com:+];
 	ALIAS_RESOLVED(0.00)[];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCVD_COUNT_SEVEN(0.00)[7]
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	TO_DN_SOME(0.00)[];
+	MID_RHS_MATCH_FROMTLD(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	RCVD_COUNT_SEVEN(0.00)[10]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 10E3B7398C0
+X-Rspamd-Queue-Id: 54EAE7398A4
 
-spi_geni_init() calls pm_runtime_get_sync() to power up the device
-before accessing hardware registers, but never checks the return value.
-If the runtime resume fails, the function silently proceeds to read and
-write hardware registers on a device that may not be powered up, leading
-to register access faults.
+On Fri, Jul 03, 2026 at 06:32:10PM +0300, Dmitry Baryshkov wrote:
+> On Fri, Jul 03, 2026 at 03:00:35PM +0530, Rakesh Kota wrote:
+> > On Tue, Jun 30, 2026 at 03:50:16PM +0200, Konrad Dybcio wrote:
+> > > On 6/30/26 2:42 PM, Rakesh Kota wrote:
+> > > > On Sun, Jun 28, 2026 at 03:33:23PM +0300, Dmitry Baryshkov wrote:
+> > > >> On Thu, Jun 25, 2026 at 09:11:19PM +0530, Kamal Wadhwa wrote:
+> > > >>> On Wed, Jun 17, 2026 at 03:48:14PM +0300, Dmitry Baryshkov wrote:
+> > > >>>> On Mon, 18 May 2026 at 14:49, Kamal Wadhwa
+> > > >>>> <kamal.wadhwa@oss.qualcomm.com> wrote:
+> > > >>>>>
+> > > >>>>> On Sun, May 17, 2026 at 08:18:15PM +0300, Dmitry Baryshkov wrote:
+> > > >>>>>> On Thu, May 14, 2026 at 04:09:18PM +0530, Kamal Wadhwa wrote:
+> > > >>>>>>> On Wed, May 13, 2026 at 06:14:20PM +0300, Dmitry Baryshkov wrote:
+> > > >>>>>>>> On 13/05/2026 17:29, Rakesh Kota wrote:
+> > > >>>>>>>>> On Wed, May 13, 2026 at 03:01:47PM +0300, Dmitry Baryshkov wrote:
+> > > >>>>>>>>>> On Wed, May 13, 2026 at 04:28:35AM +0000, sashiko-bot@kernel.org wrote:
+> > > >>>>>>>>>>> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> > > >>>>>>>>>>> - [High] The PMIC regulator definitions omit their required input supply dependencies (e.g., `vdd_s2-supply`, `vdd_l3-supply`), breaking the power hierarchy.
+> > > >>>>>>>>>>> - [Medium] The device tree inaccurately hardcodes the `compatible` string to a different PMIC model (`qcom,rpm-pm2250-regulators`) instead of explicitly identifying the actual hardware (PM4125).
+> > > >>>>>>>>>>> --
+> > > >>>>>>>>>>>> +
+> > > >>>>>>>>>>>> +         pm4125_s2: s2 {
+> > > >>>>>>>>>>>> +                 regulator-min-microvolt = <1000000>;
+> > > >>>>>>>>>>>> +                 regulator-max-microvolt = <1200000>;
+> > > >>>>>>>>>>>> +         };
+> > > >>>>>>>>>>>
+> > > >>>>>>>>>>> Do these regulators need to explicitly define their input supply dependencies
+> > > >>>>>>>>>>> such as vdd_s2-supply?
+> > > >>>>>>>>>>>
+> > > >>>>>>>>>>> Without these properties, the regulator framework might be unaware that the
+> > > >>>>>>>>>>> PMIC regulators draw power from upstream supplies.
+> > > >>>>>>>>>>>
+> > > >>>>>>>>>>> If the kernel dynamically manages the upstream supply and its reference count
+> > > >>>>>>>>>>> drops to zero, could it be disabled, causing an unexpected power loss for
+> > > >>>>>>>>>>> downstream components?
+> > > >>>>>>>>>>
+> > > >>>>>>>>>> And this is a correct comment. Please provide missing supplies.
+> > > >>>>>>>>>>
+> > > >>>>>>>>> As per the Qualcomm system design, the parent-child supply relationship
+> > > >>>>>>>>> is managed by the RPM firmware, not the Linux regulator framework. The
+> > > >>>>>>>>> RPM ensures the parent supply is never disabled until all subsystem
+> > > >>>>>>>>> votes are cleared.
+> > > >>>>>>>>
+> > > >>>>>>>> How is this different from other, previous platforms?
+> > > >>>>>>>
+> > > >>>>>>> This is not different. In the previous platforms too this is taken care from the
+> > > >>>>>>> RPM/RPMH firmware side, the only case where we may need explicit vote to parent
+> > > >>>>>>> is for non-rpmh/rpm regulator rails (like i2c based regulator pm8008), which
+> > > >>>>>>> may have a RPM/RPMH regulator as a parent.
+> > > >>>>>>>
+> > > >>>>>>> Even on those previous targets the parent rail of all RPM/RPMH regulators are
+> > > >>>>>>> internally voted by RPM/RPMH FW at proper voltage with required headroom
+> > > >>>>>>> calculated based on the active child rails. This was done for all the
+> > > >>>>>>> subsystems (including APPS) regulators.
+> > > >>>>>>>
+> > > >>>>>>> So no explicit handling from the APPS is required for parent supply.
+> > > >>>>>>
+> > > >>>>>> You are explaining the driver behaviour. But the question is about the
+> > > >>>>>> hardware description. If there is no difference, please add necessary
+> > > >>>>>> supplies back.
+> > > >>>>>
+> > > >>>>> I understand your concern about descibing the parent-child relation in the
+> > > >>>>> devicetree, and given that we have been almost always followed this for all
+> > > >>>>> the previous targets, it will expected of us to add them.
+> > > >>>>
+> > > >>>> Yes.
+> > > >>>>
+> > > >>>>>
+> > > >>>>> However, we want to avoid the unnecessary access to the parent from APPS.
+> > > >>>>
+> > > >>>> Why? What is the reason? Do we want to do the same for all the
+> > > >>>> platforms? Only for Shikra? Something else?
+> > > >>>>
+> > > >>>>> At the moment, I do not see a way to avoid that, if we add the parent
+> > > >>>>> regulators.
+> > > >>>>
+> > > >>>> That depend on the answer to the previous question. In the end, we can
+> > > >>>> make the driver ignore the parents by removing them from the regulator
+> > > >>>> desc.
+> > > >>>
+> > > >>> Ok, this seems like a good suggestion, so you mean its ok if we define the
+> > > >>> regulator desc's supply column with NULL? And only keep that in the DT?
+> > > >>>
+> > > >>> you mean like this?
+> > > >>> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/regulator/qcom-rpmh-regulator.c?h=v7.1#n1453
+> > > >>>
+> > > >>> (please let me know if i got that right. thanks)
+> > > >>
+> > > >> Yes. Don't forget to explain in the commit message, why you are doing
+> > > >> so.
+> > > > 
+> > > > Currently, Agatti uses the same PMIC, so we cannot set the driver
+> > > > supply name reference to NULL. Since it's an older target,
+> > > > we'll need to run a regression before making any driver-level changes.
+> > > > 
+> > > > Additionally, the child-to-parent regulator ganging differs between
+> > > > Shikra and Agatti:
+> > > > 
+> > > >  - On Agatti, l3 regulator is ganged with vdd_l13_l14_l15_l16
+> > > >  - On Shikra, l3 is ganged with vdd_l2_l3
+> > > 
+> > > Is it configurable on the PMIC level? I was under the impression the
+> > > supply maps are fixed in hardware.  Is there a chance the agatti
+> > > description is just wrong?
+> > 
+> > The supply ganging between child LDOs and parent supplies is not fixed
+> > at the PMIC hardware level — it varies per platform based on system
+> > design requirements. The same LDO can have a different parent supply on
+> > different SoCs.
+> 
+> It can have different power supplies, but the supply is provided through
+> a fixed pin of the PMIC. Please correct me if I'm wrong.
+> 
 
-Fix this by replacing pm_runtime_get_sync() with the
-PM_RUNTIME_ACQUIRE_IF_ENABLED() macro and checking the result via
-PM_RUNTIME_ACQUIRE_ERR(), propagating any error back to the caller
-immediately before any hardware access occurs.
+You're right, I apologize for the confusion. The supply rail is fixed in
+hardware via physical pin connections. The differing supply name in the
+Agatti DTS is likely incorrect. 
 
-Since the macro handles its own cleanup on failure, the out_pm label and
-the corresponding pm_runtime_put() call are no longer needed. Replace
-all goto out_pm paths with direct return ret statements and remove the
-label entirely.
+I'll address this in the next patch series — updating the driver
+to set the parent supply to NULL, and correcting the Agatti and Shikra
+DT parent supply names to match the actual PMIC pin connections,
+since the base change has already been merged.
 
-Fixes: 561de45f72bd ("spi: spi-geni-qcom: Add SPI driver support for GENI based QUP")
-Reviewed-by: Rafael J. Wysocki (Intel) <rafael@kernel.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Praveen Talari <praveen.talari@oss.qualcomm.com>
----
- drivers/spi/spi-geni-qcom.c | 17 ++++++++++-------
- 1 file changed, 10 insertions(+), 7 deletions(-)
+https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git/tree/arch/arm64/boot/dts/qcom/shikra-cqm-som.dtsi?h=for-next#n52
 
-diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
-index 88ac0833351c..2914d781dbf5 100644
---- a/drivers/spi/spi-geni-qcom.c
-+++ b/drivers/spi/spi-geni-qcom.c
-@@ -622,25 +622,30 @@ static int spi_geni_init(struct spi_geni_master *mas)
- 	u32 spi_tx_cfg, fifo_disable;
- 	int ret = -ENXIO;
- 
--	pm_runtime_get_sync(mas->dev);
-+	PM_RUNTIME_ACQUIRE_IF_ENABLED(mas->dev, pm);
-+	ret = PM_RUNTIME_ACQUIRE_ERR(&pm);
-+	if (ret < 0) {
-+		dev_err(mas->dev, "Failed to resume and get %d\n", ret);
-+		return ret;
-+	}
- 
- 	proto = geni_se_read_proto(se);
- 
- 	if (spi->target) {
- 		if (proto != GENI_SE_SPI_SLAVE) {
- 			dev_err(mas->dev, "Invalid proto %d\n", proto);
--			goto out_pm;
-+			return ret;
- 		}
- 		spi_slv_setup(mas);
- 	} else if (proto == GENI_SE_INVALID_PROTO) {
- 		ret = geni_load_se_firmware(se, GENI_SE_SPI);
- 		if (ret) {
- 			dev_err(mas->dev, "spi master firmware load failed ret: %d\n", ret);
--			goto out_pm;
-+			return ret;
- 		}
- 	} else if (proto != GENI_SE_SPI) {
- 		dev_err(mas->dev, "Invalid proto %d\n", proto);
--		goto out_pm;
-+		return ret;
- 	}
- 	mas->tx_fifo_depth = geni_se_get_tx_fifo_depth(se);
- 
-@@ -673,7 +678,7 @@ static int spi_geni_init(struct spi_geni_master *mas)
- 			dev_dbg(mas->dev, "Using GPI DMA mode for SPI\n");
- 			break;
- 		} else if (ret == -EPROBE_DEFER) {
--			goto out_pm;
-+			return ret;
- 		}
- 		/*
- 		 * in case of failure to get gpi dma channel, we can still do the
-@@ -702,8 +707,6 @@ static int spi_geni_init(struct spi_geni_master *mas)
- 		writel(spi_tx_cfg, se->base + SE_SPI_TRANS_CFG);
- 	}
- 
--out_pm:
--	pm_runtime_put(mas->dev);
- 	return ret;
- }
- 
+> > I have verified the Agatti parent-child supply mappings and they are
+> > correct. The difference between Agatti and Shikra is a legitimate
+> > platform-level design difference, not an error in the Agatti DT.
+> 
+> There is an error in the DT. It uses fake PMIC supply names.
+>
+yes, i will correct.
 
--- 
-2.34.1
-
+regards
+Rakesh Kota
 
