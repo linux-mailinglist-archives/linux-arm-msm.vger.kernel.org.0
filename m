@@ -1,236 +1,529 @@
-Return-Path: <linux-arm-msm+bounces-118371-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-118372-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id IBjxIbFPUWrTCAMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-118371-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 22:01:53 +0200
+	id uDkgA2tTUWpxCQMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-118372-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 22:17:47 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 23FB673DFA4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 22:01:53 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1AFFE73E0C5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 22:17:46 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b="ekx/Ir9K";
-	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=RtJLyEIg;
-	dmarc=pass (policy=reject) header.from=qualcomm.com;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118371-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118371-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=NWDb4DQ7;
+	dmarc=pass (policy=quarantine) header.from=kernel.org;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118372-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 104.64.211.4 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118372-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 68E29301AB93
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 20:01:51 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 60C4230086B2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 20:17:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9CB803939A4;
-	Fri, 10 Jul 2026 20:01:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CDB6C393DC8;
+	Fri, 10 Jul 2026 20:17:34 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4320C37F01F
-	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jul 2026 20:01:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C007F44998C;
+	Fri, 10 Jul 2026 20:17:32 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783713710; cv=none; b=WuvFWXWcHzxtV0EMIRB0oVEYCieybH1YoXBcrkyTc7DJrJiXwXPBf5d0XsXBwjN7Xon48IhvGLasNFhzIn1C6nRVlcVERz7CMvnvOvs0z4KXvemyg3UNDuLdqiDB3I+oFBo9sda1SBHS0YciXCUBGtP8qEjmmD0bQ1uiqPq4GAM=
+	t=1783714654; cv=none; b=PUHwIgyiNJ9m9Gx0cawUtN7DugS5iy/HhQpywnTBhupllAAO3pO1I7qJx34mW3EVRQbDmmp9GEaXNo0A/oL63fVuMJiQpY5qASG3OinorrR+RsNfg8raTehToqyUv1KmYMT5fUY+uA/04beBzE2xHnRfbXl7cFP9PoFyBA1F0Sw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783713710; c=relaxed/simple;
-	bh=Wpj7biINABXruyl7S8E64d6S+aIPAP+SvchHl1VAxwI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=uBtk71J/eXrplyErhyQnx8Xrue2WlWWEyLk49jg/9t55hqzwixOtN+g1o3qnvprrdWbsGqf5qDXgEtHy/3JaI8wYrw1eQzmdly+tr/whfQX21qC/vcHstfXaStn3m9wXd0Q1SCCmUHfYIbbwS3AeCNn0QByGiDjqj+CXZ7Y0tP4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ekx/Ir9K; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=RtJLyEIg; arc=none smtp.client-ip=205.220.180.131
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66AH3iPx1361434
-	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jul 2026 20:01:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	6TauvJkutb2hiYeXYH72NLc7gaplt5eyXb6hMmwHelw=; b=ekx/Ir9KisQqT+sO
-	S+dKYkRjkjB89OmCaMF97bUAQTE4ze415+U13BgRp71chl9J8OEjUDfECg6839Yc
-	nrHU8OXQkaA3HRIHSAsV8zu4b9FSDGXSVoYE3+JqrgU63WAXQo7Y+LXc0Qn2dbNZ
-	212MK8O2wSik+3XE3fyIz8kqOILZi9bFNmrGti4fH90kNAuOWbthXc1f5nzxXi3Z
-	i3SUAjXVjvtmqxsJsvxaQjH7BE46ROkkYC942Ci3GUBi7ZxKgprf/NNh+C4N9Moi
-	KcwsOwgJ4eWEKmHL0/2w+8WpmOwVO7wPVFc8npsdtlae8mdoAPVb52lzhb7gw2wn
-	ZmWaaw==
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fb2pc97wh-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jul 2026 20:01:48 +0000 (GMT)
-Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-2ce8a76df2dso17412735ad.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jul 2026 13:01:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1783713702; x=1784318502; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=6TauvJkutb2hiYeXYH72NLc7gaplt5eyXb6hMmwHelw=;
-        b=RtJLyEIgqnNad7be2CYn6VXWOjk31k/W+zXl/1132uS53TFuElau2+U6ngDlo4KaZ8
-         uBN4fCmesPQuIVvtrS+WM8jO2dwESugErk01lemvx/YGw6h8/5NMFMlCMArVCnU7vl/X
-         SNtyIVMKi0aILFHbu/HJxHOzAKQhHpPf/4ae75o+ftIPvT0ivva9q3D3O4N8kWTczWoP
-         SPfLBDMyKp82zDYtRrcBgFuAWfLcI5ZwIVXTaIBSlGcghnBL5UJzynavxmKwq2sn1ZPQ
-         XBX+ksYWuEgB62UteUjZNDrMGuVFstdETycwYrN8AHRdtjzHyhDxjHizobuqcVNw8tJ/
-         Cpwg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783713702; x=1784318502;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=6TauvJkutb2hiYeXYH72NLc7gaplt5eyXb6hMmwHelw=;
-        b=fh2sXgUPI26uooZmXx/cuMV/SWKDJ21zMkzVnyXM1Xi5aWE4qrn1PczB8cooTXjs9W
-         atVXJS+AVK9LfMP7QfyGqIwfZAK1/hsdxcUyAOev0j84B0nSTZiXDIq2rIdSpRrAubh4
-         b7Q68wQcF8Drlk8LgtHq5W3gIBZyUYar8ow8+u4qKTm2eMI4/jcVnnJtHj304LC1skda
-         h4eNeUwundKWOW4E/dyPcY6T76SE86WIg/Cx/TrH3ejE9AkvP+8NWgzo0Lx4sggtd3Dx
-         bvaSimLdoBIsrWg2IuYVqwTmr/0soJGxRQDOox6dvj6FKOp0/vqEP16XbYESERrxYYk+
-         aUhA==
-X-Gm-Message-State: AOJu0YxxyMywjCVtZh3928EY/5HgE8OC2v6QJhBFbtBElToszsMpNvAt
-	K/XJzaTmm6xt2wbBb3UPnmMgHH+DsrfdBxddDSR0uhFWaLhU8Mpt6Pm2UtJv6lf0HVYvCFND6OM
-	iEKOYvsR34PAi0dtU48C95rTOci+TsaKZU4fQtdMxMq++Hpv5p2XpWqccAvaes1D6IYVH
-X-Gm-Gg: AfdE7cn3HTtRv6xXdcMkp0ARal4Z7QiBUL0ZOYY6z2N8+ThofEjw4+0vvRURUezpsMt
-	TNjoKrikaPCQyKt1APgDoztvg+7nRcRBC0BFmoxqCxKB3okBBqRdaf0UEhD/5oM0hND2rck1MR+
-	uVM94AaR+BrmTkPr7lHSm6sVNAZ2hmHUSIkOMRjNmO9X/yzUzlgyqhgNLakxDpbB3BzonMp6Kt3
-	Gi/YbIdXFBu02BbuMAT1P+w4bpR88Xg/bxa2Sp6/3kAsIZqlACwvkCz9ne0KW6tI/4QkoXMLNpt
-	CNN9A4Wj5Dxw+gykDXuptK82Cb9Cdos5zTQCyu36yxUztECkdAPdPx3rBwCVdHyRZ/aGAT3c6NL
-	v+f6Z8tVViihvF9U6qxAXkI0tPmg8ROY4Sj1P7MNAbMo5j8uflBGF3w3WIqfWrSpVm7xm
-X-Received: by 2002:a05:6a20:258e:b0:3c0:42c0:702e with SMTP id adf61e73a8af0-3c110ba2a31mr439263637.52.1783713702127;
-        Fri, 10 Jul 2026 13:01:42 -0700 (PDT)
-X-Received: by 2002:a05:6a20:258e:b0:3c0:42c0:702e with SMTP id adf61e73a8af0-3c110ba2a31mr439205637.52.1783713701649;
-        Fri, 10 Jul 2026 13:01:41 -0700 (PDT)
-Received: from [192.168.1.11] (15.sub-75-218-246.myvzw.com. [75.218.246.15])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-13b659666e7sm50819545c88.7.2026.07.10.13.01.38
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 10 Jul 2026 13:01:40 -0700 (PDT)
-Message-ID: <3f399cac-d82d-4d52-8a52-45cd9a0e31d8@oss.qualcomm.com>
-Date: Fri, 10 Jul 2026 13:01:37 -0700
+	s=arc-20240116; t=1783714654; c=relaxed/simple;
+	bh=C4Yu71lac8pIy3vdGuBGIphs0YWMA1+aDi3eZhDjMUE=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=rA3WitmK+S9j9MGQBxvxJUVB4PEe2oUOhRjEouIrGCqWlLdW9zAbY/I5Ttld83kpErwlNQcC7H7WFYh9rzNh18DvZWLy/B57R6gONRzbZvXmm2qv8JP/ahkrLhWQ+/z3C8O6SeWG73GNvx0jT2O7y3XGmhKPVNO//xVpg6zruKE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NWDb4DQ7; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A3C61F000E9;
+	Fri, 10 Jul 2026 20:17:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1783714652;
+	bh=JQW6B9yq7rR/bwTqnS+r6OlWEUSb89pRH27/Ug8BeOA=;
+	h=From:Subject:Date:To:Cc;
+	b=NWDb4DQ7MUeqgbRNqZUG7DgijSzbV62Fy1N9G8AUIWmqoFkWkyON/u0JGsQA6RGjE
+	 DAv/3eHtjQ9eNnO8S1+kjMzw2Xjd8DO/bkHNd8Lo57BOpOtPnRi3Y9gtg116qG/JUG
+	 AlUXR4P5IcAASHCG2tr0N4tZ1xgE6r8I4/VXRO+fnTBvj9tnCj7W/WVvsbHyoNCMYa
+	 KsutgjQ+wLupOjdkccJlxWzHu+dn39dkLU6XNEXXY8uUnf5bRPcP2a1AXJcM3PRL3y
+	 aW0ObkfHc/TGiZw/HW2cRlPATx2khiqfRhAlfGNWmcYwHzSAIU339YX9gaXhm9IYJo
+	 G+I52oYLhc95w==
+From: Lorenzo Stoakes <ljs@kernel.org>
+Subject: [PATCH v2 00/33] mm: make VMA page offset handling more consistent
+Date: Fri, 10 Jul 2026 21:16:41 +0100
+Message-Id: <20260710-b4-pre-scalable-cow-v2-0-2a5aa403d977@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: (subset) [PATCH v9 00/14] firmware: qcom: Add OP-TEE PAS service
- support
-To: Bjorn Andersson <andersson@kernel.org>, konradybcio@kernel.org,
-        Sumit Garg <sumit.garg@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-media@vger.kernel.org, netdev@vger.kernel.org,
-        linux-wireless@vger.kernel.org, ath12k@lists.infradead.org,
-        linux-remoteproc@vger.kernel.org, robh@kernel.org, krzk+dt@kernel.org,
-        conor+dt@kernel.org, robin.clark@oss.qualcomm.com, sean@poorly.run,
-        akhilpo@oss.qualcomm.com, lumag@kernel.org, abhinav.kumar@linux.dev,
-        jesszhan0024@gmail.com, marijn.suijten@somainline.org,
-        airlied@gmail.com, simona@ffwll.ch, vikash.garodia@oss.qualcomm.com,
-        bod@kernel.org, mchehab@kernel.org, elder@kernel.org,
-        andrew+netdev@lunn.ch, davem@davemloft.net, edumazet@google.com,
-        kuba@kernel.org, pabeni@redhat.com, jjohnson@kernel.org,
-        mathieu.poirier@linaro.org, trilokkumar.soni@oss.qualcomm.com,
-        mukesh.ojha@oss.qualcomm.com, pavan.kondeti@oss.qualcomm.com,
-        jorge.ramirez@oss.qualcomm.com, tonyh@qti.qualcomm.com,
-        vignesh.viswanathan@oss.qualcomm.com,
-        srinivas.kandagatla@oss.qualcomm.com,
-        amirreza.zarrabi@oss.qualcomm.com, jenswi@kernel.org,
-        op-tee@lists.trustedfirmware.org, apurupa@qti.qualcomm.com,
-        skare@qti.qualcomm.com, linux-kernel@vger.kernel.org,
-        Sumit Garg <sumit.garg@oss.qualcomm.com>
-References: <20260702115835.167602-1-sumit.garg@kernel.org>
- <178362521364.2422497.1305957434056184382.b4-ty@kernel.org>
-From: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <178362521364.2422497.1305957434056184382.b4-ty@kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzEwMDIwMCBTYWx0ZWRfX+r377eccvOvE
- AjfIjjrdn71LNdpw5sWNsly+TIRMY7YnXP/pbWv0JQ7QDTzaFSpeLkK1H70auGIkzCyMS/Oxshi
- khcshbFFNGtZb8cYuGSmqFHH0//H7Gh4GgtFKZs+PybU3d7gfx2kGoYWqQc9btdrNPyqGEyKLxt
- RMFTbgxZObzbCxX3TJB4u0KVo4iPYhir/3nxDqRayjdkqD4+CD+kW8dBKi7TDcSQEnYxo/sGQB0
- fwPU2+huxOH05TvCs/BQrTwdRv3zQwia6nfYV0vXoPE+9TrJEzSocCjzKISRvY8xQGkyFVB0QUQ
- 5X72Oa+/qzj0mUCWQwoy19pCVP0dtdgyjFST0dgjFl+s7FAe0Iej221ebPzzhweAOX42Gd6MX2h
- gHyIBTb9Wd+tC3WCzBsQC/wW8Gutb/bR6p0KsZdZMA7zuBzzjmeBJMtLeIaGa0sxv9GtFQ2x0OU
- /5BNEEzitKQwVAbh/sg==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzEwMDIwMCBTYWx0ZWRfXyTz7GIgI/ENM
- roIL8Er5uRCg5NcU3vroUiigSIFlqazpySuEbf7rnrzlj6ek5GkJ5ek3AF+1I+G8DKaSMsR0gIk
- 5IDZu1SOAJ13oGN8PnlHMImF/rRenug=
-X-Proofpoint-ORIG-GUID: nxwY_c9-XkBbV9sNS9ns2MfzKnRoyFBI
-X-Authority-Analysis: v=2.4 cv=J9SaKgnS c=1 sm=1 tr=0 ts=6a514fac cx=c_pps
- a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=6VQYfvmiyQ8t40WkS/mQdw==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=G7o58nB-JDmhE5M--eMA:9 a=QEXdDO2ut3YA:10
- a=GvdueXVYPmCkWapjIL-Q:22
-X-Proofpoint-GUID: nxwY_c9-XkBbV9sNS9ns2MfzKnRoyFBI
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-10_05,2026-07-10_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 bulkscore=0 malwarescore=0 spamscore=0 adultscore=0
- clxscore=1015 suspectscore=0 impostorscore=0 lowpriorityscore=0
- priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607100200
+X-B4-Tracking: v=1; b=H4sIAClTUWoC/yWNQQ6CMBBFr0JmbZu2gKgr72FYQBmh2LRmBlFDu
+ LsFly95//0FGMkhwyVbgHB27GJIYA4Z2KEJPQrXJQajzFFVWom2EE9CwbbxTetR2PgWpsjVWem
+ yQywgLZNwd5+9eqv/zK92RDttqc0YHE+RvvvtrDcPbJyRpK5OpspLrZXs3ST9yNcHUkAvI/VQr
+ +v6A3HXvTCzAAAA
+X-Change-ID: 20260710-b4-pre-scalable-cow-24309015dee4
+To: Andrew Morton <akpm@linux-foundation.org>, 
+ David Hildenbrand <david@kernel.org>, 
+ "Liam R. Howlett" <liam@infradead.org>, Vlastimil Babka <vbabka@kernel.org>, 
+ Mike Rapoport <rppt@kernel.org>, Suren Baghdasaryan <surenb@google.com>, 
+ Michal Hocko <mhocko@suse.com>, Rik van Riel <riel@surriel.com>, 
+ Harry Yoo <harry@kernel.org>, Jann Horn <jannh@google.com>, 
+ Lance Yang <lance.yang@linux.dev>, Pedro Falcato <pfalcato@suse.de>, 
+ Russell King <linux@armlinux.org.uk>, Dinh Nguyen <dinguyen@kernel.org>, 
+ Simon Schuster <schuster.simon@siemens-energy.com>, 
+ "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>, 
+ Helge Deller <deller@gmx.de>, Alexander Viro <viro@zeniv.linux.org.uk>, 
+ Christian Brauner <brauner@kernel.org>, Jan Kara <jack@suse.cz>, 
+ Dan Williams <djbw@kernel.org>, Matthew Wilcox <willy@infradead.org>, 
+ Muchun Song <muchun.song@linux.dev>, Oscar Salvador <osalvador@suse.de>, 
+ Masami Hiramatsu <mhiramat@kernel.org>, Oleg Nesterov <oleg@redhat.com>, 
+ Peter Zijlstra <peterz@infradead.org>, Ingo Molnar <mingo@redhat.com>, 
+ Arnaldo Carvalho de Melo <acme@kernel.org>, 
+ Namhyung Kim <namhyung@kernel.org>, Mark Rutland <mark.rutland@arm.com>, 
+ Alexander Shishkin <alexander.shishkin@linux.intel.com>, 
+ Jiri Olsa <jolsa@kernel.org>, Ian Rogers <irogers@google.com>, 
+ Adrian Hunter <adrian.hunter@intel.com>, 
+ James Clark <james.clark@linaro.org>, Zi Yan <ziy@nvidia.com>, 
+ Baolin Wang <baolin.wang@linux.alibaba.com>, Nico Pache <npache@redhat.com>, 
+ Ryan Roberts <ryan.roberts@arm.com>, Dev Jain <dev.jain@arm.com>, 
+ Barry Song <baohua@kernel.org>, Miaohe Lin <linmiaohe@huawei.com>, 
+ Naoya Horiguchi <nao.horiguchi@gmail.com>, Xu Xin <xu.xin16@zte.com.cn>, 
+ Chengming Zhou <chengming.zhou@linux.dev>, SJ Park <sj@kernel.org>, 
+ Matthew Brost <matthew.brost@intel.com>, 
+ Joshua Hahn <joshua.hahnjy@gmail.com>, Rakie Kim <rakie.kim@sk.com>, 
+ Byungchul Park <byungchul@sk.com>, Gregory Price <gourry@gourry.net>, 
+ Ying Huang <ying.huang@linux.alibaba.com>, 
+ Alistair Popple <apopple@nvidia.com>, Hugh Dickins <hughd@google.com>, 
+ Peter Xu <peterx@redhat.com>, Kees Cook <kees@kernel.org>, 
+ Marek Szyprowski <m.szyprowski@samsung.com>, 
+ Robin Murphy <robin.murphy@arm.com>, 
+ Andrey Konovalov <andreyknvl@gmail.com>, 
+ Alexander Potapenko <glider@google.com>, Dmitry Vyukov <dvyukov@google.com>, 
+ Steven Rostedt <rostedt@goodmis.org>, 
+ Mathieu Desnoyers <mathieu.desnoyers@efficios.com>, 
+ Jarkko Sakkinen <jarkko@kernel.org>, 
+ Dave Hansen <dave.hansen@linux.intel.com>, 
+ Thomas Gleixner <tglx@kernel.org>, Borislav Petkov <bp@alien8.de>, 
+ x86@kernel.org, "H. Peter Anvin" <hpa@zytor.com>, 
+ Ian Abbott <abbotti@mev.co.uk>, 
+ H Hartley Sweeten <hsweeten@visionengravers.com>, 
+ Lucas Stach <l.stach@pengutronix.de>, 
+ Christian Gmeiner <christian.gmeiner@gmail.com>, 
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+ Patrik Jakobsson <patrik.r.jakobsson@gmail.com>, 
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+ Rob Clark <robin.clark@oss.qualcomm.com>, 
+ Dmitry Baryshkov <lumag@kernel.org>, 
+ Abhinav Kumar <abhinav.kumar@linux.dev>, 
+ Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>, 
+ Marijn Suijten <marijn.suijten@somainline.org>, 
+ Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>, 
+ Thierry Reding <thierry.reding@kernel.org>, 
+ Mikko Perttunen <mperttunen@nvidia.com>, 
+ Jonathan Hunter <jonathanh@nvidia.com>, 
+ Christian Koenig <christian.koenig@amd.com>, Huang Rui <ray.huang@amd.com>, 
+ Matthew Auld <matthew.auld@intel.com>, Jason Gunthorpe <jgg@ziepe.ca>, 
+ Yishai Hadas <yishaih@nvidia.com>, 
+ Shameer Kolothum <skolothumtho@nvidia.com>, 
+ Kevin Tian <kevin.tian@intel.com>, Ankit Agrawal <ankita@nvidia.com>, 
+ Alex Williamson <alex@shazbot.org>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Shakeel Butt <shakeel.butt@linux.dev>, Usama Arif <usama.arif@linux.dev>
+Cc: Lorenzo Stoakes <ljs@kernel.org>, linux-mm@kvack.org, 
+ linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+ linux-parisc@vger.kernel.org, linux-fsdevel@vger.kernel.org, 
+ nvdimm@lists.linux.dev, linux-perf-users@vger.kernel.org, 
+ linux-trace-kernel@vger.kernel.org, damon@lists.linux.dev, 
+ iommu@lists.linux.dev, kasan-dev@googlegroups.com, 
+ linux-sgx@vger.kernel.org, etnaviv@lists.freedesktop.org, 
+ dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
+ freedreno@lists.freedesktop.org, linux-tegra@vger.kernel.org, 
+ kvm@vger.kernel.org, Russell King <linux+etnaviv@armlinux.org.uk>, 
+ Ackerley Tng <ackerleytng@google.com>, Kai Huang <kai.huang@intel.com>
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=15609; i=ljs@kernel.org;
+ h=from:subject:message-id; bh=C4Yu71lac8pIy3vdGuBGIphs0YWMA1+aDi3eZhDjMUE=;
+ b=owGbwMvMwCV2fu7ZrsZH9SKMp9WSGLICg80tWR4+9zuUYB0pFfzLvnj1kgvesn57DAzNOTPrk
+ 0OOXpncUcrCIMbFICumyPL8i/j+IJGweZ0X/N1g5rAygQxh4OIUgIn8vMzwz8KS18Nb49yDM1Hr
+ O6fonH4i8/hpm8b86w/Fri4TD3v8bBfDH561m94eXr1k9uwtrU41fT1yb2w3ynduXn5tyQZHucT
+ 73GwA
+X-Developer-Key: i=ljs@kernel.org; a=openpgp;
+ fpr=E7F417BF5214569E89D04F46CF9DCD8A81E27F14
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-0.66 / 15.00];
+X-Spamd-Result: default: False [-3.66 / 15.00];
+	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORWARDED(0.00)[lists@lfdr.de];
-	RCPT_COUNT_TWELVE(0.00)[49];
-	TAGGED_FROM(0.00)[bounces-118371-lists,linux-arm-msm=lfdr.de];
-	MIME_TRACE(0.00)[0:+];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:andersson@kernel.org,m:konradybcio@kernel.org,m:sumit.garg@kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:dri-devel@lists.freedesktop.org,m:freedreno@lists.freedesktop.org,m:linux-media@vger.kernel.org,m:netdev@vger.kernel.org,m:linux-wireless@vger.kernel.org,m:ath12k@lists.infradead.org,m:linux-remoteproc@vger.kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:robin.clark@oss.qualcomm.com,m:sean@poorly.run,m:akhilpo@oss.qualcomm.com,m:lumag@kernel.org,m:abhinav.kumar@linux.dev,m:jesszhan0024@gmail.com,m:marijn.suijten@somainline.org,m:airlied@gmail.com,m:simona@ffwll.ch,m:vikash.garodia@oss.qualcomm.com,m:bod@kernel.org,m:mchehab@kernel.org,m:elder@kernel.org,m:andrew+netdev@lunn.ch,m:davem@davemloft.net,m:edumazet@google.com,m:kuba@kernel.org,m:pabeni@redhat.com,m:jjohnson@kernel.org,m:mathieu.poirier@linaro.org,m:trilokkumar.soni@oss.qualcomm.com,m:mukesh.ojha@oss.qualcomm.com,m:pavan.kondeti@oss.qualcomm
- .com,m:jorge.ramirez@oss.qualcomm.com,m:tonyh@qti.qualcomm.com,m:vignesh.viswanathan@oss.qualcomm.com,m:srinivas.kandagatla@oss.qualcomm.com,m:amirreza.zarrabi@oss.qualcomm.com,m:jenswi@kernel.org,m:op-tee@lists.trustedfirmware.org,m:apurupa@qti.qualcomm.com,m:skare@qti.qualcomm.com,m:linux-kernel@vger.kernel.org,m:sumit.garg@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,m:andrew@lunn.ch,s:lists@lfdr.de];
+	TAGGED_FROM(0.00)[bounces-118372-lists,linux-arm-msm=lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:akpm@linux-foundation.org,m:david@kernel.org,m:liam@infradead.org,m:vbabka@kernel.org,m:rppt@kernel.org,m:surenb@google.com,m:mhocko@suse.com,m:riel@surriel.com,m:harry@kernel.org,m:jannh@google.com,m:lance.yang@linux.dev,m:pfalcato@suse.de,m:linux@armlinux.org.uk,m:dinguyen@kernel.org,m:schuster.simon@siemens-energy.com,m:James.Bottomley@HansenPartnership.com,m:deller@gmx.de,m:viro@zeniv.linux.org.uk,m:brauner@kernel.org,m:jack@suse.cz,m:djbw@kernel.org,m:willy@infradead.org,m:muchun.song@linux.dev,m:osalvador@suse.de,m:mhiramat@kernel.org,m:oleg@redhat.com,m:peterz@infradead.org,m:mingo@redhat.com,m:acme@kernel.org,m:namhyung@kernel.org,m:mark.rutland@arm.com,m:alexander.shishkin@linux.intel.com,m:jolsa@kernel.org,m:irogers@google.com,m:adrian.hunter@intel.com,m:james.clark@linaro.org,m:ziy@nvidia.com,m:baolin.wang@linux.alibaba.com,m:npache@redhat.com,m:ryan.roberts@arm.com,m:dev.jain@arm.com,m:baohua@kernel.org,m:linmiaohe@huawei.com,m:nao.horiguchi@gma
+ il.com,m:xu.xin16@zte.com.cn,m:chengming.zhou@linux.dev,m:sj@kernel.org,m:matthew.brost@intel.com,m:joshua.hahnjy@gmail.com,m:rakie.kim@sk.com,m:byungchul@sk.com,m:gourry@gourry.net,m:ying.huang@linux.alibaba.com,m:apopple@nvidia.com,m:hughd@google.com,m:peterx@redhat.com,m:kees@kernel.org,m:m.szyprowski@samsung.com,m:robin.murphy@arm.com,m:andreyknvl@gmail.com,m:glider@google.com,m:dvyukov@google.com,m:rostedt@goodmis.org,m:mathieu.desnoyers@efficios.com,m:jarkko@kernel.org,m:dave.hansen@linux.intel.com,m:tglx@kernel.org,m:bp@alien8.de,m:x86@kernel.org,m:hpa@zytor.com,m:abbotti@mev.co.uk,m:hsweeten@visionengravers.com,m:l.stach@pengutronix.de,m:christian.gmeiner@gmail.com,m:airlied@gmail.com,m:simona@ffwll.ch,m:patrik.r.jakobsson@gmail.com,m:maarten.lankhorst@linux.intel.com,m:mripard@kernel.org,m:tzimmermann@suse.de,m:robin.clark@oss.qualcomm.com,m:lumag@kernel.org,m:abhinav.kumar@linux.dev,m:jesszhan0024@gmail.com,m:sean@poorly.run,m:marijn.suijten@somainline.org,m:tomi.valkeinen
+ @ideasonboard.com,m:thierry.reding@kernel.org,m:mperttunen@nvidia.com,m:jonathanh@nvidia.com,m:christian.koenig@amd.com,m:ray.huang@amd.com,m:matthew.auld@intel.com,m:jgg@ziepe.ca,m:yishaih@nvidia.com,m:skolothumtho@nvidia.com,m:kevin.tian@intel.com,m:ankita@nvidia.com,m:alex@shazbot.org,s:lists@lfdr.de];
+	FREEMAIL_TO(0.00)[linux-foundation.org,kernel.org,infradead.org,google.com,suse.com,surriel.com,linux.dev,suse.de,armlinux.org.uk,siemens-energy.com,HansenPartnership.com,gmx.de,zeniv.linux.org.uk,suse.cz,redhat.com,arm.com,linux.intel.com,intel.com,linaro.org,nvidia.com,linux.alibaba.com,huawei.com,gmail.com,zte.com.cn,sk.com,gourry.net,samsung.com,goodmis.org,efficios.com,alien8.de,zytor.com,mev.co.uk,visionengravers.com,pengutronix.de,ffwll.ch,oss.qualcomm.com,poorly.run,somainline.org,ideasonboard.com,amd.com,ziepe.ca,shazbot.org];
+	FORGED_SENDER(0.00)[ljs@kernel.org,linux-arm-msm@vger.kernel.org];
+	MIME_TRACE(0.00)[0:+];
+	RCVD_COUNT_THREE(0.00)[4];
+	FORWARDED(0.00)[lists@lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_SENDER(0.00)[jeff.johnson@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FREEMAIL_CC(0.00)[vger.kernel.org,lists.freedesktop.org,lists.infradead.org,kernel.org,oss.qualcomm.com,poorly.run,linux.dev,gmail.com,somainline.org,ffwll.ch,lunn.ch,davemloft.net,google.com,redhat.com,linaro.org,qti.qualcomm.com,lists.trustedfirmware.org];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,oss.qualcomm.com:from_mime,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[jeff.johnson@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	RCPT_COUNT_GT_50(0.00)[124];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[ljs@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	ALIAS_RESOLVED(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	TO_DN_SOME(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt,netdev];
-	RCVD_COUNT_SEVEN(0.00)[7]
+	TAGGED_RCPT(0.00)[linux-arm-msm,etnaviv];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 23FB673DFA4
+X-Rspamd-Queue-Id: 1AFFE73E0C5
 
-On 7/9/2026 12:32 PM, Bjorn Andersson wrote:
-> 
-> On Thu, 02 Jul 2026 17:28:16 +0530, Sumit Garg wrote:
->> From: Sumit Garg <sumit.garg@oss.qualcomm.com>
->>
->> Qcom platforms has the legacy of using non-standard SCM calls
->> splintered over the various kernel drivers. These SCM calls aren't
->> compliant with the standard SMC calling conventions which is a
->> prerequisite to enable migration to the FF-A specifications from Arm.
->>
->> [...]
-> 
-> Applied, thanks!
-> 
-> [01/14] firmware: qcom: Add a generic PAS service
->         commit: 08314e7c2c38b9ae6a5e01c58ed10a950859404d
-> [02/14] firmware: qcom_scm: Migrate to generic PAS service
->         commit: 5c1a2975d23c51c01aca51945d0f10a4ee4c9020
-> [03/14] firmware: qcom: Add a PAS TEE service
->         commit: b6f7978da0c4d26fe465aa6634f5a0b48f900de0
-> [14/14] MAINTAINERS: Add maintainer entry for Qualcomm PAS TZ service
->         commit: 6701259025d49139131a0eb2257659a066dcca22
-> 
-> This is available as an immutable branch, for other subsystems to pull at:
->   https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git 20260702115835.167602-2-sumit.garg@kernel.org
+This series performs a series of cleanups and improvements around how the
+vma->vm_pgoff field is used.
 
-I've merged this branch into ath/ath-next so it is available for ongoing
-ath12k support.
+Folios belonging to file-backed mappings are simply indexed by the page
+offset within the file they map (excepting pfnmap and driver mappings which
+sometimes do things different).
 
-/jeff
+However, anonymous folios belonging to pure anonymous mappings are indexed
+by their "virtual" page offset, which is equal to addr >> PAGE_SHIFT at the
+time at which the VMA was first faulted in.
+
+The page offset of a VMA is stored in vma->vm_pgoff and indicates the page
+offset of the start of the VMA range, whether it be file-backed or
+anonymous.
+
+The work here both cleans up how we reference this field, as well as laying
+the foundations for a future series which addresses the inconsistency of
+CoW'd folios in MAP_PRIVATE-file backed mappings, which are indexed as if
+they were file-backed but behave as if they were anonymous.
+
+This future series will make it such that all anonymous folios are indexed
+by virtual page offset whether belonging to VMAs who satisfy
+vma_is_anonymous() or MAP_PRIVATE-mapped file-backed mappings.
+
+This series:
+
+* Exposes vma_start_pgoff() and updates the kernel to use it consistently.
+* Adds and uses the useful vma_end_pgoff() helper.
+* Parameterises the file-backed mapping helpers vma_interval_tree_*()
+  by address_space rather than rb_root_cached.
+* Renames: the misleadingly-named vma_interval_tree_*() helpers to
+  mapping_rmap_tree_*() to be consistent with the renamed
+  anon_rmap_tree_*().
+* Parameterises anon_rmap_tree_*() by anon_vma.
+* Moves mm/interval_tree.c to the rmap section.
+* Adds vmg_*() helpers for page offset.
+* Clarifies the confusing vmg_adjust_set_range() function.
+* Introduces linear_page_delta() to provide relative pgoff within a VMA.
+* Replaces open-coded versions of linear_page_delta() and
+  linear_page_index() with invocations of these functions.
+* Introduces and uses vma_assert_can_modify() to account for whether a VMA
+  can be modified (detached or write locked).
+* Adds and uses vma_[add,sub]_pgoff() to adjust VMA page offset.
+* Moves __install_special_mapping() to vma.c.
+* Makes vma_set_range() static and internal to vma.c.
+* Introduces and makes use of vma_set_pgoff().
+* Fixes incorrect vma.h header inclusion.
+* Defaults VMA userland tests to 64-bit vma flags size.
+* Updates VMA userland tests to give better output on failure.
+* Various smaller cleanups.
+* Updated the vma_set_pgoff() assert to account for MAP_PRIVATE /dev/zero
+  correctly.
+
+Signed-off-by: Lorenzo Stoakes <ljs@kernel.org>
+---
+v2:
+* Rebased on mm-unstable.
+* Updated tags (thanks to everyone and b4 trailers -F -u! ;)
+* Updated 1/30 to include the vma_start_pgoff() helper in VMA userland tests,
+  which was previously causing a bisection hazard on the VMA userland tests.
+* Updated 2/30 to reference the pfnmap vma->vm_pgoff PFN abomination as per
+  David.
+* Updated 4/30 to include vma_end_pgoff() helper in VMA userland tests at the
+  appropriate point.
+* Updated 8/30 from mapping_interval_tree_*() to mapping_rmap_tree_*() and add
+  commit to rename anon_vma_interval-tree_*() to anon_rmap_tree_*()  as per
+  Pedro.
+* Fixed issue in 8/30 where the internal helpers were still called
+  __vma_interval_tree_*() rather than __mapping_rmap_tree_*().
+* Updated 9/30 to separate out the rename and change of parameter type for
+  clarity as per Gregory.
+* Updated 17/30 to put perf_mmap_aux() variables in reverse Christmas tree order
+  as per Pedro.
+* Updated 19/30 to remove incorrectly placed vma_start_pgoff() invocation as per
+  Thomas/Gregory.
+* Updated 20/30, 21/30 to put the vma_assert_can_modify() VMA userland test stub
+  in the right place as per Pedro.
+* Confined the vma_set_pgoff() assert to CONFIG_MMU, as the ever helpful
+  nommu of course violates all assumptions in this regard.
+* Fixed issue in improved ASSERT_[TRUE, FALSE, EQ, NE] test runners with
+  re-evaluation of input expressions.
+* Updated the vma_start_pgoff() comment further to discuss the MAP_PRIVATE
+  /dev/zero edge case.
+* Update the vma_set_pgoff() assert to handle the mmap_region() newly
+  established file mapping case.
+* Updated the linear_page_index() comment to explicitly defer to
+  vma_start_pgoff() to avoid duplicate information and future bitrot.
+* Updated vma_shrink() to no longer accept the useless start parameter, as
+  it is invoked from relocate_vma_down() only, which has already expanded
+  the VMA to cover the range [new_start, old_end) thus always shrinks the
+  tail.
+* Moved sanity checks from vma_set_pgoff() to new helper
+  assert_sane_pgoff() and documented it clearly.
+* Fixed issue with nascent file-backed VMAs hitting vma_set_pgoff() assert
+  by checking for vma_is_anonymous().
+* Moved vma_set_anonymous() earlier so vma_set_pgoff() works with nascent
+  anonymous VMAs.
+* Updated the VMA userland tests so CONFIG_MMU, CONFIG_PER_VMA_LOCK work
+  with IS_ENABLED().
+
+v1:
+https://patch.msgid.link/cover.1782735110.git.ljs@kernel.org
+
+To: Andrew Morton <akpm@linux-foundation.org>
+To: David Hildenbrand <david@kernel.org>
+To: "Liam R. Howlett" <liam@infradead.org>
+To: Vlastimil Babka <vbabka@kernel.org>
+To: Mike Rapoport <rppt@kernel.org>
+To: Suren Baghdasaryan <surenb@google.com>
+To: Michal Hocko <mhocko@suse.com>
+To: Rik van Riel <riel@surriel.com>
+To: Harry Yoo <harry@kernel.org>
+To: Jann Horn <jannh@google.com>
+To: Lance Yang <lance.yang@linux.dev>
+To: Pedro Falcato <pfalcato@suse.de>
+To: Russell King <linux@armlinux.org.uk>
+To: Dinh Nguyen <dinguyen@kernel.org>
+To: Simon Schuster <schuster.simon@siemens-energy.com>
+To: "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>
+To: Helge Deller <deller@gmx.de>
+To: Alexander Viro <viro@zeniv.linux.org.uk>
+To: Christian Brauner <brauner@kernel.org>
+To: Jan Kara <jack@suse.cz>
+To: Dan Williams <djbw@kernel.org>
+To: Matthew Wilcox <willy@infradead.org>
+To: Muchun Song <muchun.song@linux.dev>
+To: Oscar Salvador <osalvador@suse.de>
+To: Masami Hiramatsu <mhiramat@kernel.org>
+To: Oleg Nesterov <oleg@redhat.com>
+To: Peter Zijlstra <peterz@infradead.org>
+To: Ingo Molnar <mingo@redhat.com>
+To: Arnaldo Carvalho de Melo <acme@kernel.org>
+To: Namhyung Kim <namhyung@kernel.org>
+To: Mark Rutland <mark.rutland@arm.com>
+To: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+To: Jiri Olsa <jolsa@kernel.org>
+To: Ian Rogers <irogers@google.com>
+To: Adrian Hunter <adrian.hunter@intel.com>
+To: James Clark <james.clark@linaro.org>
+To: Zi Yan <ziy@nvidia.com>
+To: Baolin Wang <baolin.wang@linux.alibaba.com>
+To: Nico Pache <npache@redhat.com>
+To: Ryan Roberts <ryan.roberts@arm.com>
+To: Dev Jain <dev.jain@arm.com>
+To: Barry Song <baohua@kernel.org>
+To: Miaohe Lin <linmiaohe@huawei.com>
+To: Naoya Horiguchi <nao.horiguchi@gmail.com>
+To: Xu Xin <xu.xin16@zte.com.cn>
+To: Chengming Zhou <chengming.zhou@linux.dev>
+To: SJ Park <sj@kernel.org>
+To: Matthew Brost <matthew.brost@intel.com>
+To: Joshua Hahn <joshua.hahnjy@gmail.com>
+To: Rakie Kim <rakie.kim@sk.com>
+To: Byungchul Park <byungchul@sk.com>
+To: Gregory Price <gourry@gourry.net>
+To: Ying Huang <ying.huang@linux.alibaba.com>
+To: Alistair Popple <apopple@nvidia.com>
+To: Hugh Dickins <hughd@google.com>
+To: Peter Xu <peterx@redhat.com>
+To: Kees Cook <kees@kernel.org>
+To: Marek Szyprowski <m.szyprowski@samsung.com>
+To: Robin Murphy <robin.murphy@arm.com>
+To: Andrey Konovalov <andreyknvl@gmail.com>
+To: Alexander Potapenko <glider@google.com>
+To: Dmitry Vyukov <dvyukov@google.com>
+To: Steven Rostedt <rostedt@goodmis.org>
+To: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+To: Jarkko Sakkinen <jarkko@kernel.org>
+To: Dave Hansen <dave.hansen@linux.intel.com>
+To: Thomas Gleixner <tglx@kernel.org>
+To: Borislav Petkov <bp@alien8.de>
+To: x86@kernel.org
+To: "H. Peter Anvin" <hpa@zytor.com>
+To: Ian Abbott <abbotti@mev.co.uk>
+To: H Hartley Sweeten <hsweeten@visionengravers.com>
+To: Lucas Stach <l.stach@pengutronix.de>
+To: Christian Gmeiner <christian.gmeiner@gmail.com>
+To: David Airlie <airlied@gmail.com>
+To: Simona Vetter <simona@ffwll.ch>
+To: Patrik Jakobsson <patrik.r.jakobsson@gmail.com>
+To: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+To: Maxime Ripard <mripard@kernel.org>
+To: Thomas Zimmermann <tzimmermann@suse.de>
+To: Rob Clark <robin.clark@oss.qualcomm.com>
+To: Dmitry Baryshkov <lumag@kernel.org>
+To: Abhinav Kumar <abhinav.kumar@linux.dev>
+To: Jessica Zhang <jesszhan0024@gmail.com>
+To: Sean Paul <sean@poorly.run>
+To: Marijn Suijten <marijn.suijten@somainline.org>
+To: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+To: Thierry Reding <thierry.reding@kernel.org>
+To: Mikko Perttunen <mperttunen@nvidia.com>
+To: Jonathan Hunter <jonathanh@nvidia.com>
+To: Christian Koenig <christian.koenig@amd.com>
+To: Huang Rui <ray.huang@amd.com>
+To: Matthew Auld <matthew.auld@intel.com>
+To: Jason Gunthorpe <jgg@ziepe.ca>
+To: Yishai Hadas <yishaih@nvidia.com>
+To: Shameer Kolothum <skolothumtho@nvidia.com>
+To: Kevin Tian <kevin.tian@intel.com>
+To: Ankit Agrawal <ankita@nvidia.com>
+To: Alex Williamson <alex@shazbot.org>
+To: Paolo Bonzini <pbonzini@redhat.com>
+To: Shakeel Butt <shakeel.butt@linux.dev>
+To: Usama Arif <usama.arif@linux.dev>
+Cc: ljs@kernel.org
+Cc: linux-mm@kvack.org
+Cc: linux-kernel@vger.kernel.org
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: linux-parisc@vger.kernel.org
+Cc: linux-fsdevel@vger.kernel.org
+Cc: nvdimm@lists.linux.dev
+Cc: linux-perf-users@vger.kernel.org
+Cc: linux-trace-kernel@vger.kernel.org
+Cc: damon@lists.linux.dev
+Cc: iommu@lists.linux.dev
+Cc: kasan-dev@googlegroups.com
+Cc: linux-sgx@vger.kernel.org
+Cc: etnaviv@lists.freedesktop.org
+Cc: dri-devel@lists.freedesktop.org
+Cc: linux-arm-msm@vger.kernel.org
+Cc: freedreno@lists.freedesktop.org
+Cc: linux-tegra@vger.kernel.org
+Cc: kvm@vger.kernel.org
+Cc: Russell King <linux+etnaviv@armlinux.org.uk>
+
+---
+Lorenzo Stoakes (33):
+      mm: move vma_start_pgoff() into mm.h and clean up
+      mm: add kdoc comments for vma_start/last_pgoff()
+      tools/testing/vma: use vma_start_pgoff() in merge tests
+      mm: introduce and use vma_end_pgoff()
+      mm/rmap: update mm/interval_tree.c comments
+      mm/rmap: parameterise vma_interval_tree_*() by address_space
+      mm/rmap: elide unnecessary static inline's in interval_tree.c
+      mm/rmap: rename vma_interval_tree_*() to mapping_rmap_tree_*()
+      mm/rmap: parameterise anon_vma_interval_tree_*() by anon_vma
+      mm/rmap: rename anon_vma_interval_tree_*() params and use pgoff_t
+      mm/rmap: rename anon_vma_interval_tree_*() to anon_rmap_tree_*()
+      MAINTAINERS: Move mm/interval_tree.c to rmap section
+      mm/vma: introduce and use vmg_pages(), vmg_[start, end]_pgoff()
+      mm/vma: clean up anon_vma_compatible()
+      mm/vma: refactor vmg_adjust_set_range() for clarity
+      mm/vma: minor cleanup of expand_[upwards, downwards]()
+      mm: introduce and use linear_page_delta()
+      mm/vma: use vma_start_pgoff(), linear_page_index() in mm code
+      mm: prefer vma_[start,end]_pgoff() to vma->vm_pgoff in kernel/
+      mm/vma: remove duplicative vma_pgoff_offset() helper
+      mm: use linear_page_[index, delta]() consistently
+      mm/vma: introduce vma_assert_can_modify()
+      mm/vma: add and use vma_[add/sub]_pgoff()
+      mm/vma: move __install_special_mapping() to vma.c
+      mm/vma: make vma_set_range() static, drop insert_vm_struct() decl
+      mm/vma: update vma_shrink() to not pass start, pgoff parameters
+      mm/vma: update vmg_adjust_set_range() to offset pgoff instead
+      mm/vma: slightly rework the anonymous check in __mmap_new_vma()
+      mm/vma: introduce and use vma_set_pgoff()
+      mm/vma: correct incorrect vma.h inclusion
+      mm/vma: use guard clauses in can_vma_merge_[before, after]()
+      tools/testing/vma: default VMA, mm flag bits to 64-bit
+      tools/testing/vma: output compared expression on ASSERT_[EQ, NE]()
+
+ MAINTAINERS                           |   2 +-
+ arch/arm/mm/fault-armv.c              |   4 +-
+ arch/arm/mm/flush.c                   |   2 +-
+ arch/nios2/mm/cacheflush.c            |   2 +-
+ arch/parisc/kernel/cache.c            |   2 +-
+ arch/x86/kernel/cpu/sgx/virt.c        |   3 +-
+ drivers/gpu/drm/etnaviv/etnaviv_gem.c |   3 +-
+ drivers/gpu/drm/gma500/gem.c          |   2 +-
+ drivers/gpu/drm/msm/msm_gem.c         |   3 +-
+ drivers/gpu/drm/omapdrm/omap_gem.c    |   5 +-
+ drivers/gpu/drm/tegra/gem.c           |   3 +-
+ drivers/gpu/drm/ttm/ttm_bo_vm.c       |   7 +-
+ drivers/vfio/pci/nvgrace-gpu/main.c   |   3 +-
+ drivers/vfio/pci/vfio_pci_core.c      |   3 +-
+ fs/dax.c                              |   2 +-
+ fs/hugetlbfs/inode.c                  |  15 +-
+ include/linux/huge_mm.h               |   1 +
+ include/linux/hugetlb.h               |   3 +-
+ include/linux/mm.h                    | 118 ++++++++++----
+ include/linux/mmap_lock.h             |   8 +
+ include/linux/pagemap.h               |  35 +++-
+ kernel/dma/coherent.c                 |   7 +-
+ kernel/dma/direct.c                   |   6 +-
+ kernel/dma/mapping.c                  |   8 +-
+ kernel/dma/ops_helpers.c              |   4 +-
+ kernel/events/core.c                  |  20 +--
+ kernel/events/uprobes.c               |  13 +-
+ kernel/kcov.c                         |   2 +-
+ kernel/trace/ring_buffer.c            |   3 +-
+ mm/damon/vaddr.c                      |   5 +-
+ mm/debug.c                            |   2 +-
+ mm/filemap.c                          |   7 +-
+ mm/huge_memory.c                      |   2 +-
+ mm/hugetlb.c                          |  15 +-
+ mm/internal.h                         |  33 ++--
+ mm/interval_tree.c                    | 111 ++++++++-----
+ mm/khugepaged.c                       |   7 +-
+ mm/ksm.c                              |   7 +-
+ mm/madvise.c                          |   6 +-
+ mm/mapping_dirty_helpers.c            |   2 +-
+ mm/memory-failure.c                   |  10 +-
+ mm/memory.c                           |  33 ++--
+ mm/mempolicy.c                        |  13 +-
+ mm/mmap.c                             |  41 +----
+ mm/mmu_notifier.c                     |   2 +-
+ mm/mremap.c                           |  12 +-
+ mm/msync.c                            |   4 +-
+ mm/nommu.c                            |  22 +--
+ mm/pagewalk.c                         |   4 +-
+ mm/rmap.c                             |  14 +-
+ mm/shmem.c                            |   9 +-
+ mm/userfaultfd.c                      |   4 +-
+ mm/util.c                             |   4 +-
+ mm/vma.c                              | 293 ++++++++++++++++++++++------------
+ mm/vma.h                              |  80 ++++++++--
+ mm/vma_exec.c                         |  12 +-
+ mm/vma_init.c                         |   6 +-
+ mm/vma_internal.h                     |   4 +-
+ tools/testing/vma/Makefile            |   2 +-
+ tools/testing/vma/include/dup.h       |  41 ++++-
+ tools/testing/vma/include/stubs.h     |  16 +-
+ tools/testing/vma/shared.c            |   9 --
+ tools/testing/vma/shared.h            |  43 +++--
+ tools/testing/vma/tests/merge.c       |  40 ++---
+ tools/testing/vma/vma_internal.h      |   4 +-
+ virt/kvm/guest_memfd.c                |   2 +-
+ 66 files changed, 751 insertions(+), 459 deletions(-)
+---
+base-commit: 4a6c88e10a0791d9c3b0677ce984365815c2ab4f
+change-id: 20260710-b4-pre-scalable-cow-24309015dee4
+
+Cheers,
+-- 
+Lorenzo Stoakes <ljs@kernel.org>
+
 
