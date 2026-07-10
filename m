@@ -1,72 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-118346-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-118347-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id pe+0D1I1UWo1AwMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-118346-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 20:09:22 +0200
+	id jZUkD1s1UWo6AwMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-118347-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 20:09:31 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id D669A73D3B1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 20:09:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A410B73D3C1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 20:09:30 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=Ko+HQ5mV;
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=BKV2WcTv;
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118346-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118346-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118347-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118347-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 42EB8303AB61
+	by sea.lore.kernel.org (Postfix) with ESMTP id BF845303D12F
 	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 18:07:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BC2A437C922;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F33F937CD2E;
 	Fri, 10 Jul 2026 18:07:22 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EBD437B3FE;
-	Fri, 10 Jul 2026 18:07:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D04CE37C0E1;
+	Fri, 10 Jul 2026 18:07:21 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783706842; cv=none; b=e4Mo4Ym2zxZy7piMJEbBvcoz5oknPY5IoUbO8l+4Oh1m/A3EWBdxh71ir4pJBg9kEGctGhwvQaBdavCCnl6ozxnbzNuz/eSX9bwdAiKFKJwVGX61HiWHXXAtSzPQjpc7v6RASod5AEArFEAkzvVJ9xD5rpSm5SBxlwgVPp/Oxgk=
+	t=1783706842; cv=none; b=owXRJAgBuXs4YI7L0ZJnQj3mgIgPdwdNQhjpKZpAHZ7aw6oerVibTsJ7sUepyNTGW5+f0SzpsUTdcFjZnQ6PTnhIu6To1xHbtkh26IULYW0+t6CKySvLs7UBP97ZGm1owT9Sl5mAhvj4fX8BuffEpFaYiPDLZxoW1l+92x6LpAk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1783706842; c=relaxed/simple;
-	bh=Ea2dc/zQmoNHDSZIjzgfaOeZ+qwH3BXjDCO5+0emuis=;
+	bh=tnw7FAdtaAybU6L4IAEPAISIrMlltfpeStH7YQBdL4A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Uh+V/EPr0JRGNBO/A0gKkblDGQn3S8022psoaXTY9gIbpFa19bKAEY+ILyuLfPXerZeLneoxkFtWTCxMlQXKvDWD0402UmVt8j1/9HLtN4ZA1wSKwQ0anYSpK5DxI+Wbe65xMLB4NS/ASJG0C2conPj2QDK8Z7oN5sQB8kyE3hQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ko+HQ5mV; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 687DD1F00A3A;
-	Fri, 10 Jul 2026 18:07:19 +0000 (UTC)
+	 MIME-Version:Content-Type; b=sWQzzkptznOgoQWzaFh6TZ2+3x5NxMt9S6xAYRwH+WYbh6t//lEK4U44zggv9NidU3sTdE0n6wbiai2xhFwykYOO0Xc3HBKTgVZPOupwMShJvkToWmu0EGK94YSuwlKEiMyDvKcfJT2NrW8xToP4JcqEsrupflujYpPANQiQ4jQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BKV2WcTv; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E5CE1F000E9;
+	Fri, 10 Jul 2026 18:07:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783706840;
-	bh=q64mLoIKKO6acehYZpPZaLa/VgE/uGU2tHBrQbnJjHw=;
+	s=k20260515; t=1783706841;
+	bh=IDASqxy4pZTBIbj9QbK6E3ArCs4zatN5FPTCPmPK/3A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ko+HQ5mV6YOD+yBIhB5MOp3yEwOS+SM5J68ioNNDx71Y3gJNlvXGjWmHmSm7p38qo
-	 GIHCXvlIfgVMbMFZ3Dis2HPndxB3gypOoQ3PqmVpPgYOr+Jb5gZDxDzVhUVRg/VczQ
-	 /9qOWtihxB7LiKWVr8iZfyJffSrk49LLvlWqCY3l7X1B1fuRNzoXnTm7Dz1kDpojv4
-	 3pfsBUHHeQUCAR3cw3ogO9glxIDoHt0xNCYpzuPlgQ/t64HrRi4C4E1M5j0HyZ6Sqt
-	 HcZVyMfPpp1+HR55R3E7onMSH1IzL3UsqV/Wc8a30MYsznMQR70gGgrrkQQgT7QfZ9
-	 S3+8T3BUd5p6Q==
+	b=BKV2WcTvjwD1qc7gVRmSJNrvvJcJ7MUEoVRI820cOQdPqmoRPhU2pWGTAF1d0NLyy
+	 QR5pTK+Siujr2NFWObyKM3LQ3C8BeCQWoDd8GxYpIlQZiTUzQVAGQbRjXkPzauhkqR
+	 AvlxQ+mkFkvQwPclpZhzF+Q61y1njEMPraHSqIF4a43D8g4MjO775+SDEj5EHazw5Z
+	 RIhUY1CQMr/ayXP8o5kqnsO+BaHEJNWgfqRgGgYcfxtZOc2OM3xVVT69b+WOUqJZZ8
+	 A/ocsvAsX/Gyp0I4M/t2+e0DWaYcIQpvBrKK3Qnh6R0kkMeIPy6CCzNJSIBWVk3li0
+	 xt5GeikEbB+AA==
 From: Bjorn Andersson <andersson@kernel.org>
-To: krzk+dt@kernel.org,
-	mturquette@baylibre.com,
-	linux-remoteproc@vger.kernel.org,
-	Alexandru Gagniuc <mr.nuke.me@gmail.com>
-Cc: mathieu.poirier@linaro.org,
-	robh@kernel.org,
-	conor+dt@kernel.org,
-	konradybcio@kernel.org,
-	sboyd@kernel.org,
-	p.zabel@pengutronix.de,
+To: Mathieu Poirier <mathieu.poirier@linaro.org>,
+	Stephan Gerhold <stephan.gerhold@linaro.org>
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	=?UTF-8?q?Barnab=C3=A1s=20Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>,
 	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-clk@vger.kernel.org
-Subject: Re: (subset) [PATCH v2 0/9] remoteproc: qcom_q6v5_wcss: add native ipq9574 support
-Date: Fri, 10 Jul 2026 13:07:04 -0500
-Message-ID: <178370682987.2572738.13491033810212556744.b4-ty@kernel.org>
+	linux-remoteproc@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 0/2] remoteproc: qcom_q6v5_mss: Fix MDM9607 subsystem control instance ID
+Date: Fri, 10 Jul 2026 13:07:05 -0500
+Message-ID: <178370682990.2572738.16410202237322359346.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260109043352.3072933-1-mr.nuke.me@gmail.com>
-References: <20260109043352.3072933-1-mr.nuke.me@gmail.com>
+In-Reply-To: <20260706-qcom-q6v5-mss-mdm9607-ssctl-id-v1-0-f59e728af621@linaro.org>
+References: <20260706-qcom-q6v5-mss-mdm9607-ssctl-id-v1-0-f59e728af621@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,9 +69,8 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-3.66 / 15.00];
+X-Spamd-Result: default: False [-5.16 / 15.00];
 	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
-	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
@@ -86,60 +78,51 @@ X-Spamd-Result: default: False [-3.66 / 15.00];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_RECIPIENTS(0.00)[m:krzk+dt@kernel.org,m:mturquette@baylibre.com,m:linux-remoteproc@vger.kernel.org,m:mr.nuke.me@gmail.com,m:mathieu.poirier@linaro.org,m:robh@kernel.org,m:conor+dt@kernel.org,m:konradybcio@kernel.org,m:sboyd@kernel.org,m:p.zabel@pengutronix.de,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-clk@vger.kernel.org,m:krzk@kernel.org,m:mrnukeme@gmail.com,m:conor@kernel.org,s:lists@lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
+	TAGGED_FROM(0.00)[bounces-118347-lists,linux-arm-msm=lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:mathieu.poirier@linaro.org,m:stephan.gerhold@linaro.org,m:konrad.dybcio@oss.qualcomm.com,m:barnabas.czeman@mainlining.org,m:linux-arm-msm@vger.kernel.org,m:linux-remoteproc@vger.kernel.org,m:linux-kernel@vger.kernel.org,s:lists@lfdr.de];
 	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[14];
-	FREEMAIL_TO(0.00)[kernel.org,baylibre.com,vger.kernel.org,gmail.com];
 	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
 	FORWARDED(0.00)[lists@lfdr.de];
-	TAGGED_FROM(0.00)[bounces-118346-lists,linux-arm-msm=lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	DKIM_TRACE(0.00)[kernel.org:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	TO_DN_SOME(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
-	TO_DN_SOME(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[7];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
 	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,vger.kernel.org:from_smtp]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: D669A73D3B1
+X-Rspamd-Queue-Id: A410B73D3C1
 
 
-On Thu, 08 Jan 2026 22:33:35 -0600, Alexandru Gagniuc wrote:
-> Support loading remoteproc firmware on IPQ9574 with the qcom_q6v5_wcss
-> driver. This firmware is usually used to run ath11k firmware and enable
-> wifi with chips such as QCN5024.
+On Mon, 06 Jul 2026 17:37:15 +0200, Stephan Gerhold wrote:
+> Currently, trying to shutdown the modem firmware on MDM9607 results in the
+> following error:
 > 
-> When submitting v1, I learned that the firmware can also be loaded by
-> the trustzone firmware. Since TZ is not shipped with the kernel, it
-> makes sense to have the option of a native init sequence, as not all
-> devices come with the latest TZ firmware.
+>   qcom-q6v5-mss 4080000.remoteproc: timeout waiting for ssctl service
+> 
+> This is because qcom_q6v5_mss defines the wrong instance ID for the QMI
+> subsystem control service of the modem firmware. Make this configurable per
+> platform and fix the issue by defining the correct ssctl_id for MDM9607.
 > 
 > [...]
 
 Applied, thanks!
 
-[1/9] remoteproc: qcom_q6v5_wcss: drop unused clocks from q6v5 struct
-      commit: 22afc6163c0c7a144d24a09352b87719d64d5f65
-[2/9] dt-bindings: remoteproc: qcom,ipq8074-wcss-pil: convert to DT schema
-      commit: 2a756ac4d98efc97503629fcaddb2e7c46255824
-[4/9] dt-bindings: remoteproc: qcom: add IPQ9574 image loader
-      commit: bc33b5b5e23a389e660c3d696cd2e043fdf33ef7
-[7/9] remoteproc: qcom_q6v5_wcss: support IPQ9574
-      commit: 0149254e603f1fd89cb08aec36174ba7c2f198e3
-[8/9] remoteproc: qcom_q6v5_wcss: support m3 firmware
-      commit: 67804d8274d478ba8d1a84e9437fb340a8d3c26f
-[9/9] remoteproc: qcom_q6v5_wcss: use bulk clk API for q6 clocks in QCS404
-      commit: 920aa0298197a9a116210ac6057f1e880b9edd99
+[1/2] remoteproc: qcom_q6v5_mss: Make ssctl_id configurable per platform
+      commit: b19a43659ae4d34479ba2194961353827e659367
+[2/2] remoteproc: qcom_q6v5_mss: Fix MDM9607 subsystem control instance ID
+      commit: 4684c0491387814a2a7ebad55fc0f387dd4d4f69
 
 Best regards,
 -- 
