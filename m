@@ -1,443 +1,277 @@
-Return-Path: <linux-arm-msm+bounces-118237-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-118238-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id dVcXFqbGUGq54wIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-118237-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 12:17:10 +0200
+	id SrqtLj/GUGqP4wIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-118238-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 12:15:27 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8ED157398F8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 12:17:09 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2BD6773988C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 12:15:27 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=intel.com header.s=Intel header.b=K74HiR8M;
-	dmarc=pass (policy=none) header.from=intel.com;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118237-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118237-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=Wu5cIhAo;
+	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=RrhX9oMJ;
+	dmarc=pass (policy=reject) header.from=qualcomm.com;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118238-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118238-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id ED778301F5C8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 10:12:23 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 5E13E304C37E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 10:13:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9BE053C277E;
-	Fri, 10 Jul 2026 10:12:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 19404403EA1;
+	Fri, 10 Jul 2026 10:13:06 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.21])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A2263F86F7
-	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jul 2026 10:12:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D024E4048AA
+	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jul 2026 10:13:02 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783678343; cv=none; b=jBueAlAqy/YL71y3/HGtPetuqhusLMkdmKSZNgpiAxKg44MaMYtGgN6CAXk+sDrxshvQXlWYieflWX5C/XSdZfTfbfDeThWonG6ABkkH8DXUV2SW8Sgr9fUexg696YnuKQromQUNDbgQ17Peb7ZTyobOGb7jCqjhzOVvz6CDkTU=
+	t=1783678385; cv=none; b=XgR6p2kHpSFmdirVidDl1+6rYsnE30Ad1gtI6DpvysVAT8Z/1/JfNaPP9pCaYermfXXpiwYsqnaUhhOCcgS6GBM3My48H/NkSmlpfmUm1yPWl/oSZCQJDYwRtykCw3v8oOElyR+wU9oD5ykfLfqKvh4hZUxeTWyiQGr+HodHipg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783678343; c=relaxed/simple;
-	bh=telgb67+44ChLmvvgt7W4O8BCG94OnPlFXajoZTf0YU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uQhRBLYgKR5yejuUQsJ/6EFEdOGc2TdI/l+5CHsfHF5wtFqq8VmuUBu4vg3Xmy7XW1kFlcMQPLlzz5tbcmvHhqibP6pAzsXGhEyMqclfTrsYHZ1Er4l0JHnCdVSY5cOYJQ17xM3OqAC2YhwY09V/T0j1IzrlO21Wi823rZckX4Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=K74HiR8M; arc=none smtp.client-ip=198.175.65.21
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1783678341; x=1815214341;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=telgb67+44ChLmvvgt7W4O8BCG94OnPlFXajoZTf0YU=;
-  b=K74HiR8MRDkj6GybuHIuqmBYmBQK1nIItWAj+MT/9dmvVBGokp8ox0RF
-   F7op4WqG51vXj8HKa83+G3IJn4/H/ukp7vF+tFVnYVfcrOu3Yx8PVVrOX
-   JN734Jwp6LWwxv3oorxgdUDkZ4Egon5Tgji1TWD90SYIYmjNPWdnuCGfD
-   OHWlqXnGVemnXeEUdlAaym59ArV8+FPpk0W5LX8YU77zJBAdoMuek6e/0
-   3ae5D/LWd040eTZUDHTEtQv3n8Rl1gGTfi8FFsZnMBv04M1LxUSNOMrSe
-   O2Xlt/L1bR0fG0L7DcbcDEYLWOXtaiifAYA2CGy9XVeWk0hHrL9y/jGVo
-   Q==;
-X-CSE-ConnectionGUID: 24AtMTYVRWaSEtWSMj+jPg==
-X-CSE-MsgGUID: QV1pYt57QqmJpyhedcoOHw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11841"; a="84233529"
-X-IronPort-AV: E=Sophos;i="6.25,154,1779174000"; 
-   d="scan'208";a="84233529"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
-  by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Jul 2026 03:12:20 -0700
-X-CSE-ConnectionGUID: 8Dx5dY3kQ1uP+/Dsl1vsow==
-X-CSE-MsgGUID: FQyMKse3Tt2H8SILs8hFhA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,154,1779174000"; 
-   d="scan'208";a="252201727"
-Received: from kamilkon-desk.igk.intel.com (HELO localhost) ([10.211.136.201])
-  by fmviesa008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Jul 2026 03:12:19 -0700
-Date: Fri, 10 Jul 2026 12:12:17 +0200
-From: Kamil Konieczny <kamil.konieczny@linux.intel.com>
-To: Rob Clark <rob.clark@oss.qualcomm.com>
-Cc: igt-dev@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 1/2] drm-uapi: Sync msm_drm.h
-Message-ID: <20260710101217.2gaubw6d43w33d67@kamilkon-DESK.igk.intel.com>
-Mail-Followup-To: Kamil Konieczny <kamil.konieczny@linux.intel.com>,
-	Rob Clark <rob.clark@oss.qualcomm.com>,
-	igt-dev@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-	linux-arm-msm@vger.kernel.org
-References: <20260708161224.507091-1-rob.clark@oss.qualcomm.com>
- <20260708161224.507091-2-rob.clark@oss.qualcomm.com>
+	s=arc-20240116; t=1783678385; c=relaxed/simple;
+	bh=507xJERYnG5py92oNzE25+rSf6TS9DCmeVwskQmg59w=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=VoXFb+NKLZY2w609mnekI2CiUCJ9MXmj5nMHm4pUeiJy7nsYqR4By3RewcuuQz1lIgK6CRU/oX00LoizLMprPo6la+4bB7tKZYnqt88DN78NZ5pYj6t5fuh2LJIN6oalfsdXRbfIC3orkJWsALXmOkXeSyJMzY5Rrhyfe1/VoeQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Wu5cIhAo; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=RrhX9oMJ; arc=none smtp.client-ip=205.220.180.131
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66A7eFl8190679
+	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jul 2026 10:13:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=Bb0rb6OYxOnjgheRhVhbX8
+	rxvB0hOJvli2NDVK8wsJ8=; b=Wu5cIhAol99zZRRSArzw/EetOJXjeUYsNecyrv
+	YKDyQr54gKdfucpDY/5pybi6i8suO9uqG+fkYXM6j5CYCbeg1xHmO57IslklIPZw
+	6EpdbDwJWCptCNdjDQlnKUNcqWLs9loxGJhEszFM/X6uUW+MSXtZ12ToLLKWyvA2
+	yZXB60rFKo0r5iQUmaneiGJKuf6oRu6RfE7J+kQUjkugTBuLn52iVyLebVhz6jCM
+	XSttY0IEG3A9back5ZzjNoIo2nVWgU2hOvEIpqpJZyRnb+GT4jd8x4ygg+U7JHmc
+	WkAbuUtA/wnvvJtEcytaWngRJzbMaPwBfWeoQh/ZwbeL5TVg==
+Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com [209.85.210.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fas6n1cg8-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jul 2026 10:13:01 +0000 (GMT)
+Received: by mail-pf1-f200.google.com with SMTP id d2e1a72fcca58-8487a20472aso362209b3a.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jul 2026 03:13:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1783678381; x=1784283181; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:content-type:mime-version
+         :message-id:date:subject:from:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=Bb0rb6OYxOnjgheRhVhbX8rxvB0hOJvli2NDVK8wsJ8=;
+        b=RrhX9oMJv0fDILxUVmK4j4Oslkj7TDg43IpF6yMRdFuxYi+iOV8LYti8BISmefi82S
+         SSDieDmH+A+E7FLkR4L7r1RWAqmwjyQyjEf0jqIf/8yFNX2MyKRX4cGgoeu3uVDkkSpI
+         ppHOv3S+hYV/htowQjlv0tjD+XcRnwtuKCyTWsuP9QfvLDFpPkvRUTLXWSRNlFTpYKmi
+         iiQB/1qAD/P3rhAaXJ+0BNXlzAeSnfDWYQU9WQB1XoMyNgPeRgWPY+mwlHMTc8lyx/aw
+         Q6s4V84Q7q9uI4AiJyukstpfeD0pOw6OyELtQ2//rzKI7OV4J8w+Y1IG6SleS4pedell
+         86CQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783678381; x=1784283181;
+        h=cc:to:content-transfer-encoding:content-type:mime-version
+         :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=Bb0rb6OYxOnjgheRhVhbX8rxvB0hOJvli2NDVK8wsJ8=;
+        b=k80mEkPUcoVHfHoK0quqYd9aRn/M4mvIQWvfJMmbk6yFoka1S4bJ70I939WCYd7NoR
+         lCMdXtMBmXuil8zF13Fy2GR+z5+cTotkEGol7yvWKwRcB8WonrbQh7PQl7EHeu+A/9H3
+         21S2McqgUahNnXqP8rn5ICRl2iwU4YJobb+E+AJgrDChAi/ugUu+z5XTHGtfqbebqLKe
+         XGhPFyOHXg2x+jgHBx9InJGvmLJqw/Iefoi5C30RBKh8uQT4cOjh1g8Ny+4SJv+rFY5b
+         NgccBtDeKh5x/ggfpelpMHv0F3OlVpHn6SY2YMnTwvcgXNcHn5dT1JYUcbCK0JxhrYpd
+         lcPQ==
+X-Forwarded-Encrypted: i=1; AHgh+RqY6SB0QzoyEkD96YhB7yaurLzG31QXI6sDlGrhJltKTgxvdgIiMvRbZgusS9414eShRy1eZVwigenD3j+V@vger.kernel.org
+X-Gm-Message-State: AOJu0Yygk5vEIussJ2VArh7eEnJOb0BK1zQrMujz4gcCjiNkJ9mGH5Gd
+	mDEFS+4tNRoexElk4uYonHQKXigrTj9JBMMXTg8odqUfzGA7O6z8IulSn85csrOB/6yoVqSGlNA
+	W5KCIhSEzikGizx5tn4DhfxI2lhRG2VDUymhqKFN8A8iReFwDBJOvC1wwwgvPG9bLrhqK
+X-Gm-Gg: AfdE7ckkbzHncc1jPMsHtfgsC0CNHgw+9AQKKQOi3wmjkQP7CrDgz1OBhE/f2gaBtlu
+	jkxxUdFiFZmXpE3zmAiQ2+dKw7rNm25O91xzTR6+raerNgcCWU1LcM+9cRjcXZNRjiMPTfPLf5h
+	RBI2/lh2PXGv9gdBzVdKZhU7p//tuZomRxqSJERKfBzPNPF1QS7AJX5u+vCQoQZEjmf8eIFoTk9
+	ciW+u7mgyTcz08/lu6XQO8vvuf6X1rD3N0615rumeTrAP1q9rbk6EY+nFz1Dysdth1n/2+51k6s
+	1FCFb6OLh2uQFUSLcjuiYQfgZHcF67YFM4R8vpOUIIp/fsccGYpGPOl0qRYePXyK1fFvJHLcFdn
+	ZJuLjBPwWIYHq0NhsM4C0zoQGcRwk7deuUGr82QWrlvP8
+X-Received: by 2002:a05:6a00:859f:b0:848:5935:2e11 with SMTP id d2e1a72fcca58-8485935322amr6044424b3a.48.1783678380746;
+        Fri, 10 Jul 2026 03:13:00 -0700 (PDT)
+X-Received: by 2002:a05:6a00:859f:b0:848:5935:2e11 with SMTP id d2e1a72fcca58-8485935322amr6044384b3a.48.1783678380167;
+        Fri, 10 Jul 2026 03:13:00 -0700 (PDT)
+Received: from hu-ptalari-hyd.qualcomm.com ([202.46.22.19])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-847f6d7a96fsm9977815b3a.46.2026.07.10.03.12.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 10 Jul 2026 03:12:59 -0700 (PDT)
+From: Praveen Talari <praveen.talari@oss.qualcomm.com>
+Subject: [PATCH v4 0/2] PM: runtime: Fix sticky -EINVAL after resume
+ callback failure
+Date: Fri, 10 Jul 2026 15:42:42 +0530
+Message-Id: <20260710-fix_sticky_-einval_after_pm_runtime_api_failure-v4-0-be81d6c15043@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260708161224.507091-2-rob.clark@oss.qualcomm.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-B4-Tracking: v=1; b=H4sIAJrFUGoC/5XOTY4CIRAF4KsY1oMpsBucWc09jCEI1WNp/wk00
+ Zi+u7RuXMzGTSUveXlf3VnEQBjZz+rOAmaKNPQlVF8r5o62/0NOvmQmQSpQsuYNXU1M5M43w5H
+ 6bFtjm4TBjJ0JU5+oQ2NHMo2ldgrIlf7WHmztKg+srI4By8RT3O1fOU6HE7q0MEvjSDEN4fZ8K
+ Yul99I1yI/1LDhw5b3bCA1COPgdYlxfJtu6oevW5bDliSzfmc3njCxMrbcHvbXgmkr9w8zz/AD
+ MfO1YbgEAAA==
+X-Change-ID: 20260625-fix_sticky_-einval_after_pm_runtime_api_failure-6797d0a5c4d0
+To: "Rafael J. Wysocki" <rafael@kernel.org>, Pavel Machek <pavel@kernel.org>,
+        Len Brown <lenb@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Danilo Krummrich <dakr@kernel.org>, Mark Brown <broonie@kernel.org>,
+        Alok Chauhan <alokc@codeaurora.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Dilip Kota <dkota@codeaurora.org>,
+        Girish Mahadevan <girishm@codeaurora.org>,
+        bjorn.andersson@oss.qualcomm.com,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: Praveen Talari <praveen.talari@oss.qualcomm.com>, linux-pm@vger.kernel.org,
+        driver-core@lists.linux.dev, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org,
+        Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>,
+        aniket.randive@oss.qualcomm.com, chandana.chiluveru@oss.qualcomm.com
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1783678373; l=3214;
+ i=praveen.talari@oss.qualcomm.com; s=20251114; h=from:subject:message-id;
+ bh=507xJERYnG5py92oNzE25+rSf6TS9DCmeVwskQmg59w=;
+ b=9qtHC3wO+lvgguwyg/YH/XaI46a5cd/3BUHBLg8wAzd66qJAtThnToflVUGl3tpha+T6cUCl+
+ M/QpLd8HbI1DExzKIyCBvkl0lKUDMRVDEwXXeqIg47Apli8uRJwZ1gN
+X-Developer-Key: i=praveen.talari@oss.qualcomm.com; a=ed25519;
+ pk=NGK/88fjyHXgfhIKwag7+uIytOmyOypvZ/hDFaYPEss=
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzEwMDA5OSBTYWx0ZWRfX0H4RS+xH3F7K
+ YzOU86oDgt8rBsJtQkY1nC9Ylgfs4Im6k+y78TdvfyJ+Sj7cs43JIk9C3sZw0FrpYYWk+8Vllot
+ f88bSD+SbGUAhFf6gaOzCKOOQY9ViN0=
+X-Authority-Analysis: v=2.4 cv=DYgnbPtW c=1 sm=1 tr=0 ts=6a50c5ad cx=c_pps
+ a=mDZGXZTwRPZaeRUbqKGCBw==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=bC-a23v3AAAA:8 a=EUspDBNiAAAA:8 a=VwQbUJbxAAAA:8 a=ag1SF4gXAAAA:8
+ a=LpQP-O61AAAA:8 a=cm27Pg_UAAAA:8 a=uz69HyL-ks-YmZ1FyLUA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=zc0IvFSfCIW2DFIPzwfm:22 a=FO4_E8m0qiDe52t0p3_H:22
+ a=Yupwre4RP9_Eg_Bd0iYG:22 a=pioyyrs4ZptJ924tMmac:22
+X-Proofpoint-ORIG-GUID: rwx_Hj8y4YAVQ9QP7-z0ecLSXz7-7MJV
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzEwMDA5OSBTYWx0ZWRfX8y0/KWIMwTji
+ VaHMDzV8VxKSNCa9Sn4piqUf1xv/XPkBYFW9STEcqmvelp2PKyXAqp2vaFiDOp/xBOyn3wH8rfY
+ 0/+F2oX3jZC0eF6LmONfSiKXfvmqv87YpOr7dn3Mha71XYgZ3CrjIoVuz7CYtckrZGtu/ZKZvTh
+ CtFbRBh4vPbk3mjxN2aTxDe3bktJgRI6zJ6CN1qjujhrwDejD13/rGPZ2P5cYj/km0jzMPePDd9
+ EwJrGOSQDD7+bardBW42pXSlww4EA0PiPA8WFwXZ5RsHFWMNhsQCDXT0L2/6TSaUn+cdOh1yXEV
+ rA7gzJX6CgledMRFaNLgo/4kYjPpcSsmO5ZECR5Lkjr1vTC6keQTrNwQmmoLUAXboVamc0h7mv4
+ v3rqdTb6VxaSTtNFCStH75IK00sG6kLxf1bMCsKJ0s5ocsVdEW9ijogfRUsvUgVedOddCYqFd2B
+ OWpfoHT09HcBhxTq1/g==
+X-Proofpoint-GUID: rwx_Hj8y4YAVQ9QP7-z0ecLSXz7-7MJV
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-10_02,2026-07-09_04,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 lowpriorityscore=0 adultscore=0 suspectscore=0 bulkscore=0
+ clxscore=1015 phishscore=0 malwarescore=0 spamscore=0 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607100099
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-5.16 / 15.00];
-	WHITELIST_SPF_DKIM(-3.00)[intel.com:d:+,kernel.org:s:+];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[intel.com,none];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
-	R_DKIM_ALLOW(-0.20)[intel.com:s=Intel];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-118237-lists,linux-arm-msm=lfdr.de];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER(0.00)[kamil.konieczny@linux.intel.com,linux-arm-msm@vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-118238-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[22];
 	MIME_TRACE(0.00)[0:+];
-	FORGED_RECIPIENTS(0.00)[m:rob.clark@oss.qualcomm.com,m:igt-dev@lists.freedesktop.org,m:freedreno@lists.freedesktop.org,m:linux-arm-msm@vger.kernel.org,s:lists@lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
 	FORWARDED(0.00)[lists@lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:rafael@kernel.org,m:pavel@kernel.org,m:lenb@kernel.org,m:gregkh@linuxfoundation.org,m:dakr@kernel.org,m:broonie@kernel.org,m:alokc@codeaurora.org,m:swboyd@chromium.org,m:dianders@chromium.org,m:dkota@codeaurora.org,m:girishm@codeaurora.org,m:bjorn.andersson@oss.qualcomm.com,m:konrad.dybcio@oss.qualcomm.com,m:praveen.talari@oss.qualcomm.com,m:linux-pm@vger.kernel.org,m:driver-core@lists.linux.dev,m:linux-kernel@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-spi@vger.kernel.org,m:mukesh.savaliya@oss.qualcomm.com,m:aniket.randive@oss.qualcomm.com,m:chandana.chiluveru@oss.qualcomm.com,s:lists@lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[intel.com:+];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	FORGED_SENDER(0.00)[praveen.talari@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns];
 	TO_DN_SOME(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[kamil.konieczny@linux.intel.com,linux-arm-msm@vger.kernel.org];
-	RCPT_COUNT_THREE(0.00)[4];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[praveen.talari@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	ALIAS_RESOLVED(0.00)[];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	MID_RHS_MATCH_FROMTLD(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[linux.intel.com:from_mime,intel.com:email,intel.com:dkim,vger.kernel.org:from_smtp,kamilkon-DESK.igk.intel.com:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email,gitlab.freedesktop.org:url]
+	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 8ED157398F8
+X-Rspamd-Queue-Id: 2BD6773988C
 
-Hi Rob,
-On 2026-07-08 at 09:12:23 -0700, Rob Clark wrote:
-> Pull in updated UABI header with PERFCNTR_CONFIG ioctl.  Sync with:
-> 
->    commit 44c460d2cc8b87c08360fe60f861660c8045ef90
->    Merge: 9bb8af2770b7 9a967125427e
->    Author: Dave Airlie <airlied@redhat.com>
-> 
->        Merge tag 'drm-msm-next-2026-05-30' of https://gitlab.freedesktop.org/drm/msm into drm-next
-> 
-> Signed-off-by: Rob Clark <rob.clark@oss.qualcomm.com>
-> Part-of: <https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/41158>
+When a runtime PM resume callback returns an error, rpm_callback() sets
+power.runtime_error on the device.  All subsequent rpm_resume() calls
+then return -EINVAL immediately at the top of the function, permanently
+blocking any future resume attempt — including those triggered by
+consumers trying to power up their suppliers — until runtime PM is
+explicitly re-initialized.
 
-Sorry, I sent acked-by but I wanted to write r-b instead, so
+Unlike suspend failures, resume failures should be retryable.  The first
+patch fixes this in the core by only setting power.runtime_error when a
+suspend callback fails, leaving resume failures transient by nature.
 
-Reviewed-by: Kamil Konieczny <kamil.konieczny@linux.intel.com>
+The second patch fixes a pre-existing issue in the spi-geni-qcom driver
+that this scenario exposed: pm_runtime_get_sync() was called in
+spi_geni_init() without checking the return value, so a resume failure
+would silently proceed to access hardware registers on a device that was
+not powered up.
 
-Regards,
-Kamil
+Signed-off-by: Praveen Talari <praveen.talari@oss.qualcomm.com>
+---
+Changes in v4:
+- Added close brace to resolve build issue.
+- Link to v3: https://patch.msgid.link/20260706-fix_sticky_-einval_after_pm_runtime_api_failure-v3-0-92feb5a7b926@oss.qualcomm.com
 
-PS. series is merged.
+Changes in v3:
+- Moved power.runtime_error assignment from rpm_callback() into
+  rpm_suspend() at the fail label, per maintainer feedback.
+- Link to v2: https://patch.msgid.link/20260703-fix_sticky_-einval_after_pm_runtime_api_failure-v2-0-578b78a0cf46@oss.qualcomm.com
 
-> ---
->  include/drm-uapi/msm_drm.h | 204 ++++++++++++++++++++++++++++++++++---
->  1 file changed, 188 insertions(+), 16 deletions(-)
-> 
-> diff --git a/include/drm-uapi/msm_drm.h b/include/drm-uapi/msm_drm.h
-> index 2377147b6af0..7f2e594be4eb 100644
-> --- a/include/drm-uapi/msm_drm.h
-> +++ b/include/drm-uapi/msm_drm.h
-> @@ -90,6 +90,34 @@ struct drm_msm_timespec {
->  #define MSM_PARAM_RAYTRACING 0x11 /* RO */
->  #define MSM_PARAM_UBWC_SWIZZLE 0x12 /* RO */
->  #define MSM_PARAM_MACROTILE_MODE 0x13 /* RO */
-> +#define MSM_PARAM_UCHE_TRAP_BASE 0x14 /* RO */
-> +/* PRR (Partially Resident Region) is required for sparse residency: */
-> +#define MSM_PARAM_HAS_PRR    0x15  /* RO */
-> +/* MSM_PARAM_EN_VM_BIND is set to 1 to enable VM_BIND ops.
-> + *
-> + * With VM_BIND enabled, userspace is required to allocate iova and use the
-> + * VM_BIND ops for map/unmap ioctls.  MSM_INFO_SET_IOVA and MSM_INFO_GET_IOVA
-> + * will be rejected.  (The latter does not have a sensible meaning when a BO
-> + * can have multiple and/or partial mappings.)
-> + *
-> + * With VM_BIND enabled, userspace does not include a submit_bo table in the
-> + * SUBMIT ioctl (this will be rejected), the resident set is determined by
-> + * the the VM_BIND ops.
-> + *
-> + * Enabling VM_BIND will fail on devices which do not have per-process pgtables.
-> + * And it is not allowed to disable VM_BIND once it has been enabled.
-> + *
-> + * Enabling VM_BIND should be done (attempted) prior to allocating any BOs or
-> + * submitqueues of type MSM_SUBMITQUEUE_VM_BIND.
-> + *
-> + * Relatedly, when VM_BIND mode is enabled, the kernel will not try to recover
-> + * from GPU faults or failed async VM_BIND ops, in particular because it is
-> + * difficult to communicate to userspace which op failed so that userspace
-> + * could rewind and try again.  When the VM is marked unusable, the SUBMIT
-> + * ioctl will throw -EPIPE.
-> + */
-> +#define MSM_PARAM_EN_VM_BIND 0x16  /* WO, once */
-> +#define MSM_PARAM_AQE	     0x17  /* RO */
->  
->  /* For backwards compat.  The original support for preemption was based on
->   * a single ring per priority level so # of priority levels equals the #
-> @@ -113,6 +141,19 @@ struct drm_msm_param {
->  
->  #define MSM_BO_SCANOUT       0x00000001     /* scanout capable */
->  #define MSM_BO_GPU_READONLY  0x00000002
-> +/* Private buffers do not need to be explicitly listed in the SUBMIT
-> + * ioctl, unless referenced by a drm_msm_gem_submit_cmd.  Private
-> + * buffers may NOT be imported/exported or used for scanout (or any
-> + * other situation where buffers can be indefinitely pinned, but
-> + * cases other than scanout are all kernel owned BOs which are not
-> + * visible to userspace).
-> + *
-> + * In exchange for those constraints, all private BOs associated with
-> + * a single context (drm_file) share a single dma_resv, and if there
-> + * has been no eviction since the last submit, there are no per-BO
-> + * bookeeping to do, significantly cutting the SUBMIT overhead.
-> + */
-> +#define MSM_BO_NO_SHARE      0x00000004
->  #define MSM_BO_CACHE_MASK    0x000f0000
->  /* cache modes */
->  #define MSM_BO_CACHED        0x00010000
-> @@ -122,6 +163,7 @@ struct drm_msm_param {
->  
->  #define MSM_BO_FLAGS         (MSM_BO_SCANOUT | \
->                                MSM_BO_GPU_READONLY | \
-> +                              MSM_BO_NO_SHARE | \
->                                MSM_BO_CACHE_MASK)
->  
->  struct drm_msm_gem_new {
-> @@ -179,6 +221,17 @@ struct drm_msm_gem_cpu_fini {
->   * Cmdstream Submission:
->   */
->  
-> +#define MSM_SYNCOBJ_RESET 0x00000001 /* Reset syncobj after wait. */
-> +#define MSM_SYNCOBJ_FLAGS ( \
-> +		MSM_SYNCOBJ_RESET | \
-> +		0)
-> +
-> +struct drm_msm_syncobj {
-> +	__u32 handle;     /* in, syncobj handle. */
-> +	__u32 flags;      /* in, from MSM_SUBMIT_SYNCOBJ_FLAGS */
-> +	__u64 point;      /* in, timepoint for timeline syncobjs. */
-> +};
-> +
->  /* The value written into the cmdstream is logically:
->   *
->   *   ((relocbuf->gpuaddr + reloc_offset) << shift) | or
-> @@ -220,7 +273,10 @@ struct drm_msm_gem_submit_cmd {
->  	__u32 size;           /* in, cmdstream size */
->  	__u32 pad;
->  	__u32 nr_relocs;      /* in, number of submit_reloc's */
-> -	__u64 relocs;         /* in, ptr to array of submit_reloc's */
-> +	union {
-> +		__u64 relocs; /* in, ptr to array of submit_reloc's */
-> +		__u64 iova;   /* cmdstream address (for VM_BIND contexts) */
-> +	};
->  };
->  
->  /* Each buffer referenced elsewhere in the cmdstream submit (ie. the
-> @@ -268,17 +324,6 @@ struct drm_msm_gem_submit_bo {
->  		MSM_SUBMIT_FENCE_SN_IN   | \
->  		0)
->  
-> -#define MSM_SUBMIT_SYNCOBJ_RESET 0x00000001 /* Reset syncobj after wait. */
-> -#define MSM_SUBMIT_SYNCOBJ_FLAGS        ( \
-> -		MSM_SUBMIT_SYNCOBJ_RESET | \
-> -		0)
-> -
-> -struct drm_msm_gem_submit_syncobj {
-> -	__u32 handle;     /* in, syncobj handle. */
-> -	__u32 flags;      /* in, from MSM_SUBMIT_SYNCOBJ_FLAGS */
-> -	__u64 point;      /* in, timepoint for timeline syncobjs. */
-> -};
-> -
->  /* Each cmdstream submit consists of a table of buffers involved, and
->   * one or more cmdstream buffers.  This allows for conditional execution
->   * (context-restore), and IB buffers needed for per tile/bin draw cmds.
-> @@ -292,13 +337,80 @@ struct drm_msm_gem_submit {
->  	__u64 cmds;           /* in, ptr to array of submit_cmd's */
->  	__s32 fence_fd;       /* in/out fence fd (see MSM_SUBMIT_FENCE_FD_IN/OUT) */
->  	__u32 queueid;        /* in, submitqueue id */
-> -	__u64 in_syncobjs;    /* in, ptr to array of drm_msm_gem_submit_syncobj */
-> -	__u64 out_syncobjs;   /* in, ptr to array of drm_msm_gem_submit_syncobj */
-> +	__u64 in_syncobjs;    /* in, ptr to array of drm_msm_syncobj */
-> +	__u64 out_syncobjs;   /* in, ptr to array of drm_msm_syncobj */
->  	__u32 nr_in_syncobjs; /* in, number of entries in in_syncobj */
->  	__u32 nr_out_syncobjs; /* in, number of entries in out_syncobj. */
->  	__u32 syncobj_stride; /* in, stride of syncobj arrays. */
->  	__u32 pad;            /*in, reserved for future use, always 0. */
-> +};
-> +
-> +#define MSM_VM_BIND_OP_UNMAP	0
-> +#define MSM_VM_BIND_OP_MAP	1
-> +#define MSM_VM_BIND_OP_MAP_NULL	2
->  
-> +#define MSM_VM_BIND_OP_DUMP	1
-> +#define MSM_VM_BIND_OP_FLAGS ( \
-> +		MSM_VM_BIND_OP_DUMP | \
-> +		0)
-> +
-> +/**
-> + * struct drm_msm_vm_bind_op - bind/unbind op to run
-> + */
-> +struct drm_msm_vm_bind_op {
-> +	/** @op: one of MSM_VM_BIND_OP_x */
-> +	__u32 op;
-> +	/** @handle: GEM object handle, MBZ for UNMAP or MAP_NULL */
-> +	__u32 handle;
-> +	/** @obj_offset: Offset into GEM object, MBZ for UNMAP or MAP_NULL */
-> +	__u64 obj_offset;
-> +	/** @iova: Address to operate on */
-> +	__u64 iova;
-> +	/** @range: Number of bites to to map/unmap */
-> +	__u64 range;
-> +	/** @flags: Bitmask of MSM_VM_BIND_OP_FLAG_x */
-> +	__u32 flags;
-> +	/** @pad: MBZ */
-> +	__u32 pad;
-> +};
-> +
-> +#define MSM_VM_BIND_FENCE_FD_IN		0x00000001
-> +#define MSM_VM_BIND_FENCE_FD_OUT	0x00000002
-> +#define MSM_VM_BIND_FLAGS ( \
-> +		MSM_VM_BIND_FENCE_FD_IN | \
-> +		MSM_VM_BIND_FENCE_FD_OUT | \
-> +		0)
-> +
-> +/**
-> + * struct drm_msm_vm_bind - Input of &DRM_IOCTL_MSM_VM_BIND
-> + */
-> +struct drm_msm_vm_bind {
-> +	/** @flags: in, bitmask of MSM_VM_BIND_x */
-> +	__u32 flags;
-> +	/** @nr_ops: the number of bind ops in this ioctl */
-> +	__u32 nr_ops;
-> +	/** @fence_fd: in/out fence fd (see MSM_VM_BIND_FENCE_FD_IN/OUT) */
-> +	__s32 fence_fd;
-> +	/** @queue_id: in, submitqueue id */
-> +	__u32 queue_id;
-> +	/** @in_syncobjs: in, ptr to array of drm_msm_gem_syncobj */
-> +	__u64 in_syncobjs;
-> +	/** @out_syncobjs: in, ptr to array of drm_msm_gem_syncobj */
-> +	__u64 out_syncobjs;
-> +	/** @nr_in_syncobjs: in, number of entries in in_syncobj */
-> +	__u32 nr_in_syncobjs;
-> +	/** @nr_out_syncobjs: in, number of entries in out_syncobj */
-> +	__u32 nr_out_syncobjs;
-> +	/** @syncobj_stride: in, stride of syncobj arrays */
-> +	__u32 syncobj_stride;
-> +	/** @op_stride: sizeof each struct drm_msm_vm_bind_op in @ops */
-> +	__u32 op_stride;
-> +	union {
-> +		/** @op: used if num_ops == 1 */
-> +		struct drm_msm_vm_bind_op op;
-> +		/** @ops: userptr to array of drm_msm_vm_bind_op if num_ops > 1 */
-> +		__u64 ops;
-> +	};
->  };
->  
->  #define MSM_WAIT_FENCE_BOOST	0x00000001
-> @@ -344,10 +456,20 @@ struct drm_msm_gem_madvise {
->  /*
->   * Draw queues allow the user to set specific submission parameter. Command
->   * submissions specify a specific submitqueue to use.  ID 0 is reserved for
-> - * backwards compatibility as a "default" submitqueue
-> + * backwards compatibility as a "default" submitqueue.
-> + *
-> + * Because VM_BIND async updates happen on the CPU, they must run on a
-> + * virtual queue created with the flag MSM_SUBMITQUEUE_VM_BIND.  If we had
-> + * a way to do pgtable updates on the GPU, we could drop this restriction.
->   */
->  
-> -#define MSM_SUBMITQUEUE_FLAGS (0)
-> +#define MSM_SUBMITQUEUE_ALLOW_PREEMPT	0x00000001
-> +#define MSM_SUBMITQUEUE_VM_BIND	0x00000002  /* virtual queue for VM_BIND ops */
-> +
-> +#define MSM_SUBMITQUEUE_FLAGS		    ( \
-> +		MSM_SUBMITQUEUE_ALLOW_PREEMPT | \
-> +		MSM_SUBMITQUEUE_VM_BIND | \
-> +		0)
->  
->  /*
->   * The submitqueue priority should be between 0 and MSM_PARAM_PRIORITIES-1,
-> @@ -369,6 +491,52 @@ struct drm_msm_submitqueue_query {
->  	__u32 pad;
->  };
->  
-> +#define MSM_PERFCNTR_STREAM	0x00000001
-> +#define MSM_PERFCNTR_UPDATE	0x00000002
-> +#define MSM_PERFCNTR_FLAGS	( \
-> +		MSM_PERFCNTR_STREAM | \
-> +		MSM_PERFCNTR_UPDATE | \
-> +		0)
-> +
-> +struct drm_msm_perfcntr_group {
-> +	char group_name[16];
-> +	__u32 nr_countables;
-> +	__u32 pad;         /* mbz */
-> +	__u64 countables;  /* pointer to an array of nr_countables u32 */
-> +};
-> +
-> +/*
-> + * Note, for MSM_PERFCNTR_STREAM, the ioctl returns an fd to read recorded
-> + * counters.  This only works because the ioctl is DRM_IOW(), if we returned
-> + * a out param in the ioctl struct the copy_to_user() (in drm_ioctl())
-> + * could fault, causing us to leak the fd.
-> + *
-> + * If the ioctl returns with error E2BIG, that means more counters/countables
-> + * are requested than are currently available.  If MSM_PERFCNTR_UPDATE flag
-> + * is set, drm_msm_perfcntr_group::nr_countables will be updated to return
-> + * the actual # of counters available.
-> + *
-> + * The data read from the has the following format for each sampling period:
-> + *
-> + *     uint64_t timestamp;  // CP_ALWAYS_ON_COUNTER captured at sample time
-> + *     uint32_t seqno;      // increments by 1 each period, reset to 0 on discontinuity
-> + *     uint32_t mbz;        // pad out counters to 64b
-> + *     struct {
-> + *        uint64_t counter[nr_countables];
-> + *     } groups[nr_groups];
-> + *
-> + * The ordering of groups and counters matches the order in PERFCNTR_CONFIG
-> + * ioctl.
-> + */
-> +struct drm_msm_perfcntr_config {
-> +	__u32 flags;         /* bitmask of MSM_PERFCNTR_x */
-> +	__u32 nr_groups;     /* # of entries in groups array */
-> +	__u64 groups;        /* pointer to array of drm_msm_perfcntr_group */
-> +	__u64 period;        /* sampling period in ns */
-> +	__u32 bufsz_shift;   /* sample buffer size in bytes is 1<<bufsz_shift */
-> +	__u32 group_stride;  /* sizeof(struct drm_msm_perfcntr_group) */
-> +};
-> +
->  #define DRM_MSM_GET_PARAM              0x00
->  #define DRM_MSM_SET_PARAM              0x01
->  #define DRM_MSM_GEM_NEW                0x02
-> @@ -384,6 +552,8 @@ struct drm_msm_submitqueue_query {
->  #define DRM_MSM_SUBMITQUEUE_NEW        0x0A
->  #define DRM_MSM_SUBMITQUEUE_CLOSE      0x0B
->  #define DRM_MSM_SUBMITQUEUE_QUERY      0x0C
-> +#define DRM_MSM_VM_BIND                0x0D
-> +#define DRM_MSM_PERFCNTR_CONFIG        0x0E
->  
->  #define DRM_IOCTL_MSM_GET_PARAM        DRM_IOWR(DRM_COMMAND_BASE + DRM_MSM_GET_PARAM, struct drm_msm_param)
->  #define DRM_IOCTL_MSM_SET_PARAM        DRM_IOW (DRM_COMMAND_BASE + DRM_MSM_SET_PARAM, struct drm_msm_param)
-> @@ -397,6 +567,8 @@ struct drm_msm_submitqueue_query {
->  #define DRM_IOCTL_MSM_SUBMITQUEUE_NEW    DRM_IOWR(DRM_COMMAND_BASE + DRM_MSM_SUBMITQUEUE_NEW, struct drm_msm_submitqueue)
->  #define DRM_IOCTL_MSM_SUBMITQUEUE_CLOSE  DRM_IOW (DRM_COMMAND_BASE + DRM_MSM_SUBMITQUEUE_CLOSE, __u32)
->  #define DRM_IOCTL_MSM_SUBMITQUEUE_QUERY  DRM_IOW (DRM_COMMAND_BASE + DRM_MSM_SUBMITQUEUE_QUERY, struct drm_msm_submitqueue_query)
-> +#define DRM_IOCTL_MSM_VM_BIND          DRM_IOWR(DRM_COMMAND_BASE + DRM_MSM_VM_BIND, struct drm_msm_vm_bind)
-> +#define DRM_IOCTL_MSM_PERFCNTR_CONFIG  DRM_IOW (DRM_COMMAND_BASE + DRM_MSM_PERFCNTR_CONFIG, struct drm_msm_perfcntr_config)
->  
->  #if defined(__cplusplus)
->  }
-> -- 
-> 2.55.0
-> 
+Changes in v2:
+- Reworked the fix per maintainer feedback: instead of calling
+  pm_runtime_set_suspended() in rpm_get_suppliers(), fix the root cause
+  in rpm_callback() by not setting power.runtime_error on resume
+  callback failures.
+- Link to v1: https://patch.msgid.link/20260702-fix_sticky_-einval_after_pm_runtime_api_failure-v1-0-6ddc317011c0@oss.qualcomm.com
+
+To: "Rafael J. Wysocki" <rafael@kernel.org>
+To: Pavel Machek <pavel@kernel.org>
+To: Len Brown <lenb@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Danilo Krummrich <dakr@kernel.org>
+To: Mark Brown <broonie@kernel.org>
+To: Alok Chauhan <alokc@codeaurora.org>
+To: Stephen Boyd <swboyd@chromium.org>
+To: Douglas Anderson <dianders@chromium.org>
+To: Dilip Kota <dkota@codeaurora.org>
+To: Girish Mahadevan <girishm@codeaurora.org>
+To: bjorn.andersson@oss.qualcomm.com
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: linux-pm@vger.kernel.org
+Cc: driver-core@lists.linux.dev
+Cc: linux-kernel@vger.kernel.org
+Cc: linux-arm-msm@vger.kernel.org
+Cc: linux-spi@vger.kernel.org
+Cc: Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>
+Cc: aniket.randive@oss.qualcomm.com
+Cc: chandana.chiluveru@oss.qualcomm.com
+
+---
+Praveen Talari (2):
+      PM: runtime: Only set runtime_error on suspend callback failures
+      spi: qcom-geni: Fix missing error check on pm_runtime_get_sync()
+
+ drivers/base/power/runtime.c |  6 +++---
+ drivers/spi/spi-geni-qcom.c  | 17 ++++++++++-------
+ 2 files changed, 13 insertions(+), 10 deletions(-)
+---
+base-commit: 34cf6dafc47441dfb6b356a095b89c3585a93714
+change-id: 20260625-fix_sticky_-einval_after_pm_runtime_api_failure-6797d0a5c4d0
+
+Best regards,
+--  
+Praveen Talari <praveen.talari@oss.qualcomm.com>
+
 
