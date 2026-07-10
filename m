@@ -1,163 +1,263 @@
-Return-Path: <linux-arm-msm+bounces-118132-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-118133-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id mTqXH9x4UGqQzgIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-118132-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 06:45:16 +0200
+	id s/ziE6p9UGrfzwIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-118133-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 07:05:46 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 761227372B7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 06:45:15 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id A2A37737372
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 07:05:45 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=atomide.com header.s=25mailst header.b=CTaihVTY;
-	dmarc=pass (policy=reject) header.from=atomide.com;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118132-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 104.64.211.4 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118132-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=gmail.com header.s=20251104 header.b=WNQlyv2B;
+	dmarc=pass (policy=none) header.from=gmail.com;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118133-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118133-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 7B41E300B281
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 04:45:12 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 6C15F300A639
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 05:05:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 794F437268C;
-	Fri, 10 Jul 2026 04:45:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C32FF374A0D;
+	Fri, 10 Jul 2026 05:05:31 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail5.25mail.st (mail5.25mail.st [74.50.62.9])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 827523603D7;
-	Fri, 10 Jul 2026 04:45:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BE86369D62
+	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jul 2026 05:05:30 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783658711; cv=none; b=qLaHSescImnv3jxRf958iP5majo3qpNpyCANOdcQPZfqgL3qGuUxswf93S3+XVvUWpfvNvZ66h/NFzFHPsMyR/RUxH2IXtt1la9jjZH130fnpjQkoEvifs2Re5pLQafvWt6jBJoi67cUQs3pqxBK+ZYe7Ya+BcK6fiRkiZoZBWY=
+	t=1783659931; cv=none; b=pbdB7PB6JVXd+EnAOjEonUB9h1LFxB082JmqmUPsKIC8kARwSzDre1hQG7/TU2Jjv+5d+HthDFRSI6l0OeAZK59hdrsZ2xMqRtcPmpBzypxn9uDw1XYOt6MYzu9ydOIemn6GK6Zmvxf3tnmQZFZ5ijUdz6oHG5h1yg27SGsazQU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783658711; c=relaxed/simple;
-	bh=FwC4nxcw77Dy9Pw4BgEh1WKzMzw00KasgsFTwsY3DRw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IUUnEWYa8HS1WKHfBC6b8VCmwOed5EoN1HeTJo4L3eb8wwO9xh1Q9dpjZfgyYEwcSO/krKyAs/HbvWLqJ1mlzIo3qfUH3bC9zWX1In/nb9Uw3/WCwlRfL6C4/SS78R/ENNQ68smxpg1rS21Df5Q9WFv9YHgDXnY01MbdOcqBnoY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=atomide.com; spf=pass smtp.mailfrom=atomide.com; dkim=pass (2048-bit key) header.d=atomide.com header.i=@atomide.com header.b=CTaihVTY; arc=none smtp.client-ip=74.50.62.9
-Received: from localhost (84-231-250-126.elisa-mobile.fi [84.231.250.126])
-	by mail5.25mail.st (Postfix) with ESMTPSA id C8E32617B5;
-	Fri, 10 Jul 2026 04:37:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=atomide.com;
-	s=25mailst; t=1783658352;
-	bh=jp+8+5QI95ophkzdeX5PhLSIZp16xbFMwu4QDRkzOEs=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=CTaihVTY3xKeYwYurPIj1PGrGR+oQrwQf6TQ4FUpfmbKGRQQH/0vBl8OOK/WUw/zr
-	 +CHCGjc9WZ0h+gMjDXgKIuG0sfG5b8v/fURlsq3junjLdDh4yjLeo/E3mnyZF5ILb5
-	 0L9YsyLyaxt3ROVT6g7hv2fvRb3jKJLKIJ+xGvLZkROMhpsQ6xMpDQn/A0jBZLmU4Z
-	 ZO8Iro9rshL2Y66OWXG4Ngkys+C/yPaKUbK202WNo4t9V08TAI3OILwZ+ejHZzDyNG
-	 eSqlieskQg4bhu+Sw3PZD6vdc9fq9daM5LBBKO5PSTb9Angg33oCQkJipqydJDwaNj
-	 eyyRZriX8WpVQ==
-Date: Fri, 10 Jul 2026 07:37:46 +0300
-From: Tony Lindgren <tony@atomide.com>
-To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: Praveen Talari <praveen.talari@oss.qualcomm.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Jiri Slaby <jirislaby@kernel.org>,
-	Ilpo =?utf-8?B?SsOkcnZpbmVu?= <ilpo.jarvinen@linux.intel.com>,
+	s=arc-20240116; t=1783659931; c=relaxed/simple;
+	bh=XWI4jCnd/t/sfMXYAr8klk5lyo9qyWRg1g/x4qLIB2g=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=Eb21g2+PkOdvkBLhxFRduxsr+Dh1mdDR9IUjEdtCCqI0UN7Cm5wCLmpAHz3NFEuZ7hhJ7b7iPbnpSHyI+FkD6Qr5rwx5fD1CTGyMT4oISLX/C5dggKwHPxyhi1AaL4yUJktafjCNt/VTMkK/oKdmD0W6QejVfHSYdI1jc7ntfik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WNQlyv2B; arc=none smtp.client-ip=209.85.210.180
+Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-848479c9bd5so340797b3a.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Jul 2026 22:05:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1783659930; x=1784264730; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=8FKz6zL2lYGruFgrXSmVh8CpNcaMm/DKeCPXfcKM2u4=;
+        b=WNQlyv2BB5sZzZX4H+nzmWrCc5ZWL4M7Km+7xOqnx6zoVsQ3X5/iMB/AD7MXu3NhBD
+         RMEbO9VX2bC53Y8AsfxeRGRACAW0W+cC0qlKS3KZHylzPuEPdDD1FWgABB2GQPXXEU35
+         ewLoAmpb/zSTkLvl/ENuAqtaVdqVJZFpBjkWJnchaOswFXmotGViIHY0twnyP4WLxwxD
+         noreLd9Pmb+oC6x6XeUeUeB0/h3EYRmCu1xQn/89DZR5AzES1gRmWX3fU6e9/PsU7ZxL
+         q34Jj75DK36N4Ir1hDN5Pq11J43Nr+9gSXLMLGKCoHKHrTFGSNmc4YhyMHp2jfwX9dIh
+         fiQA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783659930; x=1784264730;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=8FKz6zL2lYGruFgrXSmVh8CpNcaMm/DKeCPXfcKM2u4=;
+        b=IyjSaKroVFJoxDJPseA+dhL0DJfqimgS66fngCrv/6e4v36oeRkAVo46y5KK1OzitR
+         Em7cblqkGZWOS3c2plWo3K2MoX8LrASEajio7sL9mOSJkX8PHU0e3mRJRdcarFjiJ5uL
+         fGYu6Gm9jsYTwu5IX6wke+Tpu+w2VIvarQ3YzVITbBNr5BrxAA746O1pdn3KmSC369jI
+         tYTokjyT528nGlH7ZxLwR1J5JGnDo+OvD8I3nNzcrsyWK3OWuPPQX6fZL5k6I5FyhZpB
+         42HKNszDPV/iZywtgNkzlKva1BA753+h4cf7C4cWvoy/AmbWslQGLfp6rc29OcKS8BiO
+         QPAA==
+X-Forwarded-Encrypted: i=1; AHgh+RoDMzhvwqvSY4ZzedWluoEqD8Nu+5joVBathR9oHKwQewCV6w+vq+M9kYmt85L6532xsIIKe9zwKrK7vlQr@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywh8xqfvFSdQsrpyLDtZdYd3M08ZPuHgnOB5+tQGFr4B5lnbPkR
+	h0c/ZrRJMWNmPRqXT6vVc71D2Z5IglQdH0TZBhzzqPKX6GsaSKFqpDV9
+X-Gm-Gg: AfdE7cks8fDnelqM/na0UMm/U89CpbWjl6pNrtc9Seu4tmDkckaPqzUG8TLHrg4quhs
+	6f6zvtq7HHgiZi8s2NfThgYxgXojlLV4uXr/vYmoyiBKc9wR4QiaMZ4HMQH/eUMJrgB2TX7JwgV
+	1uX4zCTh4K0JfiLXTyin3/XoiHTYrmxL/UMOqPI7zD5RblDxE80Jf3x81VeM1j57NpXb/XlAwet
+	J65W1mhwDSAnCCgskKyNOtTyADM2p7BAsLAadGLRLfXyHqX2AFS6rOjdXx958A+ifZQZjMVHsHK
+	jsbl65jr6mBH+6Eatl6SQ8xJbYo50zBDkQr+dw6WGKAF2IQ48yfs5v1ZXIJ7BmmLygaTSKjyd1w
+	wECePD3WbOSPDS7TV5Yf4sna+nSJIZr1hp0XMXSu2H0m8GqVR1Ggj6UPQEqOUPy1qFoOGRvocn4
+	6z5BFIPK4H/7WzsjzlBJNElG/kRd2RnxO/+6d1o94gj7D1g8BGarGRQ+Haxg==
+X-Received: by 2002:a05:6a00:400d:b0:848:6447:e09c with SMTP id d2e1a72fcca58-8486447e365mr3946827b3a.39.1783659929668;
+        Thu, 09 Jul 2026 22:05:29 -0700 (PDT)
+Received: from phuc-desktop.. ([183.91.15.56])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84847275fa0sm3400499b3a.22.2026.07.09.22.05.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 09 Jul 2026 22:05:29 -0700 (PDT)
+From: phucduc.bui@gmail.com
+To: Mark Brown <broonie@kernel.org>,
+	Takashi Iwai <tiwai@suse.com>,
+	Nick Li <nick.li@foursemi.com>,
+	Herve Codina <herve.codina@bootlin.com>
+Cc: Support Opensource <support.opensource@diasemi.com>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Jaroslav Kysela <perex@perex.cz>,
+	Srinivas Kandagatla <srini@kernel.org>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
 	Matthias Brugger <matthias.bgg@gmail.com>,
 	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Richard Genoud <richard.genoud@bootlin.com>,
-	Nicolas Ferre <nicolas.ferre@microchip.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Peter Griffin <peter.griffin@linaro.org>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	Orson Zhai <orsonzhai@gmail.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Chunyan Zhang <zhang.lyra@gmail.com>,
-	Patrice Chotard <patrice.chotard@foss.st.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Peter Korsgaard <jacmet@sunsite.dk>,
-	Michal Simek <michal.simek@amd.com>,
-	Aaro Koskinen <aaro.koskinen@iki.fi>,
-	Janusz Krzysztofik <jmkrzyszt@gmail.com>,
-	Russell King <linux@armlinux.org.uk>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-	bjorn.andersson@oss.qualcomm.com,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	linux-kernel@vger.kernel.org, linux-serial@vger.kernel.org,
+	Shenghao Ding <shenghao-ding@ti.com>,
+	Kevin Lu <kevin-lu@ti.com>,
+	Baojun Xu <baojun.xu@ti.com>,
+	Sen Wang <sen@ti.com>,
+	Oder Chiou <oder_chiou@realtek.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+	u.kleine-koenig@baylibre.com,
+	Zhang Yi <zhangyi@everest-semi.com>,
+	Marco Crivellari <marco.crivellari@suse.com>,
+	Kees Cook <kees@kernel.org>,
+	HyeongJun An <sammiee5311@gmail.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Qianfeng Rong <rongqianfeng@vivo.com>,
+	linux-sound@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	patches@opensource.cirrus.com,
+	linux-mediatek@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org,
 	linux-arm-kernel@lists.infradead.org,
-	linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-	linux-samsung-soc@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-omap@vger.kernel.org, linux-mips@vger.kernel.org,
-	Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>,
-	aniket.randive@oss.qualcomm.com,
-	chandana.chiluveru@oss.qualcomm.com
-Subject: Re: [PATCH 0/6] tty: serial: propagate errors from uart_ops.pm
- callback
-Message-ID: <20260710043746.GM30058@atomide.com>
-References: <20260709-add_return_check_for_uart_change_pm-v1-0-e85c6ffa8ec4@oss.qualcomm.com>
- <ak9OPNcVAhkfxHvZ@ashevche-desk.local>
+	bui duc phuc <phucduc.bui@gmail.com>
+Subject: [PATCH v3 03/27] ASoC: codecs: es8316: Use guard() for mutex locks
+Date: Fri, 10 Jul 2026 12:04:47 +0700
+Message-ID: <20260710050511.14439-1-phucduc.bui@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260709045902.498848-1-phucduc.bui@gmail.com>
+References: <20260709045902.498848-1-phucduc.bui@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ak9OPNcVAhkfxHvZ@ashevche-desk.local>
+Content-Transfer-Encoding: 8bit
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-0.66 / 15.00];
+X-Spamd-Result: default: False [-0.16 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[atomide.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
-	R_DKIM_ALLOW(-0.20)[atomide.com:s=25mailst];
+	R_MISSING_CHARSET(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	TAGGED_FROM(0.00)[bounces-118132-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	RECEIVED_HELO_LOCALHOST(0.00)[];
-	FORGED_SENDER(0.00)[tony@atomide.com,linux-arm-msm@vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[40];
-	FORGED_RECIPIENTS(0.00)[m:andriy.shevchenko@linux.intel.com,m:praveen.talari@oss.qualcomm.com,m:gregkh@linuxfoundation.org,m:jirislaby@kernel.org,m:ilpo.jarvinen@linux.intel.com,m:matthias.bgg@gmail.com,m:angelogioacchino.delregno@collabora.com,m:richard.genoud@bootlin.com,m:nicolas.ferre@microchip.com,m:alexandre.belloni@bootlin.com,m:claudiu.beznea@tuxon.dev,m:krzk@kernel.org,m:peter.griffin@linaro.org,m:alim.akhtar@samsung.com,m:orsonzhai@gmail.com,m:baolin.wang@linux.alibaba.com,m:zhang.lyra@gmail.com,m:patrice.chotard@foss.st.com,m:mcoquelin.stm32@gmail.com,m:alexandre.torgue@foss.st.com,m:jacmet@sunsite.dk,m:michal.simek@amd.com,m:aaro.koskinen@iki.fi,m:jmkrzyszt@gmail.com,m:linux@armlinux.org.uk,m:tsbogend@alpha.franken.de,m:bjorn.andersson@oss.qualcomm.com,m:konrad.dybcio@oss.qualcomm.com,m:linux-kernel@vger.kernel.org,m:linux-serial@vger.kernel.org,m:linux-arm-kernel@lists.infradead.org,m:linux-mediatek@lists.infradead.org,m:linux-arm-msm@vger.kernel.org,m:linux-samsung-soc
- @vger.kernel.org,m:linux-stm32@st-md-mailman.stormreply.com,m:linux-omap@vger.kernel.org,m:linux-mips@vger.kernel.org,m:mukesh.savaliya@oss.qualcomm.com,m:aniket.randive@oss.qualcomm.com,m:chandana.chiluveru@oss.qualcomm.com,m:matthiasbgg@gmail.com,m:zhanglyra@gmail.com,m:mcoquelinstm32@gmail.com,s:lists@lfdr.de];
+	FREEMAIL_FROM(0.00)[gmail.com];
+	RCPT_COUNT_TWELVE(0.00)[33];
+	TAGGED_FROM(0.00)[bounces-118133-lists,linux-arm-msm=lfdr.de];
+	FORWARDED(0.00)[lists@lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:broonie@kernel.org,m:tiwai@suse.com,m:nick.li@foursemi.com,m:herve.codina@bootlin.com,m:support.opensource@diasemi.com,m:lgirdwood@gmail.com,m:perex@perex.cz,m:srini@kernel.org,m:ckeepax@opensource.cirrus.com,m:rf@opensource.cirrus.com,m:matthias.bgg@gmail.com,m:angelogioacchino.delregno@collabora.com,m:shenghao-ding@ti.com,m:kevin-lu@ti.com,m:baojun.xu@ti.com,m:sen@ti.com,m:oder_chiou@realtek.com,m:linusw@kernel.org,m:kuninori.morimoto.gx@renesas.com,m:u.kleine-koenig@baylibre.com,m:zhangyi@everest-semi.com,m:marco.crivellari@suse.com,m:kees@kernel.org,m:sammiee5311@gmail.com,m:arnd@arndb.de,m:rongqianfeng@vivo.com,m:linux-sound@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:patches@opensource.cirrus.com,m:linux-mediatek@lists.infradead.org,m:linux-arm-msm@vger.kernel.org,m:linux-arm-kernel@lists.infradead.org,m:phucduc.bui@gmail.com,m:matthiasbgg@gmail.com,m:phucducbui@gmail.com,s:lists@lfdr.de];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FORWARDED(0.00)[lists@lfdr.de];
-	FREEMAIL_CC(0.00)[oss.qualcomm.com,linuxfoundation.org,kernel.org,linux.intel.com,gmail.com,collabora.com,bootlin.com,microchip.com,tuxon.dev,linaro.org,samsung.com,linux.alibaba.com,foss.st.com,sunsite.dk,amd.com,iki.fi,armlinux.org.uk,alpha.franken.de,vger.kernel.org,lists.infradead.org,st-md-mailman.stormreply.com];
+	FREEMAIL_CC(0.00)[diasemi.com,gmail.com,perex.cz,kernel.org,opensource.cirrus.com,collabora.com,ti.com,realtek.com,renesas.com,baylibre.com,everest-semi.com,suse.com,arndb.de,vivo.com,vger.kernel.org,lists.infradead.org];
+	FORGED_SENDER(0.00)[phucducbui@gmail.com,linux-arm-msm@vger.kernel.org];
+	FROM_NO_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
 	ALIAS_RESOLVED(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[phucducbui@gmail.com,linux-arm-msm@vger.kernel.org];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[tony@atomide.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[atomide.com:+];
+	DKIM_TRACE(0.00)[gmail.com:+];
 	MID_RHS_MATCH_FROM(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	MISSING_XM_UA(0.00)[];
+	TO_DN_SOME(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,atomide.com:from_mime,atomide.com:dkim,atomide.com:mid]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,vger.kernel.org:from_smtp]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 761227372B7
+X-Rspamd-Queue-Id: A2A37737372
 
-* Andy Shevchenko <andriy.shevchenko@linux.intel.com> [260709 10:38]:
-> Just no, please just properly implement runtime PM. The .pm() must die completely.
-> I used to have the PoC for that long time ago [1], but due to lack of time and
-> other priorities it went abandoned. Also Atlassian made a brain damages move to
-> limit repository to 1Gb, so I haven't able to update it for a few years.
-> 
-> Note, that Tony (you have him in the Cc list) did a lot for some corner cases
-> with that and we still have them IIRC. Tony, do you know what is the state of
-> affairs with runtime PM for UART?
+From: bui duc phuc <phucduc.bui@gmail.com>
 
-The RX side of things should work for hardware that can wake up to an incoming
-event. Linux for sure needs more work to properly handle the various corner case
-TX wake-up of a PM runtime idled UART. I'm mostly offline until Monday though,
-will check my notes for more details next week.
+Clean up the code using guard() for mutex locks.
+Merely code refactoring, and no behavior change.
 
-Regards,
+Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
+---
+ sound/soc/codecs/es8316.c | 31 +++++++++++++------------------
+ 1 file changed, 13 insertions(+), 18 deletions(-)
 
-Tony
+diff --git a/sound/soc/codecs/es8316.c b/sound/soc/codecs/es8316.c
+index 3abe77423f29..87f331868dc7 100644
+--- a/sound/soc/codecs/es8316.c
++++ b/sound/soc/codecs/es8316.c
+@@ -9,6 +9,7 @@
+ 
+ #include <linux/module.h>
+ #include <linux/acpi.h>
++#include <linux/cleanup.h>
+ #include <linux/clk.h>
+ #include <linux/delay.h>
+ #include <linux/i2c.h>
+@@ -620,15 +621,15 @@ static irqreturn_t es8316_irq(int irq, void *data)
+ 	struct snd_soc_component *comp = es8316->component;
+ 	unsigned int flags;
+ 
+-	mutex_lock(&es8316->lock);
++	guard(mutex)(&es8316->lock);
+ 
+ 	regmap_read(es8316->regmap, ES8316_GPIO_FLAG, &flags);
+ 	if (flags == 0x00)
+-		goto out; /* Powered-down / reset */
++		return IRQ_HANDLED; /* Powered-down / reset */
+ 
+ 	/* Catch spurious IRQ before set_jack is called */
+ 	if (!es8316->jack)
+-		goto out;
++		return IRQ_HANDLED;
+ 
+ 	if (es8316->jd_inverted)
+ 		flags ^= ES8316_GPIO_FLAG_HP_NOT_INSERTED;
+@@ -681,8 +682,6 @@ static irqreturn_t es8316_irq(int irq, void *data)
+ 		}
+ 	}
+ 
+-out:
+-	mutex_unlock(&es8316->lock);
+ 	return IRQ_HANDLED;
+ }
+ 
+@@ -699,18 +698,16 @@ static void es8316_enable_jack_detect(struct snd_soc_component *component,
+ 	es8316->jd_inverted = device_property_read_bool(component->dev,
+ 							"everest,jack-detect-inverted");
+ 
+-	mutex_lock(&es8316->lock);
++	scoped_guard(mutex, &es8316->lock) {
++		es8316->jack = jack;
+ 
+-	es8316->jack = jack;
+-
+-	if (es8316->jack->status & SND_JACK_MICROPHONE)
+-		es8316_enable_micbias_for_mic_gnd_short_detect(component);
+-
+-	snd_soc_component_update_bits(component, ES8316_GPIO_DEBOUNCE,
+-				      ES8316_GPIO_ENABLE_INTERRUPT,
+-				      ES8316_GPIO_ENABLE_INTERRUPT);
++		if (es8316->jack->status & SND_JACK_MICROPHONE)
++			es8316_enable_micbias_for_mic_gnd_short_detect(component);
+ 
+-	mutex_unlock(&es8316->lock);
++		snd_soc_component_update_bits(component, ES8316_GPIO_DEBOUNCE,
++					      ES8316_GPIO_ENABLE_INTERRUPT,
++					      ES8316_GPIO_ENABLE_INTERRUPT);
++	}
+ 
+ 	/* Enable irq and sync initial jack state */
+ 	enable_irq(es8316->irq);
+@@ -726,7 +723,7 @@ static void es8316_disable_jack_detect(struct snd_soc_component *component)
+ 
+ 	disable_irq(es8316->irq);
+ 
+-	mutex_lock(&es8316->lock);
++	guard(mutex)(&es8316->lock);
+ 
+ 	snd_soc_component_update_bits(component, ES8316_GPIO_DEBOUNCE,
+ 				      ES8316_GPIO_ENABLE_INTERRUPT, 0);
+@@ -737,8 +734,6 @@ static void es8316_disable_jack_detect(struct snd_soc_component *component)
+ 	}
+ 
+ 	es8316->jack = NULL;
+-
+-	mutex_unlock(&es8316->lock);
+ }
+ 
+ static int es8316_set_jack(struct snd_soc_component *component,
+-- 
+2.43.0
 
-> [1]: https://bitbucket.org/andy-shev/linux/branch/topic/uart/rpm-plus
 
