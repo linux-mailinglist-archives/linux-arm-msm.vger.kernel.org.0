@@ -1,203 +1,183 @@
-Return-Path: <linux-arm-msm+bounces-118427-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-118428-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id mO6qOcxzUWp1FAMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-118427-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Jul 2026 00:35:56 +0200
+	id GbUIAgx2UWrfFAMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-118428-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Jul 2026 00:45:32 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5579173F92A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Jul 2026 00:35:56 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4FBD573F9AB
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Jul 2026 00:45:31 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=gmail.com header.s=20251104 header.b=opOCEBEc;
-	dmarc=pass (policy=none) header.from=gmail.com;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118427-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118427-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	arc=pass ("subspace.kernel.org:s=arc-20240116:i=2")
+	dkim=pass header.d=linux-foundation.org header.s=korg header.b=ZSx7QPoS;
+	dmarc=none;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118428-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118428-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 33A8D302BBED
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 22:35:54 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 6B50E301175D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 22:45:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D9878404BD2;
-	Fri, 10 Jul 2026 22:35:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A8568383334;
+	Fri, 10 Jul 2026 22:45:27 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75DC73B42D0
-	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jul 2026 22:35:52 +0000 (UTC)
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783722953; cv=pass; b=P5brk6iVy6FMVEUEFp99rVTzNU9/CB4RIXU/lIN2hfwuY2/7kI6fi9YdYzLJrM6yvRvVrqTpokJhU7RjM383St465ZCF5j5MA3KautGwHcM26ke9V6hoCkGvnQ4YyzDqhXED2zchMpNUTbDWGKaZiXcCnYG7WK9L5XeGI/lNTwQ=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783722953; c=relaxed/simple;
-	bh=bF6mnDIsCnLF3CpiNDgMvY2beaAe2wRXN0+14PO5j9M=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=JtYr9nmQcecH2197Wa1nX+pUNGYaB1LNIZbpQa5SwwP7uCkfXeNUaBwU7Tlnw3YSkQAcehZsdWOXpP3wc2V4NTsaW9GwMnogFhI2q2RcnA0UEudw8JgArHA/6L85B8qER4vGEdN07VKKFPngLiGqjzv04ri3nXwNBxmO/iTk7wo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=opOCEBEc; arc=pass smtp.client-ip=209.85.216.53
-Received: by mail-pj1-f53.google.com with SMTP id 98e67ed59e1d1-3825c406ffeso1507909a91.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jul 2026 15:35:52 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783722952; cv=none;
-        d=google.com; s=arc-20260327;
-        b=oaWNu2KTkZW/+Dvo7LBFcjjsbTnG0ucX3alG1BbUdrfudZf8JOVheEFjZyd8V3aBSY
-         RnBEEIGbtr7Ox3rnw67gYU1YKLCVkKM0A6oGsijbmRYXhW3WA7+XCoTJCGHnMYm7aYps
-         Qo6z+Bkrl/L4jwSjMJKEPBZVZmUjgtOkx8yiuGCHp0mZSxt3bvuZ5mKGAgiBrvuOn9L4
-         0uX4ohJHSXuhWbYEdjURlrM7zR6b+y60AdQU9Ei6HLMdz0EijmUFvBVOHqjnw90Nt/lK
-         6vYJBx1MtRBdxIKQiJ+xm09BjgWOdnGCQl20uxL6OaYhnPyozqgxSuNke0U/eMB29qes
-         rt8w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=7+hIVLQLM/sGDz5ot7h7L83Hul9pDF/wx6nn+5acERA=;
-        fh=U4bPqZHIQKeK/PFSfY8zdrAfRus96nWHLixDoU/q7wI=;
-        b=Lud8PzaifeucOIAy6nDXyAJd1x3rCKo6O2YkeAMafsAPLP+OxI2i0INATskDw/Qvuz
-         ExLiEDc2b3QETyMO1PTmJjv4xsfgDSXYSDQsWjonKlckv8lCEv8/3fxD5F3Ea8vcp41h
-         UtTLao0poyBHCJ/WtbCsCd+MZE3YbTjt2Thq6VVGJkQih8ZCaB8yEnWUweOp4UsCfOct
-         9Yrn8yqTphQg3/SM4PzEbYYJdlYJyEmCP22eXXbwEtBbLqffzI8YnSWhSYEwyE3JAVUi
-         /s+P+xtu3ohv0KYKL71tv4vc0YuGU8i+3MF+qpv9sFOo0KzgvGM9MR2ggBkANNF/LkVC
-         u3XA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F50E4499A6;
+	Fri, 10 Jul 2026 22:45:25 +0000 (UTC)
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783723527; cv=none; b=SlzS9tfSC6p3tbPajrQWA0AZdF3WLWGn5YW9uxK8np0bnHzeA8pOonqbpARd/4jy86IDVwjmOFDFNB0WOloyQmbl1bm2UYqHzqf+FzXnN1UAquq+YAFrj8YyotF+ulqK5wno65mdPf0rLj9XcfPQJ3w4pzP5Iu59UAuPuER7RYU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783723527; c=relaxed/simple;
+	bh=hCZkEMaSNg91BSp9lPUnfEVv5lLLPtH93/eR1BiWlDo=;
+	h=Date:From:To:Cc:Subject:Message-Id:In-Reply-To:References:
+	 Mime-Version:Content-Type; b=RBSFGV0OBxO+paqutAdCctxdiMU+2Wida7p6GAX/repCyt3bMoDU8KxaSTzj4wfGWfoL0qwxTflTbFFtHDNTdrKNs2W4ZvsUQsijY/t0F5NFa71/qVcUj2CdWhItDqYYOwcP3bySFEAS/2IDlEKUYE6gAo3zy9opH1eGHFaFP8Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b=ZSx7QPoS; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28FA61F000E9;
+	Fri, 10 Jul 2026 22:45:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783722952; x=1784327752; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=7+hIVLQLM/sGDz5ot7h7L83Hul9pDF/wx6nn+5acERA=;
-        b=opOCEBEc8XvTohSnHHBVlCkyVt7VnYD3M1A49pRz+UvofD7L6pQQR4CiS2NYaw01Ei
-         3+l7kAejDLDSCC2d1JuPVKHB2RhMp9F+NK1jzxvIM04WsiggTVN41A0sPYfFDBQWqPEY
-         26N7vUBhNelaGbYxc/CiIzvluy8Z9wigJtgQolAJeE2oxKwd/y8iOBxvyjtaBwV/Gv/1
-         lgXyICRXFWMUbrTyaenJq6QjqNMGEsoJj/S/E470TuhFIIlG9dqM2QJq9jqKNuFL58hz
-         MvQW3+u968sude1+AF5A3IctIQTMt3Jl2epWR3EA9lmM1O0luiqekU5vXOaCcJvPlnjT
-         +1OA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783722952; x=1784327752;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=7+hIVLQLM/sGDz5ot7h7L83Hul9pDF/wx6nn+5acERA=;
-        b=iVF4g4BULuvTUExe9037LzNnmCA/SkrvBRkvY1gtNlgqrwO01spmNPx6ILJM6Wv4MM
-         E4N+4KqTuzCGnBo0COwS3IbSGBEf8hW28CHYWZ3cG1SciqWvbp1hWRHQAXfz2hd4iYzX
-         1fuD3VwdoWhVXhi9wXmRxvZz1OR1y9dBCNQtZxSVoQeUHtsoO/vDVJnzITu885dypJ4X
-         9dVuHwiUyOSw1yZeHeHPP33BvIhBODFBbzQlDar4k0KM9FrMTTy9FAeBkbjTf/PMBoiu
-         5JFBi+Bwmg/hIxn4MHyvzlMvjZwdxl+1m0SGFd3py2kSi8UMXThV6IEitIon3EwxzvwC
-         YAPQ==
-X-Forwarded-Encrypted: i=1; AHgh+RruAYnU/gJvKmHYeZDaNo5ETAq54oYHpqlN7eeFVG+BxPmiuVLwMibZinjAKEkyLe/mHEzrO930T6KLi5Nj@vger.kernel.org
-X-Gm-Message-State: AOJu0YzNzvZyk6AvSAY7szCtJgwkqXr3GRtXnASFC+W4Hq9dU0uce2Ms
-	z1w10Tu2GRrIS7CXh7N5WvzP5mXyJhImGwS5ia2oaZz3bO4G9aEIpFZbEPtBl3vfz6CCmw6mxDv
-	Sn/cX68dmjFB8jCG9MEtsZw/J9RpfkEA=
-X-Gm-Gg: AfdE7cmbAd7XBElt8OJUckYL1FXcoZP+i3YUES6To+se4zvHT1xiGJEOatVqJdAZGIE
-	bXbKtRPcTabqNtNcsqIAvaL0w7zXT27Pb2Mj08rTk9AtpNsUj5pYOoXpMk5NgmbNpkeAZ8/Pd2X
-	Ulp8XfpinwJQF/+nK7tF4c2tSq34KlUwaTMDDSs9ZSVzU5doUKDDL9kJCSdpETiqmOdemJU0pvV
-	VvHb1hv1MTsv9faXlCqa230PEAXZ68lYIlkurlK6smhTBwTitz+KDYIx5TwFg1mkVYmnHZ+DvmT
-	QEIEXIiygGHK3YG0uLOTJkaSmHcNI4GiyrT3gD1KPSPS5S6z11J5G6sHk+BXzy4w85ZC4W3t
-X-Received: by 2002:a17:90b:4b83:b0:387:e0db:3d8b with SMTP id
- 98e67ed59e1d1-38dc77c6073mr661104a91.38.1783722951858; Fri, 10 Jul 2026
- 15:35:51 -0700 (PDT)
+	d=linux-foundation.org; s=korg; t=1783723525;
+	bh=Yq17DLw8B7m0Ic0jrotN2vK5MclACu0PBR+dyFlWO78=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=ZSx7QPoSol/yIwMXKEmUJhTjHYhOTBLc5mXwwU3UwAh9roiwGFOEkEGDc9BHD66gH
+	 ol4A8UhH1Qv4PL+p4SHToO2ow21dRlKuMhNHReG860Gc0SP2DYkvm0I7ZKgAi4s3Wk
+	 nNh7xrNAGItIywqfA1/YCTySczvPZbj9fgWwv5ao=
+Date: Fri, 10 Jul 2026 15:45:21 -0700
+From: Andrew Morton <akpm@linux-foundation.org>
+To: Lorenzo Stoakes <ljs@kernel.org>
+Cc: David Hildenbrand <david@kernel.org>, "Liam R. Howlett"
+ <liam@infradead.org>, Vlastimil Babka <vbabka@kernel.org>, Mike Rapoport
+ <rppt@kernel.org>, Suren Baghdasaryan <surenb@google.com>, Michal Hocko
+ <mhocko@suse.com>, Rik van Riel <riel@surriel.com>, Harry Yoo
+ <harry@kernel.org>, Jann Horn <jannh@google.com>, Lance Yang
+ <lance.yang@linux.dev>, Pedro Falcato <pfalcato@suse.de>, Russell King
+ <linux@armlinux.org.uk>, Dinh Nguyen <dinguyen@kernel.org>, Simon Schuster
+ <schuster.simon@siemens-energy.com>, "James E.J. Bottomley"
+ <James.Bottomley@HansenPartnership.com>, Helge Deller <deller@gmx.de>,
+ Alexander Viro <viro@zeniv.linux.org.uk>, Christian Brauner
+ <brauner@kernel.org>, Jan Kara <jack@suse.cz>, Dan Williams
+ <djbw@kernel.org>, Matthew Wilcox <willy@infradead.org>, Muchun Song
+ <muchun.song@linux.dev>, Oscar Salvador <osalvador@suse.de>, Masami
+ Hiramatsu <mhiramat@kernel.org>, Oleg Nesterov <oleg@redhat.com>, Peter
+ Zijlstra <peterz@infradead.org>, Ingo Molnar <mingo@redhat.com>, Arnaldo
+ Carvalho de Melo <acme@kernel.org>, Namhyung Kim <namhyung@kernel.org>,
+ Mark Rutland <mark.rutland@arm.com>, Alexander Shishkin
+ <alexander.shishkin@linux.intel.com>, Jiri Olsa <jolsa@kernel.org>, Ian
+ Rogers <irogers@google.com>, Adrian Hunter <adrian.hunter@intel.com>, James
+ Clark <james.clark@linaro.org>, Zi Yan <ziy@nvidia.com>, Baolin Wang
+ <baolin.wang@linux.alibaba.com>, Nico Pache <npache@redhat.com>, Ryan
+ Roberts <ryan.roberts@arm.com>, Dev Jain <dev.jain@arm.com>, Barry Song
+ <baohua@kernel.org>, Miaohe Lin <linmiaohe@huawei.com>, Naoya Horiguchi
+ <nao.horiguchi@gmail.com>, Xu Xin <xu.xin16@zte.com.cn>, Chengming Zhou
+ <chengming.zhou@linux.dev>, SJ Park <sj@kernel.org>, Matthew Brost
+ <matthew.brost@intel.com>, Joshua Hahn <joshua.hahnjy@gmail.com>, Rakie Kim
+ <rakie.kim@sk.com>, Byungchul Park <byungchul@sk.com>, Gregory Price
+ <gourry@gourry.net>, Ying Huang <ying.huang@linux.alibaba.com>, Alistair
+ Popple <apopple@nvidia.com>, Hugh Dickins <hughd@google.com>, Peter Xu
+ <peterx@redhat.com>, Kees Cook <kees@kernel.org>, Marek Szyprowski
+ <m.szyprowski@samsung.com>, Robin Murphy <robin.murphy@arm.com>, Andrey
+ Konovalov <andreyknvl@gmail.com>, Alexander Potapenko <glider@google.com>,
+ Dmitry Vyukov <dvyukov@google.com>, Steven Rostedt <rostedt@goodmis.org>,
+ Mathieu Desnoyers <mathieu.desnoyers@efficios.com>, Jarkko Sakkinen
+ <jarkko@kernel.org>, Dave Hansen <dave.hansen@linux.intel.com>, Thomas
+ Gleixner <tglx@kernel.org>, Borislav Petkov <bp@alien8.de>, x86@kernel.org,
+ "H. Peter Anvin" <hpa@zytor.com>, Ian Abbott <abbotti@mev.co.uk>, H Hartley
+ Sweeten <hsweeten@visionengravers.com>, Lucas Stach
+ <l.stach@pengutronix.de>, Christian Gmeiner <christian.gmeiner@gmail.com>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Patrik
+ Jakobsson <patrik.r.jakobsson@gmail.com>, Maarten Lankhorst
+ <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>,
+ Thomas Zimmermann <tzimmermann@suse.de>, Rob Clark
+ <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>,
+ Abhinav Kumar <abhinav.kumar@linux.dev>, Jessica Zhang
+ <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>, Marijn Suijten
+ <marijn.suijten@somainline.org>, Tomi Valkeinen
+ <tomi.valkeinen@ideasonboard.com>, Thierry Reding
+ <thierry.reding@kernel.org>, Mikko Perttunen <mperttunen@nvidia.com>,
+ Jonathan Hunter <jonathanh@nvidia.com>, Christian Koenig
+ <christian.koenig@amd.com>, Huang Rui <ray.huang@amd.com>, Matthew Auld
+ <matthew.auld@intel.com>, Jason Gunthorpe <jgg@ziepe.ca>, Yishai Hadas
+ <yishaih@nvidia.com>, Shameer Kolothum <skolothumtho@nvidia.com>, Kevin
+ Tian <kevin.tian@intel.com>, Ankit Agrawal <ankita@nvidia.com>, Alex
+ Williamson <alex@shazbot.org>, Paolo Bonzini <pbonzini@redhat.com>, Shakeel
+ Butt <shakeel.butt@linux.dev>, Usama Arif <usama.arif@linux.dev>,
+ linux-mm@kvack.org, linux-kernel@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-parisc@vger.kernel.org,
+ linux-fsdevel@vger.kernel.org, nvdimm@lists.linux.dev,
+ linux-perf-users@vger.kernel.org, linux-trace-kernel@vger.kernel.org,
+ damon@lists.linux.dev, iommu@lists.linux.dev, kasan-dev@googlegroups.com,
+ linux-sgx@vger.kernel.org, etnaviv@lists.freedesktop.org,
+ dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+ freedreno@lists.freedesktop.org, linux-tegra@vger.kernel.org,
+ kvm@vger.kernel.org, Russell King <linux+etnaviv@armlinux.org.uk>, Ackerley
+ Tng <ackerleytng@google.com>, Kai Huang <kai.huang@intel.com>
+Subject: Re: [PATCH v2 00/33] mm: make VMA page offset handling more
+ consistent
+Message-Id: <20260710154521.435f67cc7b03ed3a9ccd423a@linux-foundation.org>
+In-Reply-To: <20260710-b4-pre-scalable-cow-v2-0-2a5aa403d977@kernel.org>
+References: <20260710-b4-pre-scalable-cow-v2-0-2a5aa403d977@kernel.org>
+X-Mailer: Sylpheed 3.8.0beta1 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-References: <20260709045902.498848-1-phucduc.bui@gmail.com>
- <20260710050511.14439-1-phucduc.bui@gmail.com> <20260710050511.14439-23-phucduc.bui@gmail.com>
- <95f5d6ec-ecc5-4090-ac04-27cdcdc21b8a@sirena.org.uk>
-In-Reply-To: <95f5d6ec-ecc5-4090-ac04-27cdcdc21b8a@sirena.org.uk>
-From: Bui Duc Phuc <phucduc.bui@gmail.com>
-Date: Sat, 11 Jul 2026 05:35:40 +0700
-X-Gm-Features: AVVi8CcV1gryT8dmwOHw2o14YhUF82x6D_iNoN6GwcJljlfAz-HFYF2Z94CVwBU
-Message-ID: <CAABR9nHUc3KvC4t=hJ9osyw93aXa+kEL07G1posnYJdLvjHEkA@mail.gmail.com>
-Subject: Re: [PATCH v3 25/27] ASoC: codecs: rt712: Use guard() for mutex locks
-To: Mark Brown <broonie@kernel.org>
-Cc: Takashi Iwai <tiwai@suse.com>, Nick Li <nick.li@foursemi.com>, 
-	Herve Codina <herve.codina@bootlin.com>, 
-	Support Opensource <support.opensource@diasemi.com>, Liam Girdwood <lgirdwood@gmail.com>, 
-	Jaroslav Kysela <perex@perex.cz>, Srinivas Kandagatla <srini@kernel.org>, 
-	Charles Keepax <ckeepax@opensource.cirrus.com>, 
-	Richard Fitzgerald <rf@opensource.cirrus.com>, Matthias Brugger <matthias.bgg@gmail.com>, 
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
-	Shenghao Ding <shenghao-ding@ti.com>, Kevin Lu <kevin-lu@ti.com>, Baojun Xu <baojun.xu@ti.com>, 
-	Sen Wang <sen@ti.com>, Oder Chiou <oder_chiou@realtek.com>, Linus Walleij <linusw@kernel.org>, 
-	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>, u.kleine-koenig@baylibre.com, 
-	Zhang Yi <zhangyi@everest-semi.com>, Marco Crivellari <marco.crivellari@suse.com>, 
-	Kees Cook <kees@kernel.org>, HyeongJun An <sammiee5311@gmail.com>, Arnd Bergmann <arnd@arndb.de>, 
-	Qianfeng Rong <rongqianfeng@vivo.com>, linux-sound@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@opensource.cirrus.com, 
-	linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org
-Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-0.66 / 15.00];
+X-Spamd-Result: default: False [0.34 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	MV_CASE(0.50)[];
+	R_DKIM_ALLOW(-0.20)[linux-foundation.org:s=korg];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-118428-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-118427-lists,linux-arm-msm=lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:broonie@kernel.org,m:tiwai@suse.com,m:nick.li@foursemi.com,m:herve.codina@bootlin.com,m:support.opensource@diasemi.com,m:lgirdwood@gmail.com,m:perex@perex.cz,m:srini@kernel.org,m:ckeepax@opensource.cirrus.com,m:rf@opensource.cirrus.com,m:matthias.bgg@gmail.com,m:angelogioacchino.delregno@collabora.com,m:shenghao-ding@ti.com,m:kevin-lu@ti.com,m:baojun.xu@ti.com,m:sen@ti.com,m:oder_chiou@realtek.com,m:linusw@kernel.org,m:kuninori.morimoto.gx@renesas.com,m:u.kleine-koenig@baylibre.com,m:zhangyi@everest-semi.com,m:marco.crivellari@suse.com,m:kees@kernel.org,m:sammiee5311@gmail.com,m:arnd@arndb.de,m:rongqianfeng@vivo.com,m:linux-sound@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:patches@opensource.cirrus.com,m:linux-mediatek@lists.infradead.org,m:linux-arm-msm@vger.kernel.org,m:linux-arm-kernel@lists.infradead.org,m:matthiasbgg@gmail.com,s:lists@lfdr.de];
-	FORGED_SENDER(0.00)[phucducbui@gmail.com,linux-arm-msm@vger.kernel.org];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_FROM(0.00)[gmail.com];
-	RCVD_COUNT_THREE(0.00)[4];
-	RCPT_COUNT_TWELVE(0.00)[32];
-	FORWARDED(0.00)[lists@lfdr.de];
-	MIME_TRACE(0.00)[0:+];
+	FORGED_RECIPIENTS(0.00)[m:ljs@kernel.org,m:david@kernel.org,m:liam@infradead.org,m:vbabka@kernel.org,m:rppt@kernel.org,m:surenb@google.com,m:mhocko@suse.com,m:riel@surriel.com,m:harry@kernel.org,m:jannh@google.com,m:lance.yang@linux.dev,m:pfalcato@suse.de,m:linux@armlinux.org.uk,m:dinguyen@kernel.org,m:schuster.simon@siemens-energy.com,m:James.Bottomley@HansenPartnership.com,m:deller@gmx.de,m:viro@zeniv.linux.org.uk,m:brauner@kernel.org,m:jack@suse.cz,m:djbw@kernel.org,m:willy@infradead.org,m:muchun.song@linux.dev,m:osalvador@suse.de,m:mhiramat@kernel.org,m:oleg@redhat.com,m:peterz@infradead.org,m:mingo@redhat.com,m:acme@kernel.org,m:namhyung@kernel.org,m:mark.rutland@arm.com,m:alexander.shishkin@linux.intel.com,m:jolsa@kernel.org,m:irogers@google.com,m:adrian.hunter@intel.com,m:james.clark@linaro.org,m:ziy@nvidia.com,m:baolin.wang@linux.alibaba.com,m:npache@redhat.com,m:ryan.roberts@arm.com,m:dev.jain@arm.com,m:baohua@kernel.org,m:linmiaohe@huawei.com,m:nao.horiguchi@gmail.com,m:xu
+ .xin16@zte.com.cn,m:chengming.zhou@linux.dev,m:sj@kernel.org,m:matthew.brost@intel.com,m:joshua.hahnjy@gmail.com,m:rakie.kim@sk.com,m:byungchul@sk.com,m:gourry@gourry.net,m:ying.huang@linux.alibaba.com,m:apopple@nvidia.com,m:hughd@google.com,m:peterx@redhat.com,m:kees@kernel.org,m:m.szyprowski@samsung.com,m:robin.murphy@arm.com,m:andreyknvl@gmail.com,m:glider@google.com,m:dvyukov@google.com,m:rostedt@goodmis.org,m:mathieu.desnoyers@efficios.com,m:jarkko@kernel.org,m:dave.hansen@linux.intel.com,m:tglx@kernel.org,m:bp@alien8.de,m:x86@kernel.org,m:hpa@zytor.com,m:abbotti@mev.co.uk,m:hsweeten@visionengravers.com,m:l.stach@pengutronix.de,m:christian.gmeiner@gmail.com,m:airlied@gmail.com,m:simona@ffwll.ch,m:patrik.r.jakobsson@gmail.com,m:maarten.lankhorst@linux.intel.com,m:mripard@kernel.org,m:tzimmermann@suse.de,m:robin.clark@oss.qualcomm.com,m:lumag@kernel.org,m:abhinav.kumar@linux.dev,m:jesszhan0024@gmail.com,m:sean@poorly.run,m:marijn.suijten@somainline.org,m:tomi.valkeinen@ideasonboa
+ rd.com,m:thierry.reding@kernel.org,m:mperttunen@nvidia.com,m:jonathanh@nvidia.com,m:christian.koenig@amd.com,m:ray.huang@amd.com,m:matthew.auld@intel.com,m:jgg@ziepe.ca,m:yishaih@nvidia.com,m:skolothumtho@nvidia.com,m:kevin.tian@intel.com,m:ankita@nvidia.com,m:alex@shazbot.org,s:lists@lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	TO_DN_SOME(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	MID_RHS_MATCH_FROMTLD(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[phucducbui@gmail.com,linux-arm-msm@vger.kernel.org];
-	FREEMAIL_CC(0.00)[suse.com,foursemi.com,bootlin.com,diasemi.com,gmail.com,perex.cz,kernel.org,opensource.cirrus.com,collabora.com,ti.com,realtek.com,renesas.com,baylibre.com,everest-semi.com,arndb.de,vivo.com,vger.kernel.org,lists.infradead.org];
-	ALIAS_RESOLVED(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
+	DMARC_NA(0.00)[linux-foundation.org];
+	MIME_TRACE(0.00)[0:+];
+	RCVD_COUNT_THREE(0.00)[4];
+	FORWARDED(0.00)[lists@lfdr.de];
+	FORGED_SENDER(0.00)[akpm@linux-foundation.org,linux-arm-msm@vger.kernel.org];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FREEMAIL_CC(0.00)[kernel.org,infradead.org,google.com,suse.com,surriel.com,linux.dev,suse.de,armlinux.org.uk,siemens-energy.com,HansenPartnership.com,gmx.de,zeniv.linux.org.uk,suse.cz,redhat.com,arm.com,linux.intel.com,intel.com,linaro.org,nvidia.com,linux.alibaba.com,huawei.com,gmail.com,zte.com.cn,sk.com,gourry.net,samsung.com,goodmis.org,efficios.com,alien8.de,zytor.com,mev.co.uk,visionengravers.com,pengutronix.de,ffwll.ch,oss.qualcomm.com,poorly.run,somainline.org,ideasonboard.com,amd.com,ziepe.ca,shazbot.org,kvack.org,vger.kernel.org,lists.infradead.org,lists.linux.dev,googlegroups.com,lists.freedesktop.org];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	RCPT_COUNT_GT_50(0.00)[123];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[akpm@linux-foundation.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[linux-foundation.org:+];
+	ALIAS_RESOLVED(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[mail.gmail.com:mid,vger.kernel.org:from_smtp,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
+	TO_DN_SOME(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,etnaviv];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,linux-foundation.org:from_mime,linux-foundation.org:dkim,linux-foundation.org:mid,vger.kernel.org:from_smtp]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 5579173F92A
+X-Rspamd-Queue-Id: 4FBD573F9AB
 
-Hi Mark,
+On Fri, 10 Jul 2026 21:16:41 +0100 Lorenzo Stoakes <ljs@kernel.org> wrote:
 
-Thanks for the review.
+> This series performs a series of cleanups and improvements around how the
+> vma->vm_pgoff field is used.
 
-> This function does also have some goto based unwinding, there's a
-> similar thing in the rt721 changes.
+Thanks, I'll add this to mm-new.
 
-It seems this goto block was added recently, and I missed it after rebasing.
-Sorry for the inconvenience.
-However, looking at the goto path, it seems we might need to unwind the
-states more completely. What do you think about rewriting it like this?
+Sashiko wasn't able to apply it :(
 
-------------------
-regcache_cache_only(rt712->regmap, false);
-    ret = regcache_sync(rt712->regmap);
-    if (ret) {
-        regcache_cache_only(rt712->regmap, true);
-        regcache_mark_dirty(rt712->regmap);
-        return ret;
-    }
+There were some minor collisions in ksm.c, thanks to
+https://lore.kernel.org/20260703162510242nxmjbcLy5ccp1dbZSK3EU@zte.com.cn.
 
-    regcache_cache_only(rt712->mbq_regmap, false);
-    ret = regcache_sync(rt712->mbq_regmap);
-    if (ret) {
-        regcache_cache_only(rt712->regmap, true);
-        regcache_cache_only(rt712->mbq_regmap, true);
-        regcache_mark_dirty(rt712->mbq_regmap);
-        return ret;
-    }
-
-    return 0;
---------------------
-
-
-Best regards,
-Phuc
+(You'd think His Royal AIness could figure out how to resolve a few
+dopey patch rejects.  Oh well.)
 
