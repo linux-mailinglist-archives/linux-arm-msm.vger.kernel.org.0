@@ -1,55 +1,54 @@
-Return-Path: <linux-arm-msm+bounces-118389-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-118390-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id Xoh4NtJUUWooCgMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-118389-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 22:23:46 +0200
+	id h8MIFu5UUWo3CgMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-118390-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 22:24:14 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id BB9FB73E2D4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 22:23:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id EAED973E310
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 22:24:13 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=d3dTLtbw;
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=Yvcme1ie;
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118389-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c09:e001:a7::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118389-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118390-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c09:e001:a7::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118390-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 1C1CD3014364
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 20:23:46 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 71E86301F8B2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 20:24:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC4DC39A4CE;
-	Fri, 10 Jul 2026 20:23:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B81D39C63E;
+	Fri, 10 Jul 2026 20:24:07 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0CEC399CFD;
-	Fri, 10 Jul 2026 20:23:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFBCF39A066;
+	Fri, 10 Jul 2026 20:24:05 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783715023; cv=none; b=T7PQhiJ7kFjT9wRmWUeHIngpEW3AAFEIMzCMXdEkgpE7vsJuQHu3smXH+b66+v2xwFzz4tORNgtvJq4WVUXitxwNFEBuPrW0UOnEWoI9fd+72kVfShoBJhWNOPOZiGjqWqJnedqr4FFzGIkO+NyZ1p0CwVIm0KQGDZ3kzBTVgrU=
+	t=1783715047; cv=none; b=bqjRyKhX2BJMIi00Z4F+z8tAxVLiMu6bQf1v2x4mrcFoT86oBpooJtTqegaXl0BbsWpRU5zKOCJ9EuA1Y99f4MOdSqVeFwe77iwYa9NTG1KClSw1EqUAQ+SiI/92t045tNcpttX11YWOWeAIsnAk+xPPmdTfqpDNHaVmwuFTHEk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783715023; c=relaxed/simple;
-	bh=fynty0cOXQIbsI8Im1dMU82VMgwlvpXxQo8CNb014Ng=;
+	s=arc-20240116; t=1783715047; c=relaxed/simple;
+	bh=RyHoLL9QYKzn8GmfhUypF1HMy7j9yuNgRKqt7m0CxCM=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=gFd97vgE2HaLZqKCL9xhiRYzJovhY3RTzCYjWy/Prga1YNYpvcZ8H+9Ta93wfXw/M6uemA3/luzSW8T88JcDnTqtAAksd62eC8TCOUqTUo+PcDGn0tObq/+6W1SsNvKrBnzR1jcJ+XXYpI303lUWNah4S5fMlALkyjVEswJzO4o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=d3dTLtbw; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A19E1F000E9;
-	Fri, 10 Jul 2026 20:23:19 +0000 (UTC)
+	 In-Reply-To:To:Cc; b=gt6qLkPGSWZHpqXpQ8ljeV6DnVA1yDQ68fTn/Sc7emNbcx2HRfOHH97+sxVvVrPrarR9ur+mpkhIxNuEnXZGTPUSYfs0iXZkLdyoaeC+YCjlmhY8wSGtf6LhbMsn2YSECm7T2/azGmmBvYI9ArXejKY0VFlxlLLbO9I8acSGWio=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Yvcme1ie; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B448D1F00A3A;
+	Fri, 10 Jul 2026 20:23:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783715022;
-	bh=2aND6ZTrK5aCnF0vB/hvCQzWPNkI/PGqvLHzAGyQuss=;
+	s=k20260515; t=1783715045;
+	bh=7rHiUFVguoq1IEHDVydiWk+wjTNnrgUwNwUljwJg4jE=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=d3dTLtbwHpud6iwAczcr/G9qOssm4UAuvj4AITz+zWpoo3DzOVp4gv/8j/t3INWRl
-	 h2iqumoE+G4TsrZXl0JhrXm1DZwp+Xg3/+wksbc2t0H/PLF/RGB/5vKhFzP677NytU
-	 q6MV3RVJSQRNxvQnBeZzwMXbXmKkia3AIRewaLGVCnf5X62tPiyvXhyTzEoOmXSEGC
-	 7JJiwAJmtNQpNHVWkspiwndBidkwdss3Ra2oN97KJrOwhYLngF5H0St0YiV3hmYCXT
-	 mfa+HnPzm/yNr4CqvgKrXrsT0Jsexbb8zALJKBx2Z3Z8c8MYQaM3JxOThN0dU2Lcc2
-	 ZnfBU5TdzppUw==
+	b=Yvcme1ieNXyFDoo+lIS03nV9pipt34r5wD+C/clXyI1xGd4MIhe9cWBew+GBWRUkJ
+	 OfNs6ewKzvo+PT4kUyxpZzl1C28zcBojxJSpeoM1fltsLT4Q3YftMtg84J6KqN16lM
+	 i6bmnzRy3cNRGNjTONoKz6tAu0Xm9REPzvoTin9cYBi7f97Cr3waoYlROrRJyJh08B
+	 iFqx09yKxv+YjA7GXu/KYTgZod4stmW3dMbcoBXT5wmPGSf8M/ZsOcAn4azvutQbxN
+	 YKaBXd6IIQNWqpqMBTU8pGx5qikO6e/CXGgvZLiiCoSPGHjrXioIbjQ0XF2RIK/9G/
+	 CmjN3WgETetvA==
 From: Lorenzo Stoakes <ljs@kernel.org>
-Date: Fri, 10 Jul 2026 21:16:57 +0100
-Subject: [PATCH v2 16/33] mm/vma: minor cleanup of expand_[upwards,
- downwards]()
+Date: Fri, 10 Jul 2026 21:16:58 +0100
+Subject: [PATCH v2 17/33] mm: introduce and use linear_page_delta()
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -58,7 +57,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260710-b4-pre-scalable-cow-v2-16-2a5aa403d977@kernel.org>
+Message-Id: <20260710-b4-pre-scalable-cow-v2-17-2a5aa403d977@kernel.org>
 References: <20260710-b4-pre-scalable-cow-v2-0-2a5aa403d977@kernel.org>
 In-Reply-To: <20260710-b4-pre-scalable-cow-v2-0-2a5aa403d977@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>, 
@@ -137,14 +136,15 @@ Cc: Lorenzo Stoakes <ljs@kernel.org>, linux-mm@kvack.org,
  linux-sgx@vger.kernel.org, etnaviv@lists.freedesktop.org, 
  dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
  freedreno@lists.freedesktop.org, linux-tegra@vger.kernel.org, 
- kvm@vger.kernel.org, Russell King <linux+etnaviv@armlinux.org.uk>
+ kvm@vger.kernel.org, Russell King <linux+etnaviv@armlinux.org.uk>, 
+ Ackerley Tng <ackerleytng@google.com>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2119; i=ljs@kernel.org;
- h=from:subject:message-id; bh=fynty0cOXQIbsI8Im1dMU82VMgwlvpXxQo8CNb014Ng=;
- b=kA0DAAoWz53NioHifxQByyZiAGpRUzzIuaLaCaR4CfWWXA/TVMCwmdk5sAWWI2+fuF7yBKZGo
- 4h1BAAWCgAdFiEE5/QXv1IUVp6J0E9Gz53NioHifxQFAmpRUzwACgkQz53NioHifxSSHwEA7mlE
- x52NRnGbJn2diesM85ALQpE3tCi1SqD0qgxp4fkBAMrSm0IQy3xvIXv/5PUxUHYQwVkEyzhhVNm
- YRBxFnqAF
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2722; i=ljs@kernel.org;
+ h=from:subject:message-id; bh=RyHoLL9QYKzn8GmfhUypF1HMy7j9yuNgRKqt7m0CxCM=;
+ b=owGbwMvMwCV2fu7ZrsZH9SKMp9WSGLICg20sa5N6ffOdZY/uuM49Q6T0gTqfSuNy/0tvAlWFV
+ naFqt7oKGVhEONikBVTZHn+RXx/kEjYvM4L/m4wc1iZQIYwcHEKwEQiUhj+CqbqT5iddiQ5f9qS
+ CascLV90qXjKHGEJqw4LrAm3UHI/xcjwb/6q1bkn6llcu88Ye2TFXFveuNVaLfBPeaex5DqGCYy
+ MAA==
 X-Developer-Key: i=ljs@kernel.org; a=openpgp;
  fpr=E7F417BF5214569E89D04F46CF9DCD8A81E27F14
 X-Rspamd-Action: no action
@@ -159,7 +159,7 @@ X-Spamd-Result: default: False [-3.66 / 15.00];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	FORWARDED(0.00)[lists@lfdr.de];
-	TAGGED_FROM(0.00)[bounces-118389-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-118390-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	FREEMAIL_TO(0.00)[linux-foundation.org,kernel.org,infradead.org,google.com,suse.com,surriel.com,linux.dev,suse.de,armlinux.org.uk,siemens-energy.com,HansenPartnership.com,gmx.de,zeniv.linux.org.uk,suse.cz,redhat.com,arm.com,linux.intel.com,intel.com,linaro.org,nvidia.com,linux.alibaba.com,huawei.com,gmail.com,zte.com.cn,sk.com,gourry.net,samsung.com,goodmis.org,efficios.com,alien8.de,zytor.com,mev.co.uk,visionengravers.com,pengutronix.de,ffwll.ch,oss.qualcomm.com,poorly.run,somainline.org,ideasonboard.com,amd.com,ziepe.ca,shazbot.org];
 	FORGED_SENDER_MAILLIST(0.00)[];
@@ -172,7 +172,7 @@ X-Spamd-Result: default: False [-3.66 / 15.00];
 	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	RCPT_COUNT_GT_50(0.00)[122];
+	RCPT_COUNT_GT_50(0.00)[123];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[ljs@kernel.org,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[kernel.org:+];
@@ -184,65 +184,85 @@ X-Spamd-Result: default: False [-3.66 / 15.00];
 	TAGGED_RCPT(0.00)[linux-arm-msm,etnaviv];
 	TO_DN_SOME(0.00)[]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: BB9FB73E2D4
+X-Rspamd-Queue-Id: EAED973E310
 
-Adjust the stack expansion functions expand_upwards() and
-expand_downwards() such that they are expressed in terms of named constant
-values, and make use of vma_start_pgoff().
+It's often useful to obtain the number of pages a given address lies at
+within a VMA.
 
-This clearly documents that we are referencing the page offset of the start
-of the VMA.
+Add linear_page_delta() to determine this and update linear_page_index() to
+make use of it.
 
-Additionally this cleans up the overflow check in expand_upwards().
+Add comments to describe both linear_page_delta() and linear_page_index().
+
+We refer the reader to the comment for vma_start_pgoff() so we don't
+duplicate information about the meaning of a VMA's page offset, which is
+also less likely to result in bitrot.
 
 No functional change intended.
 
-Reviewed-by: Pedro Falcato <pfalcato@suse.de>
+Reviewed-by: Ackerley Tng <ackerleytng@google.com>
 Reviewed-by: Gregory Price <gourry@gourry.net>
+Reviewed-by: Pedro Falcato <pfalcato@suse.de>
 Signed-off-by: Lorenzo Stoakes <ljs@kernel.org>
 ---
- mm/vma.c | 17 +++++++----------
- 1 file changed, 7 insertions(+), 10 deletions(-)
+ include/linux/pagemap.h | 33 +++++++++++++++++++++++++++++++--
+ 1 file changed, 31 insertions(+), 2 deletions(-)
 
-diff --git a/mm/vma.c b/mm/vma.c
-index 7265a054cfa3..5d5e60ea8a25 100644
---- a/mm/vma.c
-+++ b/mm/vma.c
-@@ -3216,13 +3216,12 @@ int expand_upwards(struct vm_area_struct *vma, unsigned long address)
+diff --git a/include/linux/pagemap.h b/include/linux/pagemap.h
+index 2c3718d592d6..a950070b045f 100644
+--- a/include/linux/pagemap.h
++++ b/include/linux/pagemap.h
+@@ -1063,11 +1063,40 @@ static inline pgoff_t folio_pgoff(const struct folio *folio)
+ 	return folio->index;
+ }
  
- 	/* Somebody else might have raced and expanded it already */
- 	if (address > vma->vm_end) {
--		unsigned long size, grow;
--
--		size = address - vma->vm_start;
--		grow = (address - vma->vm_end) >> PAGE_SHIFT;
-+		const unsigned long size = address - vma->vm_start;
-+		const unsigned long grow = (address - vma->vm_end) >> PAGE_SHIFT;
-+		const pgoff_t pgoff = vma_start_pgoff(vma);
++/**
++ * linear_page_delta() - Determine the relative page offset of @address within
++ * @vma.
++ * @vma: The VMA in which @address resides.
++ * @address: The address whose relative page offset is required.
++ *
++ * The result is identical for both file-backed and anonymous mappings and
++ * simply determines how many pages @address lies from @vma->vm_start.
++ *
++ * Returns: The number of pages @address is offset by within @vma.
++ */
++static inline pgoff_t linear_page_delta(const struct vm_area_struct *vma,
++					const unsigned long address)
++{
++	return (address - vma->vm_start) >> PAGE_SHIFT;
++}
++
++/**
++ * linear_page_index() - Determine the absolute page offset of @address within
++ * @vma.
++ * @vma: The VMA in which @address resides.
++ * @address: The address whose absolute page offset is required.
++ *
++ * See the comment for vma_start_pgoff() for a description of what the page
++ * offset signifies.
++ *
++ * Returns: The absolute page offset of @address within @vma.
++ */
+ static inline pgoff_t linear_page_index(const struct vm_area_struct *vma,
+ 					const unsigned long address)
+ {
+ 	pgoff_t pgoff;
+-	pgoff = (address - vma->vm_start) >> PAGE_SHIFT;
++
++	pgoff = linear_page_delta(vma, address);
+ 	pgoff += vma->vm_pgoff;
+ 	return pgoff;
+ }
+@@ -1219,7 +1248,7 @@ static inline vm_fault_t folio_lock_or_retry(struct folio *folio,
+ void folio_wait_bit(struct folio *folio, int bit_nr);
+ int folio_wait_bit_killable(struct folio *folio, int bit_nr);
  
- 		error = -ENOMEM;
--		if (vma->vm_pgoff + (size >> PAGE_SHIFT) >= vma->vm_pgoff) {
-+		if (pgoff + (size >> PAGE_SHIFT) >= pgoff) {
- 			error = acct_stack_growth(vma, size, grow);
- 			if (!error) {
- 				if (vma_test(vma, VMA_LOCKED_BIT))
-@@ -3295,13 +3294,11 @@ int expand_downwards(struct vm_area_struct *vma, unsigned long address)
- 
- 	/* Somebody else might have raced and expanded it already */
- 	if (address < vma->vm_start) {
--		unsigned long size, grow;
--
--		size = vma->vm_end - address;
--		grow = (vma->vm_start - address) >> PAGE_SHIFT;
-+		const unsigned long size = vma->vm_end - address;
-+		const unsigned long grow = (vma->vm_start - address) >> PAGE_SHIFT;
- 
- 		error = -ENOMEM;
--		if (grow <= vma->vm_pgoff) {
-+		if (grow <= vma_start_pgoff(vma)) {
- 			error = acct_stack_growth(vma, size, grow);
- 			if (!error) {
- 				if (vma_test(vma, VMA_LOCKED_BIT))
+-/* 
++/*
+  * Wait for a folio to be unlocked.
+  *
+  * This must be called with the caller "holding" the folio,
 
 -- 
 2.55.0
