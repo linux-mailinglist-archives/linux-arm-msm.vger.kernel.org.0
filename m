@@ -1,144 +1,71 @@
-Return-Path: <linux-arm-msm+bounces-118379-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-118395-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id zI3UFjdUUWrqCQMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-118379-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 22:21:11 +0200
+	id l7U5OfdVUWq6CgMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-118395-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 22:28:39 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 522FB73E20E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 22:21:10 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 629F873E4AF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 22:28:39 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=gourry.net header.s=google header.b=X3mYeLKC;
-	dmarc=none;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118379-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 104.64.211.4 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118379-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=Sd7sj++5;
+	dmarc=pass (policy=quarantine) header.from=kernel.org;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118395-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118395-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id B35D3300C3B2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 20:20:12 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id A2961308FD9A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 20:25:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 33D45396587;
-	Fri, 10 Jul 2026 20:20:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 796E539A7FE;
+	Fri, 10 Jul 2026 20:25:49 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qt1-f181.google.com (mail-qt1-f181.google.com [209.85.160.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B08E39934C
-	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jul 2026 20:20:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D3B039EF32;
+	Fri, 10 Jul 2026 20:25:47 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783714808; cv=none; b=OptqAySB6WaywZpWBowdDJsKdFE1vCtS+0nebY9vDZxH3UwlrdG4JCazx80GMSH2+aK3kdf9pEbzEl96sEcSCzd74iS7eS5SYQiqo/gBF65SbicNdpdv4bm/SRY5slB5yjTn8qyp4MIDlW5hFMeVEp7frASnXJpG2Qr1MQNDsPc=
+	t=1783715149; cv=none; b=cj+78/VAwO1AHiSBKMB6hUQwNGtM7Vya7YwaZDax1l6LrB/z2LGgGvg5lPCIf6/wlLQVHMHGfc2ADwZCRXe8Yc1gD0rSdhu+Y0n8IL4mXjeMhMtAVUWU4xV/P8+FpSgxLlnWT5dleILt71BPuX8O0EnLp4mMW9WAXhy8784fYCI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783714808; c=relaxed/simple;
-	bh=hY0ihDWAncS8x5azfJXUc95BFne8Ovg7UFiz7I6gZN4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ojNfny8YadmDfSF0noer+Yd/Tk+6bFMORgklzq457wMrhtQt+9rndo5EgfPAsEZyUWUFl4vtWqIcD7JhnG7il/N18X6Iqe0m9xrmVj8EzfmVr9aXwP9AFSlR4MPMMKXnaJtlXj0K8xNxj6PRsPhAkTgtJ9/nhUG3uvNBUBTwN8s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net; spf=pass smtp.mailfrom=gourry.net; dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b=X3mYeLKC; arc=none smtp.client-ip=209.85.160.181
-Received: by mail-qt1-f181.google.com with SMTP id d75a77b69052e-51c5382806fso12686781cf.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jul 2026 13:20:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gourry.net; s=google; t=1783714804; x=1784319604; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=Atx/vDG1sDwzZEMAHR3NGh72ccSeLTTbFrhohwZH8Yk=;
-        b=X3mYeLKCTjrKKg7CrKhhtCpJiHPHVx9i7wyXOXHXJaNZNTkaIVryh75DoorULOx84m
-         TM+OwWO82Wa5PBzq/bp3fBMco7tSum+uO7dHKjgCrcAOtrj2ZcQoqjcMRdW+2pjSQB+w
-         tlu3tni9BW495YqGesm+7e+WSEHEYWpHM5hPATAn+CpKpWPA/cUG+5VCwhc5PCHe0PUS
-         MFkXf6cktWK5db+chO1jL7u4Y/QBBpOwl8MiEg45GxqUmoLXqyMpkCjPR69yebLQ4Enu
-         QCcQoXAuwRIe5dPzaJOvDluq2JLNeIY5o4vGwaqPBzmc1kC+TmHXnJkELSBsdLoTg8vE
-         umKQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783714804; x=1784319604;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=Atx/vDG1sDwzZEMAHR3NGh72ccSeLTTbFrhohwZH8Yk=;
-        b=dlxjXluh8BeCPePXraDyXHrB+T8DhbfMlkMUFwINg7otGmA8hFfrzBZzmCFE5zjpgt
-         XehCCd2eF7dRVGn0T64T+mcWsYpUxNYqqGFF/wqt06G6jlVaz/bBdR2n40f9GBOZHezS
-         teef1NljzRX+aXQ641E+QlIKJnRpxOKzug6DCYnFbR8391s0uWzblVg/55ZOu0iLl7Ob
-         fFVVlGdOtwzrq2NEWNydxTU0tYll3HWm2bHjAqXldReO4WNHwY0H+AjnO/Kb+37/FfMR
-         6LbWSnc+KWLs5HVcH9TnSXsfhJEkFB67P8iIGE07shHCumgUal3m+NMuP0AjQWjYbmfA
-         5QUA==
-X-Forwarded-Encrypted: i=1; AHgh+Rov+eXiALi0GZ98CSY4yc1PpfFk9mIZyOsN/z4SQG8ogbLmjaSswDdDswYygXOsrZAlFIBS4BhZRDx6IA36@vger.kernel.org
-X-Gm-Message-State: AOJu0YyU5RtWAIAUW6+eGRRykhw2AnEMGyj0uH4BUBBeqcDObnykXvHx
-	LJlu8nptTSK0RmNinbaAHCBmV0LvNNoFaipL/fR2J4Gy5nUvZSLPrxFwSI3ZsTK1kug=
-X-Gm-Gg: AfdE7cmQwpvUxWmTycLNtfqLnhh8CTyOThBFeGqVYhgw1DC5yQeNL9MDS0N0DGyCioN
-	gOzAzvFciMAkKbfAUzd/1upNLSu6MbEDe7TzFkQ58/pfheSQPErPvdGu+fjr63otJFMP+lA5jFY
-	Mghtmr+kZLxlDZJqv3dJ3DwsBBIIYWcOx094zQrr3wtGOoubuT/H5oYLyjO7qhorx9RkkTLYEpx
-	XCNe5SC/kBl7s8SjPaVL3Pv1NMxJw90/r/RHSibzyna6U76Tbc2SBOJLjlr2C+XvF/81+MItPOB
-	/QGmliMoVLIV09MQg5c9eNKv9qym1GD++mvjQBkLR28esTkKqCAmBYaSnuPYotzMT/xNdqgz11T
-	SUGPVGQ6J/zWXxvrvxr8wKrCaCvu8roB28PFKJGowowLztKsRRUSrMW9mR4t48wPSR15KBRIyrw
-	mJ/n9Rf+eLneY5tm7G8VuPtX4BV3CDGZaXf/hLhsAwgsTiWNFjAFYlJ+U33W8Fgzhdv78r
-X-Received: by 2002:ac8:7c56:0:b0:51c:1291:911c with SMTP id d75a77b69052e-51cbf0e0649mr5096251cf.14.1783714804352;
-        Fri, 10 Jul 2026 13:20:04 -0700 (PDT)
-Received: from gourry-fedora-PF4VCD3F (pool-173-79-60-52.washdc.fios.verizon.net. [173.79.60.52])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8ffd50e10f4sm49427896d6.1.2026.07.10.13.20.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Jul 2026 13:20:03 -0700 (PDT)
-Date: Fri, 10 Jul 2026 16:19:58 -0400
-From: Gregory Price <gourry@gourry.net>
-To: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>,
-	Russell King <linux@armlinux.org.uk>,
-	Dinh Nguyen <dinguyen@kernel.org>,
-	Simon Schuster <schuster.simon@siemens-energy.com>,
-	"James E . J . Bottomley" <James.Bottomley@hansenpartnership.com>,
-	Helge Deller <deller@gmx.de>, Jarkko Sakkinen <jarkko@kernel.org>,
-	Thomas Gleixner <tglx@kernel.org>, Ingo Molnar <mingo@redhat.com>,
-	Borislav Petkov <bp@alien8.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org,
-	Ian Abbott <abbotti@mev.co.uk>,
-	H Hartley Sweeten <hsweeten@visionengravers.com>,
-	Lucas Stach <l.stach@pengutronix.de>,
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-	Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-	Thierry Reding <thierry.reding@kernel.org>,
-	Mikko Perttunen <mperttunen@nvidia.com>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	Christian Koenig <christian.koenig@amd.com>,
-	Huang Rui <ray.huang@amd.com>, Ankit Agrawal <ankita@nvidia.com>,
-	Alex Williamson <alex@shazbot.org>,
-	Alexander Viro <viro@zeniv.linux.org.uk>,
-	Christian Brauner <brauner@kernel.org>,
-	Dan Williams <djbw@kernel.org>, Muchun Song <muchun.song@linux.dev>,
-	Oscar Salvador <osalvador@suse.de>,
-	David Hildenbrand <david@kernel.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	"Liam R . Howlett" <liam@infradead.org>,
-	Matthew Wilcox <willy@infradead.org>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Oleg Nesterov <oleg@redhat.com>,
-	Steven Rostedt <rostedt@goodmis.org>, SeongJae Park <sj@kernel.org>,
-	Miaohe Lin <linmiaohe@huawei.com>, Hugh Dickins <hughd@google.com>,
-	Mike Rapoport <rppt@kernel.org>, Kees Cook <kees@kernel.org>,
-	Paolo Bonzini <pbonzini@redhat.com>, linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linux-parisc@vger.kernel.org,
-	linux-sgx@vger.kernel.org, etnaviv@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-	freedreno@lists.freedesktop.org, linux-tegra@vger.kernel.org,
-	kvm@vger.kernel.org, linux-fsdevel@vger.kernel.org,
-	nvdimm@lists.linux.dev, linux-mm@kvack.org, iommu@lists.linux.dev,
-	linux-perf-users@vger.kernel.org,
-	linux-trace-kernel@vger.kernel.org, kasan-dev@googlegroups.com,
-	damon@lists.linux.dev, Pedro Falcato <pfalcato@suse.de>,
-	Rik van Riel <riel@surriel.com>, Harry Yoo <harry@kernel.org>,
-	Jann Horn <jannh@google.com>
-Subject: Re: [PATCH 29/30] tools/testing/vma: default VMA flag bits to 64-bit
-Message-ID: <alFT7lx8F04rN01D@gourry-fedora-PF4VCD3F>
-References: <cover.1782735110.git.ljs@kernel.org>
- <27cd07f6dd862d92410cf9db03f7c11e5f66854d.1782735110.git.ljs@kernel.org>
+	s=arc-20240116; t=1783715149; c=relaxed/simple;
+	bh=MYkhLJjFzu/0shKCRegPVVOR3/cURK0eqPqvT6VmZW8=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=Tp3AXTv5EcrAUDrG2wZWQG246NyalAQfupWunhCBojb4K3xbQEISrZKnRqkWnRKOPyyzkmuzlzdZWcHI9LYgo+5Ks6/giImNBiIS4E6tgU2iMkYA+vEE7e5tYPwhg2nIfL5Gdj6vL0LGEyzWRxrUjxHdRmD4OpOpSuVes3Cw3mw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Sd7sj++5; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A0831F00A3A;
+	Fri, 10 Jul 2026 20:25:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1783715147;
+	bh=xkkm/ay4UwW+LKTRMQXsXHe7l4TsIKcsEKX51F7sGr4=;
+	h=Date:From:To:Cc:Subject:In-Reply-To;
+	b=Sd7sj++52Pz2Pz2wGW3mFCJs7y5zatPJ6wjFHodxWDPYb9ZC+NX15p0Uny3xfhysj
+	 wElnyMhbIk3ZUUOA5+t10GaPqjbbPsyfgHALPKW6KnJtDLUAyYaKU1fwOkEBJmolO7
+	 0ePWxShhOkhgF2fBtCCjMwYKKC/CunYss+mySjVw3PW+rxJBWmsEXZyIZ3w2KvOSp6
+	 a+wBIBpHFugDxxDB71+jUyYifB+wywDqnLXJE3CGR+A/MkdE1aESXoj8Lz8C+GBLyj
+	 naz9D8aUs4b4ooSPfrhUV/DJVq9hOpsig9yUtQzeTvdZ6tfLFPgzxALqrTBDe3In7h
+	 qzCiOIDuy6RgQ==
+Date: Fri, 10 Jul 2026 15:25:46 -0500
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Manivannan Sadhasivam <mani@kernel.org>
+Cc: Bjorn Helgaas <bhelgaas@google.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Nirmal Patel <nirmal.patel@linux.intel.com>,
+	Jonathan Derrick <jonathan.derrick@linux.dev>,
+	Jeff Johnson <jjohnson@kernel.org>, linux-pci@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-wireless@vger.kernel.org, ath12k@lists.infradead.org,
+	ath11k@lists.infradead.org, ath10k@lists.infradead.org,
+	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
+	Qiang Yu <qiang.yu@oss.qualcomm.com>,
+	Ilpo =?utf-8?B?SsOkcnZpbmVu?= <ilpo.jarvinen@linux.intel.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Subject: Re: [PATCH v3 6/8] wifi: ath12k: Use
+ pci_{enable/disable}_link_state() APIs to enable/disable ASPM states
+Message-ID: <20260710202546.GA989860@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -147,85 +74,145 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <27cd07f6dd862d92410cf9db03f7c11e5f66854d.1782735110.git.ljs@kernel.org>
+In-Reply-To: <20260708-pci-aspm-fix-v3-6-6bd72451746e@kernel.org>
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [0.34 / 15.00];
+X-Spamd-Result: default: False [-3.16 / 15.00];
+	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MID_RHS_NOT_FQDN(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
-	R_DKIM_ALLOW(-0.20)[gourry.net:s=google];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-118379-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
 	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:ljs@kernel.org,m:akpm@linux-foundation.org,m:linux@armlinux.org.uk,m:dinguyen@kernel.org,m:schuster.simon@siemens-energy.com,m:James.Bottomley@hansenpartnership.com,m:deller@gmx.de,m:jarkko@kernel.org,m:tglx@kernel.org,m:mingo@redhat.com,m:bp@alien8.de,m:dave.hansen@linux.intel.com,m:x86@kernel.org,m:abbotti@mev.co.uk,m:hsweeten@visionengravers.com,m:l.stach@pengutronix.de,m:airlied@gmail.com,m:simona@ffwll.ch,m:patrik.r.jakobsson@gmail.com,m:maarten.lankhorst@linux.intel.com,m:mripard@kernel.org,m:tzimmermann@suse.de,m:robin.clark@oss.qualcomm.com,m:lumag@kernel.org,m:tomi.valkeinen@ideasonboard.com,m:thierry.reding@kernel.org,m:mperttunen@nvidia.com,m:jonathanh@nvidia.com,m:christian.koenig@amd.com,m:ray.huang@amd.com,m:ankita@nvidia.com,m:alex@shazbot.org,m:viro@zeniv.linux.org.uk,m:brauner@kernel.org,m:djbw@kernel.org,m:muchun.song@linux.dev,m:osalvador@suse.de,m:david@kernel.org,m:surenb@google.com,m:liam@infradead.org,m:willy@infradead.org,m:m.szyprow
- ski@samsung.com,m:peterz@infradead.org,m:acme@kernel.org,m:namhyung@kernel.org,m:mhiramat@kernel.org,m:oleg@redhat.com,m:rostedt@goodmis.org,m:sj@kernel.org,m:linmiaohe@huawei.com,m:hughd@google.com,m:rppt@kernel.org,m:kees@kernel.org,m:pbonzini@redhat.com,m:linux-kernel@vger.kernel.org,m:linux-arm-kernel@lists.infradead.org,m:linux-parisc@vger.kernel.org,m:linux-sgx@vger.kernel.org,m:etnaviv@lists.freedesktop.org,m:dri-devel@lists.freedesktop.org,m:linux-arm-msm@vger.kernel.org,m:freedreno@lists.freedesktop.org,m:linux-tegra@vger.kernel.org,m:kvm@vger.kernel.org,m:linux-fsdevel@vger.kernel.org,m:nvdimm@lists.linux.dev,m:linux-mm@kvack.org,m:iommu@lists.linux.dev,m:linux-perf-users@vger.kernel.org,m:linux-trace-kernel@vger.kernel.org,m:kasan-dev@googlegroups.com,m:damon@lists.linux.dev,m:pfalcato@suse.de,m:riel@surriel.com,m:harry@kernel.org,m:jannh@google.com,m:patrikrjakobsson@gmail.com,s:lists@lfdr.de];
-	FORWARDED(0.00)[lists@lfdr.de];
+	FORGED_SENDER(0.00)[helgaas@kernel.org,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[19];
+	FORGED_RECIPIENTS(0.00)[m:mani@kernel.org,m:bhelgaas@google.com,m:lpieralisi@kernel.org,m:kwilczynski@kernel.org,m:robh@kernel.org,m:nirmal.patel@linux.intel.com,m:jonathan.derrick@linux.dev,m:jjohnson@kernel.org,m:linux-pci@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-wireless@vger.kernel.org,m:ath12k@lists.infradead.org,m:ath11k@lists.infradead.org,m:ath10k@lists.infradead.org,m:krishna.chundru@oss.qualcomm.com,m:qiang.yu@oss.qualcomm.com,m:ilpo.jarvinen@linux.intel.com,m:manivannan.sadhasivam@oss.qualcomm.com,s:lists@lfdr.de];
 	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_CC(0.00)[linux-foundation.org,armlinux.org.uk,kernel.org,siemens-energy.com,hansenpartnership.com,gmx.de,redhat.com,alien8.de,linux.intel.com,mev.co.uk,visionengravers.com,pengutronix.de,gmail.com,ffwll.ch,suse.de,oss.qualcomm.com,ideasonboard.com,nvidia.com,amd.com,shazbot.org,zeniv.linux.org.uk,linux.dev,google.com,infradead.org,samsung.com,goodmis.org,huawei.com,vger.kernel.org,lists.infradead.org,lists.freedesktop.org,lists.linux.dev,kvack.org,googlegroups.com,surriel.com];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DMARC_NA(0.00)[gourry.net];
-	FORGED_SENDER(0.00)[gourry@gourry.net,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[gourry.net:+];
-	MISSING_XM_UA(0.00)[];
-	TO_DN_SOME(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[gourry@gourry.net,linux-arm-msm@vger.kernel.org];
+	FORWARDED(0.00)[lists@lfdr.de];
+	TAGGED_FROM(0.00)[bounces-118395-lists,linux-arm-msm=lfdr.de];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_GT_50(0.00)[76];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
+	FORGED_SENDER_FORWARDING(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[helgaas@kernel.org,linux-arm-msm@vger.kernel.org];
+	TO_DN_SOME(0.00)[];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[gourry.net:from_mime,gourry.net:email,gourry.net:dkim,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,gourry-fedora-PF4VCD3F:mid,vger.kernel.org:from_smtp]
+	MISSING_XM_UA(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,vger.kernel.org:from_smtp,bhelgaas:mid]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 522FB73E20E
+X-Rspamd-Queue-Id: 629F873E4AF
 
-On Mon, Jun 29, 2026 at 01:23:40PM +0100, Lorenzo Stoakes wrote:
-> With all of the sanitisers turned on, setting the VMA flag bits depth to
-> 128 by default results in overly long build times.
+On Wed, Jul 08, 2026 at 04:30:20PM +0200, Manivannan Sadhasivam wrote:
+> From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 > 
-> Reduce this to 64 - we can always manipulate these later for testing of
-> larger bitmaps as needed.
+> It is not recommended to enable/disable the ASPM states on the back of the
+> PCI core directly using the LNKCTL register. It will break the PCI core's
+> knowledge about the device ASPM states. So use the APIs exposed by the PCI
+> core to enable/disable ASPM states.
 > 
-> Signed-off-by: Lorenzo Stoakes <ljs@kernel.org>
+> Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0.c5-00481-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
+> 
+> Reported-by: Qiang Yu <qiang.yu@oss.qualcomm.com>
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+> ---
+>  drivers/net/wireless/ath/ath12k/Kconfig |  2 +-
+>  drivers/net/wireless/ath/ath12k/pci.c   | 19 +++----------------
+>  drivers/net/wireless/ath/ath12k/pci.h   |  4 +++-
+>  3 files changed, 7 insertions(+), 18 deletions(-)
+> 
+> diff --git a/drivers/net/wireless/ath/ath12k/Kconfig b/drivers/net/wireless/ath/ath12k/Kconfig
+> index 4a2b240f967a..7852ede3eaea 100644
+> --- a/drivers/net/wireless/ath/ath12k/Kconfig
+> +++ b/drivers/net/wireless/ath/ath12k/Kconfig
+> @@ -1,7 +1,7 @@
+>  # SPDX-License-Identifier: BSD-3-Clause-Clear
+>  config ATH12K
+>  	tristate "Qualcomm Wi-Fi 7 support (ath12k)"
+> -	depends on MAC80211 && HAS_DMA && PCI
+> +	depends on MAC80211 && HAS_DMA && PCI && PCIEASPM
 
-Seems like this causes instrumented inlining to go crazy.
+As Sashiko pointed out [1], I think adding the PCIEASPM dependency is
+an issue.  The PCI core should provide stubs or whatever is necessary
+to make ath12k work even if PCIEASPM isn't selected.
 
-static inline void bitmap_or(...) {
-	if (small_const_nbits(nbits))
-		*dst = *src1 | *src2;
-	else
-		__bitmap_or(dst, src1, src2, nbits);
-	        ^^^^ this branch is being hit ^^^^
-}
+I'm guessing this hardware depends on the ability to disable ASPM even
+without PCIEASPM so we probably would need more than just empty stubs.
+We do build aspm.c unconditionally now and we provide LTR and L1SS
+save/restore regardless of PCIEASPM.  Maybe we need something similar
+here.
 
-tl;dr: __bitmap_or() gets emitted and then the sanitizers have to
-instrument a ton of inlined functions instead of the compiler simply
-injecting a couple 'or' instructions.
+[1] https://lore.kernel.org/all/20260708144904.0CC4F1F000E9@smtp.kernel.org
 
-if you wanted to keep the coverage you could do something like
-
-# These can be varied to test different sizes.
-NUM_VMA_FLAG_BITS ?= 64
-NUM_MM_FLAG_BITS  ?= 64
-CFLAGS += -DNUM_VMA_FLAG_BITS=$(NUM_VMA_FLAG_BITS) -DNUM_MM_FLAG_BITS=$(NUM_MM_FLAG_BITS)
-
-w/ 
-
-make NUM_VMA_FLAG_BITS=128
-
-would let you still test the branch but not by default.
-
-anyway:
-
-Reviewed-by: Gregory Price <gourry@gourry.net>
-
-~Gregory
+>  	select QCOM_QMI_HELPERS
+>  	select MHI_BUS
+>  	select QRTR
+> diff --git a/drivers/net/wireless/ath/ath12k/pci.c b/drivers/net/wireless/ath/ath12k/pci.c
+> index d9a22d6afbb0..6d48fb25690d 100644
+> --- a/drivers/net/wireless/ath/ath12k/pci.c
+> +++ b/drivers/net/wireless/ath/ath12k/pci.c
+> @@ -884,19 +884,9 @@ static void ath12k_pci_free_region(struct ath12k_pci *ab_pci)
+>  
+>  static void ath12k_pci_aspm_disable(struct ath12k_pci *ab_pci)
+>  {
+> -	struct ath12k_base *ab = ab_pci->ab;
+> -
+> -	pcie_capability_read_word(ab_pci->pdev, PCI_EXP_LNKCTL,
+> -				  &ab_pci->link_ctl);
+> -
+> -	ath12k_dbg(ab, ATH12K_DBG_PCI, "pci link_ctl 0x%04x L0s %d L1 %d\n",
+> -		   ab_pci->link_ctl,
+> -		   u16_get_bits(ab_pci->link_ctl, PCI_EXP_LNKCTL_ASPM_L0S),
+> -		   u16_get_bits(ab_pci->link_ctl, PCI_EXP_LNKCTL_ASPM_L1));
+> +	ab_pci->aspm_states = pcie_aspm_enabled(ab_pci->pdev);
+>  
+> -	/* disable L0s and L1 */
+> -	pcie_capability_clear_word(ab_pci->pdev, PCI_EXP_LNKCTL,
+> -				   PCI_EXP_LNKCTL_ASPMC);
+> +	pci_disable_link_state(ab_pci->pdev, PCIE_LINK_STATE_ASPM_ALL);
+>  
+>  	set_bit(ATH12K_PCI_ASPM_RESTORE, &ab_pci->flags);
+>  }
+> @@ -925,10 +915,7 @@ static void ath12k_pci_aspm_restore(struct ath12k_pci *ab_pci)
+>  {
+>  	if (ab_pci->ab->hw_params->supports_aspm &&
+>  	    test_and_clear_bit(ATH12K_PCI_ASPM_RESTORE, &ab_pci->flags))
+> -		pcie_capability_clear_and_set_word(ab_pci->pdev, PCI_EXP_LNKCTL,
+> -						   PCI_EXP_LNKCTL_ASPMC,
+> -						   ab_pci->link_ctl &
+> -						   PCI_EXP_LNKCTL_ASPMC);
+> +		pci_force_enable_link_state(ab_pci->pdev, ab_pci->aspm_states);
+>  }
+>  
+>  static void ath12k_pci_cancel_workqueue(struct ath12k_base *ab)
+> diff --git a/drivers/net/wireless/ath/ath12k/pci.h b/drivers/net/wireless/ath/ath12k/pci.h
+> index 0e0e2020c6ae..409ef063cd69 100644
+> --- a/drivers/net/wireless/ath/ath12k/pci.h
+> +++ b/drivers/net/wireless/ath/ath12k/pci.h
+> @@ -128,7 +128,9 @@ struct ath12k_pci {
+>  
+>  	/* enum ath12k_pci_flags */
+>  	unsigned long flags;
+> -	u16 link_ctl;
+> +
+> +	/* Cached PCIe ASPM states */
+> +	u32 aspm_states;
+>  	unsigned long irq_flags;
+>  	const struct ath12k_pci_ops *pci_ops;
+>  	u32 qmi_instance;
+> 
+> -- 
+> 2.43.0
+> 
+> 
 
