@@ -1,81 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-118137-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-118138-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id ImcZFR5+UGoN0AIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-118137-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 07:07:42 +0200
+	id /U8mCsp9UGrozwIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-118138-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 07:06:18 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id CD9837373B4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 07:07:41 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id CEC4E737387
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 07:06:17 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=gmail.com header.s=20251104 header.b=HmZ8Fj0P;
+	dkim=pass header.d=gmail.com header.s=20251104 header.b=fp98KrVW;
 	dmarc=pass (policy=none) header.from=gmail.com;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118137-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118137-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118138-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c09:e001:a7::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118138-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id F3E33301F18F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 05:06:07 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 4B3753015C3A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 05:06:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4E55C377ECA;
-	Fri, 10 Jul 2026 05:06:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AC57E3783A2;
+	Fri, 10 Jul 2026 05:06:15 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
+Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4536377020
-	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jul 2026 05:06:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BF03377EAC
+	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jul 2026 05:06:14 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783659967; cv=none; b=jGVgZxy+XwF/PHxFQ/W6xGwTY/s3ac9/3iu4mwdt9Yk/u+ANIugto5jih8NyK7DZim9XcYF7BV6+T8YKTerjxpenWWGwgp/2/Bnj0Dpu/BTovdxwfWrVcsGcGjsHnFtGrLsVRNoSFu9MonYipfy388mbBCwvyFGKsBysVBa/DUg=
+	t=1783659975; cv=none; b=leBBLAob0DzIw2wXfoLh20B/rwfVtRtQoJgWoNhvZOvJaaKhqcc8iS2si+iyJRBmoxe4ZwL/lH18SpySRqoVoQkbmcE8mpn1rqBQowclVDcHnDN4zOY+KTTZcT5CRuYBaL/OJGjlLbGylH1FtqoF7wwm1kSafd1KumClW7S7u3g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783659967; c=relaxed/simple;
-	bh=rqOl5FtEn1x/OgjbEoHPTL+PY+QF4fqa/Y6KQB6PCdo=;
+	s=arc-20240116; t=1783659975; c=relaxed/simple;
+	bh=+nT6I4Pca0g3yL9/0MMMJ9eU5lzYcdje8+rHxYbR5Lw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qZoTK2RPBWki9PaSAo1ikBOkRf/9SKbKg8LOj36q/U/AXAEqleztzWjrNUeWznQkAKc7Eem+iXQf50xQHUGLaMvXwEQPsMaceDEqxWnxlOTBcWWv2ywrSEracxUgCnCvSaZK6SfYm+oUz3IxGk/FJlZ4RSjxPOEh7g0t9evXPmE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HmZ8Fj0P; arc=none smtp.client-ip=209.85.210.174
-Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-8453427d3f4so407880b3a.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Jul 2026 22:06:05 -0700 (PDT)
+	 MIME-Version; b=f1XEXKAD/so/zvPZlaFX2Dl/EfdyEp24HgPJ8AxBvDYZy6hi5QkdUiVfgyexBHwQp058GynHkw+Z/xcUBSppHQ7QCD777/LBBSPPb75jOclVB3YmQmlPSI9IOJsJD3AvrAwLsKFWLe2OQ8Nq2/VWgjXY14qpqyA+6QC3u6mQLME=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fp98KrVW; arc=none smtp.client-ip=209.85.210.179
+Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-84536ecfc5bso480626b3a.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Jul 2026 22:06:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783659965; x=1784264765; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1783659973; x=1784264773; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=FxGvcZ0w0B0OvE6uvIZ2A3qQKrxY4MT5FL8LI9fV4I0=;
-        b=HmZ8Fj0PW62DJHmOkIytBxLMhIXpUqdruGFKO+iopj8wXWUKDTB5vRGyofvbaoxYgK
-         njIaK/Ejemn2H/u1Z4f/060e/bQYzVMjZny3LB9EnPLee9IssywtnmeU8f932yhvuBoY
-         qFlm+qW1bvtnfNL8u8CYJjpwyXlJyGUnvSTSPCT15SQbvZFxQ79EiJ4EXsHenQQTZw0Y
-         qIzHC3+e+RCJAaoOPrhfL0HquCeMBKuZOqXEOAQSTNhcqmp68TMDL8fVjD7dweax9jrn
-         iHcBD6wbe9q0fDHtbEwair89uooD4ZD8IhuTPWnQQjA0fhTwx8t+wwCtbceuI3+q7TTn
-         a8oQ==
+        bh=aUrf6Km35HLEs48Iv+5EKVZGrilhk0m+5i7bYMdUoc0=;
+        b=fp98KrVWKDFqOYAGRgyUuV5AZwrLOnNEj5oXubdUB4WI752XMWnLe+ctpoBcEnr2ZK
+         FSPdi1Q2L4ZRiz/kbcxEmn1Wk+B1I4A56dzjUO/DCQI7pr9zeELJGGIuXHcmqicm5akT
+         K+5qQrgb5HVdVM9gX2BWDUQPFkxwz/NtOuPcdBOYiSZmK/xmqAOAUTc9dRoHMnRpM6mL
+         BCf4eZWuZn5FX4+QkGs03YHbmrRyIJJ/h/ZMgNAjlknyL41Pd8lKWXIh+tfjlSTPsQyb
+         nhNpxjZatCKlZlbMBySn2Om5UhaypTyMxMBs9jJWDBnEEKyejhcecvk3aRia8+JUrLER
+         HxEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783659965; x=1784264765;
+        d=1e100.net; s=20251104; t=1783659973; x=1784264773;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=FxGvcZ0w0B0OvE6uvIZ2A3qQKrxY4MT5FL8LI9fV4I0=;
-        b=pY25+84JdvrGNe/PWheqeG9GY6b2ZC4LJs+GUGqLz11rCt1DlGxUggi5riarO6EaJa
-         ak0Mo/11yfHNP2e6MFq3G1WoPjYsHH9i+JEdw9h82bqUHcu2s47LNDiyYioZFiIINzUr
-         OtKstejgJu748VAm5fpkcdPZ0JyT3x7FGubn8phP/gOYImsxmNxqG4uXXT8JXu++GtcY
-         KJ/33gNnKQb8OCx+XS4uwckQQ1b55FU+/INoNPoU8KcyZWL7MIeIyed+0tYYiCJgtOl9
-         vRUti2m0GOSFvLiyF4sC2WY+Zz/BgUsE8gU8rNNb/8Lzj9Q8DMT7++sA2I/Ff95l9t+S
-         IJnQ==
-X-Forwarded-Encrypted: i=1; AHgh+RpS9nVmSKAkDxZcBnu8EmLGkf+eyEl9Jj0jGu6aos2yLVzUYvY/vQ7DmxQm5pTFe82sq6gb3dnngTzHKGqA@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw9KUIktTcXB3Hdfr9njKd+PYXOBtkZI9cFs26NkRMvA8vv0Qkt
-	jtp1AGSvCsr8GBkO04AyORtZgMmRwCG6sXcRyZ1IwOGJvVnMUTFtvS23
-X-Gm-Gg: AfdE7ckelWGmSiSDRNkl8DAFPLylJKuAbBJFWoPzppK5OVVXTy+wlHLf6qKvXRF7kYt
-	fR0fMsxCw3UK4EvAZmWAIgTzIuRzOFCp691hpfTclEO1Uf1OYDEI2KapFZASwHyQfqqOca2uVtR
-	cMF2PrVVo9dKpvMZJ5s/kbMGYY1Jm0Zb0wI0VdbprwCR4kPfXc3Zgg1QTvJ3uW+27C9wej08O2N
-	+GUgdgQ/4m61pBvaBmzT0KGVwnsCp6hu3bwKrnv3xXa5CAQ6nV5w0jyK9v+DEL5bVqSz+3liAzw
-	9dPDOqPswGyvr4ODW6QPRCyeV7X1WTskm/ZHY2bf7QivIX8ngKeB4ewfxAKg8MMfymzFopUvvJj
-	NJGdsdEystIXoGfdjG0juizA6K9Cb/cuF6roMO14qQsabzGUNkYob/UvSIocyJ7PZ4AAX3yUAjJ
-	ziVsZaHlHYm/ZcPp212rF+oMtXXZafRlxZKF5CG0if/VENYlY=
-X-Received: by 2002:a05:6a00:6f02:b0:848:63fb:fd91 with SMTP id d2e1a72fcca58-84863fbfeb0mr3528323b3a.41.1783659965051;
-        Thu, 09 Jul 2026 22:06:05 -0700 (PDT)
+        bh=aUrf6Km35HLEs48Iv+5EKVZGrilhk0m+5i7bYMdUoc0=;
+        b=R0kfPG2n/wqUs5RzQXFcMWoFWdc0PtatkVefx917FR04fFOxcGp0AaBOw5hmHG7scl
+         LQ0YVzCLUc0SrRIOhshgF6m/xMaIVsGfwR2eHmes9SHyPULDveCIgrv7de6bEQs4xZi6
+         APv6RlDs0Q2fvxyWVtqVB1k1+C1pzvnfXpJgc4q/PDnti7cmmaiIiQIR3zZEfvTpczsF
+         TmafPwlFj1HoRJXvSqb5D83HmTkghsHAq9WStQKNOI8XEU4X8gag4FXEwaMAHHlzxkhH
+         tcXSDuJdu0sZj05aB+18FhEaROyUlEl04eU+2jZL/NheAWBIbIR6OIKCWs+s40gHxzyV
+         likA==
+X-Forwarded-Encrypted: i=1; AHgh+RpqqY91CKdQ2UrWvxvoHKyx3aqEOb5g6PMh4b0pZkT3GIlLNvtAM/IsRY0pFIyiMRRQ3ERpvnxA/U4WBZiY@vger.kernel.org
+X-Gm-Message-State: AOJu0YynIeCat8OcWxfv7LDsOfwzyb0xVFtJWiQ5CJgrPVVe4b8xQC3b
+	lYriNqD216hqCr3lhyD9DvwFWgTfDIT4khBDBVK9LjvlTYEl1FaEj4pN
+X-Gm-Gg: AfdE7clF/a1KpxETQbk+9Q5KsUm/xSrEj33IVZ/WdomChwCA7/F9CAgVERpB4Swh43n
+	JG4d9Mkkk2yBD2DAdkiLKR2wIBvlpXvo9clkDSg5Fh98t6EXwR0BPydvOhqddgMNuUyHNr+5mvQ
+	LE9XM4ILg4ALAY2U7tPaINFixJ7tfQsX7RV6JR56PgD1iJU5W+PEih2MvfT30KyDlxCKI6euQdW
+	HOJRz6LfO3IXrlk4v5WetgDxP1W7b3bVf9UfiV6QpUI/er7C59ePTiiF5l5DnHPtmqUA9sYK/KS
+	3hYhknrp9E3ItZJJcHMWUIYsofbwz6Z7Za84QuJm3KMx51siYvPXGcmqggDXYTxC0Nt4C+BY1Jx
+	hoPIpGP988bkBmt4LN+xgbXHV8F4b7Hjby/tmQM8jq1YoUvzmHC1lAWV+0hm1NlroBl+cyNAj+X
+	iIha1Q6Whql8F7qOx0JN5IQ49sy6ICszXO6UaIX90edyb0KkeVhRkUlcx7wg==
+X-Received: by 2002:a05:6a00:98d:b0:848:63c9:ee38 with SMTP id d2e1a72fcca58-84863c9f684mr4368247b3a.39.1783659973416;
+        Thu, 09 Jul 2026 22:06:13 -0700 (PDT)
 Received: from phuc-desktop.. ([183.91.15.56])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84847275fa0sm3400499b3a.22.2026.07.09.22.05.57
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84847275fa0sm3400499b3a.22.2026.07.09.22.06.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Jul 2026 22:06:04 -0700 (PDT)
+        Thu, 09 Jul 2026 22:06:13 -0700 (PDT)
 From: phucduc.bui@gmail.com
 To: Mark Brown <broonie@kernel.org>,
 	Takashi Iwai <tiwai@suse.com>,
@@ -110,9 +110,9 @@ Cc: Support Opensource <support.opensource@diasemi.com>,
 	linux-arm-msm@vger.kernel.org,
 	linux-arm-kernel@lists.infradead.org,
 	bui duc phuc <phucduc.bui@gmail.com>
-Subject: [PATCH v3 07/27] ASoC: codecs: hdac_hdmi: Use guard() for mutex locks
-Date: Fri, 10 Jul 2026 12:04:51 +0700
-Message-ID: <20260710050511.14439-5-phucduc.bui@gmail.com>
+Subject: [PATCH v3 08/27] ASoC: codecs: hdmi-codec: Use guard() for mutex locks
+Date: Fri, 10 Jul 2026 12:04:52 +0700
+Message-ID: <20260710050511.14439-6-phucduc.bui@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260710050511.14439-1-phucduc.bui@gmail.com>
 References: <20260709045902.498848-1-phucduc.bui@gmail.com>
@@ -131,14 +131,14 @@ X-Spamd-Result: default: False [-0.16 / 15.00];
 	R_MISSING_CHARSET(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
 	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
 	FREEMAIL_FROM(0.00)[gmail.com];
 	RCPT_COUNT_TWELVE(0.00)[33];
-	TAGGED_FROM(0.00)[bounces-118137-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-118138-lists,linux-arm-msm=lfdr.de];
 	FORWARDED(0.00)[lists@lfdr.de];
 	FORGED_RECIPIENTS(0.00)[m:broonie@kernel.org,m:tiwai@suse.com,m:nick.li@foursemi.com,m:herve.codina@bootlin.com,m:support.opensource@diasemi.com,m:lgirdwood@gmail.com,m:perex@perex.cz,m:srini@kernel.org,m:ckeepax@opensource.cirrus.com,m:rf@opensource.cirrus.com,m:matthias.bgg@gmail.com,m:angelogioacchino.delregno@collabora.com,m:shenghao-ding@ti.com,m:kevin-lu@ti.com,m:baojun.xu@ti.com,m:sen@ti.com,m:oder_chiou@realtek.com,m:linusw@kernel.org,m:kuninori.morimoto.gx@renesas.com,m:u.kleine-koenig@baylibre.com,m:zhangyi@everest-semi.com,m:marco.crivellari@suse.com,m:kees@kernel.org,m:sammiee5311@gmail.com,m:arnd@arndb.de,m:rongqianfeng@vivo.com,m:linux-sound@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:patches@opensource.cirrus.com,m:linux-mediatek@lists.infradead.org,m:linux-arm-msm@vger.kernel.org,m:linux-arm-kernel@lists.infradead.org,m:phucduc.bui@gmail.com,m:matthiasbgg@gmail.com,m:phucducbui@gmail.com,s:lists@lfdr.de];
 	MIME_TRACE(0.00)[0:+];
@@ -157,11 +157,11 @@ X-Spamd-Result: default: False [-0.16 / 15.00];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
 	TO_DN_SOME(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,vger.kernel.org:from_smtp,ti.com:url,ti.com:email]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: CD9837373B4
+X-Rspamd-Queue-Id: CEC4E737387
 
 From: bui duc phuc <phucduc.bui@gmail.com>
 
@@ -170,203 +170,77 @@ Merely code refactoring, and no behavior change.
 
 Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
 ---
- sound/soc/codecs/hdac_hdmi.c | 117 +++++++++++++++++------------------
- 1 file changed, 57 insertions(+), 60 deletions(-)
+ sound/soc/codecs/hdmi-codec.c | 15 ++++++---------
+ 1 file changed, 6 insertions(+), 9 deletions(-)
 
-diff --git a/sound/soc/codecs/hdac_hdmi.c b/sound/soc/codecs/hdac_hdmi.c
-index 38073a70fa61..d9e6fa6d3e99 100644
---- a/sound/soc/codecs/hdac_hdmi.c
-+++ b/sound/soc/codecs/hdac_hdmi.c
-@@ -10,6 +10,7 @@
-  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+diff --git a/sound/soc/codecs/hdmi-codec.c b/sound/soc/codecs/hdmi-codec.c
+index 13ae9e83bc21..bc2c22436ba6 100644
+--- a/sound/soc/codecs/hdmi-codec.c
++++ b/sound/soc/codecs/hdmi-codec.c
+@@ -4,6 +4,7 @@
+  * Copyright (C) 2015 Texas Instruments Incorporated - https://www.ti.com/
+  * Author: Jyri Sarha <jsarha@ti.com>
   */
- 
 +#include <linux/cleanup.h>
- #include <linux/init.h>
- #include <linux/delay.h>
  #include <linux/module.h>
-@@ -537,10 +538,11 @@ static struct hdac_hdmi_port *hdac_hdmi_get_port_from_cvt(
- 				continue;
+ #include <linux/string.h>
+ #include <sound/core.h>
+@@ -452,31 +453,30 @@ static int hdmi_codec_startup(struct snd_pcm_substream *substream,
+ 	if (!((has_playback && tx) || (has_capture && !tx)))
+ 		return 0;
  
- 			list_for_each_entry(port, &pcm->port_list, head) {
--				mutex_lock(&pcm->lock);
--				ret = hdac_hdmi_query_port_connlist(hdev,
--							port->pin, port);
--				mutex_unlock(&pcm->lock);
-+				scoped_guard(mutex, &pcm->lock) {
-+					ret = hdac_hdmi_query_port_connlist(hdev,
-+									    port->pin,
-+									    port);
-+				}
- 				if (ret < 0)
- 					continue;
- 
-@@ -640,11 +642,11 @@ static void hdac_hdmi_pcm_close(struct snd_pcm_substream *substream,
- 	pcm = hdac_hdmi_get_pcm_from_cvt(hdmi, dai_map->cvt);
- 
- 	if (pcm) {
--		mutex_lock(&pcm->lock);
--		pcm->chmap_set = false;
--		memset(pcm->chmap, 0, sizeof(pcm->chmap));
--		pcm->channels = 0;
--		mutex_unlock(&pcm->lock);
-+		scoped_guard(mutex, &pcm->lock) {
-+			pcm->chmap_set = false;
-+			memset(pcm->chmap, 0, sizeof(pcm->chmap));
-+			pcm->channels = 0;
-+		}
- 	}
- 
- 	if (dai_map->port)
-@@ -922,7 +924,7 @@ static int hdac_hdmi_set_pin_port_mux(struct snd_kcontrol *kcontrol,
- 	if (port == NULL)
+-	mutex_lock(&hcp->lock);
++	guard(mutex)(&hcp->lock);
+ 	if (hcp->busy) {
+ 		dev_err(dai->dev, "Only one simultaneous stream supported!\n");
+-		mutex_unlock(&hcp->lock);
  		return -EINVAL;
- 
--	mutex_lock(&hdmi->pin_mutex);
-+	guard(mutex)(&hdmi->pin_mutex);
- 	list_for_each_entry(pcm, &hdmi->pcm_list, head) {
- 		if (list_empty(&pcm->port_list))
- 			continue;
-@@ -945,12 +947,10 @@ static int hdac_hdmi_set_pin_port_mux(struct snd_kcontrol *kcontrol,
- 			list_add_tail(&port->head, &pcm->port_list);
- 			if (port->eld.monitor_present && port->eld.eld_valid) {
- 				hdac_hdmi_jack_report_sync(pcm, port, true);
--				mutex_unlock(&hdmi->pin_mutex);
- 				return ret;
- 			}
- 		}
  	}
--	mutex_unlock(&hdmi->pin_mutex);
  
+ 	if (hcp->hcd.ops->audio_startup) {
+ 		ret = hcp->hcd.ops->audio_startup(dai->dev->parent, hcp->hcd.data);
+ 		if (ret)
+-			goto err;
++			return ret;
+ 	}
+ 
+ 	if (tx && hcp->hcd.ops->get_eld) {
+ 		ret = hcp->hcd.ops->get_eld(dai->dev->parent, hcp->hcd.data,
+ 					    hcp->eld, sizeof(hcp->eld));
+ 		if (ret)
+-			goto err;
++			return ret;
+ 
+ 		snd_parse_eld(dai->dev, &hcp->eld_parsed,
+ 			      hcp->eld, sizeof(hcp->eld));
+ 
+ 		ret = snd_pcm_hw_constraint_eld(substream->runtime, hcp->eld);
+ 		if (ret)
+-			goto err;
++			return ret;
+ 
+ 		/* Select chmap supported */
+ 		hdmi_codec_eld_chmap(hcp);
+@@ -484,8 +484,6 @@ static int hdmi_codec_startup(struct snd_pcm_substream *substream,
+ 
+ 	hcp->busy = true;
+ 
+-err:
+-	mutex_unlock(&hcp->lock);
  	return ret;
  }
-@@ -1274,67 +1274,65 @@ static void hdac_hdmi_present_sense(struct hdac_hdmi_pin *pin,
- 	 * In case of non MST pin, get_eld info API expectes port
- 	 * to be -1.
- 	 */
--	mutex_lock(&hdmi->pin_mutex);
--	port->eld.monitor_present = false;
-+	scoped_guard(mutex, &hdmi->pin_mutex) {
-+		port->eld.monitor_present = false;
  
--	if (pin->mst_capable)
--		port_id = port->id;
-+		if (pin->mst_capable)
-+			port_id = port->id;
+@@ -503,9 +501,8 @@ static void hdmi_codec_shutdown(struct snd_pcm_substream *substream,
+ 	hcp->chmap_idx = HDMI_CODEC_CHMAP_IDX_UNKNOWN;
+ 	hcp->hcd.ops->audio_shutdown(dai->dev->parent, hcp->hcd.data);
  
--	size = snd_hdac_acomp_get_eld(hdev, pin->nid, port_id,
--				&port->eld.monitor_present,
--				port->eld.eld_buffer,
--				ELD_MAX_SIZE);
-+		size = snd_hdac_acomp_get_eld(hdev, pin->nid, port_id,
-+					      &port->eld.monitor_present,
-+					      port->eld.eld_buffer,
-+					      ELD_MAX_SIZE);
- 
--	if (size > 0) {
--		size = min(size, ELD_MAX_SIZE);
--		if (hdac_hdmi_parse_eld(hdev, port) < 0)
--			size = -EINVAL;
--	}
--
--	eld_valid = port->eld.eld_valid;
-+		if (size > 0) {
-+			size = min(size, ELD_MAX_SIZE);
-+			if (hdac_hdmi_parse_eld(hdev, port) < 0)
-+				size = -EINVAL;
-+		}
- 
--	if (size > 0) {
--		port->eld.eld_valid = true;
--		port->eld.eld_size = size;
--	} else {
--		port->eld.eld_valid = false;
--		port->eld.eld_size = 0;
--	}
-+		eld_valid = port->eld.eld_valid;
- 
--	eld_changed = (eld_valid != port->eld.eld_valid);
-+		if (size > 0) {
-+			port->eld.eld_valid = true;
-+			port->eld.eld_size = size;
-+		} else {
-+			port->eld.eld_valid = false;
-+			port->eld.eld_size = 0;
-+		}
- 
--	pcm = hdac_hdmi_get_pcm(hdev, port);
-+		eld_changed = (eld_valid != port->eld.eld_valid);
- 
--	if (!port->eld.monitor_present || !port->eld.eld_valid) {
-+		pcm = hdac_hdmi_get_pcm(hdev, port);
- 
--		dev_dbg(&hdev->dev, "%s: disconnect for pin:port %d:%d\n",
--			__func__, pin->nid, port->id);
-+		if (!port->eld.monitor_present || !port->eld.eld_valid) {
- 
--		/*
--		 * PCMs are not registered during device probe, so don't
--		 * report jack here. It will be done in usermode mux
--		 * control select.
--		 */
--		if (pcm) {
--			hdac_hdmi_jack_report(pcm, port, false);
--			schedule_work(&port->dapm_work);
--		}
-+			dev_dbg(&hdev->dev, "%s: disconnect for pin:port %d:%d\n",
-+				__func__, pin->nid, port->id);
- 
--		mutex_unlock(&hdmi->pin_mutex);
--		return;
--	}
-+			/*
-+			 * PCMs are not registered during device probe, so don't
-+			 * report jack here. It will be done in usermode mux
-+			 * control select.
-+			 */
-+			if (pcm) {
-+				hdac_hdmi_jack_report(pcm, port, false);
-+				schedule_work(&port->dapm_work);
-+			}
- 
--	if (port->eld.monitor_present && port->eld.eld_valid) {
--		if (pcm) {
--			hdac_hdmi_jack_report(pcm, port, true);
--			schedule_work(&port->dapm_work);
-+			return;
- 		}
- 
--		print_hex_dump_debug("ELD: ", DUMP_PREFIX_OFFSET, 16, 1,
--			  port->eld.eld_buffer, port->eld.eld_size, false);
-+		if (port->eld.monitor_present && port->eld.eld_valid) {
-+			if (pcm) {
-+				hdac_hdmi_jack_report(pcm, port, true);
-+				schedule_work(&port->dapm_work);
-+			}
- 
-+			print_hex_dump_debug("ELD: ", DUMP_PREFIX_OFFSET, 16, 1,
-+					     port->eld.eld_buffer, port->eld.eld_size, false);
-+		}
- 	}
--	mutex_unlock(&hdmi->pin_mutex);
- 
- 	if (eld_changed && pcm)
- 		snd_ctl_notify(hdmi->card,
-@@ -1795,13 +1793,12 @@ static void hdac_hdmi_set_chmap(struct hdac_device *hdev, int pcm_idx,
- 	if (list_empty(&pcm->port_list))
- 		return;
- 
--	mutex_lock(&pcm->lock);
-+	guard(mutex)(&pcm->lock);
- 	pcm->chmap_set = true;
- 	memcpy(pcm->chmap, chmap, ARRAY_SIZE(pcm->chmap));
- 	list_for_each_entry(port, &pcm->port_list, head)
- 		if (prepared)
- 			hdac_hdmi_setup_audio_infoframe(hdev, pcm, port);
--	mutex_unlock(&pcm->lock);
+-	mutex_lock(&hcp->lock);
++	guard(mutex)(&hcp->lock);
+ 	hcp->busy = false;
+-	mutex_unlock(&hcp->lock);
  }
  
- static bool is_hdac_hdmi_pcm_attached(struct hdac_device *hdev, int pcm_idx)
+ static int hdmi_codec_fill_codec_params(struct snd_soc_dai *dai,
 -- 
 2.43.0
 
