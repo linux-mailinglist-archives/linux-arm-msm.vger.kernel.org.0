@@ -1,207 +1,202 @@
-Return-Path: <linux-arm-msm+bounces-118287-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-118286-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id FHjoGCPuUGqd8gIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-118287-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 15:05:39 +0200
+	id oWNxAj3uUGql8gIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-118286-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 15:06:05 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4E86073B0CF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 15:05:38 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8C09973B0E2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 15:06:04 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=bootlin.com header.s=dkim header.b=wZEo0zVu;
-	dmarc=pass (policy=reject) header.from=bootlin.com;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118287-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c15:e001:75::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118287-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=RG8cobAt;
+	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=Hkwt7ETX;
+	dmarc=pass (policy=reject) header.from=qualcomm.com;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118286-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118286-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 31B333025CEB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 13:01:13 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id A48363040412
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 13:01:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0EA1942B742;
-	Fri, 10 Jul 2026 13:01:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1414F1DFFD;
+	Fri, 10 Jul 2026 13:01:08 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtpout-03.galae.net (smtpout-03.galae.net [185.246.85.4])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FBE0427A06;
-	Fri, 10 Jul 2026 13:01:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51BB742983F
+	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jul 2026 13:01:06 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783688469; cv=none; b=ojCfGwm5XpVRSnrgOAR3DK+UePiLBxdkmAwgW+3IAwuCTLnAIAkBi6JYpHCQJ67oLVmGtCsqOYm9WHmnx7t5tKPsJVaFKYDTqePZIMtJiYNPEaw1PQTlya4v1WtWQ6mP7QOAsjDkidkeApYINWcHxv2Q1cxp/HtvXVS1tgItdNk=
+	t=1783688467; cv=none; b=b9o7b93V1aC95RAuIjMsZg2kxx3fUhA2Mbq/7LOmggEOgTlKxfGGR8GGwLVY60KYHHhI6rpkTikPQhk7nGtTj8WE5CQi7gcKBGtKEh6t8Egslx9y51fXnJv08lWtp/t7wxu55d6pMJlqpQzL4bihZ5NMETT8r0JOwTPqPII1Azs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783688469; c=relaxed/simple;
-	bh=M94SjjYhfG0qMo3AdWDmx7QCzOOMR1z6U/G7HOPFbC0=;
-	h=Mime-Version:Content-Type:Date:Message-Id:To:Subject:Cc:From:
-	 References:In-Reply-To; b=I0DHFmz/gYymeb7cNllJ00DbcJMWmKy6VsIMfGb8LIYqUYE1EG+9mos5hOAhByhAHgPqZ/5vfkXoPtdM6pvb4p5TTDMMx4yIRhAklxLXHYEsO34OU0fpmxPbaRr8DBqOO/hhh+0MKlCq4GpLxXOrCEVFYmHbf2Ur23W3Ug6jZl8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=wZEo0zVu; arc=none smtp.client-ip=185.246.85.4
-Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-03.galae.net (Postfix) with ESMTPS id 1F6974E40D47;
-	Fri, 10 Jul 2026 13:01:06 +0000 (UTC)
-Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id CC97760345;
-	Fri, 10 Jul 2026 13:01:05 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 9B95911BD0DEB;
-	Fri, 10 Jul 2026 15:00:44 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1783688461; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding:in-reply-to:references;
-	bh=OpR8EpUWoLVWD1U7hF0BGvXpeDpChn5vhtnYxeMgZ/M=;
-	b=wZEo0zVumBZvota9lj9ysImh10+E4+BbYYrgpWI8VBXNocIci+MYRA9CPFt7nqEwahCYw+
-	WGH/gbKanRQqklTcRaZlOdZcR2vWKZucFD13TXdAx/Gpc3+UIBLDDcSpYjyXTiFDp62YdU
-	/9/G1w78+Iq5ZxLNsh8doY94LRg4F6sBcLJh6gazI/BPBSS8plkEkDP90Iw3Jipm5LWHpd
-	t5JPw5/FOpeSvJgrAYi5ApGSR02OuWhrI719bSjbOdQQNoma1YvCMPW0BShr4FskJBpZKn
-	RT65XADHkqNtWjPe5eSMFoaw249fIMLHxmMPTQGGDMENM6BCXdXRMwQnlO+2yA==
+	s=arc-20240116; t=1783688467; c=relaxed/simple;
+	bh=IzrIYAqK12+0DbBs+SW6tlw64V962i3LE/L8V8Wfs88=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=KwKG6B2yREfJMOxULs/E51IC968zEIcxsy6R6uQtp9EYccmsEq08ne1n9jXhaw40yo8+8FHw8+2mFCUdWM6E5JBsT81Pi7w5RdFp9p3BDVdw7uegJZ1pwl7WZqVEBvFr06d3aops1c+mBwjmlGYSCeXih866DYg60wnJBu8DymM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=RG8cobAt; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Hkwt7ETX; arc=none smtp.client-ip=205.220.168.131
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66AAmPof471742
+	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jul 2026 13:01:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	6f4ngRNf22D5k1LmrlO8ahcDEww5AcgtWpArh10h7pc=; b=RG8cobAtccDGy9Fr
+	A9QbasxRaTIXsbjqafaS8tG7YdsU+vQPGRcsz99XdzM+KYfMCM5e2ogfanq16Jip
+	ahjrWVSEWyR9lglhEKpH90gSJWEq7rWlfEvI8TxeIcueDAI9pizb11FYyTxFyvhg
+	Jcxox2SYibdX9aBJG1FeNjLZ9dt8w0XtapRrhVooE3HcSd0JVEOeLDXdcYWeBnss
+	U7K6KaqOHJe1Y74Bh0odf9X1qWCL6h9+ldyfbLS04Z6HxJXU1tWEe4Zn112XvUyQ
+	tNVLyNMvtQYHuOUXjKVTJxmu2c/NpIht2UJS0STlXo+3E0aj9zcFppqBa6PA/Ok4
+	jBCX0Q==
+Received: from mail-oi1-f200.google.com (mail-oi1-f200.google.com [209.85.167.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fax5dgqn2-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jul 2026 13:01:05 +0000 (GMT)
+Received: by mail-oi1-f200.google.com with SMTP id 5614622812f47-4877418ba97so116115b6e.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jul 2026 06:01:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1783688465; x=1784293265; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=6f4ngRNf22D5k1LmrlO8ahcDEww5AcgtWpArh10h7pc=;
+        b=Hkwt7ETXbkdqRm5Hapfj9g9/jIvjAcWvPOTd2O0HE9hUgOnKjz2Of9w5CB4q+I1DO5
+         zAXaqugF1YCM2gb0OkKQ57lse33JyT45imMTw9tANwoN5obrCjAH5mEdaQBQkF0Qumzg
+         8tuWVizcvGfsCxAbbd/uGQA9b1vr0fbRNp66ufp9AEbEwpBR1Fb9aXYKLvaVBPu++WtX
+         ANqMQTaWgiyu9ecH222OZiKnevAKNURIBrLTsoGGF9hFUGm8mCdfPco30ZTTK+Innubg
+         MhVOTlR5NVjBlbMj8haKCGkEM7IcjmLoBDVsLaQBh7vBgP9atNUrS8fzYutjWZbFNgpD
+         t0HA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783688465; x=1784293265;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=6f4ngRNf22D5k1LmrlO8ahcDEww5AcgtWpArh10h7pc=;
+        b=WG7lkjztyKPt+w0u+RPELBuWxvXpc0i9dgrUZOJij1lM5AYVmuYE+McPVMUywnmCOe
+         0Moa9kzVRGUb62ufFhafG4fscizlF1kWVYjIfK7ou8BRilHZeJao/AQ/7ufD0hZGutad
+         VS6ng8/6lNE5KUFvsEpk7OXn6Ei01OhugaANfXTZn5ajiu47i67ThXoqxcZGCY5ZI4bj
+         ceW4+rCH7ds0ME/zroPC16LfGHSObBBGVoC9w9Qy5Ot9n0tbKsZaVwA615mCZaZjenLH
+         V2WuYMuMng2pVteT6y3b3nwX2tOmPTzunB+B7VDkUmkFauDv9PTh4VFX6uQDXtJQu/Kn
+         Y7cQ==
+X-Gm-Message-State: AOJu0Yz/ZA1BamIXKHRomz6xZHa0InRoq9aVR5ADETg7iVoJVMvPth3U
+	1Jo3mxaIvRKUfjx/CgsI2L91XvmUVajm9QH3EG+4f8q7mcKmGdUNj64KMyVUKd6VyhbnmNV8I+d
+	JMmyAG6t4QM1/zV87pc+CG5yvrYtdRw/2Shk2UfspbVkX/RAh3eNjh4H2uRwGb2M9hhGe
+X-Gm-Gg: AfdE7clRE2laPbxOYO60aHMq4zJkr87Te3FuES5abxS0Je3a4jUFZ3e32T5GBAQxnIk
+	lmxEOgZu4USkc03imQ/eW/xL531+lqXgFKxrZzGWQd6G8IrJglYOW95OuLj3pTBUJzZgi+iFTlM
+	crs3COFoPdI34hr3SduXDvHKFmIXbecv7Lr/QhXj59DSiUiThes7u1qI5fdHvtrZkgTtEDA00cl
+	GX5h/vNq8+1G07VqE2m4Q18zZ8j61bMcuYXn41jgbB+8+buzKgaO4ZseP8MxJXSjxUYFXu50cgu
+	gNDzV4FplofNeQg+yixnncd2ODzpTBpcRnEx3KmjGhuj7tHkSyVdzTQ+OV36FYb7qROwiqRGdHH
+	QDmqn/7KJ0d9qqna7VwK4/xXNROLCl0kP0LU=
+X-Received: by 2002:a05:6808:15a5:b0:496:9bf:c837 with SMTP id 5614622812f47-4a2f430ab1amr4763004b6e.0.1783688464660;
+        Fri, 10 Jul 2026 06:01:04 -0700 (PDT)
+X-Received: by 2002:a05:6808:15a5:b0:496:9bf:c837 with SMTP id 5614622812f47-4a2f430ab1amr4762978b6e.0.1783688464172;
+        Fri, 10 Jul 2026 06:01:04 -0700 (PDT)
+Received: from [192.168.120.193] ([178.235.128.140])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-69acd1d32c6sm3595066a12.31.2026.07.10.06.01.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 10 Jul 2026 06:01:03 -0700 (PDT)
+Message-ID: <bdb03f28-4f5c-44a5-b2d8-bb51ecdb377a@oss.qualcomm.com>
+Date: Fri, 10 Jul 2026 15:01:01 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 3/4] arm64: dts: qcom: Add PMIC thermal support for
+ Shikra CQ2390M SoM platform
+To: Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>,
+        Rakesh Kota <rakesh.kota@oss.qualcomm.com>
+References: <20260710-shikra_adc_support-v3-0-ddc840fca0a0@oss.qualcomm.com>
+ <20260710-shikra_adc_support-v3-3-ddc840fca0a0@oss.qualcomm.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20260710-shikra_adc_support-v3-3-ddc840fca0a0@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
-Date: Fri, 10 Jul 2026 15:00:43 +0200
-Message-Id: <DJUWS6ZZUDS0.2ILHWRFQ1XD1S@bootlin.com>
-To: =?utf-8?b?VXdlIEtsZWluZS1Lw7ZuaWcgKFRoZSBDYXBhYmxlIEh1Yik=?=
- <u.kleine-koenig@baylibre.com>, "Lee Jones" <lee@kernel.org>
-Subject: Re: [PATCH v3 21/23] mfd: Unify style of of_device_id arrays
-Cc: "Linus Walleij" <linusw@kernel.org>, "Nicolas Ferre"
- <nicolas.ferre@microchip.com>, "Alexandre Belloni"
- <alexandre.belloni@bootlin.com>, "Claudiu Beznea"
- <claudiu.beznea@tuxon.dev>, "Chen-Yu Tsai" <wens@kernel.org>, "Florian
- Fainelli" <florian.fainelli@broadcom.com>, "Broadcom internal kernel review
- list" <bcm-kernel-feedback-list@broadcom.com>, "Ray Jui"
- <rjui@broadcom.com>, "Scott Branden" <sbranden@broadcom.com>, "Marek Vasut"
- <marek.vasut+renesas@gmail.com>, "James Ogletree"
- <jogletre@opensource.cirrus.com>, "Fred Treven" <fred.treven@cirrus.com>,
- "Ben Bright" <ben.bright@cirrus.com>, "David Rhodes"
- <david.rhodes@cirrus.com>, "Richard Fitzgerald" <rf@opensource.cirrus.com>,
- "Support Opensource" <support.opensource@diasemi.com>, "Krzysztof
- Kozlowski" <krzk@kernel.org>, "Peter Griffin" <peter.griffin@linaro.org>,
- "Alim Akhtar" <alim.akhtar@samsung.com>, "Tim Harvey"
- <tharvey@gateworks.com>, "Neil Armstrong" <neil.armstrong@linaro.org>,
- "Charles Keepax" <ckeepax@opensource.cirrus.com>, "Sven Peter"
- <sven@kernel.org>, "Janne Grunau" <j@jannau.net>, "Neal Gompa"
- <neal@gompa.dev>, "Chanwoo Choi" <cw00.choi@samsung.com>, "Luca Ceresoli"
- <luca.ceresoli@bootlin.com>, =?utf-8?q?Andr=C3=A9_Draszik?=
- <andre.draszik@linaro.org>, "Saravanan Sekar" <sravanhome@gmail.com>,
- "Matthias Brugger" <matthias.bgg@gmail.com>, "AngeloGioacchino Del Regno"
- <angelogioacchino.delregno@collabora.com>, "Frank Li" <Frank.Li@nxp.com>,
- "Sascha Hauer" <s.hauer@pengutronix.de>, "Pengutronix Kernel Team"
- <kernel@pengutronix.de>, "Fabio Estevam" <festevam@gmail.com>,
- =?utf-8?q?Jonathan_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>, "Aaro
- Koskinen" <aaro.koskinen@iki.fi>, "Andreas Kemnade" <andreas@kemnade.info>,
- "Kevin Hilman" <khilman@baylibre.com>, "Roger Quadros" <rogerq@kernel.org>,
- "Tony Lindgren" <tony@atomide.com>, "Matti Vaittinen"
- <mazziesaccount@gmail.com>, "Orson Zhai" <orsonzhai@gmail.com>, "Baolin
- Wang" <baolin.wang@linux.alibaba.com>, "Chunyan Zhang"
- <zhang.lyra@gmail.com>, "Fabrice Gasnier" <fabrice.gasnier@foss.st.com>,
- "Maxime Coquelin" <mcoquelin.stm32@gmail.com>, "Alexandre Torgue"
- <alexandre.torgue@foss.st.com>, "Jernej Skrabec"
- <jernej.skrabec@gmail.com>, "Samuel Holland" <samuel@sholland.org>, "Liviu
- Dudau" <liviu.dudau@arm.com>, "Sudeep Holla" <sudeep.holla@kernel.org>,
- "Lorenzo Pieralisi" <lpieralisi@kernel.org>, "Geert Uytterhoeven"
- <geert+renesas@glider.be>, "Magnus Damm" <magnus.damm@gmail.com>, "Heiko
- Stuebner" <heiko@sntech.de>, <mfd@lists.linux.dev>,
- <linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
- <patches@opensource.cirrus.com>, <linux-rpi-kernel@lists.infradead.org>,
- <linux-renesas-soc@vger.kernel.org>, <linux-sound@vger.kernel.org>,
- <linux-samsung-soc@vger.kernel.org>, <linux-amlogic@lists.infradead.org>,
- <asahi@lists.linux.dev>, <linux-mediatek@lists.infradead.org>,
- <imx@lists.linux.dev>, <linux-omap@vger.kernel.org>,
- <linux-arm-msm@vger.kernel.org>,
- <linux-stm32@st-md-mailman.stormreply.com>, <linux-sunxi@lists.linux.dev>,
- <linux-rockchip@lists.infradead.org>
-From: "Mathieu Dubois-Briand" <mathieu.dubois-briand@bootlin.com>
-X-Mailer: aerc 0.21.0-0-g5549850facc2
-References: <cover.1783615311.git.u.kleine-koenig@baylibre.com>
- <e5cc82aa51da5f545f745b126923fdd6085a68a0.1783615311.git.u.kleine-koenig@baylibre.com>
-In-Reply-To: <e5cc82aa51da5f545f745b126923fdd6085a68a0.1783615311.git.u.kleine-koenig@baylibre.com>
-X-Last-TLS-Session-Version: TLSv1.3
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzEwMDEyOSBTYWx0ZWRfX2mflOUs6okuG
+ 7Oezc6GfRIp9dse347pW6dnt2TLlGx8/JQ5gclv6/sdVVoC1vy2Y8M8XUppy3HvhgM4WHDIblBU
+ HJwYfhuiSSnFk8ubE0ZeIXM1ncN2reM=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzEwMDEyOSBTYWx0ZWRfXzKImUcAlsoVm
+ 57JwRy7fVyH/xlU0pZhecQIxXhYT3+PWDpLjRIuJCTNt+JUfcVXvQ58bIeHKqYmqu+M1dH7V+JE
+ mWEBDGyyAeuXpwzd1eMlebX7g50sc+UPcr9NLBw6xZ7HQhstqLNiY44ZP5xtAupXGJqQ/mTDT+O
+ 5aPjj5JaTWboYpMbbvNjaFTM9/Ind2Tl/E8yWsosCocLzdu2tVg6/oTrbms1ohvSwTtX6Gtgz2E
+ 385W9mxNzya+mQCioovP3Od7Kug5YGm92GVWJbJJd+CT8Ev4xaI1w2JyUtUUxM6Qjoz2PqU7EmW
+ sLM/Bvtyzs3XJ7OZ7eZenYW8PqZJulYwl6ts9LhMiWdqChJPnHYSRoTR4fnLdKvIrRu+mgD7X1w
+ KsjiSh7g+fQ+q8XXSZEvyh8qpVEbAbdx5b8ZXdsAYXh2PvgziSvZexENlxzfbWcuJzw+1AWWJw+
+ YHABeLoNgiC22Djuv5w==
+X-Proofpoint-GUID: c8JxCizgObWrtWvGtIszxP6Ch-yyxV61
+X-Proofpoint-ORIG-GUID: c8JxCizgObWrtWvGtIszxP6Ch-yyxV61
+X-Authority-Analysis: v=2.4 cv=M/x97Sws c=1 sm=1 tr=0 ts=6a50ed11 cx=c_pps
+ a=AKZTfHrQPB8q3CcvmcIuDA==:117 a=PRfkaYvzSr8QmIIGAkY2Sg==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
+ a=EUspDBNiAAAA:8 a=s8hspuRcmIiiD5yHkK4A:9 a=QEXdDO2ut3YA:10
+ a=pF_qn-MSjDawc0seGVz6:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-10_03,2026-07-09_04,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 adultscore=0 bulkscore=0 malwarescore=0 suspectscore=0
+ phishscore=0 spamscore=0 clxscore=1015 priorityscore=1501 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607100129
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-0.16 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[bootlin.com,reject];
-	MV_CASE(0.50)[];
-	R_DKIM_ALLOW(-0.20)[bootlin.com:s=dkim];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_CC(0.00)[kernel.org,microchip.com,bootlin.com,tuxon.dev,broadcom.com,gmail.com,opensource.cirrus.com,cirrus.com,diasemi.com,linaro.org,samsung.com,gateworks.com,jannau.net,gompa.dev,collabora.com,nxp.com,pengutronix.de,gmx.net,iki.fi,kemnade.info,baylibre.com,atomide.com,linux.alibaba.com,foss.st.com,sholland.org,arm.com,glider.be,sntech.de,lists.linux.dev,vger.kernel.org,lists.infradead.org,st-md-mailman.stormreply.com];
-	TAGGED_FROM(0.00)[bounces-118287-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	FORGED_SENDER(0.00)[mathieu.dubois-briand@bootlin.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	FORWARDED(0.00)[lists@lfdr.de];
+	TAGGED_FROM(0.00)[bounces-118286-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:u.kleine-koenig@baylibre.com,m:lee@kernel.org,m:linusw@kernel.org,m:nicolas.ferre@microchip.com,m:alexandre.belloni@bootlin.com,m:claudiu.beznea@tuxon.dev,m:wens@kernel.org,m:florian.fainelli@broadcom.com,m:bcm-kernel-feedback-list@broadcom.com,m:rjui@broadcom.com,m:sbranden@broadcom.com,m:marek.vasut+renesas@gmail.com,m:jogletre@opensource.cirrus.com,m:fred.treven@cirrus.com,m:ben.bright@cirrus.com,m:david.rhodes@cirrus.com,m:rf@opensource.cirrus.com,m:support.opensource@diasemi.com,m:krzk@kernel.org,m:peter.griffin@linaro.org,m:alim.akhtar@samsung.com,m:tharvey@gateworks.com,m:neil.armstrong@linaro.org,m:ckeepax@opensource.cirrus.com,m:sven@kernel.org,m:j@jannau.net,m:neal@gompa.dev,m:cw00.choi@samsung.com,m:luca.ceresoli@bootlin.com,m:andre.draszik@linaro.org,m:sravanhome@gmail.com,m:matthias.bgg@gmail.com,m:angelogioacchino.delregno@collabora.com,m:Frank.Li@nxp.com,m:s.hauer@pengutronix.de,m:kernel@pengutronix.de,m:festevam@gmail.com,m:j.neuschaefer@gmx
- .net,m:aaro.koskinen@iki.fi,m:andreas@kemnade.info,m:khilman@baylibre.com,m:rogerq@kernel.org,m:tony@atomide.com,m:mazziesaccount@gmail.com,m:orsonzhai@gmail.com,m:baolin.wang@linux.alibaba.com,m:zhang.lyra@gmail.com,m:fabrice.gasnier@foss.st.com,m:mcoquelin.stm32@gmail.com,m:alexandre.torgue@foss.st.com,m:jernej.skrabec@gmail.com,m:samuel@sholland.org,m:liviu.dudau@arm.com,m:sudeep.holla@kernel.org,m:lpieralisi@kernel.org,m:geert+renesas@glider.be,m:magnus.damm@gmail.com,m:heiko@sntech.de,m:mfd@lists.linux.dev,m:linux-kernel@vger.kernel.org,m:linux-arm-kernel@lists.infradead.org,m:patches@opensource.cirrus.com,m:linux-rpi-kernel@lists.infradead.org,m:linux-renesas-soc@vger.kernel.org,m:linux-sound@vger.kernel.org,m:linux-samsung-soc@vger.kernel.org,m:linux-amlogic@lists.infradead.org,m:asahi@lists.linux.dev,m:linux-mediatek@lists.infradead.org,m:imx@lists.linux.dev,m:linux-omap@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-stm32@st-md-mailman.stormreply.com,m:linux-sunxi@
- lists.linux.dev,m:linux-rockchip@lists.infradead.org,m:marekvasut@gmail.com,s:lists@lfdr.de];
-	RECEIVED_HELO_LOCALHOST(0.00)[];
-	DKIM_TRACE(0.00)[bootlin.com:+];
-	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
-	RCVD_COUNT_FIVE(0.00)[6];
-	RCPT_COUNT_GT_50(0.00)[75];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[mathieu.dubois-briand@bootlin.com,linux-arm-msm@vger.kernel.org];
-	PRECEDENCE_BULK(0.00)[];
+	FORGED_SENDER(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS(0.00)[m:jishnu.prakash@oss.qualcomm.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:kamal.wadhwa@oss.qualcomm.com,m:rakesh.kota@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ALIAS_RESOLVED(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,vger.kernel.org:from_smtp,qualcomm.com:email,qualcomm.com:dkim,oss.qualcomm.com:from_mime,oss.qualcomm.com:dkim,oss.qualcomm.com:mid];
 	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	ALIAS_RESOLVED(0.00)[];
 	MID_RHS_MATCH_FROM(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[11];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,renesas];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,vger.kernel.org:from_smtp,linaro.org:email,baylibre.com:email,cirrus.com:email]
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 4E86073B0CF
+X-Rspamd-Queue-Id: 8C09973B0E2
 
-On Thu Jul 9, 2026 at 6:58 PM CEST, Uwe Kleine-K=C3=B6nig (The Capable Hub)=
- wrote:
-> These arrays already mostly match the most used and generally
-> recommended coding style. That is:
->
->  - no comma after the list terminator;
->  - a comma after an initializer if (and only if) the closing } is not
->    directly following;
->  - no explicit zeros in the list terminator;
->  - a space after an opening { and before a closing }, a single space in
->    the list terminator;
->
-> Adapt the offenders accordingly.
->
-> Reviewed-by: Andr=C3=A9 Draszik <andre.draszik@linaro.org> # for Maxim MA=
-X77759
-> Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-> Signed-off-by: Uwe Kleine-K=C3=B6nig (The Capable Hub) <u.kleine-koenig@b=
-aylibre.com>
+On 7/10/26 8:52 AM, Jishnu Prakash wrote:
+> Add ADC channels for pa, quiet and msm thermistors along with
+> their ADC thermal bridge nodes and thermal zones for PMIC
+> thermal mitigation.
+> 
+> Co-developed-by: Rakesh Kota <rakesh.kota@oss.qualcomm.com>
+> Signed-off-by: Rakesh Kota <rakesh.kota@oss.qualcomm.com>
+> Signed-off-by: Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>
 > ---
 
-...
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-> =20
-> diff --git a/drivers/mfd/max7360.c b/drivers/mfd/max7360.c
-> index 52fffed0c0dd..dc744b40bb38 100644
-> --- a/drivers/mfd/max7360.c
-> +++ b/drivers/mfd/max7360.c
-> @@ -152,7 +152,7 @@ static int max7360_probe(struct i2c_client *client)
-> =20
->  static const struct of_device_id max7360_dt_match[] =3D {
->  	{ .compatible =3D "maxim,max7360" },
-> -	{}
-> +	{ }
->  };
->  MODULE_DEVICE_TABLE(of, max7360_dt_match);
-> =20
-
-Reviewed-by: Mathieu Dubois-Briand <mathieu.dubois-briand@bootlin.com> # ma=
-x7360
-
---=20
-Mathieu Dubois-Briand, Bootlin
-Embedded Linux and Kernel engineering
-https://bootlin.com
-
+Konrad
 
