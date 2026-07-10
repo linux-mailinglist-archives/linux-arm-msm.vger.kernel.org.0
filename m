@@ -1,55 +1,54 @@
-Return-Path: <linux-arm-msm+bounces-118386-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-118387-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id xNt9NW9VUWp9CgMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-118386-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 22:26:23 +0200
+	id PUmsJ61VUWqXCgMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-118387-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 22:27:25 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7896D73E3D7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 22:26:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id F0F9473E42B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 22:27:24 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=cmnlAT5w;
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=BygF57wD;
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118386-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118386-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118387-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118387-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 566F430210F7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 20:22:35 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 1027E30297BC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 20:22:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9479439A070;
-	Fri, 10 Jul 2026 20:22:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C515C39A7E1;
+	Fri, 10 Jul 2026 20:22:57 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 456EB44998C;
-	Fri, 10 Jul 2026 20:22:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6987544998C;
+	Fri, 10 Jul 2026 20:22:56 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783714954; cv=none; b=uC/UtVy2Kocy+EvbAsOhsx6/biCI+2T9DmY7LiNEiwuFxffIwjJfsCAwPXQOIqOW0175my48o+lRb2aJ1RhzHCZNkllXCtOmyL2nwzoN5OxCQsudSG6jE7DugKHGncRtu5VKnwxtI9PEQZGjoYr+94js4Rp905Y+x0mKK7KGOu0=
+	t=1783714977; cv=none; b=D0+WY/rbAeduXB1e1yCNmrRd31RuVYnrOnitUQ7rYimdRwkw/5Gyd/kNzGiFxZ/4YDiCAlhR6GQUZjvpxc6WGJfyvNUdvQjTocvhavBO2yT0B/iBnfn9pJ8A17/zLTq5gBdkC7vE/+CGvyTT8R8JTthc8tcv4WcFXgC66/fNDUk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783714954; c=relaxed/simple;
-	bh=9w7HTwMbIR3XlC1PY7gTQx5p4l7ISN45M8ruExx6jwU=;
+	s=arc-20240116; t=1783714977; c=relaxed/simple;
+	bh=Ckq9F1B5R4ctEUJqWXYT1jV2i9Vim92hn6PkYJsjcDc=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=U7ya52f6F+8cxVhIV/gteOboBG4LbvxUt4qy+017mkB6LhA/y367xg417mG981zArelgWgsmSEKLrmEfRIw0DL6rOkT4/Rghn+gW7NB5C4utDdw4y6OwrD98QW46RYqOGtvfKwXcHKva+DzgqIMSQMuELf9YhLv8UhRldxnRcQ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cmnlAT5w; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41A311F00A3A;
-	Fri, 10 Jul 2026 20:22:10 +0000 (UTC)
+	 In-Reply-To:To:Cc; b=QvhB/8j2xglgO6RbQMop7fwUrxcbfK6JuMHyESNHhgZSaSrv0OYjmnMIxj1ePJHB3p6Xed9j/mno9lNMcIMvkEEZT9lQGTWdmMNoEVJDdgATLjCNS9amt4WDKtkYRGdGgDEa4aNlYo7DhPh6U1O1L2hdR+VEGgOnHK3Q7zyiDh0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BygF57wD; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C69F1F000E9;
+	Fri, 10 Jul 2026 20:22:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783714952;
-	bh=pXMh/gI7Ejl6sQaq6pNCmizKlHMxVh3sNzK86kWl2h4=;
+	s=k20260515; t=1783714976;
+	bh=g95Hx/jZszTYl/mqKEmmLN3wpFLfcUCiQ7oLxyYPtwI=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=cmnlAT5wzlYt3brmt40tysj0J5B1gKaWPdvxMOyfuvulZ+5sH8m2RssNtYd7kJ9hM
-	 3JEic/R7P0blm57mcQ0VabhZOtCOAB4dhCKn5vcEPWkjCnXEjOckc/MFsTHkCovBo4
-	 dEg/4zgFADMecv/GyNsJqD96QSHp1WhhbtMbrSCjAIUGp0fIoob9V7aAjMbXb5Yjae
-	 iBWFOm0BbeaaXFduRQLeC1gA41fycIKRojdC7cmdk7PU3JZWYDX4zaGQz3M2yYKf1w
-	 SU3WfX6qJrW400SI9+5KSdVXY3Bp5Pl2jDAeKWzdIH9ZClW5J9NYnrxx0HvA7R6dwl
-	 m3LRjk41KWVYQ==
+	b=BygF57wD+F4oIx2IjGBmXSgdeyH+kDz20QKqfZkY+JeciaIqrpYGeXs92Dhu1bJQg
+	 yDrXtWAFvHrGJ01GVLJpGEYigWux3ULkArB6G87U6BG+mND6GeRsCRQIqxn7ZB/Co7
+	 WX5bQzX3DHLJV8P5v5PFCfG2UwKM4+ICy3syuuKgzN0aQLrIra+79BjIq5f/isekmS
+	 4O/AIhZQ8j5j/Q1gq+aeN84CaAkEZVoCKAwBtKJrHGY5odfGQwzjga9mJoIKacknvz
+	 VLOYvIoanmU23sKzVnBYRU2knQpn2FpJ7GQeLdVOWXN6EA1E/tTlccruzKODHlic/F
+	 MkoQCxvPMfndg==
 From: Lorenzo Stoakes <ljs@kernel.org>
-Date: Fri, 10 Jul 2026 21:16:54 +0100
-Subject: [PATCH v2 13/33] mm/vma: introduce and use vmg_pages(),
- vmg_[start, end]_pgoff()
+Date: Fri, 10 Jul 2026 21:16:55 +0100
+Subject: [PATCH v2 14/33] mm/vma: clean up anon_vma_compatible()
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -58,7 +57,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260710-b4-pre-scalable-cow-v2-13-2a5aa403d977@kernel.org>
+Message-Id: <20260710-b4-pre-scalable-cow-v2-14-2a5aa403d977@kernel.org>
 References: <20260710-b4-pre-scalable-cow-v2-0-2a5aa403d977@kernel.org>
 In-Reply-To: <20260710-b4-pre-scalable-cow-v2-0-2a5aa403d977@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>, 
@@ -139,12 +138,12 @@ Cc: Lorenzo Stoakes <ljs@kernel.org>, linux-mm@kvack.org,
  freedreno@lists.freedesktop.org, linux-tegra@vger.kernel.org, 
  kvm@vger.kernel.org, Russell King <linux+etnaviv@armlinux.org.uk>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3014; i=ljs@kernel.org;
- h=from:subject:message-id; bh=9w7HTwMbIR3XlC1PY7gTQx5p4l7ISN45M8ruExx6jwU=;
- b=owGbwMvMwCV2fu7ZrsZH9SKMp9WSGLICg61/Za29l6e37xfjD8NZsUc+LmZ86SXA+JLr6YcvJ
- poWjBckOkpZGMS4GGTFFFmefxHfHyQSNq/zgr8bzBxWJpAhDFycAjARbUmG/9VbDidYv8s915f2
- n5N9N+szsfC93vKXTXQ3b1lYeO7JPxtGhmm3bFJOBQZ+EvJqXVpxqdBDXn1u0dxHp0v5fk/fOXu
- jNCcA
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1642; i=ljs@kernel.org;
+ h=from:subject:message-id; bh=Ckq9F1B5R4ctEUJqWXYT1jV2i9Vim92hn6PkYJsjcDc=;
+ b=owGbwMvMwCV2fu7ZrsZH9SKMp9WSGLICg20UN7HtLM/vyXsTFrxVYsWpHDm18w4P5+XM12s5+
+ WWHrvf0jlIWBjEuBlkxRZbnX8T3B4mEzeu84O8GM4eVCWQIAxenANzkqYwMU33rlv+/mL9e+HWT
+ WHxes/ljhqb8yMyVr44wrbuqccd5DcNfmT/8Ns92pKWUmxwKXbLj7ZqLidpWFw45HF1j+zc0qX0
+ fGwA=
 X-Developer-Key: i=ljs@kernel.org; a=openpgp;
  fpr=E7F417BF5214569E89D04F46CF9DCD8A81E27F14
 X-Rspamd-Action: no action
@@ -159,7 +158,7 @@ X-Spamd-Result: default: False [-3.66 / 15.00];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-118386-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-118387-lists,linux-arm-msm=lfdr.de];
 	FORGED_RECIPIENTS(0.00)[m:akpm@linux-foundation.org,m:david@kernel.org,m:liam@infradead.org,m:vbabka@kernel.org,m:rppt@kernel.org,m:surenb@google.com,m:mhocko@suse.com,m:riel@surriel.com,m:harry@kernel.org,m:jannh@google.com,m:lance.yang@linux.dev,m:pfalcato@suse.de,m:linux@armlinux.org.uk,m:dinguyen@kernel.org,m:schuster.simon@siemens-energy.com,m:James.Bottomley@HansenPartnership.com,m:deller@gmx.de,m:viro@zeniv.linux.org.uk,m:brauner@kernel.org,m:jack@suse.cz,m:djbw@kernel.org,m:willy@infradead.org,m:muchun.song@linux.dev,m:osalvador@suse.de,m:mhiramat@kernel.org,m:oleg@redhat.com,m:peterz@infradead.org,m:mingo@redhat.com,m:acme@kernel.org,m:namhyung@kernel.org,m:mark.rutland@arm.com,m:alexander.shishkin@linux.intel.com,m:jolsa@kernel.org,m:irogers@google.com,m:adrian.hunter@intel.com,m:james.clark@linaro.org,m:ziy@nvidia.com,m:baolin.wang@linux.alibaba.com,m:npache@redhat.com,m:ryan.roberts@arm.com,m:dev.jain@arm.com,m:baohua@kernel.org,m:linmiaohe@huawei.com,m:nao.horiguchi@gma
  il.com,m:xu.xin16@zte.com.cn,m:chengming.zhou@linux.dev,m:sj@kernel.org,m:matthew.brost@intel.com,m:joshua.hahnjy@gmail.com,m:rakie.kim@sk.com,m:byungchul@sk.com,m:gourry@gourry.net,m:ying.huang@linux.alibaba.com,m:apopple@nvidia.com,m:hughd@google.com,m:peterx@redhat.com,m:kees@kernel.org,m:m.szyprowski@samsung.com,m:robin.murphy@arm.com,m:andreyknvl@gmail.com,m:glider@google.com,m:dvyukov@google.com,m:rostedt@goodmis.org,m:mathieu.desnoyers@efficios.com,m:jarkko@kernel.org,m:dave.hansen@linux.intel.com,m:tglx@kernel.org,m:bp@alien8.de,m:x86@kernel.org,m:hpa@zytor.com,m:abbotti@mev.co.uk,m:hsweeten@visionengravers.com,m:l.stach@pengutronix.de,m:christian.gmeiner@gmail.com,m:airlied@gmail.com,m:simona@ffwll.ch,m:patrik.r.jakobsson@gmail.com,m:maarten.lankhorst@linux.intel.com,m:mripard@kernel.org,m:tzimmermann@suse.de,m:robin.clark@oss.qualcomm.com,m:lumag@kernel.org,m:abhinav.kumar@linux.dev,m:jesszhan0024@gmail.com,m:sean@poorly.run,m:marijn.suijten@somainline.org,m:tomi.valkeinen
  @ideasonboard.com,m:thierry.reding@kernel.org,m:mperttunen@nvidia.com,m:jonathanh@nvidia.com,m:christian.koenig@amd.com,m:ray.huang@amd.com,m:matthew.auld@intel.com,m:jgg@ziepe.ca,m:yishaih@nvidia.com,m:skolothumtho@nvidia.com,m:kevin.tian@intel.com,m:ankita@nvidia.com,m:alex@shazbot.org,s:lists@lfdr.de];
@@ -183,99 +182,57 @@ X-Spamd-Result: default: False [-3.66 / 15.00];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,etnaviv];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[gourry.net:email,vger.kernel.org:from_smtp,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,suse.de:email]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[gourry.net:email,vger.kernel.org:from_smtp,suse.de:email]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 7896D73E3D7
+X-Rspamd-Queue-Id: F0F9473E42B
 
-In the VMA logic we often need to determine the number of pages in the
-specified merge range, as well as the start and end page offsets of that
-range.
-
-Introduce and use helpers for these purposes.
+Break up the existing very large conditional, add comments and use
+vma_[start/end]_pgoff() to make clearer what we're doing here.
 
 No functional change intended.
 
-Reviewed-by: Pedro Falcato <pfalcato@suse.de>
 Reviewed-by: Gregory Price <gourry@gourry.net>
+Reviewed-by: Pedro Falcato <pfalcato@suse.de>
 Signed-off-by: Lorenzo Stoakes <ljs@kernel.org>
 ---
- mm/vma.c | 11 ++++-------
- mm/vma.h | 17 +++++++++++++++++
- 2 files changed, 21 insertions(+), 7 deletions(-)
+ mm/vma.c | 21 ++++++++++++++++-----
+ 1 file changed, 16 insertions(+), 5 deletions(-)
 
 diff --git a/mm/vma.c b/mm/vma.c
-index 35ba3475128f..995de8198fbb 100644
+index 995de8198fbb..084afdf37385 100644
 --- a/mm/vma.c
 +++ b/mm/vma.c
-@@ -197,11 +197,9 @@ static void init_multi_vma_prep(struct vma_prepare *vp,
-  */
- static bool can_vma_merge_before(struct vma_merge_struct *vmg)
+@@ -1967,14 +1967,25 @@ static int anon_vma_compatible(struct vm_area_struct *a, struct vm_area_struct *
  {
--	pgoff_t pglen = PHYS_PFN(vmg->end - vmg->start);
--
- 	if (is_mergeable_vma(vmg, /* merge_next = */ true) &&
- 	    is_mergeable_anon_vma(vmg, /* merge_next = */ true)) {
--		if (vmg->next->vm_pgoff == vmg->pgoff + pglen)
-+		if (vmg_end_pgoff(vmg) == vma_start_pgoff(vmg->next))
- 			return true;
- 	}
+ 	vma_flags_t diff = vma_flags_diff_pair(&a->flags, &b->flags);
  
-@@ -221,7 +219,7 @@ static bool can_vma_merge_after(struct vma_merge_struct *vmg)
- {
- 	if (is_mergeable_vma(vmg, /* merge_next = */ false) &&
- 	    is_mergeable_anon_vma(vmg, /* merge_next = */ false)) {
--		if (vmg->prev->vm_pgoff + vma_pages(vmg->prev) == vmg->pgoff)
-+		if (vma_end_pgoff(vmg->prev) == vmg_start_pgoff(vmg))
- 			return true;
- 	}
- 	return false;
-@@ -759,7 +757,7 @@ static int commit_merge(struct vma_merge_struct *vmg)
- 	 */
- 	vma_adjust_trans_huge(vma, vmg->start, vmg->end,
- 			      vmg->__adjust_middle_start ? vmg->middle : NULL);
--	vma_set_range(vma, vmg->start, vmg->end, vmg->pgoff);
-+	vma_set_range(vma, vmg->start, vmg->end, vmg_start_pgoff(vmg));
- 	vmg_adjust_set_range(vmg);
- 	vma_iter_store_overwrite(vmg->vmi, vmg->target);
++	/* Ignore flags that mprotect() can change. */
+ 	vma_flags_clear_mask(&diff, VMA_ACCESS_FLAGS);
++	/* Ignore flags that do not impact merging. */
+ 	vma_flags_clear_mask(&diff, VMA_IGNORE_MERGE_FLAGS);
  
-@@ -962,8 +960,7 @@ static __must_check struct vm_area_struct *vma_merge_existing_range(
- 		 *    middle     next
- 		 * shrink/delete extend
- 		 */
--
--		pgoff_t pglen = PHYS_PFN(vmg->end - vmg->start);
-+		const pgoff_t pglen = vmg_pages(vmg);
- 
- 		VM_WARN_ON_VMG(!merge_right, vmg);
- 		/* If we are offset into a VMA, then prev must be middle. */
-diff --git a/mm/vma.h b/mm/vma.h
-index 8e4b61a7304c..527716c8739d 100644
---- a/mm/vma.h
-+++ b/mm/vma.h
-@@ -230,6 +230,23 @@ static inline bool vmg_nomem(struct vma_merge_struct *vmg)
- 	return vmg->state == VMA_MERGE_ERROR_NOMEM;
+-	return a->vm_end == b->vm_start &&
+-		mpol_equal(vma_policy(a), vma_policy(b)) &&
+-		a->vm_file == b->vm_file &&
+-		vma_flags_empty(&diff) &&
+-		b->vm_pgoff == a->vm_pgoff + ((b->vm_start - a->vm_start) >> PAGE_SHIFT);
++	/* Must be adjacent. */
++	if (a->vm_end != b->vm_start)
++		return false;
++	/* Must have matching policy. */
++	if (!mpol_equal(vma_policy(a), vma_policy(b)))
++		return false;
++	/* Must both be anon or map the same file (MAP_PRIVATE case). */
++	if (a->vm_file != b->vm_file)
++		return false;
++	/* Flags must be equivalent modulo mprotect(). */
++	if (!vma_flags_empty(&diff))
++		return false;
++	/* Page offset must align. */
++	return vma_end_pgoff(a) == vma_start_pgoff(b);
  }
  
-+static inline pgoff_t vmg_start_pgoff(const struct vma_merge_struct *vmg)
-+{
-+	return vmg->pgoff;
-+}
-+
-+static inline pgoff_t vmg_pages(const struct vma_merge_struct *vmg)
-+{
-+	const unsigned long size = vmg->end - vmg->start;
-+
-+	return size >> PAGE_SHIFT;
-+}
-+
-+static inline pgoff_t vmg_end_pgoff(const struct vma_merge_struct *vmg)
-+{
-+	return vmg_start_pgoff(vmg) + vmg_pages(vmg);
-+}
-+
- /* Assumes addr >= vma->vm_start. */
- static inline pgoff_t vma_pgoff_offset(struct vm_area_struct *vma,
- 				       unsigned long addr)
+ /*
 
 -- 
 2.55.0
