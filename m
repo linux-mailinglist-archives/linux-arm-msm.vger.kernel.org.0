@@ -1,589 +1,163 @@
-Return-Path: <linux-arm-msm+bounces-118131-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-118132-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id gpj+GttzUGoHzQIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-118131-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 06:23:55 +0200
+	id mTqXH9x4UGqQzgIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-118132-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 06:45:16 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id EDC317371BD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 06:23:54 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id 761227372B7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 06:45:15 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=QJ10hBEZ;
-	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=FcjDPdxL;
-	dmarc=pass (policy=reject) header.from=qualcomm.com;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118131-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c09:e001:a7::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118131-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=atomide.com header.s=25mailst header.b=CTaihVTY;
+	dmarc=pass (policy=reject) header.from=atomide.com;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118132-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 104.64.211.4 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118132-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 6A80F3006449
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 04:23:54 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 7B41E300B281
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 04:45:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5373836A377;
-	Fri, 10 Jul 2026 04:23:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 794F437268C;
+	Fri, 10 Jul 2026 04:45:11 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mail5.25mail.st (mail5.25mail.st [74.50.62.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E37E736A373
-	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jul 2026 04:23:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 827523603D7;
+	Fri, 10 Jul 2026 04:45:09 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783657431; cv=none; b=OaHptCpY2jb7FAGUT8gaNod1DVZPDnrYXlng4t33erAPHmBbG7aqsg547SO955GUjLduAJXDGzeJIBwJASUVIbAkRaZI3Fa8sscVDSFgtJYYgEbkhb56PnHdky3pN4PXmKWqh7mgNAoDP5mmwrdxEgJYESObfsYRzEEs/6mmhOU=
+	t=1783658711; cv=none; b=qLaHSescImnv3jxRf958iP5majo3qpNpyCANOdcQPZfqgL3qGuUxswf93S3+XVvUWpfvNvZ66h/NFzFHPsMyR/RUxH2IXtt1la9jjZH130fnpjQkoEvifs2Re5pLQafvWt6jBJoi67cUQs3pqxBK+ZYe7Ya+BcK6fiRkiZoZBWY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783657431; c=relaxed/simple;
-	bh=q+GdnQAxL/KhJDXHLDPS8BYkN104mPLRh/AML/oTlNw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=jNT4lbsZ03eHMVIYmK/3sWkPUf1HDQ6DE2GUBjWT1Dfwrtin6usw2r3HpXhb5lX0JjIG0IVEoiMA9VzHzLKgOU7efLArk+zHlc6QNjRRbzTo4q/4BMsUOYOoAlCTuk0Wlnv4apdhGfG+xoa7PMqNG9qPU+InGi9X2ZB/VC0TnsA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=QJ10hBEZ; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=FcjDPdxL; arc=none smtp.client-ip=205.220.168.131
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66A3mucI3629910
-	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jul 2026 04:23:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	l9h9Iz/a5W8eF88pzYnVKouzL+ejaGHBujqlpMHXUZ8=; b=QJ10hBEZo70qBIFe
-	v2WpbknWqUi1T7fgCwCMH+Cjg/iG+O3k/9IW9Nffe624W4zANpOkQ5Pu96U+7hr3
-	HSdi1d6cP6BmIvaMcOaDTkz+O9uEogfBMa9FpTajwO8vL1g3OCGs0G96LU1yurEM
-	tZXLnt7/zGl3U5MNBFF5KJTYYsy/qurYHEWAjNycLJ3LXv1j0yBWncT4lPvDsN/L
-	H0u/cgBryodu0KJo4Crqrv/1legAbKIRx3eAlzalSnIPvamxdgMLRuWMUykKhnaF
-	acanIOQ7hy+yC1zHytXMj902K5bWwCG98k7eoXK5dancs4DvpLZP7Q8tsW4LX8yQ
-	4iaCwA==
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com [209.85.216.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fahv8hgh8-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jul 2026 04:23:48 +0000 (GMT)
-Received: by mail-pj1-f72.google.com with SMTP id 98e67ed59e1d1-388b404eaa4so666491a91.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Jul 2026 21:23:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1783657427; x=1784262227; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=l9h9Iz/a5W8eF88pzYnVKouzL+ejaGHBujqlpMHXUZ8=;
-        b=FcjDPdxLlFdbdEFTkfJ3QBhY/QSY4moPFC/89alFpdaCmwrPOZm5sVV/+K7GajnJJg
-         OcBpXy/ePiNgKm1GF4fN3QLtWqcvcjbYQR83bNRiQhQfQg7/wfEWYYa4Qa3F8i5gZnl1
-         W+J7K+uAiwLjotLsKeuCeExSOwgEXeRbTuvCzMPtCCJ4tZAZAasRNMEIHGEa6N5sr57V
-         zmfUH27xt5ZW5uSwTe4AjBNGnmg0+xGfwFeoC/rahTN81gakLaNjZFgG+8/fxP4/EMwt
-         eyt2l+ESJLpN4ioNobQ1a5F3lhDazzL2JepPnzodceyykrGmMtpo+TnzL0+3Z1ALBqYs
-         hRKw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783657427; x=1784262227;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=l9h9Iz/a5W8eF88pzYnVKouzL+ejaGHBujqlpMHXUZ8=;
-        b=QcIAKKqE7faLn88p6eFLT1jLNaOmvcwOBoXaW05iKac+E8vrwkW4xMBZARppsYIKE8
-         +LIecl4c62UP1CDdFXxCR6Gyr8rOF4Bc8B8tp3lCzhWc5Mpa/4sdOXo3/Qc7rumtlbg0
-         9LRPswKMuYZkDFksMhUYO6KW8zGEkblaYzYYB2BiO+T+/qjAKi4KoIZAkUBQAfxSB72O
-         7jxunDTr/yezpWE4a3bsrXPWGL1Sjimuxp5tyryC+gac3fRTshJkiol/897d/jl1Ifg6
-         +Vd4k1bx95d//xM30WGS1GRqsmWSJnD0OECG7yzQR6LoXKEUmes6AwYlQJz0qBsxdoWw
-         2qTg==
-X-Forwarded-Encrypted: i=1; AHgh+RpTyurIv/jxV8rPugL3KrRy8ZKIc9WRndipVjTwqSitZu3V/RGP/liOE4xZ1NO7+nT2Pi6M7jSJy57NPR/n@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxo2ijJG3psxUTEzL9zfWRF7V3kPxyFI/T/fNAMKNltL96nvsix
-	hVo2nWFnRs6PMPWdkj/3m8MFL1BiFMm4qk+qFSfUoR8id8Lm85d5i1tDDn8oozlHfQ33mtFjEzb
-	aKYNZLGAlePzQscKCcCPMi0Ti5AfwmpHBnyKrWfBmJpa+oufUoK8aWGfYICVxBOMtaD5r
-X-Gm-Gg: AfdE7clowtU1Ust+hN/qlcckbBJQOyVkw+KLRv6tDCFEt/CztbOSEOMkHQrWyPPmyop
-	VANR7URldFHHwJ7bSgLELTFePeTJphv5/rtP8nlES7EsFbDkeoiuAX20uR6fuQMpAP9eQpmbXCR
-	jK1wvi7qJSk04aIImRhO+q6e9/OqvOs2SaGZ1ByEEhxVMnafpGl59X/nMuST/lDoZz/Dk9pCShm
-	ygzwmI/SSKZjR6bxmKt0m8eKtYUGureVVbEuCfi3Q+pJiN49aCcXy3wa54ZrfF6d3ti9AzktiRm
-	xn0j33ij6M7uZ/bYBBpwIFWJJzY7JsLIJm94Fo1F23iTCv2FZnzdwWdldVMprDzWdVKEeiGkoiM
-	fF8dfFIt9aOWe1AjH/Pj58fnAcXCYc2FjgCGtKKbOegA=
-X-Received: by 2002:a17:90b:1fd0:b0:37f:9ce2:348c with SMTP id 98e67ed59e1d1-389434633b8mr10372755a91.29.1783657427314;
-        Thu, 09 Jul 2026 21:23:47 -0700 (PDT)
-X-Received: by 2002:a17:90b:1fd0:b0:37f:9ce2:348c with SMTP id 98e67ed59e1d1-389434633b8mr10372726a91.29.1783657426778;
-        Thu, 09 Jul 2026 21:23:46 -0700 (PDT)
-Received: from [10.206.105.200] ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-31174accae5sm56586238eec.29.2026.07.09.21.23.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 09 Jul 2026 21:23:46 -0700 (PDT)
-Message-ID: <f1c0469c-b20c-b828-43f2-0f46dc76e8bd@oss.qualcomm.com>
-Date: Fri, 10 Jul 2026 09:53:38 +0530
+	s=arc-20240116; t=1783658711; c=relaxed/simple;
+	bh=FwC4nxcw77Dy9Pw4BgEh1WKzMzw00KasgsFTwsY3DRw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=IUUnEWYa8HS1WKHfBC6b8VCmwOed5EoN1HeTJo4L3eb8wwO9xh1Q9dpjZfgyYEwcSO/krKyAs/HbvWLqJ1mlzIo3qfUH3bC9zWX1In/nb9Uw3/WCwlRfL6C4/SS78R/ENNQ68smxpg1rS21Df5Q9WFv9YHgDXnY01MbdOcqBnoY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=atomide.com; spf=pass smtp.mailfrom=atomide.com; dkim=pass (2048-bit key) header.d=atomide.com header.i=@atomide.com header.b=CTaihVTY; arc=none smtp.client-ip=74.50.62.9
+Received: from localhost (84-231-250-126.elisa-mobile.fi [84.231.250.126])
+	by mail5.25mail.st (Postfix) with ESMTPSA id C8E32617B5;
+	Fri, 10 Jul 2026 04:37:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=atomide.com;
+	s=25mailst; t=1783658352;
+	bh=jp+8+5QI95ophkzdeX5PhLSIZp16xbFMwu4QDRkzOEs=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=CTaihVTY3xKeYwYurPIj1PGrGR+oQrwQf6TQ4FUpfmbKGRQQH/0vBl8OOK/WUw/zr
+	 +CHCGjc9WZ0h+gMjDXgKIuG0sfG5b8v/fURlsq3junjLdDh4yjLeo/E3mnyZF5ILb5
+	 0L9YsyLyaxt3ROVT6g7hv2fvRb3jKJLKIJ+xGvLZkROMhpsQ6xMpDQn/A0jBZLmU4Z
+	 ZO8Iro9rshL2Y66OWXG4Ngkys+C/yPaKUbK202WNo4t9V08TAI3OILwZ+ejHZzDyNG
+	 eSqlieskQg4bhu+Sw3PZD6vdc9fq9daM5LBBKO5PSTb9Angg33oCQkJipqydJDwaNj
+	 eyyRZriX8WpVQ==
+Date: Fri, 10 Jul 2026 07:37:46 +0300
+From: Tony Lindgren <tony@atomide.com>
+To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: Praveen Talari <praveen.talari@oss.qualcomm.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Jiri Slaby <jirislaby@kernel.org>,
+	Ilpo =?utf-8?B?SsOkcnZpbmVu?= <ilpo.jarvinen@linux.intel.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Richard Genoud <richard.genoud@bootlin.com>,
+	Nicolas Ferre <nicolas.ferre@microchip.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Peter Griffin <peter.griffin@linaro.org>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
+	Orson Zhai <orsonzhai@gmail.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Chunyan Zhang <zhang.lyra@gmail.com>,
+	Patrice Chotard <patrice.chotard@foss.st.com>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Peter Korsgaard <jacmet@sunsite.dk>,
+	Michal Simek <michal.simek@amd.com>,
+	Aaro Koskinen <aaro.koskinen@iki.fi>,
+	Janusz Krzysztofik <jmkrzyszt@gmail.com>,
+	Russell King <linux@armlinux.org.uk>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	bjorn.andersson@oss.qualcomm.com,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	linux-kernel@vger.kernel.org, linux-serial@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	linux-samsung-soc@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	linux-omap@vger.kernel.org, linux-mips@vger.kernel.org,
+	Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>,
+	aniket.randive@oss.qualcomm.com,
+	chandana.chiluveru@oss.qualcomm.com
+Subject: Re: [PATCH 0/6] tty: serial: propagate errors from uart_ops.pm
+ callback
+Message-ID: <20260710043746.GM30058@atomide.com>
+References: <20260709-add_return_check_for_uart_change_pm-v1-0-e85c6ffa8ec4@oss.qualcomm.com>
+ <ak9OPNcVAhkfxHvZ@ashevche-desk.local>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH v7 01/18] media: iris: Add Gen2 firmware autodetect and
- fallback
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-        Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Bryan O'Donoghue <bod@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
-References: <20260709-iris-ar50lt-v7-0-76af9dd4d1f6@oss.qualcomm.com>
- <20260709-iris-ar50lt-v7-1-76af9dd4d1f6@oss.qualcomm.com>
-Content-Language: en-US
-From: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
-In-Reply-To: <20260709-iris-ar50lt-v7-1-76af9dd4d1f6@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: JGPEX3ruIUhHxHdmtdIkn-mQ1NoR1Hgc
-X-Proofpoint-ORIG-GUID: JGPEX3ruIUhHxHdmtdIkn-mQ1NoR1Hgc
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzEwMDAzNyBTYWx0ZWRfX/uPzwH2J+lJG
- fzFKih+PgvgrMpMsJNVdPsb8lDzWpHLLzcu50olPV/RvjhsLBs6tFM1w9luodeBZY5OQwCdUV54
- U7jRsoxtdkHMssQedhjdT9PlnzbmL2U=
-X-Authority-Analysis: v=2.4 cv=funsol4f c=1 sm=1 tr=0 ts=6a5073d4 cx=c_pps
- a=RP+M6JBNLl+fLTcSJhASfg==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
- a=EUspDBNiAAAA:8 a=uDXHxCxWII9kAjgowtcA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=iS9zxrgQBfv6-_F4QbHw:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzEwMDAzNyBTYWx0ZWRfX0pWJiRbmhuAx
- xDBpm0IRpWx28U9VwgksyIEZZ92mFp3kCYcjwuhXbPx5KgV0BmyEr1BhY4/vM01jNHtNxh39cT1
- ZrEeuuaztsCnZmPbIz4yf4xudbqN19ztOX70e6SjNRGX+J9C/XjdLG0wudoRABXBceZKkVdn8nJ
- lN3A9EwDVR3xEWQcJkPFq4Nj4NJvZf9zBXC6cmoaA6U6RLHiS4euwyGTFkqJEvBARs+BzKMTQNr
- k8HfTZrnIWMblULQZ6L3pQHnBUMGfnHzFqCzEko4j6XwyZAg7PdXwNqjIDT6v6byqU9UYI8p7vi
- tMzbcbuBnAIIKaosgFOBqcgHkko4SJFLvmbm9vfnQHMZCZ6BNCi/n7fm6nU78JaoKwB2RcBN1m7
- rPa9zebVU8yIewj75jZ8hdAugFRhB17OwxrTEVau4hVy6EeONx6z1tznN7FrHogwV6EXg8IzjxA
- QUtN/Fa5pNRjOQgVTAA==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-10_01,2026-07-09_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 phishscore=0 clxscore=1015 lowpriorityscore=0 adultscore=0
- bulkscore=0 suspectscore=0 malwarescore=0 priorityscore=1501 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607100037
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ak9OPNcVAhkfxHvZ@ashevche-desk.local>
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	DMARC_POLICY_ALLOW(-0.50)[atomide.com,reject];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
+	R_DKIM_ALLOW(-0.20)[atomide.com:s=25mailst];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-118131-lists,linux-arm-msm=lfdr.de];
-	RCPT_COUNT_TWELVE(0.00)[15];
-	MIME_TRACE(0.00)[0:+];
+	RCVD_COUNT_THREE(0.00)[4];
+	TAGGED_FROM(0.00)[bounces-118132-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FORWARDED(0.00)[lists@lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:dmitry.baryshkov@oss.qualcomm.com,m:vikash.garodia@oss.qualcomm.com,m:abhinav.kumar@linux.dev,m:bod@kernel.org,m:mchehab@kernel.org,m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linux-media@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:devicetree@vger.kernel.org,m:dikshita.agarwal@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_SENDER(0.00)[busanna.reddy@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,qualcomm.com:email,qualcomm.com:dkim,oss.qualcomm.com:from_mime,oss.qualcomm.com:dkim,oss.qualcomm.com:mid];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[busanna.reddy@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	RECEIVED_HELO_LOCALHOST(0.00)[];
+	FORGED_SENDER(0.00)[tony@atomide.com,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[40];
+	FORGED_RECIPIENTS(0.00)[m:andriy.shevchenko@linux.intel.com,m:praveen.talari@oss.qualcomm.com,m:gregkh@linuxfoundation.org,m:jirislaby@kernel.org,m:ilpo.jarvinen@linux.intel.com,m:matthias.bgg@gmail.com,m:angelogioacchino.delregno@collabora.com,m:richard.genoud@bootlin.com,m:nicolas.ferre@microchip.com,m:alexandre.belloni@bootlin.com,m:claudiu.beznea@tuxon.dev,m:krzk@kernel.org,m:peter.griffin@linaro.org,m:alim.akhtar@samsung.com,m:orsonzhai@gmail.com,m:baolin.wang@linux.alibaba.com,m:zhang.lyra@gmail.com,m:patrice.chotard@foss.st.com,m:mcoquelin.stm32@gmail.com,m:alexandre.torgue@foss.st.com,m:jacmet@sunsite.dk,m:michal.simek@amd.com,m:aaro.koskinen@iki.fi,m:jmkrzyszt@gmail.com,m:linux@armlinux.org.uk,m:tsbogend@alpha.franken.de,m:bjorn.andersson@oss.qualcomm.com,m:konrad.dybcio@oss.qualcomm.com,m:linux-kernel@vger.kernel.org,m:linux-serial@vger.kernel.org,m:linux-arm-kernel@lists.infradead.org,m:linux-mediatek@lists.infradead.org,m:linux-arm-msm@vger.kernel.org,m:linux-samsung-soc
+ @vger.kernel.org,m:linux-stm32@st-md-mailman.stormreply.com,m:linux-omap@vger.kernel.org,m:linux-mips@vger.kernel.org,m:mukesh.savaliya@oss.qualcomm.com,m:aniket.randive@oss.qualcomm.com,m:chandana.chiluveru@oss.qualcomm.com,m:matthiasbgg@gmail.com,m:zhanglyra@gmail.com,m:mcoquelinstm32@gmail.com,s:lists@lfdr.de];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FORWARDED(0.00)[lists@lfdr.de];
+	FREEMAIL_CC(0.00)[oss.qualcomm.com,linuxfoundation.org,kernel.org,linux.intel.com,gmail.com,collabora.com,bootlin.com,microchip.com,tuxon.dev,linaro.org,samsung.com,linux.alibaba.com,foss.st.com,sunsite.dk,amd.com,iki.fi,armlinux.org.uk,alpha.franken.de,vger.kernel.org,lists.infradead.org,st-md-mailman.stormreply.com];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[tony@atomide.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[atomide.com:+];
 	MID_RHS_MATCH_FROM(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	MISSING_XM_UA(0.00)[];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCVD_COUNT_SEVEN(0.00)[7]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,atomide.com:from_mime,atomide.com:dkim,atomide.com:mid]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: EDC317371BD
+X-Rspamd-Queue-Id: 761227372B7
 
+* Andy Shevchenko <andriy.shevchenko@linux.intel.com> [260709 10:38]:
+> Just no, please just properly implement runtime PM. The .pm() must die completely.
+> I used to have the PoC for that long time ago [1], but due to lack of time and
+> other priorities it went abandoned. Also Atlassian made a brain damages move to
+> limit repository to 1Gb, so I haven't able to update it for a few years.
+> 
+> Note, that Tony (you have him in the Cc list) did a lot for some corner cases
+> with that and we still have them IIRC. Tony, do you know what is the state of
+> affairs with runtime PM for UART?
 
-On 7/9/2026 7:11 PM, Dmitry Baryshkov wrote:
-> From: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
->
-> Some Iris platforms support both Gen1 and Gen2 HFI firmware images.
-> Update the firmware loading logic to handle this generically by
-> preferring Gen2 when available, while safely falling back to Gen1
-> when required.
->
-> The firmware loading logic is updated with the following priority:
-> 1. Device Tree (`firmware-name`): If specified, load unconditionally.
-> 2. Gen2 default : If no DT override exists, select the Gen2 firmware
->    descriptor when present and attempt to load the corresponding
->    firmware image.
-> 3. Gen1 Fallback: If loading the Gen2 firmware fails and a Gen1
->    descriptor is available, retry with the Gen1 firmware image.
->
-> When a platform provides both Gen1 and Gen2 firmware descriptors and the
-> firmware is loaded via a DT override, the driver detects the
-> firmware generation at runtime before authentication by inspecting
-> the firmware data. The firmware is classified as Gen2 if the
-> QC_IMAGE_VERSION_STRING starts with "vfw" or matches the
-> "video-firmware.N.M" format with N >= 2.
->
-> If a Gen1 firmware image is detected in this case, the driver switches
-> to the Gen1 firmware descriptor and associated platform data so that
-> the correct HFI implementation is used.
->
-> This change makes firmware generation detection platform‑agnostic,
-> preserves DT overrides, prefers newer Gen2 firmware when available,
-> and maintains compatibility with platforms that only support Gen1.
->
-> Signed-off-by: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
-> Co-developed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> ---
->  drivers/media/platform/qcom/iris/iris_core.c       |   2 +
->  drivers/media/platform/qcom/iris/iris_firmware.c   | 146 ++++++++++++++++++---
->  .../platform/qcom/iris/iris_platform_common.h      |   6 +-
->  .../media/platform/qcom/iris/iris_platform_vpu2.c  |  11 +-
->  .../media/platform/qcom/iris/iris_platform_vpu3x.c |  10 +-
->  drivers/media/platform/qcom/iris/iris_probe.c      |   4 -
->  drivers/media/platform/qcom/iris/iris_vidc.c       |   1 +
->  7 files changed, 147 insertions(+), 33 deletions(-)
->
-> diff --git a/drivers/media/platform/qcom/iris/iris_core.c b/drivers/media/platform/qcom/iris/iris_core.c
-> index 52bf56e517f9..6dbe18be5b49 100644
-> --- a/drivers/media/platform/qcom/iris/iris_core.c
-> +++ b/drivers/media/platform/qcom/iris/iris_core.c
-> @@ -6,6 +6,7 @@
->  #include <linux/pm_runtime.h>
->  
->  #include "iris_core.h"
-> +#include "iris_ctrls.h"
->  #include "iris_firmware.h"
->  #include "iris_state.h"
->  #include "iris_vpu_common.h"
-> @@ -79,6 +80,7 @@ int iris_core_init(struct iris_core *core)
->  		goto error_unload_fw;
->  
->  	core->iris_firmware_data->init_hfi_ops(core);
-> +	iris_session_init_caps(core);
->  
->  	ret = iris_hfi_core_init(core);
->  	if (ret)
-> diff --git a/drivers/media/platform/qcom/iris/iris_firmware.c b/drivers/media/platform/qcom/iris/iris_firmware.c
-> index 1a476146d758..a3aa41aa1e66 100644
-> --- a/drivers/media/platform/qcom/iris/iris_firmware.c
-> +++ b/drivers/media/platform/qcom/iris/iris_firmware.c
-> @@ -16,20 +16,138 @@
->  
->  #define MAX_FIRMWARE_NAME_SIZE	128
->  
-> -static int iris_load_fw_to_memory(struct iris_core *core, const char *fw_name)
-> +/* Detect Gen2 firmware by scanning the blob for:
-> + *   QC_IMAGE_VERSION_STRING=<version>
-> + * and then checking:
-> + *   - version starts with "vfw", OR
-> + *   - version matches "video-firmware.N.M" with N >= 2
-> + */
-> +
-> +static bool iris_detect_gen2_from_fwdata(const u8 *data, size_t size)
-> +{
-> +	static const char *marker = "QC_IMAGE_VERSION_STRING=";
-> +	const size_t mlen = strlen(marker);
-> +	static const char *vfw = "vfw";
-> +	const size_t vfwlen = strlen(vfw);
-> +	static const char *vf = "video-firmware.";
-> +	const size_t vflen = strlen(vf);
-> +
-> +	for (size_t i = 0; i + mlen < size; i++) {
-> +		const char *found;
-> +
-> +		if (memcmp(data + i, marker, mlen))
-> +			continue;
-> +
-> +		found = data + i + mlen;
-> +		size -= i + mlen;
-> +
-> +		/* vfw => Gen2 */
-> +		if (size > vfwlen && !memcmp(found, vfw, vfwlen))
-> +			return true;
-> +
-> +		if (size < vflen ||
-> +		    memcmp(found, vf, vflen))
-> +			return false;
-> +
-> +		found += vflen;
-> +		size -= vflen;
-> +
-> +		/*
-> +		 * video-firmware.1.x is Gen1.
-> +		 * video-firmware.2.x and video-firmware.10.x are Gen2.
-> +		 */
-> +		return size >= 2 &&
-> +			(*found >= '2' || (*found == '1' && found[1] != '.'));
-> +	}
-> +
-> +	return false;
-> +}
-> +
-> +static const struct firmware *iris_detect_firmware(struct iris_core *core,
-> +						   const char **fw_name)
-> +{
-> +	const struct iris_firmware_desc *desc;
-> +	const struct firmware *firmware;
-> +	bool has_both_gens;
-> +	int ret;
-> +
-> +	*fw_name = NULL;
-> +	ret = of_property_read_string_index(dev_of_node(core->dev), "firmware-name", 0, fw_name);
-> +
-> +	/*
-> +	 * A platform may support both Gen1 and Gen2 firmware; which one is used
-> +	 * depends on the firmware image installed on the system, not on the
-> +	 * hardware. That installed image does not change while the device is
-> +	 * bound, so detect the generation only once and reuse the chosen
-> +	 * descriptor on later core bring-ups (e.g. after a system error
-> +	 * recovery). Besides avoiding the redundant probing, this ensures
-> +	 * core->iris_firmware_desc and iris_firmware_data are published exactly
-> +	 * once, before any session exists, so the lockless readers in the ioctl
-> +	 * paths never observe a reassignment.
-> +	 */
-> +	if (core->iris_firmware_desc) {
-> +		if (ret)
-> +			*fw_name = core->iris_firmware_desc->fwname;
-> +		ret = request_firmware(&firmware, *fw_name, core->dev);
-> +		return ret ? ERR_PTR(ret) : firmware;
-> +	}
-> +
-> +	has_both_gens = core->iris_platform_data->firmware_desc_gen2 &&
-> +		core->iris_platform_data->firmware_desc_gen1;
-> +
-> +	if (core->iris_platform_data->firmware_desc_gen2)
-> +		desc = core->iris_platform_data->firmware_desc_gen2;
-> +	else if (core->iris_platform_data->firmware_desc_gen1)
-> +		desc = core->iris_platform_data->firmware_desc_gen1;
-> +	else
-> +		return ERR_PTR(-EINVAL);
-> +
-> +	if (ret) {
-> +		/* No firmware-name in DT: select by probing Gen2 then Gen1. */
-> +		*fw_name = desc->fwname;
-> +		if (has_both_gens)
-> +			ret = firmware_request_nowarn(&firmware, *fw_name, core->dev);
-> +		else
-> +			ret = request_firmware(&firmware, *fw_name, core->dev);
-> +		if (ret && has_both_gens) {
-> +			desc = core->iris_platform_data->firmware_desc_gen1;
-> +			*fw_name = desc->fwname;
-> +			ret = request_firmware(&firmware, *fw_name, core->dev);
-> +		}
-> +		if (ret)
-> +			return ERR_PTR(ret);
-> +	} else {
-> +		/* firmware-name given: load it and detect its generation. */
-> +		ret = request_firmware(&firmware, *fw_name, core->dev);
-> +		if (ret)
-> +			return ERR_PTR(ret);
-> +
-> +		if (has_both_gens &&
-> +		    !iris_detect_gen2_from_fwdata((const u8 *)firmware->data, firmware->size)) {
-> +			dev_info(core->dev, "Gen1 FW detected in %s\n", *fw_name);
-> +			desc = core->iris_platform_data->firmware_desc_gen1;
-> +		}
-> +	}
-> +
-> +	/* Publish iris_firmware_data first, then iris_firmware_desc (the guard). */
-> +	core->iris_firmware_data = desc->firmware_data;
-> +	core->iris_firmware_desc = desc;
-> +
-> +	return firmware;
-> +}
-> +
-> +static int iris_load_fw_to_memory(struct iris_core *core)
->  {
->  	const struct firmware *firmware = NULL;
->  	struct device *dev = core->dev;
->  	struct resource res;
->  	phys_addr_t mem_phys;
-> +	const char *fw_name;
->  	size_t res_size;
->  	ssize_t fw_size;
->  	void *mem_virt;
->  	int ret;
->  
-> -	if (strlen(fw_name) >= MAX_FIRMWARE_NAME_SIZE - 4)
-> -		return -EINVAL;
-> -
->  	ret = of_reserved_mem_region_to_resource(dev->of_node, 0, &res);
->  	if (ret)
->  		return ret;
-> @@ -37,9 +155,9 @@ static int iris_load_fw_to_memory(struct iris_core *core, const char *fw_name)
->  	mem_phys = res.start;
->  	res_size = resource_size(&res);
->  
-> -	ret = request_firmware(&firmware, fw_name, dev);
-> -	if (ret)
-> -		return ret;
-> +	firmware = iris_detect_firmware(core, &fw_name);
-> +	if (IS_ERR(firmware))
-> +		return PTR_ERR(firmware);
->  
->  	fw_size = qcom_mdt_get_size(firmware);
->  	if (fw_size < 0 || res_size < (size_t)fw_size) {
-> @@ -66,18 +184,12 @@ static int iris_load_fw_to_memory(struct iris_core *core, const char *fw_name)
->  int iris_fw_load(struct iris_core *core)
->  {
->  	const struct tz_cp_config *cp_config;
-> -	const char *fwpath = NULL;
->  	int i, ret;
->  
-> -	ret = of_property_read_string_index(core->dev->of_node, "firmware-name", 0,
-> -					    &fwpath);
-> -	if (ret)
-> -		fwpath = core->iris_firmware_desc->fwname;
-> -
-> -	ret = iris_load_fw_to_memory(core, fwpath);
-> +	ret = iris_load_fw_to_memory(core);
->  	if (ret) {
-> -		dev_err(core->dev, "firmware download failed\n");
-> -		return -ENOMEM;
-> +		dev_err(core->dev, "firmware download failed %d\n", ret);
-> +		return ret;
->  	}
->  
->  	ret = qcom_scm_pas_auth_and_reset(IRIS_PAS_ID);
-> @@ -99,7 +211,7 @@ int iris_fw_load(struct iris_core *core)
->  		}
->  	}
->  
-> -	return ret;
-> +	return 0;
->  }
->  
->  int iris_fw_unload(struct iris_core *core)
-> diff --git a/drivers/media/platform/qcom/iris/iris_platform_common.h b/drivers/media/platform/qcom/iris/iris_platform_common.h
-> index c9256f2323dc..55a4fa356985 100644
-> --- a/drivers/media/platform/qcom/iris/iris_platform_common.h
-> +++ b/drivers/media/platform/qcom/iris/iris_platform_common.h
-> @@ -289,11 +289,7 @@ struct iris_firmware_desc {
->  };
->  
->  struct iris_platform_data {
-> -	/*
-> -	 * XXX: replace with gen1 / gen2 pointers once we have platforms
-> -	 * supporting both firmware kinds.
-> -	 */
-> -	const struct iris_firmware_desc *firmware_desc;
-> +	const struct iris_firmware_desc *firmware_desc_gen1, *firmware_desc_gen2;
->  
->  	const struct vpu_ops *vpu_ops;
->  	const struct icc_info *icc_tbl;
-> diff --git a/drivers/media/platform/qcom/iris/iris_platform_vpu2.c b/drivers/media/platform/qcom/iris/iris_platform_vpu2.c
-> index 6e06a32822bb..961dce2e6aa9 100644
-> --- a/drivers/media/platform/qcom/iris/iris_platform_vpu2.c
-> +++ b/drivers/media/platform/qcom/iris/iris_platform_vpu2.c
-> @@ -22,6 +22,12 @@ static const struct iris_firmware_desc iris_vpu20_p1_gen1_desc = {
->  	.fwname = "qcom/vpu/vpu20_p1.mbn",
->  };
->  
-> +static const struct iris_firmware_desc iris_vpu20_p1_gen2_s6_desc = {
-> +	.firmware_data = &iris_hfi_gen2_data,
-> +	.get_vpu_buffer_size = iris_vpu33_buf_size,
-> +	.fwname = "qcom/vpu/vpu20_p1_gen2_s6.mbn",
-> +};
-> +
->  static const struct iris_firmware_desc iris_vpu20_p4_gen1_desc = {
->  	.firmware_data = &iris_hfi_gen1_data,
->  	.get_vpu_buffer_size = iris_vpu_buf_size,
-> @@ -65,7 +71,8 @@ static const struct tz_cp_config tz_cp_config_vpu2[] = {
->  };
->  
->  const struct iris_platform_data sc7280_data = {
-> -	.firmware_desc = &iris_vpu20_p1_gen1_desc,
-> +	.firmware_desc_gen1 = &iris_vpu20_p1_gen1_desc,
-> +	.firmware_desc_gen2 = &iris_vpu20_p1_gen2_s6_desc,
->  	.vpu_ops = &iris_vpu2_ops,
->  	.icc_tbl = iris_icc_info_vpu2,
->  	.icc_tbl_size = ARRAY_SIZE(iris_icc_info_vpu2),
-> @@ -94,7 +101,7 @@ const struct iris_platform_data sc7280_data = {
->  };
->  
->  const struct iris_platform_data sm8250_data = {
-> -	.firmware_desc = &iris_vpu20_p4_gen1_desc,
-> +	.firmware_desc_gen1 = &iris_vpu20_p4_gen1_desc,
->  	.vpu_ops = &iris_vpu2_ops,
->  	.icc_tbl = iris_icc_info_vpu2,
->  	.icc_tbl_size = ARRAY_SIZE(iris_icc_info_vpu2),
-> diff --git a/drivers/media/platform/qcom/iris/iris_platform_vpu3x.c b/drivers/media/platform/qcom/iris/iris_platform_vpu3x.c
-> index 2c63adbc5579..74626b35d9cb 100644
-> --- a/drivers/media/platform/qcom/iris/iris_platform_vpu3x.c
-> +++ b/drivers/media/platform/qcom/iris/iris_platform_vpu3x.c
-> @@ -90,7 +90,7 @@ static const struct tz_cp_config tz_cp_config_vpu3[] = {
->   * - inst_caps to platform_inst_cap_qcs8300
->   */
->  const struct iris_platform_data qcs8300_data = {
-> -	.firmware_desc = &iris_vpu30_p4_s6_gen2_desc,
-> +	.firmware_desc_gen2 = &iris_vpu30_p4_s6_gen2_desc,
->  	.vpu_ops = &iris_vpu3_ops,
->  	.icc_tbl = iris_icc_info_vpu3x,
->  	.icc_tbl_size = ARRAY_SIZE(iris_icc_info_vpu3x),
-> @@ -119,7 +119,7 @@ const struct iris_platform_data qcs8300_data = {
->  };
->  
->  const struct iris_platform_data sm8550_data = {
-> -	.firmware_desc = &iris_vpu30_p4_gen2_desc,
-> +	.firmware_desc_gen2 = &iris_vpu30_p4_gen2_desc,
->  	.vpu_ops = &iris_vpu3_ops,
->  	.icc_tbl = iris_icc_info_vpu3x,
->  	.icc_tbl_size = ARRAY_SIZE(iris_icc_info_vpu3x),
-> @@ -154,7 +154,7 @@ const struct iris_platform_data sm8550_data = {
->   * - controller_rst_tbl to sm8650_controller_reset_table
->   */
->  const struct iris_platform_data sm8650_data = {
-> -	.firmware_desc = &iris_vpu33_p4_gen2_desc,
-> +	.firmware_desc_gen2 = &iris_vpu33_p4_gen2_desc,
->  	.vpu_ops = &iris_vpu33_ops,
->  	.icc_tbl = iris_icc_info_vpu3x,
->  	.icc_tbl_size = ARRAY_SIZE(iris_icc_info_vpu3x),
-> @@ -185,7 +185,7 @@ const struct iris_platform_data sm8650_data = {
->  };
->  
->  const struct iris_platform_data sm8750_data = {
-> -	.firmware_desc = &iris_vpu35_p4_gen2_desc,
-> +	.firmware_desc_gen2 = &iris_vpu35_p4_gen2_desc,
->  	.vpu_ops = &iris_vpu35_ops,
->  	.icc_tbl = iris_icc_info_vpu3x,
->  	.icc_tbl_size = ARRAY_SIZE(iris_icc_info_vpu3x),
-> @@ -220,7 +220,7 @@ const struct iris_platform_data sm8750_data = {
->   * - different num_vpp_pipe
->   */
->  const struct iris_platform_data x1p42100_data = {
-> -	.firmware_desc = &iris_vpu30_p1_gen2_desc,
-> +	.firmware_desc_gen2 = &iris_vpu30_p1_gen2_desc,
->  	.vpu_ops = &iris_vpu3_ops,
->  	.icc_tbl = iris_icc_info_vpu3x,
->  	.icc_tbl_size = ARRAY_SIZE(iris_icc_info_vpu3x),
-> diff --git a/drivers/media/platform/qcom/iris/iris_probe.c b/drivers/media/platform/qcom/iris/iris_probe.c
-> index c2dcb50a2782..7fe31136df21 100644
-> --- a/drivers/media/platform/qcom/iris/iris_probe.c
-> +++ b/drivers/media/platform/qcom/iris/iris_probe.c
-> @@ -251,8 +251,6 @@ static int iris_probe(struct platform_device *pdev)
->  		return core->irq;
->  
->  	core->iris_platform_data = of_device_get_match_data(core->dev);
-> -	core->iris_firmware_desc = core->iris_platform_data->firmware_desc;
-> -	core->iris_firmware_data = core->iris_firmware_desc->firmware_data;
->  
->  	core->ubwc_cfg = qcom_ubwc_config_get_data();
->  	if (IS_ERR(core->ubwc_cfg))
-> @@ -271,8 +269,6 @@ static int iris_probe(struct platform_device *pdev)
->  	if (ret)
->  		return ret;
->  
-> -	iris_session_init_caps(core);
-> -
->  	ret = v4l2_device_register(dev, &core->v4l2_dev);
->  	if (ret)
->  		return ret;
-> diff --git a/drivers/media/platform/qcom/iris/iris_vidc.c b/drivers/media/platform/qcom/iris/iris_vidc.c
-> index 14d63dc76c9b..33edbc5cab8f 100644
-> --- a/drivers/media/platform/qcom/iris/iris_vidc.c
-> +++ b/drivers/media/platform/qcom/iris/iris_vidc.c
-> @@ -9,6 +9,7 @@
->  #include <media/v4l2-mem2mem.h>
->  #include <media/videobuf2-dma-contig.h>
->  
-> +#include "iris_ctrls.h"
->  #include "iris_vidc.h"
->  #include "iris_instance.h"
->  #include "iris_vdec.h"
+The RX side of things should work for hardware that can wake up to an incoming
+event. Linux for sure needs more work to properly handle the various corner case
+TX wake-up of a PM runtime idled UART. I'm mostly offline until Monday though,
+will check my notes for more details next week.
 
-Reviewed-by: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
+Regards,
 
+Tony
+
+> [1]: https://bitbucket.org/andy-shev/linux/branch/topic/uart/rpm-plus
 
