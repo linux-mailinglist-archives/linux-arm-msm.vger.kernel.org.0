@@ -1,81 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-118149-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-118150-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id UTItN6t+UGo/0AIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-118149-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 07:10:03 +0200
+	id GNYMA7J+UGpB0AIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-118150-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 07:10:10 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5AB4073740A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 07:10:03 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0EDE2737412
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 07:10:09 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=gmail.com header.s=20251104 header.b=NY9PIudY;
+	dkim=pass header.d=gmail.com header.s=20251104 header.b=C5sEkSBk;
 	dmarc=pass (policy=none) header.from=gmail.com;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118149-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118149-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118150-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 104.64.211.4 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118150-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id EF2883054AE1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 05:07:49 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 41535302237E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Jul 2026 05:07:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E1DE3378826;
-	Fri, 10 Jul 2026 05:07:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CE089378D78;
+	Fri, 10 Jul 2026 05:07:56 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
+Received: from mail-pg1-f182.google.com (mail-pg1-f182.google.com [209.85.215.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D598377EC7
-	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jul 2026 05:07:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85335378D63
+	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Jul 2026 05:07:55 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783660068; cv=none; b=gJChot8hVdUy+JefJE+oFLtq0brE410MrhPWvka8y5SS8P4BgLOmPp2zlYkjLepHX4mXjAEJLzhz+S6XAKsXkUWzXzIdUGH2k5Uf2220kSYxkqLUPSEzL0Dq7W/BgqryMrAfUeDrMlsua1JYuuIDZ1r7aepGAK/KNcPJDws54fA=
+	t=1783660076; cv=none; b=gli1bLSltl8TW4o31mCpHUAT6FdG4y4oX+ubAWhuLzATvy49MCiCgw7ygXlxiqm8IuQNWYICswBLo9LBnJ1oUqeJ5TrxhzOs6zhvU3Kmlf0aaCfoQ/f8u1yzSQeYUPg5jw96Sy++Br/Lbq5BCksYH1zhUHrscyKpo4Mz531zEcE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783660068; c=relaxed/simple;
-	bh=71e6v5A0pmTCpY/muFVgY0bKxBOo24zj6ulqSaCErLQ=;
+	s=arc-20240116; t=1783660076; c=relaxed/simple;
+	bh=j1KzWxhp75swdsTYPJvVoYjcP8hTRieKELlWe5iEq2U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RR09x9J7L7pqzlgE7X52cxfKQIko8PfQF2S/k53qnZVkUbM6AORypTmG+35Hg7ucM2/7tbt82RTQB2iVuAEm2m1f4PNaLjtYu6yvwx3P4VAdgMsLgF5L3FGRbwe6ciY6VeZi0yQWKz1bSWb9nnDQ838GcSpP3f6yKvex14L+3iE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NY9PIudY; arc=none smtp.client-ip=209.85.210.178
-Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-8485bd28dd0so482650b3a.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Jul 2026 22:07:47 -0700 (PDT)
+	 MIME-Version; b=SfdaUvdRyEkMPMVGuneOaEOR656ejX6uIIFHUjPB/viAvKYnpK8IMpc/ilx9i5MZZDz/CGniZJLVjfEhNc4cWytbHkZNCKsphr9+QChhNKRsgMEnN7v5RrJcRGt7NUIpVy2iaWqUp9hT+frwMhZjgkD1VUwiQXYLtKZ1cQABnL0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=C5sEkSBk; arc=none smtp.client-ip=209.85.215.182
+Received: by mail-pg1-f182.google.com with SMTP id 41be03b00d2f7-c96bfabc8d4so300170a12.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Jul 2026 22:07:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783660066; x=1784264866; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1783660075; x=1784264875; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=jE/vGes9bWof+nCBjw7kvawhZty+DCUG3JNg48uQoDI=;
-        b=NY9PIudYb9Mw5dcW5ExT2mirbbQi7M43wYStK2V49TrTSeBQdkOinL1ZURwb7MqVyZ
-         CmrMtCDFr8e1+NaXudhX/zPH+C46MKXDi69NZGVdMQdJ7QI9qkSd6TLD6b2nikVa2pKb
-         AWR7alm0VW50at3XAIJCc05gFuONvGKzjgHN9ovUcMSLMOKMOXm0tVaoTpuwdrdIEzeP
-         Kv6HiOphMqKhEiTru/Jl1PK8e0yPXD4mVSSeezHQcPBhqSQFU+mRTaHGLOE0dPL1h9H+
-         hMtSPAuD8KcsGxLBv23T1X0Lrjbrt1YpcBg6xfODYXQn1SnpOLxr+GiWut+zLVXJtSTr
-         c2FQ==
+        bh=26LuwxXuYnG2tABKOgMVR7HJmLwQlsRPpHyBPQzuKoY=;
+        b=C5sEkSBkcLelKqHy4TJOpblUo59/6F30ozLNQGYYo0kFQQCfgkjBWm+oEXJoD6eFhe
+         +i7PyEkiAr1/jM1w080pssJpuFSZkIjPX9Do3DtzIiP1TZ4PYbTzCyNyARX5oEIBGfhP
+         PRYWZX5Gb/5cx/Wfbfgdsyk9/+8fd7FSV3zEPyqCzIPasghGKo6aX1yvqjMcr2/sobBt
+         FJ6KnPBOpkUXGO/ih8pT9/92F8hc5OUJ6QUZEL89LdJ4szZfW4oNwY/1Pj7zAdZ6NzYs
+         3yKf+C98Xd30Q/Dyn+VuRSfbZydKygSF4QSVumjxqbWrQtTKoGfbOIQYL36LUs4+Jy3l
+         tXew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783660066; x=1784264866;
+        d=1e100.net; s=20251104; t=1783660075; x=1784264875;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=jE/vGes9bWof+nCBjw7kvawhZty+DCUG3JNg48uQoDI=;
-        b=WsIDMLQ9yD2jTHsi+jLeycE1AEfVXSfPgXGf81fW0Q/E4qlUVJBMHdvKxUfhCqKPWR
-         BXzHc051QYdPc8zCiQn3joV+M4p+7e4ISrUS0t4yu+tZQGyCwEBOzt1uM4jHT27OJO5u
-         mDmAv5MYRDBWMkTcuHRiB4iHh5ViH9x0Spc6EhRu+cLZU0C8TRiIrg9jq5BbbwtGAEox
-         kjl4bvav3v+pWoDQS5oRmUFhMM8mxiJHs8d7BJt59m4O3zVRlRtoVIr2QSNg7ai/gRjg
-         4CBkuwrII8U90i+CpO8ECGDeFA8FcqSvSgTzcMKsN6dJ8ASvWwWECOnogJyDZYCcMtFb
-         iEsw==
-X-Forwarded-Encrypted: i=1; AHgh+Ro3WwbqIfaDoENDkmj4bSNqzFQV18bpnXjMEDhhjHZZ/Kc9N3mOsYX0iAd1bQiJcen3UMOYiCa1s9eEMc9c@vger.kernel.org
-X-Gm-Message-State: AOJu0YxUuE6pmjyqzEWPdqeoZCLyGKF9hGM7glDE0LlKejvWmwI3aIOF
-	+NWFoFsLIctSWOl0w2y3LmLKltH9tcU59+Ekof4B/dQDjDxuvXlVaRJP
-X-Gm-Gg: AfdE7cnhZC0bRgOYXcHp+rLJgZ0EVIUWFVnBj1PqMlJ/AdBqZtlv9Z6WSjADUZXP6Yg
-	CofHGkWx3F2lA08M3MuB/S1dLILW6GX+IlG5Z1kePiE7PxL7yPB+yC4uOrjRLki/kfFnLf/7BI8
-	zMfoRZ9eyFT/SKdyhebtu0w3VzbTZLttADZg5xQKqalZ8SbJ0IIgQHNiNU9XxZTiNaQ8dWq40/O
-	mEmqe8At7OnDUE9BYvyM7o5qDlvE18JmO7GfMs18JevJLUqiHHZETMXm6afmt/gDzun3+vwleGy
-	N3IHlQl1jjt11HTYizI614PTEZX4LJAfjngapUOKAQ2/tvcUQ5GPJUjTm+KiUnqW2qjpBA9sPFH
-	XWhGKiGEWEIZi8pdE5gPdV2gokQUoTfRsw2dAxF5ahU9TDewswsLKi60DFjWxHi99yeJ1NWJJsc
-	INM6QQ/ySGi/8sfBj6NxDrCUkJCDUc7ju8PribAV1B+RMo2ks=
-X-Received: by 2002:a05:6a00:3923:b0:848:7b92:8e79 with SMTP id d2e1a72fcca58-8487b929051mr507140b3a.67.1783660066423;
-        Thu, 09 Jul 2026 22:07:46 -0700 (PDT)
+        bh=26LuwxXuYnG2tABKOgMVR7HJmLwQlsRPpHyBPQzuKoY=;
+        b=P4CQJtoJhxVhkAZgVrUlnYvV73nXFGN7x0F+oMzZmEzXrKo9TUIcbknZg1Pyfv9Mll
+         5d5HetyN0SB74/tvQsyv3U6+0pRAO1nLU8nF63H+8iIiCSK3/97p968rue2igzC1cZp/
+         F6h6XO8P7DvaO6OC1sRWVFZ57U4QfJELWcxEXKMEPL5feUZudiwQQQHsiUOdtF2DnFpf
+         qW2F39RDZjUoD84C/dDnc7wZdSbi+0efjQllXKd/avmFa6hUc4GFO2gujnxOq++QU7S9
+         GW9QdrpxNJ0j457yHFANxzK4Ymdzq+CfU/BCjUeuoDsRdcsvZszkBivsfIsyw7jIcDCO
+         mlBg==
+X-Forwarded-Encrypted: i=1; AHgh+RpTWIR7qUtA8aim3JjocWE1v/DxgEtgMowMruyC7lbUXK77WFgiqMX/mGeQ4uCz2t8OuZ1lexMnLXklDO28@vger.kernel.org
+X-Gm-Message-State: AOJu0YxuE3VN14J6XYfA7ietL1pB/xODHqgGUvSJ+u+uo7PVf3+iHMZH
+	Lysh29Aflq9LV89ATcTkN58DVE8qH6wXVeIpwoHxZWmECPSz1Rtf0JA8
+X-Gm-Gg: AfdE7clq7fkernXFNTxqNe82SO6KuLgJ7W93HR/l3Zx52xi+QSjKligwgXmaBUsYVGD
+	84GC4m8hz8aR4hCY1N/YK9p39j5kKvzdVX1gW1G29kr8YzZChq1iI/LJWgfeksWaOAwUqKyPguP
+	HA6yTTRbhLxMKPx8Pkw6NYQX/bzHN5YtSPnBA5tn9utXc0/iJX99t175SSpt5QnU6P77DdbZ1oS
+	rI3fr9kw/Er7H+G7g6b3S3PmUJnLZ0NrvGoIi+itWtEB2DbJMS7W0U5uvQfMcvclBkWXwLRIQ/T
+	Pqnlcpm2By9vgD1UKibO7vO/Tl5rqeGELdT4j+ZLMhM3D/a65wEgybPhnO2ko/uWVaomqUo0m2D
+	pVWEVuuYoT90HNycXspEGMlIBawQe7i60du5ENO96OtsBsug/pwXpy+EniMlOVDahqd7WOWhAlZ
+	fNRKj3pNISC6+iZ8BL9Kitu491hkCuzkfKeo1+15I4XY4n9l98iA91L3JYOA==
+X-Received: by 2002:a05:6a00:2e24:b0:847:84a1:9782 with SMTP id d2e1a72fcca58-84842ede4edmr9311865b3a.26.1783660074723;
+        Thu, 09 Jul 2026 22:07:54 -0700 (PDT)
 Received: from phuc-desktop.. ([183.91.15.56])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84847275fa0sm3400499b3a.22.2026.07.09.22.07.39
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84847275fa0sm3400499b3a.22.2026.07.09.22.07.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Jul 2026 22:07:46 -0700 (PDT)
+        Thu, 09 Jul 2026 22:07:54 -0700 (PDT)
 From: phucduc.bui@gmail.com
 To: Mark Brown <broonie@kernel.org>,
 	Takashi Iwai <tiwai@suse.com>,
@@ -110,9 +110,9 @@ Cc: Support Opensource <support.opensource@diasemi.com>,
 	linux-arm-msm@vger.kernel.org,
 	linux-arm-kernel@lists.infradead.org,
 	bui duc phuc <phucduc.bui@gmail.com>
-Subject: [PATCH v3 19/27] ASoC: codecs: rt5665: Use guard() for mutex locks
-Date: Fri, 10 Jul 2026 12:05:03 +0700
-Message-ID: <20260710050511.14439-17-phucduc.bui@gmail.com>
+Subject: [PATCH v3 20/27] ASoC: codecs: rt5668: Use guard() for mutex locks
+Date: Fri, 10 Jul 2026 12:05:04 +0700
+Message-ID: <20260710050511.14439-18-phucduc.bui@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260710050511.14439-1-phucduc.bui@gmail.com>
 References: <20260709045902.498848-1-phucduc.bui@gmail.com>
@@ -131,14 +131,14 @@ X-Spamd-Result: default: False [-0.16 / 15.00];
 	R_MISSING_CHARSET(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
 	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
 	FREEMAIL_FROM(0.00)[gmail.com];
 	RCPT_COUNT_TWELVE(0.00)[33];
-	TAGGED_FROM(0.00)[bounces-118149-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-118150-lists,linux-arm-msm=lfdr.de];
 	FORWARDED(0.00)[lists@lfdr.de];
 	FORGED_RECIPIENTS(0.00)[m:broonie@kernel.org,m:tiwai@suse.com,m:nick.li@foursemi.com,m:herve.codina@bootlin.com,m:support.opensource@diasemi.com,m:lgirdwood@gmail.com,m:perex@perex.cz,m:srini@kernel.org,m:ckeepax@opensource.cirrus.com,m:rf@opensource.cirrus.com,m:matthias.bgg@gmail.com,m:angelogioacchino.delregno@collabora.com,m:shenghao-ding@ti.com,m:kevin-lu@ti.com,m:baojun.xu@ti.com,m:sen@ti.com,m:oder_chiou@realtek.com,m:linusw@kernel.org,m:kuninori.morimoto.gx@renesas.com,m:u.kleine-koenig@baylibre.com,m:zhangyi@everest-semi.com,m:marco.crivellari@suse.com,m:kees@kernel.org,m:sammiee5311@gmail.com,m:arnd@arndb.de,m:rongqianfeng@vivo.com,m:linux-sound@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:patches@opensource.cirrus.com,m:linux-mediatek@lists.infradead.org,m:linux-arm-msm@vger.kernel.org,m:linux-arm-kernel@lists.infradead.org,m:phucduc.bui@gmail.com,m:matthiasbgg@gmail.com,m:phucducbui@gmail.com,s:lists@lfdr.de];
 	MIME_TRACE(0.00)[0:+];
@@ -157,11 +157,11 @@ X-Spamd-Result: default: False [-0.16 / 15.00];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
 	TO_DN_SOME(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[realtek.com:email,vger.kernel.org:from_smtp,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[realtek.com:email,vger.kernel.org:from_smtp,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 5AB4073740A
+X-Rspamd-Queue-Id: 0EDE2737412
 
 From: bui duc phuc <phucduc.bui@gmail.com>
 
@@ -170,13 +170,13 @@ Merely code refactoring, and no behavior change.
 
 Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
 ---
- sound/soc/codecs/rt5665.c | 15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ sound/soc/codecs/rt5668.c | 10 +++-------
+ 1 file changed, 3 insertions(+), 7 deletions(-)
 
-diff --git a/sound/soc/codecs/rt5665.c b/sound/soc/codecs/rt5665.c
-index 48f57cd0920d..1d987472ba42 100644
---- a/sound/soc/codecs/rt5665.c
-+++ b/sound/soc/codecs/rt5665.c
+diff --git a/sound/soc/codecs/rt5668.c b/sound/soc/codecs/rt5668.c
+index fed6de40b8c8..4154bad27610 100644
+--- a/sound/soc/codecs/rt5668.c
++++ b/sound/soc/codecs/rt5668.c
 @@ -6,6 +6,7 @@
   * Author: Bard Liao <bardliao@realtek.com>
   */
@@ -185,63 +185,43 @@ index 48f57cd0920d..1d987472ba42 100644
  #include <linux/module.h>
  #include <linux/moduleparam.h>
  #include <linux/init.h>
-@@ -1208,7 +1209,7 @@ static void rt5665_jack_detect_handler(struct work_struct *work)
- 		usleep_range(10000, 15000);
+@@ -986,7 +987,7 @@ static void rt5668_jack_detect_handler(struct work_struct *work)
+ 		return;
  	}
  
--	mutex_lock(&rt5665->calibrate_mutex);
-+	guard(mutex)(&rt5665->calibrate_mutex);
+-	mutex_lock(&rt5668->calibrate_mutex);
++	guard(mutex)(&rt5668->calibrate_mutex);
  
- 	val = snd_soc_component_read(rt5665->component, RT5665_AJD1_CTRL) & 0x0010;
- 	if (!val) {
-@@ -1274,8 +1275,6 @@ static void rt5665_jack_detect_handler(struct work_struct *work)
- 		schedule_delayed_work(&rt5665->jd_check_work, 0);
+ 	val = snd_soc_component_read(rt5668->component, RT5668_AJD1_CTRL)
+ 		& RT5668_JDH_RS_MASK;
+@@ -1053,8 +1054,6 @@ static void rt5668_jack_detect_handler(struct work_struct *work)
+ 		schedule_delayed_work(&rt5668->jd_check_work, 0);
  	else
- 		cancel_delayed_work_sync(&rt5665->jd_check_work);
+ 		cancel_delayed_work_sync(&rt5668->jd_check_work);
 -
--	mutex_unlock(&rt5665->calibrate_mutex);
+-	mutex_unlock(&rt5668->calibrate_mutex);
  }
  
- static const char * const rt5665_clk_sync[] = {
-@@ -4564,7 +4563,7 @@ static void rt5665_calibrate(struct rt5665_priv *rt5665)
+ static const struct snd_kcontrol_new rt5668_snd_controls[] = {
+@@ -2356,7 +2355,7 @@ static void rt5668_calibrate(struct rt5668_priv *rt5668)
  {
  	int value, count;
  
--	mutex_lock(&rt5665->calibrate_mutex);
-+	guard(mutex)(&rt5665->calibrate_mutex);
+-	mutex_lock(&rt5668->calibrate_mutex);
++	guard(mutex)(&rt5668->calibrate_mutex);
  
- 	regcache_cache_bypass(rt5665->regmap, true);
- 
-@@ -4601,7 +4600,8 @@ static void rt5665_calibrate(struct rt5665_priv *rt5665)
- 			pr_err("HP Calibration Failure\n");
- 			regmap_write(rt5665->regmap, RT5665_RESET, 0);
- 			regcache_cache_bypass(rt5665->regmap, false);
--			goto out_unlock;
-+			rt5665->calibration_done = true;
-+			return;
- 		}
- 
- 		count++;
-@@ -4620,7 +4620,8 @@ static void rt5665_calibrate(struct rt5665_priv *rt5665)
- 			pr_err("MONO Calibration Failure\n");
- 			regmap_write(rt5665->regmap, RT5665_RESET, 0);
- 			regcache_cache_bypass(rt5665->regmap, false);
--			goto out_unlock;
-+			rt5665->calibration_done = true;
-+			return;
- 		}
- 
- 		count++;
-@@ -4635,9 +4636,7 @@ static void rt5665_calibrate(struct rt5665_priv *rt5665)
- 	regmap_write(rt5665->regmap, RT5665_BIAS_CUR_CTRL_8, 0xa602);
- 	regmap_write(rt5665->regmap, RT5665_ASRC_8, 0x0120);
- 
--out_unlock:
- 	rt5665->calibration_done = true;
--	mutex_unlock(&rt5665->calibrate_mutex);
+ 	rt5668_reset(rt5668->regmap);
+ 	regmap_write(rt5668->regmap, RT5668_PWR_ANLG_1, 0xa2bf);
+@@ -2400,9 +2399,6 @@ static void rt5668_calibrate(struct rt5668_priv *rt5668)
+ 	/* restore settings */
+ 	regmap_write(rt5668->regmap, RT5668_STO1_ADC_MIXER, 0xc0c4);
+ 	regmap_write(rt5668->regmap, RT5668_PWR_DIG_1, 0x0000);
+-
+-	mutex_unlock(&rt5668->calibrate_mutex);
+-
  }
  
- static void rt5665_calibrate_handler(struct work_struct *work)
+ static int rt5668_i2c_probe(struct i2c_client *i2c)
 -- 
 2.43.0
 
