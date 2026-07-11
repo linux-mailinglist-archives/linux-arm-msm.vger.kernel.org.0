@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-118517-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-118518-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id dD+jONieUmpZRgMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-118517-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Jul 2026 21:51:52 +0200
+	id 99I9F6ieUmpLRgMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-118518-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Jul 2026 21:51:04 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4E7EC742BF9
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Jul 2026 21:51:52 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id D57D0742BCB
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Jul 2026 21:51:03 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=ZleJ7h2c;
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=S9xKZS1A;
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118517-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118517-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118518-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c09:e001:a7::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118518-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 522043040023
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Jul 2026 19:50:34 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 6C55E3012572
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Jul 2026 19:50:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E85C932B12B;
-	Sat, 11 Jul 2026 19:50:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B0A2331EB1;
+	Sat, 11 Jul 2026 19:50:07 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D26A6329371;
-	Sat, 11 Jul 2026 19:50:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1305A32C957;
+	Sat, 11 Jul 2026 19:50:05 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783799405; cv=none; b=PuPALAft77Ol7SUA38V8wXKw4EM8neqvPbKKXqacrjkF5XDQWH4nQEEY1uUW8lpuw4+SGKKSu8aTPdJ0jKnamyOawePUR2kB1UWSI59Zma3ApVlce2bBwXjfFNibqikONbvYVEVE246td6Rzdl1nw8eHNu6YmTyoQx25j7ciuLs=
+	t=1783799407; cv=none; b=JFGRJtuwX4UeZ5zfdJaIIgdKEHm0NQlyHItlicxHILZU7oyNZOJAJj0bWGfzfx5BZw/c/HZ9R37J7xTQg0ncNOPzRD+Gzk/kqm1ho+r29EOSzMX40ri9sAJyNTEOuy372YOyVrx/58xCvd7X/WVnx/eikbuA0PRZb/mThOYuKY0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783799405; c=relaxed/simple;
-	bh=QjoyP1m0r4+nuAwDi5ci4irLloF5DNiR/e9V3viE17Q=;
+	s=arc-20240116; t=1783799407; c=relaxed/simple;
+	bh=RQRWcT0CFjSsdkfjLAKCex6QiqQoLY7VOCjbz8nKe5w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ivnabk1H6IOIVpliyhk74najX+tx3YsR2j3eL4nZRx5q5NBzKGeqCOTgAfunlg6cPjgbigdHyrevN5wdZwZvejZSXY5AJtZmrTmQdE1c5xqciaT/kz6KtW1qrcv5tnTAnz8wagm1EjurG2zjN0CkfmDGz6UJc4CA7ESIkuEYasU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZleJ7h2c; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56EA31F00A3A;
-	Sat, 11 Jul 2026 19:50:03 +0000 (UTC)
+	 MIME-Version:Content-Type; b=HBnPWe07vvZueES/PnZfW0x6sBgq8WN9YlUB4X4zFiseyvcqAjXUH1YVGSVJ3+V7Bv2vqI1SOkaFY7fRTp5Jkhb/66pAFKuyZSTb+HE5hKCfemx7yxZlcPS7Dk55VZwzygvWvDlICjZHVp5XQIOr/dywyMSzWvpAiaMhyS49zHg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=S9xKZS1A; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A49431F000E9;
+	Sat, 11 Jul 2026 19:50:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783799404;
-	bh=C4TXKZrBRp6Vz4sMfZzR8NXZyvfSmNCJEm5ltozR7CI=;
+	s=k20260515; t=1783799405;
+	bh=8MeqxyuSFOsfA7kp2hQbDLGK4Y258AvNZPf0lyCyxsQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZleJ7h2ce1/4ys52OET4PocZxKV6z4WYrLLPKe+9KQWdAI6R58kxMbQYuOlN7OmvS
-	 kW1ZX5WzichxlVfhECELM1XUo5HwhyO4o+2CS324MaxbtPTKpgSMNrGA/kfdifKqkg
-	 MGokP7j2w4acAsrNgWhFmKg2tmV+EPvLzZvtSN6GkzjEpLGcoFxHTuYAEAsu5CFPb/
-	 Yc8CUJn3VrkCYRTDhA8EI5fV+VNoRxIwX8UhR0+gjorbo5s9fFh+x+fP15KdYPdb2h
-	 7UNe5o5N2NDgMl2urbKFzqu88yPsTnJDhi3BJmda+a+7DyDPp1IvFHfsaRysjBl43Q
-	 2xgXc83mwhbVA==
+	b=S9xKZS1AxJRSq75MmrZbbaBfjl45aPKS4vPveMu/Eaa0RTSt4MMbBv7RGamjCFgoF
+	 /iu6UALf5m3eQZTPuFu+nZHv2xC5AXD5JLoQ2FKXpIb8qi4QVet771OKAb2kgTJM94
+	 cSqFjfogApolQM5CVLth/anoOAOYmVthO6C9bX9cTC5HmP48LYsgjaANqgNHTKsEyy
+	 1NafuQXxAU7yrqdJr3/vuKG4PHzzztfn8OKXLukau0GhP/1Zcr9h0IET2YWgJ8A7VN
+	 Y74oWMLTkE8fIISQ5ZiFCVax1ChIqyUFIJsOjPiMS6KgaaUE+5YHvf1vv9VzqDk+hF
+	 N5jfRpwUrsi/A==
 From: Bjorn Andersson <andersson@kernel.org>
 To: Suzuki K Poulose <suzuki.poulose@arm.com>,
 	James Clark <james.clark@linaro.org>,
@@ -53,22 +53,21 @@ To: Suzuki K Poulose <suzuki.poulose@arm.com>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
 	Tingwei Zhang <tingwei.zhang@oss.qualcomm.com>,
-	Mao Jinlong <jinlong.mao@oss.qualcomm.com>,
 	Konrad Dybcio <konradybcio@kernel.org>,
 	Mike Leach <mike.leach@arm.com>,
 	Jie Gan <jie.gan@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org,
-	coresight@lists.linaro.org,
+Cc: coresight@lists.linaro.org,
 	linux-arm-kernel@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: (subset) [PATCH v2 0/2] Enable ETR and CTCU device for hamoa
-Date: Sat, 11 Jul 2026 14:49:43 -0500
-Message-ID: <178379938588.163099.2863497424373585668.b4-ty@kernel.org>
+Subject: Re: [PATCH v3 0/3] Enable CTCU and ETR devices for multiple QCOM platforms
+Date: Sat, 11 Jul 2026 14:49:44 -0500
+Message-ID: <178379938589.163099.8612045419740937512.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20251106-enable-etr-and-ctcu-for-hamoa-v2-0-cdb3a18753aa@oss.qualcomm.com>
-References: <20251106-enable-etr-and-ctcu-for-hamoa-v2-0-cdb3a18753aa@oss.qualcomm.com>
+In-Reply-To: <20260204-enable-ctcu-and-etr-v3-0-0bb95c590ae1@oss.qualcomm.com>
+References: <20260204-enable-ctcu-and-etr-v3-0-0bb95c590ae1@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -84,17 +83,17 @@ X-Spamd-Result: default: False [-3.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-118517-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-118518-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:suzuki.poulose@arm.com,m:james.clark@linaro.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:tingwei.zhang@oss.qualcomm.com,m:jinlong.mao@oss.qualcomm.com,m:konradybcio@kernel.org,m:mike.leach@arm.com,m:jie.gan@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:coresight@lists.linaro.org,m:linux-arm-kernel@lists.infradead.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:konrad.dybcio@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:suzuki.poulose@arm.com,m:james.clark@linaro.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:tingwei.zhang@oss.qualcomm.com,m:konradybcio@kernel.org,m:mike.leach@arm.com,m:jie.gan@oss.qualcomm.com,m:coresight@lists.linaro.org,m:linux-arm-kernel@lists.infradead.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:konrad.dybcio@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[16];
+	RCPT_COUNT_TWELVE(0.00)[15];
 	FORWARDED(0.00)[lists@lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	FROM_HAS_DN(0.00)[];
@@ -108,27 +107,31 @@ X-Spamd-Result: default: False [-3.66 / 15.00];
 	MID_RHS_MATCH_FROM(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,vger.kernel.org:from_smtp]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 4E7EC742BF9
+X-Rspamd-Queue-Id: D57D0742BCB
 
 
-On Thu, 06 Nov 2025 09:57:24 +0800, Jie Gan wrote:
-> Enable support for ETR and CTCU devices on the Hamoa platform. The
-> newly added CTCU compatible will fallback to qcom,sa8775p-ctcu for device
-> probing.
-> 
-> Dependency of the binding patch:
-> https://lore.kernel.org/all/20251103-enable-ctcu-for-monaco-v4-1-92ff83201584@oss.qualcomm.com/
+On Wed, 04 Feb 2026 10:22:00 +0800, Jie Gan wrote:
+> The DT‑binding patch adds platform‑specific compatibles for the
+> CTCU device, and the following Qualcomm platforms are included:
+> Kaanapali
+> Pakala(sm8750)
+> Hamoa(x1e80100)
+> Glymur
 > 
 > [...]
 
 Applied, thanks!
 
-[2/2] arm64: dts: qcom: hamoa: enable ETR and CTCU devices
+[1/3] dt-binding: document QCOM platforms for CTCU device
+      commit: 1ab1005cb6beb278df53b23f7cf520b4d6bd56cb
+[2/3] arm64: dts: qcom: hamoa: enable ETR and CTCU devices
       commit: f77ef7a6a97eb29020be430d3125e3b0e0e713f8
+[3/3] arm64: dts: qcom: sm8750: enable ETR and CTCU devices
+      commit: 55d6c80716b1ceb39fb8143976dfb1dda4e43a2e
 
 Best regards,
 -- 
