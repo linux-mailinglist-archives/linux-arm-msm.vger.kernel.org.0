@@ -1,77 +1,67 @@
-Return-Path: <linux-arm-msm+bounces-118472-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-118471-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id jxVlKIZyUmqiPwMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-118472-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Jul 2026 18:42:46 +0200
+	id YgERKTFyUmqMPwMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-118471-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Jul 2026 18:41:21 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3109B74236C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Jul 2026 18:42:46 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0941274233D
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Jul 2026 18:41:21 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=S2+CotMA;
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=VzfPEDoR;
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118472-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118472-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118471-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118471-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 6B4E23045444
+	by tor.lore.kernel.org (Postfix) with ESMTP id 4BF4A302A4C0
 	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Jul 2026 16:40:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 224E53CA4AF;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 099463C9EC2;
 	Sat, 11 Jul 2026 16:40:58 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 958853CAE76;
-	Sat, 11 Jul 2026 16:40:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E1493C9EDD;
+	Sat, 11 Jul 2026 16:40:53 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783788058; cv=none; b=uyvnXtKBG27DDogZMfTsKsnDStstZztv1ZBArqFWERfrvkHRGS72EyTTzozrj6h1kR5KtsBpwT74i+NqFoGqcA2uKtrcuODVWjU07Fxb3si3MIgbwivHRXo2cYbAJZBxLJtXrvTDhXOxgPVbWDUgsxlYezJE9ivg3HV+DUA0IFo=
+	t=1783788057; cv=none; b=TyaWlsIuhNa2bRh/+Ahfn42tUUjQ690TKdK0/MrsSUHiQeUDoIMPQbqbAGp5CB78dyDRgS3y7ciL7QoXqcFyBUPyROwOKtkTK1Da1k7SF/t0vH2k8m8Ae9PQ0gXjpE9JcTjH3hJ+5khrJ+fKhQebpVBTaUvzHno2LN75o0owO34=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783788058; c=relaxed/simple;
-	bh=/fdPJSJU8+xdscb9m0BJRsZOhGnqTjN7jAjo1SX1fSQ=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RcrFi0dtMmtOupQDQrwk21LetA2vHy45eSRdTnmILhU9DmrMA/y7UpMjg4QPkDBPstEvxJSOIvGKCkhOsYLSEF+BBCjkxG0hs8xssNtxh2lEy24u3YyaVwTq50xlefWK4fqmn3xV6wD+8tnu34lv9BpsSJgkCFiO/r/7fghneTY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=S2+CotMA; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB6081F00A3D;
-	Sat, 11 Jul 2026 16:40:50 +0000 (UTC)
+	s=arc-20240116; t=1783788057; c=relaxed/simple;
+	bh=pKnBYKLyHuSf6ETsbZ3BteL3TvQpQYOhO3QY8f3bkw4=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=qz8BI3Z2g/TXJMJeaYMm6WuOq6fYUSexU67jkS7bf7j5PrCY5OX4nGs2uvdOqC+aoyJ8Id5UxXyfH0SfTQWe5ZuM2nRmV0u/QDKJJu4Kbpi+oyuydfyqpkFm0P/91K/E37TEE1kYEuIhCqD3/GUUto3+4ZsFrKOLVqPrQ1r5rx4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VzfPEDoR; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5101C1F000E9;
+	Sat, 11 Jul 2026 16:40:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783788052;
-	bh=/nXjUxHvh2AKmCSXEKPK0rOosDRgT/rdBSCg1T+PDfU=;
-	h=From:To:Subject:Date:In-Reply-To:References;
-	b=S2+CotMA0Bb7urH4A+ORnHE4LkYPwov2V6laV8UHYb1N9uNPxP7HdNXTM5aUVgY+d
-	 UtOra0XEKshGE5Ol0aQ9g1Fu/TxeWnSqN9n1er4w068ga+vif/ML3kgCP/CzO73Nhx
-	 le+LeefxYO1eUR0lZk/W8WRrI1pmW5W+HxiI6mgVLJkH03A87hxE20fDo6tqXwlqoT
-	 i7OH1wLFKnAyHciXkS1AX9P/H68CwpE4kc1UjHiSAolCqUjk1fu6RI1p0K6zEoLjoF
-	 tJypR6ICGXFdWE4nTFRYKeqm6L+dHoE9p3H1aq1aUXPidShRtsozvNLi8xsY/OWPWq
-	 V0h0Gt+vwTp8w==
+	s=k20260515; t=1783788053;
+	bh=kU8eAldMUt6BsxSC1s1flabEKxNcK0QCEFn9gZa0Cxk=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=VzfPEDoR2W4YKDB+Z3cwXFJ7WVkvy0WZoya5EnwkNzrHapNrGf/0kazq2g1N6YOFI
+	 N6gcd9IbbGt7WS1/cZvElgqKqW052NEdYL7XwlGk3bkgbP6JU42H2Rso05yeb4PB+b
+	 SuRD9uDwOUsxuEXj5pmfRqDKsrLTL67mayxhD4Wren9xXemSklwC05ldMweBpiiVXj
+	 jIrVQfnE8AeZQ+l83txCSJMxwNzW/4xW7/3qEItXuOsutIaPEVb/c5tlQ6/wmTYD4Q
+	 kE8hkZnOZ9FyZugQkq6OZuGk4onPYzonIvm7efmNxhqVss0E74G8osASL2/5OKASDM
+	 0BcJ/z1TH5O7A==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Brian Masney <bmasney@redhat.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Sylwester Nawrocki <s.nawrocki@samsung.com>,
-	Chanwoo Choi <cw00.choi@samsung.com>,
-	Peter Griffin <peter.griffin@linaro.org>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	Barnabas Czeman <barnabas.czeman@mainlining.org>,
-	Tomasz Figa <tomasz.figa@gmail.com>,
-	linux-arm-msm@vger.kernel.org,
-	linux-clk@vger.kernel.org,
+To: konradybcio@kernel.org,
+	robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org,
+	Konstantin Shabanov <mail@etehtsea.me>
+Cc: linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	linux-samsung-soc@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Subject: Re: [PATCH v2] dt-bindings: clock: Replace bouncing emails
-Date: Sat, 11 Jul 2026 11:40:38 -0500
-Message-ID: <178378800452.138068.4635491218835073358.b4-ty@kernel.org>
+	valentin.manea@mrs.ro
+Subject: Re: (subset) [PATCH v6 0/4] Introduce HONOR MagicBook Art 14 Snapdragon device tree
+Date: Sat, 11 Jul 2026 11:40:39 -0500
+Message-ID: <178378800441.138068.1778239842219741466.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260623073050.36262-2-krzysztof.kozlowski@oss.qualcomm.com>
-References: <20260623073050.36262-2-krzysztof.kozlowski@oss.qualcomm.com>
+In-Reply-To: <20260629154812.9066-1-mail@etehtsea.me>
+References: <20260629154812.9066-1-mail@etehtsea.me>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -86,53 +76,52 @@ X-Spamd-Result: default: False [-3.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_RECIPIENTS(0.00)[m:mturquette@baylibre.com,m:sboyd@kernel.org,m:bmasney@redhat.com,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:s.nawrocki@samsung.com,m:cw00.choi@samsung.com,m:peter.griffin@linaro.org,m:alim.akhtar@samsung.com,m:barnabas.czeman@mainlining.org,m:tomasz.figa@gmail.com,m:linux-arm-msm@vger.kernel.org,m:linux-clk@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-samsung-soc@vger.kernel.org,m:linux-arm-kernel@lists.infradead.org,m:krzysztof.kozlowski@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,m:tomaszfiga@gmail.com,s:lists@lfdr.de];
+	TAGGED_FROM(0.00)[bounces-118471-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[19];
-	FREEMAIL_TO(0.00)[baylibre.com,kernel.org,redhat.com,samsung.com,linaro.org,mainlining.org,gmail.com,vger.kernel.org,lists.infradead.org,oss.qualcomm.com];
 	MIME_TRACE(0.00)[0:+];
+	FORGED_RECIPIENTS(0.00)[m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:mail@etehtsea.me,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:valentin.manea@mrs.ro,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
+	FORGED_SENDER(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
 	FORWARDED(0.00)[lists@lfdr.de];
-	TAGGED_FROM(0.00)[bounces-118472-lists,linux-arm-msm=lfdr.de];
-	DKIM_TRACE(0.00)[kernel.org:+];
+	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	RCPT_COUNT_SEVEN(0.00)[9];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	TO_DN_SOME(0.00)[];
 	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,vger.kernel.org:from_smtp]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 3109B74236C
+X-Rspamd-Queue-Id: 0941274233D
 
 
-On Tue, 23 Jun 2026 09:30:51 +0200, Krzysztof Kozlowski wrote:
-> Replace permanently bouncing email addresses (550 5.1.1 Recipient address
-> rejected) of Adam Skladowski, Chanho Park, Anusha Rao and Sireesh
-> Kodali.  There are no new messages from them via other email addresses,
-> so drop them permanently.  Add Alim Akhtar to Samsung ExynosAutov9 SoC
-> clocks, because he looks at other Samsung clock hardware and drivers.
+On Mon, 29 Jun 2026 22:48:08 +0700, Konstantin Shabanov wrote:
+> Introduce support for the HONOR MagicBook Art 14 Snapdragon laptop.
+> This version is based on the initial work by Kirill A. Korinsky [1]
+> and Valentin Manea [2].
 > 
+> I'm using it with two external displays connected to the HDMI port and
+> DP<->USB-C (over external hub) as a daily driver.
 > 
 > [...]
 
 Applied, thanks!
 
-[1/1] dt-bindings: clock: Replace bouncing emails
-      commit: 1aa4e2ed7caafbbbedff89fb226a982413469baf
+[4/4] firmware: qcom: scm: Allow QSEECOM on Honor Magicbook Art 14
+      commit: cfe9b47ef18bdb737be480f3e539e9561ef74078
 
 Best regards,
 -- 
