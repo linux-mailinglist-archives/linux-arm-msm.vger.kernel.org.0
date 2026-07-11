@@ -1,64 +1,59 @@
-Return-Path: <linux-arm-msm+bounces-118491-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-118492-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id /jBHH2uGUmqFQgMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-118491-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Jul 2026 20:07:39 +0200
+	id /uI1ENuIUmquQgMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-118492-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Jul 2026 20:18:03 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1EFB7742743
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Jul 2026 20:07:39 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5F3AC742798
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Jul 2026 20:18:02 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b="LD3Zd/km";
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=KSGt+0bO;
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118491-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118491-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118492-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118492-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id C0FC0301BCFB
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Jul 2026 18:07:19 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 264C53009159
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Jul 2026 18:18:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 381993CF1F6;
-	Sat, 11 Jul 2026 18:07:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C4205231A3B;
+	Sat, 11 Jul 2026 18:17:59 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14DBE270545;
-	Sat, 11 Jul 2026 18:07:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB5D12AD35;
+	Sat, 11 Jul 2026 18:17:58 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783793239; cv=none; b=FOQ7fSn/9gI1Ga91grg0p3fKnGywpuKxs5/x2jxQrGfIJqJ7Ibk/q1y5fsxGWeN9nZBPf3tfqDP6oN0nzaZXO7d+ceSpR4vkQtEsXBf2NJ8OxOtYlTh0XWHTPHzRmEPKdwzgYtD9/XyYkDH5mrGMRDN2G+P+hdE5vJn+9ZsD8Zs=
+	t=1783793879; cv=none; b=qQ0XVNtn2q9qjDtFOYza6c0Cc9crUYRYoT5onYDp4uaql+2bPpi4stEcOrYELS40JdZ1mQbnS2aLux2RkWJ1LxHym9XbyZ5hXFLL32VekXyyxnm+y/kDb+jJ2UbYpcuhe7GDiB3COmsnnDhrEMgx1l7mjs/ks4TxFgfWnFG1BHA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783793239; c=relaxed/simple;
-	bh=xIuTnUtLhw6lM6OFhkQay1V7xU9qDRZauTQNVJpn7b0=;
+	s=arc-20240116; t=1783793879; c=relaxed/simple;
+	bh=fW+Vz5vhlfmPHblE7i/g8O3eT0gXAibxLfZi8YUx3rs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gYnXmnAFTd2Iw+7MBznhNu0dduIYTi7a+QpY8hkTQihhdn7LpRpzjvSl3leZtBLz1hIqiTUuiAyg2t4uE7ZHkIUvvYvyw372+HnIyQSVt7TlsJaA7OoAlYHyFfVFX4qCqcKSOS4JfmP6D4QsDmHFrequn/A0h5i7jP4PsGhYfwI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LD3Zd/km; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B86F01F000E9;
-	Sat, 11 Jul 2026 18:07:16 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=e6Bs626ewrwgm5x+Dvdd0GgKSXLIvGPjZL3Ey8cS1FULos4qb0XTrn080y2GvZ3ffgpqvhal0znIGrEr8moPt0EOB3T3Ke9nyaeQtwPkQuJPR+RRwmnztPv29moL/EUJuzWUnOhCKx/hZVzrkEzmL/DNlDK9hdcsC50GQtxkPyU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KSGt+0bO; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F16C81F000E9;
+	Sat, 11 Jul 2026 18:17:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783793237;
-	bh=3yQYE3I1VWOsP0zi5++Mo0sGNVCEsyBpnoRXKY7lCJE=;
+	s=k20260515; t=1783793878;
+	bh=rqYN0gPCAn5XIATHOsISYG+q1Yl3muW/kvu1PJh5ip8=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=LD3Zd/kmLN1zN1WLP+kF6xRypUpBQgpvhgE4rJAYoNOYDw5i45U+7H9t3y65vmid+
-	 KPNfFp+TIo3z1k7K6q9KWGlo2RCdMtQLibZUeN2gk4r1x+A9pNLX8SSm3O6kzAnabo
-	 XyCpBCJ6I1gJ7ViBmal+/1GpeCCxWc0aeUujFEW5atHw8Gu7qUOonUH4aEw+oxHpYk
-	 QuknZv74ixQ880MvW+4P4yT1+XGaIvCZL1KKXHNujJhdT9fmqpVZIpLn3+GRWw+P+c
-	 lWBx0nA94nkrmhOTFyRTeqwmhYiUvfOpdVVn4A30zem+KiIGsWA8FApvfHQ+7IXbiO
-	 24/266JxITXlw==
-Date: Sat, 11 Jul 2026 13:07:14 -0500
+	b=KSGt+0bOeLEzV+Gk0ns1+Us0dCTPHuspLpCuQLb1Eu1SfOg9KNPtQe8UQiDGCVZcJ
+	 gL6thZcOAxYllsQxHyT7dzjN48Sh4hSBGs+jAhHIFCX7xxWNWF0YTRprqMD9ts3BQ9
+	 1gO2dPyoiIsWlzwdaoXUl5lg4GUuTtBe8RoDWH1rr1i01atQJ/5wkz3QqBV1p8XuWj
+	 YNTCTJMGPSJMD1UQvocSMj9IXGL3kU1D+OxS6gGhYPTe20EVLD8toYDd2NLebKia5E
+	 RoUctvcov14mvsEnGQ2P7lrVeADgV/kMeFg8pogVhHm7MIkv28nQmiY+tlj09tNm2/
+	 Tv0XEr3fQb2gQ==
+Date: Sat, 11 Jul 2026 13:17:55 -0500
 From: Bjorn Andersson <andersson@kernel.org>
-To: Maulik Shah <maulik.shah@oss.qualcomm.com>
-Cc: Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Thomas Gleixner <tglx@kernel.org>, Linus Walleij <linusw@kernel.org>, 
-	Bartosz Golaszewski <brgl@kernel.org>, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-gpio@vger.kernel.org, 
-	Sneh Mankad <sneh.mankad@oss.qualcomm.com>
-Subject: Re: [PATCH v4 7/7] arm64: dts: qcom: x1e80100: Add deepest idle state
-Message-ID: <alKEUhRgyoPs0q0c@baldur>
-References: <20260707-hamoa_pdc_v3-v4-0-dfd1f4a3ae89@oss.qualcomm.com>
- <20260707-hamoa_pdc_v3-v4-7-dfd1f4a3ae89@oss.qualcomm.com>
+To: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Cc: Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] soc: qcom: geni: depopulate children on populate failure
+Message-ID: <alKIj80YwTj0pydP@baldur>
+References: <20260616005118.5108-1-pengpeng@iscas.ac.cn>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,29 +62,29 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260707-hamoa_pdc_v3-v4-7-dfd1f4a3ae89@oss.qualcomm.com>
+In-Reply-To: <20260616005118.5108-1-pengpeng@iscas.ac.cn>
 X-Rspamd-Action: no action
 X-Spamd-Result: default: False [-4.66 / 15.00];
 	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_RECIPIENTS(0.00)[m:maulik.shah@oss.qualcomm.com,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:tglx@kernel.org,m:linusw@kernel.org,m:brgl@kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-gpio@vger.kernel.org,m:sneh.mankad@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
+	TAGGED_FROM(0.00)[bounces-118492-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[13];
+	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
 	MIME_TRACE(0.00)[0:+];
+	FORGED_RECIPIENTS(0.00)[m:pengpeng@iscas.ac.cn,m:konradybcio@kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,s:lists@lfdr.de];
 	FORWARDED(0.00)[lists@lfdr.de];
-	TAGGED_FROM(0.00)[bounces-118491-lists,linux-arm-msm=lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCPT_COUNT_THREE(0.00)[4];
 	TO_DN_SOME(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
@@ -98,84 +93,59 @@ X-Spamd-Result: default: False [-4.66 / 15.00];
 	DKIM_TRACE(0.00)[kernel.org:+];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
 	MISSING_XM_UA(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,baldur:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email]
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,iscas.ac.cn:email]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 1EFB7742743
+X-Rspamd-Queue-Id: 5F3AC742798
 
-On Tue, Jul 07, 2026 at 02:51:39PM +0530, Maulik Shah wrote:
-> Add deepest idle state as GPIO IRQs can work as wakeup capable interrupts
-> in deepest idle state.
+On Tue, Jun 16, 2026 at 08:51:18AM +0800, Pengpeng Hou wrote:
+> devm_of_platform_populate() installs its devres cleanup action only after
+> of_platform_populate() succeeds.
+
+And if it fails it runs the cleanup function.
+
+> If child population fails after creating
+> some GENI children, those partial children are not automatically removed
+> by devres because the action was never added.
+
+Did you test this?
+
+> 
+> Depopulate the children explicitly when devm_of_platform_populate()
+> returns an error.
 > 
 
-There's a lot of implied background in this sentence. When you write
-commit messages, please intend for them to be read by someone who don't
-have your background insight to the problem. In fact, if someone asks
-you about this sentence in 5 years would you be able to retell exactly
-why we ended up with this patch?
+For now I'll consider this patch to be wrong, please fix
+devm_of_platform_populate() if your analysis is correct.
 
-Please rewrite this to start with a problem description, then describe
-the user-visible change.
-
-https://docs.kernel.org/process/submitting-patches.html#describe-your-changes
-
-> Update entry/exit-latency-us to follow DSDT for cluster_cl5 idle state.
-
-I don't have strong opinions about bundling this part of the change - it
-could be argued that it's a separate change, but I won't force it.
-
-But as written I think any reasonable language parser would consider
-this to be related to the addition of the deepest idle state, not "While
-we're adding the new state, also adjust the cluster_cl5 latencies with
-values from production configuration."
-
-Regards,
+Thanks,
 Bjorn
 
-> 
-> Signed-off-by: Maulik Shah <maulik.shah@oss.qualcomm.com>
+> Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
 > ---
->  arch/arm64/boot/dts/qcom/hamoa.dtsi | 14 +++++++++++---
->  1 file changed, 11 insertions(+), 3 deletions(-)
+>  drivers/soc/qcom/qcom-geni-se.c | 6 +++++-
+>  1 file changed, 5 insertions(+), 1 deletion(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/hamoa.dtsi b/arch/arm64/boot/dts/qcom/hamoa.dtsi
-> index 054f9c4ad192..933d81fe7841 100644
-> --- a/arch/arm64/boot/dts/qcom/hamoa.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/hamoa.dtsi
-> @@ -299,10 +299,18 @@ cluster_cl4: cluster-sleep-0 {
->  			cluster_cl5: cluster-sleep-1 {
->  				compatible = "domain-idle-state";
->  				arm,psci-suspend-param = <0x01000054>;
-> -				entry-latency-us = <2200>;
-> -				exit-latency-us = <4000>;
-> +				entry-latency-us = <2000>;
-> +				exit-latency-us = <2000>;
->  				min-residency-us = <7000>;
->  			};
+> diff --git a/drivers/soc/qcom/qcom-geni-se.c b/drivers/soc/qcom/qcom-geni-se.c
+> index cd1779b6a91a..46dd7b7a8f90 100644
+> --- a/drivers/soc/qcom/qcom-geni-se.c
+> +++ b/drivers/soc/qcom/qcom-geni-se.c
+> @@ -1406,7 +1406,11 @@ static int geni_se_probe(struct platform_device *pdev)
+>  
+>  	dev_set_drvdata(dev, wrapper);
+>  	dev_dbg(dev, "GENI SE Driver probed\n");
+> -	return devm_of_platform_populate(dev);
+> +	ret = devm_of_platform_populate(dev);
+> +	if (ret)
+> +		of_platform_depopulate(dev);
 > +
-> +			domain_ss3: domain-sleep-0 {
-> +				compatible = "domain-idle-state";
-> +				arm,psci-suspend-param = <0x0200c354>;
-> +				entry-latency-us = <2500>;
-> +				exit-latency-us = <2500>;
-> +				min-residency-us = <9000>;
-> +			};
->  		};
->  	};
+> +	return ret;
+>  }
 >  
-> @@ -461,7 +469,7 @@ cluster_pd2: power-domain-cpu-cluster2 {
->  
->  		system_pd: power-domain-system {
->  			#power-domain-cells = <0>;
-> -			/* TODO: system-wide idle states */
-> +			domain-idle-states = <&domain_ss3>;
->  		};
->  	};
->  
-> 
+>  static const char * const qup_clks[] = {
 > -- 
-> 2.43.0
+> 2.50.1 (Apple Git-155)
 > 
 
