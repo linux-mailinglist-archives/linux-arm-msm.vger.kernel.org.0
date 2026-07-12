@@ -1,57 +1,58 @@
-Return-Path: <linux-arm-msm+bounces-118533-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-118532-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id L20hDzAGU2qFWAMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-118533-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Jul 2026 05:12:48 +0200
+	id OF6HIlUGU2qUWAMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-118532-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Jul 2026 05:13:25 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id CFEEF743AAE
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Jul 2026 05:12:47 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id DDCEE743AC6
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Jul 2026 05:13:24 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20201202 header.b=AXdAbHIP;
+	dkim=pass header.d=kernel.org header.s=k20201202 header.b=ibWQii7J;
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118533-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c09:e001:a7::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118533-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118532-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118532-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 4BCFB300613F
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Jul 2026 03:12:47 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id BF837302416A
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Jul 2026 03:12:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 30BCD36A358;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 94A7F36AB5A;
 	Sun, 12 Jul 2026 03:12:44 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83F6427A476;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87D5E35F5E0;
 	Sun, 12 Jul 2026 03:12:43 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783825963; cv=none; b=BqYUvoda3kpmnQXWyi5owI5Kg5/OqPMautKeO5/e6ORgCCYsJynQH+iMAXWkb1RNJJSdr8/gkSUg+YsO737R+3MAQFFh2gLfZVdF95AAz5eA3v4rGYfr9EIYP8fLKN7ysEY9ewZDdDxVTo/LdOWGjndL4BwEKA+fRoXev26IaWY=
+	t=1783825963; cv=none; b=bq4DgPTnX9IVUcC9oAFtgFyr0G32+jZGOksjdNdpcIVVpi0DGt7+ldKw4S7I0IPl93CjVUotpWsC+BqmLXzhZXDjV2+b/LDsygygoW66kYriPZmysBog9h7lJGkpX2EB8GhGnT2H29Y5/IPxE90epVBpdiICv9j3VOFwOTUmUPQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1783825963; c=relaxed/simple;
-	bh=NH/8HgVWQ4D5/65p5rKmhBa0mt3P4wWICYWvIbf6n9A=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=ZvNMFiSEhfFeMBn8YXLXnINXrlraDSkrBivu4/euA1UcnWw01fAmVajUFTwfq2oazbgpJNOUH0+W5hGTWly+B7mUojAWANH2zJ34t3L84JSftpPJqk8+w/rKetofKcSBXFAEFxqECYaTliiKgzNRlKnf/1PNg8t7wdr7hsMnGKA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AXdAbHIP; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 0F9B4C2BCC9;
+	bh=uypZPYFNrzVPlbgo3JFazgpwIcp9nk1xnzIGuAXrb5A=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=CH4MnSYaMJQN98OqxEuUgCP8P4MZRHNYwviMvWiKhYkGOPViucN7IQqceSsXWPCtQZo2JTRv11j4wV98d6kPwRi6Xyz6koUBc2FTwSfrl2Fj+qjpvBLZlifU+WEVEHeQbP0tGmliUcRddMhfyKjP+ti/c/JIDuK9aYaoKxQjKl8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ibWQii7J; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 19AB8C2BCF4;
 	Sun, 12 Jul 2026 03:12:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1783825963;
-	bh=NH/8HgVWQ4D5/65p5rKmhBa0mt3P4wWICYWvIbf6n9A=;
-	h=From:Subject:Date:To:Cc:Reply-To:From;
-	b=AXdAbHIPpdPPk0kzFVlMHdKrsPwCLnQuJL3Avu222QKjDDYZ+1iRtBG1d1YTAy/2n
-	 riLAwH7Ly3wYp+qrqnwyilHXw16EiElkuAUSvveEPJqtO3bV4kS/IMGcF5/RiCXgvA
-	 CsKpt9SORPJFWobowreAirgUl8kBPYjXFPRtOAtLHGNrgK+FRlfW3wHvGFvr8dQcpI
-	 7AjWs0ksDJOeKo+Seu80rMr/LU0nbNBbIxbuynIRqK+ad2T5y+gcLzHiw0JrZX4rG3
-	 l/ZHCqW1/cOkFVhZC/lcmSNOyg1Ltm22KNiTfABGA5jTqo4/A+b6mzfYLgkbSzdXnj
-	 7PxnF9M98RlYw==
+	bh=uypZPYFNrzVPlbgo3JFazgpwIcp9nk1xnzIGuAXrb5A=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
+	b=ibWQii7JDUG6EDE7cokuu+dyGUqdt8TBaj31klj9vFDmB3OKZOQHj4pQavBiNIuRt
+	 zAsoQi5cTjrBLUDTjbU9mKdnnrgFiN0yO20fiRMQFDxrt/1qGpTZspTvE53VDZQV6k
+	 zecE0ROAhuc2HIaYLaov2KhCHeLr57BYqPxmvCDtAaiii6iqtb9jN86bmUBXtfAECA
+	 wVZFTNzIXkHAwFNP6UheA1PsKoumSCMugmtzGwznVUDMm1LEmtHFfgePWbyC8SiK/K
+	 RL/z+oXs0B8FiextvRxCnKDKPH4dJyPBcMliPB6UQk8rwIu2dvxbm4kCKBa5z0zw7a
+	 ShjNlCWwWLIRg==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E9F9AC43458;
-	Sun, 12 Jul 2026 03:12:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0349FC44506;
+	Sun, 12 Jul 2026 03:12:43 +0000 (UTC)
 From: Esteban Urrutia via B4 Relay <devnull+esteuwu.proton.me@kernel.org>
-Subject: [PATCH v2 0/2] SM8450 QoL changes (dts)
-Date: Sat, 11 Jul 2026 23:12:26 -0400
-Message-Id: <20260711-sm8450-qol-dts-v2-0-5eb2e86468c5@proton.me>
+Date: Sat, 11 Jul 2026 23:12:27 -0400
+Subject: [PATCH v2 1/2] arm64: dts: qcom: sm8450: Remove unneeded reserved
+ memory nodes
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -60,11 +61,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/02Nyw6CMBBFf4XM2jFtESis/A/DAuggNUKxU4mG8
- O/y2Lg8ybnnzsDkLTEU0QyeJsvWDSuoUwRNVw13QmtWBiVUKjIpkXt9SQS+3BNNYNR5nFRpnSd
- aZLCORk+t/ezBW3kwv+sHNWGrbEZnOTj/3R8nuXlHPFXqPz5JFBhnpIi0aXNTXUfvghvOPUG5L
- MsPOvRxHboAAAA=
-X-Change-ID: 20260711-sm8450-qol-dts-8935a6b95807
+Message-Id: <20260711-sm8450-qol-dts-v2-1-5eb2e86468c5@proton.me>
+References: <20260711-sm8450-qol-dts-v2-0-5eb2e86468c5@proton.me>
+In-Reply-To: <20260711-sm8450-qol-dts-v2-0-5eb2e86468c5@proton.me>
 To: Bjorn Andersson <andersson@kernel.org>, 
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
  Krzysztof Kozlowski <krzk+dt@kernel.org>, 
@@ -74,11 +73,11 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  Esteban Urrutia <esteuwu@proton.me>, 
  Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1783825961; l=861;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1783825961; l=1232;
  i=esteuwu@proton.me; s=20260622; h=from:subject:message-id;
- bh=NH/8HgVWQ4D5/65p5rKmhBa0mt3P4wWICYWvIbf6n9A=;
- b=Fs+4F+B99IB18w/SxUmpLUkDUw6GNdE7FGLU93COwPWF5+MIDi1oBj63322RPohbuDddO626J
- RW2imcYr+KfDc4a7qXa3oV9jLR7/WOYV2tyl77ecVv9wQt7mANPnM47
+ bh=f6mm6bP5cP/VdfADQcuVdSA9XTjnVcdOZJRex2sxwV0=;
+ b=TcIlcP7ncJW4UTVFJGgshY/59oDIvuuhLqZRG+qXZfwBKb2XPfoB6I8mkK7K5ngv4SZaLpm9D
+ b7akfWYyzlaCxCAXlFd4dEkcJSVpvlmnzy2ApXKKooXSHkiPc+h1dlq
 X-Developer-Key: i=esteuwu@proton.me; a=ed25519;
  pk=wToFt4mOAWkzbqb15Ye1hrhevI13vK9BcMUFiQ/me1M=
 X-Endpoint-Received: by B4 Relay for esteuwu@proton.me/20260622 with
@@ -91,12 +90,12 @@ X-Spamd-Result: default: False [-3.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-118533-lists,linux-arm-msm=lfdr.de,esteuwu.proton.me];
+	TAGGED_FROM(0.00)[bounces-118532-lists,linux-arm-msm=lfdr.de,esteuwu.proton.me];
 	RCVD_TLS_LAST(0.00)[];
 	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
@@ -117,38 +116,60 @@ X-Spamd-Result: default: False [-3.66 / 15.00];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	RCPT_COUNT_SEVEN(0.00)[11];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[proton.me:replyto,proton.me:mid,proton.me:email,msgid.link:url,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,vger.kernel.org:from_smtp]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,proton.me:replyto,proton.me:mid,proton.me:email,vger.kernel.org:from_smtp,qualcomm.com:email]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: CFEEF743AAE
+X-Rspamd-Queue-Id: DDCEE743AC6
 
-These patches focus on correcting some details on the DTS for the SM8450
-SoC.
+From: Esteban Urrutia <esteuwu@proton.me>
 
+These nodes are not present on downstream device trees and only take memory
+away from the AP.
+No crashes occur without these nodes, so remove them.
+
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Esteban Urrutia <esteuwu@proton.me>
 ---
-Changes in v2:
-- Split series in subseries (dispcc, dts, qmp, smmu)
-- Add mode-switch patch
-- Drop applied patches
-- Drop GPU operating points patch (existing map seems to be OK)
-- Link to v1: https://patch.msgid.link/20260622-sm8450-qol-v1-0-37e2ee8df9da@proton.me
+ arch/arm64/boot/dts/qcom/sm8450.dtsi | 15 ---------------
+ 1 file changed, 15 deletions(-)
 
----
-Esteban Urrutia (2):
-      arm64: dts: qcom: sm8450: Remove unneeded reserved memory nodes
-      arm64: dts: qcom: sm8450: Add mode-switch property to qmpphy
+diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+index 7ddd0f5f539c..cf7c8f831fb0 100644
+--- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+@@ -752,11 +752,6 @@ oem_vm_mem: memory@bb000000 {
+ 			no-map;
+ 		};
+ 
+-		mte_mem: memory@c0000000 {
+-			reg = <0x0 0xc0000000 0x0 0x20000000>;
+-			no-map;
+-		};
+-
+ 		qheebsp_reserved_mem: memory@e0000000 {
+ 			reg = <0x0 0xe0000000 0x0 0x600000>;
+ 			no-map;
+@@ -806,16 +801,6 @@ qtee_mem: memory@e9b00000 {
+ 			reg = <0x0 0xe9b00000 0x0 0x500000>;
+ 			no-map;
+ 		};
+-
+-		trusted_apps_mem: memory@ea000000 {
+-			reg = <0x0 0xea000000 0x0 0x3900000>;
+-			no-map;
+-		};
+-
+-		trusted_apps_ext_mem: memory@ed900000 {
+-			reg = <0x0 0xed900000 0x0 0x3b00000>;
+-			no-map;
+-		};
+ 	};
+ 
+ 	smp2p-adsp {
 
- arch/arm64/boot/dts/qcom/sm8450.dtsi | 16 +---------------
- 1 file changed, 1 insertion(+), 15 deletions(-)
----
-base-commit: 96615101b3caf73612f80a217abb9a0da0effbc7
-change-id: 20260711-sm8450-qol-dts-8935a6b95807
-
-Best regards,
---  
-Esteban Urrutia <esteuwu@proton.me>
+-- 
+2.55.0
 
 
 
