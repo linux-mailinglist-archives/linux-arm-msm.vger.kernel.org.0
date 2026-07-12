@@ -1,213 +1,174 @@
-Return-Path: <linux-arm-msm+bounces-118555-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-118556-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id D2tAMHZ/U2qJbQMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-118555-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Jul 2026 13:50:14 +0200
+	id F3QrHN5/U2qvbQMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-118556-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Jul 2026 13:51:58 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id E0D10744874
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Jul 2026 13:50:13 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id F3CE0744885
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Jul 2026 13:51:57 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=quora.org header.s=google header.b=VyLKFN2N;
+	dkim=pass header.d=quora.org header.s=google header.b=URUmaZ9U;
 	dmarc=none;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118555-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118555-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118556-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c09:e001:a7::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118556-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=2")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 7B935301DCC7
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Jul 2026 11:50:12 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 215683003815
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Jul 2026 11:51:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BBBD4399013;
-	Sun, 12 Jul 2026 11:50:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 33F003A4F4A;
+	Sun, 12 Jul 2026 11:51:56 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
+Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D013310645
-	for <linux-arm-msm@vger.kernel.org>; Sun, 12 Jul 2026 11:50:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD0422571DA
+	for <linux-arm-msm@vger.kernel.org>; Sun, 12 Jul 2026 11:51:54 +0000 (UTC)
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783857011; cv=pass; b=eWNcsX3pvi2H72osAkrFz4gDc3RewGLd7RpXU89LHJcwginOw4Us4wZfO1iasdmoa0oHo6bGihChpE1Y4TSkccBuFRA9ov9TWsY4Av4Bzg+ijT+OZWpB9iVFHOVSOTlNe8XwirK+/JhT6N6RKKr0L2i+B0ZQIfGyx3Z4pfbasG4=
+	t=1783857116; cv=pass; b=GAYCrDtZXoAY/9vrigvCYFvz0Kmyy5T65jPpiUzl/uxcoFZhyCWnzJqM5v6xIlpQjiU1Mm9HaQgWq0QMJAfwhq6BY0TrobDrX6OJRP0eUG8255SAdxSttSIohJCCDRTjOyoIeVcdD2Xn0c6JN+gclWfhceH4ZdrHgUiYyTL6LHo=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783857011; c=relaxed/simple;
-	bh=zTSiCktsBx0Ihn0W6dMmRNBU4InDI+KPZnpX31zPVF0=;
+	s=arc-20240116; t=1783857116; c=relaxed/simple;
+	bh=Vq61pPu6R8RhFxhzO6MCMoN7B8JnjWnfrnKR8iKrLVo=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=fU9FqH9l0IHWtQ/P0fjrp0NkV7z+4G9xUPAr+mpqKYWJ4zkpNs1eYxIt/w9PP8hDhNjdI/rUNHMQXggMsyjWuZ+19a+rzlPuAOfCE61jFkAIOk0/DCS4YwFCb804t7ojWpMlzhtSdlkJF75JPAhw36eV7avtXAKQETxqHurttp8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=quora.org; spf=pass smtp.mailfrom=quora.org; dkim=pass (1024-bit key) header.d=quora.org header.i=@quora.org header.b=VyLKFN2N; arc=pass smtp.client-ip=209.85.216.41
-Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-381216921aaso2546093a91.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 12 Jul 2026 04:50:10 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783857010; cv=none;
+	 To:Cc:Content-Type; b=s+1Ux35GZGQCYOjkZ3k9TJ/PslodU4DpjI3Q06W19kjvub1gCkZeJypF1dZdIUm0v5ATSjqoAdzzCQCFeHvkhUc2hxp759kG7rl0FRaHI9KBZPPla0rHkt5dCyFtE3cBedUMu1ggZ7v4CY5/H/ufVp4XIcWZYA7SUTd5wyqTDng=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=quora.org; spf=pass smtp.mailfrom=quora.org; dkim=pass (1024-bit key) header.d=quora.org header.i=@quora.org header.b=URUmaZ9U; arc=pass smtp.client-ip=209.85.210.176
+Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-8484a0b998fso3474660b3a.2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 12 Jul 2026 04:51:54 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783857114; cv=none;
         d=google.com; s=arc-20260327;
-        b=AMkK1vbIYe19jpI/MAPS93PYmYv388bkE5ec/LJS9SKlhzXxZn3Gs/j44QHw6j2dRX
-         qhJrMmI7l58Lgbx4DT8DLyURknCacC3MMTV4yhhshg1GL3Ielxxg6UdfhXpArz1PgK32
-         55UnHi/HUEKfcolXLMqb99wDVDR7dDckklAcf93trW3kwdurLLmkKeU+SJyBK6P7HePW
-         waG8BLXhDpYNJdaED6GP05hRHa6ccA2vdeIwIhoPsY65NqNTF5z3UDI+3Ow6bz8cj4vC
-         wNTaqx23RCb6/izgXveISr7mgv8Verep6y3IspGkriWI7CTVPKQ6aFFdIivkpXCdmOhf
-         6Aag==
+        b=S9MJ2lKqotyzo9se7czKcZ3PMXUZTFwNX34rLfIRiBCgXCjKuxldK2FGkyOMdeEpBB
+         bzygSqM8zHmoFsGm7r/SFea8FPfUeyGJOHBJgxOiVm/H0yioz0WAQV83Vjh5XFhjz9Uw
+         /OtECHGc8Vw8MBMO4ig1/niaXui8UBBIcycG+d65ZG5KSFufog4rJvrC6IiAJjoJlwhn
+         FDFO+v1CuzPsO45JnFRxU1tyy4MZcxYMNIYjahkxpnaYWbt2yvoVlZKTwpjlUUkYTNe4
+         zdRpIecubY3byZwi++dq5lUAhpqGZfd+Rln32tIadTpkuaOUrHte3S1a9FxM1ew80unn
+         OnMQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:dkim-signature;
-        bh=Sp9a2KMToJnfNko4S/JCutxocl3+KvZJzirc4K2SinU=;
-        fh=gw/e4AiI+dNfQE+mOx7T/I4jAOlroh4oTLnpz8HKofI=;
-        b=Fm5ElcE2jCYmFjxj2J5UH0JTY7RyyolAROfIHFdKaf7tkJEI+4Bp7S84d5PfIXCuKq
-         n+o3CVRmLm8xabNiBtXWk6MtoffgCVqaSno8ujmgEN+DeNtMz+wwbDBYbeBG3048K4wJ
-         kfKD2jev6QEnFYQWDLOGzZAbViaMEQZ/Q/bbWjtNI+d5h3gqqxoulnYYlajhmT0UGMpw
-         EZPQUdQT04Pgo1vy6pgHHyoEmNHxMvaid7j9jKOqWMeffQDz5Nt2EleXalyZRf/5VRs/
-         hVXPaDUSWfu2uWhuXn+c0wRFGrgTdyf6MJhZSSfpwxTvZOhVuCrnYYRt6GMYlLbpVpfy
-         5oGA==;
+        bh=YsQpUC4iSbhz2nXUUh9/l1xqUNQEcKgCsyiqdbNE7Cc=;
+        fh=o8coPEgr2O3YHGeexMXOP466MnEE5d4s7/q3yzTYErI=;
+        b=iAK3EGxqcwewYBOX68rAglEh9VNXQpUifUFCabnAfNyJnaOKITBXuma/69AYFUrk/1
+         31l92bTASVHUwG6LXMhS9D/WR0/RNGCNcgslUKdXffNNV2S4jHCBjk78OPURHYgaqV27
+         fEYRRJS/UJNwIhHu/Z2mc23fOUnl9IuKIrx4/jnFQkG/hVCsWUd7kxO+mI9eafOCnwx/
+         Qj6zj/S8Nuq61lmMq6Opy8qFt3YdKJUF34TEKrKfh6dxMcSPPN1pd1LtDMp9CozhxjoE
+         4FpdnJszykL2Vr96SawemD8cEKvax1d7AVDI/TtWoEKHOGomEu0O6FcdrRfXErIL5wZs
+         QdOw==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=quora.org; s=google; t=1783857010; x=1784461810; darn=vger.kernel.org;
+        d=quora.org; s=google; t=1783857114; x=1784461914; darn=vger.kernel.org;
         h=content-type:cc:to:subject:message-id:date:from:in-reply-to
          :references:mime-version:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=Sp9a2KMToJnfNko4S/JCutxocl3+KvZJzirc4K2SinU=;
-        b=VyLKFN2NRJDZOsCeYGy2eGvQliap8evsLmOy5Tj0XWMSPM+R00J9hSelyg2rdrIUME
-         utFHxUI3MdKOhiN6XRhachLhv3lrzJHmDaLzkWTMl/CBQyovFIs4xIVDCyZhzYCR+D96
-         /8FjafnxYNdojHtuCmkIElpTpUqROCvFvx7xQ=
+        bh=YsQpUC4iSbhz2nXUUh9/l1xqUNQEcKgCsyiqdbNE7Cc=;
+        b=URUmaZ9UW7ebsoLPmv2ZwO+NMA/F/cdUeLiUqXEHvG7svopSwPCAh2vYO8eKQx9+Uq
+         qIHblZvsk0rX4E3NZ5TVXxD941gvWnFAmHodF0VYobDRHdLxLkftPV4gzn1z/DEbX8la
+         WR0e3xpTmTybNyRCJN6NPBqgRiYhey1vgPKa4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783857010; x=1784461810;
+        d=1e100.net; s=20251104; t=1783857114; x=1784461914;
         h=content-type:cc:to:subject:message-id:date:from:in-reply-to
          :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=Sp9a2KMToJnfNko4S/JCutxocl3+KvZJzirc4K2SinU=;
-        b=PWc+5Mgf1xsVo6fzlC+y2iFOD1pdkRnAsxK2zYK0cZMV6VZYstLKkbygvO12+aaAVw
-         48yi7lxUH098yv/Lgy6s+ZRXCUyIZbOGJB5mZ3RaSl/zBkNvR00qwO3oFmEbkakjwwjb
-         Fauthx4nN1NCNuMA4JfJZK9TuhWSCT0eFymFWjqkfqmv+w08RlvU1AIrxoC4yxj8+MEp
-         sC0aOykY5q9E3DVHi5vuOyehaRKbNhVdzNqIp8EG67ht4QqacxOQBx6UIGta9b91Jsqr
-         NeywUw242Xp2/QApk+HuEzoxxoI0+bOvyqaoLeAeJjDqnYIy0OLCtwaHQPWgo+m8NiRc
-         xgJQ==
-X-Gm-Message-State: AOJu0YwEGDqPiXhcJAnvrMQ+WJETQa0oDw6vetVUzDqccdl7rPN3bAAB
-	Z1dt3yicm9QwmQ7DIBtMUr8Aah+/hLLo2f36Jy09kLqzmReD30/BRZTy20HmIWF/hFSaLCbJm+c
-	aUihnyFM714jZA92Q86bIKKTIQf34unkwKSkhxb3SkiudB4mFrqFG5dnssQ==
-X-Gm-Gg: AfdE7cmsLlqPo7eZZk7Evm7d2o13nR58AeVYnVsfWDrDjRa13WWFIldgs42yyS4qCSG
-	rSth23esb3qkDZw4yRna6nGWBdb3bn/J0yuJ1OehXz+/rkPElqdSG3bUxFU8u3UURj3xLptJfWd
-	1ZMJP2XVNfyEvaV6kjzKYYz+rf9FJvSqZkU5KbpqdRJVJMbKlLdAJ+PZoCbkBl+QF/8Xg56NIIr
-	Aw2tJ6lhHeUrgEAmvmOmnJELni8D1HBDW/ekVRzfMxy6H0rv0FMB0fc3ZNfyJbmB+xC27FWSizH
-	vwObqaY6DtCV6/gjHBfk9WcVcvmNeRxhAAxxq/5lp7VcGz6W4LAFwFaCty++FkbLWIpKUZy6uIV
-	30vOMql1FFpoDk8REOnnoTkWE2PwRzx6EDanE1n2HdichR3GCaQazVu1yX2h00IEuOUck6x+5pd
-	p5x1cCinZKdqmpdzHbcd96ynBCd6HdCpK8oIIMZM8981VMWQ9kJKwg4UuxhpvTDWGTz5Flcww=
-X-Received: by 2002:a17:90b:314c:b0:380:94de:155e with SMTP id
- 98e67ed59e1d1-38dc73c1d67mr5199069a91.5.1783857009794; Sun, 12 Jul 2026
- 04:50:09 -0700 (PDT)
+        bh=YsQpUC4iSbhz2nXUUh9/l1xqUNQEcKgCsyiqdbNE7Cc=;
+        b=FtKVbQb2f7zT5ydWkf+BwGQfW+WrS5/xByAt4nLtVNb4F1gl6eFtMYcMVrl+bJOJno
+         Y2kEy4Lf4Y/KlA+QaW1Oy11hPZTwydATkl+uu+ChAh/xpAglfDuUk/8nEJ5rBEyfqBBn
+         LF1jnAO1GStFMFJTwA8RcUrAdZt9NK29QgVEjgh920yKhu2fWOa31LAdkej3IVyLGFwF
+         Ep1fN1teugerMuFioEQQaFJPQRJmVWlzOoBQ5Ta1caOsePodvp69mpJ/2DSSNpjD7eB5
+         +3UGZxALNcYthfiJZsR0SwJXVzrsqp82CilEOmEhtIrztS7s1eZBMYU6QYMiDWbS626/
+         +6oQ==
+X-Forwarded-Encrypted: i=1; AHgh+Rp0p9Ko7140yzqZFRAI7dKK00S8l1mSlqP5q4NjK0tWe8J+q8JPMOja13X35FIbNqm76uoy9BhjJN0JKmF9@vger.kernel.org
+X-Gm-Message-State: AOJu0YxXm8E6d/V7UXA+o5PVwiCf6AFoxHyI32H0KbWyfpybWVK0+h/c
+	ZQGA0dZ8l+UWIbaUWOcW2rt/yp4gpYDDyz/5oKtZswRXUZVY26XY8F+DHTw0qap//0WvJfd89Tq
+	SgkHH6ekYVpIMzzJ5cwgqfWtMZTXcp4jaiWwPsiNGIw==
+X-Gm-Gg: AfdE7cniJTYjjOdqxGXzw6AvU6hdbuvO+S4icCoFpRQkTtLS8KMZn9STee5QdIMB4D7
+	+toy/6bV+KC3G0/WPlKwD7J97nr36CyyHTXgDS1DAA9ZMytsZYdXb+pyoPHPVo6mRbIJbBCeefu
+	U/SG6dpq4PZonBAPfuAOYQzjkNLMeXFWAyx4v05jRAe6PiiBaDuoMnbj/TeUrWyhCs4J5x3/2kC
+	QwE5SPCin29nAolfQcJQkH1wmg4fngG3JRtbORG31tmivYKt9CwF2LBdYfu3v/W1xdQjifeXspF
+	q6fsnbNPvnpS637jAFe2p9e05BA5LLf2CDnufxuDU9Ol43sjazjPIyT0z1HihB28vy+NiWCnQT0
+	jodQ3J25k1q2Dl6MPByHRYKDnTfh+xTT6PwgIhw9x6CRuEnE/lHBESgA0vlmZUDOGiNtrIGM0wG
+	Lh7pvC8hJMdHNuzWaCf7BE25IyMsYNiMfbyn6TK4oZCMqrnBaqltTedEXLkOy3W/k/FCxyllk=
+X-Received: by 2002:a05:6a00:c88:b0:848:2f77:e2dd with SMTP id
+ d2e1a72fcca58-848897a7553mr5221254b3a.70.1783857114306; Sun, 12 Jul 2026
+ 04:51:54 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAMVG2st2udHCUHZ_2j=jNmwTAVi2Cvda0qGgH4tDZHwsGVfLKQ@mail.gmail.com>
- <CAMVG2stuY5aTwfmJkL_cLDn86hfuFD+sT-LdqdmN5m21y2aL5g@mail.gmail.com>
-In-Reply-To: <CAMVG2stuY5aTwfmJkL_cLDn86hfuFD+sT-LdqdmN5m21y2aL5g@mail.gmail.com>
+References: <20260709-vpu_iommu_iova_handling-v1-0-72bb62cb2dfd@oss.qualcomm.com>
+In-Reply-To: <20260709-vpu_iommu_iova_handling-v1-0-72bb62cb2dfd@oss.qualcomm.com>
 From: Daniel J Blueman <daniel@quora.org>
-Date: Sun, 12 Jul 2026 19:49:58 +0800
-X-Gm-Features: AVVi8CfnlO117VJ3lWa7mSJR7b-rlpaw2gAO1sdjMy1bq3J7HIu3u3SqtlgnsgQ
-Message-ID: <CAMVG2suBZFMbUmUaAdyOhZ=WNysecPQCD5rZpj96AUi7Au_xHw@mail.gmail.com>
-Subject: Re: [BUG] qcom: x1: GAMMA_LUT corruption on DPMS wake
-To: linux-arm-msm@vger.kernel.org, Rob Clark <robin.clark@oss.qualcomm.com>, 
-	Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>, 
-	Jessica Zhang <jesszhan0024@gmail.com>, Abel Vesa <abel.vesa@oss.qualcomm.com>, 
-	Krzysztof Kozlowski <krzk@kernel.org>
-Cc: David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Jun Nie <jun.nie@linaro.org>, 
-	Federico Amedeo Izzo <federico@izzo.pro>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	=?UTF-8?Q?Thomas_Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>, 
-	Randy Dunlap <rdunlap@infradead.org>, Linux Kernel <linux-kernel@vger.kernel.org>, 
-	Val Packett <val@packett.cool>, Steev Klimaszewski <threeway@gmail.com>, Sean Paul <sean@poorly.run>, 
-	freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org, 
-	Marijn Suijten <marijn.suijten@somainline.org>
+Date: Sun, 12 Jul 2026 19:51:43 +0800
+X-Gm-Features: AVVi8CfIxi4WIpFkevKCP00_7Hn3fE6sIEYaOzLrzMtk6xLs3rWmXH2GtZ7E-hM
+Message-ID: <CAMVG2stqOscN2CB5Uq4qVvb3vXOze35-JzqH4GpS8z4R2dr+Mw@mail.gmail.com>
+Subject: Re: [RFC PATCH 00/11] : media: iris: Migrate iommus to iris sub nodes
+To: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
+Cc: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>, 
+	Abhinav Kumar <abhinav.kumar@linux.dev>, "Bryan O'Donoghue" <bod@kernel.org>, 
+	Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
 Content-Type: text/plain; charset="UTF-8"
 X-Rspamd-Action: no action
 X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	R_DKIM_ALLOW(-0.20)[quora.org:s=google];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:linux-arm-msm@vger.kernel.org,m:robin.clark@oss.qualcomm.com,m:lumag@kernel.org,m:abhinav.kumar@linux.dev,m:jesszhan0024@gmail.com,m:abel.vesa@oss.qualcomm.com,m:krzk@kernel.org,m:airlied@gmail.com,m:simona@ffwll.ch,m:jun.nie@linaro.org,m:federico@izzo.pro,m:neil.armstrong@linaro.org,m:thomas.weissschuh@linutronix.de,m:rdunlap@infradead.org,m:linux-kernel@vger.kernel.org,m:val@packett.cool,m:threeway@gmail.com,m:sean@poorly.run,m:freedreno@lists.freedesktop.org,m:dri-devel@lists.freedesktop.org,m:marijn.suijten@somainline.org,s:lists@lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:vikash.garodia@oss.qualcomm.com,m:dikshita.agarwal@oss.qualcomm.com,m:abhinav.kumar@linux.dev,m:bod@kernel.org,m:mchehab@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:andersson@kernel.org,m:konradybcio@kernel.org,m:linux-media@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:busanna.reddy@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	RCVD_COUNT_THREE(0.00)[4];
 	DMARC_NA(0.00)[quora.org];
-	FREEMAIL_TO(0.00)[vger.kernel.org,oss.qualcomm.com,kernel.org,linux.dev,gmail.com];
+	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER(0.00)[daniel@quora.org,linux-arm-msm@vger.kernel.org];
 	MIME_TRACE(0.00)[0:+];
 	RCVD_TLS_LAST(0.00)[];
 	FORWARDED(0.00)[lists@lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-118555-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-118556-lists,linux-arm-msm=lfdr.de];
+	MISSING_XM_UA(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[quora.org:+];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	ALIAS_RESOLVED(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[daniel@quora.org,linux-arm-msm@vger.kernel.org];
-	FREEMAIL_CC(0.00)[gmail.com,ffwll.ch,linaro.org,izzo.pro,linutronix.de,infradead.org,vger.kernel.org,packett.cool,poorly.run,lists.freedesktop.org,somainline.org];
+	DKIM_TRACE(0.00)[quora.org:+];
+	ALIAS_RESOLVED(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCPT_COUNT_TWELVE(0.00)[21];
-	MISSING_XM_UA(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[15];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
 	TO_DN_SOME(0.00)[]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: E0D10744874
+X-Rspamd-Queue-Id: F3CE0744885
 
-On Sun, 14 Jun 2026 at 18:27, Daniel J Blueman <daniel@quora.org> wrote:
-> On Mon, 1 Jun 2026 at 13:37, Daniel J Blueman <daniel@quora.org> wrote:
-> > Since Adreno X1-85 GAMMA_LUT support was introduced in Linux v7.0 (eg
-> > Ubuntu 26.04), when waking from DPMS-off, palette corruption is
-> > frequently seen; this manifests as purple banding. If GNOME night
-> > light or similar is enabled, the visual impact is greater.
-> >
-> > Further, on larger panel monitors or laptops eg the Lenovo Yoga Slim
-> > 7x (2944x1840), a second INT2 block is used for the right half of the
-> > screen, which may remain totally blank on wake; major usability
-> > impact.
-> >
-> > Intuitively, the symptoms feel like the LUT SRAM clock isn't being
-> > driven soon enough during the wakeup, thus state loss may depend on
-> > silicon binning/variation or related. No such symptom is seen in
-> > Windows on the same hardware. I found a workaround supporting this
-> > mechanism is to activate the GNOME night light and adjust the slider
-> > to update the LUT - any black right half of the screen always
-> > reappears.
-> >
-> > Please can someone with X1-85 Adreno insight check the Linux clock and
-> > power domain behaviour around GC_EN, Layer Mixer, INTerFace and INT2
-> > on DPMS wake? Happy to test changes; this is a stunning platform
-> > otherwise.
-> ...
-> > Link: https://gitlab.freedesktop.org/drm/msm/-/work_items/89
->
-> Just a heads-up on this with additional findings. Note this issue
-> could be the only remaining daily friction on X1 laptops with suspend,
-> once my video decode reboot workaround or similar is merged. Also note
-> in my case, without GNOME night light active, only a few LUT entries
-> render purple so visual artifacts often go unnoticed until a gradient
-> eg in an image is visible.
->
-> From DPMS wake on a dual-LM panel (>2560 pixels wide) with
-> INTF_5/DSPP_0 (master) and INTF_6/DSPP_1, I find DSPP_1's registers
-> are intermittently unresponsive just after MDSS resume. DSPP_0 doesn't
-> exhibit this issue, suggesting some missing slave/second unit setup,
-> despite booting clk_ignore_unused pd_ignore_unused.
+On Thu, 9 Jul 2026 at 20:35, Vikash Garodia
+<vikash.garodia@oss.qualcomm.com> wrote:
+> VPU hardwares have a limitation where VPU streams are associated with
+> dedicated addressable address range, as illustrated below
+...
+> Mapping a stream outside its expected range can cause unintended
+> behavior, including device crashes, as reported at:
+> https://gitlab.freedesktop.org/drm/msm/-/work_items/100
+...
+> To address this limitation, the subset of stream/s are now represented as
+> sub nodes, so that they can be associated to the respective addressable
+> range.
 
-Guys, further debug reveals the Windows driver (which doesn't exhibit
-the issue) doesn't use the same register access as Linux to reprogram
-all LUT entries on DPMS wake. Instead, it appears to submit a DMA
-descriptor to fetch LUT values which get internally loaded in a stable
-manner.
+Amazing work Vikash and team! This patch series applied on 7.2-rc2
+resolves spontaneous rebooting with parallel streams eg when opening
+https://ui.com in one or more browser tabs, resolving this platform
+usability blocker. As such, this is absolutely relevant for -stable.
 
-Is it possible for Qualcomm to attempt a minimal fix, or share the DMA
-description struct and doorbell/completion register offsets and
-related so the community can?
+Tested-by: Daniel J Blueman <daniel@quora.org>
 
-Also, it would be good to hear if anyone with an X1E running a 7.0
-kernel or newer with a 4K monitor *doesn't* see palette corruption
-across DPMS sleep-wake, as this could indicate another possible
-solution.
-
-Thanks,
+Thanks again,
   Dan
 -- 
 Daniel J Blueman
