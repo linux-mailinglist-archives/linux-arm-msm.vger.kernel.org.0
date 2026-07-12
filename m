@@ -1,226 +1,244 @@
-Return-Path: <linux-arm-msm+bounces-118564-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-118565-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id h5rCFlSJU2rKbgMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-118564-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Jul 2026 14:32:20 +0200
+	id 6cUaAdGNU2pXbwMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-118565-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Jul 2026 14:51:29 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9D7F0744A6F
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Jul 2026 14:32:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8B87C744BBF
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Jul 2026 14:51:28 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=none;
-	dmarc=fail reason="SPF not aligned (relaxed), No valid DKIM" header.from=radxa.com (policy=none);
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118564-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118564-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
+	dkim=pass header.d=quora.org header.s=google header.b=R13fC5dr;
+	dmarc=none;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118565-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118565-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	arc=pass ("subspace.kernel.org:s=arc-20240116:i=2")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 5A304300DE0C
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Jul 2026 12:32:16 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 5D6F9303CD15
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Jul 2026 12:47:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7DC963AB5AC;
-	Sun, 12 Jul 2026 12:32:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0E8263ABD91;
+	Sun, 12 Jul 2026 12:47:50 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtpbgeu1.qq.com (smtpbgeu1.qq.com [52.59.177.22])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A373F371860;
-	Sun, 12 Jul 2026 12:32:09 +0000 (UTC)
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783859535; cv=none; b=evBJ+FCmY4Z11Zr/6TLakcLGD47H+IQlMBl3A/qpwIZELLID17Ve1CJcehK8ptRodGLnmw9fcR2gCqCDuReCUCAP4yUUG8Q8evymaMekwBwRTLWSBuvg1ObGzsF7WRAk9ipAVUqDbAJ6XAiGiSpA7fmnhgOHbaUrPNsF9CS/jYI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783859535; c=relaxed/simple;
-	bh=3UEBW838tt3Ism/wYKILco2zPC66IKrRADwcS8w2mW4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=bNagGKatqegJ29dulHjiGEcBgc3VhTITkqHv4E4fxUFG5ucgQook0xK5IKqG6Zjkp3mtko/ksmi9vmEICMiKptM0CwyYnSl2GWE2LvyVy6n7FCP4AQZV8k3x2YSaYQPSdLAYqsvPXNOJrqdHpt2l0f09dqnka19XxRblS1P7NGQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com; spf=pass smtp.mailfrom=radxa.com; arc=none smtp.client-ip=52.59.177.22
-X-QQ-mid: zesmtpip2t1783859495t6c5687e4
-X-QQ-Originating-IP: S5JS7u2C81s1KUtxoBHUNrmiFrBBT+I8RRgvri9o4Rk=
-Received: from [127.0.0.1] ( [localhost])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Sun, 12 Jul 2026 20:31:33 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 3583264987114645874
-Message-ID: <345F7FA4A9ED01C0+4ece59b4-afa8-4375-917a-4de9f89fa04a@radxa.com>
-Date: Sun, 12 Jul 2026 20:31:25 +0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61FFA3909A9
+	for <linux-arm-msm@vger.kernel.org>; Sun, 12 Jul 2026 12:47:47 +0000 (UTC)
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783860469; cv=pass; b=F4bBNDyx81lMQmwAwmruRhqlPR+RIwo62ZwFk1YQ1r1vVx2KrUR5wZn8um5O91vjKsh6L2qdH4yyC+oMn2wHVtSJaEcOqBiJbyIAqlV4Ak782tPoZKE3270d3kTQOZoJDGRPzU7zFLIh8fnLmPGMkPEGp6fIRW02WXnER3LD54I=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783860469; c=relaxed/simple;
+	bh=/LEF2M9kzjY+ngIjzl7wqT7Ew/V9YEjs6Sa+fgSqmsw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ffW9gUPeeD0J2HDBb6rygrx9aP2VDsvdSzfk11GKVR0SHsKica47+eGDnY+c0OIW4dVey8Twk7W5i4NLIBo56yj+myj2dsw+AROtAx2EzqZ4Jt54OyzjieUIH9a/MvAnl0V9/a1MhrpiVIn4RC07jji15jfbrx92fkmVk0pCVpQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=quora.org; spf=pass smtp.mailfrom=quora.org; dkim=pass (1024-bit key) header.d=quora.org header.i=@quora.org header.b=R13fC5dr; arc=pass smtp.client-ip=209.85.214.175
+Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-2cc97653887so25747365ad.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 12 Jul 2026 05:47:47 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783860467; cv=none;
+        d=google.com; s=arc-20260327;
+        b=KCEOD72iEs87rKREiKyiRZCXg7uExIOVTnXE0JiZmRXyRgOae6aopWc6snZ4/vJgu3
+         Tdvgk4/46ykDXeTpx3XIyBoQxb6vRi8bwbWkw/VFNRy8RozaBRl4D4RC6FqJ5XMIT6/0
+         QugWE10H6NyWjt3ATT91/iPke5DPJ9E3B/7hx7zQikUktOb2Zsrc/fDG/POMtbqo82cI
+         nFsAouqlSfJzDJWJrWRlDAb5qnRE7Uh/PIQAD/bbCTs1FWh5SNxzw/TMv0X/AFQuNMS5
+         BPZfRcmcg2EbBzR1l1+IfQC5ntABtNZNuWdxDKjzJaCThmxlhFmozkYk0BemhPc059l8
+         bCyg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=ikvSy5XLG1P+DmNPA6bgvTYTJm+JvB6ahXSZXySRz+4=;
+        fh=LJvNw9U/JQaJ8Vmbnge22J9F1mtceXUMjawLZHC8o4c=;
+        b=KJYW5+lmSVgyH5o6Qnf/lLBivFJVVqRNpi/e8R5Bs/Ayt6AFsGuIEEA7OL84m91unc
+         rl3qRPUd4Lg/GiwDTSZh8jUqRJKolmd+BP9pDqoFej2Lh6vURA1UxnYwqEJ9Hl2WmHJN
+         TE2yVoOvrfU6/VNawydf52KuolV80beSCq5P+qURRcAavSMf9jcW/5VsHIG0i0Es2yRR
+         KnI2TkP/QR4UaB9jwNhI2ktN7BRtVGL478iVj0AwjEg6YgXinYpxpb9eUfGzT1eqLCq6
+         VwEyIwVHqedLewSmXt50itxBl1QONeM7Bpit37S8fRyF1rxcllSB6OAcD502kgnSxIlQ
+         lLjw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=quora.org; s=google; t=1783860467; x=1784465267; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=ikvSy5XLG1P+DmNPA6bgvTYTJm+JvB6ahXSZXySRz+4=;
+        b=R13fC5drIzsay2MDN8HYbDkfzL/oXnPXZkgZsI//N3lBVZCZBkmvdrVGVV3xEIQqaV
+         5MT9dFbdTLxBzD1XdLGBGoIiu6rj9l8auIF0pLGr2h+Sp5jWJ4YqteiIeLWdtv1JYt8V
+         2vw1lfg/808WCo+BgP4xR8faHNSVxdU/6yrZE=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783860467; x=1784465267;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=ikvSy5XLG1P+DmNPA6bgvTYTJm+JvB6ahXSZXySRz+4=;
+        b=HjaeW8dDud58AZUZuzrzR8htEzM8IpKHC+iW/KNte8tvnpJ9VqbR+zdiBU3rBO/Txm
+         Tcvzz/PeISzcRBHias05OmB48q5h87jPcwk+gHor3hmzWXNqlRB4tZzTjpBuf5KVH09g
+         x9TE7sGmI5StRVRLAJIlVyixmCnP7gTSDV345InU+iq5phOSL8fXjycnV2cO0XKeEDX9
+         mg3vKuO0GoLGYvdAHCFasZnovoYs1CjQLkkudWxGG75zSSTeUxIizmdkz+bXvWBi4QuS
+         jZx8SopY4wHJKpAzNln3LfePL72W2XAEIsckY7bqtGbykwMnwlEpgXTyUUDgEZbKFPrw
+         Q+3Q==
+X-Gm-Message-State: AOJu0YwtwQIefvo65ok0bW7XPznfPQ2VN3fn4zIkyiHpkFFMMP9LvRCw
+	debZtkFcJhh3vfk0ZvjrLfYzFj9q6ajeJuLQkLYKHWrl8PbX4APXHpZjhwwobGd1rzPWN0nBnFg
+	oH/Y8DWuT3bnb1SxFh1i3d5tOBlW9XV4wIKbZKz+E1A==
+X-Gm-Gg: AfdE7ckVgOZF+QgCI9u946efp9CpsDi2XuCwmec8M+WD8Aq/DtP4jeCU6gECodQBa+1
+	OpFexQIPsUV3USCET16tBvxKb42/wcp2DqGdXy7xJuKboOzwq1cFoeTTson446UUrQtN7h/cqlC
+	+FpeJ1QgaZGnmL5M21MyuQ+qPNVFjiiWyrBIovUVtnUcjgD77GlfmIV8fXLlZACRXGeARQagsVG
+	tiOOvsKK7ujZCsuKua6Q6VCKsS7MGLHLjDLPDKjxNT8uovQcud7VS/ce66XKRRmlWvgqe+PZCd1
+	5jt/V6hT9bBQ9QekSjtEShZkSQxwP+RTO2WkvcMvz9UJS9DjwbBuo363uTjgpSMniQ3yL3/tpfl
+	68KCiCPmSQ2D+9Eg+1pHz46YlnyQBXamnR/WInkA0rED46k1AP2zjJvirIEe7+/ZiOLNUs4Hw0h
+	3+/01w18/iBGKMUTjCf3mYJdPrniIt+iF/Nt/VUF3AHnNwHiCJb8oM3sPkQBrKcIaxgyq0PD8=
+X-Received: by 2002:a17:903:37c4:b0:2ca:bc05:b082 with SMTP id
+ d9443c01a7336-2ce9f052b73mr58124925ad.29.1783860466725; Sun, 12 Jul 2026
+ 05:47:46 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: hamoa: Reserve low IOVA range for
- Iris
+References: <CAMVG2st2udHCUHZ_2j=jNmwTAVi2Cvda0qGgH4tDZHwsGVfLKQ@mail.gmail.com>
+ <CAMVG2stuY5aTwfmJkL_cLDn86hfuFD+sT-LdqdmN5m21y2aL5g@mail.gmail.com> <zscjwjuqhg36vwsbt735y5gq3bcfxcfh4m46zcgpakacyoxrvf@ekji5eglhdcn>
+In-Reply-To: <zscjwjuqhg36vwsbt735y5gq3bcfxcfh4m46zcgpakacyoxrvf@ekji5eglhdcn>
+From: Daniel J Blueman <daniel@quora.org>
+Date: Sun, 12 Jul 2026 20:47:34 +0800
+X-Gm-Features: AVVi8CdulQCM4FcxmDA84gLCyj97rAnjiQtbUfGcHr-szb3Uwrhdqe4fpBDVKoc
+Message-ID: <CAMVG2st0i7W3S5pyZRqMufL+pfKTkv8e3sLnws0UhOpbqfXbmg@mail.gmail.com>
+Subject: Re: [BUG] qcom: x1: GAMMA_LUT corruption on DPMS wake
 To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Val Packett <val@packett.cool>,
- Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
- Daniel J Blueman <daniel@quora.org>,
- Vikash Garodia <quic_vgarodia@quicinc.com>,
- Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
- Abhinav Kumar <abhinav.kumar@linux.dev>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-media@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, stable@vger.kernel.org,
- Bryan O'Donoghue <bod@kernel.org>
-References: <20260601041336.9497-1-daniel@quora.org>
- <ecavEnqJTDXvfFykc9uJb5No7ioighpjrCdw2CFZ4c8Izr5DxpTs-606Bg7K0RtHTaOqksWivHxWQLzMBP6qow==@protonmail.internalid>
- <20260601041336.9497-2-daniel@quora.org>
- <ec7c564e-745a-4998-af9a-e9632fe063f7@kernel.org>
- <CAMVG2ssnyH=KUKrdfnUOtPYU7p17inyzcYWcKhT4EAZxDzDjfg@mail.gmail.com>
- <cb37e7cc-4fb0-4c24-8f89-f6f9eb08a107@oss.qualcomm.com>
- <ff3748ef-cf75-42b3-850c-b8742a814920@packett.cool>
- <519CAAC5BE344EB7+e6d7f90a-e481-468c-a987-dac3c69d7362@radxa.com>
- <zaigjwjpldnsrzsfbyolnlvblteav5esfstoib4m3eusc67a26@jotedakvvo7m>
-Content-Language: en-US
-From: Xilin Wu <sophon@radxa.com>
-In-Reply-To: <zaigjwjpldnsrzsfbyolnlvblteav5esfstoib4m3eusc67a26@jotedakvvo7m>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpip:radxa.com:qybglogicsvrsz:qybglogicsvrsz3b-0
-X-QQ-XMAILINFO: Nsb+SUszp5Eku/oQs5CDltHlUEt/wMmpGkvv3+vN1HGu4Aa6uUYnLOkv
-	p07dnrq2nRWjR+mxRuT2mg8wYZRfp3/PqT9X9E3Dda+yc9wLA2dPwaS5s3A74MJWirjScTW
-	l/XElJRTNa1r1ZB7bgkX6xoXEygNc3DMZhNf+GIw37l9JKPGDlnA5qdKzpQrZLaJ6KycS6F
-	ZgqgjLEGlUCfd/fhdoBfCHe94VDJ2NUPMQB6fqxjpyEOHwwVGKdTmIzqj6vaMV6EwwVhH/p
-	AQr/+Jzy98HdSEEybSoZtUTsGRnZTN0qYxJTW4BwkA91A5qblsw9riF+dDC3t36MVU5xBm7
-	YSnlskON2LBxBQtIy+CsSkGMy4UmzIinbblaqdqmWKFdAoSvvIS+0fAPoL5M8SawEdmPa7N
-	s2gCnNeHYx4+YtgKyfsWvuzs+EhHBeYyBo4/EwAIiJqYEJuaFVvYcP+lvz6uzvBHHaXsOw1
-	J+i6bzwWHAka2uk4H97dk/iioq5UiRDRKWafbsyWDlTeopn3KHPwph/9/oe74pfkvofoB6H
-	cSyBXG3BjXRWL1hmOCLv2M6oRZxo8N4UCtoWNi3gyYdDs/BBkZk/0PtW3lDXlRkY8kf0v+H
-	HN7LRkWX4tye1hia+kceCJrJL4zIQCL2LgDLQlkln/PSSH236I3VDESVb/JJToPywRr7z+a
-	qS+peuMWay9FJ+T/cu9/9fIQQEAgCyAnQToR4egpwqeNZf+NFxOyVDn4fhBJJJPGSVMylFo
-	yVujR4AX1ZpeGMGn+HKwKs+beOhcqiYrSolTCaMhNHOTZpt2igomlIf52TIICX3A50q2/3X
-	D7+5aWq9ALz6LBeQE2xk9En/aD5YsJ7Mt0K+vSRXhPB64YPMISK7KHtDKzLj8fVdoQ2c+kG
-	5q4Mhk6Zi0xReO178M27l0qHv/ljydLdpLCE4aVX//Fz+//O2B5HJNFOJNWjGdmPhk+5mM/
-	yX2F4FZSQRNMDK5UeAOn0+yf3zbFDQt+Qh4drgR68m2I11ohtzcpxb0/O5mVPGWqyom98kC
-	gQJ1mYZi2xIXtfvgBiGs2smHqBIKaQSj74KsOhnrryfwZNFE1Vps4rhxf7zT4b5WlQAl8Mk
-	+1CbeFJOAqjT3jTl2uQ1v70J3K1er9UR1NTKFMFG/o+
-X-QQ-XMRINFO: NS+P29fieYNwqS3WCnRCOn9D1NpZuCnCRA==
-X-QQ-RECHKSPAM: 0
+Cc: linux-arm-msm@vger.kernel.org, Rob Clark <robin.clark@oss.qualcomm.com>, 
+	Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>, 
+	Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, Abel Vesa <abel.vesa@oss.qualcomm.com>, 
+	Krzysztof Kozlowski <krzk@kernel.org>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+	Jun Nie <jun.nie@linaro.org>, Federico Amedeo Izzo <federico@izzo.pro>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, 
+	=?UTF-8?Q?Thomas_Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>, 
+	Randy Dunlap <rdunlap@infradead.org>, Linux Kernel <linux-kernel@vger.kernel.org>, 
+	Val Packett <val@packett.cool>, Steev Klimaszewski <threeway@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [0.14 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+X-Spamd-Result: default: False [-1.66 / 15.00];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
 	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_DKIM_ALLOW(-0.20)[quora.org:s=google];
 	MAILLIST(-0.15)[generic];
-	DMARC_POLICY_SOFTFAIL(0.10)[radxa.com : SPF not aligned (relaxed), No valid DKIM,none];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_RECIPIENTS(0.00)[m:dmitry.baryshkov@oss.qualcomm.com,m:val@packett.cool,m:vikash.garodia@oss.qualcomm.com,m:daniel@quora.org,m:quic_vgarodia@quicinc.com,m:dikshita.agarwal@oss.qualcomm.com,m:abhinav.kumar@linux.dev,m:andersson@kernel.org,m:konradybcio@kernel.org,m:mchehab@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-media@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:stable@vger.kernel.org,m:bod@kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	RECEIVED_HELO_LOCALHOST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
 	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS(0.00)[m:dmitry.baryshkov@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:robin.clark@oss.qualcomm.com,m:lumag@kernel.org,m:abhinav.kumar@linux.dev,m:jesszhan0024@gmail.com,m:sean@poorly.run,m:marijn.suijten@somainline.org,m:dri-devel@lists.freedesktop.org,m:freedreno@lists.freedesktop.org,m:abel.vesa@oss.qualcomm.com,m:krzk@kernel.org,m:airlied@gmail.com,m:simona@ffwll.ch,m:jun.nie@linaro.org,m:federico@izzo.pro,m:neil.armstrong@linaro.org,m:thomas.weissschuh@linutronix.de,m:rdunlap@infradead.org,m:linux-kernel@vger.kernel.org,m:val@packett.cool,m:threeway@gmail.com,s:lists@lfdr.de];
+	RCVD_COUNT_THREE(0.00)[4];
+	DMARC_NA(0.00)[quora.org];
+	FORGED_SENDER(0.00)[daniel@quora.org,linux-arm-msm@vger.kernel.org];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[19];
-	FORGED_SENDER(0.00)[sophon@radxa.com,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[22];
+	RCVD_TLS_LAST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
 	FORWARDED(0.00)[lists@lfdr.de];
-	TAGGED_FROM(0.00)[bounces-118564-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-118565-lists,linux-arm-msm=lfdr.de];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
+	DKIM_TRACE(0.00)[quora.org:+];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[sophon@radxa.com,linux-arm-msm@vger.kernel.org];
-	FORGED_MUA_MAILLIST(0.00)[];
-	R_DKIM_NA(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MID_RHS_MATCH_FROM(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[daniel@quora.org,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_CC(0.00)[vger.kernel.org,oss.qualcomm.com,kernel.org,linux.dev,gmail.com,poorly.run,somainline.org,lists.freedesktop.org,ffwll.ch,linaro.org,izzo.pro,linutronix.de,infradead.org,packett.cool];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,radxa.com:from_mime,radxa.com:email,radxa.com:mid]
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	TO_DN_SOME(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[gitlab.freedesktop.org:url,mail.gmail.com:mid,vger.kernel.org:from_smtp,quora.org:from_mime,quora.org:email,quora.org:dkim,qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 9D7F0744A6F
+X-Rspamd-Queue-Id: 8B87C744BBF
 
-On 7/12/2026 8:14 PM, Dmitry Baryshkov wrote:
-> On Mon, Jun 08, 2026 at 12:17:57PM +0800, Xilin Wu wrote:
->> On 6/8/2026 11:48 AM, Val Packett wrote:
->>>
->>> On 6/4/26 3:38 AM, Vikash Garodia wrote:
->>>>
->>>>
->>>> On 6/2/2026 9:05 PM, Daniel J Blueman wrote:
->>>>> On Tue, 2 Jun 2026 at 18:27, Bryan O'Donoghue <bod@kernel.org> wrote:
->>>>>>
->>>>>> On 01/06/2026 05:13, Daniel J Blueman wrote:
->>>>>>> On X1-family hamoa platforms, Iris DMA below IOVA 0x25800000 (600MB)
->>>>>>> triggers unhandled SMMU page faults
->>>>>>
->>>>>> How do we know that is a correct address - does it come from qcom
->>>>>> documentation or trial and error ?
->>>>>
->>>>> @Vikash, beyond your comment I linked in the patch [1] kindly cite a
->>>>> source for the different stream-ID <600MB behaviour, and share
->>>>> specifics, eg if silicon, firmware, or driver and constraint, defect
->>>>> or otherwise, so I can include a definitive description.
->>>>>
->>>>> Also good to know if my workaround is good for long-term, or on the
->>>>> other hand handling streams <600MB is important/useful.
->>>>>
->>>>
->>>> Thanks Daniel for raising this patch. Did you also try the memory
->>>> fix i mentioned in the bug [1] discussion ?
->>>>
->>>> Coming to 600MB, this have been the VPU hardware restriction all the
->>>> while since venus days, and since address could not go deeper all
->>>> the way lower than 600MB, the issue never popped up earlier.
->>>>
->>>> Consider the memory layout split as below (Iris device range is
->>>> capped to 0xe0000000)
->>>>
->>>> |-----600MB-----|-----(0xe0000000 - 600MB)-----|----IO reg--|
->>>>
->>>> 0-600MB range, VPU hardware would reserve this to generate different
->>>> stream-IDs primarily for internal (non-pixel) buffers.
->>>>
->>>> 0-600 --> VPU would generate *secure* stream ID for non-pixel buffers
->>>> 601 - 0xe0000000 --> VPU would generate non-secure stream ID for
->>>> non- pixel buffers.
->>>>
->>>> When many concurrent sessions were tried, non-pixel buffers were
->>>> mapped into 0-600MB range, and VPU generated secure ID for those.
->>>> Since those were not associated with the iommus configured for iris
->>>> node, it led to USF (un-identified stream fault) and device would
->>>> crash.
->>>
->>> Umm.. is anything *actually* preventing us from adding the "secure" SID
->>> to the iommu node?
->>>
->>> I just saw a patch for sc8280xp that did just add an "extra" SID for iris:
->>>
->>> https://github.com/strongtz/linux-radxa-qcom/commit/
->>> e92850f792498c3a72d72d667503a29bf6bb0a31
->>>
->>> and I'm wondering if that's about the same exact issue.. (Adding sophon@
->>> to Cc: here)
->>>
->>
->> I'm not sure if we're having the same issue. Without adding that SID on
->> sc8280xp (HFI Gen2 FW), it fails to decode anything and crashes instantly.
->>  From the trustzone log inside the crashdump, I can see that the buffer isn't
->> actually in the 0-600MB range.
-> 
-> Hmm. The decoding is working on Lenovo X13s ([1]). It says 6.18, but it
-> was the Iris driver patched to support SM8350 / SC8280XP, which I posted
-> some time ago. For the reference, the firmware reports the version to
-> be: video-firmware.1.1-b158087140355883dc40b004032856a8feb5d565.
-> 
-> [1] https://github.com/lumag/fluster-tests/blob/trunk/iris-sc8280xp.md
-> 
+On Sun, 12 Jul 2026 at 19:56, Dmitry Baryshkov
+<dmitry.baryshkov@oss.qualcomm.com> wrote:
+>
+> On Sun, Jun 14, 2026 at 06:27:50PM +0800, Daniel J Blueman wrote:
+> > On Mon, 1 Jun 2026 at 13:37, Daniel J Blueman <daniel@quora.org> wrote:
+> > > Since Adreno X1-85 GAMMA_LUT support was introduced in Linux v7.0 (eg
+> > > Ubuntu 26.04), when waking from DPMS-off, palette corruption is
+> > > frequently seen; this manifests as purple banding. If GNOME night
+> > > light or similar is enabled, the visual impact is greater.
+> > >
+> > > Further, on larger panel monitors or laptops eg the Lenovo Yoga Slim
+> > > 7x (2944x1840), a second INT2 block is used for the right half of the
+> > > screen, which may remain totally blank on wake; major usability
+> > > impact.
+> > >
+> > > Intuitively, the symptoms feel like the LUT SRAM clock isn't being
+> > > driven soon enough during the wakeup, thus state loss may depend on
+> > > silicon binning/variation or related. No such symptom is seen in
+> > > Windows on the same hardware. I found a workaround supporting this
+> > > mechanism is to activate the GNOME night light and adjust the slider
+> > > to update the LUT - any black right half of the screen always
+> > > reappears.
+> > >
+> > > Please can someone with X1-85 Adreno insight check the Linux clock and
+> > > power domain behaviour around GC_EN, Layer Mixer, INTerFace and INT2
+> > > on DPMS wake? Happy to test changes; this is a stunning platform
+> > > otherwise.
+> > ...
+> > > Link: https://gitlab.freedesktop.org/drm/msm/-/work_items/89
+> >
+> > Just a heads-up on this with additional findings. Note this issue
+> > could be the only remaining daily friction on X1 laptops with suspend,
+> > once my video decode reboot workaround or similar is merged. Also note
+> > in my case, without GNOME night light active, only a few LUT entries
+> > render purple so visual artifacts often go unnoticed until a gradient
+> > eg in an image is visible.
+>
+> Could you please check if increasing reg_bus_bw in msm_mdss.c would fix
+> the issue? It's not a proper fix yet, but it might help me to understand
+> the issue.
 
-Yeah, HFI Gen1 FW should work on SC8280XP. But what I'm using is HFI 
-Gen2 FW, it reports: 
-video-firmware.2.4.2-39cc47c1d64195c749014787e6ab938cc34a4071
+Adjusting like so [1] didn't resolve the issue, however it was worth
+ruling out. Perhaps you could check with the Windows driver team why
+the DMA descriptor approach was used for LUT setup?
 
+> > From DPMS wake on a dual-LM panel (>2560 pixels wide) with
+> > INTF_5/DSPP_0 (master) and INTF_6/DSPP_1, I find DSPP_1's registers
+> > are intermittently unresponsive just after MDSS resume. DSPP_0 doesn't
+> > exhibit this issue, suggesting some missing slave/second unit setup,
+> > despite booting clk_ignore_unused pd_ignore_unused.
+> >
+> > I found the extracted Windows DSDT \_SB.PEP0.G0MD F-state EXIT block
+> > enables disp_cc_mdss_rscc_ahb_clk and disp_cc_mdss_rscc_vsync_clk;
+> > could this relate? RSCC being the RPMh bridge subblock. Also, could
+> > any of the *1_CLK or MDSS_INT2_GDSC entries in dispcc-x1e80100.c lack
+> > setup?
+>
+> RSCC should not affect these blocks.
 
+Good tip on ruling this out too!
+
+Thanks,
+  Dan
+
+-- [1]
+
+--- a/drivers/gpu/drm/msm/msm_mdss.c
++++ b/drivers/gpu/drm/msm/msm_mdss.c
+@@ -22,7 +22,7 @@
+
+ #include <generated/mdss.xml.h>
+
+-#define MIN_IB_BW      400000000UL /* Min ib vote 400MB */
++#define MIN_IB_BW      800000000UL /* Min ib vote 400MB */
+
+ struct msm_mdss_data {
+        u32 reg_bus_bw;
+@@ -521,7 +521,7 @@ static const struct msm_mdss_data data_76k8 = {
+ };
+
+ static const struct msm_mdss_data data_153k6 = {
+-       .reg_bus_bw = 153600,
++       .reg_bus_bw = 153600*16,
+ };
+
+ static const struct of_device_id mdss_dt_match[] = {
 -- 
-Best regards,
-Xilin Wu <sophon@radxa.com>
+Daniel J Blueman
 
