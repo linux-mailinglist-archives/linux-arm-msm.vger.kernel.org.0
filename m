@@ -1,63 +1,108 @@
-Return-Path: <linux-arm-msm+bounces-118625-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-118626-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id dLYYA35wVGpImAMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-118625-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jul 2026 06:58:38 +0200
+	id OgvtKil2VGoVmQMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-118626-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jul 2026 07:22:49 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 228D27472C7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jul 2026 06:58:37 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 453E97473D0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jul 2026 07:22:48 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b="QSQM/9Fw";
-	dmarc=pass (policy=quarantine) header.from=kernel.org;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118625-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 104.64.211.4 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118625-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b="Y/IOHKSZ";
+	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=fVCIXAad;
+	dmarc=pass (policy=reject) header.from=qualcomm.com;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118626-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118626-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 56A7B3001FB5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jul 2026 04:58:34 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 51D703018415
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jul 2026 05:22:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F0F5634FF78;
-	Mon, 13 Jul 2026 04:58:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 964453546C7;
+	Mon, 13 Jul 2026 05:22:45 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF4F334B1B0;
-	Mon, 13 Jul 2026 04:58:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CB9D33F58E
+	for <linux-arm-msm@vger.kernel.org>; Mon, 13 Jul 2026 05:22:44 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783918712; cv=none; b=KqZ+nKjfhRQxAxxrAA3dYHjPnG6NDLNKkmy2V/nzilXRHejv0CS3zV6OMUiF9UVUVp9ewVb+omuJnha8fcengoglx16gPkA/AnNe3CfkGZtGWT3EWHFJ8T3WRkm5DqxKQ3uL1VNZpbM1K1ix0M7HPhMhJ4mugNlfNvAN2tHNx6M=
+	t=1783920165; cv=none; b=dNrRtxQPgPgomJWQ6ZCQ82YIBWbb1FCc0x7IYdTgc38RfYzxJxWlK4biFxozw28ZLNI09P0lTI6gw96YBUOvYK9ulwJw6Ylu8PXBsE5OeZ7jdVHcChIcpctpoDvYpDgq2LJP3lL6Jk5SKhFlPE6U9IU4H0Kf35U65pzqJ7tv21g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783918712; c=relaxed/simple;
-	bh=5njnKo29w8kc6JMHRuRJGIrtXmktba8Y7wx2HHDcCzU=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=BSJwFg29hZ5fsQzNZwP2eL3/P67m1wie8NtPZH/m3zPxY0TsIQDQ4Ud1VGxZ4u16c6ZHSpOYDJhDOV6pL1vkZ+s1eTXyuOi350xlROs8rojl6CQZ3CPV4xw66pLdrfftTLLmCYAYF96o7EgK2wwY817oX/buSZeOHbmuIvnrTXA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QSQM/9Fw; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 935DC1F000E9;
-	Mon, 13 Jul 2026 04:58:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783918711;
-	bh=KRUKLnvBs/SujqKpE+qYHik+YrUz1JqhUnXNKN/zyLI=;
-	h=From:To:Cc:Subject:Date;
-	b=QSQM/9Fw+cphQhyWjHsrTU5EheVronz7E+s057woHyKnzTP+s830YJyBpCf5wGsAc
-	 slcNop12xvpL+k8kBzLHUddudjq6A/Qf3wIPov9F1cnVcEiV9RCr4zlppbJycmMJaD
-	 /+bbSCCxxwTs7x9fP3LhMBOnzwQw7Cw7ApTgl/W8yBIY1Is9k/sA1lqkL+AG5ttv7Z
-	 ijOOOSWBLxUwBvEODGxYa47CKGqv7DZQ04OCIYHhslwARYhSigINE9Mth2EsUT/z66
-	 sitk5jPApDN6C1UgG/ppHC7X0OA4C5ZtpUhvGtqxSHomG9mmWJVcWbnDcGADWikT2M
-	 CswpVgbiX0/qQ==
-From: Sumit Garg <sumit.garg@kernel.org>
-To: linux-arm-msm@vger.kernel.org
-Cc: andersson@kernel.org,
-	konradybcio@kernel.org,
-	linux-kernel@vger.kernel.org,
-	bartosz.golaszewski@oss.qualcomm.com,
-	harshal.dev@oss.qualcomm.com,
-	Sumit Garg <sumit.garg@oss.qualcomm.com>,
-	kernel test robot <lkp@intel.com>
-Subject: [PATCH] firmware: qcom: scm: fold tzmem into the qcom-scm module
-Date: Mon, 13 Jul 2026 10:28:11 +0530
-Message-ID: <20260713045811.484554-1-sumit.garg@kernel.org>
-X-Mailer: git-send-email 2.53.0
+	s=arc-20240116; t=1783920165; c=relaxed/simple;
+	bh=jSocg4W7Fm6BCEJ1cPt3D5MBJ9ChOmGGYTvNncubJq4=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=Fe/HqHAgW2mLUwEzNXqpdo9bsuGZeO4PFVW1DgV7M3Z/uLVwM/4ov5CJBC60Rb8B/kTzotaIo6lIwtztixRNNg/BpZcn3fetudM5NwyPra1yqZk27qEoJawaHMjugVX7WPaOLP0Nj/JlU+lQWZ3RB1fHKkrq+M5lpIt+rIKAf3I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Y/IOHKSZ; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=fVCIXAad; arc=none smtp.client-ip=205.220.180.131
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66D39tc7184857
+	for <linux-arm-msm@vger.kernel.org>; Mon, 13 Jul 2026 05:22:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=qPjS1A0Zh8DHuBLLvW8n3u0p7R2socgS97N
+	yLVt7XYc=; b=Y/IOHKSZzU1yQStBFlWhxIyYE16pX9Ky/HFUf7OYhG2u5JSF5kk
+	pCHdS2+3eGaEkZqUGxt/jpoFEfZmoFWUDfWLeZ/7x0VclJCoq0F90UdLuABvxR4W
+	NpslEtI4nw1jrgRtYGidPObFu45IPD9HaxA1EibjERjqivUkXMck6v6VWOA0YLSf
+	CaPBfDcuHWYTUQTNstkcMCMD/CYQ7Zk+143LNv+1wKDq64nbpBkSUj8h1HFaSAp/
+	YmaELZVTupq4lxCFGtHVjsl7/qy0v2dqq9zYvaiIhk9mgApPf4NZC1hSd/UCys2K
+	IhrS/CkBSh5OFMK/eyx7p3URiSZ44Ng1WLg==
+Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com [209.85.215.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fbeamvfjr-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 13 Jul 2026 05:22:43 +0000 (GMT)
+Received: by mail-pg1-f200.google.com with SMTP id 41be03b00d2f7-c856470fe9fso2481450a12.2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 12 Jul 2026 22:22:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1783920162; x=1784524962; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=qPjS1A0Zh8DHuBLLvW8n3u0p7R2socgS97NyLVt7XYc=;
+        b=fVCIXAad2wVfm5112wyOxYi9+7ZApnFzEvWBlG9cD7aUUnMaLgq2c70BBzm36uK1nJ
+         cYhiUJoBS3BVH4Cr3cvbmWyfn/AIkp5WDuQR9B1+dAjAKvdkhrgx70Qza/NY53ttUbH+
+         ee6fTUXKjV67NhxPHHFo8YKq07LAzvhENW0+dSzHwftx7dmwNfxQIuZ2She296arQTIB
+         YtYRzC1Kk5GKaXlQC1JSHp95ytOq804tiP2i/Vdf6DsomiCq/roe/Rpikqk4L+0ZcMkW
+         c+kHL8p7e3hXBDOPECX+H2A7jcaI6yxbnl6DL539kioYukBLZU/3rcRTa3/YyzDAHo9w
+         kxLA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783920162; x=1784524962;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=qPjS1A0Zh8DHuBLLvW8n3u0p7R2socgS97NyLVt7XYc=;
+        b=LFxNjT9OZSCnNGJfnJe7QWUvaET1YGigcAbcs+I0/Kqyi9ZpJLbkEbIjSfKq2wX5+a
+         pbgwo+ulM26ghqe0gy0EaQtabgrO/NmvIMJo1YCUb8pHlileF++9ooDe7/G6Mf+Tcld5
+         uOcRQV2Rvpc9p63wExJB0RNxc7eS/beCJA099gAjok3sb+Fh3U3LdOXqqVS8lh5Y10BG
+         uLtI1+cjSl2Uf6XalzrHX5wsY/JhNw070R1jxvfMIa39c2Mq/KnR92r7OpuCV5rbQbTb
+         8EQfXm57ypjNn0tzZRpACX+CkC53SxEa0htoAmB5XEDI+LKq5RLYTW7YbNnX8VBy5jsY
+         N8uw==
+X-Forwarded-Encrypted: i=1; AHgh+RoHyIZa6e9TF4W3cpmfaLY2G+K4YrIt31dVbhOMXzTyRYz/cD8/TZxL/L3K2RIQ4+HQsNfTGgpAaVwm6H/9@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxjn0OtYyh39+CsHMoOAzxhNNGBfeN13QPTsKESYyu7i+4obdy9
+	myfPpMz0P9t0rLXnkcrG52yhE2Jmyw3tQFxlew8KEggWRXRcvwrehHN5t2qqzvviRElo5tFDLHM
+	rTCDEjth0zieJfScRhoEOWHcZ/e83ffB3XfT9iqOkzKXfeqp6wD9Hu6rcxTrtVqoZlNZT
+X-Gm-Gg: AfdE7cl7MHPlcLbPo9GoyAijb8tNMU7+R24XMe4vGwz8xLsYbbFFHegXJRpxvo4WuzZ
+	a15jkSUO2THoGPv8LxZnKPW6luVnSCb37MRFrJaMAAOe6AckUqAdJm0sXuMk4a8ZgmUU4wIxyX8
+	y2Qs5AlYomsELRFkIf7RM0laC8RqcKur8/ns5igmwxj9jj3gjauoxBW6zisArDB4SKuYhrM8O76
+	tjYd8cRX4okFTudsfGrOLk1rWO69CaLmeLyekiB14FI63J0nlOu6e8d0R6TGTxg1aJr0VorhRgj
+	3xUkwsp7DJyPm0VquzyN8dys1u0moiWWVJqqE0lJXTqKjc3nKYF3WY6PhJuP166vwzPR2yYqxfw
+	cNAxWiySaCDTK2qaTegHY9N3k3lVw/TqalAt/5eu7upE=
+X-Received: by 2002:a05:6a21:1798:b0:3c0:9c1a:8952 with SMTP id adf61e73a8af0-3c110b35019mr7630845637.74.1783920162203;
+        Sun, 12 Jul 2026 22:22:42 -0700 (PDT)
+X-Received: by 2002:a05:6a21:1798:b0:3c0:9c1a:8952 with SMTP id adf61e73a8af0-3c110b35019mr7630823637.74.1783920161762;
+        Sun, 12 Jul 2026 22:22:41 -0700 (PDT)
+Received: from hu-ekangupt-hyd.qualcomm.com ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-ca75ef0c30dsm6245605a12.17.2026.07.12.22.22.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 12 Jul 2026 22:22:41 -0700 (PDT)
+From: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
+To: srini@kernel.org, linux-arm-msm@vger.kernel.org
+Cc: gregkh@linuxfoundation.org, quic_bkumar@quicinc.com,
+        linux-kernel@vger.kernel.org, quic_chennak@quicinc.com,
+        dri-devel@lists.freedesktop.org, arnd@arndb.de,
+        dmitry.baryshkov@oss.qualcomm.com
+Subject: [PATCH v13 0/4] misc: fastrpc: Add polling mode support
+Date: Mon, 13 Jul 2026 10:52:32 +0530
+Message-Id: <20260713052236.3033744-1-ekansh.gupta@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,148 +110,138 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzEzMDA1MiBTYWx0ZWRfXxKXYwHAxAHqp
+ CAJnrxRVM4JZUKVJldc0nqHPA6ajsvm21PAnHThmY5R14WJxqkQIvcaN06RzkpaxA/kMnM/D6LF
+ +vLS4Hi+sLvLqJTobVodxZk4WJZ8y5w=
+X-Proofpoint-GUID: fF_vzhz7ay2WdZkyh-uWg1wLqB-FpyV7
+X-Proofpoint-ORIG-GUID: fF_vzhz7ay2WdZkyh-uWg1wLqB-FpyV7
+X-Authority-Analysis: v=2.4 cv=dJSWXuZb c=1 sm=1 tr=0 ts=6a547623 cx=c_pps
+ a=oF/VQ+ItUULfLr/lQ2/icg==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+ a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22 a=NEAV23lmAAAA:8
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=JBkMMMYkqyTW2kI42m8A:9
+ a=3WC7DwWrALyhR5TkjVHa:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzEzMDA1MiBTYWx0ZWRfX8laIkl15TG3V
+ xbU2L/1fSJH2Zcwfk0ggyC5FUAJIThYyPmHQQLPeNMNXceGP/TWn5VmIzAAIuhZn8j2ycw8EHQV
+ GhCf9ySvA/f0VnuezJ55lw81dPmyovkqf8pJWKOzI1NhBERx+PLFOvUbgp3iHvMug5tarx4Femq
+ pqMw4TZeN0ExA++IHg5tTo2JMhE81AwR1Cd8Zw+yyJGR7ETJY7t8EErSK4SvQIzF0CUFVoOTHGQ
+ 9PDsBRk9a7tOozasXZOxJgr3Sr1ZqVWW6JGZgpQQ3+YjDKyIj4xIOi2nCEKJu6Ih542ZmifyrQB
+ N+Zz9CYtWlx3ioPZzjbLAQyKrON4fGTM2LRtZSOSU3WTTXvZi39ob34ovCdetqbRBkntOqxQkND
+ z/f8zVnscU8NhinQPQmO5pOuSswlMBhKm5oLkap3oCdLy9GSwZbHRdlWc9JEq+KfkIlKeToSP3I
+ q4ABtu6iZD5H5mIwvLQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-13_01,2026-07-10_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 impostorscore=0 suspectscore=0 phishscore=0 clxscore=1015
+ spamscore=0 priorityscore=1501 lowpriorityscore=0 adultscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607130052
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-3.66 / 15.00];
-	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
-	MID_CONTAINS_FROM(1.00)[];
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	MID_CONTAINS_FROM(1.00)[];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
 	R_MISSING_CHARSET(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_RECIPIENTS(0.00)[m:linux-arm-msm@vger.kernel.org,m:andersson@kernel.org,m:konradybcio@kernel.org,m:linux-kernel@vger.kernel.org,m:bartosz.golaszewski@oss.qualcomm.com,m:harshal.dev@oss.qualcomm.com,m:sumit.garg@oss.qualcomm.com,m:lkp@intel.com,s:lists@lfdr.de];
-	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-118625-lists,linux-arm-msm=lfdr.de];
-	RCVD_COUNT_THREE(0.00)[4];
-	RCVD_TLS_LAST(0.00)[];
-	FORGED_SENDER(0.00)[sumit.garg@kernel.org,linux-arm-msm@vger.kernel.org];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	FORWARDED(0.00)[lists@lfdr.de];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[sumit.garg@kernel.org,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	ALIAS_RESOLVED(0.00)[];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	TO_DN_SOME(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[8];
+	RCVD_TLS_LAST(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FORGED_RECIPIENTS(0.00)[m:srini@kernel.org,m:linux-arm-msm@vger.kernel.org,m:gregkh@linuxfoundation.org,m:quic_bkumar@quicinc.com,m:linux-kernel@vger.kernel.org,m:quic_chennak@quicinc.com,m:dri-devel@lists.freedesktop.org,m:arnd@arndb.de,m:dmitry.baryshkov@oss.qualcomm.com,s:lists@lfdr.de];
+	FORGED_SENDER(0.00)[ekansh.gupta@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-118626-lists,linux-arm-msm=lfdr.de];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,intel.com:email,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,vger.kernel.org:from_smtp]
+	PRECEDENCE_BULK(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[ekansh.gupta@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	TO_DN_NONE(0.00)[];
+	ALIAS_RESOLVED(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,oss.qualcomm.com:from_mime,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,qualcomm.com:dkim];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[9];
+	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 228D27472C7
+X-Rspamd-Queue-Id: 453E97473D0
 
-From: Sumit Garg <sumit.garg@oss.qualcomm.com>
+This patch series adds polling mode feature that have been missing in
+upstream FastRPC driver.
 
-qcom_scm and qcom_tzmem have a mutual symbol dependency: qcom_tzmem
-calls qcom_scm_shm_bridge_{enable,create,delete}() while qcom_scm
-calls qcom_tzmem_{alloc,free,to_phys}() and qcom_scm_get_tzmem_pool().
-When both are built as modules this results in a circular module
-dependency and depmod fails:
+- Add changes to move fdlist to ctx structure to avoid code duplicacy.
+- Update context mask to support polling mode.
+- Add changes to support polling feature.
 
-  depmod: ERROR: Cycle detected: qcom_scm -> qcom_tzmem -> qcom_scm
+Userspace change: https://github.com/qualcomm/fastrpc/pull/258
+Patch [v12]: https://lore.kernel.org/all/20260521054539.128651-1-ekansh.gupta@oss.qualcomm.com/
 
-QCOM_TZMEM is an invisible tristate that is only ever selected by
-QCOM_SCM, so the two are always enabled together. Build qcom_tzmem.o
-as part of the qcom-scm composite module instead of as a separate
-module. This breaks the cycle since the mutual symbol references
-become intra-module.
+Changes in v13:
+  - Fixed race between recycled ctxid and late glink response.
 
-With tzmem now internal to qcom-scm, the shm_bridge helpers are no
-longer used outside the module, so drop their EXPORT_SYMBOL_GPL() and
-move the declarations from the public header to the private one,
-alongside qcom_scm_shm_bridge_enable().
+Changes in v12:
+  - Fixed poll_mode_supported check.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202607122327.3zkZCUaB-lkp@intel.com/
-Assisted-by: Copilot:claude-opus-4.8
-Signed-off-by: Sumit Garg <sumit.garg@oss.qualcomm.com>
----
- drivers/firmware/qcom/Makefile         | 2 +-
- drivers/firmware/qcom/qcom_scm.c       | 3 ---
- drivers/firmware/qcom/qcom_scm.h       | 4 ++++
- include/linux/firmware/qcom/qcom_scm.h | 5 -----
- 4 files changed, 5 insertions(+), 9 deletions(-)
+Changes in v11:
+  - Moved back to read_poll*.
+  - Improved error handling.
 
-diff --git a/drivers/firmware/qcom/Makefile b/drivers/firmware/qcom/Makefile
-index 48801d18f37b..55751d282689 100644
---- a/drivers/firmware/qcom/Makefile
-+++ b/drivers/firmware/qcom/Makefile
-@@ -5,7 +5,7 @@
- 
- obj-$(CONFIG_QCOM_SCM)		+= qcom-scm.o
- qcom-scm-objs += qcom_scm.o qcom_scm-smc.o qcom_scm-legacy.o
--obj-$(CONFIG_QCOM_TZMEM)	+= qcom_tzmem.o
-+qcom-scm-$(CONFIG_QCOM_TZMEM)	+= qcom_tzmem.o
- obj-$(CONFIG_QCOM_QSEECOM)	+= qcom_qseecom.o
- obj-$(CONFIG_QCOM_QSEECOM_UEFISECAPP) += qcom_qseecom_uefisecapp.o
- obj-$(CONFIG_QCOM_PAS)		+= qcom_pas.o
-diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
-index 1deee6aea387..3495cd8af715 100644
---- a/drivers/firmware/qcom/qcom_scm.c
-+++ b/drivers/firmware/qcom/qcom_scm.c
-@@ -1813,7 +1813,6 @@ int qcom_scm_shm_bridge_enable(struct device *scm_dev)
- 
- 	return res.result[0];
- }
--EXPORT_SYMBOL_GPL(qcom_scm_shm_bridge_enable);
- 
- int qcom_scm_shm_bridge_create(u64 pfn_and_ns_perm_flags,
- 			       u64 ipfn_and_s_perm_flags, u64 size_and_flags,
-@@ -1841,7 +1840,6 @@ int qcom_scm_shm_bridge_create(u64 pfn_and_ns_perm_flags,
- 
- 	return ret ?: res.result[0];
- }
--EXPORT_SYMBOL_GPL(qcom_scm_shm_bridge_create);
- 
- int qcom_scm_shm_bridge_delete(u64 handle)
- {
-@@ -1855,7 +1853,6 @@ int qcom_scm_shm_bridge_delete(u64 handle)
- 
- 	return qcom_scm_call(__scm->dev, &desc, NULL);
- }
--EXPORT_SYMBOL_GPL(qcom_scm_shm_bridge_delete);
- 
- int qcom_scm_lmh_profile_change(u32 profile_id)
- {
-diff --git a/drivers/firmware/qcom/qcom_scm.h b/drivers/firmware/qcom/qcom_scm.h
-index caab80a73e17..0e7cd1e31d6f 100644
---- a/drivers/firmware/qcom/qcom_scm.h
-+++ b/drivers/firmware/qcom/qcom_scm.h
-@@ -84,6 +84,10 @@ int scm_legacy_call(struct device *dev, const struct qcom_scm_desc *desc,
- 
- struct qcom_tzmem_pool *qcom_scm_get_tzmem_pool(void);
- int qcom_scm_shm_bridge_enable(struct device *scm_dev);
-+int qcom_scm_shm_bridge_create(u64 pfn_and_ns_perm_flags,
-+			       u64 ipfn_and_s_perm_flags, u64 size_and_flags,
-+			       u64 ns_vmids, u64 *handle);
-+int qcom_scm_shm_bridge_delete(u64 handle);
- 
- #define QCOM_SCM_SVC_BOOT		0x01
- #define QCOM_SCM_BOOT_SET_ADDR		0x01
-diff --git a/include/linux/firmware/qcom/qcom_scm.h b/include/linux/firmware/qcom/qcom_scm.h
-index a0a6bc0229c4..b7d5f30876e1 100644
---- a/include/linux/firmware/qcom/qcom_scm.h
-+++ b/include/linux/firmware/qcom/qcom_scm.h
-@@ -133,11 +133,6 @@ bool qcom_scm_lmh_dcvsh_available(void);
- 
- int qcom_scm_gpu_init_regs(u32 gpu_req);
- 
--int qcom_scm_shm_bridge_create(u64 pfn_and_ns_perm_flags,
--			       u64 ipfn_and_s_perm_flags, u64 size_and_flags,
--			       u64 ns_vmids, u64 *handle);
--int qcom_scm_shm_bridge_delete(u64 handle);
--
- #ifdef CONFIG_QCOM_QSEECOM
- 
- int qcom_scm_qseecom_app_get_id(const char *app_name, u32 *app_id);
+Changes in v10:
+  - Add milos and sar2130p to fastrpc_poll_supported_machines. 
+  - Updated comment for supported platform list.
+
+Changes in v9:
+  - Added platform support check.
+  - Moved to readl as per Luben's suggestion.
+  - Cleaned up fastrpc_wait_for_completion().
+
+Changes in v8:
+  - Added more comments.
+
+Changes in v7:
+  - Fixed warnings.
+  - Fixed commit text.
+  - Addressed clean-up comments.
+
+Changes in v6:
+  - Fixed poll memory calculation.
+  - Added few formatting changes.
+
+Changes in v5:
+  - Add more details in commit text.
+
+Changes in v4:
+  - Replace hardcoded ctxid mask with GENMASK.
+  - Fixed commit text.
+
+Changes in v3:
+  - Resolve compilation warning.
+
+Changes in v2:
+  - Added comments and fixed commit text.
+  - Defined context id position as a macro.
+  - Added new IOCTL to control polling mode as always enabling
+    it might cause excess power consumption.
+  - Cleaned up polling mode implementation.
+
+Ekansh Gupta (4):
+  misc: fastrpc: Move fdlist to invoke context structure
+  misc: fastrpc: Replace hardcoded ctxid mask with GENMASK
+  misc: fastrpc: Expand context ID mask for DSP polling mode support
+  misc: fastrpc: Add polling mode support for fastRPC driver
+
+ drivers/misc/fastrpc.c      | 214 ++++++++++++++++++++++++++++++++----
+ include/uapi/misc/fastrpc.h |  29 +++++
+ 2 files changed, 223 insertions(+), 20 deletions(-)
+
 -- 
-2.53.0
+2.34.1
 
 
