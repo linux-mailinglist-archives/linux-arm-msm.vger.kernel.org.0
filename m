@@ -1,133 +1,201 @@
-Return-Path: <linux-arm-msm+bounces-118851-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-118854-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id Z9ZKOYUtVWrTkwAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-118851-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jul 2026 20:25:09 +0200
+	id Yo4vFZoyVWonlQAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-118854-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jul 2026 20:46:50 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 55C1E74E73E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jul 2026 20:25:09 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id BBD7074E942
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jul 2026 20:46:49 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=none;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118851-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118851-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=none;
+	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=ie3Q2xxi;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118854-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118854-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=reject) header.from=qualcomm.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 4C90F3023048
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jul 2026 18:25:08 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 620623088FDF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jul 2026 18:46:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9ECFC3537CE;
-	Mon, 13 Jul 2026 18:25:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CB0F0355055;
+	Mon, 13 Jul 2026 18:46:09 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from air.basealt.ru (air.basealt.ru [193.43.8.18])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33C723537CD;
-	Mon, 13 Jul 2026 18:25:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B216353A66;
+	Mon, 13 Jul 2026 18:46:08 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783967105; cv=none; b=E98Ga/kWR/zxoLLy7Y5Dy6XgmenfvvyfFa6JzktiwdaNzmZY9sgEO5QWUzBmkDXEzpHY1x4+4zIJLrim9oeRUr3Gon7rnQpaYGw2JUYDH8nWLkx0O0NKtczGFTXafKte2wkgTCarfIJ/3MBW0xkzTtRrvZNtWrcEMkxq+iArarI=
+	t=1783968369; cv=none; b=eMORbJn/1yApFcaJTOlh4qdWK1ZG9nsfxPZMrIhuxoncjdcL5xPxtFAUGl63hZvYu0yKW1zuqJAdAazB2uuUoiL/K/WyolPxEe/vKEFx39ip90tnTcygkjsDp82+KIoYiZreRmzh17J4VWgymlLHMgrYZbPj8qD9FPUEHIDt6kw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783967105; c=relaxed/simple;
-	bh=OX/McDO1qPytlQlVUz0pVIuCo1NendmpnWnZRv7aBFA=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=IytuJsKcFTd7CfJXjDGF3BQCGPF7W+t2pBZCS9SQ8YWdEEDIlqdwzpVjStfWkCg3srD+SA+mEqC4uN5k65OLYvTbcRTlaJxzOD0dlLl+HBjcJX6CN2qLYD168xVumfn1Gb0KNJrpuIRGR3BHpkeMQbxFQNC4qOKM7V2PLYaFZEE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=altlinux.org; spf=pass smtp.mailfrom=basealt.ru; arc=none smtp.client-ip=193.43.8.18
-Received: from localhost (broadband-46-242-4-129.ip.moscow.rt.ru [46.242.4.129])
-	(Authenticated sender: gremlin)
-	by air.basealt.ru (Postfix) with ESMTPSA id 80D2A23370;
-	Mon, 13 Jul 2026 21:25:00 +0300 (MSK)
-Date: Mon, 13 Jul 2026 21:25:00 +0300
-From: "Alexey V. Vissarionov" <gremlin@altlinux.org>
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc: gremlin@altlinux.org, Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Casey Connolly <casey.connolly@linaro.org>,
-	linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-	lvc-project@linuxtesting.org
-Subject: [PATCH v1] usb: typec: tcpm: qcom: initialize currsrc explicitly
-Message-ID: <20260713182500.GB22956@altlinux.org>
+	s=arc-20240116; t=1783968369; c=relaxed/simple;
+	bh=9yK0WJUA3/Ygz0+z5PGiqsYQi0PKm/D6VEv35d1xCy8=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=QsVf9qdSQNljFDPcFU1yvdi+xMtHskT+YAPFTxVwDSyhPV0heNYb9Qc1vy/desDZcvTxEMWu0AeDF9HaEP2PT37eeac8n7ZL7GKCSF2hc6Bk94nNWFRGWuX+Q/Xg5SHLZG68I9Le9P9sSqT7eGV9gjBi96lYkrT9bT5myBqoVuI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ie3Q2xxi; arc=none smtp.client-ip=205.220.180.131
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66DF8KKj1803539;
+	Mon, 13 Jul 2026 18:45:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=x9833UhTl6twU4VN9XXCwLRfd02iJawmoIe
+	7I0Y7B4g=; b=ie3Q2xxi5xE/vXDnSyqGK0psiY3+VxsSAP85RqlsKsvZB/u7eHC
+	lmcfnRzpJaGDkKviLnGRuTNu2pK39dop+cRoVU2s9UEpxQIZnlcggsAA8oqdmeag
+	/j1LvM439tksu8TXpwKns21QiDWXjmQ1RKAf6es11rZHmQdkGlDu1isaAKLn+wNp
+	a3W5crkpr+Qy9rPJ/0ZHrrjsSj/wN5VR2Xpd7067Phn27gSJDU3EJGyYFI9pmX1O
+	YEA3skC3lW+yzXK3/5wIGMSS00+PYe5A2ADEgTKfdGMHvSDye7cvrUFirGq7w6aO
+	S9k8tbcnhdaUba/hvNxgFdpb/OjmGReOo6A==
+Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fcwu4t3th-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 13 Jul 2026 18:45:58 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA01.qualcomm.com (8.18.1.7/8.18.1.7) with ESMTP id 66DIjsU4010053;
+	Mon, 13 Jul 2026 18:45:54 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 4fbewjb42d-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 13 Jul 2026 18:45:54 +0000 (GMT)
+Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.18.1.12/8.18.1.12) with ESMTP id 66DIjrRj010027;
+	Mon, 13 Jul 2026 18:45:54 GMT
+Received: from hu-devc-hyd-u22-c.qualcomm.com (hu-pkumpatl-hyd.qualcomm.com [10.147.245.204])
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 66DIjrbu010020
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 13 Jul 2026 18:45:53 +0000 (GMT)
+Received: by hu-devc-hyd-u22-c.qualcomm.com (Postfix, from userid 3914174)
+	id D01BC632; Tue, 14 Jul 2026 00:15:51 +0530 (+0530)
+From: Prasad Kumpatla <prasad.kumpatla@oss.qualcomm.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+        Bartosz Golaszewski <brgl@kernel.org>,
+        Linus Walleij <linusw@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+        Srinivas Kandagatla <srini@kernel.org>,
+        Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
+        Prasad Kumpatla <prasad.kumpatla@oss.qualcomm.com>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-sound@vger.kernel.org
+Subject: [PATCH v2 0/5] ASoC: qcom and pinctrl: add LPASS LPR voting and Hawi LPASS LPI TLMM
+Date: Tue, 14 Jul 2026 00:15:44 +0530
+Message-Id: <20260713184549.929569-1-prasad.kumpatla@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=koi8-r
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Authority-Analysis: v=2.4 cv=FMErAeos c=1 sm=1 tr=0 ts=6a553266 cx=c_pps
+ a=Ou0eQOY4+eZoSc0qltEV5Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
+ a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
+ a=rJkE3RaqiGZ5pbrm-msn:22 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
+ a=4GHpYZEafsO5kEG6QoIA:9
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzEzMDE5NCBTYWx0ZWRfX/lw4VyCYJbA1
+ NTjFcDcOy24Cc2xbyUi/BFAFEB6lWKvzAi049MMJhUorw4ZceFWEqqvEhVY8vuHfYDr2PhlwzGt
+ txnc/x4zN9TqVrRp/hKtryoEX5I5uiY=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzEzMDE5NCBTYWx0ZWRfX9DjcoSNShCK5
+ 4lC4KSU6pFuwLzb3jmBTczHtiBjz0dSwWN6cRGmUw2rX4QRWpFe/JmuZaue8pBeewowmE952P0Y
+ pNBE5Q4PYVAdZ+X2Q3hEmTkdwyM3FNVKM0pvDRyWK3yriJOK05+6Eki4WVyDffd1DvclvbLzYwe
+ 0QqYa1HKxwEDLa3cGGpeVVLkq/RktjLgCggPA618DYhtNkdVc0tymlkGm2/MCdBrMnk87DjgqXF
+ XsNFy/m9PLA2urPzZBEJ19JCf92Ure1jPQZ1MCRPD8yyyMs+HOIa2CBSTpMiXFvOPjWkL2DweO4
+ lYNs4x+4YSFJARS+haFDMLfXzHnE3ef6MBh94UdCI/odxNvpRfHipq8Gm3eTfTDT4znf49THFxG
+ wg26v02xbdZPU03QcHqmJOsclLlWOgL2nDBnVLd0BkMemfVMQ4ZD+FyIgh9wynZ6DRDnwouWonK
+ 18sMEOFgSF7dp5vwx7g==
+X-Proofpoint-ORIG-GUID: CCBYN9LQjIvTTpx5AD8-SKc9NkTvCvms
+X-Proofpoint-GUID: CCBYN9LQjIvTTpx5AD8-SKc9NkTvCvms
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-13_04,2026-07-10_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 adultscore=0 bulkscore=0 malwarescore=0 impostorscore=0
+ suspectscore=0 priorityscore=1501 phishscore=0 spamscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607130194
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-1.46 / 15.00];
+X-Spamd-Result: default: False [0.84 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	MID_CONTAINS_FROM(1.00)[];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_MISSING_CHARSET(0.50)[];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:bryan.odonoghue@linaro.org,m:gremlin@altlinux.org,m:heikki.krogerus@linux.intel.com,m:gregkh@linuxfoundation.org,m:linux@roeck-us.net,m:casey.connolly@linaro.org,m:linux-arm-msm@vger.kernel.org,m:linux-usb@vger.kernel.org,m:lvc-project@linuxtesting.org,s:lists@lfdr.de];
-	RECEIVED_HELO_LOCALHOST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-118851-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	DMARC_NA(0.00)[altlinux.org];
+	TAGGED_FROM(0.00)[bounces-118854-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[19];
+	FREEMAIL_TO(0.00)[kernel.org,gmail.com,perex.cz,suse.com,oss.qualcomm.com];
 	MIME_TRACE(0.00)[0:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FORWARDED(0.00)[lists@lfdr.de];
-	FORGED_SENDER(0.00)[gremlin@altlinux.org,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS(0.00)[m:andersson@kernel.org,m:brgl@kernel.org,m:linusw@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:lgirdwood@gmail.com,m:broonie@kernel.org,m:srini@kernel.org,m:perex@perex.cz,m:tiwai@suse.com,m:prasad.kumpatla@oss.qualcomm.com,m:krzk@kernel.org,m:srinivas.kandagatla@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:linux-gpio@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-sound@vger.kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	FORWARDED(0.00)[lists@lfdr.de];
+	FORGED_SENDER(0.00)[prasad.kumpatla@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	ALIAS_RESOLVED(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[gremlin@altlinux.org,linux-arm-msm@vger.kernel.org];
-	MISSING_XM_UA(0.00)[];
-	R_DKIM_NA(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCPT_COUNT_SEVEN(0.00)[9];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,vger.kernel.org:from_smtp,altlinux.org:from_mime,altlinux.org:url,altlinux.org:email,altlinux.org:mid]
+	FORGED_SENDER_FORWARDING(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[prasad.kumpatla@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,oss.qualcomm.com:from_mime,oss.qualcomm.com:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,vger.kernel.org:from_smtp];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	ALIAS_RESOLVED(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCVD_COUNT_SEVEN(0.00)[10]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 55C1E74E73E
+X-Rspamd-Queue-Id: BBD7074E942
 
-When regmap_read() fails, the execution goes to done: label, where
-currsrc is passed to rp_sel_to_name() and used as an index after a
-proper check. However, to make this situation easier to notice, an
-explicit initialization of currsrc with obviously impossible value
-is suggested. Alas, we can't simply use zero value here because it
-means TYPEC_SRC_RP_SEL_80UA.
+This series adds support for LPASS low-power resource (LPR) voting
+through PRM and introduces LPASS LPI TLMM pinctrl support for newer
+platforms such as Hawi.
 
-Found by ALT Linux Team (altlinux.org) and Linux Verification Center
-(linuxtesting.org) using SVACE.
+On such platforms, LPASS requires LPR resource voting via PRM to keep
+the subsystem active. This is handled by adding a new clock ID and
+support for PARAM_ID_RSC_CPU_LPR in q6prm.
 
-Signed-off-by: Alexey V. Vissarionov <gremlin@altlinux.org>
----
- drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Additionally, a new LPASS LPI TLMM block is introduced, requiring a
+dedicated DT binding and pinctrl driver.
 
-diff --git a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c
-index bf985efe1cd6bea4..d7cb69cf6044841b 100644
---- a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c
-+++ b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c
-@@ -461,8 +461,8 @@ static int qcom_pmic_typec_port_set_cc(struct tcpc_dev *tcpc,
- 	struct pmic_typec *tcpm = tcpc_to_tcpm(tcpc);
- 	struct pmic_typec_port *pmic_typec_port = tcpm->pmic_typec_port;
- 	struct device *dev = pmic_typec_port->dev;
--	unsigned int mode, currsrc;
--	unsigned int misc;
-+	unsigned int currsrc = 0xFF; /* error, easy to notice in the log */
-+	unsigned int mode, misc;
- 	unsigned long flags;
- 	int ret;
- 
+Changes in v2:
+	- Add mutex cleanup devm-managed in LPASS LPI Pinctrl. 
+	- Addressed Bart Comments related to newline and readability.
+	- Link to v1: https://lore.kernel.org/linux-arm-msm/20260708114924.1069239-1-prasad.kumpatla@oss.qualcomm.com/
 
+Prasad Kumpatla (5):
+  pinctrl: qcom: lpass-lpi: make mutex cleanup devm-managed
+  ASoC: dt-bindings: qcom: add LPASS LPR vote clock ID
+  ASoC: qcom: q6prm: add support for LPASS LPR resource voting
+  dt-bindings: pinctrl: qcom,hawi-lpass-lpi-pinctrl: Add Hawi LPI
+    pinctrl
+  pinctrl: qcom: hawi-lpass-lpi: add Hawi LPASS LPI TLMM
+
+ .../pinctrl/qcom,hawi-lpass-lpi-pinctrl.yaml  | 109 ++++++++
+ drivers/pinctrl/qcom/Kconfig                  |  10 +
+ drivers/pinctrl/qcom/Makefile                 |   1 +
+ drivers/pinctrl/qcom/pinctrl-hawi-lpass-lpi.c | 244 ++++++++++++++++++
+ drivers/pinctrl/qcom/pinctrl-lpass-lpi.c      |  22 +-
+ drivers/pinctrl/qcom/pinctrl-lpass-lpi.h      |  17 ++
+ .../sound/qcom,q6dsp-lpass-ports.h            |   3 +-
+ sound/soc/qcom/qdsp6/q6dsp-lpass-clocks.c     |   2 +-
+ sound/soc/qcom/qdsp6/q6prm-clocks.c           |   2 +
+ sound/soc/qcom/qdsp6/q6prm.c                  |  17 +-
+ sound/soc/qcom/qdsp6/q6prm.h                  |   1 +
+ 11 files changed, 407 insertions(+), 21 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,hawi-lpass-lpi-pinctrl.yaml
+ create mode 100644 drivers/pinctrl/qcom/pinctrl-hawi-lpass-lpi.c
 
 -- 
-Alexey V. Vissarionov
-gremlin נעי altlinux פ‏כ org; +vii-cmiii-ccxxix-lxxix-xlii
-GPG: 0D92F19E1C0DC36E27F61A29CD17E2B43D879005 @ hkp://keys.gnupg.net
+2.34.1
+
 
