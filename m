@@ -1,53 +1,53 @@
-Return-Path: <linux-arm-msm+bounces-118837-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-118838-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id JHazMAwlVWrZkQAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-118837-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jul 2026 19:49:00 +0200
+	id LRKTE7MnVWp5kgAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-118838-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jul 2026 20:00:19 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0FB8E74E223
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jul 2026 19:49:00 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id B9D9C74E3E9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jul 2026 20:00:18 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=onjxB++n;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118837-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c15:e001:75::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118837-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=X1O+yElX;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118838-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118838-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id CF0AF300CF08
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jul 2026 17:48:46 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id CF4C3311BB96
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jul 2026 17:57:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6836634A796;
-	Mon, 13 Jul 2026 17:48:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 34E2434E745;
+	Mon, 13 Jul 2026 17:57:19 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19FE8233927;
-	Mon, 13 Jul 2026 17:48:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3D3A233927;
+	Mon, 13 Jul 2026 17:57:17 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783964925; cv=none; b=fmBowfq6WMTlDLVwpD5R0l+Wr19+F3S8pJ4hNbx/c7MKUqGwzRbJ5rQRgFSXLKUKL6LOKscin63KyIDMBXG1t0rmIPsPRb0fmZpvH18qC3b/iCXp5kvPZQb+AFwGKJRJ1jbY2Fo3cYIV4MF4BDiGkoKmmEgc00crkYD+kdJKsu0=
+	t=1783965439; cv=none; b=iYd1xi95YbsH//R5fL6aXR3x5wSz8wDdHU4uwLmFLL1idI0UJX+gWbnQZFuCOFPMTTlM11Miarle0T3NOyBvUHh/FGZXrEAX1FKcWBEkZ/eNjjUzryyFbYk5ax0FLKd1W+N8Tv05uOZIHW+ydT84S/ElFj8/2hSqZVvzqPYiw04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783964925; c=relaxed/simple;
-	bh=elswOXGENSE02bniFB//+4GpuTocS2Nq9a4KJ9VylI0=;
+	s=arc-20240116; t=1783965439; c=relaxed/simple;
+	bh=DaxHaMM/p2JuXmc9+5/O65npCpNP0Nxga/n7kWt8aaE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=HDpvgmUPvW3aOqfZC9+9mQ7KQA1eH2u4il4ayGkq/DectA+IY8EQnd1gmU/wkZb7Opq8IwgJ2f7Pke5kk71weXNsU0ADvbDX0vI5cUvjPqlSRgO7UqHpiP42inICvQ/5VMUjf3M5eLP6DDqqU2xd4oiKik8ZSN5/nyodJntNW6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=onjxB++n; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 827251F000E9;
-	Mon, 13 Jul 2026 17:48:20 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=K0Zgnq+MAYbdGhdhkurVVhKIZvhlx+hy6+oCrqC+sAQTWy5kZi+GmY0iSQz7YxEareoNcWXY4tbhKEePEDyjT6KfK8FwMDZBC1qmBe/YjOogL7ubfJxG4+liaV5wNgrJIMv5dt0dByM/gNBMEmJv9eHdeEUyY1nkNRwpy6Bc0Ow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X1O+yElX; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CC8F1F000E9;
+	Mon, 13 Jul 2026 17:56:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783964923;
-	bh=eqsaQhz+Tm8HgoxeGaT5sBOLtHmA3ZLHG5CTvOWZ77w=;
+	s=k20260515; t=1783965437;
+	bh=pO9VCK4bbjDr/iFXBBe32IJs4DHT4WfrCqDsR2JO1ds=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=onjxB++nlQDm7gMhTfmaNQDGH/rqBSYbLzfVEPq1lS1OhWdb6CrePXw7aLeTLGo0M
-	 pB+hJukV545xwSzfacCs6+xpPSowS++yQcA3kxVja2GEZejGL+Hf0WxMqbxsDeOECk
-	 UdHMAgyb07hAwBRvraqJw/dg9AeSA04LDY2AQwPOWSaAv5NIULkVGuWTgoHQOKjcws
-	 4tB7saNVwm9kU+nEYLQQmup00N7S4iEjniDnAmshu1Fop9Y+D7SzuW9SN/bp2Dc/iR
-	 UQQknMV48nrRokvLe9ipKdqqYp8uAlzqLTw1pQ+E9E6C7IvEIujYOTr3MYFQkIyYDN
-	 RQbf9q/HFuDdg==
-Message-ID: <8f3c1451-1b49-473a-b060-a8b95b2d44b4@kernel.org>
-Date: Mon, 13 Jul 2026 19:48:18 +0200
+	b=X1O+yElX0zld1QItxjIAp/yc7z2vmaIPA/t09/JNbxUWZPTgMzSsQ21a1/R+/3SMp
+	 E9a1CA+/9+umIQL+HO90uHt+NaXZlLspEOXvJQ8wyiiCIJxIy4irZ9MyYK1uzCBoLb
+	 W4WuODTQwX7+Uozt9DisJMQLjV4tz8PgqBbeXTcrCbclLjRaOE02ZcLzHFiSbBhliA
+	 31uPjovjwAbHbumZPx2qDvqNRI9rdc1ZuElMLd8H+2P9+WHvjV1sML74DbwQXnHJ+F
+	 37C8dHi2/yVpLHr4TULJpSm+4QTnCovaX5pw/Sn5C8HjSZphkJCRDvwtRpi1SZp1Jj
+	 l02Cf2xcAprAQ==
+Message-ID: <e08fabfb-f3dc-442a-8491-fe4ab1f33b58@kernel.org>
+Date: Mon, 13 Jul 2026 19:56:52 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -55,7 +55,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 05/33] mm/rmap: update mm/interval_tree.c comments
+Subject: Re: [PATCH v2 06/33] mm/rmap: parameterise vma_interval_tree_*() by
+ address_space
 Content-Language: en-US
 To: Lorenzo Stoakes <ljs@kernel.org>,
  Andrew Morton <akpm@linux-foundation.org>,
@@ -132,7 +133,7 @@ Cc: linux-mm@kvack.org, linux-kernel@vger.kernel.org,
  freedreno@lists.freedesktop.org, linux-tegra@vger.kernel.org,
  kvm@vger.kernel.org, Russell King <linux+etnaviv@armlinux.org.uk>
 References: <20260710-b4-pre-scalable-cow-v2-0-2a5aa403d977@kernel.org>
- <20260710-b4-pre-scalable-cow-v2-5-2a5aa403d977@kernel.org>
+ <20260710-b4-pre-scalable-cow-v2-6-2a5aa403d977@kernel.org>
 From: "Vlastimil Babka (SUSE)" <vbabka@kernel.org>
 Autocrypt: addr=vbabka@kernel.org; keydata=
  xsFNBFZdmxYBEADsw/SiUSjB0dM+vSh95UkgcHjzEVBlby/Fg+g42O7LAEkCYXi/vvq31JTB
@@ -173,7 +174,7 @@ Autocrypt: addr=vbabka@kernel.org; keydata=
  NcaZ+c6J4H+nEJGi2SkHAUJz5oBzuThvPudLvPA/SK8sKoM01IRxSihev/S/5WLazXB1PGem
  OCbvzC1IjWJJraxiDJ5IygokapUa2RP7+WBR22skQ3SSl6G107QgWKSyTOGWEaRmV53vxQLV
  jXuCmzSSasTL60zq5yGrT4/DYQVSNEUiUbG4pYekxJujNeEDkUlky0Y=
-In-Reply-To: <20260710-b4-pre-scalable-cow-v2-5-2a5aa403d977@kernel.org>
+In-Reply-To: <20260710-b4-pre-scalable-cow-v2-6-2a5aa403d977@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Rspamd-Action: no action
@@ -182,13 +183,13 @@ X-Spamd-Result: default: False [-3.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-118837-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-118838-lists,linux-arm-msm=lfdr.de];
 	FORGED_RECIPIENTS(0.00)[m:ljs@kernel.org,m:akpm@linux-foundation.org,m:david@kernel.org,m:liam@infradead.org,m:rppt@kernel.org,m:surenb@google.com,m:mhocko@suse.com,m:riel@surriel.com,m:harry@kernel.org,m:jannh@google.com,m:lance.yang@linux.dev,m:pfalcato@suse.de,m:linux@armlinux.org.uk,m:dinguyen@kernel.org,m:schuster.simon@siemens-energy.com,m:James.Bottomley@HansenPartnership.com,m:deller@gmx.de,m:viro@zeniv.linux.org.uk,m:brauner@kernel.org,m:jack@suse.cz,m:djbw@kernel.org,m:willy@infradead.org,m:muchun.song@linux.dev,m:osalvador@suse.de,m:mhiramat@kernel.org,m:oleg@redhat.com,m:peterz@infradead.org,m:mingo@redhat.com,m:acme@kernel.org,m:namhyung@kernel.org,m:mark.rutland@arm.com,m:alexander.shishkin@linux.intel.com,m:jolsa@kernel.org,m:irogers@google.com,m:adrian.hunter@intel.com,m:james.clark@linaro.org,m:ziy@nvidia.com,m:baolin.wang@linux.alibaba.com,m:npache@redhat.com,m:ryan.roberts@arm.com,m:dev.jain@arm.com,m:baohua@kernel.org,m:linmiaohe@huawei.com,m:nao.horiguchi@gmail.
  com,m:xu.xin16@zte.com.cn,m:chengming.zhou@linux.dev,m:sj@kernel.org,m:matthew.brost@intel.com,m:joshua.hahnjy@gmail.com,m:rakie.kim@sk.com,m:byungchul@sk.com,m:gourry@gourry.net,m:ying.huang@linux.alibaba.com,m:apopple@nvidia.com,m:hughd@google.com,m:peterx@redhat.com,m:kees@kernel.org,m:m.szyprowski@samsung.com,m:robin.murphy@arm.com,m:andreyknvl@gmail.com,m:glider@google.com,m:dvyukov@google.com,m:rostedt@goodmis.org,m:mathieu.desnoyers@efficios.com,m:jarkko@kernel.org,m:dave.hansen@linux.intel.com,m:tglx@kernel.org,m:bp@alien8.de,m:x86@kernel.org,m:hpa@zytor.com,m:abbotti@mev.co.uk,m:hsweeten@visionengravers.com,m:l.stach@pengutronix.de,m:christian.gmeiner@gmail.com,m:airlied@gmail.com,m:simona@ffwll.ch,m:patrik.r.jakobsson@gmail.com,m:maarten.lankhorst@linux.intel.com,m:mripard@kernel.org,m:tzimmermann@suse.de,m:robin.clark@oss.qualcomm.com,m:lumag@kernel.org,m:abhinav.kumar@linux.dev,m:jesszhan0024@gmail.com,m:sean@poorly.run,m:marijn.suijten@somainline.org,m:tomi.valkeinen@id
  easonboard.com,m:thierry.reding@kernel.org,m:mperttunen@nvidia.com,m:jonathanh@nvidia.com,m:christian.koenig@amd.com,m:ray.huang@amd.com,m:matthew.auld@intel.com,m:jgg@ziepe.ca,m:yishaih@nvidia.com,m:skolothumtho@nvidia.com,m:kevin.tian@intel.com,m:ankita@nvidia.com,m:alex@shazbot.org,s:lists@lfdr.de];
@@ -208,73 +209,42 @@ X-Spamd-Result: default: False [-3.66 / 15.00];
 	DKIM_TRACE(0.00)[kernel.org:+];
 	ALIAS_RESOLVED(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,etnaviv];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,suse.de:email,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,gourry.net:email]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,vger.kernel.org:from_smtp,gourry.net:email,suse.de:email]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 0FB8E74E223
+X-Rspamd-Queue-Id: B9D9C74E3E9
 
 On 7/10/26 22:16, Lorenzo Stoakes wrote:
-> Update the file comment to clarify that both file-backed and anonymous
-> interval trees are provided, referencing the relevant data types for
-> clarity.
+> The file-backed mapping interval tree functions vma_interval_tree_*()
+> accept a raw rb_root_cached pointer to determine the tree in which they are
+> operating.
 > 
-> Also add comments to indicate which parts of the file apply to each.
+> However, in each case, this is always associated with an address_space data
+> type.
 > 
-> While we're here, convert the VM_BUG_ON_VMA() to VM_WARN_ON_ONCE_VMA().
+> So simply pass a pointer to that instead to simplify the code, and more
+> clearly differentiate between these operations and those concerning
+> anonymous mappings.
+> 
+> While we're here, make the generated interval tree functions static as they
+> do not need to be used externally (any previously existing external users
+> have now been removed).
+> 
+> We also rename VMA parameters from 'node' to 'vma' as calling this a node
+> is simply confusing, update the input index types to pgoff_t since they
+> reference page offsets and rename the parameters to pgoff_start and
+> pgoff_last.
+> 
+> No functional change intended.
 > 
 > Reviewed-by: Pedro Falcato <pfalcato@suse.de>
 > Reviewed-by: Gregory Price <gourry@gourry.net>
 > Signed-off-by: Lorenzo Stoakes <ljs@kernel.org>
 
+Nice.
 Reviewed-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
-
-> ---
->  mm/interval_tree.c | 9 +++++++--
->  1 file changed, 7 insertions(+), 2 deletions(-)
-> 
-> diff --git a/mm/interval_tree.c b/mm/interval_tree.c
-> index 344d1f5946c7..2d50bc6228c4 100644
-> --- a/mm/interval_tree.c
-> +++ b/mm/interval_tree.c
-> @@ -1,6 +1,7 @@
->  // SPDX-License-Identifier: GPL-2.0-only
->  /*
-> - * mm/interval_tree.c - interval tree for mapping->i_mmap
-> + * mm/interval_tree.c - interval tree for address_space->i_mmap and
-> + * anon_vma->rb_root
->   *
->   * Copyright (C) 2012, Michel Lespinasse <walken@google.com>
->   */
-> @@ -10,6 +11,8 @@
->  #include <linux/rmap.h>
->  #include <linux/interval_tree_generic.h>
->  
-> +/* File-backed interval tree (address_space->i_mmap) */
-> +
->  INTERVAL_TREE_DEFINE(struct vm_area_struct, shared.rb,
->  		     unsigned long, shared.rb_subtree_last,
->  		     vma_start_pgoff, vma_last_pgoff, /* empty */, vma_interval_tree)
-> @@ -23,7 +26,7 @@ void vma_interval_tree_insert_after(struct vm_area_struct *node,
->  	struct vm_area_struct *parent;
->  	unsigned long last = vma_last_pgoff(node);
->  
-> -	VM_BUG_ON_VMA(vma_start_pgoff(node) != vma_start_pgoff(prev), node);
-> +	VM_WARN_ON_ONCE_VMA(vma_start_pgoff(node) != vma_start_pgoff(prev), node);
->  
->  	if (!prev->shared.rb.rb_right) {
->  		parent = prev;
-> @@ -48,6 +51,8 @@ void vma_interval_tree_insert_after(struct vm_area_struct *node,
->  			    &vma_interval_tree_augment);
->  }
->  
-> +/* Anonymous interval tree (anon_vma->rb_root) */
-> +
->  static inline unsigned long avc_start_pgoff(struct anon_vma_chain *avc)
->  {
->  	return vma_start_pgoff(avc->vma);
-> 
 
 
