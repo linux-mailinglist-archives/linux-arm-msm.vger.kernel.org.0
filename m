@@ -1,276 +1,421 @@
-Return-Path: <linux-arm-msm+bounces-118784-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-118785-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id mtnRK1/kVGp+ggAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-118784-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jul 2026 15:13:03 +0200
+	id RYDhEHvkVGqIggAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-118785-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jul 2026 15:13:31 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id F19B574B62A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jul 2026 15:13:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 937D374B648
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jul 2026 15:13:30 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=NMRute2v;
-	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=K6Il1R67;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118784-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118784-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=reject) header.from=qualcomm.com;
+	dkim=pass header.d=linaro.org header.s=google header.b=iDvbb1Ze;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118785-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118785-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=none) header.from=linaro.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 7DFE134225B4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jul 2026 13:03:58 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id CDDCE30C187D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jul 2026 13:05:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 04B0A4189B5;
-	Mon, 13 Jul 2026 13:02:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 895BA416CEF;
+	Mon, 13 Jul 2026 13:05:36 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0295414DEF
-	for <linux-arm-msm@vger.kernel.org>; Mon, 13 Jul 2026 13:02:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9071B414DCB
+	for <linux-arm-msm@vger.kernel.org>; Mon, 13 Jul 2026 13:05:33 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783947738; cv=none; b=UiwPn/V8Nt+A3bJ0U0SqoHYw6+UGUnAsOKDU7bQksnkxfBiNnsuNJICMiWpzoS78vmZDF8OQP5CK2UQU4mgdNWgzJaesSOfI0WtwZM5y2CJSehdSe541AvYf82iLdvUIst7R9GXnMr66H+4012jdrIXsnTD/YgVFfFMNZlDnuhk=
+	t=1783947936; cv=none; b=AxcXG+p/8x9Q8Jb6uEYXXNLtO0b6Gl/4VKuqliaWHAof6pJ1C+cpq9O87eGKtc1Bo0O17LTtUpylEO5Q4A/vhItDWWMayQ9d7NnGjG8VeykBB9Ovzc97aGm9+q/DKh87z+pWGtZf2+nxhsfVqsJfBsiKNkO2T3akj+WuAh9bSV4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783947738; c=relaxed/simple;
-	bh=xewtmBe7Tjse/Oov1uLM7I+VZpNX0SB8ljw+4HhCUeA=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=j3uvs1aRFCZoIoYD1Zyc8sYXFi79hffmxsezYxwVvyHWBG1LTyKcLRDwTfjkK53Vse7XrikvGXRmjdbr23Rj3eg8C7V1gH3eepLdd2Y2/rwDeL305AWiL3kFoDcQ1QAzUNzfuOqBy67u9SS9SJCgXLu/O5ijTfOnqRXGVvt3Y8c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=NMRute2v; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=K6Il1R67; arc=none smtp.client-ip=205.220.168.131
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66DCE4cp1561461
-	for <linux-arm-msm@vger.kernel.org>; Mon, 13 Jul 2026 13:02:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	MsWDKH/w5P6MtO/VNux/FoMTI22L7P5oBEgCNW8qbYk=; b=NMRute2vZku5bVXS
-	QiIvvm9xeyBMm/mv+rlCvBNNpOJnef8oU//tA05q5vNoSvGUNyDoVoWq3zayf/CK
-	3ETL9z0O6xPQigL1KSvDFL3eSHcGikuV7BYFggUtg/EmVIGsWmQEM1OXkcRF1ume
-	GpWWL8fwdDsPbMhEZnhzXqzC5nPGTuYXO1/EOAH9GMxVqowSnwiui4BIRbwz1BHS
-	eUnRZKYWDBKPV1vnR2qjg5RhJ8PQ+GSenAxYMvpON1z09vPt1KwjpTdyI9WaDtVd
-	qtAQw3oO8PlvylR0t8935vWJNIEuJQTyCo+9fiU0dv23l5ONSnApGHKyVVKEGR9B
-	lvu26Q==
-Received: from mail-oi1-f199.google.com (mail-oi1-f199.google.com [209.85.167.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fcjn3akmd-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 13 Jul 2026 13:02:16 +0000 (GMT)
-Received: by mail-oi1-f199.google.com with SMTP id 5614622812f47-4893fc86bebso4308603b6e.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Jul 2026 06:02:16 -0700 (PDT)
+	s=arc-20240116; t=1783947936; c=relaxed/simple;
+	bh=LOLjznPspC1I6dtqAHg1MsPIrAzR512HbwBbzv+G9xg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Ud1AsfNG9tehmqojB/S9EKxyZsdzD6ymfBQBQ9TEw5V3x49JQb/ri9c2wMWRanNOlO095nrpETrknkAxwB4LvPlBLPucUO1/S/n7+JPsXQM/FNA6507Rr7PQAveZOBNi/q4V8tt/LomaeoK03iRhHqzjB6waGvtBnmrsMTISoHM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=iDvbb1Ze; arc=none smtp.client-ip=209.85.208.53
+Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-69c5fda04a8so4120551a12.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Jul 2026 06:05:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1783947736; x=1784552536; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :content-type:mime-version:subject:date:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=MsWDKH/w5P6MtO/VNux/FoMTI22L7P5oBEgCNW8qbYk=;
-        b=K6Il1R67PC+VeKfCGQLFAf8ru9quTh0ay4CsJ0/36nEPtoyNHDiLPaKMmIQbm8mG9z
-         f5t+GjCH/1WpFzxE5V7nPzSX9bxRRh2wnxPsSwyvt1Hap+7IT4qvPFiAem4uYP9f3jfH
-         C50UAmHyT86pdbv2rYwn9pbK+dpeqJBK1wOV/BWiA0AsPUWQMxyr077v9Q5OO/41UenF
-         oT75mzUNE24ydmC9zmFfExLZDf8pR6VtpoHFZE7nYvvPqDCReIcC8qD4AbYkotrgpmCe
-         zuh6XKzASXcXeppWNh85rdbQb1PDYwD1kknOx4oAh20S3dJ9D9aAKxzZ1pBhyrf4+7yX
-         WL2g==
+        d=linaro.org; s=google; t=1783947932; x=1784552732; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=i1I9AnCFa8eH6fsCvMzP+tR/LftoRmjX+2dMhPeaMT8=;
+        b=iDvbb1Ze+M+KacQPFmdPkWfnmNs+Jekyf9FohTnP5RTyM2DzFiXh19oXUpB8a5e/wl
+         tkVZbMpa3T2fQRa17U8Wporvang7SevgbqMpCesGO1dn4+pOhlHqszLtPTtM04opCZWR
+         QzOcAA/rnw+xdSjQ1+dNXI8M+49PoKTDFDaCgCzmPrpm5SUNdNrYmfGAa6fKDp5HMigY
+         zO3J5laMfgqXQZZdtfbnSZmN9EGvwa3Hu0sz0KSijgRj6CFMj1OLuPDNV0ssjQUhROtK
+         X0hk2m2s0SS1aTDx5+EH4x4zeSSRUIVk4sNe9Jx8zAouLApo9yjUkgIaQi6Sq3cLGZ9i
+         I68g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783947736; x=1784552536;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :content-type:mime-version:subject:date:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=MsWDKH/w5P6MtO/VNux/FoMTI22L7P5oBEgCNW8qbYk=;
-        b=Vq3fTm8snW2s62QagByU9fLTGLf078IDjivlruVy7extvbIO3TFLbDG5AUK/8OMjhU
-         ITAZ7atn/fAuYDTXs9GNJR2uwWRY/lPeG1uiPKgWPIw57LrgQ4Cu2tUn5bId/YC8kwiC
-         KGZPIOmombF39P0qy1EtiSVmHtBHEOPy4t44BqzJCEEBWM2IDxHiDPEVa2GXBAQuiBro
-         EckWocGvjk9Ew3OdEgSUngVUkLRKyrjdvkwrkFIo/A3ig1YmmS4bHEH7A7WAjNk8eGNx
-         NJRoapVtxdY+2cWoam2+FxYlzGpNGVgBmt/BtYi3mWP4kDNoc9zDA8sZkzUEwShocw4m
-         B9wg==
-X-Forwarded-Encrypted: i=1; AFNElJ/GWeSpGdsllSQ7EfXJMvdaJlNvtfuERbbYJnZzhT7igALHa0bvo5O61gEozkcsxi3iPAvfhU1FoiT5M5U7@vger.kernel.org
-X-Gm-Message-State: AOJu0YzrZqsGgBZyxswG96yrOQtgcL+m7+jXl+z7Mq9qSV4Fbf1OYzRA
-	nqv5O6MEKvI8Ghpzcm+RS2CQnw4LDzeKlsgIb4YseJCLxh/7bIcxhvSMiCBaJKsMYGT9/MEQmhp
-	O9b+png/YFEglRa2HZ7xENfEMwEMjSGpBMFZOhOo+U5G6gh221gHT8Z/moqKJQJtsxqEQ
-X-Gm-Gg: AfdE7cnMwsNhf3Dxai0WMXx1k/ZDYBKCfpNV0F95vheluQYa2xk5i4PAiG4JNsxL0v+
-	hz1wfR0eokje945J1hXXod9ZzuRiE88d4qw1V48AmJ5HKWs2AtHy3aolVFHAXQWq97uD+l96Nme
-	7mjXAMXKNUae3ohMzYGPxonYNFoxGr16qEOsQqvGKUBk3ZAbZ6KtjBhI2y3JMQPCWpunVo2yLVp
-	llkQcumhIV9lOupPBRY1tFrtQJF/IMKAXOFi9HS+usIHZsB/NDxBo2qK4rrzj+XgJ8ivcuXAM5m
-	W0SrxNJ6pKYuetZlmloObMwn7h9gGy47O1N253xYDisKACNYZRNIJQ6szewQ62mqrYEmpVd9GNy
-	KZa4bD0w/g4DY/iWq1gsRT6q/cYE9sT8SrtJhhdIe
-X-Received: by 2002:a05:6820:200d:b0:6a3:94bc:bdcf with SMTP id 006d021491bc7-6a39a72fb8amr5197240eaf.57.1783947736068;
-        Mon, 13 Jul 2026 06:02:16 -0700 (PDT)
-X-Received: by 2002:a05:6820:200d:b0:6a3:94bc:bdcf with SMTP id 006d021491bc7-6a39a72fb8amr5196960eaf.57.1783947732495;
-        Mon, 13 Jul 2026 06:02:12 -0700 (PDT)
-Received: from brgl-qcom.local ([2a01:cb1d:dc:7e00:8881:83b8:89fa:1a2a])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-493f2d97527sm306129725e9.2.2026.07.13.06.02.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Jul 2026 06:02:10 -0700 (PDT)
-From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Date: Mon, 13 Jul 2026 15:01:15 +0200
-Subject: [PATCH v21 14/14] crypto: qce - Communicate the base physical
- address to the dmaengine
+        d=1e100.net; s=20251104; t=1783947932; x=1784552732;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=i1I9AnCFa8eH6fsCvMzP+tR/LftoRmjX+2dMhPeaMT8=;
+        b=Q6DmvtS7CrJ42Kod9CIMj+j0NGu1Za5JCjx275NPX7D8lBIfJ4rFyI0ehclFYRiohs
+         BqhVLVSJiP703AZwhA13Z6DjkY5wKqdk1WBRvOAzdoZln0O04g8HDox+oo062su5VxHk
+         nFvq0ResMZOuWhK0tIOw1AujJhOJEVvgWOamJ75owN/+bO4H4MMqnh5Sdy/VxLDjxgvo
+         lCmTFauQ7fOTRa1suc4/KU4ucFXTAjF9b935kp5XDARoNIC3HgLnBYM41gsl9RXWMxf4
+         HPws/Wv0BNmvQSbZf1l4avtKAAFJ7IBlIAy0K4cxmnahCqHe/O8Ltc7A9JpVoOxOPXCt
+         uLPg==
+X-Forwarded-Encrypted: i=1; AHgh+RrRAwx01tgg5O0yW5O8zPxN46WrVNEPcIrWDyI2mqE1PUU9Uvj23Pof1NsSg9ogAVsrgFxf2LWy3G+3fPrP@vger.kernel.org
+X-Gm-Message-State: AOJu0YzyX8asldOQ0Jqn9dflCDbRbRKO14hFjVYmt1EezuVLAKVHOGA8
+	fIp8dQLYvfEf3Zn6HWLFTlTddTs8KO9p82a1zUTbiby1WV21gWxGBF7uzCCkNl7OVX8=
+X-Gm-Gg: AfdE7cmUFbkaPeP9yBZ8qjLTufmcoEVlQ19HIIcHuEmMRHSH5acsAVvp3Ke58BMaWZl
+	VVONkXHcm+2oOWkGa5kyduU+cLFCdFkjKs35ya0ZBLsn8jJqBfDHiHEtzw2/b+3kRx0OIlgJQu7
+	HADFdloahwPWyHm/GKWV5WF8pS9Q+U4So+ROc4fch0QVoxC/lTAD0zK0uoR4muYPNef9JtHpO31
+	geYEnLok6nNmQTGWKAajnoZCTWl/LRLPmMbZvt4pcUcYpP0yNJCqUro4c9to3HXDSVthichsifd
+	HdNxkxJytuGuGhDhEiXaA4lOC7to3ofKeVcDK3oaHyxcIgYgdr9zos5aVqKejQ0d8KXxbnUt6WY
+	HcTBwGMjLGxYl42ni0JT+cPtrl3Bs5Kp/DKN5FhQjaQEsELmsXLsnNmxjYJYIvEkCMCZGE0MilU
+	3GquqfFAFy6j28V1Yqt/fe0XY=
+X-Received: by 2002:a05:6402:2b8c:b0:698:a9e0:4386 with SMTP id 4fb4d7f45d1cf-69c5f12dc29mr3676164a12.29.1783947931935;
+        Mon, 13 Jul 2026 06:05:31 -0700 (PDT)
+Received: from [192.168.0.167] ([109.77.2.191])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-69a19ce4b4fsm14880852a12.10.2026.07.13.06.05.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 13 Jul 2026 06:05:30 -0700 (PDT)
+Message-ID: <da70ed94-fd76-4105-8071-1ed8d8e41d84@linaro.org>
+Date: Mon, 13 Jul 2026 14:05:29 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 6/7] media: qcom: camss: Add CAMSS Offline Processing
+ Engine driver
+To: Loic Poulain <loic.poulain@oss.qualcomm.com>,
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Kees Cook <kees@kernel.org>,
+ "Gustavo A. R. Silva" <gustavoars@kernel.org>, Rob Herring
+ <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-hardening@vger.kernel.org,
+ devicetree@vger.kernel.org, Hans de Goede <johannes.goede@oss.qualcomm.com>
+References: <20260710-camss-isp-ope-v4-0-51207a0319d8@oss.qualcomm.com>
+ <20260710-camss-isp-ope-v4-6-51207a0319d8@oss.qualcomm.com>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Content-Language: en-GB
+In-Reply-To: <20260710-camss-isp-ope-v4-6-51207a0319d8@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260713-qcom-qce-cmd-descr-v21-14-bc2583e18475@oss.qualcomm.com>
-References: <20260713-qcom-qce-cmd-descr-v21-0-bc2583e18475@oss.qualcomm.com>
-In-Reply-To: <20260713-qcom-qce-cmd-descr-v21-0-bc2583e18475@oss.qualcomm.com>
-To: Vinod Koul <vkoul@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        Herbert Xu <herbert@gondor.apana.org.au>,
-        "David S. Miller" <davem@davemloft.net>,
-        Udit Tiwari <quic_utiwari@quicinc.com>,
-        Md Sadre Alam <mdalam@qti.qualcomm.com>,
-        Dmitry Baryshkov <lumag@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Stephan Gerhold <stephan.gerhold@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Peter Ujfalusi <peter.ujfalusi@gmail.com>,
-        Michal Simek <michal.simek@amd.com>, Frank Li <Frank.Li@kernel.org>,
-        Andy Gross <agross@codeaurora.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>
-Cc: dmaengine@vger.kernel.org, linux-doc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-crypto@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        brgl@kernel.org, Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-        Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1859;
- i=bartosz.golaszewski@oss.qualcomm.com; h=from:subject:message-id;
- bh=xewtmBe7Tjse/Oov1uLM7I+VZpNX0SB8ljw+4HhCUeA=;
- b=owEBbQKS/ZANAwAKAQWdLsv/NoTDAcsmYgBqVOGhfrH2NKXSF17KSmqZSYmJCy4/yZakaynWt
- vvKhTmcPlCJAjMEAAEKAB0WIQSR5RMt5bVGHXuiZfwFnS7L/zaEwwUCalThoQAKCRAFnS7L/zaE
- w4OvEAC6nTAxezYrhc+HKbKJEUbU9SmhCNsd6nEk+cW/LBcJ4dP7CB7TvqbWxccqG/JN/L7HKcZ
- BSIWDFlfruG4HGl4gtYo0dE7OeePRr1k+klnQp4lQkg8aPtlC93WmZOAR0xYFfRgKsEJ9VJkjW8
- tNP7UB6Y4uls2OHbjBWziBzTIqB/ooWP1jYM3oS2scHsjnHbx1p00LOdVUta7jH51XAUeKKamfq
- KYeB+s7GkLJ5cVFjlocnjkOuvcalhZbZhfBugjGCzJQ+g+bH7HwAOwqonKJLYtXo5780qe0fed6
- 68A2iXZTVurWhhxp+JS1OOZxO+NahMqrzCR2mrLsHwt26rR3qnTfgoak1ZBHtiuy2uKxuOHXj4i
- cgA4nlJxxHJ96b+RLkQ1zKiZoOuN4gXp2Bj3tbkl9+x4Z+BgV1tv+8aJwaJ4OXErmZ/MdemXkAN
- UqTvYK3VKHsq+8I0AN3t6vm0b/+a78X6IpxTSP0B+GLupECFXVO57OeHO9tRI5BC/S2C/+5Tq9+
- O2KGMVfcN1RUAKPYXu4ndc+2tfbpGkk7wqWVf4vUqXP5iqWLIsj3fldX8ZbErizdigVTaTqILbB
- SpZEtBHelPypXOfqmyKM8eQec40XcEesHJlo+o8wYxXoU+WO6deS3cwQKOV649qF+vIVVx9QtTZ
- zhP7w75muXabpzw==
-X-Developer-Key: i=bartosz.golaszewski@oss.qualcomm.com; a=openpgp;
- fpr=169DEB6C0BC3C46013D2C79F11A72EA01471D772
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzEzMDEzNSBTYWx0ZWRfX6omJ7R7NcsDW
- 4d49D3d1S3owLHcEsMZeGKJe74lqYKtrSQf/J+F209ttxVgL7Ul7eVUeuM2NNTN8/C6YsNn+X5i
- QF4ri5qUBk4aITFeYUxL/2156/yUcnxmCugp0aOm1tcFbes09hzqx2PdF61Q+xNZKhbSWRtpHDa
- 58cOiVo2G1V8jzuLiqnHYKtb9kB8UzFFkvGXKauZqdgZx8vCVgPuBXzayDURTWkbOnr7Ow8JN8C
- ukICjDEhqvQEGBNLLEQlOZRxqTg5VYlW2cJQST+C+dHMVcLi41hErz26CIlacP2Ij8gWNWdTY+w
- 7jf1m1BjMi3tQS4OXBVJmqMjWB+2wBBs/m7zRxPlx43e0zIMduIogIqLzB8R9OngrYlqdHJO4Lt
- 47Uw7WPy20XWcvd965+oJdRYYx14y9xOku9R2ZnScR+GB845ejYKLmusJCaNzzll5nAhRHuH8qY
- MbU9I3pLcdasChDgwMA==
-X-Proofpoint-ORIG-GUID: 7kGMk8CSzu7ifC8IFq3YHnR117334lAx
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzEzMDEzNSBTYWx0ZWRfX37ZwlT2vC3EY
- Kx9vtyrLdWXlLpI72ruLfm+aLCqYAlZ6T/iHmJEmsk3fj5omii+zdCWiaaIgBP24daPmQ76upDe
- 0vu5YfKj+1MJFcZ4ersHbx9lJsCjgqU=
-X-Proofpoint-GUID: 7kGMk8CSzu7ifC8IFq3YHnR117334lAx
-X-Authority-Analysis: v=2.4 cv=aaJRWxot c=1 sm=1 tr=0 ts=6a54e1d8 cx=c_pps
- a=yymyAM/LQ7lj/HqAiIiKTw==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22 a=VwQbUJbxAAAA:8
- a=EUspDBNiAAAA:8 a=TFgmKHP77OfOvYwKDSoA:9 a=QEXdDO2ut3YA:10
- a=efpaJB4zofY2dbm2aIRb:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-13_03,2026-07-10_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 phishscore=0 bulkscore=0 clxscore=1015 lowpriorityscore=0
- adultscore=0 malwarescore=0 spamscore=0 suspectscore=0 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607130135
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
 	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-118785-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[16];
 	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-118784-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[25];
 	FORWARDED(0.00)[lists@lfdr.de];
-	FREEMAIL_TO(0.00)[kernel.org,lwn.net,gmail.com,gondor.apana.org.au,davemloft.net,quicinc.com,qti.qualcomm.com,linaro.org,amd.com,codeaurora.org];
-	FORGED_RECIPIENTS(0.00)[m:vkoul@kernel.org,m:corbet@lwn.net,m:thara.gopinath@gmail.com,m:herbert@gondor.apana.org.au,m:davem@davemloft.net,m:quic_utiwari@quicinc.com,m:mdalam@qti.qualcomm.com,m:lumag@kernel.org,m:mani@kernel.org,m:stephan.gerhold@linaro.org,m:andersson@kernel.org,m:peter.ujfalusi@gmail.com,m:michal.simek@amd.com,m:Frank.Li@kernel.org,m:agross@codeaurora.org,m:neil.armstrong@linaro.org,m:dmaengine@vger.kernel.org,m:linux-doc@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-crypto@vger.kernel.org,m:linux-arm-kernel@lists.infradead.org,m:brgl@kernel.org,m:bartosz.golaszewski@linaro.org,m:bartosz.golaszewski@oss.qualcomm.com,m:tharagopinath@gmail.com,m:peterujfalusi@gmail.com,s:lists@lfdr.de];
-	FORGED_SENDER(0.00)[bartosz.golaszewski@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS(0.00)[m:loic.poulain@oss.qualcomm.com,m:vladimir.zapolskiy@linaro.org,m:mchehab@kernel.org,m:kees@kernel.org,m:gustavoars@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:andersson@kernel.org,m:konradybcio@kernel.org,m:linux-kernel@vger.kernel.org,m:linux-media@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-hardening@vger.kernel.org,m:devicetree@vger.kernel.org,m:johannes.goede@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,qualcomm.com:dkim,vger.kernel.org:from_smtp,oss.qualcomm.com:from_mime,oss.qualcomm.com:dkim,oss.qualcomm.com:mid];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	FORGED_SENDER(0.00)[bryan.odonoghue@linaro.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[linaro.org:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[bartosz.golaszewski@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	TO_DN_SOME(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[bryan.odonoghue@linaro.org,linux-arm-msm@vger.kernel.org];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	ALIAS_RESOLVED(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	TO_DN_SOME(0.00)[];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCVD_COUNT_SEVEN(0.00)[7]
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,vger.kernel.org:from_smtp,qualcomm.com:email,linaro.org:from_mime,linaro.org:dkim,linaro.org:mid]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: F19B574B62A
+X-Rspamd-Queue-Id: 937D374B648
 
-In order to communicate to the BAM DMA engine which address should be
-used as a scratchpad for dummy writes related to BAM pipe locking,
-fill out and attach the provided metadata struct to the descriptor.
+On 10/07/2026 10:04, Loic Poulain wrote:
+> Add an image processing driver for the Qualcomm Offline Processing Engine
+> (OPE). OPE is a memory-to-memory ISP block that converts raw Bayer
+> frames to YUV, performing white balance, demosaic, chroma enhancement,
+> color correction and downscaling.
+> 
+> The hardware architecture consists of Fetch Engines and Write Engines,
+> connected through intermediate pipeline modules for pix processing.
+> 
+> The driver exposes three video nodes per pipeline instance:
+>    - ope_input: Bayer RAW input (V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE)
+>    - ope_disp_output: YUV output     (V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE)
+>    - ope_params: ISP parameters (V4L2_BUF_TYPE_META_OUTPUT)
+> 
+> Hardware features:
+>    - Stripe-based processing (up to 336 pixels wide per stripe)
+>    - White balance (CLC_WB)
+>    - Demosaic / Bayer-to-RGB (CLC_DEMO)
+>    - RGB-to-YUV conversion (CLC_CHROMA_ENHAN)
+>    - Color correction matrix (CLC_CC)
+>    - MN downscaler for chroma and luma planes
+> 
+> Default configuration values are based on public standards such as BT.601.
+> 
+> Processing Model:
+> OPE processes frames in stripes of up to 336 pixels. Therefore, frames must
+> be split into stripes for processing. Each stripe is configured after the
+> previous one has been acquired (double buffered registers). To minimize
+> inter-stripe latency, stripe configurations are generated ahead of time.
+> 
+> Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+> Co-developed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+> Signed-off-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+> ---
+>   drivers/media/platform/qcom/camss/Kconfig     |   18 +
+>   drivers/media/platform/qcom/camss/Makefile    |    4 +
+>   drivers/media/platform/qcom/camss/camss-ope.c | 3245 +++++++++++++++++++++++++
 
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+I think this should be in a sub-directory.
+
+>   3 files changed, 3267 insertions(+)
+> 
+> diff --git a/drivers/media/platform/qcom/camss/Kconfig b/drivers/media/platform/qcom/camss/Kconfig
+> index 4eda48cb1adf049a7fb6cb59b9da3c0870fe57f4..895fc57a679655fcb6f308be1565dc6b77bbbd67 100644
+> --- a/drivers/media/platform/qcom/camss/Kconfig
+> +++ b/drivers/media/platform/qcom/camss/Kconfig
+> @@ -7,3 +7,21 @@ config VIDEO_QCOM_CAMSS
+>   	select VIDEO_V4L2_SUBDEV_API
+>   	select VIDEOBUF2_DMA_SG
+>   	select V4L2_FWNODE
+> +
+> +config VIDEO_QCOM_CAMSS_OPE
+> +	tristate "Qualcomm Offline Processing Engine (OPE) driver"
+> +	depends on VIDEO_QCOM_CAMSS
+> +	depends on V4L_PLATFORM_DRIVERS
+> +	depends on VIDEO_DEV
+> +	depends on (ARCH_QCOM && IOMMU_DMA) || COMPILE_TEST
+> +	select V4L2_ISP
+> +	select VIDEOBUF2_DMA_CONTIG
+> +	select VIDEOBUF2_VMALLOC
+> +	help
+> +	  Enable support for the Qualcomm Offline Processing Engine (OPE).
+> +	  OPE is a memory-to-memory ISP block that converts raw Bayer frames
+> +	  to YUV, performing white balance, demosaic, chroma enhancement and
+> +	  downscaling. Found on QCM2290 and related SoCs.
+> +
+> +	  To compile this driver as a module, choose M here: the module
+> +	  will be called qcom-camss-ope.
+> diff --git a/drivers/media/platform/qcom/camss/Makefile b/drivers/media/platform/qcom/camss/Makefile
+> index 5678621efb6780b67a043ec8a2e914cce02d9b98..422eebc0a86301de3f39c743fbc06c437b17ac9a 100644
+> --- a/drivers/media/platform/qcom/camss/Makefile
+> +++ b/drivers/media/platform/qcom/camss/Makefile
+> @@ -31,3 +31,7 @@ qcom-camss-objs += \
+>   		camss-params.o \
+>   
+>   obj-$(CONFIG_VIDEO_QCOM_CAMSS) += qcom-camss.o
+> +
+> +qcom-camss-ope-objs := camss-ope.o
+> +
+> +obj-$(CONFIG_VIDEO_QCOM_CAMSS_OPE) += qcom-camss-ope.o
+> diff --git a/drivers/media/platform/qcom/camss/camss-ope.c b/drivers/media/platform/qcom/camss/camss-ope.c
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..2c0d68cf1a637c998ebe4d3afb1fa6dbdb68f029
+> --- /dev/null
+> +++ b/drivers/media/platform/qcom/camss/camss-ope.c
+> @@ -0,0 +1,3245 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +/*
+> + * camss-ope.c
+> + *
+> + * Qualcomm MSM Camera Subsystem - Offline Processing Engine
+> + *
+> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+> + */
+> +
+> +/*
+> + * This driver provides driver implementation for the Qualcomm Offline
+> + * Processing Engine (OPE). OPE is a memory-to-memory hardware block
+> + * designed for image processing on a source frame. Typically, the input
+> + * frame originates from the SoC CSI capture path, though not limited to.
+> + *
+> + * The hardware architecture consists of Fetch Engines and Write Engines,
+> + * connected through intermediate pipeline modules:
+> + *   [FETCH ENGINES] => [Pipeline Modules] => [WRITE ENGINES]
+> + *
+> + * Current Configuration:
+> + *     Fetch Engine: One fetch engine is used for Bayer frame input.
+> + *     Write Engines: Two display write engines for Y and UV planes output.
+> + *
+> + * Only a subset of the pipeline modules are enabled:
+> + *   CLC_WB: White balance for channel gain configuration
+> + *   CLC_DEMO: Demosaic for Bayer to RGB conversion
+> + *   CLC_CC: Color Correct, coefficient based RGB correction
+> + *   CLC_CHROMA_ENHAN: for RGB to YUV conversion
+> + *   CLC_DOWNSCALE*: Downscaling for UV (YUV444 -> YUV422/YUV420) and YUV planes
+> + *
+> + * Default configuration values are based on public standards such as BT.601.
+> + *
+> + * Processing Model:
+> + * OPE processes frames in stripes of up to 336 pixels. Therefore, frames must
+> + * be split into stripes for processing. Each stripe is configured after the
+> + * previous one has been acquired (double buffered registers). To minimize
+> + * inter-stripe latency, the stripe configurations are generated ahead of time.
+> + */
+> +
+> +#include <linux/bitfield.h>
+> +#include <linux/cleanup.h>
+> +#include <linux/clk.h>
+> +#include <linux/completion.h>
+> +#include <linux/delay.h>
+> +#include <linux/dma-mapping.h>
+> +#include <linux/interconnect.h>
+> +#include <linux/interrupt.h>
+> +#include <linux/io.h>
+> +#include <linux/iopoll.h>
+> +#include <linux/module.h>
+> +#include <linux/of.h>
+> +#include <linux/platform_device.h>
+> +#include <linux/pm_clock.h>
+> +#include <linux/pm_domain.h>
+> +#include <linux/pm_opp.h>
+> +#include <linux/pm_runtime.h>
+> +#include <linux/slab.h>
+> +#include <linux/units.h>
+> +
+> +#include <media/v4l2-device.h>
+> +#include <media/media-device.h>
+> +#include <media/v4l2-ctrls.h>
+> +#include <media/v4l2-event.h>
+> +#include <media/v4l2-fh.h>
+> +#include <media/v4l2-ioctl.h>
+> +#include <media/v4l2-rect.h>
+> +
+> +#include "camss-pipeline.h"
+> +
+> +#include <media/videobuf2-dma-contig.h>
+> +#include <media/videobuf2-vmalloc.h>
+> +
+> +#include <uapi/linux/camss-config.h>
+> +
+> +#include "camss-params.h"
+> +
+> +#define OPE_NAME	"qcom-camss-ope"
+> +
+> +/* Format descriptor */
+> +struct ope_fmt {
+> +	u32		fourcc;
+> +	unsigned int	depth;
+> +	unsigned int	align;
+> +	unsigned int	num_planes;
+> +	u32		mbus_code;
+> +	unsigned int	c_hsub;
+> +	unsigned int	c_vsub;
+> +};
+> +
+> +/* Per-queue format state */
+> +struct ope_fmt_state {
+> +	const struct ope_fmt	*fmt;
+> +	unsigned int		width;
+> +	unsigned int		height;
+> +	struct v4l2_rect	crop;
+> +	unsigned int		bytesperline;
+> +	unsigned int		sizeimage;
+> +	enum v4l2_colorspace	colorspace;
+> +	enum v4l2_xfer_func	xfer_func;
+> +	enum v4l2_ycbcr_encoding	ycbcr_enc;
+> +	enum v4l2_quantization	quantization;
+> +	unsigned int		sequence;
+> +	struct v4l2_fract	timeperframe;
+> +};
+> +
+> +/* -------- Register layout -------- */
+> +
+> +#define OPE_TOP_HW_VERSION					0x000
+> +#define		OPE_TOP_HW_VERSION_STEP		GENMASK(15, 0)
+> +#define		OPE_TOP_HW_VERSION_REV		GENMASK(27, 16)
+> +#define		OPE_TOP_HW_VERSION_GEN		GENMASK(31, 28)
+> +#define OPE_TOP_RESET_CMD					0x004
+> +#define		OPE_TOP_RESET_CMD_HW		BIT(0)
+> +#define		OPE_TOP_RESET_CMD_SW		BIT(1)
+> +#define OPE_TOP_IRQ_STATUS					0x014
+> +#define OPE_TOP_IRQ_MASK					0x018
+> +#define		OPE_TOP_IRQ_STATUS_RST_DONE	BIT(0)
+> +#define		OPE_TOP_IRQ_STATUS_WE		BIT(1)
+> +#define		OPE_TOP_IRQ_STATUS_FE		BIT(2)
+> +#define		OPE_TOP_IRQ_STATUS_VIOL		BIT(3)
+> +#define		OPE_TOP_IRQ_STATUS_IDLE		BIT(4)
+> +#define OPE_TOP_IRQ_CLEAR					0x01c
+> +#define OPE_TOP_IRQ_CMD						0x024
+> +#define		OPE_TOP_IRQ_CMD_CLEAR		BIT(0)
+> +#define OPE_TOP_VIOLATION_STATUS				0x028
+> +
+> +/* Fetch engine */
+> +#define OPE_BUS_RD_INPUT_IF_IRQ_MASK				0x00c
+> +#define OPE_BUS_RD_INPUT_IF_IRQ_CLEAR				0x010
+> +#define OPE_BUS_RD_INPUT_IF_IRQ_CMD				0x014
+> +#define		OPE_BUS_RD_INPUT_IF_IRQ_CMD_CLEAR	BIT(0)
+> +#define OPE_BUS_RD_INPUT_IF_IRQ_STATUS				0x018
+> +#define OPE_BUS_RD_INPUT_IF_CMD					0x01c
+> +#define		OPE_BUS_RD_INPUT_IF_CMD_GO_CMD		BIT(0)
+> +#define OPE_BUS_RD_CLIENT_0_CORE_CFG				0x050
+> +#define		OPE_BUS_RD_CLIENT_0_CORE_CFG_EN	BIT(0)
+> +#define OPE_BUS_RD_CLIENT_0_CCIF_META_DATA			0x054
+> +#define		OPE_BUS_RD_CLIENT_0_CCIF_MD_PIX_PATTERN GENMASK(7, 2)
+> +#define OPE_BUS_RD_CLIENT_0_ADDR_IMAGE				0x058
+> +#define OPE_BUS_RD_CLIENT_0_RD_BUFFER_SIZE			0x05c
+> +#define OPE_BUS_RD_CLIENT_0_RD_STRIDE				0x060
+> +#define OPE_BUS_RD_CLIENT_0_UNPACK_CFG_0			0x064
+> +
+> +/* Write engines */
+> +#define OPE_BUS_WR_INPUT_IF_IRQ_MASK_0				0x018
+> +#define OPE_BUS_WR_INPUT_IF_IRQ_MASK_1				0x01c
+> +#define OPE_BUS_WR_INPUT_IF_IRQ_CLEAR_0				0x020
+> +#define OPE_BUS_WR_INPUT_IF_IRQ_STATUS_0			0x028
+> +#define		OPE_BUS_WR_INPUT_IF_IRQ_STATUS_0_RUP_DONE	BIT(0)
+> +#define		OPE_BUS_WR_INPUT_IF_IRQ_STATUS_0_BUF_DONE	BIT(8)
+> +#define		OPE_BUS_WR_INPUT_IF_IRQ_STATUS_0_CONS_VIOL	BIT(28)
+> +#define		OPE_BUS_WR_INPUT_IF_IRQ_STATUS_0_VIOL		BIT(30)
+> +#define		OPE_BUS_WR_INPUT_IF_IRQ_STATUS_0_IMG_SZ_VIOL	BIT(31)
+> +#define OPE_BUS_WR_INPUT_IF_IRQ_CMD				0x030
+> +#define		OPE_BUS_WR_INPUT_IF_IRQ_CMD_CLEAR	BIT(0)
+> +#define OPE_BUS_WR_VIOLATION_STATUS				0x064
+> +#define OPE_BUS_WR_IMAGE_SIZE_VIOLATION_STATUS			0x070
+> +#define OPE_BUS_WR_CLIENT_CFG(c)				(0x200 + (c) * 0x100)
+> +#define		OPE_BUS_WR_CLIENT_CFG_EN		BIT(0)
+> +#define		OPE_BUS_WR_CLIENT_CFG_AUTORECOVER	BIT(4)
+> +#define OPE_BUS_WR_CLIENT_ADDR_IMAGE(c)				(0x204 + (c) * 0x100)
+> +#define OPE_BUS_WR_CLIENT_IMAGE_CFG_0(c)			(0x20c + (c) * 0x100)
+> +#define OPE_BUS_WR_CLIENT_IMAGE_CFG_1(c)			(0x210 + (c) * 0x100)
+> +#define OPE_BUS_WR_CLIENT_IMAGE_CFG_2(c)			(0x214 + (c) * 0x100)
+> +#define OPE_BUS_WR_CLIENT_PACKER_CFG(c)				(0x218 + (c) * 0x100)
+> +#define OPE_BUS_WR_CLIENT_MAX	4
+> +
+> +/* Pipeline modules */
+> +#define OPE_PP_CLC_WB_GAIN_MODULE_CFG				(0x200 + 0x60)
+
+Can you just map the individual blocks so that we can interrogate 
+HW_VERSION HW_STATUS and friends ? Those regs usually come first. I can 
+see useful debugfs and/or dev_dbg() usages of those data.
+> +#define		OPE_PP_CLC_WB_GAIN_MODULE_CFG_EN	BIT(0)
+> +#define OPE_PP_CLC_WB_GAIN_WB_CFG(ch)				(0x200 + 0x68 + 4 * (ch))
+> +#define		OPE_PP_CLC_WB_GAIN_WB_CFG_GAIN		GENMASK(14, 0)
+> +#define OPE_PP_CLC_WB_GAIN_WB_SUB_CFG(ch)			(0x200 + 0x74 + 4 * (ch))
+> +#define		OPE_PP_CLC_WB_GAIN_WB_SUB_CFG_VAL	GENMASK(31, 20)
+> +#define OPE_PP_CLC_WB_GAIN_WB_ADD_CFG(ch)			(0x200 + 0x80 + 4 * (ch))
+> +#define		OPE_PP_CLC_WB_GAIN_WB_ADD_CFG_VAL	GENMASK(31, 20)
+> +
+> +#define OPE_PP_CLC_CC_BASE					0x400
+
+Is this actually the correct register base for CCM ?
+
+I think you should check again.
+
+Same comment for each of these blocks HW_VERSION should be the first 
+register.
+
 ---
- drivers/crypto/qce/dma.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/crypto/qce/dma.c b/drivers/crypto/qce/dma.c
-index 1b43c56503334154be4b8000e5a9330b2005cb64..6410f8dc5bcf517223c768a3e8f87af245076c84 100644
---- a/drivers/crypto/qce/dma.c
-+++ b/drivers/crypto/qce/dma.c
-@@ -11,6 +11,7 @@
- 
- #include "core.h"
- #include "dma.h"
-+#include "regs-v5.h"
- 
- #define QCE_IGNORE_BUF_SZ		(2 * QCE_BAM_BURST_SIZE)
- #define QCE_BAM_CMD_SGL_SIZE		128
-@@ -41,6 +42,10 @@ void qce_clear_bam_transaction(struct qce_device *qce)
- 
- int qce_submit_cmd_desc(struct qce_device *qce)
- {
-+	struct bam_desc_metadata meta = {
-+		.scratchpad_addr = qce->base_phys + REG_VERSION,
-+		.direction = DMA_MEM_TO_DEV,
-+	};
- 	struct qce_desc_info *qce_desc = qce->dma.bam_txn->desc;
- 	struct qce_bam_transaction *bam_txn = qce->dma.bam_txn;
- 	struct dma_async_tx_descriptor *dma_desc;
-@@ -60,15 +65,21 @@ int qce_submit_cmd_desc(struct qce_device *qce)
- 		goto err_unmap_sg;
- 	}
- 
-+	ret = dmaengine_desc_attach_metadata(dma_desc, &meta, sizeof(meta));
-+	if (ret)
-+		goto err_free_desc;
-+
- 	qce_desc->dma_desc = dma_desc;
- 	cookie = dmaengine_submit(qce_desc->dma_desc);
- 
- 	ret = dma_submit_error(cookie);
- 	if (ret)
--		goto err_unmap_sg;
-+		goto err_free_desc;
- 
- 	return 0;
- 
-+err_free_desc:
-+	dmaengine_desc_free(dma_desc);
- err_unmap_sg:
- 	dma_unmap_sg(qce->dev, bam_txn->wr_sgl, bam_txn->wr_sgl_cnt, DMA_TO_DEVICE);
- 	return ret;
-
--- 
-2.47.3
-
+bod
 
