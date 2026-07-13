@@ -1,263 +1,280 @@
-Return-Path: <linux-arm-msm+bounces-118836-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-118837-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id svF+K14iVWpokQAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-118836-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jul 2026 19:37:34 +0200
+	id JHazMAwlVWrZkQAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-118837-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jul 2026 19:49:00 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id F327D74E127
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jul 2026 19:37:33 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0FB8E74E223
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jul 2026 19:49:00 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b="ZoJ3z/bC";
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118836-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118836-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=reject) header.from=qualcomm.com;
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=onjxB++n;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118837-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c15:e001:75::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118837-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 39D9A301D04C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jul 2026 17:34:47 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id CF0AF300CF08
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jul 2026 17:48:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0327834AB14;
-	Mon, 13 Jul 2026 17:34:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6836634A796;
+	Mon, 13 Jul 2026 17:48:45 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E19934A3D9;
-	Mon, 13 Jul 2026 17:34:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19FE8233927;
+	Mon, 13 Jul 2026 17:48:43 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783964085; cv=none; b=EizN/hEBvL1EGb8XTex2a17/sl/sUTj5sAqkr7O1+TttSs5I9baFVhAiJ+19S/vZjC6LtbHuqNP/lwTokcPTXw03epnx5XAO+FcsukRGa2c7FS+MRxbgxWQhQYSPwr1YOlBoLunYhsnL4RAywovg9QBuOfLj5etmoqvIiQrlQrI=
+	t=1783964925; cv=none; b=fmBowfq6WMTlDLVwpD5R0l+Wr19+F3S8pJ4hNbx/c7MKUqGwzRbJ5rQRgFSXLKUKL6LOKscin63KyIDMBXG1t0rmIPsPRb0fmZpvH18qC3b/iCXp5kvPZQb+AFwGKJRJ1jbY2Fo3cYIV4MF4BDiGkoKmmEgc00crkYD+kdJKsu0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783964085; c=relaxed/simple;
-	bh=ipPVSrltL68WFAxL16SWSPWjN1lbX2e11+Sw/JBdxLs=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=qPbV6aKafwBXLH51Jh+WVayQ8L+KZHgC7hF0B6Jg+XOStnnpt6bIkEzEHg14JblwDtYIpj7V+Fi4fBII2JxIqnFRiemGIMGr98Q9vG7iHRbpHjpjASzYUvOt2VPiUNkOia89Z7dydyt7TGINE3dNcwbLSYGOLW3cYatJhXMpMQQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ZoJ3z/bC; arc=none smtp.client-ip=205.220.180.131
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66DF8KGE1860768;
-	Mon, 13 Jul 2026 17:34:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:message-id:mime-version
-	:subject:to; s=qcppdkim1; bh=kZLHk+yRD01rKmLNo4uun6oXhpnOlpS+dLO
-	rJpBhfCs=; b=ZoJ3z/bC6DDnwgSosju6G2CuZvWq5lhZstG2DCWkjr8LfFpG0Mq
-	jJm1CidGt89uv/jIrjFZU+rKSvjux26Kz5R4/xMP53s8R9sB7njkG12OBYXmLjUy
-	VoSDTbMK4nHCsM29oLMVVaC3zNNDJUl9itf34p+kVzh8GnXhD+phl0/dCMKO2M1g
-	5XuZbp7Ozc274PY1FmDfLvZuUZ3HvaxuYufhObtYjsBD+HmFhqwD30pRskaAaFhr
-	Uksb00RWq0BgpOT+4Vof9EC/UCisrvT6f3cLfA7wl6Gw7PYQSiEDa0ccQbevwcq+
-	9jcV6DkDmLnP6HWwppDlfQ09ThUhU/lXgJA==
-Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fcuj02fm1-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 13 Jul 2026 17:34:40 +0000 (GMT)
-Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (8.18.1.7/8.18.1.7) with ESMTP id 66DHYbA6027447;
-	Mon, 13 Jul 2026 17:34:37 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 4fbewj8a81-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 13 Jul 2026 17:34:37 +0000 (GMT)
-Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.18.1.12/8.18.1.12) with ESMTP id 66DHYbhk027442;
-	Mon, 13 Jul 2026 17:34:37 GMT
-Received: from hu-devc-hyd-u22-c.qualcomm.com ([10.213.101.157])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 66DHYagW027441
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 13 Jul 2026 17:34:37 +0000 (GMT)
-Received: by hu-devc-hyd-u22-c.qualcomm.com (Postfix, from userid 2342877)
-	id 3008E629; Mon, 13 Jul 2026 23:04:36 +0530 (+0530)
-From: Nitin Rawat <nitin.rawat@oss.qualcomm.com>
-To: mani@kernel.org, James.Bottomley@HansenPartnership.com,
-        martin.petersen@oracle.com
-Cc: linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Nitin Rawat <nitin.rawat@oss.qualcomm.com>
-Subject: [PATCH V1] scsi: ufs: ufs-qcom: Enable only lane clocks in lane clock APIs
-Date: Mon, 13 Jul 2026 23:04:34 +0530
-Message-Id: <20260713173434.883386-1-nitin.rawat@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1783964925; c=relaxed/simple;
+	bh=elswOXGENSE02bniFB//+4GpuTocS2Nq9a4KJ9VylI0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=HDpvgmUPvW3aOqfZC9+9mQ7KQA1eH2u4il4ayGkq/DectA+IY8EQnd1gmU/wkZb7Opq8IwgJ2f7Pke5kk71weXNsU0ADvbDX0vI5cUvjPqlSRgO7UqHpiP42inICvQ/5VMUjf3M5eLP6DDqqU2xd4oiKik8ZSN5/nyodJntNW6Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=onjxB++n; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 827251F000E9;
+	Mon, 13 Jul 2026 17:48:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1783964923;
+	bh=eqsaQhz+Tm8HgoxeGaT5sBOLtHmA3ZLHG5CTvOWZ77w=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=onjxB++nlQDm7gMhTfmaNQDGH/rqBSYbLzfVEPq1lS1OhWdb6CrePXw7aLeTLGo0M
+	 pB+hJukV545xwSzfacCs6+xpPSowS++yQcA3kxVja2GEZejGL+Hf0WxMqbxsDeOECk
+	 UdHMAgyb07hAwBRvraqJw/dg9AeSA04LDY2AQwPOWSaAv5NIULkVGuWTgoHQOKjcws
+	 4tB7saNVwm9kU+nEYLQQmup00N7S4iEjniDnAmshu1Fop9Y+D7SzuW9SN/bp2Dc/iR
+	 UQQknMV48nrRokvLe9ipKdqqYp8uAlzqLTw1pQ+E9E6C7IvEIujYOTr3MYFQkIyYDN
+	 RQbf9q/HFuDdg==
+Message-ID: <8f3c1451-1b49-473a-b060-a8b95b2d44b4@kernel.org>
+Date: Mon, 13 Jul 2026 19:48:18 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzEzMDE4MiBTYWx0ZWRfXzGwIh2VFx9I7
- ajE5tX1yr+aunAeGpHf16ce0huJ79bRw8kyVFlbeqvDx6jomruD+ZrGuu65vcKXvWcCr1XrgewT
- fBWhGd2Vrlal1gDQji4UYWjLdEfxu80=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzEzMDE4MiBTYWx0ZWRfX5u5QhxonDYqK
- 4DSlYo3rLfLfLFEhL5k9WGFCdtZbnBNiWx950BQrRSHtQ73udH5/RzJCXFpTKGARpfoCcjzFtua
- s+IKnpYpIZIzib2O+zE3d3LuFkTZoA2FnfoojFtCZ8dJftpwb64B5nR4S+zh6CaQqEMHcanFaIU
- lx9v+L3vV+xlvH6m1UWenFVp9hxMQcyhZHAX5idwnFUrqCYsvHvxKQpHVPx/uPuRyLIcgxYpfdx
- wWZB07SL6OVSbP5JwJpkFDAWr8HnzzzDwToucyU7+D3Niokyon2sLl5K7Sfsq/SFpX5A9HHY/oL
- qqU8dgPo6fZGkhv1qMlA85U0h3Imv9+OJHNd3muYet18fdBLta0dYE2X3dBj7De+zODWa6KXeom
- 7pxwFPQcQ2hjg1eP9og6xYG1m54Ep7Ui7YPhb+n4H2h7ZQvERiBHwMt4YgYIxuOvNJlWJ46nQiJ
- CnvBxgyA+d0pEnXClxw==
-X-Proofpoint-ORIG-GUID: atXVeSU5mKjyM9WvbcACD0R50HsY1O6C
-X-Authority-Analysis: v=2.4 cv=DbcnbPtW c=1 sm=1 tr=0 ts=6a5521b0 cx=c_pps
- a=Ou0eQOY4+eZoSc0qltEV5Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
- a=RAioF0-LDSMA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
- a=gowsoOTTUOVcmtlkKump:22 a=EUspDBNiAAAA:8 a=JbtLcMotAyZ5laay-40A:9
-X-Proofpoint-GUID: atXVeSU5mKjyM9WvbcACD0R50HsY1O6C
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-13_04,2026-07-10_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 impostorscore=0 malwarescore=0 priorityscore=1501
- phishscore=0 suspectscore=0 bulkscore=0 adultscore=0 spamscore=0
- clxscore=1011 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2607130182
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 05/33] mm/rmap: update mm/interval_tree.c comments
+Content-Language: en-US
+To: Lorenzo Stoakes <ljs@kernel.org>,
+ Andrew Morton <akpm@linux-foundation.org>,
+ David Hildenbrand <david@kernel.org>, "Liam R. Howlett"
+ <liam@infradead.org>, Mike Rapoport <rppt@kernel.org>,
+ Suren Baghdasaryan <surenb@google.com>, Michal Hocko <mhocko@suse.com>,
+ Rik van Riel <riel@surriel.com>, Harry Yoo <harry@kernel.org>,
+ Jann Horn <jannh@google.com>, Lance Yang <lance.yang@linux.dev>,
+ Pedro Falcato <pfalcato@suse.de>, Russell King <linux@armlinux.org.uk>,
+ Dinh Nguyen <dinguyen@kernel.org>,
+ Simon Schuster <schuster.simon@siemens-energy.com>,
+ "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
+ Helge Deller <deller@gmx.de>, Alexander Viro <viro@zeniv.linux.org.uk>,
+ Christian Brauner <brauner@kernel.org>, Jan Kara <jack@suse.cz>,
+ Dan Williams <djbw@kernel.org>, Matthew Wilcox <willy@infradead.org>,
+ Muchun Song <muchun.song@linux.dev>, Oscar Salvador <osalvador@suse.de>,
+ Masami Hiramatsu <mhiramat@kernel.org>, Oleg Nesterov <oleg@redhat.com>,
+ Peter Zijlstra <peterz@infradead.org>, Ingo Molnar <mingo@redhat.com>,
+ Arnaldo Carvalho de Melo <acme@kernel.org>,
+ Namhyung Kim <namhyung@kernel.org>, Mark Rutland <mark.rutland@arm.com>,
+ Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+ Jiri Olsa <jolsa@kernel.org>, Ian Rogers <irogers@google.com>,
+ Adrian Hunter <adrian.hunter@intel.com>, James Clark
+ <james.clark@linaro.org>, Zi Yan <ziy@nvidia.com>,
+ Baolin Wang <baolin.wang@linux.alibaba.com>, Nico Pache <npache@redhat.com>,
+ Ryan Roberts <ryan.roberts@arm.com>, Dev Jain <dev.jain@arm.com>,
+ Barry Song <baohua@kernel.org>, Miaohe Lin <linmiaohe@huawei.com>,
+ Naoya Horiguchi <nao.horiguchi@gmail.com>, Xu Xin <xu.xin16@zte.com.cn>,
+ Chengming Zhou <chengming.zhou@linux.dev>, SJ Park <sj@kernel.org>,
+ Matthew Brost <matthew.brost@intel.com>,
+ Joshua Hahn <joshua.hahnjy@gmail.com>, Rakie Kim <rakie.kim@sk.com>,
+ Byungchul Park <byungchul@sk.com>, Gregory Price <gourry@gourry.net>,
+ Ying Huang <ying.huang@linux.alibaba.com>,
+ Alistair Popple <apopple@nvidia.com>, Hugh Dickins <hughd@google.com>,
+ Peter Xu <peterx@redhat.com>, Kees Cook <kees@kernel.org>,
+ Marek Szyprowski <m.szyprowski@samsung.com>,
+ Robin Murphy <robin.murphy@arm.com>, Andrey Konovalov
+ <andreyknvl@gmail.com>, Alexander Potapenko <glider@google.com>,
+ Dmitry Vyukov <dvyukov@google.com>, Steven Rostedt <rostedt@goodmis.org>,
+ Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+ Jarkko Sakkinen <jarkko@kernel.org>,
+ Dave Hansen <dave.hansen@linux.intel.com>, Thomas Gleixner
+ <tglx@kernel.org>, Borislav Petkov <bp@alien8.de>, x86@kernel.org,
+ "H. Peter Anvin" <hpa@zytor.com>, Ian Abbott <abbotti@mev.co.uk>,
+ H Hartley Sweeten <hsweeten@visionengravers.com>,
+ Lucas Stach <l.stach@pengutronix.de>,
+ Christian Gmeiner <christian.gmeiner@gmail.com>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov
+ <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>,
+ Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+ Thierry Reding <thierry.reding@kernel.org>,
+ Mikko Perttunen <mperttunen@nvidia.com>,
+ Jonathan Hunter <jonathanh@nvidia.com>,
+ Christian Koenig <christian.koenig@amd.com>, Huang Rui <ray.huang@amd.com>,
+ Matthew Auld <matthew.auld@intel.com>, Jason Gunthorpe <jgg@ziepe.ca>,
+ Yishai Hadas <yishaih@nvidia.com>, Shameer Kolothum
+ <skolothumtho@nvidia.com>, Kevin Tian <kevin.tian@intel.com>,
+ Ankit Agrawal <ankita@nvidia.com>, Alex Williamson <alex@shazbot.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Shakeel Butt <shakeel.butt@linux.dev>,
+ Usama Arif <usama.arif@linux.dev>
+Cc: linux-mm@kvack.org, linux-kernel@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-parisc@vger.kernel.org,
+ linux-fsdevel@vger.kernel.org, nvdimm@lists.linux.dev,
+ linux-perf-users@vger.kernel.org, linux-trace-kernel@vger.kernel.org,
+ damon@lists.linux.dev, iommu@lists.linux.dev, kasan-dev@googlegroups.com,
+ linux-sgx@vger.kernel.org, etnaviv@lists.freedesktop.org,
+ dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+ freedreno@lists.freedesktop.org, linux-tegra@vger.kernel.org,
+ kvm@vger.kernel.org, Russell King <linux+etnaviv@armlinux.org.uk>
+References: <20260710-b4-pre-scalable-cow-v2-0-2a5aa403d977@kernel.org>
+ <20260710-b4-pre-scalable-cow-v2-5-2a5aa403d977@kernel.org>
+From: "Vlastimil Babka (SUSE)" <vbabka@kernel.org>
+Autocrypt: addr=vbabka@kernel.org; keydata=
+ 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
+In-Reply-To: <20260710-b4-pre-scalable-cow-v2-5-2a5aa403d977@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-0.66 / 15.00];
+X-Spamd-Result: default: False [-3.66 / 15.00];
+	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_CONTAINS_FROM(1.00)[];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_MISSING_CHARSET(0.50)[];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-118836-lists,linux-arm-msm=lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:mani@kernel.org,m:James.Bottomley@HansenPartnership.com,m:martin.petersen@oracle.com,m:linux-scsi@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:nitin.rawat@oss.qualcomm.com,s:lists@lfdr.de];
-	FORGED_SENDER(0.00)[nitin.rawat@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-118837-lists,linux-arm-msm=lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:ljs@kernel.org,m:akpm@linux-foundation.org,m:david@kernel.org,m:liam@infradead.org,m:rppt@kernel.org,m:surenb@google.com,m:mhocko@suse.com,m:riel@surriel.com,m:harry@kernel.org,m:jannh@google.com,m:lance.yang@linux.dev,m:pfalcato@suse.de,m:linux@armlinux.org.uk,m:dinguyen@kernel.org,m:schuster.simon@siemens-energy.com,m:James.Bottomley@HansenPartnership.com,m:deller@gmx.de,m:viro@zeniv.linux.org.uk,m:brauner@kernel.org,m:jack@suse.cz,m:djbw@kernel.org,m:willy@infradead.org,m:muchun.song@linux.dev,m:osalvador@suse.de,m:mhiramat@kernel.org,m:oleg@redhat.com,m:peterz@infradead.org,m:mingo@redhat.com,m:acme@kernel.org,m:namhyung@kernel.org,m:mark.rutland@arm.com,m:alexander.shishkin@linux.intel.com,m:jolsa@kernel.org,m:irogers@google.com,m:adrian.hunter@intel.com,m:james.clark@linaro.org,m:ziy@nvidia.com,m:baolin.wang@linux.alibaba.com,m:npache@redhat.com,m:ryan.roberts@arm.com,m:dev.jain@arm.com,m:baohua@kernel.org,m:linmiaohe@huawei.com,m:nao.horiguchi@gmail.
+ com,m:xu.xin16@zte.com.cn,m:chengming.zhou@linux.dev,m:sj@kernel.org,m:matthew.brost@intel.com,m:joshua.hahnjy@gmail.com,m:rakie.kim@sk.com,m:byungchul@sk.com,m:gourry@gourry.net,m:ying.huang@linux.alibaba.com,m:apopple@nvidia.com,m:hughd@google.com,m:peterx@redhat.com,m:kees@kernel.org,m:m.szyprowski@samsung.com,m:robin.murphy@arm.com,m:andreyknvl@gmail.com,m:glider@google.com,m:dvyukov@google.com,m:rostedt@goodmis.org,m:mathieu.desnoyers@efficios.com,m:jarkko@kernel.org,m:dave.hansen@linux.intel.com,m:tglx@kernel.org,m:bp@alien8.de,m:x86@kernel.org,m:hpa@zytor.com,m:abbotti@mev.co.uk,m:hsweeten@visionengravers.com,m:l.stach@pengutronix.de,m:christian.gmeiner@gmail.com,m:airlied@gmail.com,m:simona@ffwll.ch,m:patrik.r.jakobsson@gmail.com,m:maarten.lankhorst@linux.intel.com,m:mripard@kernel.org,m:tzimmermann@suse.de,m:robin.clark@oss.qualcomm.com,m:lumag@kernel.org,m:abhinav.kumar@linux.dev,m:jesszhan0024@gmail.com,m:sean@poorly.run,m:marijn.suijten@somainline.org,m:tomi.valkeinen@id
+ easonboard.com,m:thierry.reding@kernel.org,m:mperttunen@nvidia.com,m:jonathanh@nvidia.com,m:christian.koenig@amd.com,m:ray.huang@amd.com,m:matthew.auld@intel.com,m:jgg@ziepe.ca,m:yishaih@nvidia.com,m:skolothumtho@nvidia.com,m:kevin.tian@intel.com,m:ankita@nvidia.com,m:alex@shazbot.org,s:lists@lfdr.de];
+	FREEMAIL_TO(0.00)[kernel.org,linux-foundation.org,infradead.org,google.com,suse.com,surriel.com,linux.dev,suse.de,armlinux.org.uk,siemens-energy.com,HansenPartnership.com,gmx.de,zeniv.linux.org.uk,suse.cz,redhat.com,arm.com,linux.intel.com,intel.com,linaro.org,nvidia.com,linux.alibaba.com,huawei.com,gmail.com,zte.com.cn,sk.com,gourry.net,samsung.com,goodmis.org,efficios.com,alien8.de,zytor.com,mev.co.uk,visionengravers.com,pengutronix.de,ffwll.ch,oss.qualcomm.com,poorly.run,somainline.org,ideasonboard.com,amd.com,ziepe.ca,shazbot.org];
+	FORGED_SENDER(0.00)[vbabka@kernel.org,linux-arm-msm@vger.kernel.org];
+	MIME_TRACE(0.00)[0:+];
+	RCVD_COUNT_THREE(0.00)[4];
+	FORWARDED(0.00)[lists@lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	FROM_HAS_DN(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	FORWARDED(0.00)[lists@lfdr.de];
-	FROM_NEQ_ENVFROM(0.00)[nitin.rawat@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[7];
-	ALIAS_RESOLVED(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,vger.kernel.org:from_smtp,qualcomm.com:email,qualcomm.com:dkim];
-	DKIM_TRACE(0.00)[qualcomm.com:+];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	TO_DN_SOME(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	RCVD_COUNT_SEVEN(0.00)[10]
+	FORGED_SENDER_FORWARDING(0.00)[];
+	RCPT_COUNT_GT_50(0.00)[121];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[vbabka@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	ALIAS_RESOLVED(0.00)[];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,etnaviv];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,suse.de:email,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,gourry.net:email]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: F327D74E127
+X-Rspamd-Queue-Id: 0FB8E74E223
 
-ufs_qcom_enable_lane_clks() and ufs_qcom_disable_lane_clks() currently
-use clk_bulk_prepare_enable()/clk_bulk_disable_unprepare() on the
-entire host->clks array obtained from devm_clk_bulk_get_all(). This
-array contains all device clocks, not just lane symbol clocks.
+On 7/10/26 22:16, Lorenzo Stoakes wrote:
+> Update the file comment to clarify that both file-backed and anonymous
+> interval trees are provided, referencing the relevant data types for
+> clarity.
+> 
+> Also add comments to indicate which parts of the file apply to each.
+> 
+> While we're here, convert the VM_BUG_ON_VMA() to VM_WARN_ON_ONCE_VMA().
+> 
+> Reviewed-by: Pedro Falcato <pfalcato@suse.de>
+> Reviewed-by: Gregory Price <gourry@gourry.net>
+> Signed-off-by: Lorenzo Stoakes <ljs@kernel.org>
 
-Since the UFS core framework already manages the non-lane clocks via
-the setup_clocks callback, the bulk enable/disable in the lane clock
-APIs resulted in duplicate reference count increments on those shared
-clocks. The extra enable counts were never balanced by a corresponding
-disable from the framework's clock gating path, preventing the clock
-reference counts from reaching zero and ultimately blocking CXO
-shutdown during low-power states.
+Reviewed-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
 
-Fix this by restricting the lane clock APIs to only prepare/enable
-and disable/unprepare the three lane symbol clocks (tx_lane0_sync_clk,
-rx_lane0_sync_clk, rx_lane1_sync_clk), leaving the handling of all
-other clocks to the UFS core framewore.
-
-Signed-off-by: Nitin Rawat <nitin.rawat@oss.qualcomm.com>
----
- drivers/ufs/host/ufs-qcom.c | 41 ++++++++++++++++++++++++++++++++-----
- drivers/ufs/host/ufs-qcom.h |  3 +++
- 2 files changed, 39 insertions(+), 5 deletions(-)
-
-diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-index 291c43448764..7ec1626704c6 100644
---- a/drivers/ufs/host/ufs-qcom.c
-+++ b/drivers/ufs/host/ufs-qcom.c
-@@ -347,7 +347,9 @@ static void ufs_qcom_disable_lane_clks(struct ufs_qcom_host *host)
- 	if (!host->is_lane_clks_enabled)
- 		return;
-
--	clk_bulk_disable_unprepare(host->num_clks, host->clks);
-+	clk_disable_unprepare(host->rx_lane1_sync_clk);
-+	clk_disable_unprepare(host->rx_lane0_sync_clk);
-+	clk_disable_unprepare(host->tx_lane0_sync_clk);
-
- 	host->is_lane_clks_enabled = false;
- }
-@@ -356,18 +358,35 @@ static int ufs_qcom_enable_lane_clks(struct ufs_qcom_host *host)
- {
- 	int err;
-
--	err = clk_bulk_prepare_enable(host->num_clks, host->clks);
-+	if (host->is_lane_clks_enabled)
-+		return 0;
-+
-+	err = clk_prepare_enable(host->tx_lane0_sync_clk);
- 	if (err)
--		return err;
-+		goto out;
-
--	host->is_lane_clks_enabled = true;
-+	err = clk_prepare_enable(host->rx_lane0_sync_clk);
-+	if (err)
-+		goto out_disable_tx_lane0;
-+
-+	err = clk_prepare_enable(host->rx_lane1_sync_clk);
-+	if (err)
-+		goto out_disable_rx_lane0;
-
-+	host->is_lane_clks_enabled = true;
- 	return 0;
-+
-+out_disable_rx_lane0:
-+	clk_disable_unprepare(host->rx_lane0_sync_clk);
-+out_disable_tx_lane0:
-+	clk_disable_unprepare(host->tx_lane0_sync_clk);
-+out:
-+	return err;
- }
-
- static int ufs_qcom_init_lane_clks(struct ufs_qcom_host *host)
- {
--	int err;
-+	int err, i;
- 	struct device *dev = host->hba->dev;
-
- 	if (has_acpi_companion(dev))
-@@ -379,6 +398,18 @@ static int ufs_qcom_init_lane_clks(struct ufs_qcom_host *host)
-
- 	host->num_clks = err;
-
-+	for (i = 0; i < host->num_clks; i++) {
-+		if (!host->clks[i].id)
-+			continue;
-+		if (!strcmp(host->clks[i].id, "tx_lane0_sync_clk"))
-+			host->tx_lane0_sync_clk = host->clks[i].clk;
-+		else if (!strcmp(host->clks[i].id, "rx_lane0_sync_clk"))
-+			host->rx_lane0_sync_clk = host->clks[i].clk;
-+		else if (!strcmp(host->clks[i].id, "rx_lane1_sync_clk"))
-+			if (host->hba->lanes_per_direction > 1)
-+				host->rx_lane1_sync_clk = host->clks[i].clk;
-+	}
-+
- 	return 0;
- }
-
-diff --git a/drivers/ufs/host/ufs-qcom.h b/drivers/ufs/host/ufs-qcom.h
-index e20b3ca50577..2fcc3bc1133d 100644
---- a/drivers/ufs/host/ufs-qcom.h
-+++ b/drivers/ufs/host/ufs-qcom.h
-@@ -331,6 +331,9 @@ struct ufs_qcom_host {
- 	struct ufs_hba *hba;
- 	struct ufs_pa_layer_attr dev_req_params;
- 	struct clk_bulk_data *clks;
-+	struct clk *tx_lane0_sync_clk;
-+	struct clk *rx_lane0_sync_clk;
-+	struct clk *rx_lane1_sync_clk;
- 	u32 num_clks;
- 	bool is_lane_clks_enabled;
-
---
-2.34.1
+> ---
+>  mm/interval_tree.c | 9 +++++++--
+>  1 file changed, 7 insertions(+), 2 deletions(-)
+> 
+> diff --git a/mm/interval_tree.c b/mm/interval_tree.c
+> index 344d1f5946c7..2d50bc6228c4 100644
+> --- a/mm/interval_tree.c
+> +++ b/mm/interval_tree.c
+> @@ -1,6 +1,7 @@
+>  // SPDX-License-Identifier: GPL-2.0-only
+>  /*
+> - * mm/interval_tree.c - interval tree for mapping->i_mmap
+> + * mm/interval_tree.c - interval tree for address_space->i_mmap and
+> + * anon_vma->rb_root
+>   *
+>   * Copyright (C) 2012, Michel Lespinasse <walken@google.com>
+>   */
+> @@ -10,6 +11,8 @@
+>  #include <linux/rmap.h>
+>  #include <linux/interval_tree_generic.h>
+>  
+> +/* File-backed interval tree (address_space->i_mmap) */
+> +
+>  INTERVAL_TREE_DEFINE(struct vm_area_struct, shared.rb,
+>  		     unsigned long, shared.rb_subtree_last,
+>  		     vma_start_pgoff, vma_last_pgoff, /* empty */, vma_interval_tree)
+> @@ -23,7 +26,7 @@ void vma_interval_tree_insert_after(struct vm_area_struct *node,
+>  	struct vm_area_struct *parent;
+>  	unsigned long last = vma_last_pgoff(node);
+>  
+> -	VM_BUG_ON_VMA(vma_start_pgoff(node) != vma_start_pgoff(prev), node);
+> +	VM_WARN_ON_ONCE_VMA(vma_start_pgoff(node) != vma_start_pgoff(prev), node);
+>  
+>  	if (!prev->shared.rb.rb_right) {
+>  		parent = prev;
+> @@ -48,6 +51,8 @@ void vma_interval_tree_insert_after(struct vm_area_struct *node,
+>  			    &vma_interval_tree_augment);
+>  }
+>  
+> +/* Anonymous interval tree (anon_vma->rb_root) */
+> +
+>  static inline unsigned long avc_start_pgoff(struct anon_vma_chain *avc)
+>  {
+>  	return vma_start_pgoff(avc->vma);
+> 
 
 
