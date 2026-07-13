@@ -1,105 +1,53 @@
-Return-Path: <linux-arm-msm+bounces-118690-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-118691-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id HANEF+qpVGo5pAMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-118690-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jul 2026 11:03:38 +0200
+	id 8kWtIs+pVGovpAMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-118691-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jul 2026 11:03:11 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id EA14074912A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jul 2026 11:03:36 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 15CC4749110
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jul 2026 11:03:11 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b="c4q/ae6Y";
-	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=WMTO3UIc;
-	dmarc=pass (policy=reject) header.from=qualcomm.com;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118690-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c15:e001:75::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118690-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=UWVi4JWa;
+	dmarc=pass (policy=quarantine) header.from=kernel.org;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118691-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.232.135.74 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118691-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id E05043004D9E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jul 2026 09:01:36 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 1ADFC301090F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jul 2026 09:02:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D70D13DC4D3;
-	Mon, 13 Jul 2026 09:01:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8EE2C3DC4D9;
+	Mon, 13 Jul 2026 09:02:56 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 882E33A963A
-	for <linux-arm-msm@vger.kernel.org>; Mon, 13 Jul 2026 09:01:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6332A3DC4CF;
+	Mon, 13 Jul 2026 09:02:55 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783933295; cv=none; b=pewsURGJjqSV+XhOepTByHssCPSI/1UXG9SRMho7pVtjnOp8CHs1E03F6LZBu66OB3oQs4xnMzQOor26iJfObPOjjmnVmgPcZCrUucy3BcKljt+JQb4PuYYwQAPnEVzjmKviLE2rBpeBKfz6+d9BSXeqxFm1yLtbTOS5MDIqTgw=
+	t=1783933376; cv=none; b=Xh9wO1Zyq9GmqzxWl0QXs0gxmWA5+FwE4dNfqgWMkR/I1qYhpA805RYOnbPpna6LBkYzfifqUUeGv7pn17+JwOTTTa+aTzQVMdAz8FJzayCacpL27fsXVKkRavptshdgNzI6urDXTU2dgNiNvCBf9jSD3SfsuRgYPDbN8rbH2/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783933295; c=relaxed/simple;
-	bh=zDBTH3Ht8iT/bEP/SfxoUt790hMWzYelZ4Smmp6GZjw=;
+	s=arc-20240116; t=1783933376; c=relaxed/simple;
+	bh=hv+BmMFQI7uxtEd6z3IljolVMm1yVXKHdzUxd1mtwME=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=krq8yaq691YQLwX5EJ7+JZ6rYdARfvpUTjuGuqGRS0SWv6WCxHMaqzJIXxHJpzBXWq0qUJHUkBFVFtRPctcER2uKPo3acfEtjhf/UKWF+NgpWSOob2N6iawqPtQ76V3bwHC3N2701XXWz0mdWrXFcaCrvAXwaq5GqMMbSrl6vcw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=c4q/ae6Y; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=WMTO3UIc; arc=none smtp.client-ip=205.220.180.131
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66D6NuPW568086
-	for <linux-arm-msm@vger.kernel.org>; Mon, 13 Jul 2026 09:01:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	3nUf1OEnKzZigpglhQFy8FOfo17BW1VAoVGKVtdtS/s=; b=c4q/ae6YhWEC69nP
-	rDqeGGj+8jGtqCTzI86fseoOOY15ItJFxDm6wXleAzS7ElDQaxAmH14xQPYjGPAr
-	HGAURheQEA+TRlhIUkHL/VXJiFNmMSYDuCg/t1+p7/XyKIZyZqSrA5oV24k9STXG
-	3oflQxr2R5ATrZHgXTEyw84tKTihTP0DV2aOMSM4zMLy2rrWayRRcxk7AkqbEV72
-	hc+Z7LHnTAVaTwiMlehKsH4QiXH5DrL6Ohji41WxsjZ9BzmL2cyO+PRKUSBMHSWD
-	RutWJ3JOzaV91IPStYsuq9FyvyvCV2b2tUv/VQLQ8jPwsI0bb4UjNrhLognax4qi
-	kdz7ew==
-Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com [209.85.215.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fbe915abf-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 13 Jul 2026 09:01:33 +0000 (GMT)
-Received: by mail-pg1-f198.google.com with SMTP id 41be03b00d2f7-c890bac374eso7556943a12.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Jul 2026 02:01:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1783933292; x=1784538092; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=3nUf1OEnKzZigpglhQFy8FOfo17BW1VAoVGKVtdtS/s=;
-        b=WMTO3UIcmLkPKNSH561n+hQEbKbPqlkbQ+gKUPfbCufJ0sKG/PtAUjJykETinKlNIq
-         aCvHTPfjSy0e2KAPfBz5e2vnTrB8Lo3A2wQyzzke+1+4Tiz8sZexDDLJWlInjliwAAdt
-         A4jfdvkVKDAMF6vuSg8oAyC77D/IzR8Ossa+Clr7DRI+dBllfSouwh1W021a0oZyBrgj
-         WwMok0SCBwkAzbXLFPgqr/khWCvvxZpqcaSb8hBjYaeF86CimkDSSHlAmXiFheKATcgi
-         j3xBnK4gtgFAdNrCVXapMz1qvcmLFNUiGgiOQ1Du94AznES9wFiC6uJUwlYb6l5g1TmR
-         pg6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783933292; x=1784538092;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=3nUf1OEnKzZigpglhQFy8FOfo17BW1VAoVGKVtdtS/s=;
-        b=gDDzKkDKQsuPR9whtYjj8Rv8wiISI2fb0PKvsm/qcVoLjkudt9kEK05f9Z6zKGk0wO
-         Xwe/5j4RTIJn9f7t10CL5NN3UIAXmI/IjKhb+O1jbSiRATfu3WVHqmwyFkdDxiNZmepX
-         yGPnNiOn+Kq5VZwV0oZUkmsvc5KlReARvd3VEJvOv03UGA3TZIbTcFq616Bt81sJ4wIC
-         u4lRUwaEmuV29eIMB4+c5NscjCvp1AotROmdkQY4wN75WMsMfaChCqLOFo1DxpDK3qwg
-         rZWTfErTleJ1JDdk7rJyNA7aCTIk1tGihjWJ0p1cca/2fxo7YwG4pyI+zKw6YXcRbkFQ
-         nptw==
-X-Forwarded-Encrypted: i=1; AHgh+RpBQ/XZ79NfUkGOIMXQt9ZQfpfThoIyHPnN4BcfFjL1KJRJ5XDeAOWjw/ncqxmqa9tg5JidGyC1XLTuxGmv@vger.kernel.org
-X-Gm-Message-State: AOJu0YziGYNiV8mRBRcFahis7rSFTOGl0KvtyUSSNdyjmPcRYtDPhy7f
-	wMB0NZJQ/nILipHbULJD6Bb+4rBop1R4vAzFs2cEN+qOHk06eiSXIFwjt1sVxrhVAXs4GXiQLMU
-	zQsY+Hcs9kxIfDjOyhpO25VWnW1WBMa61G3YP82plkC79tPH1W86xI5toEIAQBwXKZzG+
-X-Gm-Gg: AfdE7cnEwbc4XjgjgaS7y+ievAfecs8QnDURk6TBHwSAL+2q5ikIT5JDRuh2aTNUMUG
-	wQXj3cmJJgPZGyq9FvbBhxVMyap4y16uQh5rNZEQJg4R7mfajqPVybx14PWtT/xeRhWQ2SxNKkR
-	BIftx/ySS4e4gxL354frD6O4xCt9l+87Ca7x5TSnQvaXzUmiJnVDKqH40dDOkaR5oCxZvPHS+ZK
-	wBdEAXKtxUCFAsOM/0T16WQN2G2eH0W79njYIc1uRsCGwxxibxZPpPJOTYf6fy9Burp2sIkbp6t
-	p7cPGuEsl/XfQGH8wVDnoACQa6mbPgxEJ1+MQK/ozV3DqDVftd4AfQNgH2K7PddGVffbvsljhY7
-	IWEUJbIIqNtf3vxCm8Z+9/6oB0zsp6LlaECk2FMBvxK38
-X-Received: by 2002:a05:6a21:46c5:b0:3b4:c9d5:cd5b with SMTP id adf61e73a8af0-3c1100383f1mr8708875637.13.1783933292649;
-        Mon, 13 Jul 2026 02:01:32 -0700 (PDT)
-X-Received: by 2002:a05:6a21:46c5:b0:3b4:c9d5:cd5b with SMTP id adf61e73a8af0-3c1100383f1mr8708853637.13.1783933292234;
-        Mon, 13 Jul 2026 02:01:32 -0700 (PDT)
-Received: from [10.217.240.77] ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-313af819732sm37325698eec.16.2026.07.13.02.01.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 13 Jul 2026 02:01:31 -0700 (PDT)
-Message-ID: <6ec77dc0-1f6e-4fb1-870b-6897b686c451@oss.qualcomm.com>
-Date: Mon, 13 Jul 2026 14:31:00 +0530
+	 In-Reply-To:Content-Type; b=MRpeQaLSHl0gC9M0aexKNFvjG/UssvrEmTOwEFwJVYUl9gZImRklcAXnN74+DruJCMBoHY1BPhKisiqlnUZV9UW1yX7/7q14qgTOSat6IeCj7GwSfiz5xqDdBK0ycpdu2JvGdC4qkb9eo072Y68G+6WJfIa7XOX5NLSGww/kihc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UWVi4JWa; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BD941F000E9;
+	Mon, 13 Jul 2026 09:02:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1783933375;
+	bh=LxyKwQaktf9OsCYvofn84dtPjQPJZPN114SMIhyidto=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=UWVi4JWaOponQfliAEHWGQ6JCVxBBXWS0ecLl7ObsdKTl6l1/juz1vSHtpFr77bML
+	 Ju7ynySFyIMfXDDRhxKD/VUIctTc+Gy7Jk7ue2lGbGgCEiGOdBGrxvP0xXnMkVMUsE
+	 m1MQPXixVhSjXlCxjm6HSFHbZR5BN2v7pg3HefuquEy+RK0atRc9tD5p7XNRGRJyRY
+	 P83u3xaH2Wk5RTjcvxeAWRgoCpUxVolLGKBCuoYQXtZpoCTdtYGtDFtfTMDzBRy6OE
+	 LIw/NExfkvzkQ2vqP/fwMH+rzrgY+qIJxtjm9UmzelMCF/CYZ+7UXoabw75Sg7H8sO
+	 X3RX8Ip73U4Pw==
+Message-ID: <4b70d37b-20c6-4216-b2a3-20f525d5ca93@kernel.org>
+Date: Mon, 13 Jul 2026 10:02:50 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -107,99 +55,135 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] soc: qcom: llcc: Add configuration data for Shikra
- SoC
-To: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Komal Bajaj <komal.bajaj@oss.qualcomm.com>
-References: <20260630-shikra-edac-v1-0-287b3233241a@oss.qualcomm.com>
- <20260630-shikra-edac-v1-1-287b3233241a@oss.qualcomm.com>
- <20260701131937.ub4uzpixlmm72es4@hu-mojha-hyd.qualcomm.com>
+Subject: Re: [PATCH 3/3] ASoC: codecs: wcd9378: add TX/capture codec driver
+To: Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
+ Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+ Jorijn van der Graaf <jorijnvdgraaf@catcrafts.net>,
+ Mark Brown <broonie@kernel.org>
+Cc: Srinivas Kandagatla <srini@kernel.org>,
+ Liam Girdwood <lgirdwood@gmail.com>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Luca Weiss <luca.weiss@fairphone.com>, Conor Dooley <conor+dt@kernel.org>,
+ Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
+ Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>,
+ linux-sound@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20260706192229.144137-1-jorijnvdgraaf@catcrafts.net>
+ <20260706192229.144137-4-jorijnvdgraaf@catcrafts.net>
+ <d643de20-50db-4f5c-a803-f1737da253fe@linux.dev>
+ <f484f295-f454-4a19-bd3a-cd0db5d5f970@oss.qualcomm.com>
+ <439a96fe-9fe1-4052-8e35-f442d7f857ad@linux.dev>
 Content-Language: en-US
-From: Faiyaz Mohammed <faiyaz.mohammed@oss.qualcomm.com>
-In-Reply-To: <20260701131937.ub4uzpixlmm72es4@hu-mojha-hyd.qualcomm.com>
+From: Srinivas Kandagatla <srini@kernel.org>
+In-Reply-To: <439a96fe-9fe1-4052-8e35-f442d7f857ad@linux.dev>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=TbymcxQh c=1 sm=1 tr=0 ts=6a54a96d cx=c_pps
- a=Qgeoaf8Lrialg5Z894R3/Q==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=EUspDBNiAAAA:8 a=-ejpVAtAuEjdjmEucHkA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=x9snwWr2DeNwDh03kgHS:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzEzMDA5MyBTYWx0ZWRfXxEKD/bb6PwDh
- AerGNwVRkC3ksIXPXhIM4X07D1f7h1Ph11HdsyOJMZmx3YLBbelhsXITJODwCGBIccdfFzoVd9z
- qAkzrgvZH2dCy1rq0K+J9Se4LG0V8UE=
-X-Proofpoint-GUID: 3glipvTBzgYZ1ic-ULAWM8LqJC7FBvRS
-X-Proofpoint-ORIG-GUID: 3glipvTBzgYZ1ic-ULAWM8LqJC7FBvRS
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzEzMDA5MyBTYWx0ZWRfX/VtIAT1jzcm2
- ZToHtFEU9PCWOynfbibnuc+k/GAkrb4ppm26f0thFFTE3K/k1QXrjXW69u2xXnDhJb6po2CbQFr
- aVT1OOPpsDWMtgSWbVWklHUWvW3RVw7RImwdl4KspgrxjxHEdHPiezRIRO0/IOxXfp4YzSDec3I
- EWTDGVdKqpecdt2pdVymgCw7Vf4YAH4mEVik5PbA4VXDvUa9XqzARlgDFqI5l/aNpyIHEv5J/0e
- G3PJrHJoJfT4XMT2vixfevXwp1yBC6dBd/ZO35GwufcJeMfhfUb0XuoiV9Pl3zH7oi+Kn+Tz4kh
- dcVdiknRamMDTVuc7iDbbR/kppCttroPCqNwI1wtZFrNMzBJtH1B6NFvK3Q/6rA24asr9LJq2XT
- JhTHSyPIQJWwbFI4qkFU9pNh2/nRrv258fQb5pRx46me3wgWPkTQMHQcgBYIVfANlxSe3qDurrr
- mYTacIF6rqZMxtoHwrQ==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-13_02,2026-07-10_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 bulkscore=0 priorityscore=1501 suspectscore=0 impostorscore=0
- adultscore=0 lowpriorityscore=0 phishscore=0 spamscore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607130093
+Content-Transfer-Encoding: 7bit
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-3.66 / 15.00];
+	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-118690-lists,linux-arm-msm=lfdr.de];
-	TO_DN_SOME(0.00)[];
 	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-118691-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
+	FORGED_RECIPIENTS(0.00)[m:pierre-louis.bossart@linux.dev,m:srinivas.kandagatla@oss.qualcomm.com,m:jorijnvdgraaf@catcrafts.net,m:broonie@kernel.org,m:srini@kernel.org,m:lgirdwood@gmail.com,m:robh@kernel.org,m:krzk+dt@kernel.org,m:luca.weiss@fairphone.com,m:conor+dt@kernel.org,m:perex@perex.cz,m:tiwai@suse.com,m:mohammad.rafi.shaik@oss.qualcomm.com,m:linux-sound@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	RCVD_COUNT_THREE(0.00)[4];
+	FORGED_SENDER(0.00)[srini@kernel.org,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[17];
 	FORWARDED(0.00)[lists@lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:mukesh.ojha@oss.qualcomm.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:komal.bajaj@oss.qualcomm.com,s:lists@lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_SENDER(0.00)[faiyaz.mohammed@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,oss.qualcomm.com:from_mime,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,qualcomm.com:email,qualcomm.com:dkim,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns];
-	RCPT_COUNT_FIVE(0.00)[6];
-	PRECEDENCE_BULK(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[faiyaz.mohammed@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	TO_DN_SOME(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[srini@kernel.org,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_CC(0.00)[kernel.org,gmail.com,fairphone.com,perex.cz,suse.com,oss.qualcomm.com,vger.kernel.org];
 	MID_RHS_MATCH_FROM(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCVD_COUNT_SEVEN(0.00)[7]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: EA14074912A
+X-Rspamd-Queue-Id: 15CC4749110
 
 
 
-On 7/1/2026 6:49 PM, Mukesh Ojha wrote:
-> On Tue, Jun 30, 2026 at 06:25:09PM +0530, Faiyaz Mohammed wrote:
->> From: Komal Bajaj <komal.bajaj@oss.qualcomm.com>
+On 7/13/26 9:16 AM, Pierre-Louis Bossart wrote:
+> On 7/13/26 09:28, Srinivas Kandagatla wrote:
 >>
->> Add Last Level Cache table and configs for the Shikra SoC.
+>> On 7/7/26 12:42 PM, Pierre-Louis Bossart wrote:
+>>>> + *
+>>>> + * Qualcomm WCD9378 audio codec driver.
+>>>> + *
+>>>> + * The WCD9378 pairs a WCD937x-compatible analog core with SDCA-style
+>>> SDCA-style or SDCA-compliant?
 >>
->> Signed-off-by: Komal Bajaj <komal.bajaj@oss.qualcomm.com>
+>> This codec is SDCA compliant and used on X2 Elite Windows laptops.
+>>
+>> This Codec can be configured in two modes, Mobile and Compute, and this
+>> configuration is fused out.
 > 
-> Sender of the patch should always have their sign-off at the end.
+> How would you the drivers know which configuration is used? read from platform firmware?
+We can read fuse registers to get this info. this is pretty much fixed
+for each SoC, so the device tree description would also have to reflect
+that topology.
 > 
-Thanks for the review. You are right — I should have included my
-Signed-off-by as the submitter. The patch has already been picked
-up by the maintainer, so sending v2 of [2/2] as a standalone patch shortly.
+>> The codec IP is the same in both modes; what changes is how the
+>> host-side SoundWire master setup.
+>>
+>> The codec itself has two modes of working.
+>> 1. mobile mode
+>> 	in this mode the codec is enumerated as two slaves(tx and rx) on two
+>> different soundwire masters (tx and rx), like any other wcd codecs.
+>>
+>> 2. compute mode
+>> 	In this mode, where the codec is enumerated as single slave on primary
+>> soundwire master. Two Soundwire controllers(primary and dependent i.e tx
+>> and rx) are aggregated and they act as one logical SoundWire bus with
+>> four data lanes. The primary alone runs the SCP control channel,
+>> enumerates the slave, drives the bus clock, the secondary follows. The
+>> secondary drives some of the data lanes. There is a hardware sync
+>> between these two. This is a new configuration on Qualcomm Soundwire
+>> controllers called multi-master.
+> 
+> Very useful explanation, thanks.
+> 
+> In this configuration, I guess each lane is really dedicated to specific traffic?
+Exactly, on X2 Elite lane 0 and 1 are for TX traffic and Lane 2 and Lane
+3 are for RX traffic.
 
-Thanks,
-Faiyaz Mohammed
+> In theory the LaneCtrl port register allows a stream to be dynamically moved to a different lane, but I am not sure how this would work in such a 'multi-master' implementation. Along the same lines, I'd guess the non-zero data lanes remain enabled while the clock toggles, even if there's no traffic?
+This is pretty much fixed, frame shapping and lane mapping is hardcoded
+in device tree.
+
+> 
+> Management and optimization of multi-lane systems isn't straightforward, I've heard two theories:
+> - one where it's better to only enable multi-lane when the bandwidth on lane0 is exceeded.
+> - and a second where it's better to spread traffic on separate lanes and lower the clock.
+> It probably depends on a number of factors, and in the end on how codecs are wired to the different lanes...
+
+This is case is pretty much fixed due to how the lanes are wiredup
+internally.
+
+--srini
+> 
+>> From Codec pov, its exactly same IP, I have now SDCA drivers working for
+>> both playback and capture, so Am hoping that we could use the same SDCA
+>> driver for both of these modes. I still have to give it a try on a
+>> mobile platform to verify this.
+>>
+>> Am hoping to send a version of this driver sometime this week.
+> 
+> Sounds good.
+
 
