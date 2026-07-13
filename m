@@ -1,53 +1,53 @@
-Return-Path: <linux-arm-msm+bounces-118672-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-118673-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id C0BYHWmbVGrFoAMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-118672-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jul 2026 10:01:45 +0200
+	id FJPiOCubVGq6oAMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-118673-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jul 2026 10:00:43 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 21F3E748766
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jul 2026 10:01:40 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2FE4C748747
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jul 2026 10:00:38 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b="I/ll8Sz7";
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=ohKB1KDA;
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118672-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118672-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118673-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c15:e001:75::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118673-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id DEE1E3006B6C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jul 2026 07:57:25 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id F2509300159A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Jul 2026 08:00:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 09F5839A047;
-	Mon, 13 Jul 2026 07:57:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4BF783A451E;
+	Mon, 13 Jul 2026 08:00:32 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEDE1399346;
-	Mon, 13 Jul 2026 07:57:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46F4F358369;
+	Mon, 13 Jul 2026 08:00:31 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783929444; cv=none; b=jp2wNyA+AEMB6CA36E/d9K8+n9TYvmIeHJAMIS2eW0a6q7q08U1uVUOmDl9gCJyfPyQzlJ5vqNX6nvWRDWcFmk+d1IjJDHgpRCFfDHslgE6VMp/+HCXXbtF0CzG7YPuYTVTDJlgzYdWDNVjcON4ubhsqLW2o9eQQVXof2lh/u3w=
+	t=1783929632; cv=none; b=qRsi6+Jb5cvws3V+MHBVIcRQgoRuZ8cqDsF3dPfLdP3khHXBWsXP6Alb9/P2cNApe3uDi/k1WvofmNtfE9g0ZnSZnc/Nr17ioB5kSXkCHBNlRmmtNb9hGFmz3iZUmkzeNJIEkDeGZ44PZyvSpueVEvXMz5qGVsM1GwJtMzHtOG8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783929444; c=relaxed/simple;
-	bh=1PAtUj5SRfv3Gr9nXV8I5gZTcKtngRO156x71HXlxSg=;
+	s=arc-20240116; t=1783929632; c=relaxed/simple;
+	bh=FfRXvpHZCJqj5naLH8gsyxQOlrbUnYCrgLR3/h5n9/M=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=HU8ZgmvrEYBCliFhMXOCWlvx98JVkX5KGU8KjXKkaS1fJ1HVnXEmgEBfXlMiATd785CSkqc9muKNuWxgi4SwetkjUJXwrmE9da8L19wl53gbl/vhvXPGpqvlsoDYD0ITEuJsLCdylX8cKsPuudzVTNZliuzOxogMSbbiqYjzq5Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=I/ll8Sz7; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC0771F000E9;
-	Mon, 13 Jul 2026 07:57:18 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=q3qbHpXU7TgXSgDDnC8cR9NdAjP1rYssmcyPteirmtNiVcS7uwKa5vFJGQUgM9r0BHXddPKyAjqp65eqHXdnvvZJ/5dDUoxIwtSnoKEyH+kL5984RAAE6ClfKlQNalaDQPPJPpJWUQSYnTieBxK7Qy/g9wAZYHAJFwdwPbHhOjg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ohKB1KDA; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9A491F00A3A;
+	Mon, 13 Jul 2026 08:00:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783929443;
-	bh=hKBliu9mK6W6P1rOGcVusSeufzA2yIQpU5x+urkivwE=;
+	s=k20260515; t=1783929631;
+	bh=NOX5kOE7Z6Rk/uRRaEVLPGEGh/G3VUeBHyG9CWi4Kh4=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=I/ll8Sz7mL4SQcAbSqgYeJ+amQTV26MZUXYytUpfohYHIvKD/FVanKn9XJp2QtCQJ
-	 Zwy4CTfmJ7dhkXteNdv/7eyKSqqmLub5nawFTH5e4wgKypuE+DXqKXd6y2kf2gu7lm
-	 sxdDdAHCLZeKoN/UrmSBsB69Uy0QSCqn7VZrSn06rH3SPlcrIom27WD8ZnoN637SM/
-	 eIZpV/mCGFLr32CWo9OqpulOGrJ2LhQsdXp/3qwGV5evwlXjEQMtHBoQ4Ua8s1+Lrq
-	 OVhub0f8+GhRbdmTLQgBAoPV14Qq2uRaMV0nRpv6uIi3l9JwxkgUtIkxYE8a8YID7G
-	 /dvI7X/UXb1Rg==
-Message-ID: <2ddadbc0-0d67-4b1d-bb49-87c08172b442@kernel.org>
-Date: Mon, 13 Jul 2026 09:57:16 +0200
+	b=ohKB1KDAL313pRdVhCKRIJt2+XNzdYQQ+xSysFbjZ5TS9+fi/mZZAojqoNDtMjGHV
+	 TzU+LgQ8dHqBKObYWko7oAzo3rABGEpftO0EcDS2tCj12ArGjcjvLiguBkzYshU6ki
+	 j+wmybgzLMLWCc7sZ/5/WwhjqD3vRe69k9Xcys1ebgSEsi2wPuOFoYb8NLwk4GxnTL
+	 VRdOlotpZtIBSUMxyvMcY1jM2G9E8qZ0XNC2crqfhOhwz4NyaNV/eFp9N5vPqynmgL
+	 ELjPXR8XUZIIYfBe6NtXaqVNpM+E4in8nOfg7Wl8CfXP4bcmiEJcYsTgeiNWZn55Wb
+	 aZ7IgNtEH9V/w==
+Message-ID: <4fa8ab68-a513-483a-ac72-c157260692a1@kernel.org>
+Date: Mon, 13 Jul 2026 10:00:23 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -55,19 +55,23 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v12 0/6] Add new driver for WCSS secure PIL loading
+Subject: Re: [PATCH v13 2/6] dt-bindings: remoteproc: qcom: document hexagon
+ based WCSS secure PIL
 To: Varadarajan Narayanan <varadarajan.narayanan@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>
-Cc: Vignesh Viswanathan <vignesh.viswanathan@oss.qualcomm.com>,
- mathieu.poirier@linaro.org, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, konradybcio@kernel.org,
- manikanta.mylavarapu@oss.qualcomm.com, linux-arm-msm@vger.kernel.org,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Mathieu Poirier <mathieu.poirier@linaro.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>,
+ Manikanta Mylavarapu <manikanta.mylavarapu@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
  linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20260505102310.2925956-1-varadarajan.narayanan@oss.qualcomm.com>
- <e6311e97-0a26-4412-bcf0-d0313bf52c01@oss.qualcomm.com>
- <4a4e0e9c-8541-4fcc-8019-10a576840109@oss.qualcomm.com>
- <alAEKQzBXqjESAbo@baldur> <alSIffOraVCzfboW@hu-varada-blr.qualcomm.com>
+ Gokul Sriram Palanisamy <gokul.sriram.p@oss.qualcomm.com>,
+ George Moussalem <george.moussalem@outlook.com>,
+ Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+ Vignesh Viswanathan <vignesh.viswanathan@oss.qualcomm.com>
+References: <20260713-rproc-v13-0-41011cbcda3e@oss.qualcomm.com>
+ <20260713-rproc-v13-2-41011cbcda3e@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -113,31 +117,33 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  K9bCVaboTA2T77QYkRcRJYSsO1alGX0ome/hMLD1daXlkrNUp1HWa3K4iytLRXjCSIorWiGs
  n+q3krnpXu3TFkA8qtOFZMdnIiFuiq1yLT8hptsV5xh1TA2nsVvSYiaCr3q4s4BKjS/KrLDb
  qoxzw8ISjdUp4pA85vb6YLCmb39NgidD+7PmAr65lBNveIFynTgsja1rRQ4=
-In-Reply-To: <alSIffOraVCzfboW@hu-varada-blr.qualcomm.com>
+In-Reply-To: <20260713-rproc-v13-2-41011cbcda3e@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-5.16 / 15.00];
+X-Spamd-Result: default: False [-3.66 / 15.00];
 	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_RECIPIENTS(0.00)[m:varadarajan.narayanan@oss.qualcomm.com,m:andersson@kernel.org,m:vignesh.viswanathan@oss.qualcomm.com,m:mathieu.poirier@linaro.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:konradybcio@kernel.org,m:manikanta.mylavarapu@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:linux-remoteproc@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	TAGGED_FROM(0.00)[bounces-118673-lists,linux-arm-msm=lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:varadarajan.narayanan@oss.qualcomm.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:mathieu.poirier@linaro.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:manikanta.mylavarapu@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-remoteproc@vger.kernel.org,m:devicetree@vger.kernel.org,m:gokul.sriram.p@oss.qualcomm.com,m:george.moussalem@outlook.com,m:krzysztof.kozlowski@oss.qualcomm.com,m:vignesh.viswanathan@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_SENDER(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[13];
-	TAGGED_FROM(0.00)[bounces-118672-lists,linux-arm-msm=lfdr.de];
-	MIME_TRACE(0.00)[0:+];
-	FORWARDED(0.00)[lists@lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	RSPAMD_EMAILBL_FAIL(0.00)[linux-arm-msm@vger.kernel.org:query timed out];
+	FORGED_SENDER(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[16];
+	RCVD_COUNT_THREE(0.00)[4];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FORWARDED(0.00)[lists@lfdr.de];
+	FREEMAIL_CC(0.00)[vger.kernel.org,oss.qualcomm.com,outlook.com];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
@@ -145,32 +151,32 @@ X-Spamd-Result: default: False [-5.16 / 15.00];
 	DKIM_TRACE(0.00)[kernel.org:+];
 	MID_RHS_MATCH_FROM(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	TO_DN_SOME(0.00)[];
+	RSPAMD_EMAILBL_FAIL(0.00)[krzk@kernel.org:query timed out];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 21F3E748766
+X-Rspamd-Queue-Id: 2FE4C748747
 
-On 13/07/2026 08:41, Varadarajan Narayanan wrote:
-> On Thu, Jul 09, 2026 at 03:31:15PM -0500, Bjorn Andersson wrote:
->> On Thu, Jul 09, 2026 at 11:25:17AM +0530, Vignesh Viswanathan wrote:
->>> Hi Bjorn,
->>>
->>> Could you please help review and pick this series if it looks okay to you.
->>>
->>
->> Sorry for not keeping up with this corner of my inbox.
->>
->> Series looks good, please rebase on the PAS changes that should show up
->> in the next linux-next.
-> 
-> Have posted v13 - https://lore.kernel.org/linux-arm-msm/20260713-rproc-v13-0-41011cbcda3e@oss.qualcomm.com/.
-> Please review.
+On 13/07/2026 08:32, Varadarajan Narayanan wrote:
+> +
+> +  mboxes:
+> +    items:
+> +      - description: TMECom mailbox driver
 
-And v13 caries fake test tag and FAILS the test actually. What does such
-test tag mean if it was not actually tested?
+Drop "driver", this is not a phandle to a driver.
+
+> +
+> +  qcom,smem-states:
+> +    $ref: /schemas/types.yaml#/definitions/phandle-array
+> +    description: States used by the AP to signal the remote processor
+> +    items:
+> +      - description: Stop Q6
+> +      - description: Shutdown Q6
+
+Code already changed, you need to adapt this.
+
 
 Best regards,
 Krzysztof
