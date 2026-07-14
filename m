@@ -1,63 +1,70 @@
-Return-Path: <linux-arm-msm+bounces-119103-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-119104-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id 9rt4O8y4VmpHAgEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-119103-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jul 2026 00:31:41 +0200
+	id 0PapJhW9VmrCAgEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-119104-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jul 2026 00:49:57 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7C4D57593ED
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jul 2026 00:31:40 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2F3AF75945D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jul 2026 00:49:57 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=bUlIvnrt;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-119103-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-119103-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=Hq7tWWJi;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-119104-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-119104-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 9A6703037B81
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jul 2026 22:27:43 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 89811303E9D9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jul 2026 22:49:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 45070418A4C;
-	Tue, 14 Jul 2026 22:27:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7C6C0424D41;
+	Tue, 14 Jul 2026 22:49:44 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 341853DDDB8;
-	Tue, 14 Jul 2026 22:27:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58BE125CC57;
+	Tue, 14 Jul 2026 22:49:43 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784068063; cv=none; b=sD/krdvoG9beZ8wZZgIr2U4dM9EA05IWq6EHGR96J3NbaVlPCT2QbAUTB3nftgJGMNhQYyXCzLJD+GNbYA3+9OcMPvsrwB6V5o21C3KPceiz9k+lr9igXuBk9oTu+fSvshdE8sml/ISYRp9HsGDxY7m4ug1E66JZ/LNSTkKx/8U=
+	t=1784069384; cv=none; b=C/VcBV8ug9dVvVFANQXLxPgxV3jcOsKuMuf6PEVQFgQSW5lp7YSVFh88eXyf56P04GxiE/IcOB9HGd5W2dxi/MWkks3ayiq/AtHa0jZ7Fo/w02ibbpFjse8NyIwJ7AgXvTR/H0co4vgpwYDGga/hKgK0LmzuDlFk4gvA6HWAcDM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784068063; c=relaxed/simple;
-	bh=Uvef7YKJUXYqCm5aExFKb8Tw7REPmDgnpnOqM6wlPnk=;
+	s=arc-20240116; t=1784069384; c=relaxed/simple;
+	bh=GIhijpG2E6Yu8UVi3EtyTNDMQS+0eaChPrFTlN5MqEY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=m7by0ielMjESMvRcUh/5niYz08kLj1FLIEpwv/0eHy5tT2Fsre8WokGgWzl4psXvFthvAdHk0qCzP8zXJOzZ+TDwNJk9VeCF3SeI1DjecnI1NXF1w5BS4WtdtmpaJcs1fCqZxAFY+34ZXfot+58gSQFvwt/HGCHHato8f9XzQzY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bUlIvnrt; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FC111F000E9;
-	Tue, 14 Jul 2026 22:27:41 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=KBCqcfuAToU16EN8v6ZLsAAJId4+YhhHcSthA9UvO2Tj28VbFyBrEhssfZEIODN0AA07BLhkTFwlSZCmbhNdLKf+PyQijnzNFnpqffh04gHk4qnqjLkk4BNmXnigUIZsJGhuzEv0On0rDQ7HuwU2lognVYEQGkjV68YjkcceAP8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Hq7tWWJi; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD6EC1F000E9;
+	Tue, 14 Jul 2026 22:49:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784068061;
-	bh=GURWIME1ZSYy0zDc3cKEdN2A+uXckH8Iygm5TS+0l/8=;
+	s=k20260515; t=1784069382;
+	bh=PJr3xdYo5O85I5lwR0CL/86n0qwagbLxFzej3nisPIU=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=bUlIvnrt1ZCAaflYzXFQ4qx6L0rgJvcIBRTTYhrloEUsm7KAxg7vg6fNsmjOsXYfd
-	 To5UtCsRhKbn5jo4aEx4n15aky2h2AVfkgTorkYZPjzrGzP+d+tSSTXqFu96BlS2Ky
-	 pq0VIGFxBMEUfH3Q4ZTTjHu4rAG8P1ZHkJ/INbjXsmFTF7tAthTHmhEeoRAarD9ane
-	 jE7+tpkTWUA8oIRs1orW0TTNSkmeWfe9IDefRL20nfeaVLPXYqAm59v5YAsaMkcZzu
-	 NC/TJoSsE5LtsfiJHgRyYbG+cTmFbUtcbIEiZQmcIRw6IbwRRz8y53ucLehiaXP6TA
-	 c66oDRnvcP/ng==
-Date: Tue, 14 Jul 2026 17:27:40 -0500
-From: Rob Herring <robh@kernel.org>
-To: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Cc: Krzysztof Kozlowski <krzk@kernel.org>,
-	Georgi Djakov <djakov@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-	linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] dt-bindings: interconnect: qcom-bwmon: Document Eliza
- BWMONs compatible
-Message-ID: <20260714222740.GA3177936-robh@kernel.org>
-References: <20260708-bindings-llcc-bwmon-eliza-v1-1-3c7dbcbae87a@oss.qualcomm.com>
+	b=Hq7tWWJiyRpVUu0HieOgsngJMw/gTdsmLAn5xy0xztl4JNb0PvlKlQGODIT4SwXdh
+	 7D5Ma/KZfAzIEDM9oTGtVkL5fglMB8B186bYLv65uY1gRcMIhYU9ocjkLWbo+XqS7R
+	 I/mi6OKEmTIP33GPMDFaZ7wJsdTDM4iPyLUwODMMtWbRtCQI1oS2pO6APxpn0D/bsu
+	 04yQyL19SBwAQFDGDcDkgBPsqsUxt+nmY6qjBk0fXQbUwPueNloWAHERlerhA4ESUZ
+	 CAMRXMK21Ly7MqVsgCMd1wTiMuw0bVSGt5d+Fe3NeF4PXUA+c2bdFFNqKZRJ891yvz
+	 cCBr/dRVJBUxA==
+Date: Tue, 14 Jul 2026 17:49:42 -0500
+From: "Rob Herring (Arm)" <robh@kernel.org>
+To: Komal Bajaj <komal.bajaj@oss.qualcomm.com>
+Cc: Frank Li <Frank.Li@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
+	linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-pm@vger.kernel.org,
+	Sayantan Chakraborty <sayantan.chakraborty@oss.qualcomm.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	linux-kernel@vger.kernel.org, Georgi Djakov <djakov@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: [PATCH v6 01/11] dt-bindings: interconnect: qcom-bwmon: Add
+ Shikra cpu-bwmon compatible
+Message-ID: <178406933124.3270615.16874673383126107695.robh@kernel.org>
+References: <20260714-shikra-dt-m1-v6-0-bee265d3499b@oss.qualcomm.com>
+ <20260714-shikra-dt-m1-v6-1-bee265d3499b@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,54 +73,61 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260708-bindings-llcc-bwmon-eliza-v1-1-3c7dbcbae87a@oss.qualcomm.com>
+In-Reply-To: <20260714-shikra-dt-m1-v6-1-bee265d3499b@oss.qualcomm.com>
 X-Rspamd-Action: no action
 X-Spamd-Result: default: False [-4.16 / 15.00];
 	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MID_CONTAINS_FROM(1.00)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-119103-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-119104-lists,linux-arm-msm=lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:komal.bajaj@oss.qualcomm.com,m:Frank.Li@kernel.org,m:conor+dt@kernel.org,m:linux-arm-msm@vger.kernel.org,m:dmaengine@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-pm@vger.kernel.org,m:sayantan.chakraborty@oss.qualcomm.com,m:vkoul@kernel.org,m:konradybcio@kernel.org,m:krzk+dt@kernel.org,m:linux-kernel@vger.kernel.org,m:djakov@kernel.org,m:krzysztof.kozlowski@oss.qualcomm.com,m:andersson@kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[16];
+	FORWARDED(0.00)[lists@lfdr.de];
 	MIME_TRACE(0.00)[0:+];
 	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_RECIPIENTS(0.00)[m:abel.vesa@oss.qualcomm.com,m:krzk@kernel.org,m:djakov@kernel.org,m:conor+dt@kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-pm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	FORGED_SENDER(0.00)[robh@kernel.org,linux-arm-msm@vger.kernel.org];
-	FORWARDED(0.00)[lists@lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	MISSING_XM_UA(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[robh@kernel.org,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[kernel.org:+];
-	RCPT_COUNT_SEVEN(0.00)[8];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	TO_DN_SOME(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MISSING_XM_UA(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,qualcomm.com:email]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 7C4D57593ED
+X-Rspamd-Queue-Id: 2F3AF75945D
 
-On Wed, Jul 08, 2026 at 02:57:20PM +0300, Abel Vesa wrote:
-> Document Eliza BWMONs which has a BWMONv4 for CPU-LLCC and a BWMONv5 for
-> DDR-LLCC paths, same as SM8550.
+
+On Tue, 14 Jul 2026 01:06:50 +0530, Komal Bajaj wrote:
+> From: Sayantan Chakraborty <sayantan.chakraborty@oss.qualcomm.com>
 > 
-> Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+> Add the Qualcomm Shikra SoC compatible string for the CPU-to-DDR
+> bandwidth monitor. Shikra has a BWMONv5 for CPU.
+> 
+> Signed-off-by: Sayantan Chakraborty <sayantan.chakraborty@oss.qualcomm.com>
+> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+> Signed-off-by: Komal Bajaj <komal.bajaj@oss.qualcomm.com>
 > ---
->  Documentation/devicetree/bindings/interconnect/qcom,msm8998-bwmon.yaml | 2 ++
->  1 file changed, 2 insertions(+)
+>  Documentation/devicetree/bindings/interconnect/qcom,msm8998-bwmon.yaml | 1 +
+>  1 file changed, 1 insertion(+)
+> 
 
-Applied, but this should have gone with the .dts using it.
+Applied, since I picked up the Eliza changes.
 
 Rob
+
 
