@@ -1,270 +1,158 @@
-Return-Path: <linux-arm-msm+bounces-119074-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-119075-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id TM3ILn9pVmpc5AAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-119074-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jul 2026 18:53:19 +0200
+	id 4Ek5I3BtVmpg5QAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-119075-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jul 2026 19:10:08 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id AC22A7571DA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jul 2026 18:53:18 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id E0906757390
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jul 2026 19:10:07 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=weissschuh.net header.s=mail header.b=AfRCxkVh;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-119074-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c15:e001:75::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-119074-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=quarantine) header.from=weissschuh.net;
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b="br019/Gv";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-119075-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-119075-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 59197301F693
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jul 2026 16:52:17 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id EAF3C3036CDD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jul 2026 17:10:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E74B4DBD93;
-	Tue, 14 Jul 2026 16:52:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5F49039CCF9;
+	Tue, 14 Jul 2026 17:10:05 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from todd.t-8ch.de (todd.t-8ch.de [159.69.126.157])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 412914D90CF;
-	Tue, 14 Jul 2026 16:51:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55F8339CCE0;
+	Tue, 14 Jul 2026 17:10:04 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784047921; cv=none; b=BLzWlBYPwEneRhWJhFGnW/y5Eh91kg18iUAYqXTZ0jCPe6fG0Y7EnUTeBh4oTYjoIuHLMc9itZQpnc0bJrhCz2zmiOqh198e8wE1VGOYWpdlvo63O2zCiEjL1otRGYPZQ2r3LdhfJWlp6WbDt40uPJGRxK15XhEhTMmYtTZZUTI=
+	t=1784049005; cv=none; b=p1JshQclDBeDG928eRii2qW9hzBDOfpDv7tqn+016cR9Mlu5DIYlCnzdGJNK3Py6TMZzglnhKD3Y4c7YbeDzcn//xQnKmiHK2U5+UcgplpHdMNJgB4YqVemiFNbpHaTNvCVT/yjZl7u2oq/PprKwioGbyYdu2nQpMabEmt6WZHo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784047921; c=relaxed/simple;
-	bh=y+nMsMtnPzeoRMm6XOGdcqLiE1JJKdTJFdXgVfqhtcg=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=EwUUPNJqa6zmAHjAT/2xSETCTcp4QDJWiYWpeDBctPsDRMei9pBWTrxOIOtN4nYDRCSPiStsktiu2G83qbqfJ50LOgStWzRqUvp9JPiIrsZYPjkzpnBN4/SgIJ6s8C68/m6bNQnPgQJWpVdbtEeh4AlXvVIUZLKUDWkv1kLwYmM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=weissschuh.net; spf=pass smtp.mailfrom=weissschuh.net; dkim=pass (1024-bit key) header.d=weissschuh.net header.i=@weissschuh.net header.b=AfRCxkVh; arc=none smtp.client-ip=159.69.126.157
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=weissschuh.net;
-	s=mail; t=1784047914;
-	bh=y+nMsMtnPzeoRMm6XOGdcqLiE1JJKdTJFdXgVfqhtcg=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=AfRCxkVhMPXaeJ4X2pakjBoLYVMtENgqh6kslhbd+3AQg3WfIGgBcX2hDtINAVg+v
-	 Hw6tnma1FmLBkiT/Ldj7crCME1oCD5BjCY6CJbbzBhJYmNVDVsdn5FyukoGu1QvVSV
-	 BKkbdrDrb2bAHn8Ii1Z7+wIuZQYUY5Pu5/df8wFo=
-From: =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <linux@weissschuh.net>
-Date: Tue, 14 Jul 2026 18:51:50 +0200
-Subject: [PATCH 3/3] driver core: Constify the signature of
- device_show/store_*()
+	s=arc-20240116; t=1784049005; c=relaxed/simple;
+	bh=iU5TgyyeLsPI9CTpyKnBbHSPRESCRRzYcTsPmKBCPzs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=GYcqKpcl9tI8KVJ7AuH2qps6aijbTQRA//qgZh+HAKllOs5OKFm+Vfr3JQHKSwSuxD7a4Dh+4FUfLzhtnMzlRVawYAkcMb1phjTTzG/ifhreai16U1pS62O+YAg79gr61DriHIBeRdDXGlGlNh8XuAWHb6oOEyH+u7teqa4GYbc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=br019/Gv; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D47821F000E9;
+	Tue, 14 Jul 2026 17:10:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1784049004;
+	bh=p8krTh6h1D0xl3+E4ar9pBMXTTFfLOvTztKmJu8UNmY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=br019/Gv7LNagHxZ2TIUhQ4Ui5YbEMu3tScUpmLLNlYU1e5p2/qHGPryfUlTtHSMe
+	 6NQfssgg/7VGDNRv5r/hiimT5P84JdzlKPvIcAXAiUuUReJNHIc0nFtDEd40VZ4tQ9
+	 SoKpQpwlBYaIZ+eQpZ7PhBVrreY0e+JcPZd8QnM9mEBmr16OzwOuXKu+H83w12UZdR
+	 l8zrwQmxbad2KQ01+juChQPg12QjQkz+kLL43RW1pP4++XSEWDLtU+BSoWw7M+ENGB
+	 oDSTVowI27xZVOvFQLHKe3X1cNAUyFJLPpiXIySQG64YSI0YbANJgla7dj/Syw1B88
+	 j1Z6y1GlVjZuA==
+Date: Tue, 14 Jul 2026 18:09:58 +0100
+From: Mark Brown <broonie@kernel.org>
+To: Randy Dunlap <rdunlap@infradead.org>
+Cc: linux-sound@vger.kernel.org, Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.com>,
+	Shengjiu Wang <shengjiu.wang@gmail.com>,
+	Xiubo Li <Xiubo.Lee@gmail.com>, Fabio Estevam <festevam@gmail.com>,
+	Nicolin Chen <nicoleotsuka@gmail.com>,
+	linuxppc-dev@lists.ozlabs.org,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Maciej Strozek <mstrozek@opensource.cirrus.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
+	patches@opensource.cirrus.com,
+	Srinivas Kandagatla <srini@kernel.org>,
+	linux-arm-msm@vger.kernel.org, Liam Girdwood <lgirdwood@gmail.com>
+Subject: Re: [PATCH 01/14] ASoC: codecs: NeoFidelity: repair the kernel-doc
+ format
+Message-ID: <134b7d6e-979b-4b73-a99b-98e98a9696d6@sirena.org.uk>
+References: <20260714014445.569992-1-rdunlap@infradead.org>
+ <20260714014445.569992-2-rdunlap@infradead.org>
+ <4eddcb03-3c2a-4ef4-8825-e750e8109476@sirena.org.uk>
+ <1a885ccd-77bb-4537-89c9-6b031c2f3812@infradead.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260714-sysfs-const-attr-dev_ext_attr-v1-3-6b2c0435d621@weissschuh.net>
-References: <20260714-sysfs-const-attr-dev_ext_attr-v1-0-6b2c0435d621@weissschuh.net>
-In-Reply-To: <20260714-sysfs-const-attr-dev_ext_attr-v1-0-6b2c0435d621@weissschuh.net>
-To: Tony Luck <tony.luck@intel.com>, Borislav Petkov <bp@alien8.de>, 
- Thomas Gleixner <tglx@kernel.org>, Ingo Molnar <mingo@redhat.com>, 
- Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org, 
- "H. Peter Anvin" <hpa@zytor.com>, Will Deacon <will@kernel.org>, 
- Mark Rutland <mark.rutland@arm.com>, Jonathan Cameron <jic23@kernel.org>, 
- Yushan Wang <wangyushan12@huawei.com>, Jijie Shao <shaojijie@huawei.com>, 
- Khuong Dinh <khuong@os.amperecomputing.com>, 
- Madhavan Srinivasan <maddy@linux.ibm.com>, 
- Michael Ellerman <mpe@ellerman.id.au>, Nicholas Piggin <npiggin@gmail.com>, 
- "Christophe Leroy (CS GROUP)" <chleroy@kernel.org>, 
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
- "Rafael J. Wysocki" <rafael@kernel.org>, Danilo Krummrich <dakr@kernel.org>
-Cc: linux-edac@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-arm-kernel@lists.infradead.org, linux-perf-users@vger.kernel.org, 
- linux-cxl@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- linuxppc-dev@lists.ozlabs.org, driver-core@lists.linux.dev, 
- =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <linux@weissschuh.net>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1784047913; l=5833;
- i=linux@weissschuh.net; s=20221212; h=from:subject:message-id;
- bh=y+nMsMtnPzeoRMm6XOGdcqLiE1JJKdTJFdXgVfqhtcg=;
- b=CE/PLEPjEk9Clk2ILAqAI/VCFiwwgxAk66fuzdwrBCBYf62zj4nI5gb6xVcT3JfCfpR44koSU
- BdRAPrwT0zcBc20cdAFo7P5079v7q7Z6w6civBd2ZOcqPBwj5qITrGA
-X-Developer-Key: i=linux@weissschuh.net; a=ed25519;
- pk=KcycQgFPX2wGR5azS7RhpBqedglOZVgRPfdFSPB1LNw=
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="ICQm/UaAuCcRnyGo"
+Content-Disposition: inline
+In-Reply-To: <1a885ccd-77bb-4537-89c9-6b031c2f3812@infradead.org>
+X-Cookie: C for yourself.
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-5.76 / 15.00];
+	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
+	SIGNED_PGP(-2.00)[];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[weissschuh.net,quarantine];
-	R_DKIM_ALLOW(-0.20)[weissschuh.net:s=mail];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	MIME_GOOD(-0.20)[multipart/signed,text/plain];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
-	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FROM_HAS_DN(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	TAGGED_FROM(0.00)[bounces-119075-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:tony.luck@intel.com,m:bp@alien8.de,m:tglx@kernel.org,m:mingo@redhat.com,m:dave.hansen@linux.intel.com,m:x86@kernel.org,m:hpa@zytor.com,m:will@kernel.org,m:mark.rutland@arm.com,m:jic23@kernel.org,m:wangyushan12@huawei.com,m:shaojijie@huawei.com,m:khuong@os.amperecomputing.com,m:maddy@linux.ibm.com,m:mpe@ellerman.id.au,m:npiggin@gmail.com,m:chleroy@kernel.org,m:gregkh@linuxfoundation.org,m:rafael@kernel.org,m:dakr@kernel.org,m:linux-edac@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-arm-kernel@lists.infradead.org,m:linux-perf-users@vger.kernel.org,m:linux-cxl@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:linuxppc-dev@lists.ozlabs.org,m:driver-core@lists.linux.dev,m:linux@weissschuh.net,s:lists@lfdr.de];
-	RCVD_COUNT_THREE(0.00)[3];
-	FORGED_SENDER(0.00)[linux@weissschuh.net,linux-arm-msm@vger.kernel.org];
+	FORGED_SENDER(0.00)[broonie@kernel.org,linux-arm-msm@vger.kernel.org];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[29];
-	FREEMAIL_TO(0.00)[intel.com,alien8.de,kernel.org,redhat.com,linux.intel.com,zytor.com,arm.com,huawei.com,os.amperecomputing.com,linux.ibm.com,ellerman.id.au,gmail.com,linuxfoundation.org];
-	MIME_TRACE(0.00)[0:+];
+	RCPT_COUNT_TWELVE(0.00)[17];
+	FORGED_RECIPIENTS(0.00)[m:rdunlap@infradead.org,m:linux-sound@vger.kernel.org,m:perex@perex.cz,m:tiwai@suse.com,m:shengjiu.wang@gmail.com,m:Xiubo.Lee@gmail.com,m:festevam@gmail.com,m:nicoleotsuka@gmail.com,m:linuxppc-dev@lists.ozlabs.org,m:ckeepax@opensource.cirrus.com,m:mstrozek@opensource.cirrus.com,m:yung-chuan.liao@linux.intel.com,m:pierre-louis.bossart@linux.dev,m:patches@opensource.cirrus.com,m:srini@kernel.org,m:linux-arm-msm@vger.kernel.org,m:lgirdwood@gmail.com,m:shengjiuwang@gmail.com,m:XiuboLee@gmail.com,s:lists@lfdr.de];
+	MIME_TRACE(0.00)[0:+,1:+,2:~];
 	FORWARDED(0.00)[lists@lfdr.de];
-	TAGGED_FROM(0.00)[bounces-119074-lists,linux-arm-msm=lfdr.de];
+	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[linux@weissschuh.net,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[weissschuh.net:+];
 	ALIAS_RESOLVED(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[broonie@kernel.org,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_CC(0.00)[vger.kernel.org,perex.cz,suse.com,gmail.com,lists.ozlabs.org,opensource.cirrus.com,linux.intel.com,linux.dev,kernel.org];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TO_DN_SOME(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[weissschuh.net:from_mime,weissschuh.net:mid,weissschuh.net:email,weissschuh.net:dkim,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,vger.kernel.org:from_smtp]
+	MISSING_XM_UA(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,vger.kernel.org:from_smtp,sirena.org.uk:mid]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: AC22A7571DA
+X-Rspamd-Queue-Id: E0906757390
 
-Prepare for the constification of 'struct dev_ext_attribute' by changing
-the signature of the standard callback functions.
 
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
----
- arch/powerpc/perf/hv-24x7.c |  2 +-
- drivers/base/core.c         | 30 +++++++++++++++---------------
- include/linux/device.h      | 14 +++++++-------
- 3 files changed, 23 insertions(+), 23 deletions(-)
+--ICQm/UaAuCcRnyGo
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-diff --git a/arch/powerpc/perf/hv-24x7.c b/arch/powerpc/perf/hv-24x7.c
-index abb4cfb11fcc..c0abac00e026 100644
---- a/arch/powerpc/perf/hv-24x7.c
-+++ b/arch/powerpc/perf/hv-24x7.c
-@@ -462,7 +462,7 @@ static struct attribute *device_str_attr_create_(char *name, char *str)
- 	attr->var = str;
- 	attr->attr.attr.name = name;
- 	attr->attr.attr.mode = 0444;
--	attr->attr.show = device_show_string;
-+	attr->attr.show_const = device_show_string;
- 
- 	return &attr->attr.attr;
- }
-diff --git a/drivers/base/core.c b/drivers/base/core.c
-index 4d026682944f..649b8a126920 100644
---- a/drivers/base/core.c
-+++ b/drivers/base/core.c
-@@ -2513,13 +2513,13 @@ static const struct sysfs_ops dev_sysfs_ops = {
- 	.store	= dev_attr_store,
- };
- 
--#define to_ext_attr(x) container_of(x, struct dev_ext_attribute, attr)
-+#define to_ext_attr(x) container_of_const(x, struct dev_ext_attribute, attr)
- 
- ssize_t device_store_ulong(struct device *dev,
--			   struct device_attribute *attr,
-+			   const struct device_attribute *attr,
- 			   const char *buf, size_t size)
- {
--	struct dev_ext_attribute *ea = to_ext_attr(attr);
-+	const struct dev_ext_attribute *ea = to_ext_attr(attr);
- 	int ret;
- 	unsigned long new;
- 
-@@ -2533,19 +2533,19 @@ ssize_t device_store_ulong(struct device *dev,
- EXPORT_SYMBOL_GPL(device_store_ulong);
- 
- ssize_t device_show_ulong(struct device *dev,
--			  struct device_attribute *attr,
-+			  const struct device_attribute *attr,
- 			  char *buf)
- {
--	struct dev_ext_attribute *ea = to_ext_attr(attr);
-+	const struct dev_ext_attribute *ea = to_ext_attr(attr);
- 	return sysfs_emit(buf, "%lx\n", *(unsigned long *)(ea->var));
- }
- EXPORT_SYMBOL_GPL(device_show_ulong);
- 
- ssize_t device_store_int(struct device *dev,
--			 struct device_attribute *attr,
-+			 const struct device_attribute *attr,
- 			 const char *buf, size_t size)
- {
--	struct dev_ext_attribute *ea = to_ext_attr(attr);
-+	const struct dev_ext_attribute *ea = to_ext_attr(attr);
- 	int ret;
- 	long new;
- 
-@@ -2562,19 +2562,19 @@ ssize_t device_store_int(struct device *dev,
- EXPORT_SYMBOL_GPL(device_store_int);
- 
- ssize_t device_show_int(struct device *dev,
--			struct device_attribute *attr,
-+			const struct device_attribute *attr,
- 			char *buf)
- {
--	struct dev_ext_attribute *ea = to_ext_attr(attr);
-+	const struct dev_ext_attribute *ea = to_ext_attr(attr);
- 
- 	return sysfs_emit(buf, "%d\n", *(int *)(ea->var));
- }
- EXPORT_SYMBOL_GPL(device_show_int);
- 
--ssize_t device_store_bool(struct device *dev, struct device_attribute *attr,
-+ssize_t device_store_bool(struct device *dev, const struct device_attribute *attr,
- 			  const char *buf, size_t size)
- {
--	struct dev_ext_attribute *ea = to_ext_attr(attr);
-+	const struct dev_ext_attribute *ea = to_ext_attr(attr);
- 
- 	if (kstrtobool(buf, ea->var) < 0)
- 		return -EINVAL;
-@@ -2583,19 +2583,19 @@ ssize_t device_store_bool(struct device *dev, struct device_attribute *attr,
- }
- EXPORT_SYMBOL_GPL(device_store_bool);
- 
--ssize_t device_show_bool(struct device *dev, struct device_attribute *attr,
-+ssize_t device_show_bool(struct device *dev, const struct device_attribute *attr,
- 			 char *buf)
- {
--	struct dev_ext_attribute *ea = to_ext_attr(attr);
-+	const struct dev_ext_attribute *ea = to_ext_attr(attr);
- 
- 	return sysfs_emit(buf, "%d\n", *(bool *)(ea->var));
- }
- EXPORT_SYMBOL_GPL(device_show_bool);
- 
- ssize_t device_show_string(struct device *dev,
--			   struct device_attribute *attr, char *buf)
-+			   const struct device_attribute *attr, char *buf)
- {
--	struct dev_ext_attribute *ea = to_ext_attr(attr);
-+	const struct dev_ext_attribute *ea = to_ext_attr(attr);
- 
- 	return sysfs_emit(buf, "%s\n", (char *)ea->var);
- }
-diff --git a/include/linux/device.h b/include/linux/device.h
-index 7b2baffdd2f5..61e2b98b38a4 100644
---- a/include/linux/device.h
-+++ b/include/linux/device.h
-@@ -127,19 +127,19 @@ struct dev_ext_attribute {
- 	void *var;
- };
- 
--ssize_t device_show_ulong(struct device *dev, struct device_attribute *attr,
-+ssize_t device_show_ulong(struct device *dev, const struct device_attribute *attr,
- 			  char *buf);
--ssize_t device_store_ulong(struct device *dev, struct device_attribute *attr,
-+ssize_t device_store_ulong(struct device *dev, const struct device_attribute *attr,
- 			   const char *buf, size_t count);
--ssize_t device_show_int(struct device *dev, struct device_attribute *attr,
-+ssize_t device_show_int(struct device *dev, const struct device_attribute *attr,
- 			char *buf);
--ssize_t device_store_int(struct device *dev, struct device_attribute *attr,
-+ssize_t device_store_int(struct device *dev, const struct device_attribute *attr,
- 			 const char *buf, size_t count);
--ssize_t device_show_bool(struct device *dev, struct device_attribute *attr,
-+ssize_t device_show_bool(struct device *dev, const struct device_attribute *attr,
- 			char *buf);
--ssize_t device_store_bool(struct device *dev, struct device_attribute *attr,
-+ssize_t device_store_bool(struct device *dev, const struct device_attribute *attr,
- 			 const char *buf, size_t count);
--ssize_t device_show_string(struct device *dev, struct device_attribute *attr,
-+ssize_t device_show_string(struct device *dev, const struct device_attribute *attr,
- 			   char *buf);
- 
- typedef ssize_t __device_show_handler_const(struct device *dev, const struct device_attribute *attr,
+On Tue, Jul 14, 2026 at 08:57:06AM -0700, Randy Dunlap wrote:
+> On 7/14/26 3:20 AM, Mark Brown wrote:
 
--- 
-2.55.0
+> > As mentioned in submitting-patches.rst when submitting a patch series
+> > you should supply a cover letter for that patch series which describes
+> > the overall content of the series.  This helps people understand what
+> > they are looking at and how things fit together.
 
+> Are you saying that my cover letter was insufficient?
+
+> https://lore.kernel.org/all/20260714014445.569992-1-rdunlap@infradead.org/
+
+Well, quite apart from anything else you didn't send to to me so as far
+as my inbox is concerned it doesn't exist.
+
+--ICQm/UaAuCcRnyGo
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmpWbWUACgkQJNaLcl1U
+h9ABwQf/eHvS+UV1AYoZe6DwnsnW8Tgd6rs2VG84fELITR7/eEy+Q5m43Tn8RKt4
+xEDWcuDNbzcbk8Rv22XtI7SwSmWTstlpeYGlKRSDczjaKodKI4YL0IF1fpJ9gJ1E
+sPowWRSaO/eE41MuhRUHhqbVNjmqbeSBfz44ZaB43wStzbR7ikUfWjFZRVqTukgZ
+Rm85kdwy2rRRJBM6fNTINkBSeMbcH5lwr+nRgYOei6rQl+Qq599hzpptldSBFt8P
+GzGnRYN+OAWaH1Wkcp6Ty6G3QZf61JeroYWXQh2SIvIZDqDCtA70kyw3fy+0qFc0
+VqBIwc8XXtqwIoXBb9lv3C1qK5SnXA==
+=4vX+
+-----END PGP SIGNATURE-----
+
+--ICQm/UaAuCcRnyGo--
 
