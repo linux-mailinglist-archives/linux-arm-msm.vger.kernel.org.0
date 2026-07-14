@@ -1,131 +1,147 @@
-Return-Path: <linux-arm-msm+bounces-119048-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-119049-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id 2n+jE889VmpS2AAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-119048-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jul 2026 15:46:55 +0200
+	id vxyLH2k+Vmpz2AAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-119049-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jul 2026 15:49:29 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id C38A1755515
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jul 2026 15:46:54 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id C2B0A755577
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jul 2026 15:49:28 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=AXeWIdnH;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-119048-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-119048-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=quarantine) header.from=kernel.org;
+	dkim=pass header.d=ispras.ru header.s=default header.b=l8UnPiJm;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-119049-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-119049-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=none) header.from=ispras.ru;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id A08AC30B7925
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jul 2026 13:42:56 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 179ED30E69A4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jul 2026 13:47:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 77C6946AF3D;
-	Tue, 14 Jul 2026 13:42:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 69BCA477E33;
+	Tue, 14 Jul 2026 13:47:32 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail.ispras.ru (mail.ispras.ru [83.149.199.84])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A93D46AF3E;
-	Tue, 14 Jul 2026 13:42:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B8C346AF39;
+	Tue, 14 Jul 2026 13:47:27 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784036575; cv=none; b=OlgQWuEwBOWWH/g1eW7dWb9aFMQ1TBCW9hqSWFYWSPWrg7tUjnViyE92WfvCCIZQrj9VIpFwOoS6nImqlalzo0yGtlgqSdsrgDm7cpIX0xAsIAaHgE+s9aDUIxfQw4hxrnf/Ytl34OUm/m5TAwX78j9NTdImNEX5wNsMgL4JkXs=
+	t=1784036852; cv=none; b=NLjb2fS0YqFqC0S+7w1IAzWjmv1HIouaDzKQH5PaJIqcy2ERR3Ur4KdTTZ8KWtfvvfHYzh106HtFrqGpw129Imj4j0o+QFpYO3TtexG1I+TFaewJVNfudLDGf3iA+YSJLvD3737zqr3aNS4YVC3P2EiGNJxs+Zt+fQSneukZXE0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784036575; c=relaxed/simple;
-	bh=5gYQvavnqI9lm4kbdjEV/XUV6dE0grJr4KszdhdK/8k=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=oa7bj2BjVjf8ufqhPTDMkcuWspjoSIO0YWczlgSNcKxmvncuqypuoDLqe2n+jdBFoJWjv+RyzK+v4w8A0lfa7K8puBwZHaBIccw+pc7PORyUM9QrnBWgUavUhfAo/i+tFhtXjHknf7No8nwS4LnynLrjYgtLPmej5wOGn2WZPnw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AXeWIdnH; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AC0F1F00A3A;
-	Tue, 14 Jul 2026 13:42:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784036573;
-	bh=Y5xzVKg0zgUg0fxi1tjrjuzU1m2bzfMsm34VuVLPUrU=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date;
-	b=AXeWIdnHPUZwbNyE2+RUHQ815LLywi/PGe8YgMHLvm4NTSClIhgiWJpfdRYYRmh50
-	 Cd6xGeMFiRXGvL7nF2STd68BNLOB+Nto57XpKTi6J8zaXpiZjOv0Hcd49OrCUY672I
-	 eOqhZ+Vcs6hWVZBP9ryZB2J4ioTRFNNEaHvV+DgF/x5OM874oCY1FzhT8KLL+VxmPe
-	 /GLk7xDbSQQKXrn725wkYgF5/vAm/0/od2iKXLHDTVKG4Fcmal6Chwd/NaaH5OzQjE
-	 gSSAteczU9dD/fWDnaU5/vE+vHH3S+6m7SGO24q1WLw3Fx+T6/mlMAppyOcS6CtcUd
-	 S1/N9xeV1cfPA==
-From: Vinod Koul <vkoul@kernel.org>
-To: Bard Liao <yung-chuan.liao@linux.intel.com>, 
- Srinivas Kandagatla <srini@kernel.org>, 
- Jorijn van der Graaf <jorijnvdgraaf@catcrafts.net>
-Cc: Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>, 
- Luca Weiss <luca.weiss@fairphone.com>, 
- Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>, 
- linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- linux-kernel@vger.kernel.org
-In-Reply-To: <20260706192150.143921-1-jorijnvdgraaf@catcrafts.net>
-References: <20260706192150.143921-1-jorijnvdgraaf@catcrafts.net>
-Subject: Re: [PATCH] soundwire: qcom: add SCP address paging support
-Message-Id: <178403657091.851500.12269800526705086931.b4-ty@kernel.org>
-Date: Tue, 14 Jul 2026 19:12:50 +0530
+	s=arc-20240116; t=1784036852; c=relaxed/simple;
+	bh=v2o9z94asl5iQQQd3utUGGpD+9CMIxAw45QWSytUF3k=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=cxpiQ3DPc7fEYHEk1Pc7jDIz6WOqd1GbC9v6AIUYbplC7VFYSMHHRpfk8UGuSSfUM6igmOVnyQqU4hxmVWqBnYyggHlki1w2yUJSaTi1Ym5gBcec/jbAIBwemkTJB5xSj9UZClHpOnDcFl/omg5PsKyppn4BCuF395kdOtXKpxk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ispras.ru; spf=pass smtp.mailfrom=ispras.ru; dkim=pass (1024-bit key) header.d=ispras.ru header.i=@ispras.ru header.b=l8UnPiJm; arc=none smtp.client-ip=83.149.199.84
+Received: from localhost (unknown [95.24.32.156])
+	by mail.ispras.ru (Postfix) with ESMTPSA id A899C4077925;
+	Tue, 14 Jul 2026 13:47:24 +0000 (UTC)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mail.ispras.ru A899C4077925
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ispras.ru;
+	s=default; t=1784036844;
+	bh=EAzOUwTIZxPLoFmQvs7pqHvvpdS36xjaII/OElsZQJc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=l8UnPiJm9VfrOQV7wfrQYwiEBmuR836LAvT11z4ZCE+IWhIhMHPbUFtbgqeYyfxiX
+	 X11uwK8UEW99zwsvmOsgUsBDtM2axL/d3RM8bG7+r8tJbI4ErXg1L9a5EYFnQamxRP
+	 vcRYGzrkWbNr/aCBVYMBEPrORdh3+wxN5hNHWfTM=
+Date: Tue, 14 Jul 2026 16:47:24 +0300
+From: Fedor Pchelkin <pchelkin@ispras.ru>
+To: "Alexey V. Vissarionov" <gremlin@altlinux.org>, 
+	Vasiliy Kovalev <kovalev@altlinux.org>
+Cc: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>, lvc-project@linuxtesting.org, 
+	Casey Connolly <casey.connolly@linaro.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	Guenter Roeck <linux@roeck-us.net>
+Subject: Re: [PATCH v1] usb: typec: tcpm: qcom: initialize currsrc explicitly
+Message-ID: <alY7G3egPqw1iaPR@fedora>
+References: <20260713182500.GB22956@altlinux.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.13.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260713182500.GB22956@altlinux.org>
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-5.16 / 15.00];
-	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[ispras.ru,none];
+	R_DKIM_ALLOW(-0.20)[ispras.ru:s=default];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-119048-lists,linux-arm-msm=lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:yung-chuan.liao@linux.intel.com,m:srini@kernel.org,m:jorijnvdgraaf@catcrafts.net,m:pierre-louis.bossart@linux.dev,m:luca.weiss@fairphone.com,m:mohammad.rafi.shaik@oss.qualcomm.com,m:linux-sound@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,s:lists@lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER(0.00)[vkoul@kernel.org,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS(0.00)[m:gremlin@altlinux.org,m:kovalev@altlinux.org,m:bryan.odonoghue@linaro.org,m:heikki.krogerus@linux.intel.com,m:lvc-project@linuxtesting.org,m:casey.connolly@linaro.org,m:gregkh@linuxfoundation.org,m:linux-usb@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux@roeck-us.net,s:lists@lfdr.de];
+	RECEIVED_HELO_LOCALHOST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-119049-lists,linux-arm-msm=lfdr.de];
 	MIME_TRACE(0.00)[0:+];
 	RCVD_COUNT_THREE(0.00)[4];
 	FORWARDED(0.00)[lists@lfdr.de];
+	FORGED_SENDER(0.00)[pchelkin@ispras.ru,linux-arm-msm@vger.kernel.org];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	TO_DN_SOME(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[vkoul@kernel.org,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[9];
+	FROM_NEQ_ENVFROM(0.00)[pchelkin@ispras.ru,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[ispras.ru:+];
+	RCPT_COUNT_SEVEN(0.00)[10];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	TO_DN_SOME(0.00)[];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[altlinux.org:email,altlinux.org:url,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,vger.kernel.org:from_smtp,ispras.ru:from_mime,ispras.ru:dkim,fedora:mid,linuxtesting.org:url]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: C38A1755515
+X-Rspamd-Queue-Id: C2B0A755577
 
-
-On Mon, 06 Jul 2026 21:21:50 +0200, Jorijn van der Graaf wrote:
-> The Qualcomm controller driver ignores the paging fields of struct
-> sdw_msg. For a paged access (register address >= 0x8000 on a
-> paging-capable peripheral, e.g. the SDCA control space at
-> 0x40000000+) the core sets BIT(15) in the wire address and splits the
-> upper bits into addr_page1/addr_page2, but since the controller never
-> programmed the SCP_AddrPage registers the peripheral resolved every
-> such command against their reset value: reads and writes were
-> silently redirected to addr[14:0] in page 0.
+On Mon, 13. Jul 21:25, Alexey V. Vissarionov wrote:
+> When regmap_read() fails, the execution goes to done: label, where
+> currsrc is passed to rp_sel_to_name() and used as an index after a
+> proper check. However, to make this situation easier to notice, an
+> explicit initialization of currsrc with obviously impossible value
+> is suggested. Alas, we can't simply use zero value here because it
+> means TYPEC_SRC_RP_SEL_80UA.
 > 
-> [...]
+> Found by ALT Linux Team (altlinux.org) and Linux Verification Center
+> (linuxtesting.org) using SVACE.
+> 
+> Signed-off-by: Alexey V. Vissarionov <gremlin@altlinux.org>
+> ---
+>  drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c
+> index bf985efe1cd6bea4..d7cb69cf6044841b 100644
+> --- a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c
+> +++ b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c
+> @@ -461,8 +461,8 @@ static int qcom_pmic_typec_port_set_cc(struct tcpc_dev *tcpc,
+>  	struct pmic_typec *tcpm = tcpc_to_tcpm(tcpc);
+>  	struct pmic_typec_port *pmic_typec_port = tcpm->pmic_typec_port;
+>  	struct device *dev = pmic_typec_port->dev;
+> -	unsigned int mode, currsrc;
+> -	unsigned int misc;
+> +	unsigned int currsrc = 0xFF; /* error, easy to notice in the log */
+> +	unsigned int mode, misc;
+>  	unsigned long flags;
+>  	int ret;
 
-Applied, thanks!
+'mode' and 'misc' should be initialized as well.  Though this all was
+already covered with the patch [1], which got the review two weeks ago.
+Note that it did initialize currsrc with zero value instead of 0xFF.
 
-[1/1] soundwire: qcom: add SCP address paging support
-      commit: 999f80904763fae547c2c9c32bb7dbc31b86ffa1
+It's confusing a bit.  Maybe [1] should be respinned now with
+currsrc = 0xFF or whatever?
 
-Best regards,
--- 
-~Vinod
++Cc Vasiliy
 
-
+[1]: https://lore.kernel.org/all/20260630120114.185169-1-kovalev@altlinux.org/
 
