@@ -1,52 +1,52 @@
-Return-Path: <linux-arm-msm+bounces-118882-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-118891-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id WdGcK6qUVWqZqQAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-118882-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jul 2026 03:45:14 +0200
+	id nY3CCtCUVWqtqQAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-118891-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jul 2026 03:45:52 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0A46F750250
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jul 2026 03:45:14 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id B5D8875028D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jul 2026 03:45:51 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=infradead.org header.s=bombadil.20210309 header.b=UTNrwKVR;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118882-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118882-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=infradead.org header.s=bombadil.20210309 header.b="NhEpc/OX";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-118891-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-118891-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=none) header.from=infradead.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id CF56D300276F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jul 2026 01:44:51 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 291D93050A6E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jul 2026 01:44:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6B5C836BCD7;
-	Tue, 14 Jul 2026 01:44:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D3F5536F428;
+	Tue, 14 Jul 2026 01:44:55 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67F3F3672AF;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC270369D66;
 	Tue, 14 Jul 2026 01:44:49 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783993491; cv=none; b=l1hEhDny5n/odCvk26VUBuDGCC/m50nlobpG93fWR+eJZnG356BKAjUzN3j2Hn0W3JTtAdU5H/sF6tXV6OzcxNkichPc+1bVB7dI0slgmknbazDzJVQaNQ6DghKWIq+sbgAPpTCp/WmXhEA60n0djPqM7Ch0SXH/UzTe71iArl4=
+	t=1783993495; cv=none; b=CdconlIYZZtrAZDmCb6JjOoAtYPOAxo5yvTMPYS4ir8LQ/VgnQI/iB4ryAIOC14dMbl7/xFwTRSG/3yNrT/p/Y+crJ5UgaT7EYGzleXAjWNgBDI7JFYoEc86r9IVEpw0ptaoy70GAci3GAT81XZQzl+7qGTh66J88BiK+ts7Kvs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783993491; c=relaxed/simple;
-	bh=iKyQ6tpXSN/QAo8Wyv56MuhuLZ/e1uwQabzAP7yy/XY=;
+	s=arc-20240116; t=1783993495; c=relaxed/simple;
+	bh=e43bH6Sg4Ire0glE8cXgrmx4npbU7zr03wNu5QhEUHM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lNRxW6deIJUh8QPwK85nYTmjthgC1R33dqAAcWcPMXSClGpvxgIdEo7JaYB1/TZAeHLJehq4oSbbsqxqkEAiT45pYFZuQjVvjGbbhDLRCTN/QdvFHuLRv9zsSeDgAEcBKmhgLZ0lEZEupwlUjTcuYpDMm7nDmDPDBB8ncTQMRAM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=pass smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=UTNrwKVR; arc=none smtp.client-ip=198.137.202.133
+	 MIME-Version; b=n67aApoEkiyNd6wx6fcQ04k3jii9u3ue9uvGD692sV3AJctB2wN/Qayq986scGGCOjOiFZI4nq1tuilZBiiR0r6D80skL/0CVjT6m46J9DmsafNvPlnsDJ8U1cwwAkXng92VtvL9T4H8rM5L1KgKRNXHErCbXv6IxGIkXi34IAc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=pass smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=NhEpc/OX; arc=none smtp.client-ip=198.137.202.133
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
 	MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:Sender
 	:Reply-To:Content-Type:Content-ID:Content-Description;
-	bh=+PwZcettfGvI8Lm1XoNHMC02UlU18VC13AXj5oPS12E=; b=UTNrwKVRFbWWxYCulCRzRwkfIw
-	0peg4L4N1QTxWpk3AeIEnyBytYiYN88/soUvG/oLw1i1SXzB0LtFpjU+Akt0QXPly9ZX0mN976kpT
-	vi+QQ9HgioKWOnOvoDgCEYJzZnqX8KFtCjo7cNDRGnIuPQ589DRe8JunhuXC1diOQt+s37I9DM9Ld
-	Bat4Ygnhtj/Z+8ALUJxnP7DCvEvt8nebzzbmKvIjE2HPdWyHDx1Hhht/M7PdhhGhvA0Nh5JpHs5AJ
-	B9vRf3TZtf/2NvEYa3Ujvbv5DRI3RjIarsabsk6sx/wKW7BPkTjM+QjXCgyeIYbpNFVRXsSx+gLPU
-	u+Y10Xmg==;
+	bh=vnfsYfktu5U5dXFqu4+zHIXwtmVyfE56yQqIND2vx9A=; b=NhEpc/OXBnVTiaG6aq9cgKgQH7
+	hQGD4GwkZohSHaeAQoKkVTwm0++E6a81Z6VKtJFaP0hjJ0BKhlAoGG4YeDCLNLLJa7CeLL8CBvSmb
+	ZK6GJBCk2sbqtu/WliRu86KNn8fAL4olrntazUBuZCmAMDIEkJiNN0M1vX5SwoL7cUPCE2tCJWCjr
+	krLfX/xyRJBM4x8yduerKNK6CxRVpdlmEp4yrhborp/yc+/SWw4PTr3J2rRF0mdpOqEgrx1adGvs6
+	gCK74LJ2b0uSyGE7VpBtfAsVeds2DxDCgwDT7UxjqzN/1jGmpXBkFiqvypQSP6yBFanvhhv3HqGW1
+	2Hc0nfcA==;
 Received: from [50.53.43.113] (helo=bombadil.infradead.org)
 	by bombadil.infradead.org with esmtpsa (Exim 4.99.1 #2 (Red Hat Linux))
-	id 1wjSCW-0000000AgsR-46ef;
+	id 1wjSCX-0000000AgsR-2GAy;
 	Tue, 14 Jul 2026 01:44:49 +0000
 From: Randy Dunlap <rdunlap@infradead.org>
 To: linux-sound@vger.kernel.org
@@ -67,9 +67,9 @@ Cc: Randy Dunlap <rdunlap@infradead.org>,
 	linux-arm-msm@vger.kernel.org,
 	Liam Girdwood <lgirdwood@gmail.com>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 03/14] ASoC: fsl_asrc: avoid kernel-doc warnings
-Date: Mon, 13 Jul 2026 18:44:34 -0700
-Message-ID: <20260714014445.569992-4-rdunlap@infradead.org>
+Subject: [PATCH 04/14] ASoC: fsl-dma: fix all kernel-doc warnings
+Date: Mon, 13 Jul 2026 18:44:35 -0700
+Message-ID: <20260714014445.569992-5-rdunlap@infradead.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260714014445.569992-1-rdunlap@infradead.org>
 References: <20260714014445.569992-1-rdunlap@infradead.org>
@@ -88,11 +88,11 @@ X-Spamd-Result: default: False [0.84 / 15.00];
 	R_MISSING_CHARSET(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[infradead.org,none];
 	R_DKIM_ALLOW(-0.20)[infradead.org:s=bombadil.20210309];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-118882-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-118891-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER(0.00)[rdunlap@infradead.org,linux-arm-msm@vger.kernel.org];
@@ -112,18 +112,18 @@ X-Spamd-Result: default: False [0.84 / 15.00];
 	ALIAS_RESOLVED(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,vger.kernel.org:from_smtp,infradead.org:from_mime,infradead.org:mid,infradead.org:email,infradead.org:dkim]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,vger.kernel.org:from_smtp,ozlabs.org:email,infradead.org:from_mime,infradead.org:mid,infradead.org:email,infradead.org:dkim]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 0A46F750250
+X-Rspamd-Queue-Id: B5D8875028D
 
-Use the struct keyword to describe structs in kernel-doc format. This
-prevents kernel-doc warnings:
+Don't use "/**" for non-kernel-doc comments to avoid kernel-doc warnings:
 
-Warning: ../sound/soc/fsl/fsl_asrc.h:452 cannot understand function prototype: 'struct fsl_asrc_soc_data'
-Warning: ../sound/soc/fsl/fsl_asrc.h:463 cannot understand function prototype: 'struct fsl_asrc_pair_priv'
-Warning: ../sound/soc/fsl/fsl_asrc.h:475 cannot understand function prototype: 'struct fsl_asrc_priv'
+Warning: ../sound/soc/fsl/fsl_dma.h:95 This comment starts with '/**', but isn't a kernel-doc comment.
+ *  List Descriptor for extended chaining mode DMA operations.
+Warning: ../sound/soc/fsl/fsl_dma.h:110 This comment starts with '/**', but isn't a kernel-doc comment.
+ *  Link Descriptor for basic and extended chaining mode DMA operations.
 
 Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
 ---
@@ -135,36 +135,27 @@ Cc: Fabio Estevam <festevam@gmail.com>
 Cc: Nicolin Chen <nicoleotsuka@gmail.com>
 Cc: linuxppc-dev@lists.ozlabs.org
 
- sound/soc/fsl/fsl_asrc.h |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ sound/soc/fsl/fsl_dma.h |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- linext-2026-0710.orig/sound/soc/fsl/fsl_asrc.h
-+++ linext-2026-0710/sound/soc/fsl/fsl_asrc.h
-@@ -444,7 +444,7 @@ struct dma_block {
- };
+--- linext-2026-0710.orig/sound/soc/fsl/fsl_dma.h
++++ linext-2026-0710/sound/soc/fsl/fsl_dma.h
+@@ -92,7 +92,7 @@ static inline u32 CCSR_DMA_ECLNDAR_ADDR(
+ #define CCSR_DMA_ATR_SNOOP      	0x00050000
+ #define CCSR_DMA_ATR_ESAD_MASK  	0x0000000F
  
- /**
-- * fsl_asrc_soc_data: soc specific data
-+ * struct fsl_asrc_soc_data - soc specific data
+-/**
++/*
+  *  List Descriptor for extended chaining mode DMA operations.
   *
-  * @use_edma: using edma as dma device or not
-  * @channel_bits: width of ASRCNCR register for each pair
-@@ -457,7 +457,7 @@ struct fsl_asrc_soc_data {
- };
+  *  The CLSDAR register points to the first (in a linked-list) List
+@@ -107,7 +107,7 @@ struct fsl_dma_list_descriptor {
+ 	u8 res[8];      	/* Reserved */
+ } __attribute__ ((aligned(32), packed));
  
- /**
-- * fsl_asrc_pair_priv: ASRC Pair private data
-+ * struct fsl_asrc_pair_priv - ASRC Pair private data
+-/**
++/*
+  *  Link Descriptor for basic and extended chaining mode DMA operations.
   *
-  * @config: configuration profile
-  */
-@@ -466,7 +466,7 @@ struct fsl_asrc_pair_priv {
- };
- 
- /**
-- * fsl_asrc_priv: ASRC private data
-+ * struct fsl_asrc_priv - ASRC private data
-  *
-  * @asrck_clk: clock sources to driver ASRC internal logic
-  * @soc: soc specific data
+  *  A Link Descriptor points to a single DMA buffer.  Each link descriptor
 
