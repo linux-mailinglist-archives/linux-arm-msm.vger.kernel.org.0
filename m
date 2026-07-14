@@ -1,66 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-119097-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-119098-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id 6fxzKUSuVmpKAAEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-119097-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jul 2026 23:46:44 +0200
+	id BmX5ICKxVmq3AAEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-119098-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jul 2026 23:58:58 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id E84FA7590BE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jul 2026 23:46:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id CB494759175
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jul 2026 23:58:57 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=Vin2UnpZ;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-119097-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-119097-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=Dt4jxkA4;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-119098-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-119098-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id A22D130B238A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jul 2026 21:45:23 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 745C83024C82
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Jul 2026 21:58:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 16AC6429CF8;
-	Tue, 14 Jul 2026 21:45:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5871D429CF5;
+	Tue, 14 Jul 2026 21:58:49 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 056943EDE59;
-	Tue, 14 Jul 2026 21:45:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E0563FB055;
+	Tue, 14 Jul 2026 21:58:47 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784065522; cv=none; b=gUtx/O7cHHO6ScclgTjjTzOndE6T38ks9yJ1oPTadSpl6DB/cswtZ0Wwl2gv7/QBlIhd5Rdl4SZrnDRh/T8F2zAFCZ/EPPG86BVc0U+b6239FgJi+PxBPutVd9ZxHtxG6RN/yWxcwyGrEkvB5fc9SSaRC03kXWEBfOKsglHSslc=
+	t=1784066329; cv=none; b=ZE1XBnWtgsgH7odbE3QVTmMFHdIuBQwh3MENIDUaRMYLl3Ent9Hsm2D5O/49FL9+YnwrD4/e5B3sI6L44R8tXcKVF0c7df6sLbW+ChzD9M8qrpH/T4dTYlAIluWxhYEmGnL4EUlZrWzg5S4H77Dd1s/T8+V8Ynh1kIR+NiSualI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784065522; c=relaxed/simple;
-	bh=VzP6G29arfVHBzyobaaJmu18G5z9zE0CcRLfN9+MoJQ=;
+	s=arc-20240116; t=1784066329; c=relaxed/simple;
+	bh=ouy4npV4LYbEkQl2h2wNkvuTixT3WVi6+ilKYKx4Dbc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XTt7/MpgrwO4Qb2upYxQcTEmXkS0Vh7AJhbNkfimhhuPQpT096ETUaOZA7Duyo9Z9xCk9gVoX6QYtIkV8U3/4yfroG6RMy/KgI+1BqlB93MxDgOBBSZ1B9SOU3FPVPsDHa6jE70cqf5TSAGpWz4lY2TiYWQvr9FWJTtakW+rjrk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Vin2UnpZ; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 856C01F000E9;
-	Tue, 14 Jul 2026 21:45:20 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=ilLJoLjir4570P/TbRRBNWm99vUBDd8ugAUfdyRVyOFX7+/yLB3ToUZ0s8Mk6q5GCd6IcgYb/PxXEq9F5G6kIAIOyHFcPwOP/aNNrz44NDZclTyNaz6PcDxuzM01yJBGIVhxW69cwsaQ/xEvs1beVV5Nqo1fVs5wThcsOBf4OLk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Dt4jxkA4; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8307E1F000E9;
+	Tue, 14 Jul 2026 21:58:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784065520;
-	bh=6U0YUuRk6xW0tRmeT06lRlocuYSV9155/wLIZP3WcTg=;
+	s=k20260515; t=1784066327;
+	bh=jIilpnqGzj8khC1MQLy4UAKt3Fn3dMi3MkFbuxyLZ9w=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=Vin2UnpZpAhB84PLdnADBR1uHzDpPuT1nDSk3AiKEUWVAEt6yNSbJ/rw0nHny34/a
-	 WMNa1gyOg5ZhY6uG2ASQ7mdwNVI3ctmU0SgeYdYQ/uF+16mABrnfYrmwUoxpk2u/cF
-	 pN03rJuizEigAki8I8UW/OT02L4W+jEwR3qUm9r2O215SHHBdgI/MtIUGTBzotYur2
-	 HCxGpHi6IApbDKE8lPzEbxjjGrPnzHzWiYZLL1Zmf3frMyOdRkwcBRGTAmzpIKQLCV
-	 6ZIc491qD4VcOHc3JwHsYgIGXejgVLBeP/wYZs++6YnDwnoi5i9YnxC9R3u+50h9XL
-	 YcPXEesE7r/pQ==
-Date: Tue, 14 Jul 2026 16:45:19 -0500
+	b=Dt4jxkA4TwqZ1+6gdpqQXr0td3yEo2ANQRTYH4pFYL/oWQgZtzgthWkPKSwydZG14
+	 hu360Yk5Z3QM4gFEYxmrmJh2wbsiWQb8kcUPaO/RUPNv6ljfTE+TNgVy2gLCOUWWBk
+	 +0eWrDG+UJT3sGaUT+YJw6/sYBEC0D/8Z0InhL8k7LDIQ/w041PIu/5S6b8SK+wbg0
+	 cNlK0N79w9kBiOwmOy+HCaYGi3/C7pIcu+bbYn7hGw2IATAAoM2XHwrbnRwMfaBw92
+	 YkrAl4N5tIKo2dj04VmE/gGR/BsaiG7JIr6iUd9PFDZpw0jKi6kzGFE1ngSzI/TqdP
+	 ReYiWXDcJVTig==
+Date: Tue, 14 Jul 2026 16:58:46 -0500
 From: Rob Herring <robh@kernel.org>
-To: Bjorn Andersson <andersson@kernel.org>
-Cc: krzk+dt@kernel.org, mturquette@baylibre.com,
-	linux-remoteproc@vger.kernel.org,
-	Alexandru Gagniuc <mr.nuke.me@gmail.com>,
-	mathieu.poirier@linaro.org, conor+dt@kernel.org,
-	konradybcio@kernel.org, sboyd@kernel.org, p.zabel@pengutronix.de,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org
-Subject: Re: (subset) [PATCH v2 0/9] remoteproc: qcom_q6v5_wcss: add native
- ipq9574 support
-Message-ID: <20260714214519.GA2851152-robh@kernel.org>
-References: <20260109043352.3072933-1-mr.nuke.me@gmail.com>
- <178370682987.2572738.13491033810212556744.b4-ty@kernel.org>
+To: Komal Bajaj <komal.bajaj@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>
+Cc: Konrad Dybcio <konradybcio@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Wesley Cheng <quic_wcheng@quicinc.com>,
+	Ulf Hansson <ulfh@kernel.org>, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-phy@lists.infradead.org, linux-mmc@vger.kernel.org,
+	monish.chunara@oss.qualcomm.com,
+	Imran Shaik <imran.shaik@oss.qualcomm.com>,
+	Monish Chunara <quic_mchunara@quicinc.com>,
+	Rakesh Kota <rakesh.kota@oss.qualcomm.com>,
+	Raviteja Laggyshetty <raviteja.laggyshetty@oss.qualcomm.com>,
+	Sneh Mankad <sneh.mankad@oss.qualcomm.com>,
+	Vishnu Santhosh <vishnu.santhosh@oss.qualcomm.com>,
+	Xueyao An <xueyao.an@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH v7 2/5] arm64: dts: qcom: Introduce Shikra SoC base dtsi
+Message-ID: <20260714215846.GA2932445-robh@kernel.org>
+References: <20260708-shikra-dt-v7-0-977b65a300c1@oss.qualcomm.com>
+ <20260708-shikra-dt-v7-2-977b65a300c1@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -69,7 +79,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <178370682987.2572738.13491033810212556744.b4-ty@kernel.org>
+In-Reply-To: <20260708-shikra-dt-v7-2-977b65a300c1@oss.qualcomm.com>
 X-Rspamd-Action: no action
 X-Spamd-Result: default: False [-2.66 / 15.00];
 	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
@@ -83,57 +93,75 @@ X-Spamd-Result: default: False [-2.66 / 15.00];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-119097-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-119098-lists,linux-arm-msm=lfdr.de];
 	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
-	RCPT_COUNT_TWELVE(0.00)[14];
+	RCPT_COUNT_TWELVE(0.00)[23];
 	FORWARDED(0.00)[lists@lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:andersson@kernel.org,m:krzk+dt@kernel.org,m:mturquette@baylibre.com,m:linux-remoteproc@vger.kernel.org,m:mr.nuke.me@gmail.com,m:mathieu.poirier@linaro.org,m:conor+dt@kernel.org,m:konradybcio@kernel.org,m:sboyd@kernel.org,m:p.zabel@pengutronix.de,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-clk@vger.kernel.org,m:krzk@kernel.org,m:mrnukeme@gmail.com,m:conor@kernel.org,s:lists@lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:komal.bajaj@oss.qualcomm.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:vkoul@kernel.org,m:neil.armstrong@linaro.org,m:quic_wcheng@quicinc.com,m:ulfh@kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-phy@lists.infradead.org,m:linux-mmc@vger.kernel.org,m:monish.chunara@oss.qualcomm.com,m:imran.shaik@oss.qualcomm.com,m:quic_mchunara@quicinc.com,m:rakesh.kota@oss.qualcomm.com,m:raviteja.laggyshetty@oss.qualcomm.com,m:sneh.mankad@oss.qualcomm.com,m:vishnu.santhosh@oss.qualcomm.com,m:xueyao.an@oss.qualcomm.com,m:konrad.dybcio@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	FORGED_SENDER(0.00)[robh@kernel.org,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
 	DKIM_TRACE(0.00)[kernel.org:+];
-	TO_DN_SOME(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[robh@kernel.org,linux-arm-msm@vger.kernel.org];
-	FREEMAIL_CC(0.00)[kernel.org,baylibre.com,vger.kernel.org,gmail.com,linaro.org,pengutronix.de];
+	TO_DN_SOME(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MISSING_XM_UA(0.00)[];
 	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,quicinc.com:email,qualcomm.com:email]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: E84FA7590BE
+X-Rspamd-Queue-Id: CB494759175
 
-On Fri, Jul 10, 2026 at 01:07:04PM -0500, Bjorn Andersson wrote:
+On Wed, Jul 08, 2026 at 05:47:31PM +0530, Komal Bajaj wrote:
+> Add initial device tree support for the Qualcomm Shikra SoC,
+> an IoT-focused platform built around a heterogeneous CPU cluster
+> (Cortex-A55 + Cortex-A78C) with RPM-based power and clock management.
 > 
-> On Thu, 08 Jan 2026 22:33:35 -0600, Alexandru Gagniuc wrote:
-> > Support loading remoteproc firmware on IPQ9574 with the qcom_q6v5_wcss
-> > driver. This firmware is usually used to run ath11k firmware and enable
-> > wifi with chips such as QCN5024.
-> > 
-> > When submitting v1, I learned that the firmware can also be loaded by
-> > the trustzone firmware. Since TZ is not shipped with the kernel, it
-> > makes sense to have the option of a native init sequence, as not all
-> > devices come with the latest TZ firmware.
-> > 
-> > [...]
+> Enable support for the following peripherals:
+>   - CPU nodes
+>   - Global Clock Controller (GCC)
+>   - RPM-based clock controller (RPMCC) and power domains (RPMPD)
+>   - Interrupt controller
+>   - Top Level Mode Multiplexer (TLMM)
+>   - Debug UART
+>   - eMMC host controller
+>   - System timer and watchdog
 > 
-> Applied, thanks!
-> 
-> [1/9] remoteproc: qcom_q6v5_wcss: drop unused clocks from q6v5 struct
->       commit: 22afc6163c0c7a144d24a09352b87719d64d5f65
-> [2/9] dt-bindings: remoteproc: qcom,ipq8074-wcss-pil: convert to DT schema
->       commit: 2a756ac4d98efc97503629fcaddb2e7c46255824
-> [4/9] dt-bindings: remoteproc: qcom: add IPQ9574 image loader
->       commit: bc33b5b5e23a389e660c3d696cd2e043fdf33ef7
+> Co-developed-by: Imran Shaik <imran.shaik@oss.qualcomm.com>
+> Signed-off-by: Imran Shaik <imran.shaik@oss.qualcomm.com>
+> Co-developed-by: Monish Chunara <quic_mchunara@quicinc.com>
+> Signed-off-by: Monish Chunara <quic_mchunara@quicinc.com>
+> Co-developed-by: Rakesh Kota <rakesh.kota@oss.qualcomm.com>
+> Signed-off-by: Rakesh Kota <rakesh.kota@oss.qualcomm.com>
+> Co-developed-by: Raviteja Laggyshetty <raviteja.laggyshetty@oss.qualcomm.com>
+> Signed-off-by: Raviteja Laggyshetty <raviteja.laggyshetty@oss.qualcomm.com>
+> Co-developed-by: Sneh Mankad <sneh.mankad@oss.qualcomm.com>
+> Signed-off-by: Sneh Mankad <sneh.mankad@oss.qualcomm.com>
+> Co-developed-by: Vishnu Santhosh <vishnu.santhosh@oss.qualcomm.com>
+> Signed-off-by: Vishnu Santhosh <vishnu.santhosh@oss.qualcomm.com>
+> Co-developed-by: Xueyao An <xueyao.an@oss.qualcomm.com>
+> Signed-off-by: Xueyao An <xueyao.an@oss.qualcomm.com>
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> Signed-off-by: Komal Bajaj <komal.bajaj@oss.qualcomm.com>
 
-Why is a 6 month old patchset with reported errors being applied? 
-Anyways, linux-next is now broken. Please fix.
+So none of these people nor the maintainers managed to run dtbs_check on 
+this?
+
+All of these show up as undocumented in linux-next now:
+
+     'qcom,scm-shikra', 'qcom,scm'
+     'qcom,shikra-imem', 'mmio-sram'
+     'qcom,shikra-tcsr', 'syscon'
+
+Please fix or drop this series.
+
+I'm tired of chasing down new QCom DT warnings.
 
 Rob
 
