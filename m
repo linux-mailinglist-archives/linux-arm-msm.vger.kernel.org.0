@@ -1,51 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-119235-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-119236-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id JNXFMTh6V2qVOwEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-119235-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jul 2026 14:16:56 +0200
+	id YsS4BmR8V2r5PAEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-119236-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jul 2026 14:26:12 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4B28475DFED
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jul 2026 14:16:56 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id EB8D475E11A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jul 2026 14:26:10 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=arm.com header.s=foss header.b=k9B32DcQ;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-119235-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-119235-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=none) header.from=arm.com;
+	dkim=pass header.d=ieee.org header.s=google header.b=NQGNb5C5;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-119236-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c15:e001:75::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-119236-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=reject) header.from=ieee.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id C2C6A307C982
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jul 2026 12:14:26 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id D78B7304568B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jul 2026 12:16:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2FEDC435A8A;
-	Wed, 15 Jul 2026 12:14:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4144444B663;
+	Wed, 15 Jul 2026 12:16:16 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 351F7436BEF;
-	Wed, 15 Jul 2026 12:14:22 +0000 (UTC)
+Received: from mail-qv1-f51.google.com (mail-qv1-f51.google.com [209.85.219.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 044A945BD5F
+	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jul 2026 12:16:13 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784117664; cv=none; b=hvPnFLjv/Fy5k7MO/JD5VkR/CItMz/qj1g5RgSzeutZZ3t/HrUQSksBcSTWXBPit9JRNUlK+4CDgjuNAxe6VZReOhuIcUfxqrih195Su7LTmX5KTWoSLH0ucP+eq1byeEqKFl/fa8cQUR89zEM6oy1PQ0V71irbUWMPnILR8oJ0=
+	t=1784117776; cv=none; b=SUYpDN9NBueMZz1zI93UTAeCoJTHzC0nXv+7RpoGaqOi0elB4iShM8saGQUD0H8S3mDVEoVfPSID/kpvr6i7U1dg8wehyhBTlBnD0/XiBE/PBQHjUd6Ig86ZL1ke+kc6+gL1wKemLcvsXYaTHnEM63TveLBOC/ARya684wvXbgY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784117664; c=relaxed/simple;
-	bh=Oo24supxqHGQF/xR33i1jri7lLQABYTzlem84t/Uj/k=;
+	s=arc-20240116; t=1784117776; c=relaxed/simple;
+	bh=lT/7WO1wjfB3oak0cuKJt8DGXn0vntMapQEjDanB03g=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=YuoyatTEI59cJPr1oB2qUJP/CIEo+Q70DWKkhhbp1MGiQ/kW5y69CEyYNktKNWF/hesaCbutqIs3aDzJEuDc8nnOO/a2o5bTPAUSPTl5IC1UUZrPiwCW4GLolfpAzqXemAlayYyJNDkh4aW4PESAsJCNoCh0CXvL+c8f2AfYo0c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=k9B32DcQ; arc=none smtp.client-ip=217.140.110.172
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 5DCBC2F;
-	Wed, 15 Jul 2026 05:14:17 -0700 (PDT)
-Received: from [10.2.212.23] (e121345-lin.cambridge.arm.com [10.2.212.23])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 29C2F3F7B4;
-	Wed, 15 Jul 2026 05:14:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1784117661; bh=Oo24supxqHGQF/xR33i1jri7lLQABYTzlem84t/Uj/k=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=k9B32DcQJrkF5e4lot+BTUtvQC5lX8mMTfzEwECqdCFlZu8Rdhq4wGKx62YjotCNz
-	 CSr6EVSxOhQzpJVOGdeOFGSQTyp5VHbWYK1ZdrL6PZnP8c8sapp2kujSgyyotgXdgN
-	 AH33LRK42Nfo4NT0qt9RVcYAoWh7fLTcTyap/j6I=
-Message-ID: <2ce09e84-c57f-4087-9dda-07245fadfc02@arm.com>
-Date: Wed, 15 Jul 2026 13:14:18 +0100
+	 In-Reply-To:Content-Type; b=UrRJn4JS85UNKbQj0CRPMbNZL48IRhMKi57GnaOFR4VXlRn0RPKfHqwmqJSdcPjj6pzkCcj5coHbvs/rwLt2GIH3YR8p5Oy1GdLeRhw1Y5mgKMuwB6eg6/ge3Hl6o6OKgLeWmvrf9slu2NE6fIxI/STkGpw/qQVVIz0s73Jvn5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=ieee.org; spf=pass smtp.mailfrom=ieee.org; dkim=pass (1024-bit key) header.d=ieee.org header.i=@ieee.org header.b=NQGNb5C5; arc=none smtp.client-ip=209.85.219.51
+Received: by mail-qv1-f51.google.com with SMTP id 6a1803df08f44-8ff5d1b0f91so33062836d6.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jul 2026 05:16:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ieee.org; s=google; t=1784117773; x=1784722573; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=XYn30NuQBlpDBaqikH9GRFE2pdu5APUaoZom7kBIJ94=;
+        b=NQGNb5C5jnfBAQINK7wvlbn8IPZv3rcr2zxxsCoqDbuoSM09Y4mGJEh9XDLG/iAL/3
+         qAchGiyBkZN8PDlWyFGef/7O6UzbVIqJrBbe1/Agg1mNf773w698sQOrUuzL2Apb9PVq
+         Z5bR2xMkCXmoe2JR/W1paOmNEnbAiDRvckrWc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784117773; x=1784722573;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=XYn30NuQBlpDBaqikH9GRFE2pdu5APUaoZom7kBIJ94=;
+        b=LRRsGqWS57rNqYLpW+tj8IlmTxgSM3CxpAHshSnwsEl/WnUssKh6n1fU8kpDqFEHF9
+         5xjb6s+BURC6+W5dQNR18BW8G0JW1My/Hww8eqTsn/VuhHu+kaK4it8FWqNx6lQWcy+Y
+         KF2l3QGuEIagSUPWTf65eUeOGSQdZ6eymVxzs8pJfuCQZnEFLGJg5SENJFbj3yfwQTHC
+         dPKskK2Jg070VNaZ4pwYCt0PeCjK5D9yTjSs86An8i/zdFjjqlfSURokxPbdW3TErUa4
+         zx5jwjj0XljE6aOqmu6ltSAP/M+fKuNMZdaF74B+jh3xmLjJQQurjzPXDitYdobXQ+eH
+         ZaFg==
+X-Forwarded-Encrypted: i=1; AHgh+RqwLYSYiDgWtOf4YdJyAw3qW3I4I2/o2CVyzhc3XfRRcTnxCyxOA7CYMsF0G/pi5N7f5+3PheLlQoHZ8SSQ@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxk533pZxTC5mCtrgw/pWzxFWkAmgNtG1JXsJQriU5Idhp9BBnv
+	JYPiBki8EZJbAKz0nlfi581fmU+sQSDfkzRt36DTCeJvROZvNTMQofce7Vvtj8oX8w==
+X-Gm-Gg: AfdE7ckPKPsL2bCU0VgQAqYlQJgeZ7Rr2hW+OAegH21RU92BvFr0i1PnJn9gQEhZmB3
+	wBA1k+YvdVdB6hUIP9TLOFrYR/MuBmqor0IGuYk+be0+mL1cB6PbOUBVT/KDu5u8wCczQf+iU8n
+	u83VGWWlJjHmhHxRq9gvcrh8lU1ik/9uih7ZF8BYJIbd1jK0Igx1mZwU7zSswnmAzX/bLwD7U2G
+	p7e/BsrDTVdWrLA9fe+39yUVSTGfL3QWzazO+xz/5WhUmVi/GBaIOZYqtAcyAkpXyWGEHQ9w2DF
+	TLjhj5Y6WpNaUdlgMDlMHx8yoZUFT/oLmg71B5C05JLtbZIdzPhrrf3UvEKa7d4fyveWC8TAAXD
+	to0b9O9Z3xoNlGjuH6cZruMllDRRlzFXKBDEgAwpGeK5KdsX/Ac/BLIQDMP/OderbzV6hWL3hg5
+	h7aEdp8jwzLsmmutubSBbR
+X-Received: by 2002:a05:6214:500e:b0:8ef:5b18:65ec with SMTP id 6a1803df08f44-9074c70b5cemr66890686d6.15.1784117772692;
+        Wed, 15 Jul 2026 05:16:12 -0700 (PDT)
+Received: from [10.211.55.5] ([73.62.185.64])
+        by smtp.googlemail.com with ESMTPSA id 6a1803df08f44-8ffd7c1fd2bsm193918296d6.27.2026.07.15.05.16.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 15 Jul 2026 05:16:11 -0700 (PDT)
+Message-ID: <358b1215-df7a-427f-89cc-55a6f2cf357c@ieee.org>
+Date: Wed, 15 Jul 2026 07:16:08 -0500
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,117 +84,168 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] iommu/io-pgtable-arm: Add support for contiguous hint bit
-To: Will Deacon <will@kernel.org>, Jason Gunthorpe <jgg@nvidia.com>
-Cc: Vijayanand Jitta <vijayanand.jitta@oss.qualcomm.com>,
- "Joerg Roedel (AMD)" <joro@8bytes.org>, linux-arm-msm@vger.kernel.org,
- iommu@lists.linux.dev, linux-kernel@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org,
- Prakash Gupta <prakash.gupta@oss.qualcomm.com>
-References: <20260618-iommu_contig_hint-v1-1-4502a59e6388@oss.qualcomm.com>
- <20260703161228.GA1948451@nvidia.com>
- <b7224dff-7e51-49cb-8421-14d090492dfc@oss.qualcomm.com>
- <20260715113913.GA3775915@nvidia.com> <ald3CuddY6I7gml1@willie-the-truck>
-From: Robin Murphy <robin.murphy@arm.com>
-Content-Language: en-GB
-In-Reply-To: <ald3CuddY6I7gml1@willie-the-truck>
+Subject: Re: [PATCH v9 11/14] net: ipa: Switch to generic PAS TZ APIs
+To: Bjorn Andersson <andersson@kernel.org>, Sumit Garg <sumit.garg@kernel.org>
+Cc: konradybcio@kernel.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org, linux-media@vger.kernel.org,
+ netdev@vger.kernel.org, linux-wireless@vger.kernel.org,
+ ath12k@lists.infradead.org, linux-remoteproc@vger.kernel.org,
+ robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+ robin.clark@oss.qualcomm.com, sean@poorly.run, akhilpo@oss.qualcomm.com,
+ lumag@kernel.org, abhinav.kumar@linux.dev, jesszhan0024@gmail.com,
+ marijn.suijten@somainline.org, airlied@gmail.com, simona@ffwll.ch,
+ vikash.garodia@oss.qualcomm.com, bod@kernel.org, mchehab@kernel.org,
+ elder@kernel.org, andrew+netdev@lunn.ch, davem@davemloft.net,
+ edumazet@google.com, kuba@kernel.org, pabeni@redhat.com,
+ jjohnson@kernel.org, mathieu.poirier@linaro.org,
+ trilokkumar.soni@oss.qualcomm.com, mukesh.ojha@oss.qualcomm.com,
+ pavan.kondeti@oss.qualcomm.com, jorge.ramirez@oss.qualcomm.com,
+ tonyh@qti.qualcomm.com, vignesh.viswanathan@oss.qualcomm.com,
+ srinivas.kandagatla@oss.qualcomm.com, amirreza.zarrabi@oss.qualcomm.com,
+ jenswi@kernel.org, op-tee@lists.trustedfirmware.org,
+ apurupa@qti.qualcomm.com, skare@qti.qualcomm.com,
+ linux-kernel@vger.kernel.org, Sumit Garg <sumit.garg@oss.qualcomm.com>,
+ Alex Elder <elder@riscstar.com>,
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+References: <20260702115835.167602-1-sumit.garg@kernel.org>
+ <20260702115835.167602-12-sumit.garg@kernel.org> <alJp8jMzcw9EPZoy@baldur>
+Content-Language: en-US
+From: Alex Elder <elder@ieee.org>
+In-Reply-To: <alJp8jMzcw9EPZoy@baldur>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[arm.com,none];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
-	R_DKIM_ALLOW(-0.20)[arm.com:s=foss];
+	DMARC_POLICY_ALLOW(-0.50)[ieee.org,reject];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	R_DKIM_ALLOW(-0.20)[ieee.org:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[arm.com:+];
 	FORWARDED(0.00)[lists@lfdr.de];
-	TAGGED_FROM(0.00)[bounces-119235-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
+	FREEMAIL_CC(0.00)[kernel.org,vger.kernel.org,lists.freedesktop.org,lists.infradead.org,oss.qualcomm.com,poorly.run,linux.dev,gmail.com,somainline.org,ffwll.ch,lunn.ch,davemloft.net,google.com,redhat.com,linaro.org,qti.qualcomm.com,lists.trustedfirmware.org,riscstar.com];
+	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_SENDER(0.00)[robin.murphy@arm.com,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS(0.00)[m:will@kernel.org,m:jgg@nvidia.com,m:vijayanand.jitta@oss.qualcomm.com,m:joro@8bytes.org,m:linux-arm-msm@vger.kernel.org,m:iommu@lists.linux.dev,m:linux-kernel@vger.kernel.org,m:linux-arm-kernel@lists.infradead.org,m:prakash.gupta@oss.qualcomm.com,s:lists@lfdr.de];
+	TAGGED_FROM(0.00)[bounces-119236-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
+	FORGED_SENDER(0.00)[elder@ieee.org,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS(0.00)[m:andersson@kernel.org,m:sumit.garg@kernel.org,m:konradybcio@kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:dri-devel@lists.freedesktop.org,m:freedreno@lists.freedesktop.org,m:linux-media@vger.kernel.org,m:netdev@vger.kernel.org,m:linux-wireless@vger.kernel.org,m:ath12k@lists.infradead.org,m:linux-remoteproc@vger.kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:robin.clark@oss.qualcomm.com,m:sean@poorly.run,m:akhilpo@oss.qualcomm.com,m:lumag@kernel.org,m:abhinav.kumar@linux.dev,m:jesszhan0024@gmail.com,m:marijn.suijten@somainline.org,m:airlied@gmail.com,m:simona@ffwll.ch,m:vikash.garodia@oss.qualcomm.com,m:bod@kernel.org,m:mchehab@kernel.org,m:elder@kernel.org,m:andrew+netdev@lunn.ch,m:davem@davemloft.net,m:edumazet@google.com,m:kuba@kernel.org,m:pabeni@redhat.com,m:jjohnson@kernel.org,m:mathieu.poirier@linaro.org,m:trilokkumar.soni@oss.qualcomm.com,m:mukesh.ojha@oss.qualcomm.com,m:pavan.kondeti@oss.qualcomm
+ .com,m:jorge.ramirez@oss.qualcomm.com,m:tonyh@qti.qualcomm.com,m:vignesh.viswanathan@oss.qualcomm.com,m:srinivas.kandagatla@oss.qualcomm.com,m:amirreza.zarrabi@oss.qualcomm.com,m:jenswi@kernel.org,m:op-tee@lists.trustedfirmware.org,m:apurupa@qti.qualcomm.com,m:skare@qti.qualcomm.com,m:linux-kernel@vger.kernel.org,m:sumit.garg@oss.qualcomm.com,m:elder@riscstar.com,m:konrad.dybcio@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,m:andrew@lunn.ch,s:lists@lfdr.de];
+	DKIM_TRACE(0.00)[ieee.org:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	FROM_HAS_DN(0.00)[];
 	TO_DN_SOME(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[robin.murphy@arm.com,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	ALIAS_RESOLVED(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[elder@ieee.org,linux-arm-msm@vger.kernel.org];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	RCPT_COUNT_GT_50(0.00)[51];
 	MID_RHS_MATCH_FROM(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[9];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,qualcomm.com:email,arm.com:from_mime,arm.com:dkim,arm.com:mid]
+	ALIAS_RESOLVED(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt,netdev];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,ieee.org:from_mime,ieee.org:dkim,ieee.org:mid,vger.kernel.org:from_smtp,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,riscstar.com:email]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 4B28475DFED
+X-Rspamd-Queue-Id: EB8D475E11A
 
-On 15/07/2026 1:03 pm, Will Deacon wrote:
-> On Wed, Jul 15, 2026 at 08:39:13AM -0300, Jason Gunthorpe wrote:
->> On Wed, Jul 15, 2026 at 11:25:42AM +0530, Vijayanand Jitta wrote:
->>> On 7/3/2026 9:42 PM, Jason Gunthorpe wrote:
->>>> On Thu, Jun 18, 2026 at 02:32:09PM +0530, Vijayanand Jitta wrote:
->>>>> From: Prakash Gupta <prakash.gupta@oss.qualcomm.com>
->>>>>
->>>>> Add support for the contiguous hint (CONT) bit in ARM LPAE page tables.
->>>>> When a set of consecutive PTEs map a naturally-aligned contiguous block
->>>>> of memory, the CONT bit can be set on all entries in the group to allow
->>>>> the hardware to combine them into a single TLB entry, improving TLB
->>>>> utilization.
->>>>>
->>>>> The contiguous hint sizes per granule are:
->>>>>
->>>>>    Page Size | CONT PTE |  PMD  | CONT PMD
->>>>>    ----------+----------+-------+---------
->>>>>        4K    |   64K    |   2M  |   32M
->>>>>       16K    |    2M    |  32M  |    1G
->>>>>       64K    |    2M    | 512M  |   16G
->>>>
->>>> My series to convert smmuv3 to the iommupt takes care of this and
->>>> supports all the orders too. I'd rather we move forward with that then
->>>> try to patch up this.
->>>
->>> Thanks for details, I have gone through your series. As this patch
->>> targets io-pgtable-arm.c directly and would benefit all its users (SMMUv2,
->>> Apple DART, etc.), not just SMMUv3. I think there will still be value in
->>> this patch for the other users.
+On 7/11/26 11:06 AM, Bjorn Andersson wrote:
+> On Thu, Jul 02, 2026 at 05:28:27PM +0530, Sumit Garg wrote:
+>> From: Sumit Garg <sumit.garg@oss.qualcomm.com>
 >>
->> If other users care they should also be converted to iommupt, there
->> are many benefits to this besides just cont support.
+>> Switch ipa client driver over to generic PAS TZ APIs. Generic PAS TZ
+>> service allows to support multiple TZ implementation backends like QTEE
+>> based SCM PAS service, OP-TEE based PAS service and any further future TZ
+>> backend service.
+>>
 > 
-> I really have no interest in maintaining two copies of the page-table
-> code, so I agree that we should convert users of the architectural (long
-> descriptor) page-table format over to iommupt with a view to removing
-> the io-pgtable implementation eventually. If you want two parallel
-> implementations, then one should really be in rust :)
+> Please find an immutable branch with the dependencies for this patch at:
+>    https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git 20260702115835.167602-2-sumit.garg@kernel.org
 > 
->  From what I can tell, the fiddly parts for iommupt will be:
-> 
->    1. Hardware bugs / quirks. Some of the simpler ones could probably be
->       handled but for the more invasive stuff like the Mali format
->       format, io-pgtable will probably need to hang around. Perhaps
->       it becomes io-pgtable-mali.c?
-> 
->    2. The pKVM work from Mostafa. We'll probably end up with something
->       separate at EL2 for this (ideally, just reusing the CPU page-table
->       code when it learns about BBML3).
-> 
->    3. Non-coherent walkers, although I think this might actually be fine
->       because x86 needs it anyway?
-> 
-> So, for now, I wouldn't require new drivers to use iommupt but I'm not
-> particularly keen about teaching io-pgtable new architectural tricks
-> either.
+> Alternatively, if you think there will be no conflicting patches in the
+> time leading up to next merge window provide an Ack and I can pick this
+> through the qcom tree.
 
-Conversely though, I really wouldn't want to have to maintain arm-smmu 
-supporting two completely different pagetable APIs simultaneously either :/
+I don't see any reason there would be any conflicts (certainly
+no difficult conflicts) with this commit, so I think you can
+safely take it with the others through the Qualcomm tree.
 
-Thanks,
-Robin.
+So if my ack is what you're looking for:
+
+Acked-by: Alex Elder <elder@riscstar.com>
+
+Thank you Sumit and Bjorn.
+
+> 
+> Thanks,
+> Bjorn
+> 
+>> Reviewed-by: Alex Elder <elder@riscstar.com>
+>> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+>> Signed-off-by: Sumit Garg <sumit.garg@oss.qualcomm.com>
+>> ---
+>>   drivers/net/ipa/Kconfig    |  2 +-
+>>   drivers/net/ipa/ipa_main.c | 13 ++++++++-----
+>>   2 files changed, 9 insertions(+), 6 deletions(-)
+>>
+>> diff --git a/drivers/net/ipa/Kconfig b/drivers/net/ipa/Kconfig
+>> index 01d219d3760c..a9aff1b7977d 100644
+>> --- a/drivers/net/ipa/Kconfig
+>> +++ b/drivers/net/ipa/Kconfig
+>> @@ -6,7 +6,7 @@ config QCOM_IPA
+>>   	depends on QCOM_RPROC_COMMON || (QCOM_RPROC_COMMON=n && COMPILE_TEST)
+>>   	depends on QCOM_AOSS_QMP || QCOM_AOSS_QMP=n
+>>   	select QCOM_MDT_LOADER
+>> -	select QCOM_SCM
+>> +	select QCOM_PAS
+>>   	select QCOM_QMI_HELPERS
+>>   	help
+>>   	  Choose Y or M here to include support for the Qualcomm
+>> diff --git a/drivers/net/ipa/ipa_main.c b/drivers/net/ipa/ipa_main.c
+>> index 788dd99af2a4..3cd9e44680e9 100644
+>> --- a/drivers/net/ipa/ipa_main.c
+>> +++ b/drivers/net/ipa/ipa_main.c
+>> @@ -14,7 +14,7 @@
+>>   #include <linux/pm_runtime.h>
+>>   #include <linux/types.h>
+>>   
+>> -#include <linux/firmware/qcom/qcom_scm.h>
+>> +#include <linux/firmware/qcom/qcom_pas.h>
+>>   #include <linux/soc/qcom/mdt_loader.h>
+>>   
+>>   #include "ipa.h"
+>> @@ -624,10 +624,13 @@ static int ipa_firmware_load(struct device *dev)
+>>   	}
+>>   
+>>   	ret = qcom_mdt_load(dev, fw, path, IPA_PAS_ID, virt, phys, size, NULL);
+>> -	if (ret)
+>> +	if (ret) {
+>>   		dev_err(dev, "error %d loading \"%s\"\n", ret, path);
+>> -	else if ((ret = qcom_scm_pas_auth_and_reset(IPA_PAS_ID)))
+>> -		dev_err(dev, "error %d authenticating \"%s\"\n", ret, path);
+>> +	} else {
+>> +		ret = qcom_pas_auth_and_reset(IPA_PAS_ID);
+>> +		if (ret)
+>> +			dev_err(dev, "error %d authenticating \"%s\"\n", ret, path);
+>> +	}
+>>   
+>>   	memunmap(virt);
+>>   out_release_firmware:
+>> @@ -758,7 +761,7 @@ static enum ipa_firmware_loader ipa_firmware_loader(struct device *dev)
+>>   		return IPA_LOADER_INVALID;
+>>   out_self:
+>>   	/* We need Trust Zone to load firmware; make sure it's available */
+>> -	if (qcom_scm_is_available())
+>> +	if (qcom_pas_is_available())
+>>   		return IPA_LOADER_SELF;
+>>   
+>>   	return IPA_LOADER_DEFER;
+>> -- 
+>> 2.53.0
+>>
+
 
