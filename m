@@ -1,52 +1,52 @@
-Return-Path: <linux-arm-msm+bounces-119109-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-119110-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id qSHvA93OVmqpBQEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-119109-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jul 2026 02:05:49 +0200
+	id CGr1JeHOVmqyBQEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-119110-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jul 2026 02:05:53 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 741ED7598F7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jul 2026 02:05:48 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 36845759909
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jul 2026 02:05:53 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=infradead.org header.s=bombadil.20210309 header.b=0Ud7qJDY;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-119109-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-119109-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=infradead.org header.s=bombadil.20210309 header.b=borUDlxS;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-119110-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-119110-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=none) header.from=infradead.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 1AFFD30BD618
+	by sea.lore.kernel.org (Postfix) with ESMTP id 970EF30CDB60
 	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jul 2026 00:05:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DE8851714AA;
-	Wed, 15 Jul 2026 00:05:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2B025175A93;
+	Wed, 15 Jul 2026 00:05:34 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6856171CD;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E680B2C9D;
 	Wed, 15 Jul 2026 00:05:31 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784073933; cv=none; b=ALznKITKTrsoNWGB44WPdat3YcIwOKrYDi01V30I4Kk0yyqOQQMb1C1ncf10xv9M2riqms7LqCqEIynn1pUNbTDd5zsPppprqHANPgeFNlic43QCyDSNW8GAK+gK5V0LQcP5RaeSzhvAZ9bDZTAtjqsRD4C6lCjYxlYyzgJVFY8=
+	t=1784073934; cv=none; b=PZpJFZBdTKAiavNFLNB/iOW3nfHt6IvW9bodcBbDYoXwsRg9SN9lnuUltL+cAqVkVseFFarBf0zCZZXOZzY1hp+S7yOSczSuZCy0Qfqft4DLGULeWwbszeJQ4EUoJsjBe0ziTxW8djQNux5Mfsg+QouFOqtn2LjyF7A6v3+qBeY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784073933; c=relaxed/simple;
-	bh=dVvCTd9HiPk4BuQ/Qor/jCgpHdkxzguxFXKBEOCAJ8A=;
+	s=arc-20240116; t=1784073934; c=relaxed/simple;
+	bh=ZCPjjupNgyBOauiUKAApeUhRSp3LzaDE6QhxBtoXbzw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KU8NEHq0cBMgwftetwhQZZ3Rlj9QeX8HovshUPdYNyE9KmsYyUY9lhNJSNJkNpasADTvmhovOaNESHeT8hYA7p77E3IKo2EXLHwBaOdQBjermtsQORUmpTqK7edJEeVuICfcjEMDwP9MQt4Gs8rHbDeNfdU9J6m8uoW4aOzCrSg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=pass smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=0Ud7qJDY; arc=none smtp.client-ip=198.137.202.133
+	 MIME-Version; b=KQLG8SCeem/z8lqNe3XnbOgcJdjs45Oa9ElsLcYd1wp1clndf9+Au95pg9XC28Hm1x98a9DSLYKevAbzcdSm7FIPBatlXRHuiWwaijAdvZkFpqqe7gx1d/b23zlsRJgPeLrj6V/OZDfkxQwA9brE47oFiif8MZQWWjscrXIBwGE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=pass smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=borUDlxS; arc=none smtp.client-ip=198.137.202.133
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
 	MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:Sender
 	:Reply-To:Content-Type:Content-ID:Content-Description;
-	bh=IR3qjoddWhjrLMEmYv+RhozuipdTVtOmJ2AYAVnZkBc=; b=0Ud7qJDY4gle6F10k+EC8mwaWX
-	frHbP+h0NUsSuye5BAnnlKbMvIrd6KPAP5VQuQJUlEIVskHKOl+0qmflQpA6QJ1hL2W+Dwpf7qimQ
-	wpe+GmOpcy1XM6ABd4NxpATKeQ5HANYuekDkhBDoPRQOPIodZU+0o+vp9V1ToOiz1nApWJ009bEtF
-	ps5snFZdmX6Hh6AoYtao447Q7xJzTHygXx7RknJwGE03/m2lTryhvSi3V70GLdiXyoQEQ2gas5TeQ
-	YP0TibbgzfiHa9qqajxQWuBU9777MCo2dk9kic2K+Ltfg0l7D4H6yTWQfNFz0voIJUy6TUrCz/I5n
-	XmLfR6MQ==;
+	bh=13+kOO9irn/A7mQQp6b2R+oh3w+6rv8EFxuB7M47cVI=; b=borUDlxSSHeiJQzdvEyjL09ewq
+	JjVhpWQhGcmpl4kw0HwhRSUyJw1CoRaeAeSxQYbvkliytuSCGFIpUYuU4UJVAtCdROoK7QYZFzjBu
+	BKOp4vBO5wLHIxwaUZy8XRNPtl1mBMyQLN1VWzIgDZmXyGP0cKMPD+t7F70p3fGYvYSVE6bLOUjl0
+	i7+8TSLk0SGYNov9c5qgpEPwktMPMbmLIaj9pjUFhkwuIVi3lcu9Tf4j2nrfeZLz7RTSxQ58cLZJW
+	+ymlYcMjyC5659o9tjfrmrnS4hF4F6YChsUlv8ZKdq83L1bzVEpICTDe4pG3keTy/PLqxysFH82V1
+	jHFoPnQw==;
 Received: from [50.53.43.113] (helo=bombadil.infradead.org)
 	by bombadil.infradead.org with esmtpsa (Exim 4.99.1 #2 (Red Hat Linux))
-	id 1wjn7y-0000000DTcu-46sc;
+	id 1wjn7z-0000000DTcu-2NMf;
 	Wed, 15 Jul 2026 00:05:31 +0000
 From: Randy Dunlap <rdunlap@infradead.org>
 To: linux-sound@vger.kernel.org
@@ -67,9 +67,9 @@ Cc: Randy Dunlap <rdunlap@infradead.org>,
 	patches@opensource.cirrus.com,
 	Srinivas Kandagatla <srini@kernel.org>,
 	linux-arm-msm@vger.kernel.org
-Subject: [PATCH 05/14 v2] ASoC: fsl_easrc: use struct keyword on structs
-Date: Tue, 14 Jul 2026 17:05:16 -0700
-Message-ID: <20260715000525.739874-6-rdunlap@infradead.org>
+Subject: [PATCH 06/14 v2] ASoC: fsl: mpc5200_dma: use the struct keyword for kernel-doc comments
+Date: Tue, 14 Jul 2026 17:05:17 -0700
+Message-ID: <20260715000525.739874-7-rdunlap@infradead.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260715000525.739874-1-rdunlap@infradead.org>
 References: <20260715000525.739874-1-rdunlap@infradead.org>
@@ -88,11 +88,11 @@ X-Spamd-Result: default: False [0.84 / 15.00];
 	R_MISSING_CHARSET(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[infradead.org,none];
 	R_DKIM_ALLOW(-0.20)[infradead.org:s=bombadil.20210309];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-119109-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-119110-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	FORGED_RECIPIENTS(0.00)[m:linux-sound@vger.kernel.org,m:rdunlap@infradead.org,m:lgirdwood@gmail.com,m:broonie@kernel.org,m:perex@perex.cz,m:tiwai@suse.com,m:shengjiu.wang@gmail.com,m:Xiubo.Lee@gmail.com,m:festevam@gmail.com,m:nicoleotsuka@gmail.com,m:linuxppc-dev@lists.ozlabs.org,m:ckeepax@opensource.cirrus.com,m:mstrozek@opensource.cirrus.com,m:yung-chuan.liao@linux.intel.com,m:pierre-louis.bossart@linux.dev,m:patches@opensource.cirrus.com,m:srini@kernel.org,m:linux-arm-msm@vger.kernel.org,m:shengjiuwang@gmail.com,m:XiuboLee@gmail.com,s:lists@lfdr.de];
 	FORGED_SENDER(0.00)[rdunlap@infradead.org,linux-arm-msm@vger.kernel.org];
@@ -112,17 +112,18 @@ X-Spamd-Result: default: False [0.84 / 15.00];
 	ALIAS_RESOLVED(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,vger.kernel.org:from_smtp,infradead.org:from_mime,infradead.org:mid,infradead.org:email,infradead.org:dkim,ozlabs.org:email]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 741ED7598F7
+X-Rspamd-Queue-Id: 36845759909
 
-Use the documented format for kernel-doc of structs to prevent
-kernel-doc warnings:
+Use the documented format for kernel-doc of structs and the correct
+struct name to prevent kernel-doc warnings:
 
-Warning: ../sound/soc/fsl/fsl_easrc.h:606 cannot understand function prototype: 'struct fsl_easrc_ctx_priv'
-Warning: ../sound/soc/fsl/fsl_easrc.h:641 cannot understand function prototype: 'struct fsl_easrc_priv'
+Warning: ../sound/soc/fsl/mpc5200_dma.h:21 cannot understand function prototype: 'struct psc_dma_stream'
+Warning: ../sound/soc/fsl/mpc5200_dma.h:50 cannot understand function prototype: 'struct psc_dma'
+Warning: sound/soc/fsl/mpc5200_dma.h:35 expecting prototype for struct psc_ac97_stream. Prototype was for struct psc_dma_stream instead
 
 Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
 ---
@@ -137,27 +138,27 @@ Cc: Fabio Estevam <festevam@gmail.com>
 Cc: Nicolin Chen <nicoleotsuka@gmail.com>
 Cc: linuxppc-dev@lists.ozlabs.org
 
- sound/soc/fsl/fsl_easrc.h |    4 ++--
+ sound/soc/fsl/mpc5200_dma.h |    4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
---- linext-2026-0710.orig/sound/soc/fsl/fsl_easrc.h
-+++ linext-2026-0710/sound/soc/fsl/fsl_easrc.h
-@@ -584,7 +584,7 @@ struct fsl_easrc_slot {
+--- linext-2026-0710.orig/sound/soc/fsl/mpc5200_dma.h
++++ linext-2026-0710/sound/soc/fsl/mpc5200_dma.h
+@@ -9,7 +9,7 @@
+ #define PSC_STREAM_NAME_LEN 32
+ 
+ /**
+- * psc_ac97_stream - Data specific to a single stream (playback or capture)
++ * struct psc_dma_stream - Data specific to a single stream (playback or capture)
+  * @active:		flag indicating if the stream is active
+  * @psc_dma:		pointer back to parent psc_dma data structure
+  * @bcom_task:		bestcomm task structure
+@@ -36,7 +36,7 @@ struct psc_dma_stream {
  };
  
  /**
-- * fsl_easrc_ctx_priv: EASRC context private data
-+ * struct fsl_easrc_ctx_priv - EASRC context private data
-  *
-  * @in_params: input parameter
-  * @out_params:  output parameter
-@@ -625,7 +625,7 @@ struct fsl_easrc_ctx_priv {
- };
- 
- /**
-- * fsl_easrc_priv: EASRC private data
-+ * struct fsl_easrc_priv - EASRC private data
-  *
-  * @slot: slot setting
-  * @firmware_hdr:  the header of firmware
+- * psc_dma - Private driver data
++ * struct psc_dma - Private driver data
+  * @name: short name for this device ("PSC0", "PSC1", etc)
+  * @psc_regs: pointer to the PSC's registers
+  * @fifo_regs: pointer to the PSC's FIFO registers
 
