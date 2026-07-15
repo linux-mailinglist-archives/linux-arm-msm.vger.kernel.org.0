@@ -1,67 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-119221-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-119222-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id oyQYGixwV2ocOAEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-119221-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jul 2026 13:34:04 +0200
+	id +C0jCklxV2pgOAEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-119222-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jul 2026 13:38:49 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id AF09375D977
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jul 2026 13:34:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9037C75D9CC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jul 2026 13:38:48 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=H+iHmiGT;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-119221-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-119221-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b="Jj/YkM/q";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-119222-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-119222-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 681F5301A71E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jul 2026 11:33:51 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 2B43A310B616
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jul 2026 11:36:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 23EF7448CF2;
-	Wed, 15 Jul 2026 11:33:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA797331A63;
+	Wed, 15 Jul 2026 11:36:13 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47E81429CF7;
-	Wed, 15 Jul 2026 11:33:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3835D448CF3;
+	Wed, 15 Jul 2026 11:36:10 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784115229; cv=none; b=OeUPAGd1l6vkwYlmzXbkiplj0IqMgxuqG3cb8G2xY6pLLropJ4U71KXZlqIKZKevMEj58sSe5lETU23wdoAneXLhYNKzQYrq30rHvDWl32VWqV70nkfCHlve3fNi9RLjIDgmKIk5H6UktfJgxV6sGsM//kj0XS9mI89oyB0v09g=
+	t=1784115372; cv=none; b=nwxPag+j9L+GYIm/GVXcJ6cRA6GD7JqBJ8sEQfC5BesG6tt6XfO2g3zOeBwCzg2fzJtUG8IOVkTsimQdkxOigKMmLrbhRAABEN8NKYv7XJzPr3dooZy9jZSlurkrporUvY6zv4TqzXizeWmD5i0N+lBtt/FPYa12LQxcIb93HVU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784115229; c=relaxed/simple;
-	bh=wNLl4EHt7/5TJ9Dlwu3SQI9iEXnNtSAyPCu9DVn4+V0=;
+	s=arc-20240116; t=1784115372; c=relaxed/simple;
+	bh=vR/hWLz7KlqMR3k0+e0hevTgG/iew7QOE9ntVM+LJXs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LpfKJwHT6xrrgyC7UWC4+UbR6fE8q8WXPWyAnReiUUg6uRNQIIT/aKHqCR1NFK/Gq1S2qgdlNUq0kXCsVUsLccJLurBJzER9yhLIPujhQzhAndlPgsSsXTBHX2NH+7uA7dyeu6B1LZUBP0YG9qFbJKHuGBEJmWFAzr2E5gzXTlE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H+iHmiGT; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A5C01F00A3A;
-	Wed, 15 Jul 2026 11:33:42 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=nBqDK9EuwY41wMvGqIp5ntiMP1pCxj9gEU/lDEQCOC50DL8hHA/6WFxzHFGCuskOxPeTxz61OI66gEmzI3cRdtF6ZXT24XsocennLCON6PXY6yicnCAn/GHxUpcNukKwPm8yx0nLOl4zw1Wikw7PkZNCtZw3C/x17EqszFn7Fh8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Jj/YkM/q; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 483BE1F000E9;
+	Wed, 15 Jul 2026 11:36:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784115224;
-	bh=9JLVvqvoCSlLsZHpJXT/d1xXXcQ5YiMbXN8YNpGZ/UU=;
+	s=k20260515; t=1784115369;
+	bh=s+cCPUzfDWNBEmGXrtgzlca2oCCH/fQk5Q8BM6egFX0=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=H+iHmiGT8XGHqSd16XF4uqUaycjdWK0m5JTD3wWPP8tfXekN+QBHnP6V+2mhMdS5a
-	 iHN1HmAg4/FKtaGsZvj4GHatutAM52YvKQzHYM8+dOCmaAHEBNtkLYdam6HPppVhVj
-	 AF5avHzh5rWN9sHOOr9CcXDuc1lSOhRYO2vactvqVu0jMB9Scg37E/08Rd4k2OXcUo
-	 onHDWDKdm75KsE+QkGiAxy2S8ohPWnHGFfN1sskbnJVxdnBiEGaQ4pERkVnss6RLjI
-	 6yYhty2bNz0j5x8P7peWNDrIG3SC3DJVNZ+nth0blndhwWneFq/qCZavl4gYVo3lXR
-	 X/VG6kbJgrHHg==
-Date: Wed, 15 Jul 2026 13:33:40 +0200
+	b=Jj/YkM/qLp+Lk6Zvg3BomiGmm8LZA99hQo6UP+rLVSeQYgQPZEG7yK3TCWRjfgvEY
+	 iNNRn4aGUhhur5rCfGmfyc4wDueGwR5MA9HHVJnYIADM+MNuytRFPKJXE6DZMyJO9j
+	 o3gI6ydM1yfpzkC/zWZ1YbCpXhj8GNrcVyw0Xe5n9BLppdjKZ00b9qmZsoRTc9WXd5
+	 frcHWRvnLE+7cpWKLLMxPiVVBd/SgfbHUZ19CdYTNfSvOnRAlwu11xq2td96hUfCyV
+	 On33kR75UWc+A7XvQHTf4jkDMGWu9Wuhh6Tf6YdYYsomC0tzl3CanNLdeUWpw+e+C5
+	 Rl7YuwIAmZETw==
+Date: Wed, 15 Jul 2026 13:36:05 +0200
 From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Taniya Das <taniya.das@oss.qualcomm.com>
+To: Ravi Hothi <ravi.hothi@oss.qualcomm.com>
 Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
-	Brian Masney <bmasney@redhat.com>, Rob Herring <robh@kernel.org>, 
+	Bartosz Golaszewski <brgl@kernel.org>, Linus Walleij <linusw@kernel.org>, Rob Herring <robh@kernel.org>, 
 	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Vivek Aknurwar <vivek.aknurwar@oss.qualcomm.com>, Ajit Pandey <ajit.pandey@oss.qualcomm.com>, 
-	Imran Shaik <imran.shaik@oss.qualcomm.com>, Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>, 
-	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 3/5] dt-bindings: clock: qcom: Add Maili global clock
- controller
-Message-ID: <20260715-steadfast-silver-hog-a81e03@quoll>
-References: <20260713-maili_initial_clock-v2-0-79548f0bb58f@oss.qualcomm.com>
- <20260713-maili_initial_clock-v2-3-79548f0bb58f@oss.qualcomm.com>
+	Luca Weiss <luca.weiss@fairphone.com>, linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	mohammad.rafi.shaik@oss.qualcomm.com, ajay.nandam@oss.qualcomm.com, kernel test robot <lkp@intel.com>
+Subject: Re: [PATCH v2 1/2] dt-bindings: pinctrl:
+ qcom,milos-lpass-lpi-pinctrl: Add Eliza pinctrl
+Message-ID: <20260715-unbreakable-utopian-wallaby-fc1bec@quoll>
+References: <20260713121518.2724474-1-ravi.hothi@oss.qualcomm.com>
+ <20260713121518.2724474-2-ravi.hothi@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -70,7 +68,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260713-maili_initial_clock-v2-3-79548f0bb58f@oss.qualcomm.com>
+In-Reply-To: <20260713121518.2724474-2-ravi.hothi@oss.qualcomm.com>
 X-Rspamd-Action: no action
 X-Spamd-Result: default: False [-3.16 / 15.00];
 	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
@@ -87,12 +85,12 @@ X-Spamd-Result: default: False [-3.16 / 15.00];
 	RCVD_COUNT_THREE(0.00)[4];
 	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[16];
-	FORGED_RECIPIENTS(0.00)[m:taniya.das@oss.qualcomm.com,m:andersson@kernel.org,m:mturquette@baylibre.com,m:sboyd@kernel.org,m:bmasney@redhat.com,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:vivek.aknurwar@oss.qualcomm.com,m:ajit.pandey@oss.qualcomm.com,m:imran.shaik@oss.qualcomm.com,m:jagadeesh.kona@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:linux-clk@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[15];
+	FORGED_RECIPIENTS(0.00)[m:ravi.hothi@oss.qualcomm.com,m:andersson@kernel.org,m:brgl@kernel.org,m:linusw@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:luca.weiss@fairphone.com,m:linux-arm-msm@vger.kernel.org,m:linux-gpio@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:mohammad.rafi.shaik@oss.qualcomm.com,m:ajay.nandam@oss.qualcomm.com,m:lkp@intel.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	FORWARDED(0.00)[lists@lfdr.de];
-	TAGGED_FROM(0.00)[bounces-119221-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-119222-lists,linux-arm-msm=lfdr.de];
 	DKIM_TRACE(0.00)[kernel.org:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
@@ -105,21 +103,41 @@ X-Spamd-Result: default: False [-3.16 / 15.00];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MISSING_XM_UA(0.00)[];
 	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,quoll:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,vger.kernel.org:from_smtp]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,intel.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,vger.kernel.org:from_smtp,quoll:mid]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: AF09375D977
+X-Rspamd-Queue-Id: 9037C75D9CC
 
-On Mon, Jul 13, 2026 at 02:34:09PM +0530, Taniya Das wrote:
-> Add device tree bindings for the global clock controller (GCC) on
-> the Qualcomm Maili SoC by extending the existing Qualcomm Hawi GCC
-> bindings, since the Maili GCC is identical to the Hawi GCC apart
-> from a few additional clocks.
+On Mon, Jul 13, 2026 at 05:45:17PM +0530, Ravi Hothi wrote:
+> Document compatible for Qualcomm Eliza SoC LPASS LPI pin controller.
+> Eliza has the same pin mux functions as Milos but uses a different
+> slew rate register layout where the slew rate field is in the same
+> GPIO config register rather than a separate dedicated register. As a
+> result, Eliza only has a single reg entry instead of two.
 > 
-> Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
+> Signed-off-by: Ravi Hothi <ravi.hothi@oss.qualcomm.com>
+> Reported-by: kernel test robot <lkp@intel.com>
+> Closes: https://lore.kernel.org/r/202607032107.RMly13RH-lkp@intel.com/
 > ---
->  .../devicetree/bindings/clock/qcom,hawi-gcc.yaml    | 11 ++++++++---
->  include/dt-bindings/clock/qcom,maili-gcc.h          | 21 +++++++++++++++++++++
->  2 files changed, 29 insertions(+), 3 deletions(-)
+>  .../pinctrl/qcom,milos-lpass-lpi-pinctrl.yaml  | 18 +++++++++++++++++-
+>  1 file changed, 17 insertions(+), 1 deletion(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,milos-lpass-lpi-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,milos-lpass-lpi-pinctrl.yaml
+> index 73e84f188591..c81cac1a9740 100644
+> --- a/Documentation/devicetree/bindings/pinctrl/qcom,milos-lpass-lpi-pinctrl.yaml
+> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,milos-lpass-lpi-pinctrl.yaml
+> @@ -15,9 +15,12 @@ description:
+>  
+>  properties:
+>    compatible:
+> -    const: qcom,milos-lpass-lpi-pinctrl
+> +    enum:
+> +      - qcom,milos-lpass-lpi-pinctrl
+> +      - qcom,eliza-lpass-lpi-pinctrl
+
+Please keep alphabetical order.
+
+With this fixed and dropped incorrect tags (please read response from
+LKP - it tells you when to add the tags):
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
