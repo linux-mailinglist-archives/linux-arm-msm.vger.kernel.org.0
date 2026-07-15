@@ -1,53 +1,53 @@
-Return-Path: <linux-arm-msm+bounces-119113-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-119109-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id NnU0OevOVmq2BQEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-119113-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jul 2026 02:06:03 +0200
+	id qSHvA93OVmqpBQEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-119109-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jul 2026 02:05:49 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3F45A759919
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jul 2026 02:06:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 741ED7598F7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jul 2026 02:05:48 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=infradead.org header.s=bombadil.20210309 header.b=T0CUoKFP;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-119113-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-119113-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=infradead.org header.s=bombadil.20210309 header.b=0Ud7qJDY;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-119109-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-119109-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=none) header.from=infradead.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 6DB0530E2578
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jul 2026 00:05:38 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 1AFFD30BD618
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jul 2026 00:05:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 91D361A01BE;
-	Wed, 15 Jul 2026 00:05:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DE8851714AA;
+	Wed, 15 Jul 2026 00:05:33 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43776FC0A;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6856171CD;
 	Wed, 15 Jul 2026 00:05:31 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784073934; cv=none; b=EYmkbEkiZiUusKAEdynu8ZIoWZSa6DNWi6q2YFDKMz+omgcp4arzQOFK6YcdGwxNvGDdeNwo0zpIZPBwEb7sgkRXGvIL83LTT5L49zZ/3mU3DiGslvmDP1+G86WOCI25Rdozo8eEbgtaLmqFSSJ6kO24GvCbj5hU0fwce3eeKNU=
+	t=1784073933; cv=none; b=ALznKITKTrsoNWGB44WPdat3YcIwOKrYDi01V30I4Kk0yyqOQQMb1C1ncf10xv9M2riqms7LqCqEIynn1pUNbTDd5zsPppprqHANPgeFNlic43QCyDSNW8GAK+gK5V0LQcP5RaeSzhvAZ9bDZTAtjqsRD4C6lCjYxlYyzgJVFY8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784073934; c=relaxed/simple;
-	bh=BZewiftLFYOj0FqoCELdWkal16OQR61j7OKb5kXzPvE=;
+	s=arc-20240116; t=1784073933; c=relaxed/simple;
+	bh=dVvCTd9HiPk4BuQ/Qor/jCgpHdkxzguxFXKBEOCAJ8A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=au4NPN7v6Q/YIvQWAX/YF5zB3Y8IfFZvx8I8Sp4E2R+yjbkHtfuAMz5QphnWM+Xio77fTrWMe+AyoXeZ7bOLbRmOyKftvFHB4coWS4uOUB/tUnrvZi/RaXjN8nnBMK78fG6IePfZ3OHvIQKsTuzAcnwZZKzOArsDwMaV6Spl9gk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=pass smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=T0CUoKFP; arc=none smtp.client-ip=198.137.202.133
+	 MIME-Version; b=KU8NEHq0cBMgwftetwhQZZ3Rlj9QeX8HovshUPdYNyE9KmsYyUY9lhNJSNJkNpasADTvmhovOaNESHeT8hYA7p77E3IKo2EXLHwBaOdQBjermtsQORUmpTqK7edJEeVuICfcjEMDwP9MQt4Gs8rHbDeNfdU9J6m8uoW4aOzCrSg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=pass smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=0Ud7qJDY; arc=none smtp.client-ip=198.137.202.133
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
 	MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:Sender
 	:Reply-To:Content-Type:Content-ID:Content-Description;
-	bh=G+ICPr4j5N29bqgssjH6/kLVysBy2Z2WmiFI+/aQQHg=; b=T0CUoKFPmf9OVYNj4ZoWHojS2u
-	z4Gwx70W/kY+Hr1XC3YRzifUDHCih/fhoTwNy6/TpckrZWQW2RMcSu4g9QYujWZY3czHi5SXLs2yv
-	dkL9nB2kEPr2UoFbLyL3tvpLIpCQbtuGJZuR85aCsKXNndfBGx0JMWBiMwHOLQs+kBrK8Hrr7i14c
-	EYKoT9Lg0uvo8pwqqL7c0IuyK2cIK6iHNWJdofGjhaDwo8h7QMTaLTy5qWxLe7lazjVkr4BqQV4lf
-	mApc2S+FMlWkVUmLma9nuRubnFTSz7/tOrHT7FYl1RjBM8yxAlxjITdrqwIl0vsAidsGp3HKL7v+W
-	IuU66hOA==;
+	bh=IR3qjoddWhjrLMEmYv+RhozuipdTVtOmJ2AYAVnZkBc=; b=0Ud7qJDY4gle6F10k+EC8mwaWX
+	frHbP+h0NUsSuye5BAnnlKbMvIrd6KPAP5VQuQJUlEIVskHKOl+0qmflQpA6QJ1hL2W+Dwpf7qimQ
+	wpe+GmOpcy1XM6ABd4NxpATKeQ5HANYuekDkhBDoPRQOPIodZU+0o+vp9V1ToOiz1nApWJ009bEtF
+	ps5snFZdmX6Hh6AoYtao447Q7xJzTHygXx7RknJwGE03/m2lTryhvSi3V70GLdiXyoQEQ2gas5TeQ
+	YP0TibbgzfiHa9qqajxQWuBU9777MCo2dk9kic2K+Ltfg0l7D4H6yTWQfNFz0voIJUy6TUrCz/I5n
+	XmLfR6MQ==;
 Received: from [50.53.43.113] (helo=bombadil.infradead.org)
 	by bombadil.infradead.org with esmtpsa (Exim 4.99.1 #2 (Red Hat Linux))
-	id 1wjn7y-0000000DTcu-1XYG;
-	Wed, 15 Jul 2026 00:05:30 +0000
+	id 1wjn7y-0000000DTcu-46sc;
+	Wed, 15 Jul 2026 00:05:31 +0000
 From: Randy Dunlap <rdunlap@infradead.org>
 To: linux-sound@vger.kernel.org
 Cc: Randy Dunlap <rdunlap@infradead.org>,
@@ -67,9 +67,9 @@ Cc: Randy Dunlap <rdunlap@infradead.org>,
 	patches@opensource.cirrus.com,
 	Srinivas Kandagatla <srini@kernel.org>,
 	linux-arm-msm@vger.kernel.org
-Subject: [PATCH 04/14 v2] ASoC: fsl-dma: fix all kernel-doc warnings
-Date: Tue, 14 Jul 2026 17:05:15 -0700
-Message-ID: <20260715000525.739874-5-rdunlap@infradead.org>
+Subject: [PATCH 05/14 v2] ASoC: fsl_easrc: use struct keyword on structs
+Date: Tue, 14 Jul 2026 17:05:16 -0700
+Message-ID: <20260715000525.739874-6-rdunlap@infradead.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260715000525.739874-1-rdunlap@infradead.org>
 References: <20260715000525.739874-1-rdunlap@infradead.org>
@@ -88,11 +88,11 @@ X-Spamd-Result: default: False [0.84 / 15.00];
 	R_MISSING_CHARSET(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[infradead.org,none];
 	R_DKIM_ALLOW(-0.20)[infradead.org:s=bombadil.20210309];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-119113-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-119109-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	FORGED_RECIPIENTS(0.00)[m:linux-sound@vger.kernel.org,m:rdunlap@infradead.org,m:lgirdwood@gmail.com,m:broonie@kernel.org,m:perex@perex.cz,m:tiwai@suse.com,m:shengjiu.wang@gmail.com,m:Xiubo.Lee@gmail.com,m:festevam@gmail.com,m:nicoleotsuka@gmail.com,m:linuxppc-dev@lists.ozlabs.org,m:ckeepax@opensource.cirrus.com,m:mstrozek@opensource.cirrus.com,m:yung-chuan.liao@linux.intel.com,m:pierre-louis.bossart@linux.dev,m:patches@opensource.cirrus.com,m:srini@kernel.org,m:linux-arm-msm@vger.kernel.org,m:shengjiuwang@gmail.com,m:XiuboLee@gmail.com,s:lists@lfdr.de];
 	FORGED_SENDER(0.00)[rdunlap@infradead.org,linux-arm-msm@vger.kernel.org];
@@ -114,16 +114,15 @@ X-Spamd-Result: default: False [0.84 / 15.00];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,infradead.org:from_mime,infradead.org:mid,infradead.org:email,infradead.org:dkim,ozlabs.org:email]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,vger.kernel.org:from_smtp,infradead.org:from_mime,infradead.org:mid,infradead.org:email,infradead.org:dkim,ozlabs.org:email]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 3F45A759919
+X-Rspamd-Queue-Id: 741ED7598F7
 
-Don't use "/**" for non-kernel-doc comments to avoid kernel-doc warnings:
+Use the documented format for kernel-doc of structs to prevent
+kernel-doc warnings:
 
-Warning: ../sound/soc/fsl/fsl_dma.h:95 This comment starts with '/**', but isn't a kernel-doc comment.
- *  List Descriptor for extended chaining mode DMA operations.
-Warning: ../sound/soc/fsl/fsl_dma.h:110 This comment starts with '/**', but isn't a kernel-doc comment.
- *  Link Descriptor for basic and extended chaining mode DMA operations.
+Warning: ../sound/soc/fsl/fsl_easrc.h:606 cannot understand function prototype: 'struct fsl_easrc_ctx_priv'
+Warning: ../sound/soc/fsl/fsl_easrc.h:641 cannot understand function prototype: 'struct fsl_easrc_priv'
 
 Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
 ---
@@ -138,27 +137,27 @@ Cc: Fabio Estevam <festevam@gmail.com>
 Cc: Nicolin Chen <nicoleotsuka@gmail.com>
 Cc: linuxppc-dev@lists.ozlabs.org
 
- sound/soc/fsl/fsl_dma.h |    4 ++--
+ sound/soc/fsl/fsl_easrc.h |    4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
---- linext-2026-0710.orig/sound/soc/fsl/fsl_dma.h
-+++ linext-2026-0710/sound/soc/fsl/fsl_dma.h
-@@ -92,7 +92,7 @@ static inline u32 CCSR_DMA_ECLNDAR_ADDR(
- #define CCSR_DMA_ATR_SNOOP      	0x00050000
- #define CCSR_DMA_ATR_ESAD_MASK  	0x0000000F
+--- linext-2026-0710.orig/sound/soc/fsl/fsl_easrc.h
++++ linext-2026-0710/sound/soc/fsl/fsl_easrc.h
+@@ -584,7 +584,7 @@ struct fsl_easrc_slot {
+ };
  
--/**
-+/*
-  *  List Descriptor for extended chaining mode DMA operations.
+ /**
+- * fsl_easrc_ctx_priv: EASRC context private data
++ * struct fsl_easrc_ctx_priv - EASRC context private data
   *
-  *  The CLSDAR register points to the first (in a linked-list) List
-@@ -107,7 +107,7 @@ struct fsl_dma_list_descriptor {
- 	u8 res[8];      	/* Reserved */
- } __attribute__ ((aligned(32), packed));
+  * @in_params: input parameter
+  * @out_params:  output parameter
+@@ -625,7 +625,7 @@ struct fsl_easrc_ctx_priv {
+ };
  
--/**
-+/*
-  *  Link Descriptor for basic and extended chaining mode DMA operations.
+ /**
+- * fsl_easrc_priv: EASRC private data
++ * struct fsl_easrc_priv - EASRC private data
   *
-  *  A Link Descriptor points to a single DMA buffer.  Each link descriptor
+  * @slot: slot setting
+  * @firmware_hdr:  the header of firmware
 
