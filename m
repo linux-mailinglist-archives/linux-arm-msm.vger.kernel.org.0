@@ -1,52 +1,52 @@
-Return-Path: <linux-arm-msm+bounces-119114-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-119108-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id fulpIOzOVmq3BQEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-119114-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jul 2026 02:06:04 +0200
+	id AVOLC9POVmqoBQEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-119108-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jul 2026 02:05:39 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 23F8B75991E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jul 2026 02:06:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A12F67598F0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jul 2026 02:05:38 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=infradead.org header.s=bombadil.20210309 header.b=BFVhVWgm;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-119114-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-119114-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=infradead.org header.s=bombadil.20210309 header.b="3/Skb14K";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-119108-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-119108-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=none) header.from=infradead.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 8FFB230E65C1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jul 2026 00:05:38 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id E2A043094F5F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jul 2026 00:05:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 967B11A3165;
-	Wed, 15 Jul 2026 00:05:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 78CC88003D;
+	Wed, 15 Jul 2026 00:05:33 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4374942BC50;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 437BE219E8;
 	Wed, 15 Jul 2026 00:05:31 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784073934; cv=none; b=ZWL83k+92uErOPqKctROzK+jKj5VWrOEkNt5FskJ/unBQeRy12U4YEAo/vSX0uAszJxfS33e9fq6OZBGWfta/CFH1YHit21+77qGayfZv5VUBEG9D4nYQ+1n+8ESu+NAy+wnF2eFwanaNWqjpF0GtuOYszWjnruXEkn4qqfai9A=
+	t=1784073933; cv=none; b=hm3UyLZcsK4c4ajnoSDDnzQS0oAqd/glmqh3Tci+sTyUBVkQG8s7NFZOL/fzmS2w3LlK7p0ZVyXYqdWkM64cp51n6u493TJVnZw5gtj15QFJ+4079SfU+iWR9EmWREQ9In66Nr3gBBg6Fi0oKgqwObWHm1el/7eCfZoURpfIk8U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784073934; c=relaxed/simple;
-	bh=mF3MCHi3YHEPYtjop3i9gaPyrknZouMvJIo5Ib6adhI=;
+	s=arc-20240116; t=1784073933; c=relaxed/simple;
+	bh=kcEZMM9dwwv/+5LXAHMwexp/Dz8ByaXsOxuHEAExciw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FVC7FAt7Dv/wE/0MqlrX7W63WugUhVkk4rlEyUZ/9/pfrX8YhGoElYLsXnUV55nvfGLwXKU1mJAPVT2Ji6Fq+FptipTrNWNDzZVcvEdthIVg3iX+HNsqDPmIlW/h+DG9hXxcLrWoeoy3xR59AdhH6mcZWMCB1dkFHz4fpteKNUE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=pass smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=BFVhVWgm; arc=none smtp.client-ip=198.137.202.133
+	 MIME-Version; b=YzJqFhyS7Hj2QD7ovd4D/Cm8apnYQPAfuEPw9oeH89CwJSfBv3TqX/+uftcy4GppKv+SlmidEmc+Sl8o3Q6fdn3GL/ydfgOmHph0sHxgCFpjBgQ5LbU2X/RDwiPSvdX/MoCB2TAB4DMwupUTQSsgYar6d1Hvebp1SuXePPzSmuw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=pass smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=3/Skb14K; arc=none smtp.client-ip=198.137.202.133
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
 	MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:Sender
 	:Reply-To:Content-Type:Content-ID:Content-Description;
-	bh=XertOOfFvpAplO/JrXsYikR9iJI/5mQbiOBJ8r5yVLw=; b=BFVhVWgmF8Tu0/VlCpz6e4+xxR
-	/z/aTnIe4M94RU3PDWGzerm3sAiS6RhmL9NR5RIB8j1ynsh4vGCQ51Gj1WwHMy5opjF6LDEfEPlU+
-	EHYJeSbgntpoTAaeeUX1V8YgmwmRT4o+AykGeEF58OzX6Dmd/MKM8l/jERzY5GwpIenwKLxlt/21X
-	isOStveFnQ844M08IsSVYa6CBec0u7e17AOmPMrPDf3WAh/RR4CBencwEJX9srqgpToMfBrzU0WA+
-	EvjMUboiLOZ3oWkS9Zt6M+EB3z/eiN2jUJkh5gjLpJIejWS8SxMVwFhx+bC3bRwkDI7gMYs+T3V9u
-	3GosD8mw==;
+	bh=QfGvfC9/hXJmNDdXlodJG/Zikxj+nGFIjS0nGqw5KLc=; b=3/Skb14KpqKl8XgD2qSmCo5Omf
+	kUwlHnGIkgJyvOZEx7MA+s2OXp6Px+wU8qKdoE9DSGSIX0JVf+fdPt/MNtQp7BY2/ZFs9PjW5+E1A
+	Du7qQYNmqY6dsQ7mmh0mDWlXqBMNqMyHFVxm2cKwQa3YQYiPUfVPhEGtNGPKVVSJFcQFlDO6e18fP
+	qG2B/hGW4XyUUoxHdRLXXlYDmr0jQ+r4bdESGIIMmC+A6F+ZLbdKYo53wVtIC2GiS3JSWmmBeuIO+
+	iw9YZ+bcFAwNx5CPgvH8TeJWK0LhPN4aQRmOQCbPrgymVUNHap7lRae/3m5V3LiaITJKY1iXspsJ3
+	ZI0V7i2g==;
 Received: from [50.53.43.113] (helo=bombadil.infradead.org)
 	by bombadil.infradead.org with esmtpsa (Exim 4.99.1 #2 (Red Hat Linux))
-	id 1wjn7x-0000000DTcu-0oxX;
+	id 1wjn7x-0000000DTcu-3IAY;
 	Wed, 15 Jul 2026 00:05:29 +0000
 From: Randy Dunlap <rdunlap@infradead.org>
 To: linux-sound@vger.kernel.org
@@ -67,9 +67,9 @@ Cc: Randy Dunlap <rdunlap@infradead.org>,
 	patches@opensource.cirrus.com,
 	Srinivas Kandagatla <srini@kernel.org>,
 	linux-arm-msm@vger.kernel.org
-Subject: [PATCH 02/14 v2] ASoC: fsl_asrc_common: fix all kernel-doc warnings
-Date: Tue, 14 Jul 2026 17:05:13 -0700
-Message-ID: <20260715000525.739874-3-rdunlap@infradead.org>
+Subject: [PATCH 03/14 v2] ASoC: fsl_asrc: avoid kernel-doc warnings
+Date: Tue, 14 Jul 2026 17:05:14 -0700
+Message-ID: <20260715000525.739874-4-rdunlap@infradead.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260715000525.739874-1-rdunlap@infradead.org>
 References: <20260715000525.739874-1-rdunlap@infradead.org>
@@ -92,7 +92,7 @@ X-Spamd-Result: default: False [0.84 / 15.00];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-119114-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-119108-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	FORGED_RECIPIENTS(0.00)[m:linux-sound@vger.kernel.org,m:rdunlap@infradead.org,m:lgirdwood@gmail.com,m:broonie@kernel.org,m:perex@perex.cz,m:tiwai@suse.com,m:shengjiu.wang@gmail.com,m:Xiubo.Lee@gmail.com,m:festevam@gmail.com,m:nicoleotsuka@gmail.com,m:linuxppc-dev@lists.ozlabs.org,m:ckeepax@opensource.cirrus.com,m:mstrozek@opensource.cirrus.com,m:yung-chuan.liao@linux.intel.com,m:pierre-louis.bossart@linux.dev,m:patches@opensource.cirrus.com,m:srini@kernel.org,m:linux-arm-msm@vger.kernel.org,m:shengjiuwang@gmail.com,m:XiuboLee@gmail.com,s:lists@lfdr.de];
 	FORGED_SENDER(0.00)[rdunlap@infradead.org,linux-arm-msm@vger.kernel.org];
@@ -114,15 +114,16 @@ X-Spamd-Result: default: False [0.84 / 15.00];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,vger.kernel.org:from_smtp,infradead.org:from_mime,infradead.org:mid,infradead.org:email,infradead.org:dkim,ozlabs.org:email]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,vger.kernel.org:from_smtp,infradead.org:from_mime,infradead.org:mid,infradead.org:email,infradead.org:dkim]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 23F8B75991E
+X-Rspamd-Queue-Id: A12F67598F0
 
-Add missing struct fields for struct fsl_asrc_m2m_cap.
-Add the missing "struct" keyword on struct kernel-doc headings.
+Use the struct keyword to describe structs in kernel-doc format. This
+prevents kernel-doc warnings:
 
-Warning: ../sound/soc/fsl/fsl_asrc_common.h:65 cannot understand function prototype: 'struct fsl_asrc_pair'
-Warning: ../sound/soc/fsl/fsl_asrc_common.h:129 cannot understand function prototype: 'struct fsl_asrc'
+Warning: ../sound/soc/fsl/fsl_asrc.h:452 cannot understand function prototype: 'struct fsl_asrc_soc_data'
+Warning: ../sound/soc/fsl/fsl_asrc.h:463 cannot understand function prototype: 'struct fsl_asrc_pair_priv'
+Warning: ../sound/soc/fsl/fsl_asrc.h:475 cannot understand function prototype: 'struct fsl_asrc_priv'
 
 Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
 ---
@@ -137,38 +138,36 @@ Cc: Fabio Estevam <festevam@gmail.com>
 Cc: Nicolin Chen <nicoleotsuka@gmail.com>
 Cc: linuxppc-dev@lists.ozlabs.org
 
- sound/soc/fsl/fsl_asrc_common.h |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ sound/soc/fsl/fsl_asrc.h |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- linext-2026-0710.orig/sound/soc/fsl/fsl_asrc_common.h
-+++ linext-2026-0710/sound/soc/fsl/fsl_asrc_common.h
-@@ -28,7 +28,9 @@ enum asrc_pair_index {
-  * @chan_min: minimum channel number
-  * @chan_max: maximum channel number
-  * @rate_in: minimum rate
-- * @rate_out: maximum rete
-+ * @rate_in_count: number of array elements in @rate_in
-+ * @rate_out: maximum rate
-+ * @rate_out_count: number of array elements in @rate_out
+--- linext-2026-0710.orig/sound/soc/fsl/fsl_asrc.h
++++ linext-2026-0710/sound/soc/fsl/fsl_asrc.h
+@@ -444,7 +444,7 @@ struct dma_block {
+ };
+ 
+ /**
+- * fsl_asrc_soc_data: soc specific data
++ * struct fsl_asrc_soc_data - soc specific data
+  *
+  * @use_edma: using edma as dma device or not
+  * @channel_bits: width of ASRCNCR register for each pair
+@@ -457,7 +457,7 @@ struct fsl_asrc_soc_data {
+ };
+ 
+ /**
+- * fsl_asrc_pair_priv: ASRC Pair private data
++ * struct fsl_asrc_pair_priv - ASRC Pair private data
+  *
+  * @config: configuration profile
   */
- struct fsl_asrc_m2m_cap {
- 	u64 fmt_in;
-@@ -42,7 +44,7 @@ struct fsl_asrc_m2m_cap {
+@@ -466,7 +466,7 @@ struct fsl_asrc_pair_priv {
  };
  
  /**
-- * fsl_asrc_pair: ASRC Pair common data
-+ * struct fsl_asrc_pair - ASRC Pair common data
+- * fsl_asrc_priv: ASRC private data
++ * struct fsl_asrc_priv - ASRC private data
   *
-  * @asrc: pointer to its parent module
-  * @error: error record
-@@ -90,7 +92,7 @@ struct fsl_asrc_pair {
- };
- 
- /**
-- * fsl_asrc: ASRC common data
-+ * struct fsl_asrc - ASRC common data
-  *
-  * @dma_params_rx: DMA parameters for receive channel
-  * @dma_params_tx: DMA parameters for transmit channel
+  * @asrck_clk: clock sources to driver ASRC internal logic
+  * @soc: soc specific data
 
