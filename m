@@ -1,224 +1,302 @@
-Return-Path: <linux-arm-msm+bounces-119183-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-119185-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id qOFpJBRFV2qPIQEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-119183-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jul 2026 10:30:12 +0200
+	id 8CmsNI1FV2qtIQEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-119185-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jul 2026 10:32:13 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6EF3A75BE35
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jul 2026 10:30:11 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4995C75BE85
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jul 2026 10:32:13 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=CiWlGEiz;
-	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=VQbLB3GA;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-119183-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 104.64.211.4 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-119183-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=reject) header.from=qualcomm.com;
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=hLvqPZif;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-119185-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-119185-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id B22763001FA0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jul 2026 08:30:03 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 54C1E3009F10
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Jul 2026 08:32:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 683F83CE4B6;
-	Wed, 15 Jul 2026 08:29:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6C2A938BF6A;
+	Wed, 15 Jul 2026 08:32:11 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFE183CC7EC
-	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jul 2026 08:29:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1013927A91D;
+	Wed, 15 Jul 2026 08:32:09 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784104197; cv=none; b=QiJjjk+6pUTi8n/DmqDVC94SHohCwjl2uEc1qzMXj0dbtEgrXMb9feqr1HKg4Cz1uMxstXvrtFXu/NmhMMe6UN51Tnlxa3YBa98gcp6tBNJExDEX5sACbyHBDRX2pjFxm/IrT/2HLR7VLkiY9nrG2+VJ5j0FZP1fXl7eiwH2ksw=
+	t=1784104331; cv=none; b=OayLEGB4bhBzAqyxiHfhB2aotCNlbEgw4vh1IXxiiTYXmhtaNh0FGVck6ABo4IvF8QMrBxZUfWKLimzgIQfcMyBNVAqu6BPPyZaFG/K3relbi6ccKkkOUxD12ewtguTRSk1SvNUQrUX/HQihMyw5qUbPxQTH8OzuhcPRYb1+fZw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784104197; c=relaxed/simple;
-	bh=o4ARZ01tTH4LKxC7OaN73OKp7OJl5tf3fPsvab8XkZs=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=iWle+/PNNfoFFMu2RSEDE6M11h2toLQ6fjY0cfjwLBMg34Nh0WxvZRpuqSmGJ4VcVUJJL7mSwlQha4fb2DYDCHo5A7GZWiBf8rmAlyGE6IJ8suvoLpgn0izZWUjIxM1XDrqynrxK1ds+h8kBO9CXEaHgJlGIq8h9qkGvyvRR2Jo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=CiWlGEiz; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=VQbLB3GA; arc=none smtp.client-ip=205.220.168.131
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66F3lxh82374697
-	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jul 2026 08:29:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	IApwrUwL0UHXKJe/ull5musLsDGYYHv2AUyfZVVBGsE=; b=CiWlGEizouFQpuOU
-	Cout2IRecONlNqFVS5M6W/6jWv1ovgZ/lOKQSvL5UM4oSbPhci30WXyDhcZLB2WD
-	I2Er+DwT3ksue517pyJ8t9/Z9LcjozDSRd0SmeesSJOm0QK+bjEHLk52Vw29iLlr
-	Jd6Wztd04fEVY4EzDYywzP51uBmDBChmzChkFXEQIvaew6pV3tJMgR07DWpJpNpX
-	NZefIc2wVTFsmLZ5uXvheSIBOfSuTF2HbbzhCz24YPMfU6wr47np5SgwCb4FaWsL
-	z7wgTIqgmw/jElzyWihUu3Nh91aEk1G899+FeMwuvUxwjg2xdWCK8WdTd1vCYO9e
-	DVib5w==
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fdmkk434h-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jul 2026 08:29:49 +0000 (GMT)
-Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-2caa9a3cf7aso5197145ad.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Jul 2026 01:29:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1784104187; x=1784708987; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :content-type:mime-version:subject:date:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=IApwrUwL0UHXKJe/ull5musLsDGYYHv2AUyfZVVBGsE=;
-        b=VQbLB3GA/O9X/RCv+BIkXXvqd1LRQ+MTRNK5G5SMo+0dmbM7UpHddL+Tze9a1E8G4u
-         F7e9dJBNNGR4ckbDojZhI3//Gt8+9F+WrllHYoYPQkHIg8lEYmjqXsUUqSQ+g76aTCDg
-         rbYEcm5rKePS0fzG5dRqHcNX+0oA02G5vvoc3YPRaP9H6o2WsYEZmxLshjpUqvpEtuV+
-         xw5c4705vvJiboUochjEPHEK1M9VrsexF6EI7Ek3j401/YDSfcdHrXUAYwQqWXBNNJKV
-         dRLVoJgPVRP7XIi8YhC7e2WQz3229nUO84mWAuWUMSBkGKyVtFvgSnYvVwa9j9qyyahC
-         BMUg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784104187; x=1784708987;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :content-type:mime-version:subject:date:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=IApwrUwL0UHXKJe/ull5musLsDGYYHv2AUyfZVVBGsE=;
-        b=XzM8oarnYe8OxUBh3tZauCh1jMV5VBLVcJPTjgUgavkMp5CTneNklhfZknL4r0+UjW
-         50t32Y8oOc4gu5qKBBL41OTRC6Rjbdd+XHGTyHxNsMQBsAgBeyEovzS5e3+hyFXsR5cQ
-         L34QM0R32q0nSuutzF0aCLdlScqrlU+dCb0q/PaPsRRnQZneHwjbgQoZbgFsXnrfo2LG
-         3ZpZ11xt4hJbbJMq8GsKV/MB2lReo/L4Nn74LGuM9Y4hoB2fIOh4Hohpj+p/r6XxMERP
-         DNLySL3w+L6uDI26xz+IRuqfVm0BMzEQWDtesPOEp+/N1xiX3bC6g4xxI6HJV1gaXnNY
-         grHg==
-X-Forwarded-Encrypted: i=1; AHgh+Rr6gaBVuiOl/ynFhncAOgjMii69idWHzJdq2EFERtWMGYJ+6dU8lwycl9LSpSCchi9rmT2MRSyGo5GgPR8s@vger.kernel.org
-X-Gm-Message-State: AOJu0YzHOcEFqhMRRwgv9ihFdadJcOoPKm4+fpKl4JY0L1gZb4MAuW6N
-	7VrE/NX9krFd45Va4OPZQvFshUbaknYan7XwQ904tBW7SWLTi2U8OzA4m+h+e2HDiHD0dRTHOYd
-	sxuPLZSb24r2Bv7+87frmHBcgzF0jblqrfQ/l8he6i6Y47D+Z3SXQXO1ZEsJGW3oy+RQ5
-X-Gm-Gg: AfdE7clMyb+bJRg9hIFa8dVGkqV93O/FKSZ5dUmOOFLC2S5cigjBCfMAYNfX6FgKF9P
-	SAoAn71VWsj5IyJOjeK/VmsgTcEhysHdn4kjqnMC38FqfPh65RzpGs0kh8xPj3lQumAJDCf2GxH
-	FJf+GRmQUtLpfnp10jVXj79AAGau1lUHj2u/TXRVVaVxv/bbkmxKaFWMdPlfVEbFm5ZZ2DsJpDi
-	XuhH56kzX+WJI5vmbED+K7h3keSiXkNKKUpBG4Zek9OkIYDH9WMlYuTM9eScwMOFcmQ3l8zLJPL
-	sJB0XkjPfjsrOZ1D+Gyeg02oQiS5CK/2pEpf9EJt+xosUq8ii3P6fLJwmY9WxzaAjppGH1IR8Mo
-	8uUiLGKrYGC9hFDU5ggQzHxwOtsPVFmKm/R/Svrw=
-X-Received: by 2002:a17:902:f70b:b0:2ca:eff:ff58 with SMTP id d9443c01a7336-2cea17fa4e9mr157420415ad.15.1784104187058;
-        Wed, 15 Jul 2026 01:29:47 -0700 (PDT)
-X-Received: by 2002:a17:902:f70b:b0:2ca:eff:ff58 with SMTP id d9443c01a7336-2cea17fa4e9mr157420195ad.15.1784104186647;
-        Wed, 15 Jul 2026 01:29:46 -0700 (PDT)
-Received: from hu-nandam-hyd.qualcomm.com ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ccc9bdb75fsm129260715ad.8.2026.07.15.01.29.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Jul 2026 01:29:46 -0700 (PDT)
-From: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
-Date: Wed, 15 Jul 2026 13:59:24 +0530
-Subject: [PATCH 2/2] ASoC: codecs: lpass-va-macro: check clk_set_rate()
- return value
+	s=arc-20240116; t=1784104331; c=relaxed/simple;
+	bh=VdgvCK/DEqos+tWO5AzNwxX7DxDwPVMJyr33E1EKcKQ=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=lFDgwEiFGeKWbZQmOC8Xgjk2U/UHvdBjM7awcnj677GjBU0KXtMOpImtoc7B98jNL4zj9jCyt9pPI6ji7864hLML1SDy52CCBfqDarJ7Ii0KNW9kI3kG51RUNNAuWZCIEPt9nKLHGdg0insdhXxRBdphNPg0lMdZgvPfvPM5bqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hLvqPZif; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C22B1F000E9;
+	Wed, 15 Jul 2026 08:32:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1784104329;
+	bh=Rv/WkuhxEmVUjKZPLywY5nPLg9cMq0vAok56zknF3Nk=;
+	h=Date:From:Subject:To:Cc:References:In-Reply-To;
+	b=hLvqPZif2ftOlKR0HnL/JKQjlgidV43UKiPa7KUafE+twJqDCgFyjMCt8FKbHjp6k
+	 4STxhrb9q8DfXfozEuMa5rRu9sEWqhBuTZn6tZCjtrk70LsD1DQx7tWim0sF+E8zNa
+	 4Xf03snqC7qW58dn2VhHis9kWhubGvopV1XNqrrFTYJvoALZIJB1TjSX6iy5ni8CLJ
+	 nXrLS3m6lb+0Go0RhrY5DTfCJqgPyfveeR6xB4Ra5YgzCYJoDsfwgubV32YOaO8cUR
+	 r2INB6xTAdn0+riQtT821zjlqjZhey6NresU+MS70P/84oWCZgqkKK8Be8TduV16IF
+	 Gfu78VSC6UFag==
+Message-ID: <1ef14047-f385-4163-ad9d-414702f45695@kernel.org>
+Date: Wed, 15 Jul 2026 10:32:06 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+From: Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: Re: [PATCH v2 2/3] media: v4l2-core: Add support for video encoder
+ ROI control
+To: Deepa Guthyappa Madivalara <deepa.madivalara@oss.qualcomm.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
+ Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+ Abhinav Kumar <abhinav.kumar@linux.dev>, Bryan O'Donoghue <bod@kernel.org>
+Cc: linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, kernel test robot <lkp@intel.com>
+References: <20260714-enc_roi_enable-v2-0-63683f9dbcef@oss.qualcomm.com>
+ <20260714-enc_roi_enable-v2-2-63683f9dbcef@oss.qualcomm.com>
+Content-Language: en-US, nl
+In-Reply-To: <20260714-enc_roi_enable-v2-2-63683f9dbcef@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260715-xo-sd-codec-wsa-va-clk-set-rate-v1-2-f0c713ff0b4e@oss.qualcomm.com>
-References: <20260715-xo-sd-codec-wsa-va-clk-set-rate-v1-0-f0c713ff0b4e@oss.qualcomm.com>
-In-Reply-To: <20260715-xo-sd-codec-wsa-va-clk-set-rate-v1-0-f0c713ff0b4e@oss.qualcomm.com>
-To: Srinivas Kandagatla <srini@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
-        Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>
-Cc: linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
-X-Mailer: b4 0.15.0
-X-Proofpoint-GUID: GkjMYAOHCKq4Bv4GEXqelURWrkNEYnJm
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE1MDA4MCBTYWx0ZWRfX5yJkWSHgZcZ3
- vTjrxsKfVUiy5fpSktI7vBoF4aBbPe1nTzLvM6z22viBCBO12Sa9OGanEhiGDuzDphb9udw1gKH
- oip9QXFxRRSkiAnXOnT1AhYqkF8ThBCG7NCw1M5JxDdREa7EvGQJ/eMLWOGrssAqtz/vzGhJyzV
- mMB1vYKVCMPXl1s+d/j7bHSjoaMoj8sn+QKG0ieXJRXFspcUYSlBWqvvUZI5a1TY3QGbyIGtzys
- nWcuSve7zRc6ifdfL+3jPRZThmBr9yhXDByvkMpUr1OQbAMnLrhcjUqccI+M9zDWEAr3tQ17tMM
- C//xSzaSC2TfTaGAVFdOCwWLhlrp6WG9P3cCpbNiEhYG3uMZ2yiG8VC8xLCOnrQygDDFWMfoze9
- VrWXbo8xMFQZenk3WzHJ8PaXcMWKlVeAk/7Qw3NMt1z2jcIJWlYwev8K1zC7j7h6mKCNwiEYP9Z
- nM/ecQ+98RkQHXdAaBQ==
-X-Authority-Analysis: v=2.4 cv=NszhtcdJ c=1 sm=1 tr=0 ts=6a5744fd cx=c_pps
- a=cmESyDAEBpBGqyK7t0alAg==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=EUspDBNiAAAA:8 a=Rw-3s851JbwrW9yZSY0A:9 a=QEXdDO2ut3YA:10
- a=1OuFwYUASf3TG4hYMiVC:22
-X-Proofpoint-ORIG-GUID: GkjMYAOHCKq4Bv4GEXqelURWrkNEYnJm
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE1MDA4MCBTYWx0ZWRfX96ybNyVqoUku
- 70uGQE572tBAXX9OLlwS45GFBjA2MyUg53fyXQYxisDo9kgbND0EWijEejvvZWZvsvUYDry7MBg
- R2IMo33WoIVV7RdQnRl3Fk4hlGV4ABc=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-15_02,2026-07-14_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 impostorscore=0 clxscore=1015 malwarescore=0 spamscore=0
- phishscore=0 lowpriorityscore=0 bulkscore=0 adultscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607150080
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-5.16 / 15.00];
+	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-119183-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:srini@kernel.org,m:lgirdwood@gmail.com,m:broonie@kernel.org,m:perex@perex.cz,m:tiwai@suse.com,m:linux-sound@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:ajay.nandam@oss.qualcomm.com,s:lists@lfdr.de];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,qualcomm.com:email,qualcomm.com:dkim];
-	FREEMAIL_TO(0.00)[kernel.org,gmail.com,perex.cz,suse.com];
-	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	FORWARDED(0.00)[lists@lfdr.de];
-	FORGED_SENDER(0.00)[ajay.nandam@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[ajay.nandam@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-119185-lists,linux-arm-msm=lfdr.de,cisco];
+	FORGED_RECIPIENTS(0.00)[m:deepa.madivalara@oss.qualcomm.com,m:mchehab@kernel.org,m:vikash.garodia@oss.qualcomm.com,m:dikshita.agarwal@oss.qualcomm.com,m:abhinav.kumar@linux.dev,m:bod@kernel.org,m:linux-media@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:lkp@intel.com,s:lists@lfdr.de];
 	FROM_HAS_DN(0.00)[];
+	FORGED_SENDER(0.00)[hverkuil@kernel.org,linux-arm-msm@vger.kernel.org];
+	MIME_TRACE(0.00)[0:+];
+	RCVD_COUNT_THREE(0.00)[4];
+	FORWARDED(0.00)[lists@lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	TO_DN_SOME(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[9];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[hverkuil@kernel.org,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[10];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCVD_COUNT_SEVEN(0.00)[7]
+	MID_RHS_MATCH_FROM(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,vger.kernel.org:from_smtp,qualcomm.com:email]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 6EF3A75BE35
+X-Rspamd-Queue-Id: 4995C75BE85
 
-clk_set_rate() returns 0 on success or a negative errno on failure but
-the VA macro probe function was ignoring it. Check the return value and
-bail out of probe on failure.
+On 14/07/2026 21:00, Deepa Guthyappa Madivalara wrote:
+> Add necessary support for controls V4L2_CID_MPEG_VIDEO_ROI_MB_DELTA_QP
+> and V4L2_CID_MPEG_VIDEO_ROI_MB_SIZE.
+> 
+> Signed-off-by: Deepa Guthyappa Madivalara <deepa.madivalara@oss.qualcomm.com>
+> ---
+>  drivers/media/v4l2-core/v4l2-ctrls-api.c  |  1 +
+>  drivers/media/v4l2-core/v4l2-ctrls-core.c | 40 +++++++++++++++++++++++++++++--
+>  drivers/media/v4l2-core/v4l2-ctrls-defs.c | 10 ++++++++
+>  include/media/v4l2-ctrls.h                |  3 ++-
+>  4 files changed, 51 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/media/v4l2-core/v4l2-ctrls-api.c b/drivers/media/v4l2-core/v4l2-ctrls-api.c
+> index 93d8d4012d0f4fef004e417d0aee2ae44b1b30bd..7d41cfd7378baaa929d4da0266c45f731bb54285 100644
+> --- a/drivers/media/v4l2-core/v4l2-ctrls-api.c
+> +++ b/drivers/media/v4l2-core/v4l2-ctrls-api.c
+> @@ -980,6 +980,7 @@ int __v4l2_ctrl_modify_range(struct v4l2_ctrl *ctrl,
+>  	case V4L2_CTRL_TYPE_U8:
+>  	case V4L2_CTRL_TYPE_U16:
+>  	case V4L2_CTRL_TYPE_U32:
+> +	case V4L2_CTRL_TYPE_S8:
+>  		if (ctrl->is_array)
+>  			return -EINVAL;
+>  		ret = check_range(ctrl->type, min, max, step, def);
+> diff --git a/drivers/media/v4l2-core/v4l2-ctrls-core.c b/drivers/media/v4l2-core/v4l2-ctrls-core.c
+> index ba047d7d86010bf0cf8f8fbf2dc343883d6bdae0..15b69dce0127e7c8546c2d23ae5458ace10301a0 100644
+> --- a/drivers/media/v4l2-core/v4l2-ctrls-core.c
+> +++ b/drivers/media/v4l2-core/v4l2-ctrls-core.c
+> @@ -287,6 +287,14 @@ static void __v4l2_ctrl_type_op_init(const struct v4l2_ctrl *ctrl, u32 from_idx,
+>  			memset(ptr.p_u32 + from_idx, 0, elems * sizeof(u32));
+>  		}
+>  		break;
+> +	case V4L2_CTRL_TYPE_S8:
+> +		if (value) {
+> +			for (i = from_idx; i < tot_elems; i++)
+> +				ptr.p_s8[i] = value;
+> +		} else {
+> +			memset(ptr.p_s8 + from_idx, 0, elems * sizeof(s8));
+> +		}
+> +		break;
+>  	default:
+>  		for (i = from_idx; i < tot_elems; i++) {
+>  			switch (which) {
+> @@ -367,6 +375,9 @@ void v4l2_ctrl_type_op_log(const struct v4l2_ctrl *ctrl)
+>  	case V4L2_CTRL_TYPE_U32:
+>  		pr_cont("%u", (unsigned)*ptr.p_u32);
+>  		break;
+> +	case V4L2_CTRL_TYPE_S8:
+> +		pr_cont("%d", *ptr.p_s8);
+> +		break;
+>  	case V4L2_CTRL_TYPE_AREA:
+>  		pr_cont("%ux%u", ptr.p_area->width, ptr.p_area->height);
+>  		break;
+> @@ -481,6 +492,21 @@ EXPORT_SYMBOL(v4l2_ctrl_type_op_log);
+>  	0;							\
+>  })
+>  
+> +#define ROUND_TO_RANGE_SIGNED(val, offset_type, ctrl)			\
+> +({								\
+> +	offset_type offset;					\
+> +	if ((ctrl)->maximum >= 0 &&				\
+> +	    val >= (ctrl)->maximum - (s32)((ctrl)->step / 2))	\
+> +		val = (ctrl)->maximum;				\
+> +	else							\
+> +		val += (s32)((ctrl)->step / 2);			\
+> +	val = clamp_t(typeof(val), val,				\
+> +		      (ctrl)->minimum, (ctrl)->maximum);	\
+> +	offset = (val) - (ctrl)->minimum;			\
+> +	offset = (ctrl)->step * (offset / (s32)(ctrl)->step);	\
+> +	val = (ctrl)->minimum + offset;				\
+> +})
 
-Signed-off-by: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
----
- sound/soc/codecs/lpass-va-macro.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+Why is this new define needed? I think you can just use ROUND_TO_RANGE.
 
-diff --git a/sound/soc/codecs/lpass-va-macro.c b/sound/soc/codecs/lpass-va-macro.c
-index 946051698420..dbc5795b9273 100644
---- a/sound/soc/codecs/lpass-va-macro.c
-+++ b/sound/soc/codecs/lpass-va-macro.c
-@@ -1605,7 +1605,9 @@ static int va_macro_probe(struct platform_device *pdev)
- 	va->has_npl_clk = data->has_npl_clk;
- 
- 	/* mclk rate */
--	clk_set_rate(va->mclk, 2 * VA_MACRO_MCLK_FREQ);
-+	ret = clk_set_rate(va->mclk, 2 * VA_MACRO_MCLK_FREQ);
-+	if (ret)
-+		goto err;
- 
- 	if (va->has_npl_clk) {
- 		va->npl = devm_clk_get(dev, "npl");
-@@ -1614,7 +1616,9 @@ static int va_macro_probe(struct platform_device *pdev)
- 			goto err;
- 		}
- 
--		clk_set_rate(va->npl, 2 * VA_MACRO_MCLK_FREQ);
-+		ret = clk_set_rate(va->npl, 2 * VA_MACRO_MCLK_FREQ);
-+		if (ret)
-+			goto err;
- 	}
- 
- 	ret = devm_pm_clk_create(dev);
+Regards,
 
--- 
-2.34.1
+	Hans
+
+> +
+>  /* Validate a new control */
+>  
+>  #define zero_padding(s) \
+> @@ -1365,6 +1391,8 @@ static int std_validate_compound(const struct v4l2_ctrl *ctrl, u32 idx,
+>  			return -EINVAL;
+>  		break;
+>  
+> +	case V4L2_CID_MPEG_VIDEO_ROI_MB_DELTA_QP:
+> +		break;
+>  	default:
+>  		return -EINVAL;
+>  	}
+> @@ -1378,6 +1406,7 @@ static int std_validate_elem(const struct v4l2_ctrl *ctrl, u32 idx,
+>  	size_t len;
+>  	u64 offset;
+>  	s64 val;
+> +	s32 tmp;
+>  
+>  	switch ((u32)ctrl->type) {
+>  	case V4L2_CTRL_TYPE_INTEGER:
+> @@ -1403,7 +1432,11 @@ static int std_validate_elem(const struct v4l2_ctrl *ctrl, u32 idx,
+>  		return ROUND_TO_RANGE(ptr.p_u16[idx], u16, ctrl);
+>  	case V4L2_CTRL_TYPE_U32:
+>  		return ROUND_TO_RANGE(ptr.p_u32[idx], u32, ctrl);
+> -
+> +	case V4L2_CTRL_TYPE_S8:
+> +		tmp = ptr.p_s8[idx];
+> +		ROUND_TO_RANGE_SIGNED(tmp, s32, ctrl);
+> +		ptr.p_s8[idx] = (s8)tmp;
+> +		return 0;
+>  	case V4L2_CTRL_TYPE_BOOLEAN:
+>  		ptr.p_s32[idx] = !!ptr.p_s32[idx];
+>  		return 0;
+> @@ -1556,6 +1589,7 @@ void cur_to_new(struct v4l2_ctrl *ctrl)
+>  		return;
+>  	if (ctrl->is_dyn_array)
+>  		ctrl->new_elems = ctrl->elems;
+> +
+>  	ptr_to_ptr(ctrl, ctrl->p_cur, ctrl->p_new, ctrl->new_elems);
+>  }
+>  
+> @@ -1998,6 +2032,9 @@ static struct v4l2_ctrl *v4l2_ctrl_new(struct v4l2_ctrl_handler *hdl,
+>  	case V4L2_CTRL_TYPE_U32:
+>  		elem_size = sizeof(u32);
+>  		break;
+> +	case V4L2_CTRL_TYPE_S8:
+> +		elem_size = sizeof(s8);
+> +		break;
+>  	case V4L2_CTRL_TYPE_MPEG2_SEQUENCE:
+>  		elem_size = sizeof(struct v4l2_ctrl_mpeg2_sequence);
+>  		break;
+> @@ -2215,7 +2252,6 @@ static struct v4l2_ctrl *v4l2_ctrl_new(struct v4l2_ctrl_handler *hdl,
+>  
+>  	if (flags & V4L2_CTRL_FLAG_HAS_WHICH_MIN_MAX) {
+>  		void *ptr = ctrl->p_def.p;
+> -
+>  		if (p_min.p_const) {
+>  			ptr += elem_size;
+>  			ctrl->p_min.p = ptr;
+> diff --git a/drivers/media/v4l2-core/v4l2-ctrls-defs.c b/drivers/media/v4l2-core/v4l2-ctrls-defs.c
+> index e062f2088490470c42d6c579ff7675be454a29b0..8f895060799ea13443143edd398dfb97f4ba0085 100644
+> --- a/drivers/media/v4l2-core/v4l2-ctrls-defs.c
+> +++ b/drivers/media/v4l2-core/v4l2-ctrls-defs.c
+> @@ -974,6 +974,8 @@ const char *v4l2_ctrl_get_name(u32 id)
+>  	case V4L2_CID_MPEG_VIDEO_AVERAGE_QP:			return "Average QP Value";
+>  	case V4L2_CID_FWHT_I_FRAME_QP:				return "FWHT I-Frame QP Value";
+>  	case V4L2_CID_FWHT_P_FRAME_QP:				return "FWHT P-Frame QP Value";
+> +	case V4L2_CID_MPEG_VIDEO_ROI_MB_DELTA_QP:		return "Encoder ROI MB Delta QP";
+> +	case V4L2_CID_MPEG_VIDEO_ROI_MB_SIZE:			return "Encoder ROI MB Size";
+>  
+>  	/* VPX controls */
+>  	case V4L2_CID_MPEG_VIDEO_VPX_NUM_PARTITIONS:		return "VPX Number of Partitions";
+> @@ -1622,6 +1624,14 @@ void v4l2_ctrl_fill(u32 id, const char **name, enum v4l2_ctrl_type *type,
+>  	case V4L2_CID_COLORIMETRY_HDR10_MASTERING_DISPLAY:
+>  		*type = V4L2_CTRL_TYPE_HDR10_MASTERING_DISPLAY;
+>  		break;
+> +	case V4L2_CID_MPEG_VIDEO_ROI_MB_DELTA_QP:
+> +		*type = V4L2_CTRL_TYPE_S8;
+> +		*flags |= V4L2_CTRL_FLAG_DYNAMIC_ARRAY;
+> +		break;
+> +	case V4L2_CID_MPEG_VIDEO_ROI_MB_SIZE:
+> +		*type = V4L2_CTRL_TYPE_U8;
+> +		*flags |= V4L2_CTRL_FLAG_READ_ONLY;
+> +		break;
+>  	default:
+>  		*type = V4L2_CTRL_TYPE_INTEGER;
+>  		break;
+> diff --git a/include/media/v4l2-ctrls.h b/include/media/v4l2-ctrls.h
+> index a1806ddbc797efa52e83cd3f685ef70d5b5483d2..9a68a3555e349f1e55aa01af5c10f08201d62bae 100644
+> --- a/include/media/v4l2-ctrls.h
+> +++ b/include/media/v4l2-ctrls.h
+> @@ -27,6 +27,7 @@ struct video_device;
+>  
+>  /**
+>   * union v4l2_ctrl_ptr - A pointer to a control value.
+> + * @p_s8:			Pointer to a 8-bit signed value.
+>   * @p_s32:			Pointer to a 32-bit signed value.
+>   * @p_s64:			Pointer to a 64-bit signed value.
+>   * @p_u8:			Pointer to a 8-bit unsigned value.
+> @@ -61,10 +62,10 @@ struct video_device;
+>   * @p_const:			Pointer to a constant compound value.
+>   */
+>  union v4l2_ctrl_ptr {
+> +	s8 *p_s8;
+>  	s32 *p_s32;
+>  	s64 *p_s64;
+>  	u8 *p_u8;
+> -	s8 *p_s8;
+>  	u16 *p_u16;
+>  	u32 *p_u32;
+>  	char *p_char;
+> 
 
 
